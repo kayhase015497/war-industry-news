@@ -206,6 +206,48 @@
             color: #364f62;
         }
 
+        /* ── 年份導航列 ── */
+        .year-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 18, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #1c2e3d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .year-nav .nav-label {
+            font-size: 0.72rem;
+            color: #4a6274;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        .year-nav a {
+            text-decoration: none;
+            color: #7f9aac;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border: 1px solid #253545;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            letter-spacing: 0.05em;
+        }
+
+        .year-nav a:hover,
+        .year-nav a.active {
+            background: #c0392b;
+            color: #fff;
+            border-color: #c0392b;
+        }
+
         /* ── 響應式 ── */
         @media (max-width: 600px) {
             .news-card {
@@ -224,6 +266,16 @@
             .stat-item .num {
                 font-size: 1.4rem;
             }
+
+            .year-nav {
+                gap: 6px;
+                padding: 8px 12px;
+            }
+
+            .year-nav a {
+                padding: 4px 10px;
+                font-size: 0.82rem;
+            }
         }
     </style>
 </head>
@@ -234,6 +286,13 @@
         <h1>戰爭<span>即</span>工業力</h1>
         <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
     </header>
+
+    <nav class="year-nav">
+        <span class="nav-label">跳至年份</span>
+        <a href="#year-2023">2023</a>
+        <a href="#year-2024">2024</a>
+        <a href="#year-2025">2025</a>
+    </nav>
 
     <div class="container">
 
@@ -257,7 +316,7 @@
         </div>
 
         <!-- 2023年 -->
-        <section class="year-section">
+        <section class="year-section" id="year-2023">
             <div class="year-header">
                 <div class="year-badge">2023</div>
                 <div class="year-line"></div>
@@ -324,7 +383,7 @@
         </section>
 
         <!-- 2024年 -->
-        <section class="year-section">
+        <section class="year-section" id="year-2024">
             <div class="year-header">
                 <div class="year-badge">2024</div>
                 <div class="year-line"></div>
@@ -419,7 +478,7 @@
         </section>
 
         <!-- 2025年 -->
-        <section class="year-section">
+        <section class="year-section" id="year-2025">
             <div class="year-header">
                 <div class="year-badge">2025</div>
                 <div class="year-line"></div>
@@ -494,6 +553,31 @@
         </section>
 
     </div>
+
+    <script>
+        // Scroll-spy：自動高亮目前可見的年份
+        const sections = ['year-2023', 'year-2024', 'year-2025'];
+        const navLinks = {};
+        sections.forEach(id => {
+            navLinks[id] = document.querySelector(`.year-nav a[href="#${id}"]`);
+        });
+
+        function updateNav() {
+            let current = sections[0];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.getBoundingClientRect().top <= 80) {
+                    current = id;
+                }
+            });
+            sections.forEach(id => {
+                navLinks[id]?.classList.toggle('active', id === current);
+            });
+        }
+
+        window.addEventListener('scroll', updateNav, { passive: true });
+        updateNav();
+    </script>
 
     <footer class="site-footer">
         資料來源：中國時報 &nbsp;｜&nbsp; 報導期間：2023 – 2025
