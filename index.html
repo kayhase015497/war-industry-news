@@ -58,6 +58,7 @@
             width: 100%;
             height: 420px;
             border-radius: 10px;
+            overflow: hidden;
             background: #050d14;
             margin-bottom: 40px;
             cursor: grab;
@@ -1152,7 +1153,11 @@
             { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'] },
         ];
 
-        // 明確傳入尺寸，確保 canvas 與容器對齊置中
+        // 延遲初始化：確保瀏覽器完成 layout，clientWidth/clientHeight 才有正確值
+        setTimeout(function() { startGlobe(container, hotspots); }, 50);
+    })();
+
+    function startGlobe(container, hotspots) {
         const w = container.clientWidth;
         const h = container.clientHeight;
 
@@ -1193,8 +1198,8 @@
             globe.width(container.clientWidth).height(container.clientHeight);
         });
 
-        // 初始視角：對準歐亞衝突帶，稍微拉遠確保地球完整可見
-        globe.pointOfView({ lat: 25, lng: 50, altitude: 2.2 });
+        // 初始視角：對準歐亞衝突帶，拉遠確保地球完整可見
+        globe.pointOfView({ lat: 25, lng: 50, altitude: 2.8 });
 
         // 滑鼠拖曳時暫停自轉，放開後繼續
         container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
@@ -1242,7 +1247,7 @@
             container.style.position = 'relative';
             container.appendChild(panel);
         }
-    })();
+    }
     </script>
 
 </body>
