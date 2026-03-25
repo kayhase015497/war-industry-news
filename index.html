@@ -11,6 +11,22 @@
             box-sizing: border-box;
         }
 
+        /*
+         * ── 圖片資源管理 ──────────────────────────────────────────────
+         * 如需新增圖片：在 :root 新增變數，再套用到對應元素即可。
+         * 新增卡片圖片：增加 --img-card-N 變數，並在
+         *   .news-card:nth-child(Nn+N)::before 加入對應規則。
+         * ──────────────────────────────────────────────────────────────
+         */
+        :root {
+            --img-header:  url('images/soldiers-breach.jpg'); /* 頁首背景 */
+            --img-footer:  url('images/ammo-loading.jpg');    /* 頁尾背景 */
+            --img-card-1:  url('images/night-vision.jpg');    /* 卡片背景 1 */
+            --img-card-2:  url('images/rpg-soldier.jpg');     /* 卡片背景 2 */
+            --img-card-3:  url('images/soldiers-breach.jpg'); /* 卡片背景 3 */
+            --img-card-4:  url('images/ammo-loading.jpg');    /* 卡片背景 4 */
+        }
+
         body {
             font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
             background-color: #0f1923;
@@ -22,14 +38,23 @@
 
         /* ── 頂部橫幅 ── */
         .site-header {
-            background: linear-gradient(160deg, #0f1923 0%, #1c2e3d 50%, #0f1923 100%);
+            /* 深色漸層疊在圖片上，保持文字可讀性 */
+            background:
+                linear-gradient(160deg,
+                    rgba(15, 25, 35, 0.88) 0%,
+                    rgba(28, 46, 61, 0.76) 50%,
+                    rgba(15, 25, 35, 0.88) 100%),
+                var(--img-header);
+            background-size: cover;
+            background-position: center 40%;
             border-bottom: 3px solid #c0392b;
-            padding: 40px 20px 30px;
+            padding: 60px 20px 40px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
+        /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
             content: '';
             position: absolute;
@@ -38,9 +63,10 @@
                 45deg,
                 transparent,
                 transparent 40px,
-                rgba(192, 57, 43, 0.04) 40px,
-                rgba(192, 57, 43, 0.04) 41px
+                rgba(192, 57, 43, 0.06) 40px,
+                rgba(192, 57, 43, 0.06) 41px
             );
+            pointer-events: none;
         }
 
         .site-header .badge {
@@ -167,6 +193,8 @@
             display: flex;
             align-items: flex-start;
             gap: 16px;
+            position: relative;
+            overflow: hidden;
         }
 
         .news-card:hover {
@@ -174,6 +202,33 @@
             background: #1f3245;
             transform: translateX(4px);
         }
+
+        /*
+         * 卡片背景圖：以 ::before 疊在卡片底層，低透明度保持可讀性。
+         * 卡片依序循環使用 --img-card-1 ~ --img-card-4。
+         * 新增圖片：在 :root 新增 --img-card-N，並加一條 nth-child 規則。
+         */
+        .news-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.06;
+            border-radius: 7px;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .news-card:hover::before {
+            opacity: 0.13;
+        }
+
+        /* 4 張圖片輪流套用 */
+        .news-card:nth-child(4n+1)::before { background-image: var(--img-card-1); }
+        .news-card:nth-child(4n+2)::before { background-image: var(--img-card-2); }
+        .news-card:nth-child(4n+3)::before { background-image: var(--img-card-3); }
+        .news-card:nth-child(4n+0)::before { background-image: var(--img-card-4); }
 
         .news-card .date {
             font-size: 0.78rem;
@@ -199,11 +254,20 @@
 
         /* ── 頁尾 ── */
         .site-footer {
-            border-top: 1px solid #1c2e3d;
-            padding: 24px 20px;
+            border-top: 2px solid #1c2e3d;
+            padding: 28px 20px;
             text-align: center;
             font-size: 0.8rem;
-            color: #364f62;
+            color: #7f9aac;
+            /* 深色漸層疊在圖片上 */
+            background:
+                linear-gradient(
+                    rgba(10, 18, 26, 0.93),
+                    rgba(10, 18, 26, 0.93)),
+                var(--img-footer);
+            background-size: cover;
+            background-position: center 70%;
+            position: relative;
         }
 
         /* ── 年份導航列 ── */
