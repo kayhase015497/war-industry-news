@@ -29,8 +29,8 @@
 
         body {
             font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
-            background-color: #0f1923;
-            color: #e0e0e0;
+            background-color: #eef2f5;
+            color: #1e2d3d;
             margin: 0;
             padding: 0;
             line-height: 1.7;
@@ -40,9 +40,9 @@
         .site-header {
             background:
                 linear-gradient(160deg,
-                    rgba(15, 25, 35, 0.88) 0%,
-                    rgba(28, 46, 61, 0.76) 50%,
-                    rgba(15, 25, 35, 0.88) 100%),
+                    rgba(15, 25, 35, 0.72) 0%,
+                    rgba(28, 46, 61, 0.58) 50%,
+                    rgba(15, 25, 35, 0.72) 100%),
                 var(--img-header);
             background-size: cover;
             background-position: center 40%;
@@ -56,16 +56,72 @@
         /* 3D 地球儀容器（內容區全寬） */
         #globe-container {
             width: 100%;
-            height: 420px;
-            border-radius: 10px;
+            height: 500px;
+            border-radius: 12px;
             overflow: hidden;
             background: #050d14;
             margin-bottom: 40px;
             cursor: grab;
             position: relative;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
 
         #globe-container:active { cursor: grabbing; }
+
+        /* 地球儀縮放按鈕 */
+        #globe-zoom-controls {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        #globe-zoom-controls .zoom-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        #globe-zoom-controls button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(10, 18, 26, 0.75);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            line-height: 1;
+            padding: 0;
+        }
+
+        #globe-zoom-controls button:hover {
+            background: rgba(192, 57, 43, 0.7);
+            border-color: #c0392b;
+        }
+
+        /* 太陽光暈動畫 */
+        @keyframes sunGlow {
+            0%   { box-shadow: 0 0 18px 8px rgba(255,200,50,0.45), 0 0 38px 18px rgba(255,150,0,0.22); }
+            100% { box-shadow: 0 0 26px 12px rgba(255,220,80,0.6), 0 0 54px 26px rgba(255,165,0,0.28); }
+        }
+
+        /* 月亮光暈動畫 */
+        @keyframes moonGlow {
+            0%   { box-shadow: 0 0 10px 4px rgba(200,210,230,0.30), 0 0 22px 10px rgba(180,190,210,0.14); }
+            100% { box-shadow: 0 0 16px 7px rgba(220,230,250,0.45), 0 0 32px 16px rgba(200,210,230,0.20); }
+        }
 
         /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
@@ -141,22 +197,22 @@
             overflow-y: auto;
             padding: 28px 0 28px 16px;
             scrollbar-width: thin;
-            scrollbar-color: #253545 transparent;
+            scrollbar-color: #cdd8e3 transparent;
         }
 
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: #253545; border-radius: 2px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #cdd8e3; border-radius: 2px; }
 
         .sidebar-header {
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.18em;
-            color: #4a6274;
+            color: #6a8a9e;
             text-transform: uppercase;
             margin-bottom: 16px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #1c2e3d;
+            border-bottom: 1px solid #cdd8e3;
         }
 
         .sidebar-cat {
@@ -169,8 +225,8 @@
             margin-top: 14px;
         }
 
-        .sidebar-cat.military   { background: rgba(192,57,43,0.15); color: #e74c3c; }
-        .sidebar-cat.geopolitics{ background: rgba(52,152,219,0.12); color: #5dade2; }
+        .sidebar-cat.military   { background: rgba(192,57,43,0.12); color: #c0392b; }
+        .sidebar-cat.geopolitics{ background: rgba(52,152,219,0.12); color: #2980b9; }
 
         .sidebar-links {
             list-style: none;
@@ -179,7 +235,7 @@
         }
 
         .sidebar-links li {
-            border-left: 2px solid #1c2e3d;
+            border-left: 2px solid #cdd8e3;
             margin-bottom: 2px;
             transition: border-color 0.2s;
         }
@@ -190,7 +246,7 @@
             display: block;
             padding: 5px 8px;
             text-decoration: none;
-            color: #7f9aac;
+            color: #4a6a7e;
             font-size: 0.78rem;
             line-height: 1.4;
             transition: color 0.2s;
@@ -200,12 +256,12 @@
             -webkit-box-orient: vertical;
         }
 
-        .sidebar-links a:hover { color: #e0e0e0; }
+        .sidebar-links a:hover { color: #1e2d3d; }
 
         .sidebar-links .sdate {
             display: block;
             font-size: 0.68rem;
-            color: #364f62;
+            color: #8aabbf;
             margin-bottom: 1px;
             font-variant-numeric: tabular-nums;
         }
@@ -217,7 +273,7 @@
             gap: 12px;
             margin: 20px 0 14px;
             font-size: 0.72rem;
-            color: #5dade2;
+            color: #2980b9;
             letter-spacing: 0.1em;
         }
 
@@ -226,11 +282,11 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, transparent, #1c4a6e44);
+            background: linear-gradient(to right, transparent, #2980b955);
         }
 
         .column-marker::before {
-            background: linear-gradient(to left, transparent, #1c4a6e44);
+            background: linear-gradient(to left, transparent, #2980b955);
         }
 
         /* ── 回頂部按鈕 ── */
@@ -277,24 +333,25 @@
         .stat-item {
             flex: 1;
             min-width: 120px;
-            background: #1c2e3d;
-            border: 1px solid #2a3f52;
+            background: #ffffff;
+            border: 1px solid #cdd8e3;
             border-radius: 8px;
             padding: 14px 18px;
             text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
 
         .stat-item .num {
             display: block;
             font-size: 1.8rem;
             font-weight: 900;
-            color: #e74c3c;
+            color: #c0392b;
             line-height: 1;
         }
 
         .stat-item .label {
             font-size: 0.78rem;
-            color: #7f9aac;
+            color: #5a7a8e;
             margin-top: 4px;
             letter-spacing: 0.05em;
         }
@@ -329,7 +386,7 @@
 
         .year-count {
             font-size: 0.8rem;
-            color: #4a6274;
+            color: #7a9aae;
             white-space: nowrap;
         }
 
@@ -341,23 +398,25 @@
         }
 
         .news-card {
-            background: #1a2a38;
-            border: 1px solid #253545;
+            background: #ffffff;
+            border: 1px solid #cdd8e3;
             border-left: 3px solid transparent;
             border-radius: 8px;
             padding: 14px 18px;
-            transition: border-left-color 0.2s, background 0.2s, transform 0.2s;
+            transition: border-left-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: flex-start;
             gap: 16px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .news-card:hover {
             border-left-color: #e74c3c;
-            background: #1f3245;
+            background: #f0f5fa;
             transform: translateX(4px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
 
         /*
@@ -389,7 +448,7 @@
 
         .news-card .date {
             font-size: 0.78rem;
-            color: #4a6274;
+            color: #7a9aae;
             white-space: nowrap;
             min-width: 76px;
             padding-top: 2px;
@@ -398,7 +457,7 @@
 
         .news-card a {
             text-decoration: none;
-            color: #c8d8e4;
+            color: #1e3a50;
             font-size: 0.95rem;
             font-weight: 500;
             line-height: 1.5;
@@ -406,21 +465,21 @@
         }
 
         .news-card a:hover {
-            color: #e74c3c;
+            color: #c0392b;
         }
 
         /* ── 頁尾 ── */
         .site-footer {
-            border-top: 2px solid #1c2e3d;
+            border-top: 2px solid #cdd8e3;
             padding: 28px 20px;
             text-align: center;
             font-size: 0.8rem;
-            color: #7f9aac;
+            color: #b0c8d8;
             /* 深色漸層疊在圖片上 */
             background:
                 linear-gradient(
-                    rgba(10, 18, 26, 0.93),
-                    rgba(10, 18, 26, 0.93)),
+                    rgba(10, 18, 26, 0.86),
+                    rgba(10, 18, 26, 0.86)),
                 var(--img-footer);
             background-size: cover;
             background-position: center 70%;
@@ -432,19 +491,20 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(10, 18, 26, 0.95);
+            background: rgba(238, 242, 245, 0.97);
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid #1c2e3d;
+            border-bottom: 1px solid #cdd8e3;
             padding: 10px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
         }
 
         .year-nav .nav-label {
             font-size: 0.72rem;
-            color: #4a6274;
+            color: #6a8a9e;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             margin-right: 4px;
@@ -452,11 +512,11 @@
 
         .year-nav a {
             text-decoration: none;
-            color: #7f9aac;
+            color: #3a6278;
             font-size: 0.88rem;
             font-weight: 700;
             padding: 5px 14px;
-            border: 1px solid #253545;
+            border: 1px solid #b0c5d5;
             border-radius: 4px;
             transition: background 0.2s, color 0.2s, border-color 0.2s;
             letter-spacing: 0.05em;
@@ -476,7 +536,7 @@
         }
 
         @media (max-width: 600px) {
-            #globe-container { height: 260px; }
+            #globe-container { height: 300px; }
             .news-card {
                 flex-direction: column;
                 gap: 4px;
@@ -529,7 +589,7 @@
         <a href="#year-2024">2024</a>
         <a href="#year-2025">2025</a>
         <a href="#year-2026">2026</a>
-        <a href="#column-section" style="border-color:#1c4a6e;color:#5dade2;">✍ 專欄</a>
+        <a href="#column-section" style="border-color:#a0c4d8;color:#2980b9;">✍ 專欄</a>
     </nav>
 
     <div class="page-layout">
@@ -1100,14 +1160,14 @@
         const colLink = document.querySelector('.year-nav a[href="#column-section"]');
         if (colLink) {
             colLink.addEventListener('mouseenter', () => {
-                colLink.style.background = '#1c4a6e';
+                colLink.style.background = '#2471a3';
                 colLink.style.color = '#fff';
-                colLink.style.borderColor = '#1c4a6e';
+                colLink.style.borderColor = '#2471a3';
             });
             colLink.addEventListener('mouseleave', () => {
                 colLink.style.background = '';
-                colLink.style.color = '#5dade2';
-                colLink.style.borderColor = '#1c4a6e';
+                colLink.style.color = '#2980b9';
+                colLink.style.borderColor = '#a0c4d8';
             });
         }
     </script>
@@ -1198,8 +1258,77 @@
             globe.width(container.clientWidth).height(container.clientHeight);
         });
 
-        // 初始視角：拉遠至 3.5 讓完整地球球形清晰可見，視角偏北以免遮蔽左側面板
-        globe.pointOfView({ lat: 35, lng: 50, altitude: 3.5 });
+        // 初始視角（altitude 較小 → 地球較大）
+        let currentAltitude = 2.0;
+        globe.pointOfView({ lat: 30, lng: 50, altitude: currentAltitude });
+
+        // ── 縮放控制按鈕（+/-）──────────────────────────────────────
+        const zoomCtrl = document.createElement('div');
+        zoomCtrl.id = 'globe-zoom-controls';
+        zoomCtrl.innerHTML = `
+            <span class="zoom-label">🔍</span>
+            <button id="globe-zoom-in"  title="放大">＋</button>
+            <button id="globe-zoom-out" title="縮小">－</button>
+        `;
+        container.appendChild(zoomCtrl);
+
+        document.getElementById('globe-zoom-in').addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentAltitude = Math.max(0.8, currentAltitude - 0.4);
+            globe.pointOfView({ altitude: currentAltitude }, 400);
+        });
+        document.getElementById('globe-zoom-out').addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentAltitude = Math.min(4.5, currentAltitude + 0.4);
+            globe.pointOfView({ altitude: currentAltitude }, 400);
+        });
+
+        // ── 太陽與月亮裝飾 ───────────────────────────────────────────
+        // 計算當前日期的太陽大致方位（僅供視覺參考）
+        (function addCelestials() {
+            // 太陽：右上角發光球體
+            const sun = document.createElement('div');
+            sun.id = 'globe-sun';
+            Object.assign(sun.style, {
+                position: 'absolute',
+                width: '42px', height: '42px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 38% 38%, #fffde7 0%, #ffe066 35%, #ffa500 65%, rgba(255,140,0,0) 80%)',
+                boxShadow: '0 0 22px 10px rgba(255,200,50,0.48), 0 0 44px 22px rgba(255,150,0,0.24)',
+                animation: 'sunGlow 2.8s ease-in-out infinite alternate',
+                top: '14%', right: '10%',
+                pointerEvents: 'none', zIndex: '5'
+            });
+            container.appendChild(sun);
+
+            // 月亮：左下角偏藍白光暈
+            const moon = document.createElement('div');
+            moon.id = 'globe-moon';
+            Object.assign(moon.style, {
+                position: 'absolute',
+                width: '26px', height: '26px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 35% 30%, #ffffff 0%, #dce8f8 45%, rgba(200,215,240,0) 75%)',
+                boxShadow: '0 0 12px 5px rgba(200,215,240,0.35), 0 0 26px 12px rgba(180,200,230,0.18)',
+                animation: 'moonGlow 3.8s ease-in-out infinite alternate',
+                bottom: '18%', left: '8%',
+                pointerEvents: 'none', zIndex: '5'
+            });
+            container.appendChild(moon);
+
+            // 月牙效果（半遮陰影）
+            const moonShadow = document.createElement('div');
+            Object.assign(moonShadow.style, {
+                position: 'absolute',
+                width: '26px', height: '26px',
+                borderRadius: '50%',
+                background: 'transparent',
+                boxShadow: 'inset -5px -3px 0 2px rgba(5,13,20,0.75)',
+                bottom: '18%', left: '8%',
+                pointerEvents: 'none', zIndex: '6'
+            });
+            container.appendChild(moonShadow);
+        })();
 
         // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
         let idleTimer = null;
