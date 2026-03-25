@@ -38,7 +38,6 @@
 
         /* ── 頂部橫幅 ── */
         .site-header {
-            /* 深色漸層疊在圖片上，保持文字可讀性 */
             background:
                 linear-gradient(160deg,
                     rgba(15, 25, 35, 0.88) 0%,
@@ -48,11 +47,36 @@
             background-size: cover;
             background-position: center 40%;
             border-bottom: 3px solid #c0392b;
-            padding: 60px 20px 40px;
-            text-align: center;
+            padding: 40px 60px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
             position: relative;
             overflow: hidden;
         }
+
+        .header-text {
+            flex: 1;
+            max-width: 560px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D 地球儀容器 */
+        #globe-container {
+            width: 300px;
+            height: 300px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            cursor: grab;
+            /* 左側細邊界線隔開文字 */
+            border-left: 1px solid rgba(192, 57, 43, 0.2);
+        }
+
+        #globe-container:active { cursor: grabbing; }
 
         /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
@@ -578,8 +602,14 @@
 
         /* ── 響應式 ── */
         @media (max-width: 1140px) {
-            /* 側邊欄在小螢幕隱藏 */
             .sidebar { display: none; }
+        }
+
+        @media (max-width: 860px) {
+            /* 手機/平板隱藏地球儀，header 回單欄置中 */
+            #globe-container { display: none; }
+            .site-header { padding: 48px 20px 36px; justify-content: center; }
+            .header-text { max-width: 100%; }
         }
 
         @media (max-width: 600px) {
@@ -624,9 +654,12 @@
 <body>
 
     <header class="site-header">
-        <div class="badge">軍事工業分析</div>
-        <h1>戰爭<span>即</span>工業力</h1>
-        <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
+        <div class="header-text">
+            <div class="badge">軍事工業分析</div>
+            <h1>戰爭<span>即</span>工業力</h1>
+            <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
+        </div>
+        <div id="globe-container"></div>
     </header>
 
     <nav class="year-nav">
@@ -1284,6 +1317,80 @@
     </footer>
 
     <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
+
+    <!-- Globe.gl（Three.js WebGL 地球儀） -->
+    <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
+    <script>
+    (function initGlobe() {
+        const container = document.getElementById('globe-container');
+        if (!container) return;
+
+        // 檢查 WebGL 支援
+        try {
+            const testCanvas = document.createElement('canvas');
+            if (!testCanvas.getContext('webgl') && !testCanvas.getContext('experimental-webgl')) {
+                container.style.display = 'none';
+                return;
+            }
+        } catch (e) { container.style.display = 'none'; return; }
+
+        // 文章中提及的衝突區域 / 主要地緣政治焦點
+        // 如需新增地點：在陣列加一筆 { lat, lng, label, size }
+        const hotspots = [
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55 },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50 },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55 },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50 },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55 },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50 },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45 },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40 },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45 },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38 },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35 },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38 },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38 },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35 },
+        ];
+
+        const globe = Globe({ animateIn: true })(container)
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundColor('rgba(0,0,0,0)')
+            .showAtmosphere(true)
+            .atmosphereColor('rgba(192,57,43,0.35)')
+            .atmosphereAltitude(0.14)
+            // 衝突點
+            .pointsData(hotspots)
+            .pointLat('lat')
+            .pointLng('lng')
+            .pointColor(() => '#e74c3c')
+            .pointRadius('size')
+            .pointAltitude(0.01)
+            .pointLabel('label')
+            // 雷達波紋
+            .ringsData(hotspots)
+            .ringLat('lat')
+            .ringLng('lng')
+            .ringColor(() => t => `rgba(192,57,43,${(1 - t) * 0.7})`)
+            .ringMaxRadius(3.5)
+            .ringPropagationSpeed(1.2)
+            .ringRepeatPeriod(2200);
+
+        const ctrl = globe.controls();
+        ctrl.autoRotate      = true;
+        ctrl.autoRotateSpeed = 0.5;
+        ctrl.enableZoom      = false;
+        ctrl.enablePan       = false;
+
+        // 初始視角：對準歐亞衝突帶
+        globe.pointOfView({ lat: 30, lng: 50, altitude: 2.0 });
+
+        // 滑鼠拖曳時暫停自轉，放開後繼續
+        container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
+        window.addEventListener('mouseup',      () => { ctrl.autoRotate = true;  });
+    })();
+    </script>
 
 </body>
 </html>
