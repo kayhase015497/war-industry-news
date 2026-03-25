@@ -111,18 +111,6 @@
             border-color: #c0392b;
         }
 
-        /* 太陽光暈動畫 */
-        @keyframes sunGlow {
-            0%   { box-shadow: 0 0 18px 8px rgba(255,200,50,0.45), 0 0 38px 18px rgba(255,150,0,0.22); }
-            100% { box-shadow: 0 0 26px 12px rgba(255,220,80,0.6), 0 0 54px 26px rgba(255,165,0,0.28); }
-        }
-
-        /* 月亮光暈動畫 */
-        @keyframes moonGlow {
-            0%   { box-shadow: 0 0 10px 4px rgba(200,210,230,0.30), 0 0 22px 10px rgba(180,190,210,0.14); }
-            100% { box-shadow: 0 0 16px 7px rgba(220,230,250,0.45), 0 0 32px 16px rgba(200,210,230,0.20); }
-        }
-
         /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
             content: '';
@@ -1262,6 +1250,71 @@
         let currentAltitude = 2.0;
         globe.pointOfView({ lat: 30, lng: 50, altitude: currentAltitude });
 
+        // ── 星空背景 ─────────────────────────────────────────────────
+        // 取得 Globe.gl 內建的 Three.js 場景，手動加入星點粒子群
+        setTimeout(function() {
+            try {
+                const scene = globe.scene();
+                const renderer = globe.renderer();
+                if (!scene || !renderer) return;
+
+                // 取得 Three.js（Globe.gl 內部使用的 THREE 物件）
+                const THREE = renderer.domElement.__three_renderer__
+                    ? null
+                    : (function() {
+                        // 從場景的 children 裡撈出 THREE 建構子
+                        const obj = scene.children[0];
+                        return obj ? obj.constructor.__proto__.__proto__.constructor : null;
+                    })();
+
+                // 直接用 Globe.gl 提供的 customLayerData 來產生星空比較可靠
+                // 改用 CSS 星空 canvas overlay（最相容做法）
+                const starCanvas = document.createElement('canvas');
+                starCanvas.width  = container.clientWidth;
+                starCanvas.height = container.clientHeight;
+                Object.assign(starCanvas.style, {
+                    position: 'absolute', inset: '0',
+                    pointerEvents: 'none', zIndex: '0',
+                    borderRadius: '12px'
+                });
+                container.insertBefore(starCanvas, container.firstChild);
+
+                const ctx = starCanvas.getContext('2d');
+                ctx.fillStyle = '#050d14';
+                ctx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+
+                // 隨機散佈 320 顆星
+                for (let i = 0; i < 320; i++) {
+                    const x = Math.random() * starCanvas.width;
+                    const y = Math.random() * starCanvas.height;
+                    const r = Math.random() * 1.2 + 0.2;
+                    const alpha = Math.random() * 0.7 + 0.3;
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+                    ctx.fill();
+                }
+
+                // 視窗縮放時同步重繪
+                window.addEventListener('resize', function() {
+                    starCanvas.width  = container.clientWidth;
+                    starCanvas.height = container.clientHeight;
+                    ctx.fillStyle = '#050d14';
+                    ctx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+                    for (let i = 0; i < 320; i++) {
+                        const x = Math.random() * starCanvas.width;
+                        const y = Math.random() * starCanvas.height;
+                        const r = Math.random() * 1.2 + 0.2;
+                        const alpha = Math.random() * 0.7 + 0.3;
+                        ctx.beginPath();
+                        ctx.arc(x, y, r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+                        ctx.fill();
+                    }
+                });
+            } catch(e) { /* 若瀏覽器不支援則靜默略過 */ }
+        }, 200);
+
         // ── 縮放控制按鈕（+/-）──────────────────────────────────────
         const zoomCtrl = document.createElement('div');
         zoomCtrl.id = 'globe-zoom-controls';
@@ -1282,53 +1335,6 @@
             currentAltitude = Math.min(4.5, currentAltitude + 0.4);
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
-
-        // ── 太陽與月亮裝飾 ───────────────────────────────────────────
-        // 計算當前日期的太陽大致方位（僅供視覺參考）
-        (function addCelestials() {
-            // 太陽：右上角發光球體
-            const sun = document.createElement('div');
-            sun.id = 'globe-sun';
-            Object.assign(sun.style, {
-                position: 'absolute',
-                width: '42px', height: '42px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 38% 38%, #fffde7 0%, #ffe066 35%, #ffa500 65%, rgba(255,140,0,0) 80%)',
-                boxShadow: '0 0 22px 10px rgba(255,200,50,0.48), 0 0 44px 22px rgba(255,150,0,0.24)',
-                animation: 'sunGlow 2.8s ease-in-out infinite alternate',
-                top: '14%', right: '10%',
-                pointerEvents: 'none', zIndex: '5'
-            });
-            container.appendChild(sun);
-
-            // 月亮：左下角偏藍白光暈
-            const moon = document.createElement('div');
-            moon.id = 'globe-moon';
-            Object.assign(moon.style, {
-                position: 'absolute',
-                width: '26px', height: '26px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 35% 30%, #ffffff 0%, #dce8f8 45%, rgba(200,215,240,0) 75%)',
-                boxShadow: '0 0 12px 5px rgba(200,215,240,0.35), 0 0 26px 12px rgba(180,200,230,0.18)',
-                animation: 'moonGlow 3.8s ease-in-out infinite alternate',
-                bottom: '18%', left: '8%',
-                pointerEvents: 'none', zIndex: '5'
-            });
-            container.appendChild(moon);
-
-            // 月牙效果（半遮陰影）
-            const moonShadow = document.createElement('div');
-            Object.assign(moonShadow.style, {
-                position: 'absolute',
-                width: '26px', height: '26px',
-                borderRadius: '50%',
-                background: 'transparent',
-                boxShadow: 'inset -5px -3px 0 2px rgba(5,13,20,0.75)',
-                bottom: '18%', left: '8%',
-                pointerEvents: 'none', zIndex: '6'
-            });
-            container.appendChild(moonShadow);
-        })();
 
         // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
         let idleTimer = null;
