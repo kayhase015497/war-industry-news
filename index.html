@@ -248,6 +248,125 @@
             border-color: #c0392b;
         }
 
+        /* ── 前線紀實輪播 ── */
+        .frontline-section {
+            margin-bottom: 48px;
+        }
+
+        .frontline-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .frontline-badge {
+            background: #c0392b;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 900;
+            padding: 6px 18px;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.08em;
+        }
+
+        .frontline-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #c0392b44, transparent);
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111b25;
+            border: 1px solid #253545;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.75));
+            color: #e0e0e0;
+            font-size: 0.82rem;
+            padding: 24px 16px 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(192, 57, 43, 0.8);
+        }
+
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2a3f52;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            background: #e74c3c;
+        }
+
         /* ── 響應式 ── */
         @media (max-width: 600px) {
             .news-card {
@@ -314,6 +433,37 @@
                 <div class="label">最新年份</div>
             </div>
         </div>
+
+        <!-- 前線紀實輪播 -->
+        <section class="frontline-section">
+            <div class="frontline-header">
+                <div class="frontline-badge">前線紀實</div>
+                <div class="frontline-line"></div>
+            </div>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <img src="images/soldiers-breach.jpg" alt="突破陣地">
+                        <div class="carousel-caption">突破陣地</div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/ammo-loading.jpg" alt="彈藥裝填">
+                        <div class="carousel-caption">彈藥裝填</div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/rpg-soldier.jpg" alt="RPG 射手">
+                        <div class="carousel-caption">RPG 射手</div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/night-vision.jpg" alt="夜視行動">
+                        <div class="carousel-caption">夜視行動</div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">&#8249;</button>
+                <button class="carousel-btn next" id="nextBtn">&#8250;</button>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </section>
 
         <!-- 2023年 -->
         <section class="year-section" id="year-2023">
@@ -577,6 +727,30 @@
 
         window.addEventListener('scroll', updateNav, { passive: true });
         updateNav();
+
+        // 前線紀實輪播
+        const track = document.getElementById('carouselTrack');
+        const slides = track.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carouselDots');
+        let current = 0;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        function goTo(index) {
+            current = (index + slides.length) % slides.length;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
     </script>
 
     <footer class="site-footer">
