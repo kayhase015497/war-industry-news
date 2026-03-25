@@ -47,33 +47,22 @@
             background-size: cover;
             background-position: center 40%;
             border-bottom: 3px solid #c0392b;
-            padding: 40px 60px 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 32px;
+            padding: 60px 20px 40px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .header-text {
-            flex: 1;
-            max-width: 560px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 3D 地球儀容器 */
+        /* 3D 地球儀容器（內容區全寬） */
         #globe-container {
-            width: 300px;
-            height: 300px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
+            width: 100%;
+            height: 420px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #050d14;
+            margin-bottom: 40px;
             cursor: grab;
-            /* 左側細邊界線隔開文字 */
-            border-left: 1px solid rgba(192, 57, 43, 0.2);
+            position: relative;
         }
 
         #globe-container:active { cursor: grabbing; }
@@ -480,139 +469,14 @@
             border-color: #c0392b;
         }
 
-        /* ── 輪播圖 ── */
-        .carousel {
-            margin-bottom: 40px;
-        }
-
-        .carousel-title {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            color: #4a6274;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .carousel-wrapper {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #0a1219;
-        }
-
-        .carousel-track {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 2 / 1;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .carousel-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(10, 18, 26, 0.9));
-            padding: 32px 18px 14px;
-            color: #c8d8e4;
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-
-        .carousel-caption .tag {
-            display: inline-block;
-            background: #c0392b;
-            color: #fff;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            padding: 2px 8px;
-            border-radius: 2px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            background: rgba(10, 18, 26, 0.6);
-            border: 1px solid #253545;
-            color: #c8d8e4;
-            font-size: 1.6rem;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            line-height: 1;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .carousel-btn:hover {
-            background: rgba(192, 57, 43, 0.75);
-            border-color: #c0392b;
-        }
-
-        .carousel-prev { left: 12px; }
-        .carousel-next { right: 12px; }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .carousel-dots .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #253545;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .carousel-dots .dot.active {
-            background: #c0392b;
-            transform: scale(1.4);
-        }
 
         /* ── 響應式 ── */
         @media (max-width: 1140px) {
             .sidebar { display: none; }
         }
 
-        @media (max-width: 860px) {
-            /* 手機/平板隱藏地球儀，header 回單欄置中 */
-            #globe-container { display: none; }
-            .site-header { padding: 48px 20px 36px; justify-content: center; }
-            .header-text { max-width: 100%; }
-        }
-
         @media (max-width: 600px) {
+            #globe-container { height: 260px; }
             .news-card {
                 flex-direction: column;
                 gap: 4px;
@@ -654,12 +518,9 @@
 <body>
 
     <header class="site-header">
-        <div class="header-text">
-            <div class="badge">軍事工業分析</div>
-            <h1>戰爭<span>即</span>工業力</h1>
-            <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
-        </div>
-        <div id="globe-container"></div>
+        <div class="badge">軍事工業分析</div>
+        <h1>戰爭<span>即</span>工業力</h1>
+        <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
     </header>
 
     <nav class="year-nav">
@@ -693,50 +554,8 @@
             </div>
         </div>
 
-        <!-- 輪播圖（新增圖片：加一個 .carousel-slide + .dot 即可） -->
-        <div class="carousel">
-            <div class="carousel-title">前線紀實</div>
-            <div class="carousel-wrapper">
-                <div class="carousel-track">
-                    <div class="carousel-slide active">
-                        <img src="images/soldiers-breach.jpg" alt="士兵突破陣線">
-                        <div class="carousel-caption">
-                            <span class="tag">突擊</span><br>
-                            步兵突破陣線，地面戰術執行中
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="images/ammo-loading.jpg" alt="彈藥裝填">
-                        <div class="carousel-caption">
-                            <span class="tag">後勤</span><br>
-                            彈藥補給與裝填作業
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="images/night-vision.jpg" alt="夜視作戰">
-                        <div class="carousel-caption">
-                            <span class="tag">夜戰</span><br>
-                            夜視裝備下的隱匿行動
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="images/rpg-soldier.jpg" alt="RPG士兵">
-                        <div class="carousel-caption">
-                            <span class="tag">反裝甲</span><br>
-                            火箭彈兵部署於城鎮戰場
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-btn carousel-prev" aria-label="上一張">&#8249;</button>
-                <button class="carousel-btn carousel-next" aria-label="下一張">&#8250;</button>
-            </div>
-            <div class="carousel-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
+        <!-- 3D 地球儀 -->
+        <div id="globe-container"></div>
 
         <!-- 2023年 -->
         <section class="year-section" id="year-2023">
@@ -1245,25 +1064,6 @@
     </div><!-- /page-layout -->
 
     <script>
-        // 輪播圖
-        (function () {
-            const slides = document.querySelectorAll('.carousel-slide');
-            const dots   = document.querySelectorAll('.carousel-dots .dot');
-            let current  = 0;
-
-            function show(n) {
-                slides[current].classList.remove('active');
-                dots[current].classList.remove('active');
-                current = (n + slides.length) % slides.length;
-                slides[current].classList.add('active');
-                dots[current].classList.add('active');
-            }
-
-            document.querySelector('.carousel-prev').addEventListener('click', () => show(current - 1));
-            document.querySelector('.carousel-next').addEventListener('click', () => show(current + 1));
-            dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
-        })();
-
         // Scroll-spy：自動高亮目前可見的年份
         const sections = ['year-2023', 'year-2024', 'year-2025', 'year-2026'];
         const navLinks = {};
@@ -1384,7 +1184,7 @@
         ctrl.enablePan       = false;
 
         // 初始視角：對準歐亞衝突帶
-        globe.pointOfView({ lat: 30, lng: 50, altitude: 2.0 });
+        globe.pointOfView({ lat: 30, lng: 50, altitude: 1.8 });
 
         // 滑鼠拖曳時暫停自轉，放開後繼續
         container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
