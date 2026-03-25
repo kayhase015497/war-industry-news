@@ -434,6 +434,14 @@
 
         /* ── 響應式 ── */
         @media (max-width: 600px) {
+            .gallery-item:first-child img {
+                max-height: 200px;
+            }
+
+            .gallery-item:not(:first-child) img {
+                max-height: 140px;
+            }
+        }
             .news-card {
                 flex-direction: column;
                 gap: 4px;
