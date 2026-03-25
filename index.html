@@ -248,8 +248,127 @@
             border-color: #c0392b;
         }
 
+        /* ── 圖片輪播 ── */
+        .gallery-section {
+            margin-bottom: 48px;
+        }
+
+        .gallery-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .gallery-title .label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #e74c3c;
+            text-transform: uppercase;
+            border-left: 3px solid #e74c3c;
+            padding-left: 10px;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            background: #111c27;
+            border: 1px solid #253545;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+            padding: 32px 20px 18px;
+            color: #e0e0e0;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .carousel-caption .cap-date {
+            font-size: 0.72rem;
+            color: #e74c3c;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(15, 25, 35, 0.75);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .carousel-btn.prev { left: 14px; }
+        .carousel-btn.next { right: 14px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            padding: 12px 0;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2a3f52;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .carousel-dot.active {
+            background: #e74c3c;
+            transform: scale(1.3);
+        }
+
         /* ── 響應式 ── */
         @media (max-width: 600px) {
+            .carousel-slide img {
+                height: 220px;
+            }
+
             .news-card {
                 flex-direction: column;
                 gap: 4px;
@@ -314,6 +433,55 @@
                 <div class="label">最新年份</div>
             </div>
         </div>
+
+        <!-- 前線紀實圖片畫廊 -->
+        <section class="gallery-section">
+            <div class="gallery-title">
+                <span class="label">前線紀實圖片畫廊</span>
+            </div>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/2022_Russian_invasion_of_Ukraine_-_Kharkiv_aftermath.jpg/1280px-2022_Russian_invasion_of_Ukraine_-_Kharkiv_aftermath.jpg" alt="哈爾科夫戰後" onerror="this.style.background='#1c2e3d';this.style.height='400px';this.removeAttribute('src')">
+                        <div class="carousel-caption">
+                            <div class="cap-date">2022 · 烏克蘭</div>
+                            哈爾科夫遭俄軍砲擊後的街道廢墟，建築嚴重損毀
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/2022_Russian_invasion_of_Ukraine_-_Mariupol_factory.jpg/1280px-2022_Russian_invasion_of_Ukraine_-_Mariupol_factory.jpg" alt="馬里烏波爾工廠" onerror="this.style.background='#1a2030';this.style.height='400px';this.removeAttribute('src')">
+                        <div class="carousel-caption">
+                            <div class="cap-date">2022 · 馬里烏波爾</div>
+                            亞速鋼鐵廠在圍城戰後的殘骸，見證工業設施在現代戰爭中的命運
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/155mm_artillery_Ukraine.jpg/1280px-155mm_artillery_Ukraine.jpg" alt="155毫米榴彈砲" onerror="this.style.background='#121e2a';this.style.height='400px';this.removeAttribute('src')">
+                        <div class="carousel-caption">
+                            <div class="cap-date">2023 · 東部前線</div>
+                            烏軍操作西方援助的155毫米榴彈砲，彈藥消耗速度遠超各國產能
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/T-72_tank_Ukraine_2022.jpg/1280px-T-72_tank_Ukraine_2022.jpg" alt="坦克前線" onerror="this.style.background='#101820';this.style.height='400px';this.removeAttribute('src')">
+                        <div class="carousel-caption">
+                            <div class="cap-date">2023 · 扎波羅熱</div>
+                            前線坦克部隊，俄羅斯坦克年產量持續超越西方對烏援助總量
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Drone_warfare_Ukraine.jpg/1280px-Drone_warfare_Ukraine.jpg" alt="無人機戰場" onerror="this.style.background='#0e1820';this.style.height='400px';this.removeAttribute('src')">
+                        <div class="carousel-caption">
+                            <div class="cap-date">2024 · 無人機戰場</div>
+                            低成本無人機成為烏俄衝突主角，雙方每月消耗量達數萬架
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="carouselPrev">&#8249;</button>
+                <button class="carousel-btn next" id="carouselNext">&#8250;</button>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </section>
 
         <!-- 2023年 -->
         <section class="year-section" id="year-2023">
@@ -555,6 +723,43 @@
     </div>
 
     <script>
+        // 圖片輪播
+        (function () {
+            const track = document.getElementById('carouselTrack');
+            const slides = track ? track.querySelectorAll('.carousel-slide') : [];
+            const dotsContainer = document.getElementById('carouselDots');
+            let current = 0;
+
+            if (!slides.length) return;
+
+            // 建立 dots
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            function goTo(index) {
+                current = (index + slides.length) % slides.length;
+                track.style.transform = `translateX(-${current * 100}%)`;
+                dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === current);
+                });
+            }
+
+            document.getElementById('carouselPrev').addEventListener('click', () => goTo(current - 1));
+            document.getElementById('carouselNext').addEventListener('click', () => goTo(current + 1));
+
+            // 支援觸控滑動
+            let startX = 0;
+            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - startX;
+                if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+            }, { passive: true });
+        })();
+
         // Scroll-spy：自動高亮目前可見的年份
         const sections = ['year-2023', 'year-2024', 'year-2025'];
         const navLinks = {};
