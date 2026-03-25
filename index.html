@@ -1198,12 +1198,18 @@
             globe.width(container.clientWidth).height(container.clientHeight);
         });
 
-        // 初始視角：對準歐亞衝突帶，拉遠確保地球完整可見
-        globe.pointOfView({ lat: 25, lng: 50, altitude: 2.8 });
+        // 初始視角：拉遠至 3.5 讓完整地球球形清晰可見，視角偏北以免遮蔽左側面板
+        globe.pointOfView({ lat: 35, lng: 50, altitude: 3.5 });
 
-        // 滑鼠拖曳時暫停自轉，放開後繼續
-        container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
-        window.addEventListener('mouseup',      () => { ctrl.autoRotate = true;  });
+        // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
+        let idleTimer = null;
+        function handleInteraction() {
+            ctrl.autoRotate = false;
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => { ctrl.autoRotate = true; }, 3000);
+        }
+        container.addEventListener('pointerdown', handleInteraction);
+        container.addEventListener('touchstart',  handleInteraction, { passive: true });
 
         // ── 熱點點擊：顯示相關報導面板 ──────────────────────────
         function showRelatedArticles(point) {
