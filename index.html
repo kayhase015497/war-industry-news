@@ -561,6 +561,136 @@
                 font-size: 1rem;
             }
         }
+
+        /* ── 標籤篩選列 ── */
+        .tag-filter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #6a8a9e;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-right: 2px;
+        }
+
+        .tag-btn {
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #cdd8e3;
+            background: #fff;
+            color: #4a6a7e;
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border-color 0.18s;
+            white-space: nowrap;
+        }
+
+        .tag-btn:hover   { border-color: #c0392b; color: #c0392b; }
+        .tag-btn.active  { background: #c0392b; border-color: #c0392b; color: #fff; }
+
+        .filter-count {
+            font-size: 0.78rem;
+            color: #8aabbf;
+            margin-left: 4px;
+        }
+
+        /* ── 時間軸（密度長條圖） ── */
+        #timeline-chart {
+            background: #fff;
+            border: 1px solid #cdd8e3;
+            border-radius: 10px;
+            padding: 16px 20px 14px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .timeline-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #6a8a9e;
+            text-transform: uppercase;
+        }
+
+        .timeline-subtitle {
+            font-size: 0.68rem;
+            color: #aabcca;
+        }
+
+        .timeline-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 100px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: thin;
+            scrollbar-color: #cdd8e3 transparent;
+        }
+
+        .timeline-bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            width: 18px;
+        }
+
+        .timeline-bar-group .year-tick {
+            font-size: 0.6rem;
+            color: #aabcca;
+            height: 14px;
+            line-height: 14px;
+            white-space: nowrap;
+        }
+
+        .timeline-bar-group.new-year .year-tick {
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        .tbar {
+            width: 14px;
+            background: #cdd8e3;
+            border-radius: 2px 2px 0 0;
+            transition: background 0.18s;
+            min-height: 3px;
+            flex-shrink: 0;
+        }
+
+        .tbar.has-articles           { background: #7fb3cc; }
+        .timeline-bar-group:hover .tbar { background: #c0392b; }
+
+        .bar-month {
+            font-size: 0.58rem;
+            color: #cdd8e3;
+            margin-top: 3px;
+            height: 10px;
+            line-height: 10px;
+        }
+
+        .bar-month.show { color: #8aabbf; }
+
+        /* ── 篩選隱藏狀態 ── */
+        .card-hidden    { display: none !important; }
+        .section-hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -1389,6 +1519,145 @@
             container.appendChild(panel);
         }
     }
+    </script>
+
+    <!-- 標籤篩選 & 時間軸密度圖 -->
+    <script>
+    (function() {
+        // ── 主題標籤定義 ─────────────────────────────────────────
+        const TAGS = [
+            { id: 'all',      label: '全部' },
+            { id: 'ukraine',  label: '🇺🇦 烏俄戰場',  kw: ['烏克蘭','烏軍','俄羅斯','俄軍','基輔','烏俄','俄烏','普丁','澤倫斯基','莫斯科'] },
+            { id: 'nato',     label: '🇪🇺 北約/歐洲', kw: ['北約','歐洲','歐盟'] },
+            { id: 'taiwan',   label: '🇹🇼 台海/中國', kw: ['台灣','台海','中國','解放軍','國軍','台積電'] },
+            { id: 'industry', label: '⚙️ 軍工產能',   kw: ['軍工','產能','武器','彈藥','工業力','火藥','炸藥','砲彈','火砲','艦'] },
+            { id: 'mideast',  label: '🕌 中東',        kw: ['以色列','加薩','哈馬斯','伊朗','中東','胡塞'] },
+            { id: 'us',       label: '🇺🇸 美國政策',   kw: ['美國','美軍','五角大廈','川普','拜登','國會','白宮','海軍'] },
+        ];
+
+        // ── 掃描所有報導卡片，預先標記 tag ───────────────────────
+        const allCards = Array.from(document.querySelectorAll('.news-card'));
+        allCards.forEach(card => {
+            const text = card.querySelector('a')?.textContent || '';
+            const matched = TAGS
+                .filter(t => t.id !== 'all' && t.kw.some(k => text.includes(k)))
+                .map(t => t.id);
+            card.dataset.tags = matched.join(' ');
+        });
+
+        // ── 建立標籤列 HTML ──────────────────────────────────────
+        const tagBar = document.createElement('div');
+        tagBar.className = 'tag-filter';
+        tagBar.innerHTML =
+            '<span class="filter-label">主題篩選</span>' +
+            TAGS.map(t =>
+                `<button class="tag-btn${t.id === 'all' ? ' active' : ''}" data-tag="${t.id}">${t.label}</button>`
+            ).join('') +
+            '<span class="filter-count"></span>';
+
+        // ── 建立時間軸容器 ──────────────────────────────────────
+        const timelineEl = document.createElement('div');
+        timelineEl.id = 'timeline-chart';
+
+        // 插入 globe 後面
+        const globeEl = document.getElementById('globe-container');
+        globeEl.after(tagBar);
+        tagBar.after(timelineEl);
+
+        // ── 計算 2023-03 → 2026-03 所有月份 ────────────────────
+        function allMonths() {
+            const list = [];
+            const end = new Date(2026, 2); // 2026-03
+            let d   = new Date(2023, 2);   // 2023-03
+            while (d <= end) {
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                list.push(`${y}-${m}`);
+                d.setMonth(d.getMonth() + 1);
+            }
+            return list;
+        }
+
+        // ── 渲染時間軸 ──────────────────────────────────────────
+        function renderTimeline(cards) {
+            const months = allMonths();
+            const counts = {};
+            months.forEach(ym => counts[ym] = 0);
+            cards.forEach(card => {
+                const ym = (card.querySelector('.date')?.textContent || '').trim().slice(0, 7);
+                if (counts[ym] !== undefined) counts[ym]++;
+            });
+
+            const max = Math.max(...Object.values(counts), 1);
+            const BAR_H = 68; // px 最大高度
+
+            let prevYear = '';
+            const bars = months.map(ym => {
+                const [y, mo] = ym.split('-');
+                const n = counts[ym];
+                const h = n > 0 ? Math.max(5, Math.round(n / max * BAR_H)) : 3;
+                const isNew = y !== prevYear;
+                const showMonth = ['01','04','07','10'].includes(mo);
+                prevYear = y;
+                return `<div class="timeline-bar-group${isNew ? ' new-year' : ''}" data-ym="${ym}" data-year="${y}" title="${ym}　${n} 篇">
+                    <div class="year-tick">${isNew ? y : ''}</div>
+                    <div class="tbar${n > 0 ? ' has-articles' : ''}" style="height:${h}px"></div>
+                    <div class="bar-month${showMonth ? ' show' : ''}">${showMonth ? mo : ''}</div>
+                </div>`;
+            }).join('');
+
+            timelineEl.innerHTML =
+                `<div class="timeline-header">
+                    <span class="timeline-title">報導密度時間軸</span>
+                    <span class="timeline-subtitle">每格 = 一個月，高度 = 篇數，點擊跳至該年份</span>
+                </div>
+                <div class="timeline-bars">${bars}</div>`;
+
+            // 點擊長條 → 捲動至該年份
+            timelineEl.querySelectorAll('.timeline-bar-group').forEach(g => {
+                g.addEventListener('click', () => {
+                    const sec = document.getElementById('year-' + g.dataset.year);
+                    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        // ── 套用篩選 ────────────────────────────────────────────
+        function applyFilter(tagId) {
+            // 按鈕高亮
+            tagBar.querySelectorAll('.tag-btn').forEach(btn =>
+                btn.classList.toggle('active', btn.dataset.tag === tagId)
+            );
+
+            // 顯示 / 隱藏卡片
+            let visible = 0;
+            allCards.forEach(card => {
+                const show = tagId === 'all' ||
+                    card.dataset.tags.split(' ').includes(tagId);
+                card.classList.toggle('card-hidden', !show);
+                if (show) visible++;
+            });
+
+            // 整個年份區塊若全空則隱藏
+            document.querySelectorAll('.year-section').forEach(sec => {
+                const hasAny = sec.querySelector('.news-card:not(.card-hidden)');
+                sec.classList.toggle('section-hidden', !hasAny);
+            });
+
+            // 計數顯示
+            const countEl = tagBar.querySelector('.filter-count');
+            countEl.textContent = tagId === 'all' ? '' : `${visible} 篇`;
+
+            // 重繪時間軸（只算可見卡片）
+            renderTimeline(allCards.filter(c => !c.classList.contains('card-hidden')));
+        }
+
+        // ── 綁定按鈕事件，初始渲染 ──────────────────────────────
+        tagBar.querySelectorAll('.tag-btn').forEach(btn =>
+            btn.addEventListener('click', () => applyFilter(btn.dataset.tag))
+        );
+        applyFilter('all');
+    })();
     </script>
 
 </body>
