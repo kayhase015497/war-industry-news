@@ -38,7 +38,6 @@
 
         /* ── 頂部橫幅 ── */
         .site-header {
-            /* 深色漸層疊在圖片上，保持文字可讀性 */
             background:
                 linear-gradient(160deg,
                     rgba(15, 25, 35, 0.88) 0%,
@@ -48,11 +47,36 @@
             background-size: cover;
             background-position: center 40%;
             border-bottom: 3px solid #c0392b;
-            padding: 60px 20px 40px;
-            text-align: center;
+            padding: 40px 60px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
             position: relative;
             overflow: hidden;
         }
+
+        .header-text {
+            flex: 1;
+            max-width: 560px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D 地球儀容器 */
+        #globe-container {
+            width: 300px;
+            height: 300px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            cursor: grab;
+            /* 左側細邊界線隔開文字 */
+            border-left: 1px solid rgba(192, 57, 43, 0.2);
+        }
+
+        #globe-container:active { cursor: grabbing; }
 
         /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
@@ -578,8 +602,14 @@
 
         /* ── 響應式 ── */
         @media (max-width: 1140px) {
-            /* 側邊欄在小螢幕隱藏 */
             .sidebar { display: none; }
+        }
+
+        @media (max-width: 860px) {
+            /* 手機/平板隱藏地球儀，header 回單欄置中 */
+            #globe-container { display: none; }
+            .site-header { padding: 48px 20px 36px; justify-content: center; }
+            .header-text { max-width: 100%; }
         }
 
         @media (max-width: 600px) {
@@ -624,9 +654,12 @@
 <body>
 
     <header class="site-header">
-        <div class="badge">軍事工業分析</div>
-        <h1>戰爭<span>即</span>工業力</h1>
-        <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
+        <div class="header-text">
+            <div class="badge">軍事工業分析</div>
+            <h1>戰爭<span>即</span>工業力</h1>
+            <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
+        </div>
+        <div id="globe-container"></div>
     </header>
 
     <nav class="year-nav">
@@ -634,6 +667,7 @@
         <a href="#year-2023">2023</a>
         <a href="#year-2024">2024</a>
         <a href="#year-2025">2025</a>
+        <a href="#year-2026">2026</a>
         <a href="#column-section" style="border-color:#1c4a6e;color:#5dade2;">✍ 專欄</a>
     </nav>
 
@@ -642,7 +676,7 @@
 
         <div class="stats-bar">
             <div class="stat-item">
-                <span class="num">85</span>
+                <span class="num">99</span>
                 <div class="label">篇報導</div>
             </div>
             <div class="stat-item">
@@ -654,7 +688,7 @@
                 <div class="label">起始年份</div>
             </div>
             <div class="stat-item">
-                <span class="num">2025</span>
+                <span class="num">2026</span>
                 <div class="label">最新年份</div>
             </div>
         </div>
@@ -1078,6 +1112,73 @@
             </div>
         </section>
 
+        <!-- 2026年 -->
+        <section class="year-section" id="year-2026">
+            <div class="year-header">
+                <div class="year-badge">2026</div>
+                <div class="year-line"></div>
+                <div class="year-count">14 篇</div>
+            </div>
+            <div class="news-list">
+                <div class="news-card">
+                    <div class="date">2026-01-03</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260103000013-260417" target="_blank">Military》想不到吧？國軍伙食相當不錯「遠勝」日韓</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-01-04</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260104000087-260417" target="_blank">Military》解析美軍捉拿馬杜洛的3支關鍵力量</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-01-10</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260110000051-260408" target="_blank">Geopolitics》大咖動念「退出北約」能擺脫美戰略綁架？</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-01-11</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260111000110-260417" target="_blank">Military》委內瑞拉之後 中俄「百年變局」還推得動？</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-01-18</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260118000154-260417" target="_blank">Military》川普威脅與北約排擠下「冷衙門」歐洲軍團能復甦？</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-01-25</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260125000031-260417" target="_blank">Military》戰報很熱鬧 現實很殘酷：俄軍裝甲車「越打越多」</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-02-01</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260201000073-260408" target="_blank">Geopolitics》剛果悲歌：礦產、代理人與西方共犯結構</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-02-08</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260208000130-260417" target="_blank">Geopolitics》再見華盛頓！巴基斯坦「中沙土」鐵三角重建南亞格局</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-02-15</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260215000411-260417" target="_blank">Military》消耗戰算術 俄烏火力差距如何決定傷亡</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-02-22</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank">Military》雙航母壓境 美伊兵力全盤解析</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-03-01</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank">Military》卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-03-08</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260308000090-260417" target="_blank">Geopolitics》戰火延燒全球！能源、科技與農業供應鏈連鎖危機</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-03-15</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank">Geopolitics》晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a>
+                </div>
+                <div class="news-card">
+                    <div class="date">2026-03-22</div>
+                    <a href="https://www.chinatimes.com/realtimenews/20260322000103-260408" target="_blank">Geopolitics》猶太人燒以色列國旗？真相比你想的更複雜</a>
+                </div>
+            </div>
+        </section>
+
     </div><!-- /container -->
 
     <!-- 專欄側邊欄（桌面版顯示） -->
@@ -1086,6 +1187,14 @@
 
         <div class="sidebar-cat military">Military》</div>
         <ul class="sidebar-links">
+            <li><a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank"><span class="sdate">2026-03-01</span>卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank"><span class="sdate">2026-02-22</span>雙航母壓境 美伊兵力全盤解析</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260215000411-260417" target="_blank"><span class="sdate">2026-02-15</span>消耗戰算術 俄烏火力差距如何決定傷亡</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260125000031-260417" target="_blank"><span class="sdate">2026-01-25</span>戰報很熱鬧 現實很殘酷：俄軍裝甲車「越打越多」</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260118000154-260417" target="_blank"><span class="sdate">2026-01-18</span>川普威脅與北約排擠下「冷衙門」歐洲軍團能復甦？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260111000110-260417" target="_blank"><span class="sdate">2026-01-11</span>委內瑞拉之後 中俄「百年變局」還推得動？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260104000087-260417" target="_blank"><span class="sdate">2026-01-04</span>解析美軍捉拿馬杜洛的3支關鍵力量</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260103000013-260417" target="_blank"><span class="sdate">2026-01-03</span>想不到吧？國軍伙食相當不錯「遠勝」日韓</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251221000723-260417" target="_blank"><span class="sdate">2025-12-21</span>從波蘭總統「贈送大禮」看烏克蘭納粹問題</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251214000094-260417" target="_blank"><span class="sdate">2025-12-14</span>誰在破壞規則？西方如何合理化公海掠奪</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank"><span class="sdate">2025-12-07</span>不知彼、不知己：台灣缺乏面對現實的勇氣</a></li>
@@ -1116,6 +1225,12 @@
 
         <div class="sidebar-cat geopolitics">Geopolitics》</div>
         <ul class="sidebar-links">
+            <li><a href="https://www.chinatimes.com/realtimenews/20260322000103-260408" target="_blank"><span class="sdate">2026-03-22</span>猶太人燒以色列國旗？真相比你想的更複雜</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank"><span class="sdate">2026-03-15</span>晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260308000090-260417" target="_blank"><span class="sdate">2026-03-08</span>戰火延燒全球！能源、科技與農業供應鏈連鎖危機</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260208000130-260417" target="_blank"><span class="sdate">2026-02-08</span>再見華盛頓！巴基斯坦「中沙土」鐵三角重建南亞格局</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260201000073-260408" target="_blank"><span class="sdate">2026-02-01</span>剛果悲歌：礦產、代理人與西方共犯結構</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20260110000051-260408" target="_blank"><span class="sdate">2026-01-10</span>大咖動念「退出北約」能擺脫美戰略綁架？</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank"><span class="sdate">2025-12-28</span>不是穿越！2019年就寫好的俄烏戰爭劇本</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251227000026-260408" target="_blank"><span class="sdate">2025-12-27</span>歐美慣稱的「普丁侵略藉口」遭最新解密文件戳破</a></li>
             <li><a href="https://www.chinatimes.com/realtimenews/20251220000012-260408" target="_blank"><span class="sdate">2025-12-20</span>拿國安體系來保位 尹錫悅案對台灣的啟示</a></li>
@@ -1150,7 +1265,7 @@
         })();
 
         // Scroll-spy：自動高亮目前可見的年份
-        const sections = ['year-2023', 'year-2024', 'year-2025'];
+        const sections = ['year-2023', 'year-2024', 'year-2025', 'year-2026'];
         const navLinks = {};
         sections.forEach(id => {
             navLinks[id] = document.querySelector(`.year-nav a[href="#${id}"]`);
@@ -1202,6 +1317,80 @@
     </footer>
 
     <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
+
+    <!-- Globe.gl（Three.js WebGL 地球儀） -->
+    <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
+    <script>
+    (function initGlobe() {
+        const container = document.getElementById('globe-container');
+        if (!container) return;
+
+        // 檢查 WebGL 支援
+        try {
+            const testCanvas = document.createElement('canvas');
+            if (!testCanvas.getContext('webgl') && !testCanvas.getContext('experimental-webgl')) {
+                container.style.display = 'none';
+                return;
+            }
+        } catch (e) { container.style.display = 'none'; return; }
+
+        // 文章中提及的衝突區域 / 主要地緣政治焦點
+        // 如需新增地點：在陣列加一筆 { lat, lng, label, size }
+        const hotspots = [
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55 },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50 },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55 },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50 },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55 },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50 },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45 },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40 },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45 },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38 },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35 },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38 },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38 },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35 },
+        ];
+
+        const globe = Globe({ animateIn: true })(container)
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundColor('rgba(0,0,0,0)')
+            .showAtmosphere(true)
+            .atmosphereColor('rgba(192,57,43,0.35)')
+            .atmosphereAltitude(0.14)
+            // 衝突點
+            .pointsData(hotspots)
+            .pointLat('lat')
+            .pointLng('lng')
+            .pointColor(() => '#e74c3c')
+            .pointRadius('size')
+            .pointAltitude(0.01)
+            .pointLabel('label')
+            // 雷達波紋
+            .ringsData(hotspots)
+            .ringLat('lat')
+            .ringLng('lng')
+            .ringColor(() => t => `rgba(192,57,43,${(1 - t) * 0.7})`)
+            .ringMaxRadius(3.5)
+            .ringPropagationSpeed(1.2)
+            .ringRepeatPeriod(2200);
+
+        const ctrl = globe.controls();
+        ctrl.autoRotate      = true;
+        ctrl.autoRotateSpeed = 0.5;
+        ctrl.enableZoom      = false;
+        ctrl.enablePan       = false;
+
+        // 初始視角：對準歐亞衝突帶
+        globe.pointOfView({ lat: 30, lng: 50, altitude: 2.0 });
+
+        // 滑鼠拖曳時暫停自轉，放開後繼續
+        container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
+        window.addEventListener('mouseup',      () => { ctrl.autoRotate = true;  });
+    })();
+    </script>
 
 </body>
 </html>
