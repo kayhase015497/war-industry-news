@@ -102,11 +102,155 @@
             position: relative;
         }
 
+        /* ── 頁面主佈局（側邊欄 + 內容） ── */
+        .page-layout {
+            display: flex;
+            align-items: flex-start;
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
         /* ── 主容器 ── */
         .container {
+            flex: 1;
+            min-width: 0;
             max-width: 860px;
-            margin: 0 auto;
             padding: 40px 20px 60px;
+        }
+
+        /* ── 專欄側邊欄 ── */
+        .sidebar {
+            width: 230px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 50px;
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            padding: 28px 0 28px 16px;
+            scrollbar-width: thin;
+            scrollbar-color: #253545 transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: #253545; border-radius: 2px; }
+
+        .sidebar-header {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: #4a6274;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #1c2e3d;
+        }
+
+        .sidebar-cat {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            margin-top: 14px;
+        }
+
+        .sidebar-cat.military   { background: rgba(192,57,43,0.15); color: #e74c3c; }
+        .sidebar-cat.geopolitics{ background: rgba(52,152,219,0.12); color: #5dade2; }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 4px;
+        }
+
+        .sidebar-links li {
+            border-left: 2px solid #1c2e3d;
+            margin-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+
+        .sidebar-links li:hover { border-left-color: #c0392b; }
+
+        .sidebar-links a {
+            display: block;
+            padding: 5px 8px;
+            text-decoration: none;
+            color: #7f9aac;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            transition: color 0.2s;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .sidebar-links a:hover { color: #e0e0e0; }
+
+        .sidebar-links .sdate {
+            display: block;
+            font-size: 0.68rem;
+            color: #364f62;
+            margin-bottom: 1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ── 專欄錨點標記 ── */
+        .column-marker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0 14px;
+            font-size: 0.72rem;
+            color: #5dade2;
+            letter-spacing: 0.1em;
+        }
+
+        .column-marker::before,
+        .column-marker::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #1c4a6e44);
+        }
+
+        .column-marker::before {
+            background: linear-gradient(to left, transparent, #1c4a6e44);
+        }
+
+        /* ── 回頂部按鈕 ── */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #c0392b;
+            border: 2px solid rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            background: #e74c3c;
+            transform: translateY(-3px);
         }
 
         /* ── 統計列 ── */
@@ -433,15 +577,12 @@
         }
 
         /* ── 響應式 ── */
-        @media (max-width: 600px) {
-            .gallery-item:first-child img {
-                max-height: 200px;
-            }
-
-            .gallery-item:not(:first-child) img {
-                max-height: 140px;
-            }
+        @media (max-width: 1140px) {
+            /* 側邊欄在小螢幕隱藏 */
+            .sidebar { display: none; }
         }
+
+        @media (max-width: 600px) {
             .news-card {
                 flex-direction: column;
                 gap: 4px;
@@ -462,11 +603,20 @@
             .year-nav {
                 gap: 6px;
                 padding: 8px 12px;
+                flex-wrap: wrap;
             }
 
             .year-nav a {
                 padding: 4px 10px;
                 font-size: 0.82rem;
+            }
+
+            .back-to-top {
+                bottom: 16px;
+                right: 16px;
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -484,8 +634,10 @@
         <a href="#year-2023">2023</a>
         <a href="#year-2024">2024</a>
         <a href="#year-2025">2025</a>
+        <a href="#column-section" style="border-color:#1c4a6e;color:#5dade2;">✍ 專欄</a>
     </nav>
 
+    <div class="page-layout">
     <div class="container">
 
         <div class="stats-bar">
@@ -786,6 +938,7 @@
                     <div class="date">2025-04-29</div>
                     <a href="https://www.chinatimes.com/realtimenews/20250429004635-260417?chdtv" target="_blank">正視軍工產能問題 愛沙尼亞擬建RDX炸藥廠</a>
                 </div>
+                <div class="column-marker" id="column-section">✍ 張威翔 專欄起始</div>
                 <div class="news-card">
                     <div class="date">2025-05-24</div>
                     <a href="https://www.chinatimes.com/realtimenews/20250524000026-260417" target="_blank">Military》普丁是如何逐漸佔上風？揭開俄攻勢升溫內幕 烏深陷難局</a>
@@ -925,7 +1078,56 @@
             </div>
         </section>
 
-    </div>
+    </div><!-- /container -->
+
+    <!-- 專欄側邊欄（桌面版顯示） -->
+    <aside class="sidebar">
+        <div class="sidebar-header">張威翔 專欄</div>
+
+        <div class="sidebar-cat military">Military》</div>
+        <ul class="sidebar-links">
+            <li><a href="https://www.chinatimes.com/realtimenews/20251221000723-260417" target="_blank"><span class="sdate">2025-12-21</span>從波蘭總統「贈送大禮」看烏克蘭納粹問題</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251214000094-260417" target="_blank"><span class="sdate">2025-12-14</span>誰在破壞規則？西方如何合理化公海掠奪</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank"><span class="sdate">2025-12-07</span>不知彼、不知己：台灣缺乏面對現實的勇氣</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251109000035-260417" target="_blank"><span class="sdate">2025-11-09</span>專家回顧烏戰三年 俄軍演變與歐美錯覺</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251026000038-260417" target="_blank"><span class="sdate">2025-10-26</span>地圖不會說謊 烏東戰線已崩</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251019000048-260417" target="_blank"><span class="sdate">2025-10-19</span>西方掠奪百年 非洲緊握稀土礦產不再沈默</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251012000061-260417" target="_blank"><span class="sdate">2025-10-12</span>「鎖喉」中國？美國海權思維 碰上資源巨獸</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251005000072-260417" target="_blank"><span class="sdate">2025-10-05</span>東亞戰略現實「鐵娘子」高市早苗如何強硬抗中？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250928000128-260417" target="_blank"><span class="sdate">2025-09-28</span>供應鏈被掐喉！西方再工業化困局</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250921000628-260417" target="_blank"><span class="sdate">2025-09-21</span>2週2500枚滑翔炸彈 澤倫斯基意外揭俄驚人實力</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250914000037-260417" target="_blank"><span class="sdate">2025-09-14</span>美軍壓境委內瑞拉 劍指全球最大石油儲備</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250907000046-260417" target="_blank"><span class="sdate">2025-09-07</span>陸93閱兵大秀新武器 看懂台海嚴峻挑戰</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250831000043-260417" target="_blank"><span class="sdate">2025-08-31</span>烏克蘭狂轟能源設施 俄為何能屢次復原？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250824000101-260417" target="_blank"><span class="sdate">2025-08-24</span>沒被淘汰 烏克蘭戰爭如何重塑坦克定位</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250817000118-260417" target="_blank"><span class="sdate">2025-08-17</span>西方都錯了 俄絕非靠「人海戰術」維持局勢</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250810000054-260417" target="_blank"><span class="sdate">2025-08-10</span>台灣有強項？摩托車在現代戰爭中的作用</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250803000037-260417" target="_blank"><span class="sdate">2025-08-03</span>不是軍力！最新兵推曝台灣「隱形罩門」</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250726000013-260417" target="_blank"><span class="sdate">2025-07-26</span>柬埔寨交戰泰國軍力比一比！解析驚人差距「無戰機」也能打？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250720000032-260417" target="_blank"><span class="sdate">2025-07-20</span>M1艾布蘭坦克不是「神兵」烏克蘭慘況給台灣的警訊</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250713000106-260417" target="_blank"><span class="sdate">2025-07-13</span>經濟規模僅一個「廣東省」為何北約扳不倒俄羅斯？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250629000020-260417" target="_blank"><span class="sdate">2025-06-29</span>誰在自導自演？國家如何為戰爭布下致命騙局</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250622000020-260417" target="_blank"><span class="sdate">2025-06-22</span>打掉一枚虧一枚！以色列陷消耗戰困局</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250615000027-260417" target="_blank"><span class="sdate">2025-06-15</span>混合動力趨勢？中國99式油電戰車 預示未來戰場</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250608000049-260417" target="_blank"><span class="sdate">2025-06-08</span>烏克蘭「蜘蛛網行動」空前戰果 難撼戰略現實</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250601000018-260417" target="_blank"><span class="sdate">2025-06-01</span>川普喊建「金穹」 習近平、普丁為何跳腳？</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20250524000026-260417" target="_blank"><span class="sdate">2025-05-24</span>普丁是如何逐漸佔上風？揭開俄攻勢升溫內幕 烏深陷難局</a></li>
+        </ul>
+
+        <div class="sidebar-cat geopolitics">Geopolitics》</div>
+        <ul class="sidebar-links">
+            <li><a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank"><span class="sdate">2025-12-28</span>不是穿越！2019年就寫好的俄烏戰爭劇本</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251227000026-260408" target="_blank"><span class="sdate">2025-12-27</span>歐美慣稱的「普丁侵略藉口」遭最新解密文件戳破</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251220000012-260408" target="_blank"><span class="sdate">2025-12-20</span>拿國安體系來保位 尹錫悅案對台灣的啟示</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251213000013-260408" target="_blank"><span class="sdate">2025-12-13</span>陸半導體10年 美國認了：越制裁越壯大</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251130000046-260417" target="_blank"><span class="sdate">2025-11-30</span>烏克蘭下場台灣看懂沒？從俄談判要求看「大國紅線」</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251123000041-260417" target="_blank"><span class="sdate">2025-11-23</span>台灣有事？日本、IPAC喊得最大聲 沒一個敢建交</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251116000038-260417" target="_blank"><span class="sdate">2025-11-16</span>高市為何惹毛陸？918到珍珠港皆稱「存立危機」</a></li>
+            <li><a href="https://www.chinatimes.com/realtimenews/20251102000081-260417" target="_blank"><span class="sdate">2025-11-02</span>從沈伯洋案 鑽探索羅斯、民主黨全球網絡</a></li>
+        </ul>
+    </aside>
+
+    </div><!-- /page-layout -->
 
     <script>
         // 輪播圖
@@ -969,11 +1171,37 @@
 
         window.addEventListener('scroll', updateNav, { passive: true });
         updateNav();
+
+        // 回頂部按鈕
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 專欄連結 hover 高亮
+        const colLink = document.querySelector('.year-nav a[href="#column-section"]');
+        if (colLink) {
+            colLink.addEventListener('mouseenter', () => {
+                colLink.style.background = '#1c4a6e';
+                colLink.style.color = '#fff';
+                colLink.style.borderColor = '#1c4a6e';
+            });
+            colLink.addEventListener('mouseleave', () => {
+                colLink.style.background = '';
+                colLink.style.color = '#5dade2';
+                colLink.style.borderColor = '#1c4a6e';
+            });
+        }
     </script>
 
     <footer class="site-footer">
         資料來源：中國時報 &nbsp;｜&nbsp; 報導期間：2023 – 2025
     </footer>
+
+    <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
 
 </body>
 </html>
