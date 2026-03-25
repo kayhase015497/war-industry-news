@@ -58,7 +58,6 @@
             width: 100%;
             height: 420px;
             border-radius: 10px;
-            overflow: hidden;
             background: #050d14;
             margin-bottom: 40px;
             cursor: grab;
@@ -1135,25 +1134,29 @@
         } catch (e) { container.style.display = 'none'; return; }
 
         // 文章中提及的衝突區域 / 主要地緣政治焦點
-        // 如需新增地點：在陣列加一筆 { lat, lng, label, size }
+        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords }
         const hotspots = [
-            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55 },
-            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50 },
-            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55 },
-            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50 },
-            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55 },
-            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50 },
-            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45 },
-            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40 },
-            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45 },
-            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38 },
-            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35 },
-            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38 },
-            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38 },
-            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35 },
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'] },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'] },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'] },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'] },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'] },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'] },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'] },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'] },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'] },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'] },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'] },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'] },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'] },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'] },
         ];
 
-        const globe = Globe({ animateIn: true })(container)
+        // 明確傳入尺寸，確保 canvas 與容器對齊置中
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+
+        const globe = Globe({ animateIn: true, width: w, height: h })(container)
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
             .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
             .backgroundColor('rgba(0,0,0,0)')
@@ -1167,7 +1170,7 @@
             .pointColor(() => '#e74c3c')
             .pointRadius('size')
             .pointAltitude(0.01)
-            .pointLabel('label')
+            .pointLabel(d => `<div style="font-size:13px;padding:4px 8px;background:rgba(10,18,26,0.85);border:1px solid #c0392b;border-radius:4px;color:#e0e0e0">${d.label}</div>`)
             // 雷達波紋
             .ringsData(hotspots)
             .ringLat('lat')
@@ -1175,7 +1178,9 @@
             .ringColor(() => t => `rgba(192,57,43,${(1 - t) * 0.7})`)
             .ringMaxRadius(3.5)
             .ringPropagationSpeed(1.2)
-            .ringRepeatPeriod(2200);
+            .ringRepeatPeriod(2200)
+            // 點擊熱點 → 顯示相關報導
+            .onPointClick(showRelatedArticles);
 
         const ctrl = globe.controls();
         ctrl.autoRotate      = true;
@@ -1183,12 +1188,60 @@
         ctrl.enableZoom      = false;
         ctrl.enablePan       = false;
 
-        // 初始視角：對準歐亞衝突帶
-        globe.pointOfView({ lat: 30, lng: 50, altitude: 1.8 });
+        // 視窗縮放時同步更新地球儀尺寸
+        window.addEventListener('resize', () => {
+            globe.width(container.clientWidth).height(container.clientHeight);
+        });
+
+        // 初始視角：對準歐亞衝突帶，稍微拉遠確保地球完整可見
+        globe.pointOfView({ lat: 25, lng: 50, altitude: 2.2 });
 
         // 滑鼠拖曳時暫停自轉，放開後繼續
         container.addEventListener('mousedown', () => { ctrl.autoRotate = false; });
         window.addEventListener('mouseup',      () => { ctrl.autoRotate = true;  });
+
+        // ── 熱點點擊：顯示相關報導面板 ──────────────────────────
+        function showRelatedArticles(point) {
+            const existing = document.getElementById('globe-panel');
+            if (existing) existing.remove();
+
+            // 掃描頁面所有新聞卡片，比對 keywords
+            const cards = Array.from(document.querySelectorAll('.news-card'));
+            const matches = cards.filter(card => {
+                const text = card.querySelector('a')?.textContent || '';
+                return point.keywords.some(kw => text.includes(kw));
+            });
+
+            const panel = document.createElement('div');
+            panel.id = 'globe-panel';
+            panel.innerHTML = `
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                    <span style="font-size:0.85rem;font-weight:700;color:#e74c3c;letter-spacing:0.08em">${point.label} 相關報導</span>
+                    <button onclick="document.getElementById('globe-panel').remove()" style="background:none;border:none;color:#7f9aac;font-size:1.2rem;cursor:pointer;line-height:1;padding:0">✕</button>
+                </div>
+                ${matches.length === 0
+                    ? '<p style="color:#4a6274;font-size:0.82rem;margin:0">目前無相關報導</p>'
+                    : matches.map(card => {
+                        const a = card.querySelector('a');
+                        const date = card.querySelector('.date')?.textContent || '';
+                        return `<div style="border-left:2px solid #c0392b;padding:4px 8px;margin-bottom:6px">
+                            <div style="font-size:0.68rem;color:#4a6274;margin-bottom:2px">${date}</div>
+                            <a href="${a.href}" target="_blank" style="color:#c8d8e4;font-size:0.82rem;text-decoration:none;line-height:1.4;display:block">${a.textContent}</a>
+                        </div>`;
+                    }).join('')
+                }`;
+
+            Object.assign(panel.style, {
+                position: 'absolute', bottom: '16px', left: '16px',
+                width: '300px', maxHeight: '320px', overflowY: 'auto',
+                background: 'rgba(10,18,26,0.95)', border: '1px solid #253545',
+                borderRadius: '8px', padding: '14px', zIndex: '20',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
+                scrollbarWidth: 'thin'
+            });
+            container.style.position = 'relative';
+            container.appendChild(panel);
+        }
     })();
     </script>
 
