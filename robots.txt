@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kayhase015497.github.io/war-industry-news/sitemap.xml
