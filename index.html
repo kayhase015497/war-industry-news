@@ -160,6 +160,24 @@
             position: relative;
         }
 
+        .site-header .byline {
+            margin-top: 14px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 0.12em;
+            position: relative;
+            font-weight: 400;
+        }
+        .site-header .byline::before {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 1px;
+            background: rgba(231,76,60,0.7);
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
         /* ── 頁面主佈局（側邊欄 + 內容） ── */
         .page-layout {
             display: flex;
@@ -570,6 +588,7 @@
         <div class="badge">軍事工業分析</div>
         <h1>戰爭<span>即</span>工業力</h1>
         <p class="subtitle">烏俄戰爭 · 軍工產能 · 武器採購 · 國防工業</p>
+        <p class="byline">張威翔｜交錯地帶</p>
     </header>
 
     <nav class="year-nav">
@@ -1162,7 +1181,7 @@
     </script>
 
     <footer class="site-footer">
-        資料來源：中國時報 &nbsp;｜&nbsp; 報導期間：2023 – 2025
+        資料來源：時報資訊 &nbsp;｜&nbsp; 報導期間：2023 – 2026
     </footer>
 
     <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
