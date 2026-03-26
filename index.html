@@ -714,6 +714,116 @@
         /* ── 篩選隱藏狀態 ── */
         .card-hidden    { display: none !important; }
         .section-hidden { display: none !important; }
+
+        /* ── 日間/夜間切換按鈕 ── */
+        .theme-toggle-btn {
+            position: absolute;
+            right: 16px;
+            background: none;
+            border: 1px solid #b0c5d5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            padding: 0;
+        }
+        .theme-toggle-btn:hover { background: rgba(0,0,0,0.06); }
+
+        /* ── 暗色主題覆蓋 ── */
+        body.dark-mode {
+            background-color: #0f1923;
+            color: #e0e0e0;
+        }
+        body.dark-mode .site-header {
+            background:
+                linear-gradient(160deg,
+                    rgba(15,25,35,0.88) 0%,
+                    rgba(28,46,61,0.76) 50%,
+                    rgba(15,25,35,0.88) 100%),
+                var(--img-header);
+            background-size: cover;
+            background-position: center 40%;
+        }
+        body.dark-mode .year-nav {
+            background: rgba(10,18,26,0.95);
+            border-bottom-color: #1c2e3d;
+            box-shadow: none;
+        }
+        body.dark-mode .year-nav .nav-label { color: #4a6274; }
+        body.dark-mode .year-nav a { color: #7f9aac; border-color: #253545; }
+        body.dark-mode .theme-toggle-btn { border-color: #253545; }
+        body.dark-mode .theme-toggle-btn:hover { background: rgba(255,255,255,0.06); }
+        body.dark-mode .stat-item {
+            background: #1c2e3d;
+            border-color: #2a3f52;
+            box-shadow: none;
+        }
+        body.dark-mode .stat-item .label { color: #7f9aac; }
+        body.dark-mode .news-card {
+            background: #1a2a38;
+            border-color: #253545;
+            box-shadow: none;
+        }
+        body.dark-mode .news-card:hover {
+            background: #1f3245;
+            box-shadow: none;
+        }
+        body.dark-mode .news-card .date { color: #4a6274; }
+        body.dark-mode .news-card a { color: #c8d8e4; }
+        body.dark-mode .news-card a:hover { color: #e74c3c; }
+        body.dark-mode .year-count { color: #4a6274; }
+        body.dark-mode .site-footer {
+            border-top-color: #1c2e3d;
+            color: #7f9aac;
+            background:
+                linear-gradient(rgba(10,18,26,0.93), rgba(10,18,26,0.93)),
+                var(--img-footer);
+            background-size: cover;
+            background-position: center 70%;
+        }
+        body.dark-mode .sidebar { scrollbar-color: #253545 transparent; }
+        body.dark-mode .sidebar::-webkit-scrollbar-thumb { background: #253545; }
+        body.dark-mode .sidebar-header { color: #4a6274; border-bottom-color: #1c2e3d; }
+        body.dark-mode .featured-card {
+            background: #1a2a38;
+            border-color: #253545;
+            box-shadow: none;
+        }
+        body.dark-mode .featured-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+        body.dark-mode .featured-card a { color: #c8d8e4; }
+        body.dark-mode .sidebar-hint { color: #4a6274; }
+        body.dark-mode #timeline-chart {
+            background: #1c2e3d;
+            border-color: #2a3f52;
+            box-shadow: none;
+        }
+        body.dark-mode .timeline-title { color: #4a6274; }
+        body.dark-mode .timeline-subtitle { color: #364f62; }
+        body.dark-mode .timeline-bar-group .year-tick { color: #364f62; }
+        body.dark-mode .tbar { background: #253545; }
+        body.dark-mode .tbar.has-articles { background: #2a5a72; }
+        body.dark-mode .bar-month.show { color: #4a6274; }
+        body.dark-mode .tag-filter .filter-label { color: #4a6274; }
+        body.dark-mode .tag-btn {
+            background: #1a2a38;
+            border-color: #253545;
+            color: #7f9aac;
+        }
+        body.dark-mode .tag-btn:hover { border-color: #c0392b; color: #c0392b; }
+        body.dark-mode .tag-btn.active { background: #c0392b; border-color: #c0392b; color: #fff; }
+        body.dark-mode .filter-count { color: #4a6274; }
+        body.dark-mode .column-marker { color: #5dade2; }
+        body.dark-mode .column-marker::before {
+            background: linear-gradient(to left, transparent, #1c4a6e44);
+        }
+        body.dark-mode .column-marker::after {
+            background: linear-gradient(to right, transparent, #1c4a6e44);
+        }
     </style>
 </head>
 <body>
@@ -731,6 +841,7 @@
         <a href="#year-2025">2025</a>
         <a href="#year-2026">2026</a>
         <a href="#column-section" style="border-color:#a0c4d8;color:#2980b9;">✍ 專欄</a>
+        <button id="theme-toggle" class="theme-toggle-btn" title="切換日間／夜間模式">🌙</button>
     </nav>
 
     <div class="page-layout">
@@ -1333,6 +1444,24 @@
     </div><!-- /page-layout -->
 
     <script>
+        // ── 日間/夜間模式切換 ─────────────────────────────────────
+        (function() {
+            const btn  = document.getElementById('theme-toggle');
+            const body = document.body;
+            function applyTheme(dark) {
+                body.classList.toggle('dark-mode', dark);
+                btn.textContent = dark ? '☀️' : '🌙';
+                btn.title = dark ? '切換至日間模式' : '切換至夜間模式';
+            }
+            // 讀取上次偏好
+            applyTheme(localStorage.getItem('theme') === 'dark');
+            btn.addEventListener('click', function() {
+                const isDark = !body.classList.contains('dark-mode');
+                applyTheme(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        })();
+
         // Scroll-spy：自動高亮目前可見的年份
         const sections = ['year-2023', 'year-2024', 'year-2025', 'year-2026'];
         const navLinks = {};
