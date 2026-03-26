@@ -16,13 +16,17 @@
     <meta property="og:title" content="戰爭即工業力｜張威翔 交錯地帶">
     <meta property="og:description" content="烏俄戰爭、軍工產能、台海情勢深度分析。時報資訊國際軍事組。">
     <meta property="og:url" content="https://kayhase015497.github.io/war-industry-news/">
+    <meta property="og:image" content="https://kayhase015497.github.io/war-industry-news/images/soldiers-breach.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="zh_TW">
     <meta property="og:site_name" content="交錯地帶">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="戰爭即工業力｜張威翔 交錯地帶">
     <meta name="twitter:description" content="烏俄戰爭、軍工產能、台海情勢深度分析。時報資訊國際軍事組。">
+    <meta name="twitter:image" content="https://kayhase015497.github.io/war-industry-news/images/soldiers-breach.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -862,6 +866,134 @@
         }
         body.dark-mode .column-marker::after {
             background: linear-gradient(to right, transparent, #1c4a6e44);
+        }
+
+        /* ── 全文搜尋列 ── */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            font-size: 0.9rem;
+            color: #8aabbf;
+            pointer-events: none;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 9px 36px 9px 34px;
+            border: 1px solid #cdd8e3;
+            border-radius: 20px;
+            background: #fff;
+            color: #1e2d3d;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input::placeholder { color: #aabcca; }
+
+        .search-input:focus {
+            border-color: #c0392b;
+            box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 86px;
+            background: none;
+            border: none;
+            color: #8aabbf;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px;
+            line-height: 1;
+            display: none;
+            transition: color 0.2s;
+        }
+
+        .search-clear:hover { color: #c0392b; }
+        .search-clear.visible { display: block; }
+
+        .search-count {
+            font-size: 0.78rem;
+            color: #8aabbf;
+            white-space: nowrap;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .search-highlight {
+            background: rgba(192,57,43,0.15);
+            border-radius: 2px;
+        }
+
+        body.dark-mode .search-input {
+            background: #1a2a38;
+            border-color: #253545;
+            color: #c8d8e4;
+        }
+        body.dark-mode .search-input:focus {
+            border-color: #c0392b;
+            box-shadow: 0 0 0 3px rgba(192,57,43,0.15);
+        }
+        body.dark-mode .search-count { color: #4a6274; }
+        body.dark-mode .search-clear { color: #4a6274; }
+
+        /* ── 響應式增強 ── */
+        @media (max-width: 768px) {
+            .container { padding: 24px 14px 48px; }
+
+            .stats-bar { gap: 8px; }
+            .stat-item { padding: 10px 12px; min-width: 90px; }
+            .stat-item .num { font-size: 1.5rem; }
+
+            .tag-filter {
+                gap: 6px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 6px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tag-filter::-webkit-scrollbar { display: none; }
+            .filter-label { flex-shrink: 0; }
+            .tag-btn { flex-shrink: 0; }
+            .filter-count { flex-shrink: 0; }
+
+            .search-clear { right: 74px; }
+            .search-count { min-width: 50px; }
+
+            #timeline-chart { padding: 12px 14px 10px; }
+            .timeline-bars { height: 80px; }
+
+            .year-badge { font-size: 0.95rem; padding: 5px 14px; }
+        }
+
+        @media (max-width: 600px) {
+            #globe-container { height: 260px; }
+
+            .news-card { flex-direction: column; gap: 4px; padding: 12px 14px; }
+            .news-card .date { min-width: unset; }
+
+            .stats-bar { gap: 8px; }
+            .stat-item .num { font-size: 1.4rem; }
+
+            .year-nav { gap: 6px; padding: 8px 10px; flex-wrap: wrap; }
+            .year-nav a { padding: 4px 10px; font-size: 0.8rem; }
+            .year-nav .nav-label { display: none; }
+
+            .back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 1rem; }
+
+            .search-input { font-size: 0.85rem; padding: 8px 32px 8px 30px; }
+            .search-icon { font-size: 0.82rem; }
         }
     </style>
 </head>
@@ -1882,18 +2014,42 @@
             });
         }
 
-        // ── 套用篩選 ────────────────────────────────────────────
-        function applyFilter(tagId) {
-            // 按鈕高亮
+        // ── 搜尋列 ─────────────────────────────────────────────
+        const searchBar = document.createElement('div');
+        searchBar.className = 'search-bar';
+        searchBar.innerHTML = `
+            <span class="search-icon">🔍</span>
+            <input class="search-input" id="search-input" type="search"
+                placeholder="搜尋報導標題關鍵字…" autocomplete="off" spellcheck="false">
+            <button class="search-clear" id="search-clear" title="清除搜尋">✕</button>
+            <span class="search-count" id="search-count"></span>
+        `;
+        tagBar.after(searchBar);
+
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        const searchCount = document.getElementById('search-count');
+
+        // ── 套用篩選（tag + 搜尋字串合併判斷）───────────────────
+        let currentTag = 'all';
+
+        function applyFilter(tagId, query) {
+            if (tagId !== undefined) currentTag = tagId;
+            const q = (query !== undefined ? query : searchInput.value).trim().toLowerCase();
+
+            // Tag 按鈕高亮
             tagBar.querySelectorAll('.tag-btn').forEach(btn =>
-                btn.classList.toggle('active', btn.dataset.tag === tagId)
+                btn.classList.toggle('active', btn.dataset.tag === currentTag)
             );
 
             // 顯示 / 隱藏卡片
             let visible = 0;
             allCards.forEach(card => {
-                const show = tagId === 'all' ||
-                    card.dataset.tags.split(' ').includes(tagId);
+                const tagMatch = currentTag === 'all' ||
+                    card.dataset.tags.split(' ').includes(currentTag);
+                const title = (card.querySelector('a')?.textContent || '').toLowerCase();
+                const queryMatch = q === '' || title.includes(q);
+                const show = tagMatch && queryMatch;
                 card.classList.toggle('card-hidden', !show);
                 if (show) visible++;
             });
@@ -1905,18 +2061,31 @@
             });
 
             // 計數顯示
-            const countEl = tagBar.querySelector('.filter-count');
-            countEl.textContent = tagId === 'all' ? '' : `${visible} 篇`;
+            const tagEl = tagBar.querySelector('.filter-count');
+            const isFiltered = currentTag !== 'all' || q !== '';
+            tagEl.textContent = '';
+            searchCount.textContent = isFiltered ? `${visible} 篇` : '';
+
+            // 清除按鈕顯示
+            searchClear.classList.toggle('visible', q !== '');
 
             // 重繪時間軸（只算可見卡片）
             renderTimeline(allCards.filter(c => !c.classList.contains('card-hidden')));
         }
 
-        // ── 綁定按鈕事件，初始渲染 ──────────────────────────────
+        // ── 搜尋輸入事件 ────────────────────────────────────────
+        searchInput.addEventListener('input', () => applyFilter(undefined, searchInput.value));
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchInput.focus();
+            applyFilter(undefined, '');
+        });
+
+        // ── 綁定 Tag 按鈕事件，初始渲染 ─────────────────────────
         tagBar.querySelectorAll('.tag-btn').forEach(btn =>
-            btn.addEventListener('click', () => applyFilter(btn.dataset.tag))
+            btn.addEventListener('click', () => applyFilter(btn.dataset.tag, searchInput.value))
         );
-        applyFilter('all');
+        applyFilter('all', '');
     })();
     </script>
 
