@@ -868,6 +868,83 @@
             background: linear-gradient(to right, transparent, #1c4a6e44);
         }
 
+        /* ── 手機版精選報導橫列 ── */
+        .featured-mobile {
+            display: none;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .featured-mobile-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #6a8a9e;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .featured-mobile-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .featured-mobile-scroll::-webkit-scrollbar { display: none; }
+
+        .featured-mobile-card {
+            flex-shrink: 0;
+            width: 200px;
+            background: #fff;
+            border: 1px solid #cdd8e3;
+            border-radius: 8px;
+            padding: 12px 13px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: box-shadow 0.2s, transform 0.18s;
+        }
+
+        .featured-mobile-card:active {
+            transform: scale(0.98);
+        }
+
+        .featured-mobile-card .feat-badge {
+            align-self: flex-start;
+        }
+
+        .featured-mobile-card .fm-title {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #1e3a50;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .featured-mobile-card .fm-date {
+            font-size: 0.66rem;
+            color: #8aabbf;
+            margin-top: auto;
+        }
+
+        body.dark-mode .featured-mobile-label { color: #4a6274; }
+        body.dark-mode .featured-mobile-card {
+            background: #1a2a38;
+            border-color: #253545;
+        }
+        body.dark-mode .featured-mobile-card .fm-title { color: #c8d8e4; }
+
+        @media (max-width: 1140px) {
+            .featured-mobile { display: flex; }
+        }
+
         /* ── 全文搜尋列 ── */
         .search-bar {
             display: flex;
@@ -1615,6 +1692,8 @@
 
     </div><!-- /page-layout -->
 
+    <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
+
     <script>
         // ── 日間/夜間模式切換 ─────────────────────────────────────
         (function() {
@@ -1685,8 +1764,6 @@
     <footer class="site-footer">
         資料來源：時報資訊 &nbsp;｜&nbsp; 報導期間：2023 – 2026
     </footer>
-
-    <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
 
     <!-- Globe.gl（Three.js WebGL 地球儀） -->
     <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
@@ -2025,6 +2102,31 @@
             <span class="search-count" id="search-count"></span>
         `;
         tagBar.after(searchBar);
+
+        // ── 手機版精選橫列（桌面版已有側邊欄，此處只在 ≤1140px 顯示）──
+        const featuredItems = [
+            { badge: 'military',    label: 'Military',    date: '2026-03-01', title: '卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘',          url: 'https://www.chinatimes.com/realtimenews/20260301000106-260417' },
+            { badge: 'military',    label: 'Military',    date: '2026-02-22', title: '雙航母壓境 美伊兵力全盤解析',                          url: 'https://www.chinatimes.com/realtimenews/20260222000046-260417' },
+            { badge: 'military',    label: 'Military',    date: '2025-12-07', title: '不知彼、不知己：台灣缺乏面對現實的勇氣',                url: 'https://www.chinatimes.com/realtimenews/20251207000039-260417' },
+            { badge: 'geopolitics', label: 'Geopolitics', date: '2026-03-15', title: '晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣',             url: 'https://www.chinatimes.com/realtimenews/20260315000028-260417' },
+            { badge: 'geopolitics', label: 'Geopolitics', date: '2025-12-28', title: '不是穿越！2019年就寫好的俄烏戰爭劇本',                  url: 'https://www.chinatimes.com/realtimenews/20251228000234-260417' },
+            { badge: 'analysis',    label: '深度分析',    date: '2026-03-11', title: '伊朗飛彈實力全解析！美以踢到鐵板不是巧合',               url: 'https://www.chinatimes.com/realtimenews/20260311003985-260417' },
+            { badge: 'analysis',    label: '深度分析',    date: '2026-03-05', title: '客機打陀螺！船在陸上甩尾？波斯灣全陷電戰「GPS欺騙」', url: 'https://www.chinatimes.com/realtimenews/20260305005064-260417' },
+        ];
+        const featMobile = document.createElement('div');
+        featMobile.className = 'featured-mobile';
+        featMobile.innerHTML =
+            '<div class="featured-mobile-label">✦ 精選報導</div>' +
+            '<div class="featured-mobile-scroll">' +
+            featuredItems.map(f =>
+                `<a class="featured-mobile-card" href="${f.url}" target="_blank">
+                    <span class="feat-badge ${f.badge}">${f.label}</span>
+                    <span class="fm-title">${f.title}</span>
+                    <span class="fm-date">${f.date}</span>
+                </a>`
+            ).join('') +
+            '</div>';
+        searchBar.after(featMobile);
 
         const searchInput = document.getElementById('search-input');
         const searchClear = document.getElementById('search-clear');
