@@ -746,10 +746,10 @@ function startAllocation(){
       </div>
       <div class="res-controls">
         <button class="res-btn" id="btn-minus-${i}" onclick="adjustRes(${i},-1)"
-          ${disabled?'disabled title="胡塞武裝不使用此資源"':''}>−</button>
+          ${disabled?'disabled data-locked="true" title="胡塞武裝不使用此資源"':''}>−</button>
         <span class="res-value" id="val-${i}">0</span>
         <button class="res-btn" id="btn-plus-${i}"  onclick="adjustRes(${i},+1)"
-          ${disabled?'disabled title="胡塞武裝不使用此資源"':''}>＋</button>
+          ${disabled?'disabled data-locked="true" title="胡塞武裝不使用此資源"':''}>＋</button>
       </div>
     </div>`;
   }).join('');
@@ -789,8 +789,8 @@ function updateButtons(){
   RESOURCES.forEach((_,i)=>{
     const btnP = document.getElementById('btn-plus-'+i);
     const btnM = document.getElementById('btn-minus-'+i);
-    if(btnP && !btnP.disabled) btnP.disabled = remain<=0;
-    if(btnM && !btnM.disabled) btnM.disabled = state.allocation[i]<=0;
+    if(btnP && !btnP.dataset.locked) btnP.disabled = remain<=0;
+    if(btnM && !btnM.dataset.locked) btnM.disabled = state.allocation[i]<=0;
   });
 }
 
