@@ -271,7 +271,64 @@ body{
 .badge-std{background:#1a3a1a;color:#27ae60;border:1px solid #27ae60;}
 .badge-real{background:#3a1a1a;color:#e74c3c;border:1px solid #e74c3c;}
 
-/* ── RWD ── */
+/* ── 解說卡片 ── */
+details.explainer{width:100%;max-width:720px;margin-bottom:16px;}
+details.explainer>summary{
+  list-style:none;cursor:pointer;
+  font-size:.9rem;font-weight:700;color:#7a9ab5;
+  padding:14px 20px;
+  background:#111c27;border:1px solid #1e3048;border-radius:10px;
+  display:flex;justify-content:space-between;align-items:center;
+  user-select:none;transition:background .2s;
+}
+details.explainer>summary::-webkit-details-marker{display:none;}
+details.explainer>summary::after{content:'＋';color:#4a6a85;font-size:1rem;}
+details.explainer[open]>summary{
+  border-radius:10px 10px 0 0;background:#1a2d42;
+}
+details.explainer[open]>summary::after{content:'－';}
+.explainer-body{
+  background:#111c27;border:1px solid #1e3048;border-top:none;
+  border-radius:0 0 10px 10px;padding:20px 20px;
+}
+.formula-block{
+  background:#0a1520;border:1px solid #1e3048;border-radius:8px;
+  padding:14px 18px;margin:12px 0;font-family:monospace;font-size:.88rem;
+  color:#7ec8e3;line-height:1.9;
+}
+.formula-label{
+  font-size:.75rem;color:#4a6a85;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:4px;
+}
+.expl-para{font-size:.85rem;color:#8aa8bf;line-height:1.75;margin:8px 0;}
+.expl-para strong{color:#cdd6e0;}
+.method-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:10px;margin-top:12px;
+}
+.method-item{
+  background:#0d1822;border:1px solid #1e3048;border-radius:8px;
+  padding:10px 14px;
+}
+.method-item .mi-title{font-size:.8rem;font-weight:700;color:#cdd6e0;margin-bottom:3px;}
+.method-item .mi-desc{font-size:.72rem;color:#4a6a85;line-height:1.5;}
+.country-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:12px;}
+.country-table th{
+  padding:6px 10px;color:#4a6a85;font-weight:500;font-size:.75rem;
+  text-transform:uppercase;border-bottom:1px solid #1e3048;text-align:left;
+}
+.country-table td{padding:8px 10px;border-bottom:1px solid #0d1822;vertical-align:middle;}
+.country-table tr:last-child td{border-bottom:none;}
+.pts-chip{
+  display:inline-block;background:#1a2d42;border:1px solid #2a4060;
+  color:#eaf0f5;font-weight:700;font-size:.8rem;
+  padding:2px 10px;border-radius:20px;
+}
+.gdp-chip{
+  display:inline-block;background:#1a0d0d;border:1px solid #3a1a1a;
+  color:#e74c3c;font-size:.78rem;padding:2px 8px;border-radius:20px;
+}
+
 @media(max-width:480px){
   .card{padding:20px 16px;}
   .resource-row{padding:12px 14px;gap:10px;}
@@ -393,6 +450,81 @@ body{
       <tbody id="compare-tbody"></tbody>
     </table>
   </div>
+  <!-- 解說 1：最優解邏輯（動態） -->
+  <details class="explainer" id="details-rationale">
+    <summary>📖 這局的最優解邏輯</summary>
+    <div class="explainer-body" id="rationale-body">
+      <!-- JS 填入 -->
+    </div>
+  </details>
+
+  <!-- 解說 2：計分公式 -->
+  <details class="explainer">
+    <summary>🧮 計分公式說明</summary>
+    <div class="explainer-body">
+      <p class="expl-para">
+        遊戲以「你的配置比例」與「最優解比例」的<strong>絕對差距</strong>來衡量偏差，差距越小得分越高。
+      </p>
+      <div class="formula-label">偏差值</div>
+      <div class="formula-block">偏差值 = Σ |（你的分配 ÷ 總點數）− 最優解比例|</div>
+      <div class="formula-label">得分（0–100）</div>
+      <div class="formula-block">得分 = max(0, 100 − 偏差值 × 100)</div>
+      <div class="formula-label">國債 / GDP 變動（真實難度）</div>
+      <div class="formula-block">國債變動 = (1 − 得分/100) × 25 × GDP乘數  （%）
+新國債/GDP = 起始值 + 國債變動</div>
+      <p class="expl-para">
+        例如得分 60 分，台灣（GDP乘數 1.0）的國債增加 <strong>(1−0.6)×25×1.0 = 10%</strong>；
+        同樣錯誤，烏克蘭（乘數 4.0）則增加 <strong>40%</strong>。
+        這反映了小經濟體在戰時犯錯的代價遠高於大國。
+      </p>
+      <p class="expl-para">
+        <strong>為何用比例而非絕對點數？</strong>
+        各國總點數差異巨大（胡塞 4 點 vs 美國 95 點），以比例計算才能公平比較決策品質。
+      </p>
+    </div>
+  </details>
+
+  <!-- 解說 3：工業力點數方法論 -->
+  <details class="explainer">
+    <summary>🏭 工業力點數怎麼來的？</summary>
+    <div class="explainer-body">
+      <p class="expl-para">
+        真實難度的工業力點數，以<strong>戰時軍事工業動員能力</strong>為核心，
+        綜合以下 9 項指標校正，並以台灣為基準（14點）進行相對比較：
+      </p>
+      <div class="method-grid">
+        <div class="method-item"><div class="mi-title">MVA 製造業增加值</div><div class="mi-desc">衡量實際工業產出規模，為主要權重指標</div></div>
+        <div class="method-item"><div class="mi-title">ECI 經濟複雜性指數</div><div class="mi-desc">衡量產品多樣性與精密度，反映高端軍工潛力</div></div>
+        <div class="method-item"><div class="mi-title">探明儲量</div><div class="mi-desc">自有能源與礦產資源，決定戰時自給能力</div></div>
+        <div class="method-item"><div class="mi-title">關鍵礦物</div><div class="mi-desc">鋰、鈷等對國防與精密武器不可或缺的原料</div></div>
+        <div class="method-item"><div class="mi-title">供應鏈韌性</div><div class="mi-desc">受制裁或封鎖時，維持生產的能力</div></div>
+        <div class="method-item"><div class="mi-title">PPI 生產者物價指數</div><div class="mi-desc">反映武器生產成本壓力</div></div>
+        <div class="method-item"><div class="mi-title">PPP 購買力平價</div><div class="mi-desc">調整生產成本使各國可比較</div></div>
+        <div class="method-item"><div class="mi-title">基礎設施</div><div class="mi-desc">鐵路、港口、電網的戰時動員支撐力</div></div>
+        <div class="method-item"><div class="mi-title">能源成本</div><div class="mi-desc">低能源成本可放大工業產出效率</div></div>
+      </div>
+      <table class="country-table" style="margin-top:16px;">
+        <thead><tr><th>國家</th><th>工業力點數</th><th>起始國債/GDP</th><th>GDP懲罰乘數</th></tr></thead>
+        <tbody>
+          <tr><td>🇺🇸 美國</td><td><span class="pts-chip">95</span></td><td>120%</td><td><span class="gdp-chip">×0.03</span></td></tr>
+          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">78</span></td><td>51%</td><td><span class="gdp-chip">×0.05</span></td></tr>
+          <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>17%</td><td><span class="gdp-chip">×0.4</span></td></tr>
+          <tr><td>🇮🇱 以色列</td><td><span class="pts-chip">20</span></td><td>61%</td><td><span class="gdp-chip">×0.5</span></td></tr>
+          <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">14</span></td><td>27%</td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
+          <tr><td>🇮🇷 伊朗</td><td><span class="pts-chip">12</span></td><td>30%</td><td><span class="gdp-chip">×2.0</span></td></tr>
+          <tr><td>🇺🇦 烏克蘭</td><td><span class="pts-chip">8</span></td><td>90%</td><td><span class="gdp-chip">×4.0</span></td></tr>
+          <tr><td>🏴 胡塞武裝</td><td><span class="pts-chip">4</span></td><td colspan="2">特殊規則（光腳的不怕穿鞋的）</td></tr>
+          <tr><td>🌐 多線聯盟</td><td><span class="pts-chip">30</span></td><td>60%</td><td><span class="gdp-chip">×1.5</span></td></tr>
+        </tbody>
+      </table>
+      <p class="expl-para" style="margin-top:12px;">
+        <strong>為何俄：烏 ≈ 5:1？</strong>
+        戰時俄羅斯炮彈月產量已超越北約總和，烏克蘭工業在戰爭中大規模損毀，高度依賴北約補給才能維持前線。
+        中：台 ≈ 5.6:1，反映中國製造業規模是台灣的數十倍，但台灣憑藉高 ECI 仍保有精密武器自製能力。
+      </p>
+    </div>
+  </details>
+
   <div class="result-actions">
     <button class="btn-primary" onclick="playAgain()">再玩一局</button>
     <button class="btn-secondary" onclick="goTo('screen-title')">回標題</button>
@@ -695,6 +827,126 @@ function updateTimerDisplay(){
 }
 
 /* ════════════════════════════════════════
+   最優解解說資料
+   ════════════════════════════════════════ */
+const RATIONALE = {
+  east_ukraine: {
+    defender: {
+      headline: '烏克蘭守方：砲彈主導的消耗戰',
+      body: `烏東戰線是二戰以來最密集的砲兵對決。烏軍嚴重依賴西方補給的砲彈，日耗彈量高達數千發。
+<strong>砲彈（35%）</strong>是支撐前線的核心；<strong>無人機（25%）</strong>用於偵察敵方砲兵陣地，已成現代戰場必需品。
+<strong>能源（20%）</strong>維持後勤、指揮系統與冬季民生；<strong>攔截彈（15%）</strong>保護後方城市免受俄飛彈攻擊。
+礦產佔比最低，因烏克蘭目前靠外援，自主工業生產受限。`,
+    },
+    attacker: {
+      headline: '俄羅斯攻方：砲兵優先 + 能源自足',
+      body: `俄軍戰術以砲兵火力覆蓋為主，2023年後砲彈月產量超過北約總和。
+<strong>砲彈（40%）</strong>是壓制烏軍陣地的主要手段；<strong>無人機（25%）</strong>大量使用「見證者」型自殺無人機進行廉價飽和攻擊。
+<strong>能源（25%）</strong>反映俄羅斯燃料自足優勢——這是少數無須擔心能源封鎖的大國。
+攔截彈（5%）極低，因為進攻方毋須大規模防空，預算集中在火力投射。`,
+    },
+  },
+  taiwan_strait: {
+    defender: {
+      headline: '台灣守方：防空優先、礦產護鏈',
+      body: `台海衝突核心是解放軍飛彈飽和攻擊 vs 台灣防空體系。
+<strong>攔截彈（30%）</strong>最高，因為對岸飛彈數量遠超台灣攔截庫存，防空消耗是存亡關鍵。
+<strong>無人機（25%）</strong>用於戰場感知與岸基打擊；<strong>能源（20%）</strong>維持電網與海空軍出勤率。
+<strong>礦產（15%）</strong>比例高，因台灣半導體供應鏈依賴進口關鍵原材料，戰時礦產安全直接影響軍工生產。
+砲彈（10%）最低——台海是海空域戰場，傳統陸基砲兵重要性有限。`,
+    },
+    attacker: {
+      headline: '中國攻方：飛彈主導、能源支撐遠征',
+      body: `解放軍的台海作戰計畫高度依賴第一波精準飛彈打擊，癱瘓台灣指管與防空。
+<strong>無人機／飛彈（35%）</strong>最高，東風系列彈道飛彈、巡弋飛彈與無人機是主力。
+<strong>能源（30%）</strong>次之——遠程兩棲作戰、航母編隊出動消耗燃料極為龐大。
+<strong>攔截彈（15%）</strong>用於防禦美軍可能介入的反制打擊；礦產（10%）維持工業持續動員。
+砲彈（10%）低，因為台海是水域，地面砲兵效益遠低於飛彈。`,
+    },
+  },
+  yemen: {
+    defender: {
+      headline: '美國守方：攔截彈的成本困局',
+      body: `葉門危機呈現現代防空最諷刺的困境：用價值數千萬台幣的「標準三型」攔截一架幾十萬台幣的無人機。
+<strong>攔截彈（40%）</strong>最高，因為胡塞無人機飽和攻擊造成防空彈藥快速耗盡；2024年美軍已多次預警庫存吃緊。
+<strong>能源（25%）</strong>維持紅海艦隊的持續巡邏作戰；<strong>無人機（25%）</strong>用於反制偵察與精準打擊胡塞陣地。
+礦產與砲彈最低，因為這是海上/空中作戰，不是地面消耗戰。`,
+    },
+    attacker: {
+      headline: '胡塞武裝：以無人機為唯一武器',
+      body: `胡塞武裝幾乎無工業基礎，但靠伊朗提供的無人機設計圖與零件，以極低成本打擊全球最強海軍。
+<strong>無人機（75%）</strong>壓倒性最高——這是唯一有意義的投資，每架成本不到美軍攔截彈的百分之一。
+<strong>能源（25%）</strong>維持操作與通訊；其餘砲彈、攔截彈、礦產均為零，因為胡塞武裝根本無法生產或維護這些武器。
+<em>「光腳的不怕穿鞋的」——這個配置本身就是一種不對稱戰略宣言。</em>`,
+    },
+  },
+  kursk: {
+    defender: {
+      headline: '俄羅斯守方：反砲兵 + 無人機應急',
+      body: `2024年8月烏軍奇襲庫爾斯克州，俄軍面臨本土受攻的罕見局面，需要快速機動反應。
+<strong>砲彈（30%）</strong>用於阻止烏軍推進的傳統火力反擊；<strong>無人機（25%）</strong>則成為偵察和打擊突入俄境小單位的利器。
+<strong>能源（20%）</strong>確保快速機動補充兵力的燃料；<strong>礦產（10%）</strong>維持高消耗下的工業補給鏈。
+攔截彈（15%）略高於常規，因為俄方需要保護核設施和關鍵基礎設施免遭烏軍反擊。`,
+    },
+    attacker: {
+      headline: '烏克蘭攻方：燃料是奇襲的靈魂',
+      body: `庫爾斯克奇襲需要在俄境快速推進，燃料供應是決定成敗的核心變數。
+<strong>能源（45%）</strong>壓倒性最高——深入敵境的裝甲突擊極度燃料密集，補給線又長又脆弱。
+<strong>無人機（25%）</strong>用於偵察俄軍反應部署，是高風險進攻中的眼睛；<strong>砲彈（15%）</strong>提供必要的火力支援。
+礦產（5%）最低，因為這是短期奇襲而非長期消耗戰，不需要大規模工業生產支撐。`,
+    },
+  },
+  iran: {
+    defender: {
+      headline: '伊朗守方：飛彈報復力 + 防空互補',
+      body: `伊朗的戰略核心是「報復威懾」——讓以色列知道任何打擊都會付出飛彈雨的代價。
+<strong>無人機／飛彈（35%）</strong>最高，2024年4月以色列遭受300枚飛彈/無人機的史上最大規模攻擊即為例證。
+<strong>攔截彈（30%）</strong>次之，用於防禦以色列報復打擊；伊朗的防空系統相對落後，因此需要大量投資。
+<strong>能源（20%）</strong>維持軍工生產與飛彈燃料；礦產（10%）支撐自主生產能力（伊朗受制裁、必須自製）。`,
+    },
+    attacker: {
+      headline: '以色列攻方：精準打擊兼顧自保',
+      body: `以色列的戰略是以少量精準攻擊換取最大效果，同時維護本土防空。
+<strong>無人機／飛彈（40%）</strong>最高，F-35搭載精準炸彈、彈道飛彈精準打擊伊朗防空與核設施。
+<strong>攔截彈（35%）</strong>次之——以色列鐵穹、大衛投石索、箭式系統構成多層防禦，抵禦伊朗反擊。
+<strong>能源（15%）</strong>維持空軍出勤率；礦產最低，因為以色列工業鏈高ECI但礦產依賴進口。`,
+    },
+  },
+  multifront: {
+    defender: {
+      headline: '多線聯盟守方：均衡是唯一選擇',
+      body: `面對同時來自多個方向的威脅，任何資源傾斜都可能造成致命缺口。
+各項資源必須相對均衡：<strong>無人機（25%）、攔截彈（25%）、砲彈（20%）、能源（20%）</strong>相互支撐。
+礦產（10%）仍需保留，用於長期戰爭下的軍工補給鏈維護。
+多線防禦的教訓：企圖在某一方向壓倒對手，往往在其他戰線付出加倍代價。`,
+    },
+    attacker: {
+      headline: '美國攻方：能源支撐全球投射',
+      body: `美軍的核心優勢是全球力量投射能力，但這極度依賴燃料供應鏈。
+<strong>能源（30%）</strong>最高——航母打擊群、B-2轟炸機跨洲任務、後勤艦隊的燃料消耗是所有大國中最高的。
+<strong>無人機／飛彈（25%）</strong>和<strong>攔截彈（25%）</strong>並重：既要精準打擊，又要保護前進基地免受對方反制。
+砲彈（10%）和礦產（10%）最低——美軍依靠精準飛彈而非傳統砲兵，礦產則來自全球同盟供應鏈。`,
+    },
+  },
+};
+
+/* ════════════════════════════════════════
+   渲染解說區
+   ════════════════════════════════════════ */
+function renderRationale(scenario, role){
+  const data = RATIONALE[scenario.id]?.[role];
+  if(!data){ document.getElementById('details-rationale').style.display='none'; return; }
+  document.getElementById('details-rationale').style.display='';
+  document.getElementById('rationale-body').innerHTML = `
+    <p class="expl-para"><strong>${data.headline}</strong></p>
+    <p class="expl-para">${data.body.replace(/\n/g,'<br>')}</p>
+    <p class="expl-para" style="margin-top:10px;font-size:.78rem;color:#3a5a75;">
+      最優解比例：${RESOURCES.map((r,i)=>`${r.name} ${Math.round(scenario.optimal[role][i]*100)}%`).join('、')}
+    </p>
+  `;
+}
+
+/* ════════════════════════════════════════
    提交 & 計分
    ════════════════════════════════════════ */
 function submitAllocation(){
@@ -757,6 +1009,9 @@ function renderResult({ score, debtChange, newDebt, startDebt, isSpecial, optima
       `國債 / GDP：${startDebt}% → <span class="debt-new">${newDebt}%</span>` +
       `（<span class="debt-val">${sign}${debtChange}%</span>）`;
   }
+
+  // 解說區
+  renderRationale(sc, role);
 
   // 對比表格
   const tbody = document.getElementById('compare-tbody');
