@@ -573,13 +573,125 @@ function selectRole(role){
 }
 
 /* ════════════════════════════════════════
-   計時器（在步驟3插入完整邏輯）
+   配置畫面初始化
+   ════════════════════════════════════════ */
+function startAllocation(){
+  const sc   = state.scenario;
+  const role = state.role;
+  const country = state.country;
+
+  // 計算點數
+  let pts = 20;
+  if(state.difficulty==='realistic'){
+    pts = COUNTRY_DATA[country]?.pts ?? 20;
+  }
+  state.totalPts   = pts;
+  state.allocation = [0,0,0,0,0];
+
+  // 狀態列
+  const roleLabel = role==='defender' ? '🛡 守方' : '⚔ 攻方';
+  document.getElementById('alloc-situation-label').textContent =
+    `${sc.emoji} ${sc.name} — ${roleLabel}：${country}`;
+  document.getElementById('alloc-total-pts').textContent = pts;
+  document.getElementById('pts-total-label').textContent  = `/ ${pts}`;
+
+  const modeBadge = state.difficulty==='realistic'
+    ? '<span class="badge-mode badge-real">Realistic</span>'
+    : '<span class="badge-mode badge-std">Standard</span>';
+  document.getElementById('alloc-mode-badge').innerHTML = modeBadge;
+
+  // 渲染資源列
+  const list = document.getElementById('resource-list');
+  const isHouthi = (country==='胡塞武裝');
+  list.innerHTML = RESOURCES.map((r,i)=>{
+    const disabled = isHouthi && (i===0||i===2||i===4); // 胡塞：砲彈/攔截彈/礦產鎖定
+    return `
+    <div class="resource-row" id="row-${i}">
+      <div class="res-icon">${r.icon}</div>
+      <div class="res-info">
+        <div class="res-name">${r.name}</div>
+        <div class="res-desc">${r.desc}</div>
+      </div>
+      <div class="res-controls">
+        <button class="res-btn" id="btn-minus-${i}" onclick="adjustRes(${i},-1)"
+          ${disabled?'disabled title="胡塞武裝不使用此資源"':''}>−</button>
+        <span class="res-value" id="val-${i}">0</span>
+        <button class="res-btn" id="btn-plus-${i}"  onclick="adjustRes(${i},+1)"
+          ${disabled?'disabled title="胡塞武裝不使用此資源"':''}>＋</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  updatePointsBar();
+  startTimer();
+  goTo('screen-alloc');
+}
+
+/* ════════════════════════════════════════
+   資源 +/- 操作
+   ════════════════════════════════════════ */
+function adjustRes(i, delta){
+  const used = state.allocation.reduce((a,b)=>a+b,0);
+  const remain = state.totalPts - used;
+  const cur = state.allocation[i];
+
+  if(delta>0 && remain<=0) return;
+  if(delta<0 && cur<=0)    return;
+
+  state.allocation[i] = cur + delta;
+  document.getElementById('val-'+i).textContent = state.allocation[i];
+  updatePointsBar();
+  updateButtons();
+}
+
+function updatePointsBar(){
+  const used   = state.allocation.reduce((a,b)=>a+b,0);
+  const remain = state.totalPts - used;
+  document.getElementById('pts-remain').textContent = remain;
+  document.getElementById('pts-remain').style.color = remain===0 ? '#27ae60' : '#eaf0f5';
+}
+
+function updateButtons(){
+  const used   = state.allocation.reduce((a,b)=>a+b,0);
+  const remain = state.totalPts - used;
+  RESOURCES.forEach((_,i)=>{
+    const btnP = document.getElementById('btn-plus-'+i);
+    const btnM = document.getElementById('btn-minus-'+i);
+    if(btnP && !btnP.disabled) btnP.disabled = remain<=0;
+    if(btnM && !btnM.disabled) btnM.disabled = state.allocation[i]<=0;
+  });
+}
+
+/* ════════════════════════════════════════
+   計時器
    ════════════════════════════════════════ */
 let timerInterval = null;
 let secondsLeft = 300;
 
 function clearTimer(){
   if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
+}
+
+function startTimer(){
+  clearTimer();
+  secondsLeft = 300;
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    secondsLeft--;
+    updateTimerDisplay();
+    if(secondsLeft<=0){
+      clearTimer();
+      submitAllocation();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(){
+  const el = document.getElementById('timer-display');
+  const m  = Math.floor(secondsLeft/60);
+  const s  = secondsLeft % 60;
+  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.toggle('warning', secondsLeft<=60);
 }
 
 /* ════════════════════════════════════════
