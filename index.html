@@ -591,7 +591,7 @@
         /* ── 響應式 ── */
         @media (max-width: 1140px) {
             .sidebar { display: none; }
-            .featured-mobile { display: flex; }
+            .container { margin: 0 auto; }
         }
 
 
@@ -908,6 +908,11 @@
         }
         body.dark-mode .featured-mobile-card .fm-title { color: #c8d8e4; }
 
+        /* 須放在 .featured-mobile { display:none } 定義之後，避免被覆蓋 */
+        @media (max-width: 1140px) {
+            .featured-mobile { display: flex; }
+        }
+
         /* ── 全文搜尋列 ── */
         .search-bar {
             display: flex;
@@ -1029,6 +1034,12 @@
             .year-nav { gap: 6px; padding: 8px 10px; flex-wrap: wrap; }
             .year-nav a { padding: 4px 10px; font-size: 0.8rem; }
             .year-nav .nav-label { display: none; }
+            /* portrait 模式：切換按鈕改為 flow 排版，避免與「專欄」重疊 */
+            .theme-toggle-btn {
+                position: static;
+                margin-left: auto;
+                flex-shrink: 0;
+            }
 
             .back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 1rem; }
 
