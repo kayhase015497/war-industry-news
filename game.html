@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工業力試煉｜戰爭即工業力</title>
+<meta name="description" content="模擬戰時資源配置決策，考驗你的工業力戰略眼光。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── 全域 ── */
+body{
+  font-family:'Noto Sans TC','Segoe UI',sans-serif;
+  background:#0a0f14;
+  color:#cdd6e0;
+  min-height:100vh;
+  line-height:1.6;
+}
+
+/* ── 畫面容器 ── */
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:0 16px 40px;
+}
+.screen.active{display:flex;flex-direction:column;align-items:center;}
+
+/* ── 頁首條 ── */
+.game-topbar{
+  width:100%;
+  max-width:720px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid #1e3048;
+  margin-bottom:32px;
+}
+.game-topbar .back-btn{
+  background:none;border:1px solid #2a4060;color:#7a9ab5;
+  padding:5px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;
+  transition:all .2s;
+}
+.game-topbar .back-btn:hover{background:#1a2d42;color:#cdd6e0;}
+.site-badge{
+  font-size:.8rem;color:#4a6a85;text-decoration:none;margin-left:auto;
+}
+.site-badge:hover{color:#7a9ab5;}
+
+/* ── 卡片容器 ── */
+.card{
+  width:100%;max-width:720px;
+  background:#111c27;
+  border:1px solid #1e3048;
+  border-radius:12px;
+  padding:28px 28px;
+  margin-bottom:20px;
+}
+
+/* ── 標題畫面 ── */
+#screen-title{
+  background:
+    linear-gradient(160deg,rgba(10,15,20,.88) 0%,rgba(20,35,50,.75) 100%),
+    url('images/soldiers-breach.jpg') center/cover no-repeat;
+  justify-content:center;
+}
+.title-inner{
+  text-align:center;max-width:600px;padding:40px 20px;
+}
+.title-label{
+  display:inline-block;
+  font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  color:#c0392b;border:1px solid #c0392b;
+  padding:4px 14px;border-radius:4px;margin-bottom:20px;
+}
+.title-main{
+  font-size:clamp(2rem,6vw,3.2rem);
+  font-weight:900;color:#eaf0f5;
+  line-height:1.15;margin-bottom:12px;
+}
+.title-sub{
+  font-size:1rem;color:#7a9ab5;margin-bottom:36px;
+}
+.timer-note{
+  font-size:.82rem;color:#4a6a85;margin-bottom:36px;
+}
+
+/* ── 按鈕系統 ── */
+.btn-primary{
+  display:inline-block;
+  background:linear-gradient(135deg,#c0392b,#96281b);
+  color:#fff;font-size:1.05rem;font-weight:700;
+  padding:14px 44px;border:none;border-radius:8px;
+  cursor:pointer;letter-spacing:.05em;
+  transition:transform .15s,box-shadow .15s;
+  text-decoration:none;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,57,43,.4);}
+.btn-primary:active{transform:translateY(0);}
+
+.btn-choice{
+  display:block;width:100%;
+  background:#111c27;border:1.5px solid #1e3048;
+  color:#cdd6e0;font-size:1rem;font-weight:500;
+  padding:16px 20px;border-radius:10px;
+  cursor:pointer;text-align:left;
+  transition:all .2s;margin-bottom:10px;
+}
+.btn-choice:hover,.btn-choice.selected{
+  border-color:#c0392b;background:#1a2d42;color:#eaf0f5;
+}
+.btn-choice .choice-title{font-weight:700;font-size:1.05rem;}
+.btn-choice .choice-sub{font-size:.82rem;color:#5a7a95;margin-top:3px;}
+
+.btn-row{display:flex;gap:12px;width:100%;max-width:720px;}
+.btn-row .btn-choice{margin-bottom:0;}
+
+/* ── 情景卡片格線 ── */
+.scenario-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:12px;width:100%;max-width:720px;
+}
+.scenario-card{
+  background:#111c27;border:1.5px solid #1e3048;
+  border-radius:10px;padding:18px 16px;
+  cursor:pointer;transition:all .2s;
+}
+.scenario-card:hover,.scenario-card.selected{
+  border-color:#c0392b;background:#1a2d42;
+}
+.scenario-card .sc-emoji{font-size:1.6rem;margin-bottom:8px;}
+.scenario-card .sc-name{font-weight:700;font-size:.95rem;color:#eaf0f5;margin-bottom:4px;}
+.scenario-card .sc-sides{font-size:.78rem;color:#5a7a95;}
+
+/* ── 配置畫面 ── */
+.alloc-header{
+  width:100%;max-width:720px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;flex-wrap:wrap;gap:10px;
+}
+.alloc-meta{font-size:.85rem;color:#5a7a95;}
+.alloc-meta span{color:#c0392b;font-weight:700;}
+
+#timer-display{
+  font-size:1.5rem;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:#eaf0f5;
+  background:#111c27;border:1px solid #1e3048;
+  padding:6px 18px;border-radius:8px;
+}
+#timer-display.warning{color:#e74c3c;animation:pulse .8s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+.points-bar{
+  width:100%;max-width:720px;
+  background:#111c27;border:1px solid #1e3048;
+  border-radius:8px;padding:12px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;
+}
+.points-bar .pts-label{font-size:.85rem;color:#7a9ab5;}
+.points-bar .pts-remain{
+  font-size:1.3rem;font-weight:700;color:#eaf0f5;
+  font-variant-numeric:tabular-nums;
+}
+.points-bar .pts-total{font-size:.82rem;color:#4a6a85;}
+
+.resource-list{width:100%;max-width:720px;}
+.resource-row{
+  background:#111c27;border:1px solid #1e3048;
+  border-radius:10px;padding:16px 20px;
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:16px;
+}
+.res-icon{font-size:1.4rem;width:32px;text-align:center;flex-shrink:0;}
+.res-info{flex:1;}
+.res-name{font-weight:700;font-size:.95rem;color:#eaf0f5;}
+.res-desc{font-size:.75rem;color:#4a6a85;margin-top:2px;}
+.res-controls{display:flex;align-items:center;gap:10px;}
+.res-btn{
+  width:36px;height:36px;border-radius:6px;
+  border:1px solid #2a4060;background:#0d1822;
+  color:#cdd6e0;font-size:1.2rem;font-weight:700;
+  cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.res-btn:hover{background:#1a2d42;border-color:#c0392b;color:#fff;}
+.res-btn:disabled{opacity:.3;cursor:not-allowed;}
+.res-value{
+  min-width:40px;text-align:center;
+  font-size:1.1rem;font-weight:700;
+  font-variant-numeric:tabular-nums;color:#eaf0f5;
+}
+
+/* ── 結果畫面 ── */
+.result-score-box{
+  text-align:center;padding:32px 20px;
+}
+.result-label{font-size:.82rem;letter-spacing:.1em;color:#5a7a95;text-transform:uppercase;margin-bottom:8px;}
+.result-score{
+  font-size:clamp(3rem,10vw,5rem);
+  font-weight:900;line-height:1;
+  margin-bottom:6px;
+}
+.score-great{color:#27ae60;}
+.score-ok{color:#f39c12;}
+.score-poor{color:#e74c3c;}
+
+.result-debt{
+  font-size:1.1rem;color:#cdd6e0;margin-top:10px;
+}
+.debt-val{font-weight:700;color:#e74c3c;}
+.debt-new{font-weight:700;color:#f39c12;}
+
+.special-msg{
+  background:#1a2d42;border-left:4px solid #c0392b;
+  padding:14px 18px;border-radius:0 8px 8px 0;
+  font-size:1.05rem;font-weight:700;color:#eaf0f5;
+  margin:16px 0;
+}
+
+.compare-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.compare-table th{
+  padding:8px 12px;text-align:left;
+  color:#5a7a95;font-weight:500;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.05em;
+  border-bottom:1px solid #1e3048;
+}
+.compare-table td{
+  padding:10px 12px;border-bottom:1px solid #141e28;
+  vertical-align:middle;
+}
+.compare-table tr:last-child td{border-bottom:none;}
+.bar-wrap{background:#0d1822;border-radius:4px;height:8px;overflow:hidden;margin-top:4px;}
+.bar-player{background:#3498db;height:8px;border-radius:4px;transition:width .5s;}
+.bar-optimal{background:#27ae60;height:8px;border-radius:4px;transition:width .5s;}
+.bar-label{display:flex;justify-content:space-between;font-size:.72rem;color:#4a6a85;margin-top:2px;}
+
+.result-actions{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-top:8px;
+}
+.btn-secondary{
+  background:none;border:1.5px solid #2a4060;color:#7a9ab5;
+  padding:11px 28px;border-radius:8px;cursor:pointer;
+  font-size:.9rem;transition:all .2s;
+}
+.btn-secondary:hover{border-color:#5a7a95;color:#cdd6e0;background:#111c27;}
+
+/* ── 章節標題 ── */
+.section-title{
+  width:100%;max-width:720px;
+  font-size:1.3rem;font-weight:700;color:#eaf0f5;
+  margin-bottom:16px;
+}
+.section-sub{
+  width:100%;max-width:720px;
+  font-size:.85rem;color:#5a7a95;margin-bottom:20px;
+}
+
+/* ── 難度標籤 ── */
+.badge-mode{
+  display:inline-block;font-size:.72rem;letter-spacing:.08em;
+  padding:2px 10px;border-radius:4px;font-weight:700;
+  text-transform:uppercase;margin-left:8px;vertical-align:middle;
+}
+.badge-std{background:#1a3a1a;color:#27ae60;border:1px solid #27ae60;}
+.badge-real{background:#3a1a1a;color:#e74c3c;border:1px solid #e74c3c;}
+
+/* ── RWD ── */
+@media(max-width:480px){
+  .card{padding:20px 16px;}
+  .resource-row{padding:12px 14px;gap:10px;}
+  .res-controls{gap:8px;}
+  .scenario-grid{grid-template-columns:1fr 1fr;}
+  .btn-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ 畫面 1：標題 ══ -->
+<section class="screen active" id="screen-title">
+  <div class="title-inner">
+    <div class="title-label">戰爭即工業力</div>
+    <h1 class="title-main">工業力試煉</h1>
+    <p class="title-sub">模擬戰時資源配置決策<br>考驗你的工業力戰略眼光</p>
+    <p class="timer-note">每局 5 分鐘倒數　× 6 個情景　× 攻守雙方</p>
+    <button class="btn-primary" onclick="goTo('screen-difficulty')">開始遊戲</button>
+  </div>
+</section>
+
+<!-- ══ 畫面 2：難度選擇 ══ -->
+<section class="screen" id="screen-difficulty">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="goTo('screen-title')">← 返回</button>
+    <span style="font-size:.85rem;color:#4a6a85;">選擇難度</span>
+    <a class="site-badge" href="index.html">← 回主站</a>
+  </div>
+  <div class="section-title">選擇難度</div>
+  <div class="section-sub">真實難度下，各國工業力點數與經濟數據依現實調整。</div>
+  <button class="btn-choice" onclick="selectDifficulty('standard')">
+    <div class="choice-title">標準模式 <span class="badge-mode badge-std">Standard</span></div>
+    <div class="choice-sub">所有國家均分 20 點工業力，起始國債 0%，適合初次體驗</div>
+  </button>
+  <button class="btn-choice" onclick="selectDifficulty('realistic')">
+    <div class="choice-title">真實難度 <span class="badge-mode badge-real">Realistic</span></div>
+    <div class="choice-sub">依各國實際工業力與GDP數據，感受真實戰略壓力</div>
+  </button>
+</section>
+
+<!-- ══ 畫面 3：情景選擇 ══ -->
+<section class="screen" id="screen-scenario">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="goTo('screen-difficulty')">← 返回</button>
+    <span style="font-size:.85rem;color:#4a6a85;">選擇情景</span>
+    <a class="site-badge" href="index.html">← 回主站</a>
+  </div>
+  <div class="section-title">選擇情景</div>
+  <div class="section-sub">6 個當代衝突情景，每個均可選擇攻守方。</div>
+  <div class="scenario-grid" id="scenario-grid">
+    <!-- 由 JS 動態填入 -->
+  </div>
+</section>
+
+<!-- ══ 畫面 4：角色選擇 ══ -->
+<section class="screen" id="screen-role">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="goTo('screen-scenario')">← 返回</button>
+    <span style="font-size:.85rem;color:#4a6a85;">選擇角色</span>
+    <a class="site-badge" href="index.html">← 回主站</a>
+  </div>
+  <div class="section-title" id="role-scenario-name">情景名稱</div>
+  <div class="section-sub" id="role-scenario-desc"></div>
+  <div class="btn-row" id="role-btn-row">
+    <!-- 由 JS 動態填入 -->
+  </div>
+</section>
+
+<!-- ══ 畫面 5：資源配置 ══ -->
+<section class="screen" id="screen-alloc">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="confirmBack()">← 放棄</button>
+    <span style="font-size:.85rem;color:#4a6a85;" id="alloc-situation-label">情景 / 角色</span>
+    <div id="timer-display">5:00</div>
+  </div>
+  <div class="alloc-header">
+    <div class="alloc-meta">工業力點數：<span id="alloc-total-pts">20</span> 點</div>
+    <div class="alloc-meta" id="alloc-mode-badge"></div>
+  </div>
+  <div class="points-bar">
+    <span class="pts-label">剩餘可分配點數</span>
+    <span class="pts-remain" id="pts-remain">20</span>
+    <span class="pts-total" id="pts-total-label">/ 20</span>
+  </div>
+  <div class="resource-list" id="resource-list">
+    <!-- 由 JS 動態填入 -->
+  </div>
+  <div style="width:100%;max-width:720px;margin-top:16px;text-align:right;">
+    <button class="btn-primary" onclick="submitAllocation()">提交配置 →</button>
+  </div>
+</section>
+
+<!-- ══ 畫面 6：結果 ══ -->
+<section class="screen" id="screen-result">
+  <div class="game-topbar">
+    <span style="font-size:.85rem;color:#4a6a85;" id="result-situation-label">結果</span>
+    <a class="site-badge" href="index.html">← 回主站</a>
+  </div>
+  <div class="card">
+    <div class="result-score-box">
+      <div class="result-label">配置得分</div>
+      <div class="result-score" id="result-score-val">—</div>
+      <div id="result-debt-line" class="result-debt"></div>
+      <div id="result-special-msg"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:.9rem;color:#7a9ab5;margin-bottom:14px;font-weight:700;">最優解對比</div>
+    <table class="compare-table" id="compare-table">
+      <thead>
+        <tr>
+          <th>資源</th>
+          <th>你的配置</th>
+          <th>最優解</th>
+          <th>分布</th>
+        </tr>
+      </thead>
+      <tbody id="compare-tbody"></tbody>
+    </table>
+  </div>
+  <div class="result-actions">
+    <button class="btn-primary" onclick="playAgain()">再玩一局</button>
+    <button class="btn-secondary" onclick="goTo('screen-title')">回標題</button>
+  </div>
+</section>
+
+<script>
+/* ════════════════════════════════════════
+   JS 邏輯由後續步驟插入
+   ════════════════════════════════════════ */
+</script>
+</body>
+</html>
