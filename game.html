@@ -401,8 +401,203 @@ body{
 
 <script>
 /* ════════════════════════════════════════
-   JS 邏輯由後續步驟插入
+   遊戲資料
    ════════════════════════════════════════ */
+
+const RESOURCES = [
+  { id:'shell',    icon:'💥', name:'砲彈',       desc:'傳統砲兵彈藥、地面火力' },
+  { id:'drone',    icon:'🚁', name:'無人機／飛彈', desc:'精準打擊、偵搜、防區外武器' },
+  { id:'intercept',icon:'🛡', name:'攔截彈',      desc:'防空系統、反飛彈' },
+  { id:'energy',   icon:'⛽', name:'能源',        desc:'燃料、電力、後勤動能' },
+  { id:'mineral',  icon:'⛏', name:'礦產',        desc:'關鍵原材料、工業生產鏈' },
+];
+
+// 各國真實難度數據
+const COUNTRY_DATA = {
+  '美國':     { pts:95, debtPct:120, gdpMult:0.03 },
+  '中國':     { pts:78, debtPct:51,  gdpMult:0.05 },
+  '俄羅斯':   { pts:40, debtPct:17,  gdpMult:0.4  },
+  '以色列':   { pts:20, debtPct:61,  gdpMult:0.5  },
+  '台灣':     { pts:14, debtPct:27,  gdpMult:1.0  },
+  '伊朗':     { pts:12, debtPct:30,  gdpMult:2.0  },
+  '烏克蘭':   { pts:8,  debtPct:90,  gdpMult:4.0  },
+  '胡塞武裝': { pts:4,  debtPct:null, gdpMult:null },
+  '多線聯盟': { pts:30, debtPct:60,  gdpMult:1.5  },
+};
+
+// 情景定義
+const SCENARIOS = [
+  {
+    id:'east_ukraine', emoji:'🪖', name:'烏東戰線',
+    desc:'烏克蘭東部持續消耗戰，砲彈與無人機為核心爭奪',
+    defender:'烏克蘭', attacker:'俄羅斯',
+    optimal:{
+      defender:[0.35,0.25,0.15,0.20,0.05],
+      attacker:[0.40,0.25,0.05,0.25,0.05],
+    }
+  },
+  {
+    id:'taiwan_strait', emoji:'🌊', name:'台海衝突',
+    desc:'台灣海峽高強度海空衝突，防空與飛彈對決',
+    defender:'台灣', attacker:'中國',
+    optimal:{
+      defender:[0.10,0.25,0.30,0.20,0.15],
+      attacker:[0.10,0.35,0.15,0.30,0.10],
+    }
+  },
+  {
+    id:'yemen', emoji:'🚢', name:'葉門危機',
+    desc:'紅海航運受攻，美軍面對低成本無人機飽和攻擊',
+    defender:'美國', attacker:'胡塞武裝',
+    optimal:{
+      defender:[0.05,0.25,0.40,0.25,0.05],
+      attacker:[0.00,0.75,0.00,0.25,0.00],
+    },
+    attackerSpecial: true,
+  },
+  {
+    id:'kursk', emoji:'🏴', name:'庫爾斯克',
+    desc:'烏軍跨境奇襲俄境，俄軍面臨快速反應壓力',
+    defender:'俄羅斯', attacker:'烏克蘭',
+    optimal:{
+      defender:[0.30,0.25,0.15,0.20,0.10],
+      attacker:[0.15,0.25,0.10,0.45,0.05],
+    }
+  },
+  {
+    id:'iran', emoji:'🚀', name:'伊朗對決',
+    desc:'以色列與伊朗飛彈對攻，防空消耗戰',
+    defender:'伊朗', attacker:'以色列',
+    optimal:{
+      defender:[0.05,0.35,0.30,0.20,0.10],
+      attacker:[0.05,0.40,0.35,0.15,0.05],
+    }
+  },
+  {
+    id:'multifront', emoji:'🌐', name:'多線防禦',
+    desc:'多線聯盟面對美軍技術優勢，均衡部署考驗',
+    defender:'多線聯盟', attacker:'美國',
+    optimal:{
+      defender:[0.20,0.25,0.25,0.20,0.10],
+      attacker:[0.10,0.25,0.25,0.30,0.10],
+    }
+  },
+];
+
+/* ════════════════════════════════════════
+   遊戲狀態
+   ════════════════════════════════════════ */
+const state = {
+  difficulty: null,   // 'standard' | 'realistic'
+  scenario:   null,   // SCENARIOS[i]
+  role:       null,   // 'defender' | 'attacker'
+  country:    null,   // 國家名稱字串
+  allocation: [0,0,0,0,0],
+  totalPts:   20,
+};
+
+/* ════════════════════════════════════════
+   畫面切換
+   ════════════════════════════════════════ */
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ════════════════════════════════════════
+   難度選擇
+   ════════════════════════════════════════ */
+function selectDifficulty(mode){
+  state.difficulty = mode;
+  renderScenarios();
+  goTo('screen-scenario');
+}
+
+/* ════════════════════════════════════════
+   情景選擇
+   ════════════════════════════════════════ */
+function renderScenarios(){
+  const grid = document.getElementById('scenario-grid');
+  grid.innerHTML = SCENARIOS.map((sc,i)=>`
+    <div class="scenario-card" onclick="selectScenario(${i})">
+      <div class="sc-emoji">${sc.emoji}</div>
+      <div class="sc-name">${sc.name}</div>
+      <div class="sc-sides">🛡 ${sc.defender} vs ⚔ ${sc.attacker}</div>
+    </div>
+  `).join('');
+}
+
+function selectScenario(i){
+  state.scenario = SCENARIOS[i];
+  renderRoleSelection();
+  goTo('screen-role');
+}
+
+/* ════════════════════════════════════════
+   角色選擇
+   ════════════════════════════════════════ */
+function renderRoleSelection(){
+  const sc = state.scenario;
+  document.getElementById('role-scenario-name').textContent = sc.emoji + ' ' + sc.name;
+  document.getElementById('role-scenario-desc').textContent = sc.desc;
+
+  const row = document.getElementById('role-btn-row');
+  row.innerHTML = `
+    <button class="btn-choice" onclick="selectRole('defender')">
+      <div class="choice-title">🛡 守方：${sc.defender}</div>
+      <div class="choice-sub">${roleDesc(sc,'defender')}</div>
+    </button>
+    <button class="btn-choice" onclick="selectRole('attacker')">
+      <div class="choice-title">⚔ 攻方：${sc.attacker}</div>
+      <div class="choice-sub">${roleDesc(sc,'attacker')}</div>
+    </button>
+  `;
+}
+
+function roleDesc(sc, role){
+  const country = role==='defender' ? sc.defender : sc.attacker;
+  if(state.difficulty==='standard'){
+    return `工業力 20 點 · 起始國債 0%`;
+  }
+  const d = COUNTRY_DATA[country];
+  if(!d) return '';
+  if(d.debtPct===null) return `工業力 ${d.pts} 點 · 特殊規則（胡塞武裝）`;
+  return `工業力 ${d.pts} 點 · 起始國債 ${d.debtPct}% GDP`;
+}
+
+function selectRole(role){
+  state.role = role;
+  state.country = role==='defender' ? state.scenario.defender : state.scenario.attacker;
+  startAllocation();
+}
+
+/* ════════════════════════════════════════
+   計時器（在步驟3插入完整邏輯）
+   ════════════════════════════════════════ */
+let timerInterval = null;
+let secondsLeft = 300;
+
+function clearTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
+}
+
+/* ════════════════════════════════════════
+   放棄確認
+   ════════════════════════════════════════ */
+function confirmBack(){
+  if(confirm('確定放棄本局？')){
+    clearTimer();
+    goTo('screen-scenario');
+  }
+}
+
+/* ════════════════════════════════════════
+   再玩一局
+   ════════════════════════════════════════ */
+function playAgain(){
+  goTo('screen-scenario');
+}
 </script>
 </body>
 </html>
