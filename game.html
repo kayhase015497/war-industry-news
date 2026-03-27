@@ -506,17 +506,23 @@ details.explainer[open]>summary::after{content:'－';}
       <table class="country-table" style="margin-top:16px;">
         <thead><tr><th>國家</th><th>工業力點數</th><th>起始國債/GDP</th><th>GDP懲罰乘數</th></tr></thead>
         <tbody>
-          <tr><td>🇺🇸 美國</td><td><span class="pts-chip">95</span></td><td>120%</td><td><span class="gdp-chip">×0.03</span></td></tr>
-          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">78</span></td><td>51%</td><td><span class="gdp-chip">×0.05</span></td></tr>
-          <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>17%</td><td><span class="gdp-chip">×0.4</span></td></tr>
-          <tr><td>🇮🇱 以色列</td><td><span class="pts-chip">20</span></td><td>61%</td><td><span class="gdp-chip">×0.5</span></td></tr>
-          <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">14</span></td><td>27%</td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
-          <tr><td>🇮🇷 伊朗</td><td><span class="pts-chip">12</span></td><td>30%</td><td><span class="gdp-chip">×2.0</span></td></tr>
-          <tr><td>🇺🇦 烏克蘭</td><td><span class="pts-chip">8</span></td><td>90%</td><td><span class="gdp-chip">×4.0</span></td></tr>
+          <tr><td>🇺🇸 美國</td><td><span class="pts-chip">95</span></td><td>122%</td><td><span class="gdp-chip">×0.03</span></td></tr>
+          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">78</span></td><td>83% <sup>*</sup></td><td><span class="gdp-chip">×0.05</span></td></tr>
+          <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>21%</td><td><span class="gdp-chip">×0.4</span></td></tr>
+          <tr><td>🇮🇱 以色列</td><td><span class="pts-chip">20</span></td><td>67%</td><td><span class="gdp-chip">×0.5</span></td></tr>
+          <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">14</span></td><td>27% <sup>†</sup></td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
+          <tr><td>🇮🇷 伊朗</td><td><span class="pts-chip">12</span></td><td>35% <sup>‡</sup></td><td><span class="gdp-chip">×2.0</span></td></tr>
+          <tr><td>🇺🇦 烏克蘭</td><td><span class="pts-chip">8</span></td><td>97%</td><td><span class="gdp-chip">×4.0</span></td></tr>
           <tr><td>🏴 胡塞武裝</td><td><span class="pts-chip">4</span></td><td colspan="2">特殊規則（光腳的不怕穿鞋的）</td></tr>
           <tr><td>🌐 多線聯盟</td><td><span class="pts-chip">30</span></td><td>60%</td><td><span class="gdp-chip">×1.5</span></td></tr>
         </tbody>
       </table>
+      <p class="expl-para" style="margin-top:10px;font-size:.75rem;color:#3a5a75;line-height:1.7;">
+        資料來源：<strong>IMF World Economic Outlook Database, October 2024</strong>（政府債務佔GDP比，一般政府總負債口徑）<br>
+        <sup>*</sup> 中國官方口徑約 51%；IMF 含地方政府融資平台（LGFV）廣義估算約 83%，本遊戲採 IMF 口徑。<br>
+        <sup>†</sup> 台灣非 IMF 成員，數據來源：行政院主計總處（2024）。<br>
+        <sup>‡</sup> 伊朗受制裁影響，IMF 數據有限，為估算值。
+      </p>
       <p class="expl-para" style="margin-top:12px;">
         <strong>為何俄：烏 ≈ 5:1？</strong>
         戰時俄羅斯炮彈月產量已超越北約總和，烏克蘭工業在戰爭中大規模損毀，高度依賴北約補給才能維持前線。
@@ -544,15 +550,15 @@ const RESOURCES = [
   { id:'mineral',  icon:'⛏', name:'礦產',        desc:'關鍵原材料、工業生產鏈' },
 ];
 
-// 各國真實難度數據
+// 各國真實難度數據（國債/GDP 採 IMF WEO October 2024 數據）
 const COUNTRY_DATA = {
-  '美國':     { pts:95, debtPct:120, gdpMult:0.03 },
-  '中國':     { pts:78, debtPct:51,  gdpMult:0.05 },
-  '俄羅斯':   { pts:40, debtPct:17,  gdpMult:0.4  },
-  '以色列':   { pts:20, debtPct:61,  gdpMult:0.5  },
+  '美國':     { pts:95, debtPct:122, gdpMult:0.03 },
+  '中國':     { pts:78, debtPct:83,  gdpMult:0.05 },
+  '俄羅斯':   { pts:40, debtPct:21,  gdpMult:0.4  },
+  '以色列':   { pts:20, debtPct:67,  gdpMult:0.5  },
   '台灣':     { pts:14, debtPct:27,  gdpMult:1.0  },
-  '伊朗':     { pts:12, debtPct:30,  gdpMult:2.0  },
-  '烏克蘭':   { pts:8,  debtPct:90,  gdpMult:4.0  },
+  '伊朗':     { pts:12, debtPct:35,  gdpMult:2.0  },
+  '烏克蘭':   { pts:8,  debtPct:97,  gdpMult:4.0  },
   '胡塞武裝': { pts:4,  debtPct:null, gdpMult:null },
   '多線聯盟': { pts:30, debtPct:60,  gdpMult:1.5  },
 };
