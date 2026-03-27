@@ -695,6 +695,95 @@ function updateTimerDisplay(){
 }
 
 /* ════════════════════════════════════════
+   提交 & 計分
+   ════════════════════════════════════════ */
+function submitAllocation(){
+  clearTimer();
+
+  const sc      = state.scenario;
+  const role    = state.role;
+  const country = state.country;
+  const alloc   = state.allocation;
+  const total   = state.totalPts;
+  const optimal = sc.optimal[role]; // [w0..w4]
+
+  // 偏差值 = Σ |玩家分配/total - 最優解|
+  const playerW = alloc.map(v => v / (total||1));
+  const deviation = optimal.reduce((sum, opt, i) => sum + Math.abs(playerW[i] - opt), 0);
+  const score = Math.max(0, Math.round(100 - deviation * 100));
+
+  // 國債計算
+  const cd = COUNTRY_DATA[country];
+  const isSpecial = cd?.debtPct === null; // 胡塞武裝
+
+  let debtChange = 0, newDebt = 0, startDebt = 0;
+  if(!isSpecial && cd){
+    startDebt  = cd.debtPct;
+    debtChange = +((1 - score/100) * 25 * cd.gdpMult).toFixed(1);
+    newDebt    = +(startDebt + debtChange).toFixed(1);
+  }
+
+  renderResult({ score, debtChange, newDebt, startDebt, isSpecial, optimal, playerW });
+  goTo('screen-result');
+}
+
+/* ════════════════════════════════════════
+   結果畫面渲染
+   ════════════════════════════════════════ */
+function renderResult({ score, debtChange, newDebt, startDebt, isSpecial, optimal, playerW }){
+  const sc      = state.scenario;
+  const country = state.country;
+  const role    = state.role;
+  const roleLabel = role==='defender' ? '🛡 守方' : '⚔ 攻方';
+
+  document.getElementById('result-situation-label').textContent =
+    `${sc.emoji} ${sc.name} — ${roleLabel}：${country}`;
+
+  // 分數
+  const scoreEl = document.getElementById('result-score-val');
+  scoreEl.textContent = score;
+  scoreEl.className = 'result-score ' + (score>=75?'score-great':score>=45?'score-ok':'score-poor');
+
+  // 國債行
+  const debtLine = document.getElementById('result-debt-line');
+  if(isSpecial){
+    debtLine.innerHTML = '';
+    document.getElementById('result-special-msg').innerHTML =
+      '<div class="special-msg">光腳的不怕穿鞋的</div>';
+  } else {
+    document.getElementById('result-special-msg').innerHTML = '';
+    const sign = debtChange>=0?'+':'';
+    debtLine.innerHTML =
+      `國債 / GDP：${startDebt}% → <span class="debt-new">${newDebt}%</span>` +
+      `（<span class="debt-val">${sign}${debtChange}%</span>）`;
+  }
+
+  // 對比表格
+  const tbody = document.getElementById('compare-tbody');
+  tbody.innerHTML = RESOURCES.map((r,i)=>{
+    const pct = Math.round(playerW[i]*100);
+    const opt = Math.round(optimal[i]*100);
+    const diff = pct - opt;
+    const diffStr = diff>0?`+${diff}%`:diff<0?`${diff}%`:'持平';
+    const diffColor = Math.abs(diff)<=5?'#27ae60':Math.abs(diff)<=15?'#f39c12':'#e74c3c';
+    return `<tr>
+      <td>${r.icon} ${r.name}</td>
+      <td>${pct}%</td>
+      <td>${opt}%</td>
+      <td style="width:160px">
+        <div class="bar-wrap"><div class="bar-player" style="width:${pct}%"></div></div>
+        <div class="bar-wrap" style="margin-top:3px"><div class="bar-optimal" style="width:${opt}%"></div></div>
+        <div class="bar-label">
+          <span style="color:#3498db">你</span>
+          <span style="color:${diffColor}">${diffStr}</span>
+          <span style="color:#27ae60">最優</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════
    放棄確認
    ════════════════════════════════════════ */
 function confirmBack(){
