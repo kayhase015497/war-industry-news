@@ -583,50 +583,17 @@
             border-color: #c0392b;
         }
 
+        .year-nav a.col-link { border-color: #a0c4d8; color: #2980b9; }
+        .year-nav a.col-link:hover { background: #2471a3; color: #fff; border-color: #2471a3; }
+        body.dark-mode .year-nav a.col-link { border-color: #1c3a52; color: #5dade2; }
+
 
         /* ── 響應式 ── */
         @media (max-width: 1140px) {
             .sidebar { display: none; }
+            .featured-mobile { display: flex; }
         }
 
-        @media (max-width: 600px) {
-            #globe-container { height: 300px; }
-            .news-card {
-                flex-direction: column;
-                gap: 4px;
-            }
-
-            .news-card .date {
-                min-width: unset;
-            }
-
-            .stats-bar {
-                gap: 10px;
-            }
-
-            .stat-item .num {
-                font-size: 1.4rem;
-            }
-
-            .year-nav {
-                gap: 6px;
-                padding: 8px 12px;
-                flex-wrap: wrap;
-            }
-
-            .year-nav a {
-                padding: 4px 10px;
-                font-size: 0.82rem;
-            }
-
-            .back-to-top {
-                bottom: 16px;
-                right: 16px;
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
-            }
-        }
 
         /* ── 標籤篩選列 ── */
         .tag-filter {
@@ -941,10 +908,6 @@
         }
         body.dark-mode .featured-mobile-card .fm-title { color: #c8d8e4; }
 
-        @media (max-width: 1140px) {
-            .featured-mobile { display: flex; }
-        }
-
         /* ── 全文搜尋列 ── */
         .search-bar {
             display: flex;
@@ -1089,7 +1052,7 @@
         <a href="#year-2024">2024</a>
         <a href="#year-2025">2025</a>
         <a href="#year-2026">2026</a>
-        <a href="#column-section" style="border-color:#a0c4d8;color:#2980b9;">✍ 專欄</a>
+        <a href="#column-section" class="col-link">✍ 專欄</a>
         <button id="theme-toggle" class="theme-toggle-btn" title="切換日間／夜間模式">🌙</button>
     </nav>
 
@@ -1745,20 +1708,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // 專欄連結 hover 高亮
-        const colLink = document.querySelector('.year-nav a[href="#column-section"]');
-        if (colLink) {
-            colLink.addEventListener('mouseenter', () => {
-                colLink.style.background = '#2471a3';
-                colLink.style.color = '#fff';
-                colLink.style.borderColor = '#2471a3';
-            });
-            colLink.addEventListener('mouseleave', () => {
-                colLink.style.background = '';
-                colLink.style.color = '#2980b9';
-                colLink.style.borderColor = '#a0c4d8';
-            });
-        }
     </script>
 
     <footer class="site-footer">
@@ -1840,9 +1789,11 @@
         ctrl.enableZoom      = false;
         ctrl.enablePan       = false;
 
-        // 視窗縮放時同步更新地球儀尺寸
+        // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
+        let _resizeStarFn = null; // 由星空 callback 設定
         window.addEventListener('resize', () => {
             globe.width(container.clientWidth).height(container.clientHeight);
+            if (_resizeStarFn) _resizeStarFn();
         });
 
         // 初始視角（altitude 較小 → 地球較大）
@@ -1894,8 +1845,8 @@
                     ctx.fill();
                 }
 
-                // 視窗縮放時同步重繪
-                window.addEventListener('resize', function() {
+                // 星空重繪函式，由外層 resize listener 統一呼叫
+                _resizeStarFn = function() {
                     starCanvas.width  = container.clientWidth;
                     starCanvas.height = container.clientHeight;
                     ctx.fillStyle = '#050d14';
@@ -1910,7 +1861,7 @@
                         ctx.fillStyle = `rgba(255,255,255,${alpha})`;
                         ctx.fill();
                     }
-                });
+                };
             } catch(e) { /* 若瀏覽器不支援則靜默略過 */ }
         }, 200);
 
