@@ -510,7 +510,7 @@ details.explainer[open]>summary::after{content:'－';}
         <thead><tr><th>國家</th><th>工業力點數</th><th>起始國債/GDP</th><th>GDP懲罰乘數</th></tr></thead>
         <tbody>
           <tr><td>🇺🇸 美國</td><td><span class="pts-chip">95</span></td><td>122%</td><td><span class="gdp-chip">×0.03</span></td></tr>
-          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">82</span></td><td>28% <sup>*</sup></td><td><span class="gdp-chip">×0.05</span></td></tr>
+          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">82</span></td><td>83% <sup>*</sup></td><td><span class="gdp-chip">×0.05</span></td></tr>
           <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>16%</td><td><span class="gdp-chip">×0.4</span></td></tr>
           <tr><td>🇮🇱 以色列</td><td><span class="pts-chip">20</span></td><td>67%</td><td><span class="gdp-chip">×0.5</span></td></tr>
           <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">10</span></td><td>27% <sup>†</sup></td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
@@ -521,8 +521,8 @@ details.explainer[open]>summary::after{content:'－';}
         </tbody>
       </table>
       <p class="expl-para" style="margin-top:10px;font-size:.75rem;color:#3a5a75;line-height:1.7;">
-        國債/GDP 資料來源：<strong>CEIC 2024</strong>（中央政府口徑）<br>
-        <sup>*</sup> 中國 CEIC 為中央政府口徑（~28%）；若含地方政府融資平台（LGFV），IMF 廣義估算達 83%。<br>
+        國債/GDP 資料來源：<strong>CEIC 2024</strong>（各國採中央政府口徑）；中國採 <strong>IMF WEO 2024</strong> 廣義口徑<br>
+        <sup>*</sup> 中國 CEIC 中央政府口徑僅 ~28%，但含地方政府融資平台（LGFV）的 IMF 廣義估算為 83%，本遊戲採後者以反映真實財政壓力。<br>
         <sup>†</sup> 台灣非 CEIC/IMF 成員，數據來源：行政院主計總處（2024）。<br>
         <sup>‡</sup> 伊朗受制裁影響，CEIC 口徑過窄（僅對銀行體系債務），本遊戲採廣義估算值。
       </p>
@@ -584,7 +584,7 @@ const COUNTRY_DATA = {
     ind:{ ship:'<1%（全球）', steel:'8,000萬噸/年（全球4%）', robot:'~33,000台/年（全球7%）', rare:'採礦13%，精煉<5%', machine:'全球第三大生產國' }
   },
   '中國': {
-    pts:82, debtPct:28, gdpMult:0.05,
+    pts:82, debtPct:83, gdpMult:0.05,
     ind:{ ship:'55–60%（超過其他所有國家總和）', steel:'11億噸/年（全球54%）', robot:'~270,000台/年（全球70%）', rare:'採礦60%，精煉85%', machine:'全球最大生產國與消費國' }
   },
   '俄羅斯': {
