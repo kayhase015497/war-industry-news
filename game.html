@@ -490,11 +490,12 @@ details.explainer[open]>summary::after{content:'－';}
     <div class="explainer-body">
       <p class="expl-para">
         真實難度的工業力點數，以<strong>戰時軍事工業動員能力</strong>為核心，
-        綜合以下 9 項指標校正，並以台灣為基準（14點）進行相對比較：
+        綜合以下 10 項指標校正，並以台灣為基準（10點）進行相對比較：
       </p>
       <div class="method-grid">
         <div class="method-item"><div class="mi-title">MVA 製造業增加值</div><div class="mi-desc">衡量實際工業產出規模，為主要權重指標</div></div>
-        <div class="method-item"><div class="mi-title">ECI 經濟複雜性指數</div><div class="mi-desc">衡量產品多樣性與精密度，反映高端軍工潛力</div></div>
+        <div class="method-item"><div class="mi-title">ECI 經濟複雜性指數</div><div class="mi-desc">衡量產品多樣性與精密度，反映高端軍工潛力（有規模上限）</div></div>
+        <div class="method-item"><div class="mi-title">造艦噸位</div><div class="mi-desc">最直接的軍工動員指標——造船能力等比反映裝甲、武器生產潛力</div></div>
         <div class="method-item"><div class="mi-title">探明儲量</div><div class="mi-desc">自有能源與礦產資源，決定戰時自給能力</div></div>
         <div class="method-item"><div class="mi-title">關鍵礦物</div><div class="mi-desc">鋰、鈷等對國防與精密武器不可或缺的原料</div></div>
         <div class="method-item"><div class="mi-title">供應鏈韌性</div><div class="mi-desc">受制裁或封鎖時，維持生產的能力</div></div>
@@ -503,30 +504,55 @@ details.explainer[open]>summary::after{content:'－';}
         <div class="method-item"><div class="mi-title">基礎設施</div><div class="mi-desc">鐵路、港口、電網的戰時動員支撐力</div></div>
         <div class="method-item"><div class="mi-title">能源成本</div><div class="mi-desc">低能源成本可放大工業產出效率</div></div>
       </div>
-      <table class="country-table" style="margin-top:16px;">
+
+      <p class="expl-para" style="margin-top:16px;"><strong>各國工業力評分與國債數據</strong></p>
+      <table class="country-table">
         <thead><tr><th>國家</th><th>工業力點數</th><th>起始國債/GDP</th><th>GDP懲罰乘數</th></tr></thead>
         <tbody>
           <tr><td>🇺🇸 美國</td><td><span class="pts-chip">95</span></td><td>122%</td><td><span class="gdp-chip">×0.03</span></td></tr>
-          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">78</span></td><td>83% <sup>*</sup></td><td><span class="gdp-chip">×0.05</span></td></tr>
-          <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>21%</td><td><span class="gdp-chip">×0.4</span></td></tr>
+          <tr><td>🇨🇳 中國</td><td><span class="pts-chip">82</span></td><td>28% <sup>*</sup></td><td><span class="gdp-chip">×0.05</span></td></tr>
+          <tr><td>🇷🇺 俄羅斯</td><td><span class="pts-chip">40</span></td><td>16%</td><td><span class="gdp-chip">×0.4</span></td></tr>
           <tr><td>🇮🇱 以色列</td><td><span class="pts-chip">20</span></td><td>67%</td><td><span class="gdp-chip">×0.5</span></td></tr>
-          <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">14</span></td><td>27% <sup>†</sup></td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
-          <tr><td>🇮🇷 伊朗</td><td><span class="pts-chip">12</span></td><td>35% <sup>‡</sup></td><td><span class="gdp-chip">×2.0</span></td></tr>
-          <tr><td>🇺🇦 烏克蘭</td><td><span class="pts-chip">8</span></td><td>97%</td><td><span class="gdp-chip">×4.0</span></td></tr>
+          <tr><td>🇹🇼 台灣</td><td><span class="pts-chip">10</span></td><td>27% <sup>†</sup></td><td><span class="gdp-chip">×1.0（基準）</span></td></tr>
+          <tr><td>🇮🇷 伊朗</td><td><span class="pts-chip">12</span></td><td>30% <sup>‡</sup></td><td><span class="gdp-chip">×2.0</span></td></tr>
+          <tr><td>🇺🇦 烏克蘭</td><td><span class="pts-chip">8</span></td><td>90%</td><td><span class="gdp-chip">×4.0</span></td></tr>
           <tr><td>🏴 胡塞武裝</td><td><span class="pts-chip">4</span></td><td colspan="2">特殊規則（光腳的不怕穿鞋的）</td></tr>
           <tr><td>🌐 多線聯盟</td><td><span class="pts-chip">30</span></td><td>60%</td><td><span class="gdp-chip">×1.5</span></td></tr>
         </tbody>
       </table>
       <p class="expl-para" style="margin-top:10px;font-size:.75rem;color:#3a5a75;line-height:1.7;">
-        資料來源：<strong>IMF World Economic Outlook Database, October 2024</strong>（政府債務佔GDP比，一般政府總負債口徑）<br>
-        <sup>*</sup> 中國官方口徑約 51%；IMF 含地方政府融資平台（LGFV）廣義估算約 83%，本遊戲採 IMF 口徑。<br>
-        <sup>†</sup> 台灣非 IMF 成員，數據來源：行政院主計總處（2024）。<br>
-        <sup>‡</sup> 伊朗受制裁影響，IMF 數據有限，為估算值。
+        國債/GDP 資料來源：<strong>CEIC 2024</strong>（中央政府口徑）<br>
+        <sup>*</sup> 中國 CEIC 為中央政府口徑（~28%）；若含地方政府融資平台（LGFV），IMF 廣義估算達 83%。<br>
+        <sup>†</sup> 台灣非 CEIC/IMF 成員，數據來源：行政院主計總處（2024）。<br>
+        <sup>‡</sup> 伊朗受制裁影響，CEIC 口徑過窄（僅對銀行體系債務），本遊戲採廣義估算值。
       </p>
+
+      <p class="expl-para" style="margin-top:16px;"><strong>各國關鍵工業指標</strong></p>
+      <div style="overflow-x:auto;">
+      <table class="country-table">
+        <thead><tr><th>國家</th><th>🚢 造艦噸位（全球佔比）</th><th>🔩 鋼鐵產量</th><th>🤖 工業機器人/年</th><th>⛏ 稀土精煉</th><th>🏭 機床</th></tr></thead>
+        <tbody>
+          <tr><td>🇺🇸 美國</td><td>&lt;1%</td><td>8,000萬噸（全球4%）</td><td>~33,000台（全球7%）</td><td>採礦13%，精煉&lt;5%</td><td>全球第三大生產國</td></tr>
+          <tr><td>🇨🇳 中國</td><td><strong>55–60%（超過其他所有國家總和）</strong></td><td><strong>11億噸（全球54%）</strong></td><td><strong>~270,000台（全球70%）</strong></td><td><strong>採礦60%，精煉85%</strong></td><td><strong>全球最大生產國與消費國</strong></td></tr>
+          <tr><td>🇷🇺 俄羅斯</td><td>~1%</td><td>7,600萬噸（全球4%）</td><td>~7,000台（偏低）</td><td>鈦、鎳豐富；稀土精煉有限</td><td>蘇聯遺產，產能萎縮中</td></tr>
+          <tr><td>🇮🇱 以色列</td><td>無商業造艦</td><td>~100萬噸</td><td>精密製造，絕對量小</td><td>無顯著儲量</td><td>高端精密，規模小</td></tr>
+          <tr><td>🇹🇼 台灣</td><td>&lt;1%</td><td>~2,100萬噸</td><td>~11,000台（半導體自動化）</td><td>依賴進口</td><td>高品質CNC，出口導向</td></tr>
+          <tr><td>🇮🇷 伊朗</td><td>波斯灣小型船廠</td><td>~3,200萬噸（全球前十）</td><td>自動化程度低</td><td>鐵礦豐富，稀土有限</td><td>受制裁，靠仿製改裝</td></tr>
+          <tr><td>🇺🇦 烏克蘭</td><td>主要廠已摧毀</td><td>戰前~2,100萬噸，戰時~700萬噸</td><td>戰前偏低，戰時停滯</td><td>鈦、鋰豐富但無法開採</td><td>戰時嚴重受損</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="expl-para" style="margin-top:10px;font-size:.75rem;color:#3a5a75;">
+        資料來源：世界鋼鐵協會（2023）、IFR 國際機器人聯合會（2023）、USGS 稀土報告（2024）、Clarksons Research 造艦統計（2023）
+      </p>
+
       <p class="expl-para" style="margin-top:12px;">
+        <strong>為何中：台 ≈ 8.2:1？</strong>
+        台灣 ECI 全球前五，但造艦噸位不及全球 1%，中國則超過全球總和的一半。
+        ECI 代表製造精密度，不代表規模——本遊戲引入「MVA 規模上限」，使高 ECI 小國無法突破體量天花板。
+        台灣 10 分仍高於烏克蘭（8 分），因台灣無戰損、半導體供應鏈完整、且有美援背書。<br>
         <strong>為何俄：烏 ≈ 5:1？</strong>
-        戰時俄羅斯炮彈月產量已超越北約總和，烏克蘭工業在戰爭中大規模損毀，高度依賴北約補給才能維持前線。
-        中：台 ≈ 5.6:1，反映中國製造業規模是台灣的數十倍，但台灣憑藉高 ECI 仍保有精密武器自製能力。
+        戰時俄羅斯炮彈月產量已超越北約總和，烏克蘭工業大規模損毀，高度依賴北約補給才能維持前線。
       </p>
     </div>
   </details>
@@ -550,17 +576,39 @@ const RESOURCES = [
   { id:'mineral',  icon:'⛏', name:'礦產',        desc:'關鍵原材料、工業生產鏈' },
 ];
 
-// 各國真實難度數據（國債/GDP 採 IMF WEO October 2024 數據）
+// 各國真實難度數據（國債/GDP 採 CEIC 2024；中國為中央政府口徑）
+// 工業指標：造艦噸位/鋼鐵產量/工業機器人/稀土精煉/機床
 const COUNTRY_DATA = {
-  '美國':     { pts:95, debtPct:122, gdpMult:0.03 },
-  '中國':     { pts:78, debtPct:83,  gdpMult:0.05 },
-  '俄羅斯':   { pts:40, debtPct:21,  gdpMult:0.4  },
-  '以色列':   { pts:20, debtPct:67,  gdpMult:0.5  },
-  '台灣':     { pts:14, debtPct:27,  gdpMult:1.0  },
-  '伊朗':     { pts:12, debtPct:35,  gdpMult:2.0  },
-  '烏克蘭':   { pts:8,  debtPct:97,  gdpMult:4.0  },
-  '胡塞武裝': { pts:4,  debtPct:null, gdpMult:null },
-  '多線聯盟': { pts:30, debtPct:60,  gdpMult:1.5  },
+  '美國': {
+    pts:95, debtPct:122, gdpMult:0.03,
+    ind:{ ship:'<1%（全球）', steel:'8,000萬噸/年（全球4%）', robot:'~33,000台/年（全球7%）', rare:'採礦13%，精煉<5%', machine:'全球第三大生產國' }
+  },
+  '中國': {
+    pts:82, debtPct:28, gdpMult:0.05,
+    ind:{ ship:'55–60%（超過其他所有國家總和）', steel:'11億噸/年（全球54%）', robot:'~270,000台/年（全球70%）', rare:'採礦60%，精煉85%', machine:'全球最大生產國與消費國' }
+  },
+  '俄羅斯': {
+    pts:40, debtPct:16, gdpMult:0.4,
+    ind:{ ship:'~1%', steel:'7,600萬噸/年（全球4%）', robot:'~7,000台/年（工業化程度偏低）', rare:'鈦、鎳儲量豐富；稀土精煉有限', machine:'蘇聯遺產，產能持續萎縮' }
+  },
+  '以色列': {
+    pts:20, debtPct:67, gdpMult:0.5,
+    ind:{ ship:'無商業造艦能力', steel:'~100萬噸/年', robot:'精密製造重鎮，絕對量小', rare:'無顯著儲量', machine:'高端精密機具，規模小' }
+  },
+  '台灣': {
+    pts:10, debtPct:27, gdpMult:1.0,
+    ind:{ ship:'<1%', steel:'~2,100萬噸/年', robot:'~11,000台/年（半導體封裝自動化）', rare:'依賴進口，精煉能力有限', machine:'高品質CNC，出口導向' }
+  },
+  '伊朗': {
+    pts:12, debtPct:30, gdpMult:2.0,
+    ind:{ ship:'波斯灣小型船廠', steel:'~3,200萬噸/年（全球前十）', robot:'自動化程度低', rare:'鐵礦豐富，稀土有限', machine:'受制裁，主要靠仿製與改裝' }
+  },
+  '烏克蘭': {
+    pts:8, debtPct:90, gdpMult:4.0,
+    ind:{ ship:'主要造船廠已遭摧毀', steel:'戰前~2,100萬噸，戰時驟降至~700萬噸', robot:'戰前偏低，戰時停滯', rare:'鈦、鋰儲量豐富但無法正常開採', machine:'戰前尚可，戰時嚴重受損' }
+  },
+  '胡塞武裝': { pts:4,  debtPct:null, gdpMult:null, ind:null },
+  '多線聯盟': { pts:30, debtPct:60,   gdpMult:1.5,  ind:null },
 };
 
 // 情景定義
