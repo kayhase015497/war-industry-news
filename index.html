@@ -344,6 +344,42 @@
             background: linear-gradient(to left, transparent, #2980b955);
         }
 
+        /* ── 音樂播放器 ── */
+        .music-btn {
+            position: fixed;
+            bottom: 82px;
+            right: 28px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1a1a2e;
+            border: 2px solid rgba(192,57,43,0.6);
+            color: #c0392b;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+        .music-btn:hover {
+            background: #c0392b;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+        .music-btn.playing {
+            border-color: #c0392b;
+            color: #c0392b;
+            animation: music-pulse 2s ease-in-out infinite;
+        }
+        @keyframes music-pulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 0 rgba(192,57,43,0.4); }
+            50% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 8px rgba(192,57,43,0); }
+        }
+
         /* ── 回頂部按鈕 ── */
         .back-to-top {
             position: fixed;
@@ -1667,6 +1703,12 @@
 
     </div><!-- /page-layout -->
 
+    <!-- 背景音樂播放器 -->
+    <iframe id="sc-player"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/scottbuckley/incredulity-cc-by&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
+        style="display:none" allow="autoplay"></iframe>
+    <button class="music-btn" id="music-btn" aria-label="播放背景音樂" title="背景音樂">&#9834;</button>
+
     <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
 
     <script>
@@ -2153,6 +2195,60 @@
         applyFilter('all', '');
     })();
     </script>
+
+    <script>
+    // ── 背景音樂控制 ──────────────────────────────────────────────
+    (function () {
+        const btn = document.getElementById('music-btn');
+        const iframe = document.getElementById('sc-player');
+        let widget = null;
+        let playing = false;
+        let ready = false;
+        let pendingPlay = false;
+
+        function initWidget() {
+            if (widget) return;
+            widget = SC.Widget(iframe);
+            widget.bind(SC.Widget.Events.READY, function () {
+                ready = true;
+                if (pendingPlay) { widget.play(); pendingPlay = false; }
+            });
+            widget.bind(SC.Widget.Events.FINISH, function () {
+                widget.seekTo(0);
+                widget.play();
+            });
+        }
+
+        function startPlay() {
+            if (!widget) {
+                initWidget();
+                if (!ready) { pendingPlay = true; return; }
+            }
+            widget.play();
+        }
+
+        btn.addEventListener('click', function () {
+            playing = !playing;
+            btn.classList.toggle('playing', playing);
+            btn.setAttribute('aria-label', playing ? '暫停音樂' : '播放背景音樂');
+            if (playing) {
+                startPlay();
+            } else {
+                if (widget) widget.pause();
+            }
+        });
+
+        // 首次點擊頁面任意處自動開始（繞過瀏覽器自動播放限制）
+        document.addEventListener('click', function autoStart() {
+            document.removeEventListener('click', autoStart);
+            playing = true;
+            btn.classList.add('playing');
+            btn.setAttribute('aria-label', '暫停音樂');
+            startPlay();
+        }, { once: true });
+    })();
+    </script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
 
 </body>
 </html>
