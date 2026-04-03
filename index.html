@@ -366,9 +366,13 @@
             box-shadow: 0 4px 16px rgba(0,0,0,0.5);
         }
         .music-btn:hover {
-            background: #c0392b;
-            color: #fff;
+            border-color: #e74c3c;
             transform: translateY(-3px);
+        }
+        @media (hover: hover) {
+            .music-btn:hover {
+                background: #2a1a1e;
+            }
         }
         .music-btn.playing {
             border-color: #c0392b;
@@ -2197,6 +2201,7 @@
     })();
     </script>
 
+    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
     // ── 背景音樂控制 ──────────────────────────────────────────────
     (function () {
@@ -2207,49 +2212,50 @@
         let ready = false;
         let pendingPlay = false;
 
+        function setPlaying(state) {
+            playing = state;
+            btn.classList.toggle('playing', playing);
+            btn.innerHTML = playing ? '&#10074;&#10074;' : '&#9834;';
+            btn.setAttribute('aria-label', playing ? '暫停音樂' : '播放音樂');
+        }
+
         function initWidget() {
             if (widget) return;
             widget = SC.Widget(iframe);
             widget.bind(SC.Widget.Events.READY, function () {
                 ready = true;
-                if (pendingPlay) { widget.play(); pendingPlay = false; }
+                if (pendingPlay) { pendingPlay = false; widget.play(); }
             });
             widget.bind(SC.Widget.Events.FINISH, function () {
-                widget.seekTo(0);
-                widget.play();
+                widget.seekTo(0); widget.play();
             });
         }
 
         function startPlay() {
-            if (!widget) {
-                initWidget();
-                if (!ready) { pendingPlay = true; return; }
-            }
+            if (!widget) initWidget();
+            if (!ready) { pendingPlay = true; return; }
             widget.play();
         }
 
         btn.addEventListener('click', function () {
-            playing = !playing;
-            btn.classList.toggle('playing', playing);
-            btn.setAttribute('aria-label', playing ? '暫停音樂' : '播放背景音樂');
             if (playing) {
-                startPlay();
-            } else {
+                setPlaying(false);
                 if (widget) widget.pause();
+            } else {
+                setPlaying(true);
+                startPlay();
             }
         });
 
-        // 首次點擊頁面任意處自動開始（繞過瀏覽器自動播放限制）
-        document.addEventListener('click', function autoStart() {
+        // 首次點擊頁面任意處自動開始（排除音樂按鈕本身，避免雙重觸發）
+        document.addEventListener('click', function autoStart(e) {
+            if (e.target === btn) return;
             document.removeEventListener('click', autoStart);
-            playing = true;
-            btn.classList.add('playing');
-            btn.setAttribute('aria-label', '暫停音樂');
+            setPlaying(true);
             startPlay();
-        }, { once: true });
+        });
     })();
     </script>
-    <script src="https://w.soundcloud.com/player/api.js"></script>
 
 </body>
 </html>
