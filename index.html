@@ -1709,9 +1709,7 @@
     </div><!-- /page-layout -->
 
     <!-- 背景音樂播放器 -->
-    <iframe id="sc-player"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/scottbuckley/incredulity-cc-by&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
-        style="display:none" allow="autoplay"></iframe>
+    <audio id="bg-music" src="music/incredulity.mp3" loop preload="none"></audio>
     <button class="music-btn" id="music-btn" aria-label="播放背景音樂" title="背景音樂">&#9834;</button>
 
     <button class="back-to-top" aria-label="回到頂部">&#8679;</button>
@@ -2201,15 +2199,12 @@
     })();
     </script>
 
-    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script>
     // ── 背景音樂控制 ──────────────────────────────────────────────
     (function () {
         const btn = document.getElementById('music-btn');
-        const iframe = document.getElementById('sc-player');
-        let widget = null;
+        const audio = document.getElementById('bg-music');
         let playing = false;
-        let ready = false;
 
         function setPlaying(state) {
             playing = state;
@@ -2218,50 +2213,26 @@
             btn.setAttribute('aria-label', playing ? '暫停音樂' : '播放音樂');
         }
 
-        function initWidget() {
-            if (widget) return;
-            widget = SC.Widget(iframe);
-            widget.bind(SC.Widget.Events.READY, function () {
-                ready = true;
-            });
-            widget.bind(SC.Widget.Events.FINISH, function () {
-                widget.seekTo(0); widget.play();
-            });
-        }
-
-        // 第一次播放：直接改 iframe src 為 auto_play=true，
-        // 讓 iframe 自己重載播放，繞過 postMessage 非同步限制
-        function firstPlay() {
-            iframe.src = iframe.src.replace('auto_play=false', 'auto_play=true');
-            initWidget();
-        }
-
         btn.addEventListener('click', function () {
             if (playing) {
+                audio.pause();
                 setPlaying(false);
-                if (widget && ready) widget.pause();
             } else {
+                audio.play();
                 setPlaying(true);
-                if (!ready) {
-                    firstPlay();
-                } else {
-                    widget.play();
-                }
             }
         });
 
-        // 首次互動自動開始（capture phase 防止 stopPropagation 攔截，同時監聽 touchend）
+        // 首次互動自動開始（capture phase + touchend，排除音樂按鈕本身）
         function autoStart(e) {
-            if (e.target === btn || (e.target && btn.contains(e.target))) return;
+            if (e.target === btn || btn.contains(e.target)) return;
             document.removeEventListener('click', autoStart, true);
             document.removeEventListener('touchend', autoStart, true);
+            audio.play();
             setPlaying(true);
-            firstPlay(); // 在 user gesture call stack 內直接改 src，瀏覽器允許播放
         }
         document.addEventListener('click', autoStart, true);
         document.addEventListener('touchend', autoStart, true);
-    })();
-    </script>
     })();
     </script>
 
