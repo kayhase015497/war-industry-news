@@ -2247,13 +2247,16 @@
             }
         });
 
-        // 首次點擊頁面任意處自動開始（排除音樂按鈕本身，避免雙重觸發）
-        document.addEventListener('click', function autoStart(e) {
-            if (e.target === btn) return;
-            document.removeEventListener('click', autoStart);
+        // 首次互動自動開始（capture phase 防止 stopPropagation 攔截，同時監聽 touchend）
+        function autoStart(e) {
+            if (e.target === btn || (e.target && btn.contains(e.target))) return;
+            document.removeEventListener('click', autoStart, true);
+            document.removeEventListener('touchend', autoStart, true);
             setPlaying(true);
             startPlay();
-        });
+        }
+        document.addEventListener('click', autoStart, true);
+        document.addEventListener('touchend', autoStart, true);
     })();
     </script>
 
