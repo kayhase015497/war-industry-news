@@ -2210,7 +2210,6 @@
         let widget = null;
         let playing = false;
         let ready = false;
-        let pendingPlay = false;
 
         function setPlaying(state) {
             playing = state;
@@ -2224,26 +2223,30 @@
             widget = SC.Widget(iframe);
             widget.bind(SC.Widget.Events.READY, function () {
                 ready = true;
-                if (pendingPlay) { pendingPlay = false; widget.play(); }
             });
             widget.bind(SC.Widget.Events.FINISH, function () {
                 widget.seekTo(0); widget.play();
             });
         }
 
-        function startPlay() {
-            if (!widget) initWidget();
-            if (!ready) { pendingPlay = true; return; }
-            widget.play();
+        // 第一次播放：直接改 iframe src 為 auto_play=true，
+        // 讓 iframe 自己重載播放，繞過 postMessage 非同步限制
+        function firstPlay() {
+            iframe.src = iframe.src.replace('auto_play=false', 'auto_play=true');
+            initWidget();
         }
 
         btn.addEventListener('click', function () {
             if (playing) {
                 setPlaying(false);
-                if (widget) widget.pause();
+                if (widget && ready) widget.pause();
             } else {
                 setPlaying(true);
-                startPlay();
+                if (!ready) {
+                    firstPlay();
+                } else {
+                    widget.play();
+                }
             }
         });
 
@@ -2253,10 +2256,12 @@
             document.removeEventListener('click', autoStart, true);
             document.removeEventListener('touchend', autoStart, true);
             setPlaying(true);
-            startPlay();
+            firstPlay(); // 在 user gesture call stack 內直接改 src，瀏覽器允許播放
         }
         document.addEventListener('click', autoStart, true);
         document.addEventListener('touchend', autoStart, true);
+    })();
+    </script>
     })();
     </script>
 
