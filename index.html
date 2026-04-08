@@ -319,29 +319,6 @@
             line-height: 1.5;
         }
 
-        /* ── 專欄錨點標記 ── */
-        .column-marker {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 20px 0 14px;
-            font-size: 0.72rem;
-            color: #2980b9;
-            letter-spacing: 0.1em;
-        }
-
-        .column-marker::before,
-        .column-marker::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #2980b955);
-        }
-
-        .column-marker::before {
-            background: linear-gradient(to left, transparent, #2980b955);
-        }
-
         /* ── 音樂播放器 ── */
         .music-btn {
             position: fixed;
@@ -1172,8 +1149,8 @@
 <a href="#year-2024">2024</a>
 <a href="#year-2025">2025</a>
 <a href="#year-2026">2026</a>
-<a class="col-link" href="#column-section">✍ 專欄</a>
-<a class="col-link" href="game.html" style="background:#c0392b;color:#fff;border-color:#c0392b;">🎮 工業力試煉</a>
+
+
 <button class="theme-toggle-btn" id="theme-toggle" title="切換日間／夜間模式">🌙</button>
 </nav>
 <div class="page-layout">
@@ -1329,7 +1306,7 @@
 <div class="year-count">50 篇</div>
 <button aria-label="展開/收合" class="year-toggle">▼</button></div>
 <div class="year-progress"><div class="year-progress-bar"></div></div><div class="news-list-wrapper"><div class="news-list">
-<div class="column-marker" id="column-section">✍ 張威翔 專欄起始</div>
+
 <div class="news-card">
 <div class="date">2025-12-28</div>
 <span class="news-badge geopolitics">Geo</span><a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank">Geopolitics》不是穿越！2019年就寫好的俄烏戰爭劇本</a>
@@ -1434,13 +1411,13 @@
 <span class="news-badge military">Military</span><a href="https://www.chinatimes.com/realtimenews/20250524000026-260417" target="_blank">Military》普丁是如何逐漸佔上風？揭開俄攻勢升溫內幕 烏深陷難局</a>
 </div><div class="news-card">
 <div class="date">2025-04-29</div>
-<a href="https://www.chinatimes.com/realtimenews/20250429004635-260417?chdtv" target="_blank">正視軍工產能問題 愛沙尼亞擬建RDX炸藥廠</a>
+<span class="news-badge series">工業力</span><a href="https://www.chinatimes.com/realtimenews/20250429004635-260417?chdtv" target="_blank">正視軍工產能問題 愛沙尼亞擬建RDX炸藥廠</a>
 </div><div class="news-card">
 <div class="date">2025-04-29</div>
-<a href="https://www.chinatimes.com/realtimenews/20250429005165-260417?chdtv" target="_blank">美軍研發「不需要也用不到」M10坦克 成採購體制失敗縮影</a>
+<span class="news-badge series">工業力</span><a href="https://www.chinatimes.com/realtimenews/20250429005165-260417?chdtv" target="_blank">美軍研發「不需要也用不到」M10坦克 成採購體制失敗縮影</a>
 </div><div class="news-card">
 <div class="date">2025-04-29</div>
-<a href="https://www.chinatimes.com/realtimenews/20250426003531-260417?chdtv" target="_blank">戰場勝利始於生產 美國力拼砲彈月產能10萬發</a>
+<span class="news-badge series">工業力</span><a href="https://www.chinatimes.com/realtimenews/20250426003531-260417?chdtv" target="_blank">戰場勝利始於生產 美國力拼砲彈月產能10萬發</a>
 </div><div class="news-card">
 <div class="date">2025-04-26</div>
 <span class="news-badge series">工業力</span><a href="https://www.chinatimes.com/realtimenews/20250424004553-260417?chdtv" target="_blank">北歐4國聯合採購870輛CV90步兵戰鬥車 標準化降低成本</a>
