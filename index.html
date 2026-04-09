@@ -248,6 +248,84 @@
             border-color: #c0392b;
         }
 
+        /* ── 遊戲 CTA 橫幅 ── */
+        .game-banner {
+            background: linear-gradient(135deg, #0f1f30 0%, #1a0a0a 100%);
+            border: 1px solid #c0392b;
+            border-radius: 10px;
+            padding: 20px 28px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 20px,
+                rgba(192,57,43,0.03) 20px,
+                rgba(192,57,43,0.03) 21px
+            );
+            pointer-events: none;
+        }
+
+        .game-banner .game-info h3 {
+            margin: 0 0 4px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+        }
+
+        .game-banner .game-info p {
+            margin: 0;
+            font-size: 0.82rem;
+            color: #7f9aac;
+            line-height: 1.5;
+        }
+
+        .game-banner .game-badge {
+            display: inline-block;
+            background: #c0392b;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            padding: 2px 8px;
+            border-radius: 2px;
+            margin-bottom: 6px;
+        }
+
+        .game-banner .play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #c0392b;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: background 0.2s, transform 0.15s;
+            position: relative;
+        }
+
+        .game-banner .play-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-1px);
+        }
+
         /* ── 響應式 ── */
         @media (max-width: 600px) {
             .news-card {
@@ -292,9 +370,21 @@
         <a href="#year-2023">2023</a>
         <a href="#year-2024">2024</a>
         <a href="#year-2025">2025</a>
+        <a href="game-v2/dist/" style="background:#c0392b;color:#fff;border-color:#c0392b;">▶ 試煉</a>
     </nav>
 
     <div class="container">
+
+        <!-- 遊戲入口 -->
+        <div class="game-banner">
+            <div class="game-info">
+                <div class="game-badge">互動遊戲 v2.0</div>
+                <h3>工業力試煉 — 你能做出正確決策嗎？</h3>
+                <p>在倒數計時中配置工業資源、應對突發事件，比較你的決策與最優解。<br>
+                   3 個情景 · 9 個陣營 · 隨機事件系統 · 3D 地球儀背景</p>
+            </div>
+            <a class="play-btn" href="game-v2/dist/">▶&nbsp; 開始遊戲</a>
+        </div>
 
         <div class="stats-bar">
             <div class="stat-item">

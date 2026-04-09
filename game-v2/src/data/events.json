@@ -1,0 +1,167 @@
+[
+  {
+    "id": "black_sea_blockade",
+    "title": "俄羅斯封鎖黑海",
+    "description": "俄軍宣布黑海部分海域為危險區域，烏克蘭能源進口受阻，能源安全優先級大幅上升。",
+    "icon": "⚓",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "energy": 2, "naval": 1 }
+    },
+    "scenarios": ["ukraine_2024"]
+  },
+  {
+    "id": "nato_ammo_fire",
+    "title": "北約彈藥庫起火",
+    "description": "波蘭境內一處北約彈藥儲存設施發生火災，可分配砲彈點數緊急削減。",
+    "icon": "🔥",
+    "type": "point_loss",
+    "effects": {
+      "pointLoss": { "artillery": 2 }
+    },
+    "scenarios": ["ukraine_2024"]
+  },
+  {
+    "id": "satellite_detect",
+    "title": "衛星偵測敵方集結",
+    "description": "最新衛星影像顯示俄軍在前線以北集結大規模裝甲部隊，防空與後勤的重要性急速提升。",
+    "icon": "🛰️",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "air_defense": 2, "logistics": 1 }
+    },
+    "scenarios": ["ukraine_2024"]
+  },
+  {
+    "id": "civilian_factory",
+    "title": "民間工廠轉軍工",
+    "description": "多家民間製造商宣布轉型軍工生產，額外獲得生產力加成。",
+    "icon": "🏭",
+    "type": "point_gain",
+    "effects": {
+      "pointGain": 3
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait"]
+  },
+  {
+    "id": "intel_leak",
+    "title": "情報洩漏",
+    "description": "我方戰略佈署資訊遭洩漏，最優配置需重新評估——各方向的優先級發生輕微偏移。",
+    "icon": "🔓",
+    "type": "random_shift",
+    "effects": {
+      "randomShift": 1
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+  },
+  {
+    "id": "pla_drone_swarm",
+    "title": "解放軍無人機群測試",
+    "description": "解放軍對台灣防空識別區發動大規模無人機騷擾，防空資源消耗評估需上調。",
+    "icon": "🚁",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "air_defense": 3 }
+    },
+    "scenarios": ["taiwan_strait"]
+  },
+  {
+    "id": "submarine_detected",
+    "title": "偵測到敵方潛艦",
+    "description": "多艘不明潛艦在台灣海峽附近出沒，海上力量優先級顯著提升。",
+    "icon": "🌊",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "naval": 2, "cyber": 1 }
+    },
+    "scenarios": ["taiwan_strait", "red_sea"]
+  },
+  {
+    "id": "cyberattack_grid",
+    "title": "電網遭受網路攻擊",
+    "description": "敵方網路攻擊造成部分電網中斷，能源安全與網路防禦同步上升為優先項目。",
+    "icon": "💻",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "energy": 1, "cyber": 2 }
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait"]
+  },
+  {
+    "id": "houthi_new_missiles",
+    "title": "胡塞獲得新型飛彈",
+    "description": "情報顯示胡塞武裝獲得伊朗提供的長程反艦飛彈，海上防禦需求大幅增加。",
+    "icon": "🚀",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "naval": 3, "air_defense": 1 }
+    },
+    "scenarios": ["red_sea"]
+  },
+  {
+    "id": "trade_route_reopened",
+    "title": "替代航線部分開放",
+    "description": "蘇伊士替代路線談判有進展，能源與後勤壓力短暫緩解，可轉移部分資源。",
+    "icon": "🛳️",
+    "type": "point_gain",
+    "effects": {
+      "pointGain": 2
+    },
+    "scenarios": ["red_sea"]
+  },
+  {
+    "id": "allied_support",
+    "title": "盟國緊急支援",
+    "description": "盟國宣布緊急軍事援助計劃，額外獲得工業產能加成。",
+    "icon": "🤝",
+    "type": "point_gain",
+    "effects": {
+      "pointGain": 2
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+  },
+  {
+    "id": "supply_chain_disruption",
+    "title": "供應鏈中斷警報",
+    "description": "關鍵零件供應商遭網路攻擊，後勤補給效率下降，需重新分配資源。",
+    "icon": "⚠️",
+    "type": "point_loss",
+    "effects": {
+      "pointLoss": { "logistics": 1 }
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+  },
+  {
+    "id": "media_pressure",
+    "title": "國內輿論壓力",
+    "description": "國內媒體報導軍費開支過高，政治壓力迫使部分資源重新評估。",
+    "icon": "📰",
+    "type": "random_shift",
+    "effects": {
+      "randomShift": 1
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+  },
+  {
+    "id": "drone_factory_boost",
+    "title": "無人機生產線加速",
+    "description": "新型自動化生產線投入使用，無人機相關的電子戰能力快速提升。",
+    "icon": "⚙️",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "cyber": 2 }
+    },
+    "scenarios": ["ukraine_2024", "taiwan_strait"]
+  },
+  {
+    "id": "iran_involvement",
+    "title": "伊朗加大介入力度",
+    "description": "伊朗向代理武裝提供更多技術支援，整體威脅等級上升，各方向防禦壓力同步增加。",
+    "icon": "⚡",
+    "type": "weight_shift",
+    "effects": {
+      "weightShift": { "air_defense": 1, "naval": 2, "cyber": 1 }
+    },
+    "scenarios": ["red_sea"]
+  }
+]

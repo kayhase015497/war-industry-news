@@ -1,0 +1,212 @@
+[
+  {
+    "id": "ukraine_2024",
+    "title": "烏克蘭防線危機",
+    "subtitle": "東線陣地告急，工業調配決定戰局",
+    "year": 2024,
+    "region": "ukraine",
+    "coords": [49.0, 31.0],
+    "description": "俄軍在東部前線發動新一輪攻勢，烏克蘭防線承受巨大壓力。砲彈消耗速度遠超補給，防空系統遭持續壓制。你需要在有限的工業資源中做出取捨——究竟是優先補充砲彈，還是強化防空與能源基礎設施？",
+    "intel": [
+      { "text": "偵察：俄軍在哈爾科夫北部集結大量裝甲部隊", "accurate": true },
+      { "text": "情報：俄方計劃發動大規模無人機攻擊能源設施", "accurate": true },
+      { "text": "消息：俄海軍計劃突破黑海封鎖（可信度低）", "accurate": false }
+    ],
+    "roles": [
+      {
+        "id": "usa",
+        "name": "美國",
+        "flag": "🇺🇸",
+        "description": "全球最大軍工生產國，政治壓力限制援助規模",
+        "totalPoints": 20,
+        "baseDebt": 34.0,
+        "baseGDP": 27.4,
+        "optimalAllocation": {
+          "artillery": 6,
+          "air_defense": 5,
+          "energy": 2,
+          "logistics": 4,
+          "cyber": 2,
+          "naval": 1
+        },
+        "optimalDebtChange": -1.2
+      },
+      {
+        "id": "eu",
+        "name": "歐盟",
+        "flag": "🇪🇺",
+        "description": "工業基礎雄厚，成員國意見分歧協調困難",
+        "totalPoints": 18,
+        "baseDebt": 89.0,
+        "baseGDP": 18.3,
+        "optimalAllocation": {
+          "artillery": 5,
+          "air_defense": 4,
+          "energy": 4,
+          "logistics": 3,
+          "cyber": 1,
+          "naval": 1
+        },
+        "optimalDebtChange": -0.8
+      },
+      {
+        "id": "ukraine",
+        "name": "烏克蘭",
+        "flag": "🇺🇦",
+        "description": "本土作戰，民間工廠緊急轉型軍工生產",
+        "totalPoints": 14,
+        "baseDebt": 78.0,
+        "baseGDP": 0.16,
+        "optimalAllocation": {
+          "artillery": 5,
+          "air_defense": 4,
+          "energy": 2,
+          "logistics": 2,
+          "cyber": 1,
+          "naval": 0
+        },
+        "optimalDebtChange": -3.5
+      }
+    ]
+  },
+  {
+    "id": "taiwan_strait",
+    "title": "台灣海峽危機",
+    "subtitle": "解放軍軍演升溫，島鏈防線面臨考驗",
+    "year": 2025,
+    "region": "taiwan",
+    "coords": [23.5, 121.0],
+    "description": "解放軍宣布進行大規模「聯合利劍」演習，實際上已構成近距離封鎖。外交窗口隨時可能關閉，防空飛彈、反艦武器、網路防禦——你的工業產能只夠支撐其中幾項，如何取捨？",
+    "intel": [
+      { "text": "衛星：東部戰區多個機場戰機數量異常增加", "accurate": true },
+      { "text": "情報：解放軍後勤備戰未完成，衝突窗口有限", "accurate": true },
+      { "text": "消息：對方優先打擊能源設施而非軍事目標（可信度存疑）", "accurate": false }
+    ],
+    "roles": [
+      {
+        "id": "taiwan",
+        "name": "台灣",
+        "flag": "🇹🇼",
+        "description": "防衛本土，不對稱作戰是核心戰略",
+        "totalPoints": 16,
+        "baseDebt": 27.0,
+        "baseGDP": 0.76,
+        "optimalAllocation": {
+          "artillery": 2,
+          "air_defense": 5,
+          "energy": 2,
+          "logistics": 2,
+          "cyber": 3,
+          "naval": 2
+        },
+        "optimalDebtChange": -2.1
+      },
+      {
+        "id": "usa_pacific",
+        "name": "美國太平洋司令部",
+        "flag": "🇺🇸",
+        "description": "維護印太秩序，需在多個方向同步佈力",
+        "totalPoints": 22,
+        "baseDebt": 34.0,
+        "baseGDP": 27.4,
+        "optimalAllocation": {
+          "artillery": 2,
+          "air_defense": 5,
+          "energy": 2,
+          "logistics": 5,
+          "cyber": 4,
+          "naval": 4
+        },
+        "optimalDebtChange": -0.9
+      },
+      {
+        "id": "japan",
+        "name": "日本",
+        "flag": "🇯🇵",
+        "description": "突破防衛限制，擴大對台安全支援",
+        "totalPoints": 17,
+        "baseDebt": 261.0,
+        "baseGDP": 4.2,
+        "optimalAllocation": {
+          "artillery": 2,
+          "air_defense": 4,
+          "energy": 3,
+          "logistics": 4,
+          "cyber": 2,
+          "naval": 2
+        },
+        "optimalDebtChange": -1.5
+      }
+    ]
+  },
+  {
+    "id": "red_sea",
+    "title": "紅海航運危機",
+    "subtitle": "胡塞武裝封鎖全球貿易要道",
+    "year": 2024,
+    "region": "red_sea",
+    "coords": [15.0, 43.0],
+    "description": "葉門胡塞武裝以飛彈與無人機持續攻擊紅海商船，全球約12%貿易量受阻。多國海軍聯合護航，但攔截彈藥快速消耗——反艦飛彈、護衛艦隊、情報偵察，你如何分配有限的工業產能？",
+    "intel": [
+      { "text": "情報：胡塞武裝新獲伊朗提供的遠程反艦飛彈", "accurate": true },
+      { "text": "分析：聯軍艦隊攔截彈藥庫存不足3個月", "accurate": true },
+      { "text": "消息：胡塞武裝無人機儲量將於本月耗盡（可信度低）", "accurate": false }
+    ],
+    "roles": [
+      {
+        "id": "us_navy",
+        "name": "美國海軍",
+        "flag": "🇺🇸",
+        "description": "領導繁榮守護者行動，維護國際航道",
+        "totalPoints": 20,
+        "baseDebt": 34.0,
+        "baseGDP": 27.4,
+        "optimalAllocation": {
+          "artillery": 1,
+          "air_defense": 4,
+          "energy": 2,
+          "logistics": 3,
+          "cyber": 3,
+          "naval": 7
+        },
+        "optimalDebtChange": -0.7
+      },
+      {
+        "id": "uk_navy",
+        "name": "英國皇家海軍",
+        "flag": "🇬🇧",
+        "description": "參與護航行動，預算緊張責任艱鉅",
+        "totalPoints": 14,
+        "baseDebt": 100.0,
+        "baseGDP": 3.1,
+        "optimalAllocation": {
+          "artillery": 0,
+          "air_defense": 3,
+          "energy": 2,
+          "logistics": 3,
+          "cyber": 2,
+          "naval": 4
+        },
+        "optimalDebtChange": -1.8
+      },
+      {
+        "id": "trade_alliance",
+        "name": "貿易同盟",
+        "flag": "🚢",
+        "description": "多國商業聯合體，緊急組建武裝護航",
+        "totalPoints": 16,
+        "baseDebt": 65.0,
+        "baseGDP": 12.0,
+        "optimalAllocation": {
+          "artillery": 1,
+          "air_defense": 3,
+          "energy": 4,
+          "logistics": 4,
+          "cyber": 2,
+          "naval": 2
+        },
+        "optimalDebtChange": -1.1
+      }
+    ]
+  }
+]
