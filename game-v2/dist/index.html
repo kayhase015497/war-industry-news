@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>工業力試煉 v2 — 戰爭即工業力</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #050a14;
+      font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
+    }
+
+    #globe-container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* Dim globe for readability */
+    #globe-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(5,10,20,0.2) 0%, rgba(5,10,20,0.6) 100%);
+      pointer-events: none;
+    }
+
+    #game-container {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #game-container canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    #back-btn {
+      position: fixed;
+      top: 14px;
+      left: 16px;
+      z-index: 100;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      font-size: 12px;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    #back-btn:hover { color: rgba(255, 255, 255, 0.75); }
+  </style>
+  <script type="module" crossorigin src="./assets/index-Xihbq8Px.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/globe-5sGTA5iQ.js">
+  <link rel="modulepreload" crossorigin href="./assets/phaser-Bxxwf2Ny.js">
+</head>
+<body>
+  <a id="back-btn" href="../">← 返回新聞</a>
+  <div id="globe-container"></div>
+  <div id="game-container"></div>
+</body>
+</html>
