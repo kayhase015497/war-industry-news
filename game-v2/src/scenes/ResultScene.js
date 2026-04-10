@@ -177,6 +177,7 @@ export class ResultScene extends Phaser.Scene {
       });
       this.add.text(36, 516, roleData.rationale.headline, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '12px', fontStyle: 'bold', color: '#ecf0f1',
+        wordWrap: { width: 285 },
       });
       this.add.text(36, 536, roleData.rationale.body, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '10px', color: '#7f8c8d',

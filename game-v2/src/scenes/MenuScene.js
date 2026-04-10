@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { C, GAME_WIDTH, GAME_HEIGHT, DIFFICULTY } from '../constants.js';
 import { loadSave } from '../systems/SaveSystem.js';
+import { sfxClick } from '../audio.js';
 import { resumeAutoRotate } from '../globe.js';
 
 export class MenuScene extends Phaser.Scene {
@@ -161,6 +162,24 @@ export class MenuScene extends Phaser.Scene {
       color: '#34495e',
       lineSpacing: 5,
     });
+
+    // ── Methodology info button ───────────────────────────────────────────────
+    const infoBg = this.add.rectangle(200, 668, 300, 36, C.PANEL_LIGHT);
+    infoBg.setStrokeStyle(1, C.BORDER);
+    this.add.text(200, 668, 'ℹ  計分方法論 · 各國數據說明', {
+      fontFamily: "'Noto Sans TC', sans-serif",
+      fontSize: '12px',
+      color: '#7f8c8d',
+    }).setOrigin(0.5);
+
+    infoBg.setInteractive({ useHandCursor: true })
+      .on('pointerover',  () => { infoBg.setStrokeStyle(1, C.CYAN); })
+      .on('pointerout',   () => { infoBg.setStrokeStyle(1, C.BORDER); })
+      .on('pointerdown',  () => {
+        sfxClick();
+        this.cameras.main.fade(300, 5, 10, 20);
+        this.time.delayedCall(300, () => this.scene.start('InfoScene'));
+      });
 
     // Entrance animation
     this.cameras.main.fadeIn(500, 5, 10, 20);

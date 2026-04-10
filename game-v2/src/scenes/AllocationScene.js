@@ -87,6 +87,7 @@ export class AllocationScene extends Phaser.Scene {
     this.add.text(LEFT_X, 31,
       `${this._scenario.emoji} ${this._scenario.title}  —  ${roleLabel}：${this._roleData.country} ${this._roleData.flag}`, {
       fontFamily: "'Noto Sans TC', sans-serif", fontSize: '14px', fontStyle: 'bold', color: '#ecf0f1',
+      wordWrap: { width: 460 },   // timer starts at ~575, keep clear
     }).setOrigin(0, 0.5);
 
     // Timer

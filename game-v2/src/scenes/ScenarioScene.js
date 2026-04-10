@@ -183,11 +183,13 @@ export class ScenarioScene extends Phaser.Scene {
       this.add.text(cx - cardW2 / 2 + 20, cy - cardH2 / 2 + 20,
         `${icon} ${sideLabel}：${roleData.country} ${roleData.flag}`, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '16px', fontStyle: 'bold', color: '#ecf0f1',
+        wordWrap: { width: cardW2 - 40 },
       });
 
       this.add.text(cx - cardW2 / 2 + 20, cy - cardH2 / 2 + 48,
         `工業力 ${pts} 點  ·  ${debtStr}  ·  懲罰係數 ×${roleData.gdpMult ?? '—'}`, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '11px', color: '#7f8c8d',
+        wordWrap: { width: cardW2 - 40 },
       });
 
       this.add.text(cx - cardW2 / 2 + 20, cy + cardH2 / 2 - 26,

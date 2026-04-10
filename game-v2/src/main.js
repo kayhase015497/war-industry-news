@@ -6,6 +6,7 @@ import { ScenarioScene }   from './scenes/ScenarioScene.js';
 import { AllocationScene } from './scenes/AllocationScene.js';
 import { EventScene }      from './scenes/EventScene.js';
 import { ResultScene }     from './scenes/ResultScene.js';
+import { InfoScene }       from './scenes/InfoScene.js';
 
 const config = {
   type: Phaser.AUTO,
@@ -27,6 +28,7 @@ const config = {
     AllocationScene,
     EventScene,
     ResultScene,
+    InfoScene,
   ],
 };
 
