@@ -1994,10 +1994,11 @@
         const timelineEl = document.createElement('div');
         timelineEl.id = 'timeline-chart';
 
-        // 插入 globe 後面
+        // tagBar 插在 globe 後面；時間軸移到所有年份區塊之後（footer 前）
         const globeEl = document.getElementById('globe-container');
         globeEl.after(tagBar);
-        tagBar.after(timelineEl);
+        const lastSection = document.querySelector('.year-section:last-of-type');
+        lastSection.after(timelineEl);
 
         // ── 計算 2023-03 → 2026-03 所有月份 ────────────────────
         function allMonths() {
