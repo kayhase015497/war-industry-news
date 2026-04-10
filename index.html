@@ -672,44 +672,6 @@
         }
 
         .year-nav a.col-link { border-color: #a0c4d8; color: #2980b9; }
-        .year-nav a.v2-link { background: #c0392b; color: #fff; border-color: #c0392b; font-weight: 700; }
-        .year-nav a.v2-link:hover { background: #e74c3c; border-color: #e74c3c; }
-        /* ── 遊戲 v2 CTA 橫幅 ── */
-        .game-v2-banner {
-            background: linear-gradient(135deg, #0f1f30 0%, #1a0a0a 100%);
-            border: 1px solid #c0392b;
-            border-radius: 10px;
-            padding: 18px 24px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-            position: relative;
-            overflow: hidden;
-        }
-        .game-v2-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(192,57,43,0.03) 20px, rgba(192,57,43,0.03) 21px);
-            pointer-events: none;
-        }
-        .game-v2-banner .v2-info h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 900; color: #ffffff; }
-        .game-v2-banner .v2-info p { margin: 0; font-size: 0.8rem; color: #7f9aac; line-height: 1.5; }
-        .game-v2-banner .v2-badge {
-            display: inline-block; background: #c0392b; color: #fff;
-            font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em;
-            padding: 2px 7px; border-radius: 2px; margin-bottom: 5px;
-        }
-        .game-v2-banner .v2-play-btn {
-            display: inline-flex; align-items: center; gap: 7px;
-            background: #c0392b; color: #fff; text-decoration: none;
-            font-size: 0.95rem; font-weight: 700; padding: 11px 24px;
-            border-radius: 6px; white-space: nowrap; transition: background 0.2s, transform 0.15s;
-        }
-        .game-v2-banner .v2-play-btn:hover { background: #e74c3c; transform: translateY(-1px); }
         .year-nav a.col-link:hover { background: #2471a3; color: #fff; border-color: #2471a3; }
         body.dark-mode .year-nav a.col-link { border-color: #1c3a52; color: #5dade2; }
 
@@ -1202,7 +1164,6 @@
 <a href="#year-2025">2025</a>
 <a href="#year-2026">2026</a>
 <a class="col-link" href="game.html">🎮 工業力試煉</a>
-<a class="v2-link" href="game-v2/dist/">▶ 試煉 v2</a>
 
 
 <button class="theme-toggle-btn" id="theme-toggle" title="切換日間／夜間模式">🌙</button>
@@ -1227,15 +1188,7 @@
 <div class="label">最新年份</div>
 </div>
 </div>
-<!-- 工業力試煉 v2 遊戲入口 -->
-<div class="game-v2-banner">
-  <div class="v2-info">
-    <div class="v2-badge">互動遊戲 NEW v2.0</div>
-    <h3>工業力試煉 v2 — 你能做出正確決策嗎？</h3>
-    <p>Phaser 3 全新重製 · 3D 地球儀背景 · 隨機事件系統 · 3 情景 9 陣營</p>
-  </div>
-  <a class="v2-play-btn" href="game-v2/dist/">▶&nbsp; 開始遊戲</a>
-</div>
+
 <!-- 3D 地球儀 -->
 <div id="globe-container"></div><section class="year-section" id="year-2026">
 <div class="year-header">
