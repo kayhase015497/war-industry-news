@@ -1,113 +1,84 @@
 [
   {
-    "id": "black_sea_blockade",
-    "title": "俄羅斯封鎖黑海",
-    "description": "俄軍宣布黑海部分海域為危險區域，烏克蘭能源進口受阻，能源安全優先級大幅上升。",
-    "icon": "⚓",
-    "type": "weight_shift",
-    "effects": {
-      "weightShift": { "energy": 2, "naval": 1 }
-    },
-    "scenarios": ["ukraine_2024"]
-  },
-  {
-    "id": "nato_ammo_fire",
+    "id": "ammo_fire",
     "title": "北約彈藥庫起火",
     "description": "波蘭境內一處北約彈藥儲存設施發生火災，可分配砲彈點數緊急削減。",
     "icon": "🔥",
     "type": "point_loss",
-    "effects": {
-      "pointLoss": { "artillery": 2 }
-    },
-    "scenarios": ["ukraine_2024"]
+    "effects": { "pointLoss": { "shell": 1 } },
+    "scenarios": ["east_ukraine", "kursk"]
   },
   {
     "id": "satellite_detect",
     "title": "衛星偵測敵方集結",
-    "description": "最新衛星影像顯示俄軍在前線以北集結大規模裝甲部隊，防空與後勤的重要性急速提升。",
+    "description": "最新衛星影像顯示對方在前線以北集結大規模裝甲部隊，無人機反制優先級急升。",
     "icon": "🛰️",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "air_defense": 2, "logistics": 1 }
-    },
-    "scenarios": ["ukraine_2024"]
+    "effects": { "weightShift": { "drone": 0.08, "intercept": -0.05 } },
+    "scenarios": ["east_ukraine", "kursk", "taiwan_strait"]
   },
   {
     "id": "civilian_factory",
     "title": "民間工廠轉軍工",
-    "description": "多家民間製造商宣布轉型軍工生產，額外獲得生產力加成。",
+    "description": "多家民間製造商宣布轉型軍工生產，獲得額外工業產能加成。",
     "icon": "🏭",
     "type": "point_gain",
-    "effects": {
-      "pointGain": 3
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait"]
+    "effects": { "pointGain": 2 },
+    "scenarios": ["east_ukraine", "taiwan_strait", "kursk", "multifront"]
   },
   {
     "id": "intel_leak",
     "title": "情報洩漏",
-    "description": "我方戰略佈署資訊遭洩漏，最優配置需重新評估——各方向的優先級發生輕微偏移。",
+    "description": "我方戰略佈署資訊遭洩漏，最優配置需重新評估——各方向優先級發生輕微偏移。",
     "icon": "🔓",
     "type": "random_shift",
-    "effects": {
-      "randomShift": 1
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+    "effects": { "randomShift": 1 },
+    "scenarios": ["east_ukraine", "taiwan_strait", "iran", "kursk", "multifront", "yemen"]
   },
   {
-    "id": "pla_drone_swarm",
-    "title": "解放軍無人機群測試",
-    "description": "解放軍對台灣防空識別區發動大規模無人機騷擾，防空資源消耗評估需上調。",
+    "id": "black_sea_blockade",
+    "title": "黑海航運受阻",
+    "description": "黑海部分海域宣布危險區域，能源進口受阻，能源安全優先級大幅上升。",
+    "icon": "⚓",
+    "type": "weight_shift",
+    "effects": { "weightShift": { "energy": 0.08, "mineral": 0.04 } },
+    "scenarios": ["east_ukraine", "kursk"]
+  },
+  {
+    "id": "drone_swarm",
+    "title": "無人機群來襲",
+    "description": "對方發動大規模無人機群飽和攻擊，攔截彈消耗速度遠超預期，防空優先級急升。",
     "icon": "🚁",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "air_defense": 3 }
-    },
-    "scenarios": ["taiwan_strait"]
+    "effects": { "weightShift": { "intercept": 0.10, "drone": -0.05 } },
+    "scenarios": ["taiwan_strait", "iran", "yemen", "multifront"]
   },
   {
-    "id": "submarine_detected",
-    "title": "偵測到敵方潛艦",
-    "description": "多艘不明潛艦在台灣海峽附近出沒，海上力量優先級顯著提升。",
+    "id": "submarine_threat",
+    "title": "潛艦威脅升高",
+    "description": "多艘不明潛艦在作戰海域附近出沒，反艦能力需求提升。",
     "icon": "🌊",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "naval": 2, "cyber": 1 }
-    },
-    "scenarios": ["taiwan_strait", "red_sea"]
+    "effects": { "weightShift": { "drone": 0.07, "intercept": 0.03 } },
+    "scenarios": ["taiwan_strait", "yemen"]
   },
   {
     "id": "cyberattack_grid",
-    "title": "電網遭受網路攻擊",
-    "description": "敵方網路攻擊造成部分電網中斷，能源安全與網路防禦同步上升為優先項目。",
+    "title": "電網遭受攻擊",
+    "description": "敵方攻擊造成部分電網中斷，能源安全成為最緊迫的補救項目。",
     "icon": "💻",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "energy": 1, "cyber": 2 }
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait"]
+    "effects": { "weightShift": { "energy": 0.10 } },
+    "scenarios": ["east_ukraine", "taiwan_strait", "kursk"]
   },
   {
-    "id": "houthi_new_missiles",
-    "title": "胡塞獲得新型飛彈",
-    "description": "情報顯示胡塞武裝獲得伊朗提供的長程反艦飛彈，海上防禦需求大幅增加。",
+    "id": "new_missiles",
+    "title": "獲得新型飛彈技術",
+    "description": "盟友提供新型精準打擊技術，無人機與飛彈的戰略地位顯著提升。",
     "icon": "🚀",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "naval": 3, "air_defense": 1 }
-    },
-    "scenarios": ["red_sea"]
-  },
-  {
-    "id": "trade_route_reopened",
-    "title": "替代航線部分開放",
-    "description": "蘇伊士替代路線談判有進展，能源與後勤壓力短暫緩解，可轉移部分資源。",
-    "icon": "🛳️",
-    "type": "point_gain",
-    "effects": {
-      "pointGain": 2
-    },
-    "scenarios": ["red_sea"]
+    "effects": { "weightShift": { "drone": 0.08 } },
+    "scenarios": ["iran", "yemen", "taiwan_strait"]
   },
   {
     "id": "allied_support",
@@ -115,53 +86,52 @@
     "description": "盟國宣布緊急軍事援助計劃，額外獲得工業產能加成。",
     "icon": "🤝",
     "type": "point_gain",
-    "effects": {
-      "pointGain": 2
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+    "effects": { "pointGain": 2 },
+    "scenarios": ["east_ukraine", "taiwan_strait", "iran", "kursk", "multifront"]
   },
   {
-    "id": "supply_chain_disruption",
-    "title": "供應鏈中斷警報",
-    "description": "關鍵零件供應商遭網路攻擊，後勤補給效率下降，需重新分配資源。",
+    "id": "supply_disruption",
+    "title": "礦產供應鏈中斷",
+    "description": "關鍵礦產供應商遭制裁，可用礦產點數減少，需重新調整分配。",
     "icon": "⚠️",
     "type": "point_loss",
-    "effects": {
-      "pointLoss": { "logistics": 1 }
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+    "effects": { "pointLoss": { "mineral": 1 } },
+    "scenarios": ["taiwan_strait", "iran", "multifront"]
   },
   {
     "id": "media_pressure",
     "title": "國內輿論壓力",
-    "description": "國內媒體報導軍費開支過高，政治壓力迫使部分資源重新評估。",
+    "description": "國內媒體報導軍費開支過高，政治壓力迫使部分資源重新評估，最優解略有偏移。",
     "icon": "📰",
     "type": "random_shift",
-    "effects": {
-      "randomShift": 1
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait", "red_sea"]
+    "effects": { "randomShift": 1 },
+    "scenarios": ["east_ukraine", "taiwan_strait", "iran", "kursk", "multifront", "yemen"]
   },
   {
-    "id": "drone_factory_boost",
-    "title": "無人機生產線加速",
-    "description": "新型自動化生產線投入使用，無人機相關的電子戰能力快速提升。",
-    "icon": "⚙️",
-    "type": "weight_shift",
-    "effects": {
-      "weightShift": { "cyber": 2 }
-    },
-    "scenarios": ["ukraine_2024", "taiwan_strait"]
+    "id": "houthi_new_supply",
+    "title": "伊朗緊急補給抵達",
+    "description": "伊朗向胡塞武裝緊急輸送新一批無人機零件，獲得額外產能。",
+    "icon": "📦",
+    "type": "point_gain",
+    "effects": { "pointGain": 1 },
+    "scenarios": ["yemen"]
   },
   {
-    "id": "iran_involvement",
-    "title": "伊朗加大介入力度",
-    "description": "伊朗向代理武裝提供更多技術支援，整體威脅等級上升，各方向防禦壓力同步增加。",
-    "icon": "⚡",
+    "id": "fuel_shortage",
+    "title": "燃料供應告急",
+    "description": "前線燃料補給出現缺口，能源分配必須優先保障核心作戰需求。",
+    "icon": "⛽",
     "type": "weight_shift",
-    "effects": {
-      "weightShift": { "air_defense": 1, "naval": 2, "cyber": 1 }
-    },
-    "scenarios": ["red_sea"]
+    "effects": { "weightShift": { "energy": 0.07, "shell": -0.04 } },
+    "scenarios": ["kursk", "multifront", "east_ukraine"]
+  },
+  {
+    "id": "precision_strike",
+    "title": "精準打擊取得突破",
+    "description": "我方無人機精準打擊對方指揮中心，無人機的戰略效益大幅上升。",
+    "icon": "🎯",
+    "type": "weight_shift",
+    "effects": { "weightShift": { "drone": 0.06, "shell": -0.06 } },
+    "scenarios": ["east_ukraine", "kursk", "iran", "taiwan_strait"]
   }
 ]
