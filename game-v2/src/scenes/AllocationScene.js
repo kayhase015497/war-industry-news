@@ -8,9 +8,10 @@ const BAR_X   = 670;   // center X of bar
 const BAR_W   = 440;
 const BAR_H   = 26;
 const LEFT_X  = 60;
-const RIGHT_X = 930;
+const RIGHT_X = 990;   // panel wall — must stay right of BAR_X+BAR_W/2+80 = 990
 const ROW_H   = 95;
 const Y_START = 74;
+const PANEL_W = GAME_WIDTH - RIGHT_X - 5;  // usable right-panel width ≈ 285
 
 export class AllocationScene extends Phaser.Scene {
   constructor() {
@@ -264,9 +265,11 @@ export class AllocationScene extends Phaser.Scene {
     stats.forEach(({ label, value }, i) => {
       this.add.text(X, 165 + i * 42, label, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '10px', color: '#34495e',
+        wordWrap: { width: PANEL_W },
       });
       this.add.text(X, 178 + i * 42, value, {
         fontFamily: "'Noto Sans TC', sans-serif", fontSize: '13px', fontStyle: 'bold', color: '#bdc3c7',
+        wordWrap: { width: PANEL_W },
       });
     });
 
@@ -285,7 +288,8 @@ export class AllocationScene extends Phaser.Scene {
 
     tips.forEach((tip, i) => {
       this.add.text(X, 334 + i * 72, tip, {
-        fontFamily: "'Noto Sans TC', sans-serif", fontSize: '11px', color: '#34495e', lineSpacing: 4,
+        fontFamily: "'Noto Sans TC', sans-serif", fontSize: '11px', color: '#7f8c8d',
+        lineSpacing: 4, wordWrap: { width: PANEL_W },
       });
     });
   }
