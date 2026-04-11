@@ -1984,7 +1984,7 @@
                 globe.polygonCapColor(feat =>
                     highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
                 ).polygonStrokeColor(feat =>
-                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.22)'
                 );
             }
         };
@@ -2002,7 +2002,7 @@
                     )
                     .polygonSideColor(() => 'rgba(0,0,0,0)')
                     .polygonStrokeColor(feat =>
-                        highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                        highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.22)'
                     )
                     .polygonAltitude(0.003);
             })
