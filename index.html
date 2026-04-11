@@ -1134,6 +1134,78 @@
             .search-input { font-size: 0.85rem; padding: 8px 32px 8px 30px; }
             .search-icon { font-size: 0.82rem; }
         }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 閱讀紀錄 — 已讀文章視覺標記
+         * ══════════════════════════════════════════════════════════════ */
+        .news-card.card-read a { color: #8aabbf !important; }
+        .card-read-marker {
+            font-size: 0.58rem; color: #8aabbf;
+            padding: 1px 5px; border: 1px solid rgba(138,171,191,0.35);
+            border-radius: 2px; flex-shrink: 0; align-self: center;
+            white-space: nowrap; letter-spacing: 0.05em;
+        }
+        body.dark-mode .card-read-marker { border-color: rgba(138,171,191,0.2); }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 書籤系統
+         * ══════════════════════════════════════════════════════════════ */
+        .bookmark-btn {
+            background: none; border: none; cursor: pointer;
+            font-size: 1rem; color: #cdd8e3; padding: 0 2px;
+            line-height: 1; flex-shrink: 0; align-self: center;
+            transition: color 0.18s, transform 0.15s;
+        }
+        .bookmark-btn:hover { color: #e0c050; transform: scale(1.22); }
+        .news-card.card-bookmarked .bookmark-btn { color: #e0c050; }
+        .tag-btn.bookmarks-tab { border-color: #dab840; color: #b8971a; }
+        .tag-btn.bookmarks-tab.active { background: #e0c050; border-color: #e0c050; color: #1e2d3d; }
+        .tag-btn.bookmarks-tab .bm-count {
+            display: inline-block; background: rgba(0,0,0,0.12);
+            border-radius: 8px; font-size: 0.7em; padding: 0 4px;
+            margin-left: 3px; min-width: 14px; text-align: center;
+        }
+        body.dark-mode .tag-btn.bookmarks-tab { border-color: #5a4a10; color: #c9a827; }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 地點篩選橫幅
+         * ══════════════════════════════════════════════════════════════ */
+        #location-filter-bar {
+            display: none; align-items: center; gap: 10px;
+            padding: 9px 16px;
+            background: rgba(192,57,43,0.07); border: 1px solid rgba(192,57,43,0.22);
+            border-radius: 8px; margin-bottom: 14px; font-size: 0.82rem;
+        }
+        #location-filter-bar.active { display: flex; }
+        #location-filter-bar .lf-label { font-weight: 700; color: #c0392b; flex: 1; }
+        #location-filter-bar .lf-count { color: #7f9aac; font-size: 0.78rem; white-space: nowrap; }
+        #location-filter-bar .lf-clear {
+            background: none; border: 1px solid rgba(192,57,43,0.3);
+            color: #c0392b; border-radius: 4px; padding: 2px 10px;
+            font-size: 0.75rem; cursor: pointer; font-family: inherit; white-space: nowrap;
+        }
+        #location-filter-bar .lf-clear:hover { background: rgba(192,57,43,0.1); }
+        body.dark-mode #location-filter-bar { background: rgba(192,57,43,0.05); border-color: rgba(192,57,43,0.18); }
+        .news-card.location-highlight { border-left: 3px solid #c0392b !important; background: rgba(192,57,43,0.04) !important; }
+        .news-card.location-dim { opacity: 0.35; }
+        body.dark-mode .news-card.location-highlight { background: rgba(192,57,43,0.08) !important; }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 文章聯動旋轉 + 弧線圖例
+         * ══════════════════════════════════════════════════════════════ */
+        .news-card.globe-rotating { box-shadow: 0 0 0 2px rgba(192,57,43,0.35), 0 3px 12px rgba(0,0,0,0.1); }
+        #arc-legend {
+            position: absolute; top: 52px; right: 12px;
+            background: rgba(10,18,26,0.82); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px; padding: 8px 11px; z-index: 10;
+            pointer-events: none; font-size: 0.65rem; line-height: 1.7; min-width: 112px;
+        }
+        #arc-legend .arc-legend-title {
+            color: rgba(255,255,255,0.5); letter-spacing: 0.1em;
+            text-transform: uppercase; font-size: 0.6rem; margin-bottom: 4px; font-weight: 700;
+        }
+        .arc-legend-item { display: flex; align-items: center; gap: 5px; color: #c8d8e4; }
+        .arc-legend-dot { width: 18px; height: 2px; border-radius: 1px; flex-shrink: 0; }
     </style>
     <script type="application/ld+json">
     {
@@ -1730,7 +1802,8 @@
 <footer class="site-footer">
         資料來源：時報資訊  ｜  報導期間：2023 – 2026
     </footer>
-<!-- Globe.gl（Three.js WebGL 地球儀） -->
+<!-- Globe.gl + TopoJSON 國家輪廓 -->
+<script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
 <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
 <script>
     (function initGlobe() {
@@ -1747,23 +1820,27 @@
         } catch (e) { container.style.display = 'none'; return; }
 
         // 文章中提及的衝突區域 / 主要地緣政治焦點
-        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords }
+        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords, countryIds }
         const hotspots = [
-            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'] },
-            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'] },
-            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'] },
-            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'] },
-            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'] },
-            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'] },
-            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'] },
-            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'] },
-            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'] },
-            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'] },
-            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'] },
-            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'] },
-            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'] },
-            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'] },
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'], countryIds: [804] },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'], countryIds: [643] },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'], countryIds: [158] },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'], countryIds: [156] },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'], countryIds: [376] },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'], countryIds: [364] },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'], countryIds: [840] },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'], countryIds: [276, 250, 724, 380, 616] },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'], countryIds: [408] },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'], countryIds: [862] },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'], countryIds: [180] },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'], countryIds: [586] },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'], countryIds: [634] },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'], countryIds: [] },
+            { lat: 15.35, lng: 44.20,   label: '🇾🇪 葉門',         size: 0.40, keywords: ['葉門', '胡塞'], countryIds: [887] },
         ];
+
+        // 全域暴露供文章聯動旋轉 / 國家高亮使用
+        window.globeHotspots = hotspots;
 
         // 延遲初始化：確保瀏覽器完成 layout，clientWidth/clientHeight 才有正確值
         setTimeout(function() { startGlobe(container, hotspots); }, 50);
@@ -1772,6 +1849,27 @@
     function startGlobe(container, hotspots) {
         const w = container.clientWidth;
         const h = container.clientHeight;
+
+        // ── 衝突弧線：主要武器援助 / 影響力通道 ──────────────────
+        const supplyArcs = [
+            { startLat: 39.03, startLng: 125.75, endLat: 55.75, endLng: 37.62,
+              color: ['rgba(255,107,53,0.9)', 'rgba(231,76,60,0.3)'],   label: '🇰🇵→🇷🇺 北韓彈藥輸俄' },
+            { startLat: 38.90, startLng: -77.04, endLat: 48.38, endLng: 31.17,
+              color: ['rgba(39,174,96,0.9)',   'rgba(46,204,113,0.3)'], label: '🇺🇸→🇺🇦 美援烏克蘭' },
+            { startLat: 35.69, startLng: 51.39,  endLat: 15.35, endLng: 44.20,
+              color: ['rgba(192,57,43,0.9)',   'rgba(231,76,60,0.3)'],  label: '🇮🇷→🇾🇪 伊朗支援胡塞' },
+            { startLat: 39.92, startLng: 116.39, endLat: 55.75, endLng: 37.62,
+              color: ['rgba(52,152,219,0.9)',  'rgba(41,128,185,0.3)'], label: '🇨🇳→🇷🇺 中俄雙邊' },
+            { startLat: 38.90, startLng: -77.04, endLat: 31.77, endLng: 35.22,
+              color: ['rgba(39,174,96,0.9)',   'rgba(46,204,113,0.3)'], label: '🇺🇸→🇮🇱 美援以色列' },
+            { startLat: 35.69, startLng: 51.39,  endLat: 55.75, endLng: 37.62,
+              color: ['rgba(192,57,43,0.7)',   'rgba(231,76,60,0.2)'],  label: '🇮🇷→🇷🇺 無人機技術' },
+            { startLat: 52.52, startLng: 13.40,  endLat: 48.38, endLng: 31.17,
+              color: ['rgba(52,152,219,0.8)',  'rgba(41,128,185,0.2)'], label: '🇪🇺→🇺🇦 北約援助' },
+        ];
+
+        // 國家高亮狀態
+        let highlightedIds = [];
 
         const globe = Globe({ animateIn: true, width: w, height: h })(container)
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
@@ -1796,7 +1894,15 @@
             .ringMaxRadius(3.5)
             .ringPropagationSpeed(1.2)
             .ringRepeatPeriod(2200)
-            // 點擊熱點 → 顯示相關報導
+            // ── 衝突弧線（供應路線）─────────────────────────────────
+            .arcsData(supplyArcs)
+            .arcStartLat('startLat').arcStartLng('startLng')
+            .arcEndLat('endLat').arcEndLng('endLng')
+            .arcColor('color')
+            .arcAltitude(0.28).arcStroke(0.6)
+            .arcDashLength(0.45).arcDashGap(0.45).arcDashAnimateTime(2800)
+            .arcLabel(d => `<div style="font-size:11px;padding:3px 8px;background:rgba(10,18,26,0.9);border:1px solid rgba(192,57,43,0.4);border-radius:4px;color:#e0e0e0">${d.label}</div>`)
+            // 點擊熱點 → 顯示相關報導 + 篩選主列表
             .onPointClick(showRelatedArticles);
 
         const ctrl = globe.controls();
@@ -1804,6 +1910,53 @@
         ctrl.autoRotateSpeed = 0.5;
         ctrl.enableZoom      = false;
         ctrl.enablePan       = false;
+
+        // 全域暴露 Globe 實例
+        window.globeInstance = globe;
+
+        // ── 國家高亮 API ─────────────────────────────────────────────
+        window.globeHighlightCountry = function(ids) {
+            highlightedIds = ids || [];
+            if (window._globeCountriesLoaded) {
+                globe.polygonCapColor(feat =>
+                    highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
+                ).polygonStrokeColor(feat =>
+                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                );
+            }
+        };
+
+        if (!window._globeCountriesLoaded) {
+            fetch('https://unpkg.com/world-atlas@2/countries-110m.json')
+                .then(r => r.json())
+                .then(world => {
+                    if (typeof topojson === 'undefined') return;
+                    const countries = topojson.feature(world, world.objects.countries);
+                    window._globeCountriesLoaded = true;
+                    globe.polygonsData(countries.features)
+                        .polygonCapColor(feat =>
+                            highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
+                        )
+                        .polygonSideColor(() => 'rgba(0,0,0,0)')
+                        .polygonStrokeColor(feat =>
+                            highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                        )
+                        .polygonAltitude(0.003);
+                })
+                .catch(() => {});
+        }
+
+        // ── 弧線圖例 ──────────────────────────────────────────────────
+        const arcLegend = document.createElement('div');
+        arcLegend.id = 'arc-legend';
+        arcLegend.innerHTML = `
+            <div class="arc-legend-title">供應/影響力通道</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#ff6b35"></div>北韓→俄 彈藥</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#27ae60"></div>美→烏/以 援助</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#c0392b"></div>伊朗→胡塞</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#3498db"></div>中俄 雙邊</div>
+        `;
+        container.appendChild(arcLegend);
 
         // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
         let _resizeStarFn = null; // 由星空 callback 設定
@@ -1912,12 +2065,11 @@
         container.addEventListener('pointerdown', handleInteraction);
         container.addEventListener('touchstart',  handleInteraction, { passive: true });
 
-        // ── 熱點點擊：顯示相關報導面板 ──────────────────────────
+        // ── 熱點點擊：顯示相關報導面板 + 篩選主列表 ──────────────
         function showRelatedArticles(point) {
             const existing = document.getElementById('globe-panel');
             if (existing) existing.remove();
 
-            // 掃描頁面所有新聞卡片，比對 keywords
             const cards = Array.from(document.querySelectorAll('.news-card'));
             const matches = cards.filter(card => {
                 const text = card.querySelector('a')?.textContent || '';
@@ -1929,31 +2081,73 @@
             panel.innerHTML = `
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                     <span style="font-size:0.85rem;font-weight:700;color:#e74c3c;letter-spacing:0.08em">${point.label} 相關報導</span>
-                    <button onclick="document.getElementById('globe-panel').remove()" style="background:none;border:none;color:#7f9aac;font-size:1.2rem;cursor:pointer;line-height:1;padding:0">✕</button>
+                    <button id="globe-panel-close" style="background:none;border:none;color:#7f9aac;font-size:1.2rem;cursor:pointer;line-height:1;padding:0">✕</button>
                 </div>
                 ${matches.length === 0
                     ? '<p style="color:#4a6274;font-size:0.82rem;margin:0">目前無相關報導</p>'
-                    : matches.map(card => {
+                    : matches.slice(0,8).map(card => {
                         const a = card.querySelector('a');
                         const date = card.querySelector('.date')?.textContent || '';
                         return `<div style="border-left:2px solid #c0392b;padding:4px 8px;margin-bottom:6px">
                             <div style="font-size:0.68rem;color:#4a6274;margin-bottom:2px">${date}</div>
                             <a href="${a.href}" target="_blank" style="color:#c8d8e4;font-size:0.82rem;text-decoration:none;line-height:1.4;display:block">${a.textContent}</a>
                         </div>`;
-                    }).join('')
+                    }).join('') +
+                    (matches.length > 8 ? `<div style="font-size:0.72rem;color:#7f9aac;padding:4px 8px">… 共 ${matches.length} 篇，已顯示前 8 篇</div>` : '')
+                }
+                ${matches.length > 0
+                    ? `<button id="globe-panel-filter" style="margin-top:10px;width:100%;padding:6px 0;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.35);border-radius:4px;color:#e74c3c;font-size:0.78rem;cursor:pointer;font-family:inherit">📍 在文章列表中篩選（${matches.length} 篇）</button>`
+                    : ''
                 }`;
 
             Object.assign(panel.style, {
                 position: 'absolute', bottom: '16px', left: '16px',
-                width: '300px', maxHeight: '320px', overflowY: 'auto',
+                width: '300px', maxHeight: '360px', overflowY: 'auto',
                 background: 'rgba(10,18,26,0.95)', border: '1px solid #253545',
                 borderRadius: '8px', padding: '14px', zIndex: '20',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
-                scrollbarWidth: 'thin'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.6)', scrollbarWidth: 'thin'
             });
             container.style.position = 'relative';
             container.appendChild(panel);
+
+            document.getElementById('globe-panel-close').addEventListener('click', () => {
+                panel.remove(); clearLocationFilter();
+            });
+            const filterBtn = document.getElementById('globe-panel-filter');
+            if (filterBtn) {
+                filterBtn.addEventListener('click', () => {
+                    applyLocationFilter(point, matches);
+                    panel.remove();
+                    const tagFilter = document.querySelector('.tag-filter');
+                    if (tagFilter) tagFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
         }
+
+        function applyLocationFilter(point, matches) {
+            const bar = document.getElementById('location-filter-bar');
+            if (bar) {
+                bar.querySelector('.lf-label').textContent = '📍 ' + point.label + ' 相關報導';
+                bar.querySelector('.lf-count').textContent = matches.length + ' 篇';
+                bar.classList.add('active');
+            }
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.classList.toggle('location-highlight', matches.includes(card));
+                card.classList.toggle('location-dim', !matches.includes(card));
+            });
+            if (window.globeHighlightCountry) window.globeHighlightCountry(point.countryIds || []);
+        }
+
+        function clearLocationFilter() {
+            const bar = document.getElementById('location-filter-bar');
+            if (bar) bar.classList.remove('active');
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.classList.remove('location-highlight', 'location-dim');
+            });
+            if (window.globeHighlightCountry) window.globeHighlightCountry([]);
+        }
+        window.clearLocationFilter = clearLocationFilter;
+    }
     }
     </script>
 <!-- 標籤篩選 & 時間軸密度圖 -->
@@ -1988,11 +2182,20 @@
             TAGS.map(t =>
                 `<button class="tag-btn${t.id === 'all' ? ' active' : ''}" data-tag="${t.id}">${t.label}</button>`
             ).join('') +
+            '<button class="tag-btn bookmarks-tab" data-tag="bookmarks">☆ 書籤<span class="bm-count" id="bm-tab-count">0</span></button>' +
             '<span class="filter-count"></span>';
 
         // ── 建立時間軸容器 ──────────────────────────────────────
         const timelineEl = document.createElement('div');
         timelineEl.id = 'timeline-chart';
+
+        // ── 地點篩選橫幅 ────────────────────────────────────────
+        const locationBar = document.createElement('div');
+        locationBar.id = 'location-filter-bar';
+        locationBar.innerHTML =
+            '<span class="lf-label"></span>' +
+            '<span class="lf-count"></span>' +
+            '<button class="lf-clear" onclick="window.clearLocationFilter && window.clearLocationFilter()">✕ 清除篩選</button>';
 
         // tagBar 插在 globe 後面；時間軸移到所有年份區塊之後（footer 前）
         const globeEl = document.getElementById('globe-container');
@@ -2089,6 +2292,7 @@
         }).join('');
         featMobile.innerHTML = '<div class="featured-mobile-label">✦ 精選報導</div><div class="featured-mobile-scroll">' + mobileCardsHtml + '</div>';
         searchBar.after(featMobile);
+        featMobile.after(locationBar);
 
         const searchInput = document.getElementById('search-input');
         const searchClear = document.getElementById('search-clear');
@@ -2106,11 +2310,19 @@
                 btn.classList.toggle('active', btn.dataset.tag === currentTag)
             );
 
+            const bookmarks = window._bookmarks || new Set();
+
             // 顯示 / 隱藏卡片
             let visible = 0;
             allCards.forEach(card => {
-                const tagMatch = currentTag === 'all' ||
-                    card.dataset.tags.split(' ').includes(currentTag);
+                let tagMatch;
+                if (currentTag === 'all') {
+                    tagMatch = true;
+                } else if (currentTag === 'bookmarks') {
+                    tagMatch = bookmarks.has(card.querySelector('a')?.href || '');
+                } else {
+                    tagMatch = card.dataset.tags.split(' ').includes(currentTag);
+                }
                 const title = (card.querySelector('a')?.textContent || '').toLowerCase();
                 const queryMatch = q === '' || title.includes(q);
                 const show = tagMatch && queryMatch;
@@ -2150,8 +2362,135 @@
             btn.addEventListener('click', () => applyFilter(btn.dataset.tag, searchInput.value))
         );
         applyFilter('all', '');
+
+        // 全域暴露，供書籤 script 觸發重新篩選
+        window._reapplyFilter = () => applyFilter(undefined, undefined);
     })();
     </script>
+<script>
+    // ══════════════════════════════════════════════════════════════════
+    // 閱讀紀錄 ／ 書籤系統 ／ 文章聯動旋轉 ／ 國家高亮
+    // ══════════════════════════════════════════════════════════════════
+    (function() {
+        const STORAGE_READ = 'wii_read_history';
+        const STORAGE_BM   = 'wii_bookmarks';
+
+        function loadSet(key) {
+            try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); }
+            catch(e) { return new Set(); }
+        }
+        function saveSet(key, set) {
+            try { localStorage.setItem(key, JSON.stringify([...set])); } catch(e) {}
+        }
+
+        const readHistory = loadSet(STORAGE_READ);
+        const bookmarks   = loadSet(STORAGE_BM);
+        window._bookmarks = bookmarks;
+
+        const allCards = Array.from(document.querySelectorAll('.news-card'));
+
+        // ── 注入書籤按鈕 + 已讀標記 ──────────────────────────────
+        allCards.forEach(card => {
+            const href = card.querySelector('a')?.href || '';
+
+            // ☆ 書籤按鈕
+            const bmBtn = document.createElement('button');
+            bmBtn.className = 'bookmark-btn';
+            bmBtn.title = '加入書籤';
+            bmBtn.textContent = '☆';
+            bmBtn.addEventListener('click', function(e) {
+                e.preventDefault(); e.stopPropagation();
+                toggleBookmark(card, href);
+            });
+            const dateEl = card.querySelector('.date');
+            if (dateEl) dateEl.after(bmBtn); else card.prepend(bmBtn);
+
+            if (bookmarks.has(href)) {
+                card.classList.add('card-bookmarked');
+                bmBtn.textContent = '★'; bmBtn.title = '取消書籤';
+            }
+            if (readHistory.has(href)) markAsRead(card);
+
+            const link = card.querySelector('a');
+            if (link) {
+                link.addEventListener('click', function() {
+                    readHistory.add(href);
+                    saveSet(STORAGE_READ, readHistory);
+                    markAsRead(card);
+                });
+            }
+        });
+
+        function markAsRead(card) {
+            card.classList.add('card-read');
+            if (!card.querySelector('.card-read-marker')) {
+                const m = document.createElement('span');
+                m.className = 'card-read-marker'; m.textContent = '已讀';
+                const link = card.querySelector('a');
+                if (link) link.after(m);
+            }
+        }
+
+        function toggleBookmark(card, href) {
+            const btn = card.querySelector('.bookmark-btn');
+            if (bookmarks.has(href)) {
+                bookmarks.delete(href);
+                card.classList.remove('card-bookmarked');
+                if (btn) { btn.textContent = '☆'; btn.title = '加入書籤'; }
+            } else {
+                bookmarks.add(href);
+                card.classList.add('card-bookmarked');
+                if (btn) { btn.textContent = '★'; btn.title = '取消書籤'; }
+            }
+            saveSet(STORAGE_BM, bookmarks);
+            updateBmCount();
+            if (window._reapplyFilter) window._reapplyFilter();
+        }
+
+        function updateBmCount() {
+            const el = document.getElementById('bm-tab-count');
+            if (el) el.textContent = bookmarks.size || '0';
+        }
+        updateBmCount();
+
+        // ── 文章聯動旋轉 + 國家高亮 ──────────────────────────────
+        let rotateTimer = null;
+        let lastHotspot = null;
+
+        allCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                if (!window.globeInstance || !window.globeHotspots) return;
+                const text = card.querySelector('a')?.textContent || '';
+                let best = null, bestScore = 0;
+                window.globeHotspots.forEach(h => {
+                    const score = h.keywords.filter(kw => text.includes(kw)).length;
+                    if (score > bestScore) { bestScore = score; best = h; }
+                });
+                if (!best || best === lastHotspot) return;
+                lastHotspot = best;
+                card.classList.add('globe-rotating');
+                clearTimeout(rotateTimer);
+                rotateTimer = setTimeout(function() {
+                    if (!window.globeInstance) return;
+                    window.globeInstance.pointOfView({ lat: best.lat, lng: best.lng, altitude: 1.1 }, 900);
+                    const ctrl = window.globeInstance.controls();
+                    if (ctrl) {
+                        ctrl.autoRotate = false;
+                        clearTimeout(window._globeAutoRotateTimer);
+                        window._globeAutoRotateTimer = setTimeout(() => { if (ctrl) ctrl.autoRotate = true; }, 4000);
+                    }
+                    if (window.globeHighlightCountry) window.globeHighlightCountry(best.countryIds || []);
+                }, 120);
+            });
+            card.addEventListener('mouseleave', function() {
+                card.classList.remove('globe-rotating');
+                clearTimeout(rotateTimer);
+                if (window.globeHighlightCountry) window.globeHighlightCountry([]);
+                lastHotspot = null;
+            });
+        });
+    })();
+</script>
 <script>
     // ── 背景音樂控制 ──────────────────────────────────────────────
     (function () {
