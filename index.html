@@ -76,17 +76,17 @@
             overflow: hidden;
         }
 
-        /* 3D 地球儀容器（分欄左側填滿） */
+        /* 3D 地球儀容器（內容區全寬） */
         #globe-container {
             width: 100%;
-            flex: 1;
-            min-height: 0;
-            border-radius: 0;
+            height: 500px;
+            border-radius: 12px;
             overflow: hidden;
             background: #050d14;
-            margin-bottom: 0;
+            margin-bottom: 40px;
             cursor: grab;
             position: relative;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
 
         #globe-container:active { cursor: grabbing; }
@@ -201,37 +201,38 @@
             margin-right: 8px;
         }
 
-        /* ── 頁面主佈局（地球儀欄 + 文章欄） ── */
+        /* ── 頁面主佈局（側邊欄 + 內容） ── */
         .page-layout {
             display: flex;
             align-items: flex-start;
-            max-width: 1340px;
+            max-width: 1160px;
             margin: 0 auto;
         }
 
-        /* ── 文章欄 ── */
+        /* ── 主容器 ── */
         .container {
             flex: 1;
             min-width: 0;
-            padding: 40px 24px 60px;
+            max-width: 860px;
+            padding: 40px 20px 60px;
         }
 
-        /* ── 精選側欄（在地球儀欄底部） ── */
+        /* ── 專欄側邊欄 ── */
         .sidebar {
+            width: 230px;
             flex-shrink: 0;
-            position: static;
-            width: 100%;
-            max-height: 250px;
+            position: sticky;
+            top: 50px;
+            max-height: calc(100vh - 60px);
             overflow-y: auto;
-            padding: 14px 16px 16px;
+            padding: 28px 0 28px 16px;
             scrollbar-width: thin;
-            scrollbar-color: #2a3f50 transparent;
-            border-top: 1px solid rgba(255,255,255,0.07);
+            scrollbar-color: #cdd8e3 transparent;
         }
 
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: #2a3f50; border-radius: 2px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #cdd8e3; border-radius: 2px; }
 
         .sidebar-header {
             font-size: 0.72rem;
@@ -675,55 +676,71 @@
         body.dark-mode .year-nav a.col-link { border-color: #1c3a52; color: #5dade2; }
 
 
-        /* ── 左右分欄：地球儀固定欄 ── */
-        #globe-col {
-            flex: 0 0 420px;
-            position: sticky;
-            top: 44px;
-            height: calc(100vh - 44px);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background: #060e17;
-            border-right: 1px solid rgba(255,255,255,0.06);
-        }
-        /* 地球儀欄內精選側欄：暗色覆蓋 */
-        #globe-col .sidebar-header {
-            color: rgba(255,255,255,0.38);
-            border-bottom-color: rgba(255,255,255,0.08);
-        }
-        #globe-col .featured-card {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.09);
-            box-shadow: none;
-        }
-        #globe-col .featured-card:hover {
-            background: rgba(255,255,255,0.09);
-            transform: none;
-            box-shadow: none;
-        }
-        #globe-col .featured-card a { color: #c8d8e4; }
-        #globe-col .featured-card .feat-date { color: rgba(255,255,255,0.32); }
-        #globe-col .sidebar-hint { color: rgba(255,255,255,0.28); }
-
-        /* ── 手機板：單欄佈局 ── */
-        @media (max-width: 900px) {
-            .page-layout { flex-direction: column; }
+        /* ── 響應式 ── */
+        @media (max-width: 1140px) {
             .sidebar { display: none; }
-            #globe-col {
-                position: static;
-                flex: none;
-                width: 100%;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.07);
-            }
-            #globe-container {
-                flex: none;
-                height: 340px;
-            }
+            .container { margin: 0 auto; }
         }
 
+        /* ══════════════════════════════════════════════════════════════
+         * 閱讀紀錄 — 已讀文章視覺標記
+         * ══════════════════════════════════════════════════════════════ */
+        .news-card.card-read a { color: #8aabbf !important; }
+        .card-read-marker {
+            font-size: 0.58rem; color: #8aabbf;
+            padding: 1px 5px; border: 1px solid rgba(138,171,191,0.35);
+            border-radius: 2px; flex-shrink: 0; align-self: center;
+            white-space: nowrap; letter-spacing: 0.05em;
+        }
+        body.dark-mode .card-read-marker { border-color: rgba(138,171,191,0.2); }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 書籤系統
+         * ══════════════════════════════════════════════════════════════ */
+        .bookmark-btn {
+            background: none; border: none; cursor: pointer;
+            font-size: 1rem; color: #cdd8e3; padding: 0 2px;
+            line-height: 1; flex-shrink: 0; align-self: center;
+            transition: color 0.18s, transform 0.15s;
+        }
+        .bookmark-btn:hover { color: #e0c050; transform: scale(1.22); }
+        .news-card.card-bookmarked .bookmark-btn { color: #e0c050; }
+        .tag-btn.bookmarks-tab { border-color: #dab840; color: #b8971a; }
+        .tag-btn.bookmarks-tab.active { background: #e0c050; border-color: #e0c050; color: #1e2d3d; }
+        .tag-btn.bookmarks-tab .bm-count {
+            display: inline-block; background: rgba(0,0,0,0.12);
+            border-radius: 8px; font-size: 0.7em; padding: 0 4px;
+            margin-left: 3px; min-width: 14px; text-align: center;
+        }
+        body.dark-mode .tag-btn.bookmarks-tab { border-color: #5a4a10; color: #c9a827; }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 地點篩選橫幅
+         * ══════════════════════════════════════════════════════════════ */
+        #location-filter-bar {
+            display: none; align-items: center; gap: 10px;
+            padding: 9px 16px;
+            background: rgba(192,57,43,0.07); border: 1px solid rgba(192,57,43,0.22);
+            border-radius: 8px; margin-bottom: 14px; font-size: 0.82rem;
+        }
+        #location-filter-bar.active { display: flex; }
+        #location-filter-bar .lf-label { font-weight: 700; color: #c0392b; flex: 1; }
+        #location-filter-bar .lf-count { color: #7f9aac; font-size: 0.78rem; white-space: nowrap; }
+        #location-filter-bar .lf-clear {
+            background: none; border: 1px solid rgba(192,57,43,0.3);
+            color: #c0392b; border-radius: 4px; padding: 2px 10px;
+            font-size: 0.75rem; cursor: pointer; font-family: inherit; white-space: nowrap;
+        }
+        #location-filter-bar .lf-clear:hover { background: rgba(192,57,43,0.1); }
+        body.dark-mode #location-filter-bar { background: rgba(192,57,43,0.05); border-color: rgba(192,57,43,0.18); }
+        .news-card.location-highlight { border-left: 3px solid #c0392b !important; background: rgba(192,57,43,0.04) !important; }
+        .news-card.location-dim { opacity: 0.35; }
+        body.dark-mode .news-card.location-highlight { background: rgba(192,57,43,0.08) !important; }
+
+        /* ══════════════════════════════════════════════════════════════
+         * 文章聯動旋轉
+         * ══════════════════════════════════════════════════════════════ */
+        .news-card.globe-rotating { box-shadow: 0 0 0 2px rgba(192,57,43,0.35), 0 3px 12px rgba(0,0,0,0.1); }
 
         /* ── 標籤篩選列 ── */
         .tag-filter {
@@ -1176,78 +1193,6 @@
             .search-input { font-size: 0.85rem; padding: 8px 32px 8px 30px; }
             .search-icon { font-size: 0.82rem; }
         }
-
-        /* ══════════════════════════════════════════════════════════════
-         * 閱讀紀錄 — 已讀文章視覺標記
-         * ══════════════════════════════════════════════════════════════ */
-        .news-card.card-read a { color: #8aabbf !important; }
-        .card-read-marker {
-            font-size: 0.58rem; color: #8aabbf;
-            padding: 1px 5px; border: 1px solid rgba(138,171,191,0.35);
-            border-radius: 2px; flex-shrink: 0; align-self: center;
-            white-space: nowrap; letter-spacing: 0.05em;
-        }
-        body.dark-mode .card-read-marker { border-color: rgba(138,171,191,0.2); }
-
-        /* ══════════════════════════════════════════════════════════════
-         * 書籤系統
-         * ══════════════════════════════════════════════════════════════ */
-        .bookmark-btn {
-            background: none; border: none; cursor: pointer;
-            font-size: 1rem; color: #cdd8e3; padding: 0 2px;
-            line-height: 1; flex-shrink: 0; align-self: center;
-            transition: color 0.18s, transform 0.15s;
-        }
-        .bookmark-btn:hover { color: #e0c050; transform: scale(1.22); }
-        .news-card.card-bookmarked .bookmark-btn { color: #e0c050; }
-        .tag-btn.bookmarks-tab { border-color: #dab840; color: #b8971a; }
-        .tag-btn.bookmarks-tab.active { background: #e0c050; border-color: #e0c050; color: #1e2d3d; }
-        .tag-btn.bookmarks-tab .bm-count {
-            display: inline-block; background: rgba(0,0,0,0.12);
-            border-radius: 8px; font-size: 0.7em; padding: 0 4px;
-            margin-left: 3px; min-width: 14px; text-align: center;
-        }
-        body.dark-mode .tag-btn.bookmarks-tab { border-color: #5a4a10; color: #c9a827; }
-
-        /* ══════════════════════════════════════════════════════════════
-         * 地點篩選橫幅
-         * ══════════════════════════════════════════════════════════════ */
-        #location-filter-bar {
-            display: none; align-items: center; gap: 10px;
-            padding: 9px 16px;
-            background: rgba(192,57,43,0.07); border: 1px solid rgba(192,57,43,0.22);
-            border-radius: 8px; margin-bottom: 14px; font-size: 0.82rem;
-        }
-        #location-filter-bar.active { display: flex; }
-        #location-filter-bar .lf-label { font-weight: 700; color: #c0392b; flex: 1; }
-        #location-filter-bar .lf-count { color: #7f9aac; font-size: 0.78rem; white-space: nowrap; }
-        #location-filter-bar .lf-clear {
-            background: none; border: 1px solid rgba(192,57,43,0.3);
-            color: #c0392b; border-radius: 4px; padding: 2px 10px;
-            font-size: 0.75rem; cursor: pointer; font-family: inherit; white-space: nowrap;
-        }
-        #location-filter-bar .lf-clear:hover { background: rgba(192,57,43,0.1); }
-        body.dark-mode #location-filter-bar { background: rgba(192,57,43,0.05); border-color: rgba(192,57,43,0.18); }
-        .news-card.location-highlight { border-left: 3px solid #c0392b !important; background: rgba(192,57,43,0.04) !important; }
-        .news-card.location-dim { opacity: 0.35; }
-        body.dark-mode .news-card.location-highlight { background: rgba(192,57,43,0.08) !important; }
-
-        /* ══════════════════════════════════════════════════════════════
-         * 文章聯動旋轉 + 弧線圖例
-         * ══════════════════════════════════════════════════════════════ */
-        .news-card.globe-rotating { box-shadow: 0 0 0 2px rgba(192,57,43,0.35), 0 3px 12px rgba(0,0,0,0.1); }
-        #arc-legend {
-            position: absolute; top: 52px; right: 12px;
-            background: rgba(10,18,26,0.82); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 6px; padding: 8px 11px; z-index: 10;
-            pointer-events: none; font-size: 0.65rem; line-height: 1.7; min-width: 112px;
-        }
-        #arc-legend .arc-legend-title {
-            color: rgba(255,255,255,0.5); letter-spacing: 0.1em;
-            text-transform: uppercase; font-size: 0.6rem; margin-bottom: 4px; font-weight: 700;
-        }
-        .arc-legend-item { display: flex; align-items: center; gap: 5px; color: #c8d8e4; }
-        .arc-legend-dot { width: 18px; height: 2px; border-radius: 1px; flex-shrink: 0; }
     </style>
     <script type="application/ld+json">
     {
@@ -1283,48 +1228,7 @@
 <button class="theme-toggle-btn" id="theme-toggle" title="切換日間／夜間模式">🌙</button>
 </nav>
 <div class="page-layout">
-<div id="globe-col">
-<div id="globe-container"></div><aside class="sidebar">
-<div class="sidebar-header">✦ 精選報導</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank">卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a>
-<span class="feat-date">2026-03-01</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank">雙航母壓境 美伊兵力全盤解析</a>
-<span class="feat-date">2026-02-22</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank">不知彼、不知己：台灣缺乏面對現實的勇氣</a>
-<span class="feat-date">2025-12-07</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank">晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a>
-<span class="feat-date">2026-03-15</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank">不是穿越！2019年就寫好的俄烏戰爭劇本</a>
-<span class="feat-date">2025-12-28</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge analysis">深度分析</span>
-<a href="https://www.chinatimes.com/realtimenews/20260311003985-260417" target="_blank">伊朗飛彈實力全解析！美以踢到鐵板不是巧合</a>
-<span class="feat-date">2026-03-11</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20260405000151-260417" target="_blank">荷莫茲封鎖４週 台灣想起自己是島國</a>
-<span class="feat-date">2026-04-05</span>
-</div>
-<p class="sidebar-hint">張威翔<br/>時報資訊／國際軍事組</p>
-</aside>
-</div>
-<div class="container" id="articles-col">
+<div class="container">
 <div class="stats-bar">
 <div class="stat-item">
 <span class="num">119</span>
@@ -1344,7 +1248,8 @@
 </div>
 </div>
 
-<section class="year-section" id="year-2026">
+<!-- 3D 地球儀 -->
+<div id="globe-container"></div><section class="year-section" id="year-2026">
 <div class="year-header">
 <div class="year-badge">2026</div>
 <div class="year-line"></div>
@@ -1754,7 +1659,47 @@
 <!-- 2024年 -->
 <!-- 2025年 -->
 <!-- 2026年 -->
-</div><!-- /articles-col -->
+</div><!-- /container -->
+<!-- 精選文章側邊欄（桌面版顯示） -->
+<aside class="sidebar">
+<div class="sidebar-header">✦ 精選報導</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank">卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a>
+<span class="feat-date">2026-03-01</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank">雙航母壓境 美伊兵力全盤解析</a>
+<span class="feat-date">2026-02-22</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank">不知彼、不知己：台灣缺乏面對現實的勇氣</a>
+<span class="feat-date">2025-12-07</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank">晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a>
+<span class="feat-date">2026-03-15</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank">不是穿越！2019年就寫好的俄烏戰爭劇本</a>
+<span class="feat-date">2025-12-28</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge analysis">深度分析</span>
+<a href="https://www.chinatimes.com/realtimenews/20260311003985-260417" target="_blank">伊朗飛彈實力全解析！美以踢到鐵板不是巧合</a>
+<span class="feat-date">2026-03-11</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20260405000151-260417" target="_blank">荷莫茲封鎖４週 台灣想起自己是島國</a>
+<span class="feat-date">2026-04-05</span>
+</div>
+<p class="sidebar-hint">張威翔<br/>時報資訊／國際軍事組</p>
+</aside>
 </div><!-- /page-layout -->
 <!-- 背景音樂播放器 -->
 <audio id="bg-music" loop="" preload="none" src="music/incredulity.mp3"></audio>
@@ -1844,8 +1789,7 @@
 <footer class="site-footer">
         資料來源：時報資訊  ｜  報導期間：2023 – 2026
     </footer>
-<!-- Globe.gl + TopoJSON 國家輪廓 -->
-<script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
+<!-- Globe.gl（Three.js WebGL 地球儀） -->
 <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
 <script>
     (function initGlobe() {
@@ -1862,27 +1806,23 @@
         } catch (e) { container.style.display = 'none'; return; }
 
         // 文章中提及的衝突區域 / 主要地緣政治焦點
-        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords, countryIds }
+        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords }
         const hotspots = [
-            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'], countryIds: [804] },
-            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'], countryIds: [643] },
-            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'], countryIds: [158] },
-            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'], countryIds: [156] },
-            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'], countryIds: [376] },
-            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'], countryIds: [364] },
-            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'], countryIds: [840] },
-            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'], countryIds: [276, 250, 724, 380, 616] },
-            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'], countryIds: [408] },
-            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'], countryIds: [862] },
-            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'], countryIds: [180] },
-            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'], countryIds: [586] },
-            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'], countryIds: [634] },
-            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'], countryIds: [] },
-            { lat: 15.35, lng: 44.20,   label: '🇾🇪 葉門',         size: 0.40, keywords: ['葉門', '胡塞'], countryIds: [887] },
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'] },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'] },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'] },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'] },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'] },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'] },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'] },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'] },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'] },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'] },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'] },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'] },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'] },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'] },
         ];
-
-        // 全域暴露供文章聯動旋轉 / 國家高亮使用
-        window.globeHotspots = hotspots;
 
         // 延遲初始化：確保瀏覽器完成 layout，clientWidth/clientHeight 才有正確值
         setTimeout(function() { startGlobe(container, hotspots); }, 50);
@@ -1891,34 +1831,6 @@
     function startGlobe(container, hotspots) {
         const w = container.clientWidth;
         const h = container.clientHeight;
-
-        // ── 全球關鍵航運水道 ──────────────────────────────────────
-        const supplyArcs = [
-            // 台灣海峽：全球最高地緣風險咽喉
-            { startLat: 30.5, startLng: 122.5, endLat: 21.0, endLng: 120.0,
-              color: ['rgba(231,76,60,0.95)', 'rgba(192,57,43,0.15)'], label: '🇹🇼 台灣海峽' },
-            // 麻六甲海峽：全球最繁忙貿易通道
-            { startLat: 8.0,  startLng: 94.0,  endLat: 1.3,  endLng: 104.0,
-              color: ['rgba(52,152,219,0.95)', 'rgba(41,128,185,0.15)'], label: '🌊 麻六甲海峽' },
-            // 蘇伊士運河／紅海：胡塞武裝攻擊受影響航線
-            { startLat: 31.5, startLng: 32.5,  endLat: 12.5, endLng: 43.5,
-              color: ['rgba(241,196,15,0.95)', 'rgba(230,176,8,0.15)'],  label: '🚢 蘇伊士／紅海' },
-            // 霍爾木茲海峽：全球石油命脈
-            { startLat: 27.5, startLng: 55.0,  endLat: 23.5, endLng: 59.5,
-              color: ['rgba(230,126,34,0.95)', 'rgba(211,84,0,0.15)'],   label: '🛢️ 霍爾木茲海峽' },
-            // 黑海／博斯普魯斯：俄烏戰爭核心水道
-            { startLat: 45.5, startLng: 33.0,  endLat: 38.5, endLng: 26.5,
-              color: ['rgba(155,89,182,0.95)', 'rgba(142,68,173,0.15)'], label: '⚓ 黑海／博斯普魯斯' },
-            // 好望角：蘇伊士受阻時全球繞行路徑
-            { startLat: -18.0, startLng: -5.0, endLat: -35.0, endLng: 24.0,
-              color: ['rgba(39,174,96,0.95)',  'rgba(27,153,88,0.15)'],  label: '🔄 好望角備用航線' },
-            // 南海主幹線：台海衝突最敏感區域
-            { startLat: 22.5, startLng: 114.5, endLat: 10.5, endLng: 107.5,
-              color: ['rgba(231,76,60,0.65)', 'rgba(192,57,43,0.1)'],   label: '🌏 南海主幹線' },
-        ];
-
-        // 國家高亮狀態
-        let highlightedIds = [];
 
         const globe = Globe({ animateIn: true, width: w, height: h })(container)
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
@@ -1943,77 +1855,14 @@
             .ringMaxRadius(3.5)
             .ringPropagationSpeed(1.2)
             .ringRepeatPeriod(2200)
-            // 點擊熱點 → 顯示相關報導 + 篩選主列表
+            // 點擊熱點 → 顯示相關報導
             .onPointClick(showRelatedArticles);
-
-        // ── 衝突弧線（分開設定，避免版本不支援時炸掉初始化鏈）────
-        try {
-            globe
-                .arcsData(supplyArcs)
-                .arcStartLat('startLat').arcStartLng('startLng')
-                .arcEndLat('endLat').arcEndLng('endLng')
-                .arcColor(d => d.color)
-                .arcAltitude(0.28)
-                .arcStroke(0.6)
-                .arcDashLength(0.45).arcDashGap(0.45).arcDashAnimateTime(2800);
-            if (typeof globe.arcLabel === 'function') {
-                globe.arcLabel(d => `<div style="font-size:11px;padding:3px 8px;background:rgba(10,18,26,0.9);border:1px solid rgba(192,57,43,0.4);border-radius:4px;color:#e0e0e0">${d.label}</div>`);
-            }
-        } catch(e) { /* 此版本不支援弧線動畫，靜默略過 */ }
 
         const ctrl = globe.controls();
         ctrl.autoRotate      = true;
         ctrl.autoRotateSpeed = 0.5;
         ctrl.enableZoom      = false;
         ctrl.enablePan       = false;
-
-        // 全域暴露 Globe 實例
-        window.globeInstance = globe;
-
-        // ── 國家高亮 API ─────────────────────────────────────────────
-        window.globeHighlightCountry = function(ids) {
-            highlightedIds = ids || [];
-            if (window._globeCountriesLoaded) {
-                globe.polygonCapColor(feat =>
-                    highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
-                ).polygonStrokeColor(feat =>
-                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
-                );
-            }
-        };
-
-        if (!window._globeCountriesLoaded) {
-            fetch('https://unpkg.com/world-atlas@2/countries-110m.json')
-                .then(r => r.json())
-                .then(world => {
-                    if (typeof topojson === 'undefined') return;
-                    const countries = topojson.feature(world, world.objects.countries);
-                    window._globeCountriesLoaded = true;
-                    globe.polygonsData(countries.features)
-                        .polygonCapColor(feat =>
-                            highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
-                        )
-                        .polygonSideColor(() => 'rgba(0,0,0,0)')
-                        .polygonStrokeColor(feat =>
-                            highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
-                        )
-                        .polygonAltitude(0.003);
-                })
-                .catch(() => {});
-        }
-
-        // ── 弧線圖例 ──────────────────────────────────────────────────
-        const arcLegend = document.createElement('div');
-        arcLegend.id = 'arc-legend';
-        arcLegend.innerHTML = `
-            <div class="arc-legend-title">關鍵航運水道</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#e74c3c"></div>台灣海峽／南海</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#3498db"></div>麻六甲海峽</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#f1c40f"></div>蘇伊士／紅海</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#e67e22"></div>霍爾木茲</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#9b59b6"></div>黑海/博斯普魯斯</div>
-        `;
-        container.appendChild(arcLegend);
 
         // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
         let _resizeStarFn = null; // 由星空 callback 設定
@@ -2122,11 +1971,12 @@
         container.addEventListener('pointerdown', handleInteraction);
         container.addEventListener('touchstart',  handleInteraction, { passive: true });
 
-        // ── 熱點點擊：顯示相關報導面板 + 篩選主列表 ──────────────
+        // ── 熱點點擊：顯示相關報導面板 ──────────────────────────
         function showRelatedArticles(point) {
             const existing = document.getElementById('globe-panel');
             if (existing) existing.remove();
 
+            // 掃描頁面所有新聞卡片，比對 keywords
             const cards = Array.from(document.querySelectorAll('.news-card'));
             const matches = cards.filter(card => {
                 const text = card.querySelector('a')?.textContent || '';
@@ -2138,72 +1988,31 @@
             panel.innerHTML = `
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                     <span style="font-size:0.85rem;font-weight:700;color:#e74c3c;letter-spacing:0.08em">${point.label} 相關報導</span>
-                    <button id="globe-panel-close" style="background:none;border:none;color:#7f9aac;font-size:1.2rem;cursor:pointer;line-height:1;padding:0">✕</button>
+                    <button onclick="document.getElementById('globe-panel').remove()" style="background:none;border:none;color:#7f9aac;font-size:1.2rem;cursor:pointer;line-height:1;padding:0">✕</button>
                 </div>
                 ${matches.length === 0
                     ? '<p style="color:#4a6274;font-size:0.82rem;margin:0">目前無相關報導</p>'
-                    : matches.slice(0,8).map(card => {
+                    : matches.map(card => {
                         const a = card.querySelector('a');
                         const date = card.querySelector('.date')?.textContent || '';
                         return `<div style="border-left:2px solid #c0392b;padding:4px 8px;margin-bottom:6px">
                             <div style="font-size:0.68rem;color:#4a6274;margin-bottom:2px">${date}</div>
                             <a href="${a.href}" target="_blank" style="color:#c8d8e4;font-size:0.82rem;text-decoration:none;line-height:1.4;display:block">${a.textContent}</a>
                         </div>`;
-                    }).join('') +
-                    (matches.length > 8 ? `<div style="font-size:0.72rem;color:#7f9aac;padding:4px 8px">… 共 ${matches.length} 篇，已顯示前 8 篇</div>` : '')
-                }
-                ${matches.length > 0
-                    ? `<button id="globe-panel-filter" style="margin-top:10px;width:100%;padding:6px 0;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.35);border-radius:4px;color:#e74c3c;font-size:0.78rem;cursor:pointer;font-family:inherit">📍 在文章列表中篩選（${matches.length} 篇）</button>`
-                    : ''
+                    }).join('')
                 }`;
 
             Object.assign(panel.style, {
                 position: 'absolute', bottom: '16px', left: '16px',
-                width: '300px', maxHeight: '360px', overflowY: 'auto',
+                width: '300px', maxHeight: '320px', overflowY: 'auto',
                 background: 'rgba(10,18,26,0.95)', border: '1px solid #253545',
                 borderRadius: '8px', padding: '14px', zIndex: '20',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.6)', scrollbarWidth: 'thin'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
+                scrollbarWidth: 'thin'
             });
             container.style.position = 'relative';
             container.appendChild(panel);
-
-            document.getElementById('globe-panel-close').addEventListener('click', () => {
-                panel.remove(); clearLocationFilter();
-            });
-            const filterBtn = document.getElementById('globe-panel-filter');
-            if (filterBtn) {
-                filterBtn.addEventListener('click', () => {
-                    applyLocationFilter(point, matches);
-                    panel.remove();
-                    const tagFilter = document.querySelector('.tag-filter');
-                    if (tagFilter) tagFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
         }
-
-        function applyLocationFilter(point, matches) {
-            const bar = document.getElementById('location-filter-bar');
-            if (bar) {
-                bar.querySelector('.lf-label').textContent = '📍 ' + point.label + ' 相關報導';
-                bar.querySelector('.lf-count').textContent = matches.length + ' 篇';
-                bar.classList.add('active');
-            }
-            document.querySelectorAll('.news-card').forEach(card => {
-                card.classList.toggle('location-highlight', matches.includes(card));
-                card.classList.toggle('location-dim', !matches.includes(card));
-            });
-            if (window.globeHighlightCountry) window.globeHighlightCountry(point.countryIds || []);
-        }
-
-        function clearLocationFilter() {
-            const bar = document.getElementById('location-filter-bar');
-            if (bar) bar.classList.remove('active');
-            document.querySelectorAll('.news-card').forEach(card => {
-                card.classList.remove('location-highlight', 'location-dim');
-            });
-            if (window.globeHighlightCountry) window.globeHighlightCountry([]);
-        }
-        window.clearLocationFilter = clearLocationFilter;
     }
     </script>
 <!-- 標籤篩選 & 時間軸密度圖 -->
@@ -2241,10 +2050,6 @@
             '<button class="tag-btn bookmarks-tab" data-tag="bookmarks">☆ 書籤<span class="bm-count" id="bm-tab-count">0</span></button>' +
             '<span class="filter-count"></span>';
 
-        // ── 建立時間軸容器 ──────────────────────────────────────
-        const timelineEl = document.createElement('div');
-        timelineEl.id = 'timeline-chart';
-
         // ── 地點篩選橫幅 ────────────────────────────────────────
         const locationBar = document.createElement('div');
         locationBar.id = 'location-filter-bar';
@@ -2253,11 +2058,13 @@
             '<span class="lf-count"></span>' +
             '<button class="lf-clear" onclick="window.clearLocationFilter && window.clearLocationFilter()">✕ 清除篩選</button>';
 
-        // tagBar 插在文章欄最前面；時間軸移到所有年份區塊之後（footer 前）
-        const articlesCol = document.getElementById('articles-col');
-        const firstSection = articlesCol ? articlesCol.querySelector('.year-section') : null;
-        if (firstSection) firstSection.before(tagBar);
-        else (articlesCol || document.body).appendChild(tagBar);
+        // ── 建立時間軸容器 ──────────────────────────────────────
+        const timelineEl = document.createElement('div');
+        timelineEl.id = 'timeline-chart';
+
+        // tagBar 插在 globe 後面；時間軸移到所有年份區塊之後（footer 前）
+        const globeEl = document.getElementById('globe-container');
+        globeEl.after(tagBar);
         const lastSection = document.querySelector('.year-section:last-of-type');
         lastSection.after(timelineEl);
 
@@ -2368,10 +2175,9 @@
                 btn.classList.toggle('active', btn.dataset.tag === currentTag)
             );
 
-            const bookmarks = window._bookmarks || new Set();
-
             // 顯示 / 隱藏卡片
             let visible = 0;
+            const bookmarks = window._bookmarks || new Set();
             allCards.forEach(card => {
                 let tagMatch;
                 if (currentTag === 'all') {
@@ -2420,9 +2226,6 @@
             btn.addEventListener('click', () => applyFilter(btn.dataset.tag, searchInput.value))
         );
         applyFilter('all', '');
-
-        // 全域暴露，供書籤 script 觸發重新篩選
-        window._reapplyFilter = () => applyFilter(undefined, undefined);
     })();
     </script>
 <script>
@@ -2548,7 +2351,7 @@
             });
         });
     })();
-</script>
+    </script>
 <script>
     // ── 背景音樂控制 ──────────────────────────────────────────────
     (function () {
