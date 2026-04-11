@@ -1789,7 +1789,8 @@
 <footer class="site-footer">
         資料來源：時報資訊  ｜  報導期間：2023 – 2026
     </footer>
-<!-- Globe.gl（Three.js WebGL 地球儀） -->
+<!-- TopoJSON 地理資料轉換工具 & Globe.gl（Three.js WebGL 地球儀） -->
+<script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
 <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
 <script>
     (function initGlobe() {
@@ -1806,22 +1807,22 @@
         } catch (e) { container.style.display = 'none'; return; }
 
         // 文章中提及的衝突區域 / 主要地緣政治焦點
-        // 如需新增地點：在陣列加一筆 { lat, lng, label, size, keywords }
+        // countryIds：ISO 3166-1 numeric country codes
         const hotspots = [
-            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'] },
-            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'] },
-            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'] },
-            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'] },
-            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'] },
-            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'] },
-            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'] },
-            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'] },
-            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'] },
-            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'] },
-            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'] },
-            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'] },
-            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'] },
-            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'] },
+            { lat: 48.38, lng: 31.17,   label: '🇺🇦 烏克蘭',       size: 0.55, keywords: ['烏克蘭', '烏軍', '澤倫斯基', '基輔', '烏俄'], countryIds: [804] },
+            { lat: 55.75, lng: 37.62,   label: '🇷🇺 俄羅斯',       size: 0.50, keywords: ['俄羅斯', '俄軍', '普丁', '俄國', '俄烏', '莫斯科'], countryIds: [643] },
+            { lat: 23.70, lng: 120.96,  label: '🇹🇼 台灣',         size: 0.55, keywords: ['台灣', '國軍', '台海'], countryIds: [158] },
+            { lat: 39.92, lng: 116.39,  label: '🇨🇳 中國',         size: 0.50, keywords: ['中國', '陸', '北京', '解放軍'], countryIds: [156] },
+            { lat: 31.77, lng: 35.22,   label: '🇮🇱 以色列',       size: 0.55, keywords: ['以色列', '以軍', '加薩', '哈馬斯'], countryIds: [376] },
+            { lat: 35.69, lng: 51.39,   label: '🇮🇷 伊朗',         size: 0.50, keywords: ['伊朗', '伊斯蘭'], countryIds: [364] },
+            { lat: 38.90, lng: -77.04,  label: '🇺🇸 美國',         size: 0.45, keywords: ['美國', '美軍', '五角大廈', '國會', '川普', '拜登'], countryIds: [840] },
+            { lat: 52.52, lng: 13.40,   label: '🇩🇪 歐洲／北約',   size: 0.40, keywords: ['北約', '歐洲', '歐盟', '歐洲軍'], countryIds: [276, 250, 724, 380, 616] },
+            { lat: 39.03, lng: 125.75,  label: '🇰🇵 北韓',         size: 0.45, keywords: ['北韓', '北朝鮮'], countryIds: [408] },
+            { lat: 6.42,  lng: -66.59,  label: '🇻🇪 委內瑞拉',     size: 0.38, keywords: ['委內瑞拉', '馬杜洛'], countryIds: [862] },
+            { lat: -4.32, lng: 15.32,   label: '🇨🇩 剛果',         size: 0.35, keywords: ['剛果', '非洲'], countryIds: [180] },
+            { lat: 30.38, lng: 69.35,   label: '🇵🇰 巴基斯坦',     size: 0.38, keywords: ['巴基斯坦'], countryIds: [586] },
+            { lat: 25.29, lng: 51.53,   label: '🇶🇦 卡達',         size: 0.38, keywords: ['卡達', '中東'], countryIds: [634] },
+            { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'], countryIds: [] },
         ];
 
         // 延遲初始化：確保瀏覽器完成 layout，clientWidth/clientHeight 才有正確值
@@ -1863,6 +1864,10 @@
         ctrl.autoRotateSpeed = 0.5;
         ctrl.enableZoom      = false;
         ctrl.enablePan       = false;
+
+        // 全域暴露 Globe 實例和熱點 (供文章聯動旋轉使用)
+        window.globeInstance = globe;
+        window.globeHotspots = hotspots;
 
         // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
         let _resizeStarFn = null; // 由星空 callback 設定
@@ -1970,6 +1975,62 @@
         }
         container.addEventListener('pointerdown', handleInteraction);
         container.addEventListener('touchstart',  handleInteraction, { passive: true });
+
+        // ── 國家高亮：TopoJSON 多邊形 ──────────────────────────────
+        let highlightedIds = [];
+        window.globeHighlightCountry = function(ids) {
+            highlightedIds = ids || [];
+            if (window._globeCountriesLoaded) {
+                globe.polygonCapColor(feat =>
+                    highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
+                ).polygonStrokeColor(feat =>
+                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                );
+            }
+        };
+
+        // 加載 TopoJSON 國家邊界
+        fetch('https://unpkg.com/world-atlas@2/countries-110m.json')
+            .then(r => r.json())
+            .then(world => {
+                if (typeof topojson === 'undefined') return; // topojson-client 函式庫必須已加載
+                const countries = topojson.feature(world, world.objects.countries);
+                window._globeCountriesLoaded = true;
+                globe.polygonsData(countries.features)
+                    .polygonCapColor(feat =>
+                        highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
+                    )
+                    .polygonSideColor(() => 'rgba(0,0,0,0)')
+                    .polygonStrokeColor(feat =>
+                        highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.04)'
+                    )
+                    .polygonAltitude(0.003);
+            })
+            .catch(() => {}); // 靜默失敗：topojson 不可用時無國家高光
+
+        // ── 位置篩選函數 ────────────────────────────────────────
+        window.applyLocationFilter = function(point, matches) {
+            const bar = document.getElementById('location-filter-bar');
+            if (bar) {
+                bar.querySelector('.lf-label').textContent = '📍 ' + point.label + ' 相關報導';
+                bar.querySelector('.lf-count').textContent = matches.length + ' 篇';
+                bar.classList.add('active');
+            }
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.classList.toggle('location-highlight', matches.includes(card));
+                card.classList.toggle('location-dim', !matches.includes(card));
+            });
+            if (window.globeHighlightCountry) window.globeHighlightCountry(point.countryIds || []);
+        };
+
+        window.clearLocationFilter = function() {
+            const bar = document.getElementById('location-filter-bar');
+            if (bar) bar.classList.remove('active');
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.classList.remove('location-highlight', 'location-dim');
+            });
+            if (window.globeHighlightCountry) window.globeHighlightCountry([]);
+        };
 
         // ── 熱點點擊：顯示相關報導面板 ──────────────────────────
         function showRelatedArticles(point) {
