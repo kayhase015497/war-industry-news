@@ -76,17 +76,17 @@
             overflow: hidden;
         }
 
-        /* 3D 地球儀容器（內容區全寬） */
+        /* 3D 地球儀容器（分欄左側填滿） */
         #globe-container {
             width: 100%;
-            height: 500px;
-            border-radius: 12px;
+            flex: 1;
+            min-height: 0;
+            border-radius: 0;
             overflow: hidden;
             background: #050d14;
-            margin-bottom: 40px;
+            margin-bottom: 0;
             cursor: grab;
             position: relative;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
 
         #globe-container:active { cursor: grabbing; }
@@ -201,38 +201,37 @@
             margin-right: 8px;
         }
 
-        /* ── 頁面主佈局（側邊欄 + 內容） ── */
+        /* ── 頁面主佈局（地球儀欄 + 文章欄） ── */
         .page-layout {
             display: flex;
             align-items: flex-start;
-            max-width: 1160px;
+            max-width: 1340px;
             margin: 0 auto;
         }
 
-        /* ── 主容器 ── */
+        /* ── 文章欄 ── */
         .container {
             flex: 1;
             min-width: 0;
-            max-width: 860px;
-            padding: 40px 20px 60px;
+            padding: 40px 24px 60px;
         }
 
-        /* ── 專欄側邊欄 ── */
+        /* ── 精選側欄（在地球儀欄底部） ── */
         .sidebar {
-            width: 230px;
             flex-shrink: 0;
-            position: sticky;
-            top: 50px;
-            max-height: calc(100vh - 60px);
+            position: static;
+            width: 100%;
+            max-height: 250px;
             overflow-y: auto;
-            padding: 28px 0 28px 16px;
+            padding: 14px 16px 16px;
             scrollbar-width: thin;
-            scrollbar-color: #cdd8e3 transparent;
+            scrollbar-color: #2a3f50 transparent;
+            border-top: 1px solid rgba(255,255,255,0.07);
         }
 
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: #cdd8e3; border-radius: 2px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #2a3f50; border-radius: 2px; }
 
         .sidebar-header {
             font-size: 0.72rem;
@@ -676,10 +675,53 @@
         body.dark-mode .year-nav a.col-link { border-color: #1c3a52; color: #5dade2; }
 
 
-        /* ── 響應式 ── */
-        @media (max-width: 1140px) {
+        /* ── 左右分欄：地球儀固定欄 ── */
+        #globe-col {
+            flex: 0 0 420px;
+            position: sticky;
+            top: 44px;
+            height: calc(100vh - 44px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #060e17;
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        /* 地球儀欄內精選側欄：暗色覆蓋 */
+        #globe-col .sidebar-header {
+            color: rgba(255,255,255,0.38);
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+        #globe-col .featured-card {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.09);
+            box-shadow: none;
+        }
+        #globe-col .featured-card:hover {
+            background: rgba(255,255,255,0.09);
+            transform: none;
+            box-shadow: none;
+        }
+        #globe-col .featured-card a { color: #c8d8e4; }
+        #globe-col .featured-card .feat-date { color: rgba(255,255,255,0.32); }
+        #globe-col .sidebar-hint { color: rgba(255,255,255,0.28); }
+
+        /* ── 手機板：單欄佈局 ── */
+        @media (max-width: 900px) {
+            .page-layout { flex-direction: column; }
             .sidebar { display: none; }
-            .container { margin: 0 auto; }
+            #globe-col {
+                position: static;
+                flex: none;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.07);
+            }
+            #globe-container {
+                flex: none;
+                height: 340px;
+            }
         }
 
 
@@ -1241,7 +1283,48 @@
 <button class="theme-toggle-btn" id="theme-toggle" title="切換日間／夜間模式">🌙</button>
 </nav>
 <div class="page-layout">
-<div class="container">
+<div id="globe-col">
+<div id="globe-container"></div><aside class="sidebar">
+<div class="sidebar-header">✦ 精選報導</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank">卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a>
+<span class="feat-date">2026-03-01</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank">雙航母壓境 美伊兵力全盤解析</a>
+<span class="feat-date">2026-02-22</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge military">Military</span>
+<a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank">不知彼、不知己：台灣缺乏面對現實的勇氣</a>
+<span class="feat-date">2025-12-07</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank">晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a>
+<span class="feat-date">2026-03-15</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank">不是穿越！2019年就寫好的俄烏戰爭劇本</a>
+<span class="feat-date">2025-12-28</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge analysis">深度分析</span>
+<a href="https://www.chinatimes.com/realtimenews/20260311003985-260417" target="_blank">伊朗飛彈實力全解析！美以踢到鐵板不是巧合</a>
+<span class="feat-date">2026-03-11</span>
+</div>
+<div class="featured-card">
+<span class="feat-badge geopolitics">Geopolitics</span>
+<a href="https://www.chinatimes.com/realtimenews/20260405000151-260417" target="_blank">荷莫茲封鎖４週 台灣想起自己是島國</a>
+<span class="feat-date">2026-04-05</span>
+</div>
+<p class="sidebar-hint">張威翔<br/>時報資訊／國際軍事組</p>
+</aside>
+</div>
+<div class="container" id="articles-col">
 <div class="stats-bar">
 <div class="stat-item">
 <span class="num">119</span>
@@ -1261,8 +1344,7 @@
 </div>
 </div>
 
-<!-- 3D 地球儀 -->
-<div id="globe-container"></div><section class="year-section" id="year-2026">
+<section class="year-section" id="year-2026">
 <div class="year-header">
 <div class="year-badge">2026</div>
 <div class="year-line"></div>
@@ -1672,47 +1754,7 @@
 <!-- 2024年 -->
 <!-- 2025年 -->
 <!-- 2026年 -->
-</div><!-- /container -->
-<!-- 精選文章側邊欄（桌面版顯示） -->
-<aside class="sidebar">
-<div class="sidebar-header">✦ 精選報導</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20260301000106-260417" target="_blank">卡達雷達到樂山 伊朗空襲敲響台灣防空警鐘</a>
-<span class="feat-date">2026-03-01</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20260222000046-260417" target="_blank">雙航母壓境 美伊兵力全盤解析</a>
-<span class="feat-date">2026-02-22</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge military">Military</span>
-<a href="https://www.chinatimes.com/realtimenews/20251207000039-260417" target="_blank">不知彼、不知己：台灣缺乏面對現實的勇氣</a>
-<span class="feat-date">2025-12-07</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20260315000028-260417" target="_blank">晶片產業命繫中東！台灣「矽盾」軟肋不只氦氣</a>
-<span class="feat-date">2026-03-15</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20251228000234-260417" target="_blank">不是穿越！2019年就寫好的俄烏戰爭劇本</a>
-<span class="feat-date">2025-12-28</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge analysis">深度分析</span>
-<a href="https://www.chinatimes.com/realtimenews/20260311003985-260417" target="_blank">伊朗飛彈實力全解析！美以踢到鐵板不是巧合</a>
-<span class="feat-date">2026-03-11</span>
-</div>
-<div class="featured-card">
-<span class="feat-badge geopolitics">Geopolitics</span>
-<a href="https://www.chinatimes.com/realtimenews/20260405000151-260417" target="_blank">荷莫茲封鎖４週 台灣想起自己是島國</a>
-<span class="feat-date">2026-04-05</span>
-</div>
-<p class="sidebar-hint">張威翔<br/>時報資訊／國際軍事組</p>
-</aside>
+</div><!-- /articles-col -->
 </div><!-- /page-layout -->
 <!-- 背景音樂播放器 -->
 <audio id="bg-music" loop="" preload="none" src="music/incredulity.mp3"></audio>
@@ -1850,22 +1892,29 @@
         const w = container.clientWidth;
         const h = container.clientHeight;
 
-        // ── 衝突弧線：主要武器援助 / 影響力通道 ──────────────────
+        // ── 全球關鍵航運水道 ──────────────────────────────────────
         const supplyArcs = [
-            { startLat: 39.03, startLng: 125.75, endLat: 55.75, endLng: 37.62,
-              color: ['rgba(255,107,53,0.9)', 'rgba(231,76,60,0.3)'],   label: '🇰🇵→🇷🇺 北韓彈藥輸俄' },
-            { startLat: 38.90, startLng: -77.04, endLat: 48.38, endLng: 31.17,
-              color: ['rgba(39,174,96,0.9)',   'rgba(46,204,113,0.3)'], label: '🇺🇸→🇺🇦 美援烏克蘭' },
-            { startLat: 35.69, startLng: 51.39,  endLat: 15.35, endLng: 44.20,
-              color: ['rgba(192,57,43,0.9)',   'rgba(231,76,60,0.3)'],  label: '🇮🇷→🇾🇪 伊朗支援胡塞' },
-            { startLat: 39.92, startLng: 116.39, endLat: 55.75, endLng: 37.62,
-              color: ['rgba(52,152,219,0.9)',  'rgba(41,128,185,0.3)'], label: '🇨🇳→🇷🇺 中俄雙邊' },
-            { startLat: 38.90, startLng: -77.04, endLat: 31.77, endLng: 35.22,
-              color: ['rgba(39,174,96,0.9)',   'rgba(46,204,113,0.3)'], label: '🇺🇸→🇮🇱 美援以色列' },
-            { startLat: 35.69, startLng: 51.39,  endLat: 55.75, endLng: 37.62,
-              color: ['rgba(192,57,43,0.7)',   'rgba(231,76,60,0.2)'],  label: '🇮🇷→🇷🇺 無人機技術' },
-            { startLat: 52.52, startLng: 13.40,  endLat: 48.38, endLng: 31.17,
-              color: ['rgba(52,152,219,0.8)',  'rgba(41,128,185,0.2)'], label: '🇪🇺→🇺🇦 北約援助' },
+            // 台灣海峽：全球最高地緣風險咽喉
+            { startLat: 30.5, startLng: 122.5, endLat: 21.0, endLng: 120.0,
+              color: ['rgba(231,76,60,0.95)', 'rgba(192,57,43,0.15)'], label: '🇹🇼 台灣海峽' },
+            // 麻六甲海峽：全球最繁忙貿易通道
+            { startLat: 8.0,  startLng: 94.0,  endLat: 1.3,  endLng: 104.0,
+              color: ['rgba(52,152,219,0.95)', 'rgba(41,128,185,0.15)'], label: '🌊 麻六甲海峽' },
+            // 蘇伊士運河／紅海：胡塞武裝攻擊受影響航線
+            { startLat: 31.5, startLng: 32.5,  endLat: 12.5, endLng: 43.5,
+              color: ['rgba(241,196,15,0.95)', 'rgba(230,176,8,0.15)'],  label: '🚢 蘇伊士／紅海' },
+            // 霍爾木茲海峽：全球石油命脈
+            { startLat: 27.5, startLng: 55.0,  endLat: 23.5, endLng: 59.5,
+              color: ['rgba(230,126,34,0.95)', 'rgba(211,84,0,0.15)'],   label: '🛢️ 霍爾木茲海峽' },
+            // 黑海／博斯普魯斯：俄烏戰爭核心水道
+            { startLat: 45.5, startLng: 33.0,  endLat: 38.5, endLng: 26.5,
+              color: ['rgba(155,89,182,0.95)', 'rgba(142,68,173,0.15)'], label: '⚓ 黑海／博斯普魯斯' },
+            // 好望角：蘇伊士受阻時全球繞行路徑
+            { startLat: -18.0, startLng: -5.0, endLat: -35.0, endLng: 24.0,
+              color: ['rgba(39,174,96,0.95)',  'rgba(27,153,88,0.15)'],  label: '🔄 好望角備用航線' },
+            // 南海主幹線：台海衝突最敏感區域
+            { startLat: 22.5, startLng: 114.5, endLat: 10.5, endLng: 107.5,
+              color: ['rgba(231,76,60,0.65)', 'rgba(192,57,43,0.1)'],   label: '🌏 南海主幹線' },
         ];
 
         // 國家高亮狀態
@@ -1957,11 +2006,12 @@
         const arcLegend = document.createElement('div');
         arcLegend.id = 'arc-legend';
         arcLegend.innerHTML = `
-            <div class="arc-legend-title">供應/影響力通道</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#ff6b35"></div>北韓→俄 彈藥</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#27ae60"></div>美→烏/以 援助</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#c0392b"></div>伊朗→胡塞</div>
-            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#3498db"></div>中俄 雙邊</div>
+            <div class="arc-legend-title">關鍵航運水道</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#e74c3c"></div>台灣海峽／南海</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#3498db"></div>麻六甲海峽</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#f1c40f"></div>蘇伊士／紅海</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#e67e22"></div>霍爾木茲</div>
+            <div class="arc-legend-item"><div class="arc-legend-dot" style="background:#9b59b6"></div>黑海/博斯普魯斯</div>
         `;
         container.appendChild(arcLegend);
 
@@ -2163,11 +2213,11 @@
         const TAGS = [
             { id: 'all',      label: '全部' },
             { id: 'ukraine',  label: '🇺🇦 烏俄戰場',  kw: ['烏克蘭','烏軍','俄羅斯','俄軍','基輔','烏俄','俄烏','普丁','澤倫斯基','莫斯科'] },
-            { id: 'nato',     label: '🇪🇺 北約/歐洲', kw: ['北約','歐洲','歐盟'] },
-            { id: 'taiwan',   label: '🇹🇼 台海/中國', kw: ['台灣','台海','中國','解放軍','國軍','台積電'] },
+            { id: 'nato',     label: '🇪🇺 歐洲', kw: ['北約','歐洲','歐盟'] },
+            { id: 'taiwan',   label: '🇹🇼 台海', kw: ['台灣','台海','中國','解放軍','國軍','台積電'] },
             { id: 'industry', label: '⚙️ 軍工產能',   kw: ['軍工','產能','武器','彈藥','工業力','火藥','炸藥','砲彈','火砲','艦'] },
             { id: 'mideast',  label: '🕌 中東',        kw: ['以色列','加薩','哈馬斯','伊朗','中東','胡塞'] },
-            { id: 'us',       label: '🇺🇸 美國政策',   kw: ['美國','美軍','五角大廈','川普','拜登','國會','白宮','海軍'] },
+            { id: 'us',       label: '🇺🇸 美國', kw: ['美國','美軍','五角大廈','川普','拜登','國會','白宮','海軍'] },
         ];
 
         // ── 掃描所有報導卡片，預先標記 tag ───────────────────────
@@ -2203,9 +2253,11 @@
             '<span class="lf-count"></span>' +
             '<button class="lf-clear" onclick="window.clearLocationFilter && window.clearLocationFilter()">✕ 清除篩選</button>';
 
-        // tagBar 插在 globe 後面；時間軸移到所有年份區塊之後（footer 前）
-        const globeEl = document.getElementById('globe-container');
-        globeEl.after(tagBar);
+        // tagBar 插在文章欄最前面；時間軸移到所有年份區塊之後（footer 前）
+        const articlesCol = document.getElementById('articles-col');
+        const firstSection = articlesCol ? articlesCol.querySelector('.year-section') : null;
+        if (firstSection) firstSection.before(tagBar);
+        else (articlesCol || document.body).appendChild(tagBar);
         const lastSection = document.querySelector('.year-section:last-of-type');
         lastSection.after(timelineEl);
 
