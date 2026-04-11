@@ -1834,7 +1834,7 @@
         const h = container.clientHeight;
 
         const globe = Globe({ animateIn: true, width: w, height: h })(container)
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
             .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
             .backgroundColor('rgba(0,0,0,0)')
             .showAtmosphere(true)
@@ -1984,7 +1984,7 @@
                 globe.polygonCapColor(feat =>
                     highlightedIds.includes(+feat.id) ? 'rgba(192,57,43,0.28)' : 'rgba(0,0,0,0)'
                 ).polygonStrokeColor(feat =>
-                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.22)'
+                    highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : false
                 );
             }
         };
@@ -2002,7 +2002,7 @@
                     )
                     .polygonSideColor(() => 'rgba(0,0,0,0)')
                     .polygonStrokeColor(feat =>
-                        highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : 'rgba(255,255,255,0.22)'
+                        highlightedIds.includes(+feat.id) ? 'rgba(231,76,60,0.8)' : false
                     )
                     .polygonAltitude(0.003);
             })
