@@ -1894,16 +1894,23 @@
             .ringMaxRadius(3.5)
             .ringPropagationSpeed(1.2)
             .ringRepeatPeriod(2200)
-            // ── 衝突弧線（供應路線）─────────────────────────────────
-            .arcsData(supplyArcs)
-            .arcStartLat('startLat').arcStartLng('startLng')
-            .arcEndLat('endLat').arcEndLng('endLng')
-            .arcColor('color')
-            .arcAltitude(0.28).arcStroke(0.6)
-            .arcDashLength(0.45).arcDashGap(0.45).arcDashAnimateTime(2800)
-            .arcLabel(d => `<div style="font-size:11px;padding:3px 8px;background:rgba(10,18,26,0.9);border:1px solid rgba(192,57,43,0.4);border-radius:4px;color:#e0e0e0">${d.label}</div>`)
             // 點擊熱點 → 顯示相關報導 + 篩選主列表
             .onPointClick(showRelatedArticles);
+
+        // ── 衝突弧線（分開設定，避免版本不支援時炸掉初始化鏈）────
+        try {
+            globe
+                .arcsData(supplyArcs)
+                .arcStartLat('startLat').arcStartLng('startLng')
+                .arcEndLat('endLat').arcEndLng('endLng')
+                .arcColor(d => d.color)
+                .arcAltitude(0.28)
+                .arcStroke(0.6)
+                .arcDashLength(0.45).arcDashGap(0.45).arcDashAnimateTime(2800);
+            if (typeof globe.arcLabel === 'function') {
+                globe.arcLabel(d => `<div style="font-size:11px;padding:3px 8px;background:rgba(10,18,26,0.9);border:1px solid rgba(192,57,43,0.4);border-radius:4px;color:#e0e0e0">${d.label}</div>`);
+            }
+        } catch(e) { /* 此版本不支援弧線動畫，靜默略過 */ }
 
         const ctrl = globe.controls();
         ctrl.autoRotate      = true;
