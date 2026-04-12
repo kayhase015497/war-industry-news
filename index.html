@@ -141,6 +141,38 @@
             border-color: #c0392b;
         }
 
+        /* 海底電纜切換按鈕 */
+        #globe-cable-controls {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            z-index: 10;
+        }
+        #globe-cable-btn {
+            padding: 5px 11px;
+            border-radius: 4px;
+            background: rgba(10,18,26,0.75);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.45);
+            font-size: 0.72rem;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        #globe-cable-btn:hover {
+            border-color: rgba(79,195,247,0.5);
+            color: rgba(79,195,247,0.9);
+        }
+        #globe-cable-btn.cable-active {
+            border-color: #4fc3f7;
+            color: #4fc3f7;
+            background: rgba(8,32,60,0.8);
+        }
+        #globe-cable-btn:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
 
         /* 斜線紋理疊加於圖片之上，增加軍事質感 */
         .site-header::before {
@@ -1849,8 +1881,8 @@
             .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
             .backgroundColor('rgba(0,0,0,0)')
             .showAtmosphere(true)
-            .atmosphereColor('rgba(192,57,43,0.35)')
-            .atmosphereAltitude(0.14)
+            .atmosphereColor('rgba(80,160,255,0.65)')
+            .atmosphereAltitude(0.18)
             // 衝突點
             .pointsData(hotspots)
             .pointLat('lat')
@@ -1884,6 +1916,44 @@
         requestAnimationFrame(function() {
             globe.width(container.clientWidth).height(container.clientHeight);
         });
+
+        // ── 雲層 ────────────────────────────────────────────────────
+        // three-globe 的範例圖片目錄就有 earth-clouds.png
+        if (typeof globe.cloudsImageUrl === 'function') {
+            globe.cloudsImageUrl('//unpkg.com/three-globe/example/img/earth-clouds.png')
+                 .cloudsAltitude(0.004)
+                 .cloudsOpacity(0.75);
+        }
+
+        // ── 地表反光效果 ────────────────────────────────────────────
+        // 取得 globe.gl 內部的 MeshPhongMaterial，調高 shininess 並加藍色 specular，
+        // 讓海洋區域在光源角度有微微的太陽光反射感。
+        setTimeout(function() {
+            try {
+                // 優先用 API getter；若回傳 undefined 則掃描場景
+                var mat = (typeof globe.globeMaterial === 'function') ? globe.globeMaterial() : null;
+                if (!mat || mat.shininess === undefined) {
+                    globe.scene().traverse(function(obj) {
+                        if (mat) return;
+                        // 全球球體是有 texture map 的 MeshPhongMaterial
+                        if (obj.isMesh && obj.material && obj.material.shininess !== undefined
+                            && obj.material.map) {
+                            mat = obj.material;
+                        }
+                    });
+                }
+                if (mat && mat.shininess !== undefined) {
+                    mat.shininess = 20;
+                    if (mat.specular) {
+                        // 藍色系反光，模擬海洋反射天空光
+                        mat.specular.r = 0.08;
+                        mat.specular.g = 0.14;
+                        mat.specular.b = 0.26;
+                    }
+                    mat.needsUpdate = true;
+                }
+            } catch(e) { /* 靜默略過 */ }
+        }, 400);
 
         // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
         let _resizeStarFn = null; // 由星空 callback 設定
@@ -1980,6 +2050,67 @@
             e.stopPropagation();
             currentAltitude = Math.min(4.5, currentAltitude + 0.4);
             globe.pointOfView({ altitude: currentAltitude }, 400);
+        });
+
+        // ── 海底電纜切換按鈕 ────────────────────────────────────────
+        const cableCtrl = document.createElement('div');
+        cableCtrl.id = 'globe-cable-controls';
+        const cableBtn = document.createElement('button');
+        cableBtn.id = 'globe-cable-btn';
+        cableBtn.title = '切換全球海底電纜顯示';
+        cableBtn.textContent = '⚡ 海纜';
+        cableCtrl.appendChild(cableBtn);
+        container.appendChild(cableCtrl);
+
+        let _cablePaths = null; // null = 尚未載入；[] = 已載入但隱藏
+
+        cableBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (_cablePaths === null) {
+                // 首次點擊：非同步載入電纜 GeoJSON
+                cableBtn.textContent = '⏳ 載入中';
+                cableBtn.disabled = true;
+                fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json')
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        _cablePaths = [];
+                        data.features.forEach(function(f) {
+                            if (!f.geometry) return;
+                            // 支援 LineString 與 MultiLineString
+                            var segments = f.geometry.type === 'MultiLineString'
+                                ? f.geometry.coordinates
+                                : [f.geometry.coordinates];
+                            var color = (f.properties && f.properties.color) ? f.properties.color : '#4fc3f7';
+                            segments.forEach(function(coords) {
+                                _cablePaths.push({ coords: coords, color: color });
+                            });
+                        });
+                        // 以流動虛線呈現電纜路徑
+                        globe.pathsData(_cablePaths)
+                            .pathPoints(function(d) { return d.coords; })
+                            .pathPointLat(function(p) { return p[1]; })
+                            .pathPointLng(function(p) { return p[0]; })
+                            .pathColor(function(d) { return d.color; })
+                            .pathStroke(0.6)
+                            .pathDashLength(0.025)
+                            .pathDashGap(0.01)
+                            .pathDashAnimateTime(80000);
+                        cableBtn.textContent = '⚡ 海纜';
+                        cableBtn.disabled = false;
+                        cableBtn.classList.add('cable-active');
+                    })
+                    .catch(function() {
+                        // 載入失敗：重設按鈕狀態
+                        _cablePaths = null;
+                        cableBtn.textContent = '⚡ 海纜';
+                        cableBtn.disabled = false;
+                    });
+            } else {
+                // 已載入：切換顯示 / 隱藏
+                var isShowing = globe.pathsData().length > 0;
+                globe.pathsData(isShowing ? [] : _cablePaths);
+                cableBtn.classList.toggle('cable-active', !isShowing);
+            }
         });
 
         // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
