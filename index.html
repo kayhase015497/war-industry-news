@@ -1919,11 +1919,12 @@
 
         // ── 雲層 ────────────────────────────────────────────────────
         // three-globe 的範例圖片目錄就有 earth-clouds.png
-        if (typeof globe.cloudsImageUrl === 'function') {
+        // 用 try/catch 取代 typeof 檢查，確保舊版 API 靜默略過
+        try {
             globe.cloudsImageUrl('//unpkg.com/three-globe/example/img/earth-clouds.png')
-                 .cloudsAltitude(0.004)
-                 .cloudsOpacity(0.75);
-        }
+                 .cloudsAltitude(0.01)
+                 .cloudsOpacity(0.9);
+        } catch(e) { /* 舊版 globe.gl 不支援雲層 API */ }
 
         // ── 地表反光效果 ────────────────────────────────────────────
         // 取得 globe.gl 內部的 MeshPhongMaterial，調高 shininess 並加藍色 specular，
@@ -1943,12 +1944,12 @@
                     });
                 }
                 if (mat && mat.shininess !== undefined) {
-                    mat.shininess = 20;
+                    mat.shininess = 10;
                     if (mat.specular) {
-                        // 藍色系反光，模擬海洋反射天空光
-                        mat.specular.r = 0.08;
-                        mat.specular.g = 0.14;
-                        mat.specular.b = 0.26;
+                        // 輕微藍色系反光，不搶眼但有立體感
+                        mat.specular.r = 0.04;
+                        mat.specular.g = 0.07;
+                        mat.specular.b = 0.13;
                     }
                     mat.needsUpdate = true;
                 }
@@ -2062,45 +2063,42 @@
         cableCtrl.appendChild(cableBtn);
         container.appendChild(cableCtrl);
 
-        let _cablePaths = null; // null = 尚未載入；[] = 已載入但隱藏
+        let _cablePaths = null; // null = 尚未載入；array = 已載入的 features
 
         cableBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (_cablePaths === null) {
-                // 首次點擊：非同步載入電纜 GeoJSON
+                // 首次點擊：載入電纜 GeoJSON（完全依照 globe.gl 官方範例寫法）
                 cableBtn.textContent = '⏳ 載入中';
                 cableBtn.disabled = true;
                 fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json')
                     .then(function(r) { return r.json(); })
-                    .then(function(data) {
-                        _cablePaths = [];
-                        data.features.forEach(function(f) {
-                            if (!f.geometry) return;
-                            // 支援 LineString 與 MultiLineString
-                            var segments = f.geometry.type === 'MultiLineString'
-                                ? f.geometry.coordinates
-                                : [f.geometry.coordinates];
-                            var color = (f.properties && f.properties.color) ? f.properties.color : '#4fc3f7';
-                            segments.forEach(function(coords) {
-                                _cablePaths.push({ coords: coords, color: color });
-                            });
-                        });
-                        // 以流動虛線呈現電纜路徑
-                        globe.pathsData(_cablePaths)
-                            .pathPoints(function(d) { return d.coords; })
-                            .pathPointLat(function(p) { return p[1]; })
-                            .pathPointLng(function(p) { return p[0]; })
-                            .pathColor(function(d) { return d.color; })
-                            .pathStroke(0.6)
-                            .pathDashLength(0.025)
-                            .pathDashGap(0.01)
-                            .pathDashAnimateTime(80000);
+                    .then(function(cablesGeo) {
+                        _cablePaths = cablesGeo.features;
+                        // ↓ 官方範例原樣移植
+                        globe
+                            .pathsData(_cablePaths)
+                            .pathLabel(function(e) { return e.properties.name; })
+                            .pathPointLat(function(e) {
+                                return e.geometry.coordinates.map(function(d) { return d[1]; });
+                            })
+                            .pathPointLng(function(e) {
+                                return e.geometry.coordinates.map(function(d) { return d[0]; });
+                            })
+                            .pathColor(function() {
+                                return ['rgba(253,128,93,0.2)', 'rgba(253,128,93,0.2)',
+                                        'rgba(253,128,93,1)',   'rgba(253,128,93,1)',
+                                        'rgba(253,128,93,0.2)'];
+                            })
+                            .pathDashLength(0.01)
+                            .pathDashGap(0.004)
+                            .pathDashAnimateTime(100000)
+                            .pathStroke(2);
                         cableBtn.textContent = '⚡ 海纜';
                         cableBtn.disabled = false;
                         cableBtn.classList.add('cable-active');
                     })
                     .catch(function() {
-                        // 載入失敗：重設按鈕狀態
                         _cablePaths = null;
                         cableBtn.textContent = '⚡ 海纜';
                         cableBtn.disabled = false;
