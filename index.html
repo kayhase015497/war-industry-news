@@ -88,6 +88,13 @@
             position: relative;
             box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
+        /* 確保 globe.gl 的 Three.js canvas 填滿容器、不偏移 */
+        #globe-container canvas {
+            display: block;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
 
         #globe-container:active { cursor: grabbing; }
 
@@ -1825,8 +1832,12 @@
             { lat: 12.87, lng: 30.22,   label: '🌍 非洲衝突帶',    size: 0.35, keywords: ['非洲', '稀土'], countryIds: [] },
         ];
 
-        // 延遲初始化：確保瀏覽器完成 layout，clientWidth/clientHeight 才有正確值
-        setTimeout(function() { startGlobe(container, hotspots); }, 50);
+        // 延遲初始化：雙 rAF 確保瀏覽器完成 flex/reflow，clientWidth/clientHeight 才有正確值
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                startGlobe(container, hotspots);
+            });
+        });
     })();
 
     function startGlobe(container, hotspots) {
@@ -1868,6 +1879,11 @@
         // 全域暴露 Globe 實例和熱點 (供文章聯動旋轉使用)
         window.globeInstance = globe;
         window.globeHotspots = hotspots;
+
+        // 首幀後強制對齊尺寸，修正潛在的初始偏移
+        requestAnimationFrame(function() {
+            globe.width(container.clientWidth).height(container.clientHeight);
+        });
 
         // 視窗縮放時同步更新地球儀尺寸（星空重繪合併在 startGlobe 內）
         let _resizeStarFn = null; // 由星空 callback 設定
