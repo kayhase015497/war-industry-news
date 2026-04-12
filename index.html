@@ -2053,62 +2053,90 @@
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
 
-        // ── 海底電纜切換按鈕 ────────────────────────────────────────
+        // ── 海底電纜模式切換按鈕 ────────────────────────────────────
+        // 點擊後直接把地球儀切換成 globe.gl 官方 submarine-cables 範例的外觀與資料，
+        // 再點一次還原為原本的戰情地球儀。
         const cableCtrl = document.createElement('div');
         cableCtrl.id = 'globe-cable-controls';
         const cableBtn = document.createElement('button');
         cableBtn.id = 'globe-cable-btn';
-        cableBtn.title = '切換全球海底電纜顯示';
+        cableBtn.title = '切換海底電纜模式';
         cableBtn.textContent = '⚡ 海纜';
         cableCtrl.appendChild(cableBtn);
         container.appendChild(cableCtrl);
 
-        let _cablePaths = null; // null = 尚未載入；array = 已載入的 features
+        let _cableFeatures = null; // null = 尚未載入
+        let _cableMode     = false;
+
+        // ── 切換到電纜模式（官方範例外觀）──
+        function activateCableMode() {
+            _cableMode = true;
+            globe
+                .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+                .showAtmosphere(false)
+                .pointsData([])
+                .ringsData([])
+                .pathsData(_cableFeatures)
+                .pathLabel(function(e) { return e.properties.name; })
+                .pathPointLat(function(e) {
+                    return e.geometry.coordinates.map(function(d) { return d[1]; });
+                })
+                .pathPointLng(function(e) {
+                    return e.geometry.coordinates.map(function(d) { return d[0]; });
+                })
+                .pathColor(function() {
+                    return ['rgba(253,128,93,0.2)', 'rgba(253,128,93,0.2)',
+                            'rgba(253,128,93,1)',   'rgba(253,128,93,1)',
+                            'rgba(253,128,93,0.2)'];
+                })
+                .pathDashLength(0.01)
+                .pathDashGap(0.004)
+                .pathDashAnimateTime(100000)
+                .pathStroke(2);
+            try { globe.cloudsOpacity(0); } catch(e) {}
+            cableBtn.classList.add('cable-active');
+        }
+
+        // ── 還原戰情地球儀 ──
+        function deactivateCableMode() {
+            _cableMode = false;
+            globe
+                .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .showAtmosphere(true)
+                .atmosphereColor('rgba(80,160,255,0.65)')
+                .atmosphereAltitude(0.18)
+                .pointsData(hotspots)
+                .ringsData(hotspots)
+                .pathsData([]);
+            try { globe.cloudsOpacity(0.9); } catch(e) {}
+            cableBtn.classList.remove('cable-active');
+        }
 
         cableBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            if (_cablePaths === null) {
-                // 首次點擊：載入電纜 GeoJSON（完全依照 globe.gl 官方範例寫法）
-                cableBtn.textContent = '⏳ 載入中';
-                cableBtn.disabled = true;
-                fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json')
-                    .then(function(r) { return r.json(); })
-                    .then(function(cablesGeo) {
-                        _cablePaths = cablesGeo.features;
-                        // ↓ 官方範例原樣移植
-                        globe
-                            .pathsData(_cablePaths)
-                            .pathLabel(function(e) { return e.properties.name; })
-                            .pathPointLat(function(e) {
-                                return e.geometry.coordinates.map(function(d) { return d[1]; });
-                            })
-                            .pathPointLng(function(e) {
-                                return e.geometry.coordinates.map(function(d) { return d[0]; });
-                            })
-                            .pathColor(function() {
-                                return ['rgba(253,128,93,0.2)', 'rgba(253,128,93,0.2)',
-                                        'rgba(253,128,93,1)',   'rgba(253,128,93,1)',
-                                        'rgba(253,128,93,0.2)'];
-                            })
-                            .pathDashLength(0.01)
-                            .pathDashGap(0.004)
-                            .pathDashAnimateTime(100000)
-                            .pathStroke(2);
-                        cableBtn.textContent = '⚡ 海纜';
-                        cableBtn.disabled = false;
-                        cableBtn.classList.add('cable-active');
-                    })
-                    .catch(function() {
-                        _cablePaths = null;
-                        cableBtn.textContent = '⚡ 海纜';
-                        cableBtn.disabled = false;
-                    });
-            } else {
-                // 已載入：切換顯示 / 隱藏
-                var isShowing = globe.pathsData().length > 0;
-                globe.pathsData(isShowing ? [] : _cablePaths);
-                cableBtn.classList.toggle('cable-active', !isShowing);
+            if (_cableMode) {
+                deactivateCableMode();
+                return;
             }
+            if (_cableFeatures !== null) {
+                activateCableMode();
+                return;
+            }
+            // 首次：先 fetch GeoJSON 再切換
+            cableBtn.textContent = '⏳ 載入中';
+            cableBtn.disabled = true;
+            fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json')
+                .then(function(r) { return r.json(); })
+                .then(function(cablesGeo) {
+                    _cableFeatures = cablesGeo.features;
+                    cableBtn.textContent = '⚡ 海纜';
+                    cableBtn.disabled = false;
+                    activateCableMode();
+                })
+                .catch(function() {
+                    cableBtn.textContent = '⚡ 海纜';
+                    cableBtn.disabled = false;
+                });
         });
 
         // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
