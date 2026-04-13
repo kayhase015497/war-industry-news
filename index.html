@@ -1199,6 +1199,152 @@
             .search-input { font-size: 0.85rem; padding: 8px 32px 8px 30px; }
             .search-icon { font-size: 0.82rem; }
         }
+
+        /* ── 3D 戰情室 ────────────────────────────────────────────── */
+        #enter-warroom-btn {
+            background: rgba(192,57,43,0.15);
+            border: 1px solid rgba(192,57,43,0.5);
+            color: #e74c3c;
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+        #enter-warroom-btn:hover { background: rgba(192,57,43,0.35); }
+
+        #warroom-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            background: #000510;
+        }
+        #warroom-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px, transparent 3px,
+                rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+        #warroom-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 0;
+        }
+        #wr-title, #wr-crosshair, #wr-coords, #wr-hint,
+        #wr-tooltip, #wr-exit-btn, #wr-mobile-controls {
+            position: absolute;
+            z-index: 3;
+        }
+        #wr-title {
+            top: 14px; left: 50%;
+            transform: translateX(-50%);
+            color: rgba(192,57,43,0.6);
+            font-family: 'Courier New', monospace;
+            font-size: 0.66rem;
+            letter-spacing: 0.28em;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #wr-crosshair {
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(220,90,80,0.72);
+            font-size: 1.4rem;
+            font-family: monospace;
+            line-height: 1;
+            pointer-events: none;
+        }
+        #wr-coords {
+            bottom: 22px; left: 22px;
+            color: #c0392b;
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            pointer-events: none;
+        }
+        #wr-hint {
+            bottom: 22px; right: 22px;
+            color: rgba(140,185,220,0.48);
+            font-family: 'Courier New', monospace;
+            font-size: 0.66rem;
+            text-align: right;
+            pointer-events: none;
+        }
+        #wr-tooltip {
+            top: 50px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,5,16,0.9);
+            border: 1px solid rgba(192,57,43,0.45);
+            color: #e0cca0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            padding: 5px 14px;
+            border-radius: 3px;
+            max-width: 500px;
+            text-align: center;
+            pointer-events: none;
+            display: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #wr-exit-btn {
+            top: 12px; right: 12px;
+            background: rgba(192,57,43,0.18);
+            border: 1px solid rgba(192,57,43,0.55);
+            color: #e74c3c;
+            font-family: 'Courier New', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #wr-exit-btn:hover { background: rgba(192,57,43,0.42); }
+        #wr-mobile-controls {
+            bottom: 60px; left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        @media (hover: none) {
+            #wr-mobile-controls {
+                display: grid;
+                grid-template-columns: 52px 52px 52px;
+                grid-template-rows: 52px 52px;
+                gap: 5px;
+            }
+            #wr-mobile-controls button {
+                background: rgba(0,5,16,0.72);
+                border: 1px solid rgba(192,57,43,0.4);
+                color: #e74c3c;
+                font-size: 1.2rem;
+                border-radius: 6px;
+                cursor: pointer;
+                -webkit-user-select: none;
+                user-select: none;
+                touch-action: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #wr-mobile-controls button[data-key="KeyW"] { grid-column: 2; grid-row: 1; }
+            #wr-mobile-controls button[data-key="KeyA"] { grid-column: 1; grid-row: 2; }
+            #wr-mobile-controls button[data-key="KeyS"] { grid-column: 2; grid-row: 2; }
+            #wr-mobile-controls button[data-key="KeyD"] { grid-column: 3; grid-row: 2; }
+            #wr-hint { display: none; }
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -1231,6 +1377,7 @@
 <a class="col-link" href="game.html">🎮 工業力試煉</a>
 
 
+<button id="enter-warroom-btn" title="進入 3D 戰情室">⚔️ 戰情室</button>
 <button class="theme-toggle-btn" id="theme-toggle" title="切換日間／夜間模式">🌙</button>
 </nav>
 <div class="page-layout">
@@ -2503,5 +2650,447 @@
         document.addEventListener('touchend', autoStart, true);
     })();
     </script>
+
+<!-- ── 3D 戰情室 overlay ──────────────────────────────────────────── -->
+<div id="warroom-overlay">
+    <canvas id="warroom-canvas"></canvas>
+    <div id="wr-title">◈ WAR ROOM COMMAND CENTER ◈</div>
+    <div id="wr-crosshair">+</div>
+    <div id="wr-coords">SECTOR 0 , 0</div>
+    <div id="wr-hint">WASD 移動 ｜ 滑鼠視角 ｜ 點擊面板開啟文章 ｜ ESC 退出</div>
+    <div id="wr-tooltip"></div>
+    <button id="wr-exit-btn">[ ESC ] 退出戰情室</button>
+    <div id="wr-mobile-controls">
+        <button data-key="KeyW">▲</button>
+        <button data-key="KeyA">◀</button>
+        <button data-key="KeyS">▼</button>
+        <button data-key="KeyD">▶</button>
+    </div>
+</div>
+
+<!-- Three.js (3D 戰情室用，與 globe.gl 內部的 Three.js 互相獨立) -->
+<script src="https://unpkg.com/three@0.155.0/build/three.min.js"></script>
+<script>
+(function() {
+    'use strict';
+
+    var overlay   = document.getElementById('warroom-overlay');
+    var enterBtn  = document.getElementById('enter-warroom-btn');
+    var exitBtn   = document.getElementById('wr-exit-btn');
+    var coordsEl  = document.getElementById('wr-coords');
+    var tooltipEl = document.getElementById('wr-tooltip');
+
+    // 若 Three.js 載入失敗則隱藏入口按鈕
+    if (typeof THREE === 'undefined') {
+        if (enterBtn) enterBtn.style.display = 'none';
+        return;
+    }
+
+    // ── 狀態變數 ───────────────────────────────────────────────────
+    var initialized = false;
+    var renderer, scene, camera, raycaster;
+    var panelMeshes = [];
+    var keys = {};
+    var yaw = 0, pitch = 0;
+    var mouseNDC = { x: 0, y: 0 };
+    var hoveredMesh = null;
+    var clockPrev = 0;
+    var touchPrev = null;
+
+    // ── 事件監聽 ──────────────────────────────────────────────────
+    enterBtn.addEventListener('click', enterWarRoom);
+    exitBtn.addEventListener('click', exitWarRoom);
+
+    document.addEventListener('keydown', function(e) {
+        keys[e.code] = true;
+        if (e.code === 'Escape' && overlay.style.display !== 'none') exitWarRoom();
+    });
+    document.addEventListener('keyup', function(e) { keys[e.code] = false; });
+
+    // ── 入場 ──────────────────────────────────────────────────────
+    function enterWarRoom() {
+        keys = {};
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        if (!initialized) { buildScene(); initialized = true; }
+        clockPrev = performance.now();
+        renderer.setAnimationLoop(animate);
+        var c = document.getElementById('warroom-canvas');
+        if (c && c.requestPointerLock) c.requestPointerLock();
+        if (window.globeInstance) {
+            try { window.globeInstance.controls().autoRotate = false; } catch(e) {}
+        }
+    }
+
+    // ── 離場 ──────────────────────────────────────────────────────
+    function exitWarRoom() {
+        if (document.exitPointerLock) document.exitPointerLock();
+        if (renderer) renderer.setAnimationLoop(null);
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+        keys = {};
+        if (window.globeInstance) {
+            try { window.globeInstance.controls().autoRotate = true; } catch(e) {}
+        }
+    }
+
+    // ── 場景初始化 ────────────────────────────────────────────────
+    function buildScene() {
+        var canvas = document.getElementById('warroom-canvas');
+        var W = window.innerWidth, H = window.innerHeight;
+
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(W, H);
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000510);
+        scene.fog = new THREE.FogExp2(0x000510, 0.011);
+
+        camera = new THREE.PerspectiveCamera(70, W / H, 0.1, 500);
+        camera.position.set(0, 1.7, 18);
+        camera.rotation.order = 'YXZ';
+
+        raycaster = new THREE.Raycaster();
+
+        buildLights();
+        buildFloor();
+        buildGlobe();
+        buildPanels();
+        buildParticles();
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        var c = canvas;
+        c.addEventListener('click', onCanvasClick);
+        c.addEventListener('touchstart', onTouchStart, { passive: true });
+        c.addEventListener('touchmove',  onTouchMove,  { passive: false });
+        c.addEventListener('touchend',   function() { touchPrev = null; }, { passive: true });
+
+        var mobileCtrl = document.getElementById('wr-mobile-controls');
+        if (mobileCtrl) {
+            mobileCtrl.querySelectorAll('button').forEach(function(btn) {
+                var k = btn.getAttribute('data-key');
+                btn.addEventListener('touchstart',  function(e) { e.stopPropagation(); keys[k] = true;  }, { passive: true });
+                btn.addEventListener('touchend',    function(e) { e.stopPropagation(); keys[k] = false; }, { passive: true });
+                btn.addEventListener('touchcancel', function(e) { e.stopPropagation(); keys[k] = false; }, { passive: true });
+            });
+        }
+
+        window.addEventListener('resize', onResize);
+    }
+
+    // ── 燈光 ──────────────────────────────────────────────────────
+    function buildLights() {
+        scene.add(new THREE.AmbientLight(0x112233, 0.7));
+        var cL = new THREE.PointLight(0xc0392b, 2.5, 55);
+        cL.position.set(0, 10, 0);
+        scene.add(cL);
+        var bL = new THREE.PointLight(0x1a4a9f, 2, 75);
+        bL.position.set(14, 6, -14);
+        scene.add(bL);
+    }
+
+    // ── 地板格線 ──────────────────────────────────────────────────
+    function buildFloor() {
+        var grid = new THREE.GridHelper(200, 100, 0xc0392b, 0x0a1825);
+        grid.position.y = -0.1;
+        scene.add(grid);
+    }
+
+    // ── 中央地球 ──────────────────────────────────────────────────
+    function buildGlobe() {
+        var g = new THREE.SphereGeometry(3.5, 32, 32);
+        var m = new THREE.MeshPhongMaterial({
+            color: 0x0d4060,
+            emissive: 0x001520,
+            shininess: 12,
+            specular: new THREE.Color(0.08, 0.18, 0.35)
+        });
+        var globe = new THREE.Mesh(g, m);
+        scene.add(globe);
+        scene.userData.globe = globe;
+
+        // 格線紋理
+        var wg = new THREE.SphereGeometry(3.52, 16, 8);
+        var wm = new THREE.MeshBasicMaterial({ color: 0x1a5c8a, wireframe: true, transparent: true, opacity: 0.25 });
+        scene.add(new THREE.Mesh(wg, wm));
+
+        // 大氣光暈
+        var ag = new THREE.SphereGeometry(4.05, 32, 32);
+        var am = new THREE.MeshBasicMaterial({ color: 0x0a3399, transparent: true, opacity: 0.10, side: THREE.BackSide });
+        scene.add(new THREE.Mesh(ag, am));
+    }
+
+    // ── 文章面板（4 個同心環） ───────────────────────────────────
+    function buildPanels() {
+        var articles = [];
+        document.querySelectorAll('.news-card').forEach(function(card) {
+            var aEl  = card.querySelector('a');
+            var dtEl = card.querySelector('.date');
+            var bdEl = card.querySelector('.news-badge');
+            if (!aEl || !aEl.href) return;
+            var yr  = dtEl ? dtEl.textContent.trim().slice(0, 4) : '2024';
+            var color = '#e0c050';
+            if (bdEl) {
+                if (bdEl.classList.contains('military'))    color = '#c0392b';
+                else if (bdEl.classList.contains('geopolitics')) color = '#2980b9';
+                else if (bdEl.classList.contains('analysis'))    color = '#27ae60';
+            }
+            articles.push({
+                title: aEl.textContent.trim(),
+                url:   aEl.href,
+                date:  dtEl ? dtEl.textContent.trim() : '',
+                year:  yr,
+                color: color
+            });
+        });
+
+        var rings = { '2026': 16, '2025': 22, '2024': 28, '2023': 33 };
+        var byYear = {};
+        Object.keys(rings).forEach(function(y) { byYear[y] = []; });
+        articles.forEach(function(a) {
+            if (byYear[a.year]) byYear[a.year].push(a);
+            else byYear['2024'].push(a);
+        });
+
+        Object.keys(rings).forEach(function(yr) {
+            var r    = rings[yr];
+            var list = byYear[yr];
+            if (!list.length) return;
+            addYearFlag(yr, r);
+            list.forEach(function(art, i) {
+                var angle = (i / list.length) * Math.PI * 2 - Math.PI / 2;
+                var x = Math.sin(angle) * r;
+                var z = Math.cos(angle) * r;
+                var mesh = new THREE.Mesh(
+                    new THREE.PlaneGeometry(2.6, 1.5),
+                    new THREE.MeshBasicMaterial({
+                        map: makePanelTex(art),
+                        transparent: true,
+                        side: THREE.DoubleSide
+                    })
+                );
+                mesh.position.set(x, 1.5, z);
+                mesh.lookAt(0, 1.5, 0);
+                mesh.userData.url   = art.url;
+                mesh.userData.title = art.title;
+                panelMeshes.push(mesh);
+                scene.add(mesh);
+            });
+        });
+    }
+
+    // ── 面板紋理 ──────────────────────────────────────────────────
+    function makePanelTex(art) {
+        var cv = document.createElement('canvas');
+        cv.width = 256; cv.height = 160;
+        var c = cv.getContext('2d');
+
+        c.fillStyle = 'rgba(2,8,20,0.94)';
+        c.fillRect(0, 0, 256, 160);
+        c.strokeStyle = art.color;
+        c.lineWidth = 2;
+        c.strokeRect(1, 1, 254, 158);
+
+        // 頂部色條
+        c.fillStyle = art.color;
+        c.fillRect(1, 1, 254, 20);
+
+        // 色條文字
+        c.fillStyle = 'rgba(255,255,255,0.9)';
+        c.font = 'bold 9px "Courier New", monospace';
+        c.textBaseline = 'middle';
+        c.textAlign = 'left';
+        c.fillText(art.date.slice(0, 10), 7, 11);
+        c.textAlign = 'right';
+        c.fillText(art.year, 249, 11);
+
+        // 標題
+        c.fillStyle = '#ddd5b8';
+        c.font = '13px "Noto Sans TC", sans-serif';
+        c.textAlign = 'left';
+        c.textBaseline = 'top';
+        drawWrapped(c, art.title, 8, 30, 240, 19, 6);
+
+        return new THREE.CanvasTexture(cv);
+    }
+
+    function drawWrapped(ctx, text, x, y, maxW, lh, maxLines) {
+        var chars = text.split('');
+        var line = '', n = 0;
+        for (var i = 0; i < chars.length; i++) {
+            var t = line + chars[i];
+            if (ctx.measureText(t).width > maxW && line.length) {
+                ctx.fillText(line, x, y + n * lh);
+                n++;
+                if (n >= maxLines - 1 && i < chars.length - 1) {
+                    var rest = chars[i] + chars.slice(i + 1).join('');
+                    while (ctx.measureText(rest + '…').width > maxW && rest.length > 1)
+                        rest = rest.slice(0, -1);
+                    ctx.fillText(rest + '…', x, y + n * lh);
+                    return;
+                }
+                line = chars[i];
+            } else {
+                line = t;
+            }
+        }
+        if (line) ctx.fillText(line, x, y + n * lh);
+    }
+
+    // ── 年份旗標 ──────────────────────────────────────────────────
+    function addYearFlag(yr, radius) {
+        var cv = document.createElement('canvas');
+        cv.width = 256; cv.height = 80;
+        var c = cv.getContext('2d');
+        c.fillStyle = 'rgba(192,57,43,0.10)';
+        c.fillRect(0, 0, 256, 80);
+        c.strokeStyle = 'rgba(192,57,43,0.45)';
+        c.lineWidth = 2;
+        c.strokeRect(1, 1, 254, 78);
+        c.fillStyle = '#e74c3c';
+        c.font = 'bold 46px "Courier New", monospace';
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText(yr, 128, 40);
+        var mesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(3.5, 1.1),
+            new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, side: THREE.DoubleSide })
+        );
+        mesh.position.set(0, 4.2, -radius);
+        mesh.lookAt(0, 4.2, 0);
+        scene.add(mesh);
+    }
+
+    // ── 浮動粒子 ──────────────────────────────────────────────────
+    function buildParticles() {
+        var n = 220;
+        var pos = new Float32Array(n * 3);
+        for (var i = 0; i < n; i++) {
+            pos[i*3]   = (Math.random() - 0.5) * 80;
+            pos[i*3+1] = Math.random() * 16 - 1;
+            pos[i*3+2] = (Math.random() - 0.5) * 80;
+        }
+        var geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        var pts = new THREE.Points(geo, new THREE.PointsMaterial({
+            color: 0x4488bb, size: 0.09, transparent: true, opacity: 0.55
+        }));
+        scene.userData.particles = pts;
+        scene.add(pts);
+    }
+
+    // ── 輸入處理 ──────────────────────────────────────────────────
+    function onMouseMove(e) {
+        if (overlay.style.display === 'none') return;
+        var c = document.getElementById('warroom-canvas');
+        if (document.pointerLockElement === c) {
+            yaw   -= e.movementX * 0.002;
+            pitch -= e.movementY * 0.002;
+            pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+        } else {
+            var rect = c.getBoundingClientRect();
+            mouseNDC.x =  ((e.clientX - rect.left) / rect.width)  * 2 - 1;
+            mouseNDC.y = -((e.clientY - rect.top)  / rect.height) * 2 + 1;
+        }
+    }
+
+    function onCanvasClick() {
+        var c = document.getElementById('warroom-canvas');
+        if (!document.pointerLockElement) {
+            if (c.requestPointerLock) c.requestPointerLock();
+            return;
+        }
+        raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+        var hits = raycaster.intersectObjects(panelMeshes);
+        if (hits.length) window.open(hits[0].object.userData.url, '_blank');
+    }
+
+    function onTouchStart(e) {
+        if (e.touches.length === 1)
+            touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+
+    function onTouchMove(e) {
+        if (e.touches.length === 1 && touchPrev) {
+            e.preventDefault();
+            yaw   -= (e.touches[0].clientX - touchPrev.x) * 0.004;
+            pitch -= (e.touches[0].clientY - touchPrev.y) * 0.004;
+            pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+            touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+    }
+
+    function onResize() {
+        if (!renderer || overlay.style.display === 'none') return;
+        var W = window.innerWidth, H = window.innerHeight;
+        camera.aspect = W / H;
+        camera.updateProjectionMatrix();
+        renderer.setSize(W, H);
+    }
+
+    // ── 動畫主循環 ────────────────────────────────────────────────
+    function animate() {
+        var now = performance.now();
+        var dt  = Math.min((now - clockPrev) / 1000, 0.05); // 秒
+        clockPrev = now;
+
+        // WASD 移動
+        var spd = 6; // 單位/秒
+        var px = camera.position.x, pz = camera.position.z;
+        var fx = -Math.sin(yaw), fz = -Math.cos(yaw);
+        var rx =  Math.cos(yaw), rz = -Math.sin(yaw);
+        if (keys['KeyW']) { px += fx*spd*dt; pz += fz*spd*dt; }
+        if (keys['KeyS']) { px -= fx*spd*dt; pz -= fz*spd*dt; }
+        if (keys['KeyA']) { px -= rx*spd*dt; pz -= rz*spd*dt; }
+        if (keys['KeyD']) { px += rx*spd*dt; pz += rz*spd*dt; }
+
+        // 邊界（半徑 36 以內）
+        var dist = Math.sqrt(px*px + pz*pz);
+        if (dist > 36) { px = px/dist*36; pz = pz/dist*36; }
+
+        camera.position.x = px;
+        camera.position.z = pz;
+        camera.rotation.y = yaw;
+        camera.rotation.x = pitch;
+
+        // 地球自轉
+        if (scene.userData.globe) scene.userData.globe.rotation.y += 0.15 * dt;
+
+        // 粒子旋轉
+        if (scene.userData.particles) scene.userData.particles.rotation.y += 0.012 * dt;
+
+        // HUD 座標
+        if (coordsEl) coordsEl.textContent = 'SECTOR ' + Math.round(px) + ' , ' + Math.round(pz);
+
+        // Raycasting hover
+        var c = document.getElementById('warroom-canvas');
+        var rv = (document.pointerLockElement === c)
+            ? new THREE.Vector2(0, 0)
+            : new THREE.Vector2(mouseNDC.x, mouseNDC.y);
+        raycaster.setFromCamera(rv, camera);
+        var hits = raycaster.intersectObjects(panelMeshes);
+        if (hits.length) {
+            var m = hits[0].object;
+            if (hoveredMesh !== m) {
+                if (hoveredMesh) hoveredMesh.scale.setScalar(1.0);
+                hoveredMesh = m;
+                m.scale.setScalar(1.07);
+                if (tooltipEl) {
+                    tooltipEl.style.display = 'block';
+                    tooltipEl.textContent   = m.userData.title;
+                }
+            }
+        } else {
+            if (hoveredMesh) { hoveredMesh.scale.setScalar(1.0); hoveredMesh = null; }
+            if (tooltipEl) tooltipEl.style.display = 'none';
+        }
+
+        renderer.render(scene, camera);
+    }
+
+})();
+</script>
 </body>
 </html>
