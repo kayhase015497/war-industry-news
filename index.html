@@ -2122,21 +2122,50 @@
                 activateCableMode();
                 return;
             }
-            // 首次：先 fetch GeoJSON 再切換
+            // 首次：依序嘗試三條 URL，全部失敗才顯示錯誤
             cableBtn.textContent = '⏳ 載入中';
             cableBtn.disabled = true;
-            fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json')
-                .then(function(r) { return r.json(); })
-                .then(function(cablesGeo) {
-                    _cableFeatures = cablesGeo.features;
-                    cableBtn.textContent = '⚡ 海纜';
+
+            var urls = [
+                'https://vasturiano.github.io/globe.gl/example/submarine-cables/ne_10m_cables.json',
+                'https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/submarine-cables/ne_10m_cables.json',
+                'https://raw.githubusercontent.com/vasturiano/globe.gl/main/example/submarine-cables/ne_10m_cables.json'
+            ];
+
+            function tryNext(i) {
+                if (i >= urls.length) {
+                    // 全部失敗
+                    cableBtn.textContent = '⚡ 海纜 ✕';
+                    cableBtn.title = '資料載入失敗，請確認網路連線後重試';
                     cableBtn.disabled = false;
-                    activateCableMode();
-                })
-                .catch(function() {
-                    cableBtn.textContent = '⚡ 海纜';
-                    cableBtn.disabled = false;
-                });
+                    setTimeout(function() {
+                        cableBtn.textContent = '⚡ 海纜';
+                        cableBtn.title = '切換海底電纜模式';
+                    }, 3000);
+                    return;
+                }
+                fetch(urls[i])
+                    .then(function(r) {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        return r.json();
+                    })
+                    .then(function(cablesGeo) {
+                        _cableFeatures = cablesGeo.features;
+                        cableBtn.textContent = '⚡ 海纜';
+                        cableBtn.disabled = false;
+                        try {
+                            activateCableMode();
+                        } catch(err) {
+                            // globe API 呼叫失敗（e.g. 版本不支援）
+                            _cableFeatures = null;
+                            deactivateCableMode();
+                            cableBtn.textContent = '⚡ 海纜 ✕';
+                            setTimeout(function() { cableBtn.textContent = '⚡ 海纜'; }, 3000);
+                        }
+                    })
+                    .catch(function() { tryNext(i + 1); });
+            }
+            tryNext(0);
         });
 
         // 點擊/觸摸後暫停自轉，閒置 3 秒後自動恢復
