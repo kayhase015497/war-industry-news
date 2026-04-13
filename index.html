@@ -2009,10 +2009,10 @@
             .ringsData(hotspots)
             .ringLat('lat')
             .ringLng('lng')
-            .ringColor(() => t => `rgba(255,80,50,${Math.pow(1 - t, 0.35) * 0.95})`)
-            .ringMaxRadius(6)
-            .ringPropagationSpeed(1.8)
-            .ringRepeatPeriod(1600)
+            .ringColor(() => t => `rgba(220,65,45,${Math.pow(1 - t, 0.5) * 0.82})`)
+            .ringMaxRadius(4.8)
+            .ringPropagationSpeed(1.5)
+            .ringRepeatPeriod(1900)
             .ringAltitude(0.005)
             // 點擊熱點 → 顯示相關報導
             .onPointClick(showRelatedArticles);
