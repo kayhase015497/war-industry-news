@@ -2009,10 +2009,10 @@
             .ringsData(hotspots)
             .ringLat('lat')
             .ringLng('lng')
-            .ringColor(() => t => `rgba(192,57,43,${(1 - t) * 0.7})`)
-            .ringMaxRadius(3.5)
-            .ringPropagationSpeed(1.2)
-            .ringRepeatPeriod(2200)
+            .ringColor(() => t => `rgba(255,80,50,${Math.pow(1 - t, 0.35) * 0.95})`)
+            .ringMaxRadius(6)
+            .ringPropagationSpeed(1.8)
+            .ringRepeatPeriod(1600)
             // 點擊熱點 → 顯示相關報導
             .onPointClick(showRelatedArticles);
 
@@ -2158,12 +2158,12 @@
 
         document.getElementById('globe-zoom-in').addEventListener('click', function(e) {
             e.stopPropagation();
-            currentAltitude = Math.max(0.8, currentAltitude - 0.4);
+            currentAltitude = Math.max(0.1, currentAltitude - 0.2);
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
         document.getElementById('globe-zoom-out').addEventListener('click', function(e) {
             e.stopPropagation();
-            currentAltitude = Math.min(4.5, currentAltitude + 0.4);
+            currentAltitude = Math.min(4.5, currentAltitude + 0.2);
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
 
