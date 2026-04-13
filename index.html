@@ -2934,13 +2934,13 @@
         scene.add(base);
 
         // 地面發光圓盤
-        base.add(Object.assign(
-            new THREE.Mesh(
-                new THREE.CircleGeometry(5.5, 64),
-                new THREE.MeshBasicMaterial({ color: 0x001030, transparent: true, opacity: 0.7 })
-            ),
-            { rotation: { x: -Math.PI / 2 }, position: { y: 0.01 } }
-        ));
+        var disc = new THREE.Mesh(
+            new THREE.CircleGeometry(5.5, 64),
+            new THREE.MeshBasicMaterial({ color: 0x001030, transparent: true, opacity: 0.7 })
+        );
+        disc.rotation.x = -Math.PI / 2;
+        disc.position.y = 0.01;
+        base.add(disc);
 
         // 3 個旋轉光環（TorusGeometry 水平）
         var torusConfigs = [
