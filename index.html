@@ -1345,6 +1345,27 @@
             #wr-mobile-controls button[data-key="KeyD"] { grid-column: 3; grid-row: 2; }
             #wr-hint { display: none; }
         }
+
+        /* 戰情室熱點文章面板 */
+        #wr-article-panel {
+            position: absolute;
+            top: 50%; right: 18px;
+            transform: translateY(-50%);
+            width: 300px;
+            max-height: 65vh;
+            overflow-y: auto;
+            background: rgba(0,5,16,0.94);
+            border: 1px solid rgba(192,57,43,0.55);
+            border-radius: 4px;
+            padding: 14px;
+            z-index: 10003;
+            display: none;
+            font-family: 'Courier New', monospace;
+            scrollbar-width: thin;
+            scrollbar-color: #c0392b transparent;
+        }
+        #wr-article-panel::-webkit-scrollbar { width: 4px; }
+        #wr-article-panel::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 2px; }
     </style>
     <script type="application/ld+json">
     {
@@ -2009,10 +2030,11 @@
             .ringsData(hotspots)
             .ringLat('lat')
             .ringLng('lng')
-            .ringColor(() => t => `rgba(192,57,43,${(1 - t) * 0.7})`)
-            .ringMaxRadius(3.5)
-            .ringPropagationSpeed(1.2)
-            .ringRepeatPeriod(2200)
+            .ringColor(() => t => `rgba(220,65,45,${Math.pow(1 - t, 0.5) * 0.82})`)
+            .ringMaxRadius(4.8)
+            .ringPropagationSpeed(1.5)
+            .ringRepeatPeriod(1900)
+            .ringAltitude(0.005)
             // 點擊熱點 → 顯示相關報導
             .onPointClick(showRelatedArticles);
 
@@ -2158,12 +2180,12 @@
 
         document.getElementById('globe-zoom-in').addEventListener('click', function(e) {
             e.stopPropagation();
-            currentAltitude = Math.max(0.8, currentAltitude - 0.4);
+            currentAltitude = Math.max(0.1, currentAltitude - 0.2);
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
         document.getElementById('globe-zoom-out').addEventListener('click', function(e) {
             e.stopPropagation();
-            currentAltitude = Math.min(4.5, currentAltitude + 0.4);
+            currentAltitude = Math.min(4.5, currentAltitude + 0.2);
             globe.pointOfView({ altitude: currentAltitude }, 400);
         });
 
@@ -2657,8 +2679,9 @@
     <div id="wr-title">◈ WAR ROOM COMMAND CENTER ◈</div>
     <div id="wr-crosshair">+</div>
     <div id="wr-coords">SECTOR 0 , 0</div>
-    <div id="wr-hint">WASD 移動 ｜ 滑鼠視角 ｜ 點擊面板開啟文章 ｜ ESC 退出</div>
+    <div id="wr-hint">WASD 移動 ｜ 滑鼠視角 ｜ 點擊地球熱點 / 螢幕 ｜ ESC 退出</div>
     <div id="wr-tooltip"></div>
+    <div id="wr-article-panel"></div>
     <button id="wr-exit-btn">[ ESC ] 退出戰情室</button>
     <div id="wr-mobile-controls">
         <button data-key="KeyW">▲</button>
@@ -2745,10 +2768,10 @@
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x000510);
-        scene.fog = new THREE.FogExp2(0x000510, 0.011);
+        scene.fog = new THREE.FogExp2(0x000510, 0.005); // 稀薄霧，讓螢幕和地球都清晰可見
 
-        camera = new THREE.PerspectiveCamera(70, W / H, 0.1, 500);
-        camera.position.set(0, 1.7, 18);
+        camera = new THREE.PerspectiveCamera(65, W / H, 0.1, 500);
+        camera.position.set(0, 1.7, 10); // 面向 -Z：對著螢幕牆與地球
         camera.rotation.order = 'YXZ';
 
         raycaster = new THREE.Raycaster();
@@ -2756,7 +2779,8 @@
         buildLights();
         buildFloor();
         buildGlobe();
-        buildPanels();
+        buildHoloBase();
+        buildScreenWall();
         buildParticles();
 
         document.addEventListener('mousemove', onMouseMove);
@@ -2798,120 +2822,291 @@
         scene.add(grid);
     }
 
-    // ── 中央地球 ──────────────────────────────────────────────────
-    function buildGlobe() {
-        var g = new THREE.SphereGeometry(3.5, 32, 32);
-        var m = new THREE.MeshPhongMaterial({
-            color: 0x0d4060,
-            emissive: 0x001520,
-            shininess: 12,
-            specular: new THREE.Color(0.08, 0.18, 0.35)
-        });
-        var globe = new THREE.Mesh(g, m);
-        scene.add(globe);
-        scene.userData.globe = globe;
+    // ── 全域：地球位置與半徑 ────────────────────────────────────
+    var GLOBE_POS = new THREE.Vector3(0, 6, -12);
+    var GLOBE_R   = 4;
 
-        // 格線紋理
-        var wg = new THREE.SphereGeometry(3.52, 16, 8);
-        var wm = new THREE.MeshBasicMaterial({ color: 0x1a5c8a, wireframe: true, transparent: true, opacity: 0.25 });
-        scene.add(new THREE.Mesh(wg, wm));
-
-        // 大氣光暈
-        var ag = new THREE.SphereGeometry(4.05, 32, 32);
-        var am = new THREE.MeshBasicMaterial({ color: 0x0a3399, transparent: true, opacity: 0.10, side: THREE.BackSide });
-        scene.add(new THREE.Mesh(ag, am));
+    // ── Lat/Lng → 球面向量（地球 local 空間）────────────────────
+    function latLngToVec3(lat, lng, r) {
+        var phi   = (90 - lat) * Math.PI / 180;
+        var theta = (lng + 180) * Math.PI / 180;
+        return new THREE.Vector3(
+            -r * Math.sin(phi) * Math.cos(theta),
+             r * Math.cos(phi),
+             r * Math.sin(phi) * Math.sin(theta)
+        );
     }
 
-    // ── 文章面板（4 個同心環） ───────────────────────────────────
-    function buildPanels() {
+    // ── 帶紋理地球 + 熱點 + 波紋 ────────────────────────────────
+    function buildGlobe() {
+        var loader = new THREE.TextureLoader();
+        loader.crossOrigin = 'anonymous';
+
+        // 地球本體
+        var earthMat = new THREE.MeshPhongMaterial({
+            map:         loader.load('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'),
+            specularMap: loader.load('//unpkg.com/three-globe/example/img/earth-water.png'),
+            bumpMap:     loader.load('//unpkg.com/three-globe/example/img/earth-topology.png'),
+            bumpScale:   0.05,
+            specular:    new THREE.Color(0.25, 0.45, 0.65),
+            shininess:   18
+        });
+        var globeMesh = new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R, 48, 48), earthMat);
+
+        // 雲層（比地球稍大，獨立旋轉）
+        var cloudMesh = new THREE.Mesh(
+            new THREE.SphereGeometry(GLOBE_R + 0.07, 48, 48),
+            new THREE.MeshBasicMaterial({
+                map: loader.load('//unpkg.com/three-globe/example/img/earth-clouds.png'),
+                transparent: true, opacity: 0.32, depthWrite: false
+            })
+        );
+        scene.userData.cloudMesh = cloudMesh;
+
+        // 大氣光暈
+        var glowMesh = new THREE.Mesh(
+            new THREE.SphereGeometry(GLOBE_R + 0.55, 32, 32),
+            new THREE.MeshBasicMaterial({ color: 0x1155aa, transparent: true, opacity: 0.09, side: THREE.BackSide, depthWrite: false })
+        );
+
+        // 整組群組，統一自轉
+        var globeGroup = new THREE.Group();
+        globeGroup.add(globeMesh, cloudMesh, glowMesh);
+        globeGroup.position.copy(GLOBE_POS);
+        scene.add(globeGroup);
+        scene.userData.globeGroup = globeGroup;
+
+        // 熱點資料（與主站相同）
+        var hotspotData = [
+            { lat: 48.38, lng:  31.17, label: '🇺🇦 烏克蘭',     keywords: ['烏克蘭','烏軍','澤倫斯基','基輔','烏俄'] },
+            { lat: 55.75, lng:  37.62, label: '🇷🇺 俄羅斯',     keywords: ['俄羅斯','俄軍','普丁','俄烏','莫斯科'] },
+            { lat: 23.70, lng: 120.96, label: '🇹🇼 台灣',       keywords: ['台灣','國軍','台海'] },
+            { lat: 39.92, lng: 116.39, label: '🇨🇳 中國',       keywords: ['中國','北京','解放軍'] },
+            { lat: 31.77, lng:  35.22, label: '🇮🇱 以色列',     keywords: ['以色列','以軍','加薩','哈馬斯'] },
+            { lat: 35.69, lng:  51.39, label: '🇮🇷 伊朗',       keywords: ['伊朗'] },
+            { lat: 38.90, lng: -77.04, label: '🇺🇸 美國',       keywords: ['美國','美軍','五角大廈','川普','拜登'] },
+            { lat: 52.52, lng:  13.40, label: '🇩🇪 歐洲／北約', keywords: ['北約','歐洲','歐盟'] },
+            { lat: 39.03, lng: 125.75, label: '🇰🇵 北韓',       keywords: ['北韓','北朝鮮'] },
+        ];
+
+        scene.userData.hotspotMeshes = [];
+        scene.userData.hotspotRings  = [];
+
+        hotspotData.forEach(function(hs) {
+            var pos = latLngToVec3(hs.lat, hs.lng, GLOBE_R + 0.07);
+
+            // 發光熱點球
+            var dot = new THREE.Mesh(
+                new THREE.SphereGeometry(0.09, 10, 10),
+                new THREE.MeshBasicMaterial({ color: 0xff5533 })
+            );
+            dot.position.copy(pos);
+            dot.userData.hotspot = hs;
+            globeGroup.add(dot);
+            scene.userData.hotspotMeshes.push(dot);
+
+            // 3 個錯相波紋環
+            for (var p = 0; p < 3; p++) {
+                var ring = new THREE.Mesh(
+                    new THREE.RingGeometry(0.07, 0.13, 32),
+                    new THREE.MeshBasicMaterial({
+                        color: 0xff6644, transparent: true, opacity: 0.85,
+                        side: THREE.DoubleSide, depthWrite: false
+                    })
+                );
+                ring.position.copy(pos);
+                // 讓環面朝外（法向量 = 球面外法線）
+                ring.quaternion.setFromUnitVectors(
+                    new THREE.Vector3(0, 0, 1),
+                    pos.clone().normalize()
+                );
+                ring.userData.phase = p / 3;
+                globeGroup.add(ring);
+                scene.userData.hotspotRings.push(ring);
+            }
+        });
+    }
+
+    // ── 全息投影台（地球正下方） ─────────────────────────────────
+    function buildHoloBase() {
+        var base = new THREE.Group();
+        base.position.set(GLOBE_POS.x, 0, GLOBE_POS.z);
+        scene.add(base);
+
+        // 地面發光圓盤
+        var disc = new THREE.Mesh(
+            new THREE.CircleGeometry(5.5, 64),
+            new THREE.MeshBasicMaterial({ color: 0x001030, transparent: true, opacity: 0.7 })
+        );
+        disc.rotation.x = -Math.PI / 2;
+        disc.position.y = 0.01;
+        base.add(disc);
+
+        // 3 個旋轉光環（TorusGeometry 水平）
+        var torusConfigs = [
+            { r: 2.0, tube: 0.03, speed:  0.45, color: 0x00aaff },
+            { r: 3.4, tube: 0.04, speed: -0.28, color: 0x0066cc },
+            { r: 4.7, tube: 0.05, speed:  0.18, color: 0x0033aa },
+        ];
+        scene.userData.holoTori = [];
+        torusConfigs.forEach(function(cfg) {
+            var torus = new THREE.Mesh(
+                new THREE.TorusGeometry(cfg.r, cfg.tube, 16, 90),
+                new THREE.MeshBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.72 })
+            );
+            torus.rotation.x = Math.PI / 2; // 水平放置
+            torus.userData.rotSpeed = cfg.speed;
+            base.add(torus);
+            scene.userData.holoTori.push(torus);
+        });
+
+        // 4 條上射光柱（連結地板到地球底部）
+        scene.userData.holoBeams = [];
+        var beamH = GLOBE_POS.y - GLOBE_R; // 從地板到地球底部
+        [0, Math.PI / 2, Math.PI, Math.PI * 3 / 2].forEach(function(angle) {
+            var bx = Math.sin(angle) * 4.7;
+            var bz = Math.cos(angle) * 4.7;
+            var beam = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.03, 0.10, beamH, 8, 1, true),
+                new THREE.MeshBasicMaterial({ color: 0x2266dd, transparent: true, opacity: 0.15, depthWrite: false })
+            );
+            beam.position.set(bx, beamH / 2, bz);
+            base.add(beam);
+            scene.userData.holoBeams.push(beam);
+        });
+    }
+
+    // ── 弧形指揮螢幕牆 ───────────────────────────────────────────
+    function buildScreenWall() {
+        // 從 DOM 取得文章
         var articles = [];
         document.querySelectorAll('.news-card').forEach(function(card) {
             var aEl  = card.querySelector('a');
             var dtEl = card.querySelector('.date');
             var bdEl = card.querySelector('.news-badge');
             if (!aEl || !aEl.href) return;
-            var yr  = dtEl ? dtEl.textContent.trim().slice(0, 4) : '2024';
-            var color = '#e0c050';
+            var color = '#e0c050', cat = 'other';
             if (bdEl) {
-                if (bdEl.classList.contains('military'))    color = '#c0392b';
-                else if (bdEl.classList.contains('geopolitics')) color = '#2980b9';
-                else if (bdEl.classList.contains('analysis'))    color = '#27ae60';
+                if (bdEl.classList.contains('military'))         { color = '#c0392b'; cat = 'military'; }
+                else if (bdEl.classList.contains('geopolitics')) { color = '#2980b9'; cat = 'geo'; }
+                else if (bdEl.classList.contains('analysis'))    { color = '#27ae60'; cat = 'analysis'; }
             }
-            articles.push({
-                title: aEl.textContent.trim(),
-                url:   aEl.href,
-                date:  dtEl ? dtEl.textContent.trim() : '',
-                year:  yr,
-                color: color
-            });
+            articles.push({ title: aEl.textContent.trim(), url: aEl.href,
+                date: dtEl ? dtEl.textContent.trim() : '', color: color, cat: cat });
         });
 
-        var rings = { '2026': 16, '2025': 22, '2024': 28, '2023': 33 };
-        var byYear = {};
-        Object.keys(rings).forEach(function(y) { byYear[y] = []; });
-        articles.forEach(function(a) {
-            if (byYear[a.year]) byYear[a.year].push(a);
-            else byYear['2024'].push(a);
+        var latest   = articles.slice(0, 5);
+        var military = articles.filter(function(a) { return a.cat === 'military';   }).slice(0, 3);
+        var geo      = articles.filter(function(a) { return a.cat === 'geo';        }).slice(0, 3);
+
+        // 5 大螢幕：弧形排列，面朝玩家起始點 (0,1.7,10)
+        var W = 4, H = 2.6;
+        var arc = [
+            { x:  0,    z: -4.5, ry:  0    },
+            { x: -3.8,  z: -3.8, ry:  0.32 },
+            { x:  3.8,  z: -3.8, ry: -0.32 },
+            { x: -7.8,  z: -2.0, ry:  0.68 },
+            { x:  7.8,  z: -2.0, ry: -0.68 },
+        ];
+        latest.forEach(function(art, i) {
+            if (i >= arc.length) return;
+            addScreen(art, arc[i].x, 2.2, arc[i].z, 0, arc[i].ry, 0, W, H);
         });
 
-        Object.keys(rings).forEach(function(yr) {
-            var r    = rings[yr];
-            var list = byYear[yr];
-            if (!list.length) return;
-            addYearFlag(yr, r);
-            list.forEach(function(art, i) {
-                var angle = (i / list.length) * Math.PI * 2 - Math.PI / 2;
-                var x = Math.sin(angle) * r;
-                var z = Math.cos(angle) * r;
-                var mesh = new THREE.Mesh(
-                    new THREE.PlaneGeometry(2.6, 1.5),
-                    new THREE.MeshBasicMaterial({
-                        map: makePanelTex(art),
-                        transparent: true,
-                        side: THREE.DoubleSide
-                    })
-                );
-                mesh.position.set(x, 1.5, z);
-                mesh.lookAt(0, 1.5, 0);
-                mesh.userData.url   = art.url;
-                mesh.userData.title = art.title;
-                panelMeshes.push(mesh);
-                scene.add(mesh);
-            });
+        // 左翼（軍事，面朝右 +X）
+        military.forEach(function(art, i) {
+            addScreen(art, -11, 2, -3 - i * 3.8, 0, Math.PI / 2, 0, 3.2, 2.0);
+        });
+
+        // 右翼（地緣政治，面朝左 -X）
+        geo.forEach(function(art, i) {
+            addScreen(art, 11, 2, -3 - i * 3.8, 0, -Math.PI / 2, 0, 3.2, 2.0);
         });
     }
 
-    // ── 面板紋理 ──────────────────────────────────────────────────
-    function makePanelTex(art) {
+    function addScreen(art, x, y, z, rx, ry, rz, w, h) {
+        var group = new THREE.Group();
+        group.position.set(x, y, z);
+        group.rotation.set(rx, ry, rz);
+
+        // 深色框體
+        group.add(new THREE.Mesh(
+            new THREE.BoxGeometry(w + 0.14, h + 0.14, 0.06),
+            new THREE.MeshBasicMaterial({ color: 0x000d1a })
+        ));
+
+        // 邊框發光條
+        var ec = new THREE.Color(art.color);
+        var hw = (w + 0.14) / 2, hh = (h + 0.14) / 2;
+        [[w + 0.16, 0.04, 0.04, 0, hh], [w + 0.16, 0.04, 0.04, 0, -hh],
+         [0.04, h + 0.16, 0.04, -hw, 0], [0.04, h + 0.16, 0.04, hw, 0]
+        ].forEach(function(e) {
+            var em = new THREE.Mesh(new THREE.BoxGeometry(e[0], e[1], e[2]),
+                new THREE.MeshBasicMaterial({ color: ec }));
+            em.position.set(e[3], e[4], 0.035);
+            group.add(em);
+        });
+
+        // 螢幕面
+        var screen = new THREE.Mesh(
+            new THREE.PlaneGeometry(w, h),
+            new THREE.MeshBasicMaterial({ map: makeScreenTex(art, w, h) })
+        );
+        screen.position.z = 0.04;
+        screen.userData.url   = art.url;
+        screen.userData.title = art.title;
+        panelMeshes.push(screen);
+        group.add(screen);
+
+        scene.add(group);
+    }
+
+    function makeScreenTex(art, w, h) {
+        var PW = Math.round(w * 110), PH = Math.round(h * 110);
         var cv = document.createElement('canvas');
-        cv.width = 256; cv.height = 160;
+        cv.width = PW; cv.height = PH;
         var c = cv.getContext('2d');
 
-        c.fillStyle = 'rgba(2,8,20,0.94)';
-        c.fillRect(0, 0, 256, 160);
-        c.strokeStyle = art.color;
-        c.lineWidth = 2;
-        c.strokeRect(1, 1, 254, 158);
+        // 背景
+        var bg = c.createLinearGradient(0, 0, 0, PH);
+        bg.addColorStop(0, '#020814');
+        bg.addColorStop(1, '#040c1e');
+        c.fillStyle = bg;
+        c.fillRect(0, 0, PW, PH);
 
         // 頂部色條
         c.fillStyle = art.color;
-        c.fillRect(1, 1, 254, 20);
+        c.fillRect(0, 0, PW, Math.round(PH * 0.11));
 
-        // 色條文字
-        c.fillStyle = 'rgba(255,255,255,0.9)';
-        c.font = 'bold 9px "Courier New", monospace';
+        // 日期
+        c.fillStyle = 'rgba(255,255,255,0.92)';
+        c.font = 'bold ' + Math.round(PH * 0.056) + 'px "Courier New", monospace';
         c.textBaseline = 'middle';
         c.textAlign = 'left';
-        c.fillText(art.date.slice(0, 10), 7, 11);
-        c.textAlign = 'right';
-        c.fillText(art.year, 249, 11);
+        c.fillText(art.date.slice(0, 10), 10, PH * 0.055);
 
-        // 標題
-        c.fillStyle = '#ddd5b8';
-        c.font = '13px "Noto Sans TC", sans-serif';
-        c.textAlign = 'left';
+        // 大標題
+        c.fillStyle = '#e8dfc8';
+        var fs = Math.round(PH * 0.082);
+        c.font = fs + 'px "Noto Sans TC", sans-serif';
         c.textBaseline = 'top';
-        drawWrapped(c, art.title, 8, 30, 240, 19, 6);
+        drawWrapped(c, art.title, 10, PH * 0.14, PW - 20, fs * 1.35, 5);
+
+        // 底部提示
+        c.fillStyle = 'rgba(150,175,200,0.45)';
+        c.font = Math.round(PH * 0.048) + 'px "Courier New", monospace';
+        c.textBaseline = 'bottom';
+        c.fillText('[ CLICK TO OPEN ]', 10, PH - 8);
+
+        // 底部橫線
+        c.strokeStyle = art.color;
+        c.lineWidth = 1;
+        c.globalAlpha = 0.25;
+        c.beginPath();
+        c.moveTo(10, PH - Math.round(PH * 0.10));
+        c.lineTo(PW - 10, PH - Math.round(PH * 0.10));
+        c.stroke();
+        c.globalAlpha = 1;
 
         return new THREE.CanvasTexture(cv);
     }
@@ -2939,28 +3134,36 @@
         if (line) ctx.fillText(line, x, y + n * lh);
     }
 
-    // ── 年份旗標 ──────────────────────────────────────────────────
-    function addYearFlag(yr, radius) {
-        var cv = document.createElement('canvas');
-        cv.width = 256; cv.height = 80;
-        var c = cv.getContext('2d');
-        c.fillStyle = 'rgba(192,57,43,0.10)';
-        c.fillRect(0, 0, 256, 80);
-        c.strokeStyle = 'rgba(192,57,43,0.45)';
-        c.lineWidth = 2;
-        c.strokeRect(1, 1, 254, 78);
-        c.fillStyle = '#e74c3c';
-        c.font = 'bold 46px "Courier New", monospace';
-        c.textAlign = 'center';
-        c.textBaseline = 'middle';
-        c.fillText(yr, 128, 40);
-        var mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(3.5, 1.1),
-            new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, side: THREE.DoubleSide })
-        );
-        mesh.position.set(0, 4.2, -radius);
-        mesh.lookAt(0, 4.2, 0);
-        scene.add(mesh);
+    // ── 熱點點擊面板（戰情室版） ─────────────────────────────────
+    function showWRHotspot(hs) {
+        var panel = document.getElementById('wr-article-panel');
+        if (!panel) return;
+        var cards = Array.from(document.querySelectorAll('.news-card'));
+        var matches = cards.filter(function(card) {
+            var text = (card.querySelector('a') || {}).textContent || '';
+            return hs.keywords.some(function(kw) { return text.includes(kw); });
+        });
+
+        var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'
+            + '<span style="color:#e74c3c;font-size:0.8rem;letter-spacing:0.08em">' + hs.label + '</span>'
+            + '<button onclick="document.getElementById(\'wr-article-panel\').style.display=\'none\'"'
+            + ' style="background:none;border:none;color:#7f9aac;font-size:1.1rem;cursor:pointer;line-height:1;padding:0">✕</button>'
+            + '</div>';
+        if (!matches.length) {
+            html += '<p style="color:#4a6274;font-size:0.75rem;margin:0">無相關報導</p>';
+        } else {
+            matches.forEach(function(card) {
+                var a = card.querySelector('a');
+                var date = (card.querySelector('.date') || {}).textContent || '';
+                html += '<div style="border-left:2px solid #c0392b;padding:4px 8px;margin-bottom:6px">'
+                    + '<div style="font-size:0.63rem;color:#4a6274;margin-bottom:2px">' + date + '</div>'
+                    + '<a href="' + a.href + '" target="_blank"'
+                    + ' style="color:#c8d8e4;font-size:0.76rem;text-decoration:none;line-height:1.4;display:block">'
+                    + a.textContent + '</a></div>';
+            });
+        }
+        panel.innerHTML = html;
+        panel.style.display = 'block';
     }
 
     // ── 浮動粒子 ──────────────────────────────────────────────────
@@ -3003,8 +3206,17 @@
             return;
         }
         raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+
+        // 優先偵測熱點（含子物件）
+        if (scene.userData.hotspotMeshes && scene.userData.hotspotMeshes.length) {
+            var hHits = raycaster.intersectObjects(scene.userData.hotspotMeshes, false);
+            if (hHits.length) { showWRHotspot(hHits[0].object.userData.hotspot); return; }
+        }
+
+        // 再偵測螢幕面板
         var hits = raycaster.intersectObjects(panelMeshes);
-        if (hits.length) window.open(hits[0].object.userData.url, '_blank');
+        if (hits.length && hits[0].object.userData.url)
+            window.open(hits[0].object.userData.url, '_blank');
     }
 
     function onTouchStart(e) {
@@ -3046,17 +3258,42 @@
         if (keys['KeyA']) { px -= rx*spd*dt; pz -= rz*spd*dt; }
         if (keys['KeyD']) { px += rx*spd*dt; pz += rz*spd*dt; }
 
-        // 邊界（半徑 36 以內）
+        // 邊界（半徑 18 以內，涵蓋指揮室範圍）
         var dist = Math.sqrt(px*px + pz*pz);
-        if (dist > 36) { px = px/dist*36; pz = pz/dist*36; }
+        if (dist > 18) { px = px/dist*18; pz = pz/dist*18; }
 
         camera.position.x = px;
         camera.position.z = pz;
         camera.rotation.y = yaw;
         camera.rotation.x = pitch;
 
-        // 地球自轉
-        if (scene.userData.globe) scene.userData.globe.rotation.y += 0.15 * dt;
+        // 地球群組自轉
+        if (scene.userData.globeGroup) scene.userData.globeGroup.rotation.y += 0.10 * dt;
+        // 雲層比地球稍快
+        if (scene.userData.cloudMesh) scene.userData.cloudMesh.rotation.y += 0.018 * dt;
+
+        // 全息底座：旋轉光環
+        if (scene.userData.holoTori) {
+            scene.userData.holoTori.forEach(function(t) {
+                t.rotation.z += t.userData.rotSpeed * dt;
+            });
+        }
+        // 光柱呼吸閃爍
+        if (scene.userData.holoBeams) {
+            var pulse = 0.10 + Math.sin(clockPrev * 0.0012) * 0.06;
+            scene.userData.holoBeams.forEach(function(b) { b.material.opacity = pulse; });
+        }
+
+        // 熱點波紋動畫
+        if (scene.userData.hotspotRings) {
+            scene.userData.hotspotRings.forEach(function(ring) {
+                ring.userData.phase += 0.38 * dt;
+                if (ring.userData.phase > 1) ring.userData.phase -= 1;
+                var p = ring.userData.phase;
+                ring.scale.setScalar(0.1 + p * 2.8);
+                ring.material.opacity = (1 - p) * 0.88;
+            });
+        }
 
         // 粒子旋轉
         if (scene.userData.particles) scene.userData.particles.rotation.y += 0.012 * dt;
