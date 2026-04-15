@@ -3488,8 +3488,10 @@
                     });
                 });
                 updateTermMaxScroll();
-                termUI.tex = new THREE.CanvasTexture(termUI.cv);
+                // 先繪製再建立紋理，確保第一幀有內容
                 drawTerminal();
+                termUI.tex = new THREE.CanvasTexture(termUI.cv);
+                termUI.tex.needsUpdate = true;
                 scrTex = termUI.tex;
             } else {
                 scrTex = makeGameScreenTex();
@@ -3719,24 +3721,26 @@
     function drawTerminal() {
         var ctx = termUI.ctx;
         if (!ctx) return;
+        // 每次繪製後立即標記紋理需要更新
+        if (termUI.tex) termUI.tex.needsUpdate = true;
         var W = TERM_W, H = TERM_H;
         var HDR = TERM_HDR_H, FOOT = TERM_FOOT_H;
         var listH = H - HDR - FOOT;
 
-        // 背景
-        ctx.fillStyle = '#020d07';
+        // 背景（比純黑稍亮，讓 3D 場景中可見）
+        ctx.fillStyle = '#061a0e';
         ctx.fillRect(0, 0, W, H);
         // 掃描線
-        ctx.fillStyle = 'rgba(0,255,100,0.016)';
-        for (var sl = 0; sl < H; sl += 3) ctx.fillRect(0, sl, W, 1.5);
+        ctx.fillStyle = 'rgba(0,255,100,0.04)';
+        for (var sl = 0; sl < H; sl += 4) ctx.fillRect(0, sl, W, 2);
 
-        // 頭部漸層條
+        // 頭部漸層條（更亮）
         var hg = ctx.createLinearGradient(0, 0, W, 0);
-        hg.addColorStop(0, '#003d1a'); hg.addColorStop(0.5, '#005824'); hg.addColorStop(1, '#003d1a');
+        hg.addColorStop(0, '#006630'); hg.addColorStop(0.5, '#008840'); hg.addColorStop(1, '#006630');
         ctx.fillStyle = hg; ctx.fillRect(0, 0, W, HDR);
 
-        ctx.fillStyle = '#00ff88'; ctx.font = 'bold 14px "Courier New"';
-        ctx.fillText('≡ INTEL TERMINAL', 8, 25);
+        ctx.fillStyle = '#00ff88'; ctx.font = 'bold 15px "Courier New"';
+        ctx.fillText('[ INTEL TERMINAL ]', 8, 26);
 
         // 篩選標籤
         var tabDefs = [
@@ -3808,8 +3812,8 @@
             ctx.fillText(lbl, 7, ry + 21);
 
             // 標題
-            ctx.fillStyle = isH ? '#ccffdd' : '#77cc99';
-            ctx.font = '13px sans-serif';
+            ctx.fillStyle = isH ? '#ffffff' : '#aaffcc';
+            ctx.font = 'bold 13px sans-serif';
             var title = art.title;
             while (title.length > 3 && ctx.measureText(title).width > 300) title = title.slice(0, -1);
             if (title.length < art.title.length) title += '…';
