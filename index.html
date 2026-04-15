@@ -3023,8 +3023,32 @@
         });
 
         var latest   = articles.slice(0, 5);
-        var military = articles.filter(function(a) { return a.cat === 'military';   }).slice(0, 3);
-        var geo      = articles.filter(function(a) { return a.cat === 'geo';        }).slice(0, 3);
+
+        // 從精選報導取 6 篇（左翼前3、右翼後3）
+        var featured = [];
+        document.querySelectorAll('.featured-card').forEach(function(card) {
+            var aEl  = card.querySelector('a');
+            var dtEl = card.querySelector('.feat-date');
+            var bdEl = card.querySelector('.feat-badge');
+            if (!aEl || !aEl.href) return;
+            var color = '#e0c050', cat = 'featured';
+            if (bdEl) {
+                if (bdEl.classList.contains('military'))         { color = '#c0392b'; cat = 'military'; }
+                else if (bdEl.classList.contains('geopolitics')) { color = '#2980b9'; cat = 'geo'; }
+                else if (bdEl.classList.contains('analysis'))    { color = '#27ae60'; cat = 'analysis'; }
+            }
+            featured.push({ title: aEl.textContent.trim(), url: aEl.href,
+                date: dtEl ? dtEl.textContent.trim() : '', color: color, cat: cat });
+        });
+        // 若精選不足，以一般文章補位
+        if (featured.length < 6) {
+            articles.forEach(function(a) {
+                if (featured.length >= 6) return;
+                if (!featured.some(function(f) { return f.url === a.url; })) featured.push(a);
+            });
+        }
+        var leftWing  = featured.slice(0, 3);
+        var rightWing = featured.slice(3, 6);
 
         // ── 5 大頂部俯瞰螢幕：頭頂弧形扇型，face 指向玩家視角中心
         var W = 5.0, H = 3.0;
@@ -3042,13 +3066,13 @@
             addScreenLookAt(art, ohPositions[i], eyeTarget, W, H);
         });
 
-        // ── 左翼（軍事，面朝 +X 向右）
-        military.forEach(function(art, i) {
+        // ── 左翼（精選報導前3篇，面朝 +X 向右）
+        leftWing.forEach(function(art, i) {
             addScreen(art, -13, 3, -2 - i * 4.0, 0, Math.PI / 2, 0, 3.5, 2.2);
         });
 
-        // ── 右翼（地緣政治，面朝 -X 向左）
-        geo.forEach(function(art, i) {
+        // ── 右翼（精選報導後3篇，面朝 -X 向左）
+        rightWing.forEach(function(art, i) {
             addScreen(art, 13, 3, -2 - i * 4.0, 0, -Math.PI / 2, 0, 3.5, 2.2);
         });
     }
@@ -3368,20 +3392,40 @@
                 l.position.set(xz[0] + leg[0], 0.45, xz[1] + leg[1]);
                 scene.add(l);
             });
-            // 螢幕：左邊是文章列表，右邊是遊戲
+            // 螢幕：左邊是精選文章列表，右邊是工業力試煉遊戲
             var scrTex = (idx === 0) ? makeArticleListTex() : makeGameScreenTex();
+            var scrW = 2.8, scrH = 1.75;
             var scr = new THREE.Mesh(
-                new THREE.PlaneGeometry(1.6, 1.0),
+                new THREE.PlaneGeometry(scrW, scrH),
                 new THREE.MeshBasicMaterial({ map: scrTex })
             );
-            scr.position.set(xz[0], 1.45, xz[1] - 0.5);
+            scr.position.set(xz[0], 1.65, xz[1] - 0.5);
             scr.rotation.x = -0.25;
+            scr.userData.url   = (idx === 0)
+                ? window.location.href.split('#')[0]
+                : window.location.href.replace(/[^\/]*$/, '') + 'game.html';
+            scr.userData.title = (idx === 0) ? '精選文章列表' : '工業力試煉';
+            panelMeshes.push(scr);
             scene.add(scr);
             // 螢幕框
-            var frame = new THREE.Mesh(new THREE.BoxGeometry(1.68, 1.08, 0.04), deskMat);
-            frame.position.set(xz[0], 1.45, xz[1] - 0.52);
+            var frame = new THREE.Mesh(new THREE.BoxGeometry(scrW + 0.1, scrH + 0.1, 0.04), deskMat);
+            frame.position.set(xz[0], 1.65, xz[1] - 0.52);
             frame.rotation.x = -0.25;
             scene.add(frame);
+            // 發光邊框條
+            var frameGlow = new THREE.MeshBasicMaterial({
+                color: (idx === 0) ? 0x00ff88 : 0xff2266, transparent: true, opacity: 0.7
+            });
+            [[scrW + 0.12, 0.05, 0, (scrH + 0.1) / 2],
+             [scrW + 0.12, 0.05, 0, -(scrH + 0.1) / 2],
+             [0.05, scrH + 0.12, -(scrW + 0.1) / 2, 0],
+             [0.05, scrH + 0.12,  (scrW + 0.1) / 2, 0]
+            ].forEach(function(e) {
+                var bar = new THREE.Mesh(new THREE.PlaneGeometry(e[0], e[1]), frameGlow);
+                bar.position.set(xz[0] + e[2], 1.65 + e[3] * Math.cos(-0.25), xz[1] - 0.5 + e[3] * Math.sin(-0.25));
+                bar.rotation.x = -0.25;
+                scene.add(bar);
+            });
         });
 
         // ── 吊掛指示條（天花板下紅色橫條，半透明）
@@ -3451,66 +3495,198 @@
     // 文章列表紋理（左邊螢幕）
     function makeArticleListTex() {
         var cv = document.createElement('canvas');
-        cv.width = 256; cv.height = 160;
+        cv.width = 512; cv.height = 320;
         var ctx = cv.getContext('2d');
+
+        // 背景漸層（深藍→黑）
+        var bg = ctx.createLinearGradient(0, 0, 0, 320);
+        bg.addColorStop(0, '#022a14');
+        bg.addColorStop(1, '#011a0b');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 512, 320);
+
+        // 掃描線（細膩）
+        ctx.fillStyle = 'rgba(0,255,120,0.025)';
+        for (var sl = 0; sl < 320; sl += 3) { ctx.fillRect(0, sl, 512, 1.5); }
+
+        // 頂部狀態欄
+        ctx.fillStyle = '#00ff88';
+        ctx.fillRect(0, 0, 512, 34);
         ctx.fillStyle = '#001a0a';
-        ctx.fillRect(0, 0, 256, 160);
-        // 掃描線
-        ctx.fillStyle = 'rgba(0,255,100,0.04)';
-        for (var sl = 0; sl < 160; sl += 2) { ctx.fillRect(0, sl, 256, 1); }
-        // 標題
-        ctx.fillStyle = '#00ff55';
-        ctx.font = 'bold 10px "Courier New"';
-        ctx.fillText('[ ARTICLES ]', 8, 16);
-        ctx.font = '9px "Courier New"';
-        // 取前5篇文章
-        var articles = [];
-        document.querySelectorAll('.news-card').forEach(function(card, i) {
-            if (i < 5) {
-                var aEl = card.querySelector('a');
-                if (aEl) articles.push(aEl.textContent.trim().substring(0, 20));
+        ctx.font = 'bold 18px "Courier New"';
+        ctx.fillText('  精選報導  ARTICLES', 10, 23);
+
+        // 時間戳
+        var now = new Date();
+        var ts = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+        ctx.font = '12px "Courier New"';
+        ctx.fillText(ts, 380, 23);
+
+        // 分隔線
+        ctx.strokeStyle = '#00cc66';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, 36); ctx.lineTo(512, 36); ctx.stroke();
+
+        // 取精選文章
+        var featItems = [];
+        document.querySelectorAll('.featured-card').forEach(function(card, i) {
+            if (i >= 6) return;
+            var aEl  = card.querySelector('a');
+            var dtEl = card.querySelector('.feat-date');
+            var bdEl = card.querySelector('.feat-badge');
+            if (!aEl) return;
+            var cat = '■', catColor = '#00ff88';
+            if (bdEl) {
+                if (bdEl.classList.contains('military'))         { cat = '軍事'; catColor = '#ff6644'; }
+                else if (bdEl.classList.contains('geopolitics')) { cat = '地緣'; catColor = '#44aaff'; }
+                else if (bdEl.classList.contains('analysis'))    { cat = '分析'; catColor = '#44ff88'; }
             }
+            featItems.push({
+                title: aEl.textContent.trim(),
+                date:  dtEl ? dtEl.textContent.trim() : '',
+                cat: cat, catColor: catColor
+            });
         });
-        articles.forEach(function(title, i) {
-            ctx.fillStyle = '#00ee55';
-            ctx.fillText('> ' + title, 8, 35 + i * 18);
+
+        featItems.forEach(function(item, i) {
+            var y = 56 + i * 44;
+            // 列背景（交替）
+            ctx.fillStyle = (i % 2 === 0) ? 'rgba(0,200,100,0.06)' : 'rgba(0,0,0,0)';
+            ctx.fillRect(0, y - 16, 512, 44);
+
+            // 分類標籤
+            ctx.fillStyle = item.catColor;
+            ctx.fillRect(8, y - 12, 32, 16);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px "Courier New"';
+            ctx.fillText(item.cat, 10, y);
+
+            // 標題（截斷）
+            var maxChars = 18;
+            var title = item.title.length > maxChars ? item.title.substring(0, maxChars) + '…' : item.title;
+            ctx.fillStyle = '#ccffdd';
+            ctx.font = '14px sans-serif';
+            ctx.fillText(title, 50, y);
+
+            // 日期
+            ctx.fillStyle = '#448866';
+            ctx.font = '11px "Courier New"';
+            ctx.fillText(item.date, 380, y);
+
+            // 底部細線
+            ctx.strokeStyle = 'rgba(0,180,80,0.2)';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(8, y + 14); ctx.lineTo(504, y + 14); ctx.stroke();
         });
-        // 頁碼
-        ctx.fillStyle = '#004400';
-        ctx.fillText('[1/N]', 200, 155);
+
+        // 底部操作提示
+        ctx.fillStyle = '#003322';
+        ctx.fillRect(0, 300, 512, 20);
+        ctx.fillStyle = '#00ff88';
+        ctx.font = '11px "Courier New"';
+        ctx.fillText('► 點擊進入主網站  CLICK TO OPEN', 10, 315);
+
         return new THREE.CanvasTexture(cv);
     }
 
     // 遊戲螢幕紋理（右邊螢幕）
     function makeGameScreenTex() {
         var cv = document.createElement('canvas');
-        cv.width = 256; cv.height = 160;
+        cv.width = 512; cv.height = 320;
         var ctx = cv.getContext('2d');
-        ctx.fillStyle = '#0a0520';
-        ctx.fillRect(0, 0, 256, 160);
-        // 掃描線
-        ctx.fillStyle = 'rgba(255,0,100,0.06)';
-        for (var sl2 = 0; sl2 < 160; sl2 += 2) { ctx.fillRect(0, sl2, 256, 1); }
-        // 標題
-        ctx.fillStyle = '#ff3366';
-        ctx.font = 'bold 10px "Courier New"';
-        ctx.fillText('[ INDUSTRIAL ]', 8, 16);
-        ctx.fillStyle = '#ff6699';
-        ctx.font = '8px "Courier New"';
-        ctx.fillText('Trial v2.6', 12, 28);
-        // 遊戲預覽區（黑色方框）
-        ctx.strokeStyle = '#ff3366';
+
+        // 背景漸層（深紫→黑）
+        var bg = ctx.createLinearGradient(0, 0, 0, 320);
+        bg.addColorStop(0, '#1a0530');
+        bg.addColorStop(1, '#0a0220');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 512, 320);
+
+        // 格線背景（科技感）
+        ctx.strokeStyle = 'rgba(180,0,255,0.1)';
         ctx.lineWidth = 1;
-        ctx.strokeRect(10, 40, 236, 100);
-        // 遊戲內容預覽
-        ctx.fillStyle = 'rgba(255,100,150,0.15)';
-        ctx.fillRect(15, 50, 50, 40);
-        ctx.fillRect(75, 50, 50, 40);
-        ctx.fillRect(135, 50, 50, 40);
-        // 文字
-        ctx.fillStyle = '#ff3366';
-        ctx.font = '7px "Courier New"';
-        ctx.fillText('SELECT RESOURCE', 50, 130);
+        for (var gx = 0; gx < 512; gx += 32) {
+            ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, 320); ctx.stroke();
+        }
+        for (var gy = 0; gy < 320; gy += 32) {
+            ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(512, gy); ctx.stroke();
+        }
+
+        // 頂部標題欄
+        var titleGrad = ctx.createLinearGradient(0, 0, 512, 0);
+        titleGrad.addColorStop(0, '#6600cc');
+        titleGrad.addColorStop(1, '#cc0044');
+        ctx.fillStyle = titleGrad;
+        ctx.fillRect(0, 0, 512, 40);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.fillText('工業力試煉', 16, 28);
+        ctx.font = '12px "Courier New"';
+        ctx.fillStyle = '#ffccee';
+        ctx.fillText('INDUSTRIAL TRIAL  v2.6', 230, 27);
+
+        // 分隔線
+        ctx.strokeStyle = '#ff44aa';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(0, 42); ctx.lineTo(512, 42); ctx.stroke();
+
+        // 資源面板標題
+        ctx.fillStyle = '#ff88cc';
+        ctx.font = 'bold 13px "Courier New"';
+        ctx.fillText('RESOURCES', 16, 64);
+
+        // 三個資源條
+        var resources = [
+            { name: '鋼鐵', label: 'STEEL',  color: '#888888', pct: 0.72 },
+            { name: '能源', label: 'ENERGY', color: '#ffaa00', pct: 0.55 },
+            { name: '技術', label: 'TECH',   color: '#00aaff', pct: 0.38 },
+        ];
+        resources.forEach(function(r, i) {
+            var bx = 16, by = 76 + i * 38;
+            // 資源名
+            ctx.fillStyle = r.color;
+            ctx.font = 'bold 12px "Courier New"';
+            ctx.fillText(r.name + ' ' + r.label, bx, by + 14);
+            // 條底
+            ctx.fillStyle = 'rgba(255,255,255,0.12)';
+            ctx.fillRect(bx + 130, by, 340, 18);
+            // 條實際值
+            ctx.fillStyle = r.color;
+            ctx.fillRect(bx + 130, by, Math.round(340 * r.pct), 18);
+            // 百分比文字
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '11px "Courier New"';
+            ctx.fillText(Math.round(r.pct * 100) + '%', bx + 130 + Math.round(340 * r.pct) + 6, by + 14);
+        });
+
+        // 中央 CTA 按鈕
+        var btnGrad = ctx.createLinearGradient(136, 190, 376, 240);
+        btnGrad.addColorStop(0, '#9900ff');
+        btnGrad.addColorStop(1, '#ff0066');
+        ctx.fillStyle = btnGrad;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(136, 190, 240, 50, 8) : ctx.rect(136, 190, 240, 50);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('▶  進入遊戲', 256, 224);
+        ctx.textAlign = 'left';
+
+        // 邊框發光
+        ctx.strokeStyle = '#ff44aa';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(136, 190, 240, 50);
+
+        // 底部提示
+        ctx.fillStyle = '#330022';
+        ctx.fillRect(0, 290, 512, 30);
+        ctx.fillStyle = '#ff88cc';
+        ctx.font = '11px "Courier New"';
+        ctx.fillText('► 點擊啟動遊戲  CLICK TO LAUNCH', 10, 310);
+
         return new THREE.CanvasTexture(cv);
     }
 
