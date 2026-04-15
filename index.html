@@ -2808,7 +2808,7 @@
         });
         c.addEventListener('touchstart', onTouchStart, { passive: true });
         c.addEventListener('touchmove',  onTouchMove,  { passive: false });
-        c.addEventListener('touchend',   function() { touchPrev = null; globeDragging = false; globeDragLast = null; }, { passive: true });
+        c.addEventListener('touchend',   onTouchEnd,   { passive: true });
 
         var mobileCtrl = document.getElementById('wr-mobile-controls');
         if (mobileCtrl) {
@@ -2878,11 +2878,11 @@
             specular:    new THREE.Color(0.25, 0.45, 0.65),
             shininess:   18
         });
-        var globeMesh = new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R, 48, 48), earthMat);
+        var globeMesh = new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R, 32, 32), earthMat);
 
         // 雲層（比地球稍大，獨立旋轉）
         var cloudMesh = new THREE.Mesh(
-            new THREE.SphereGeometry(GLOBE_R + 0.07, 48, 48),
+            new THREE.SphereGeometry(GLOBE_R + 0.07, 32, 32),
             new THREE.MeshBasicMaterial({
                 map: loader.load('//unpkg.com/three-globe/example/img/earth-clouds.png'),
                 transparent: true, opacity: 0.32, depthWrite: false
@@ -2969,7 +2969,7 @@
         disc.position.y = 0.01;
         base.add(disc);
 
-        // 3 個旋轉光環（TorusGeometry 水平）
+        // 3 個旋轉光環（TorusGeometry 水平，優化版）
         var torusConfigs = [
             { r: 2.0, tube: 0.03, speed:  0.45, color: 0x00aaff },
             { r: 3.4, tube: 0.04, speed: -0.28, color: 0x0066cc },
@@ -2978,7 +2978,7 @@
         scene.userData.holoTori = [];
         torusConfigs.forEach(function(cfg) {
             var torus = new THREE.Mesh(
-                new THREE.TorusGeometry(cfg.r, cfg.tube, 16, 90),
+                new THREE.TorusGeometry(cfg.r, cfg.tube, 12, 64),
                 new THREE.MeshBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.72 })
             );
             torus.rotation.x = Math.PI / 2; // 水平放置
@@ -3253,7 +3253,7 @@
 
     // ── 浮動粒子 ──────────────────────────────────────────────────
     function buildParticles() {
-        var n = 220;
+        var n = 100;
         var pos = new Float32Array(n * 3);
         for (var i = 0; i < n; i++) {
             pos[i*3]   = (Math.random() - 0.5) * 80;
@@ -3272,7 +3272,7 @@
     // ── 戰情室裝飾（免費開源素材：程序生成紋理 + 簡單幾何）────────
     function buildDecorations() {
         // ── 地板：金屬板格（canvas 程序紋理，CC0 等效）
-        var floorTex = makeTileTex(512, 512, 10);
+        var floorTex = makeTileTex(256, 256, 8);
         var floor = new THREE.Mesh(
             new THREE.PlaneGeometry(120, 120),
             new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.55, metalness: 0.4 })
@@ -3281,15 +3281,15 @@
         floor.position.y = -0.06;
         scene.add(floor);
 
-        // ── 四根角柱（CylinderGeometry，自帶金屬感）
+        // ── 四根角柱（CylinderGeometry，自帶金屬感，優化版）
         var pillarMat = new THREE.MeshStandardMaterial({ color: 0x0b1a28, metalness: 0.75, roughness: 0.35 });
         var ringMat   = new THREE.MeshBasicMaterial({ color: 0xc0392b, transparent: true, opacity: 0.85 });
         [[-13,-13],[-13,13],[13,-13],[13,13]].forEach(function(xz) {
-            var pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 13, 10), pillarMat);
+            var pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 13, 8), pillarMat);
             pillar.position.set(xz[0], 6.5, xz[1]);
             scene.add(pillar);
             // 頂部紅色警示環
-            var ring = new THREE.Mesh(new THREE.TorusGeometry(0.54, 0.07, 8, 32), ringMat);
+            var ring = new THREE.Mesh(new THREE.TorusGeometry(0.54, 0.07, 6, 24), ringMat);
             ring.rotation.x = Math.PI / 2;
             ring.position.set(xz[0], 12.9, xz[1]);
             scene.add(ring);
@@ -3322,15 +3322,15 @@
             }
         });
 
-        // ── 天花板橫梁 + LED 指示燈
+        // ── 天花板橫梁 + LED 指示燈（優化版）
         var beamMat = new THREE.MeshStandardMaterial({ color: 0x08151f, metalness: 0.6, roughness: 0.5 });
         for (var bi = -10; bi <= 10; bi += 5) {
             var beam = new THREE.Mesh(new THREE.BoxGeometry(34, 0.22, 0.32), beamMat);
             beam.position.set(0, 12.9, bi);
             scene.add(beam);
-            for (var bl = -15; bl <= 15; bl += 3.5) {
+            for (var bl = -15; bl <= 15; bl += 5) {
                 var ledColor = (Math.random() > 0.25) ? 0xff2200 : 0x00ff88;
-                var led = new THREE.Mesh(new THREE.SphereGeometry(0.09, 6, 6),
+                var led = new THREE.Mesh(new THREE.SphereGeometry(0.08, 4, 4),
                     new THREE.MeshBasicMaterial({ color: ledColor }));
                 led.position.set(bl, 12.75, bi);
                 scene.add(led);
@@ -3357,7 +3357,7 @@
 
         // ── 簡易電腦終端機（玩家前方兩側桌台）
         var deskMat = new THREE.MeshStandardMaterial({ color: 0x081520, metalness: 0.55, roughness: 0.6 });
-        [[-5, 7], [5, 7]].forEach(function(xz) {
+        [[-5, 7], [5, 7]].forEach(function(xz, idx) {
             // 桌體
             var desk = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.9, 1.1), deskMat);
             desk.position.set(xz[0], 0.45, xz[1]);
@@ -3368,8 +3368,8 @@
                 l.position.set(xz[0] + leg[0], 0.45, xz[1] + leg[1]);
                 scene.add(l);
             });
-            // 螢幕
-            var scrTex = makeTerminalTex();
+            // 螢幕：左邊是文章列表，右邊是遊戲
+            var scrTex = (idx === 0) ? makeArticleListTex() : makeGameScreenTex();
             var scr = new THREE.Mesh(
                 new THREE.PlaneGeometry(1.6, 1.0),
                 new THREE.MeshBasicMaterial({ map: scrTex })
@@ -3445,6 +3445,72 @@
             '>>> STANDBY <<<',
         ];
         lines.forEach(function(l, i) { ctx.fillText(l, 8, 16 + i * 17); });
+        return new THREE.CanvasTexture(cv);
+    }
+
+    // 文章列表紋理（左邊螢幕）
+    function makeArticleListTex() {
+        var cv = document.createElement('canvas');
+        cv.width = 256; cv.height = 160;
+        var ctx = cv.getContext('2d');
+        ctx.fillStyle = '#001a0a';
+        ctx.fillRect(0, 0, 256, 160);
+        // 掃描線
+        ctx.fillStyle = 'rgba(0,255,100,0.04)';
+        for (var sl = 0; sl < 160; sl += 2) { ctx.fillRect(0, sl, 256, 1); }
+        // 標題
+        ctx.fillStyle = '#00ff55';
+        ctx.font = 'bold 10px "Courier New"';
+        ctx.fillText('[ ARTICLES ]', 8, 16);
+        ctx.font = '9px "Courier New"';
+        // 取前5篇文章
+        var articles = [];
+        document.querySelectorAll('.news-card').forEach(function(card, i) {
+            if (i < 5) {
+                var aEl = card.querySelector('a');
+                if (aEl) articles.push(aEl.textContent.trim().substring(0, 20));
+            }
+        });
+        articles.forEach(function(title, i) {
+            ctx.fillStyle = '#00ee55';
+            ctx.fillText('> ' + title, 8, 35 + i * 18);
+        });
+        // 頁碼
+        ctx.fillStyle = '#004400';
+        ctx.fillText('[1/N]', 200, 155);
+        return new THREE.CanvasTexture(cv);
+    }
+
+    // 遊戲螢幕紋理（右邊螢幕）
+    function makeGameScreenTex() {
+        var cv = document.createElement('canvas');
+        cv.width = 256; cv.height = 160;
+        var ctx = cv.getContext('2d');
+        ctx.fillStyle = '#0a0520';
+        ctx.fillRect(0, 0, 256, 160);
+        // 掃描線
+        ctx.fillStyle = 'rgba(255,0,100,0.06)';
+        for (var sl2 = 0; sl2 < 160; sl2 += 2) { ctx.fillRect(0, sl2, 256, 1); }
+        // 標題
+        ctx.fillStyle = '#ff3366';
+        ctx.font = 'bold 10px "Courier New"';
+        ctx.fillText('[ INDUSTRIAL ]', 8, 16);
+        ctx.fillStyle = '#ff6699';
+        ctx.font = '8px "Courier New"';
+        ctx.fillText('Trial v2.6', 12, 28);
+        // 遊戲預覽區（黑色方框）
+        ctx.strokeStyle = '#ff3366';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(10, 40, 236, 100);
+        // 遊戲內容預覽
+        ctx.fillStyle = 'rgba(255,100,150,0.15)';
+        ctx.fillRect(15, 50, 50, 40);
+        ctx.fillRect(75, 50, 50, 40);
+        ctx.fillRect(135, 50, 50, 40);
+        // 文字
+        ctx.fillStyle = '#ff3366';
+        ctx.font = '7px "Courier New"';
+        ctx.fillText('SELECT RESOURCE', 50, 130);
         return new THREE.CanvasTexture(cv);
     }
 
@@ -3538,6 +3604,42 @@
             }
             touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
         }
+    }
+
+    function onTouchEnd(e) {
+        // 偵測觸摸點擊（移動距離 < 20px = 點擊；> 20px = 拖拽）
+        if (touchPrev && !globeDragging) {
+            // 沒有進行拖拽，檢查是否點擊熱點或螢幕
+            var c = document.getElementById('warroom-canvas');
+            if (e.changedTouches.length > 0) {
+                var touch = e.changedTouches[0];
+                var rect = c.getBoundingClientRect();
+                var mx = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+                var my = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+                raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
+
+                // 優先檢測熱點
+                if (scene.userData.hotspotMeshes && scene.userData.hotspotMeshes.length) {
+                    var hHits = raycaster.intersectObjects(scene.userData.hotspotMeshes, false);
+                    if (hHits.length) {
+                        showWRHotspot(hHits[0].object.userData.hotspot);
+                        showWRToast('按 ESC 喚出滑鼠游標，即可點擊文章連結');
+                        touchPrev = null;
+                        return;
+                    }
+                }
+                // 檢測螢幕面板
+                var hits = raycaster.intersectObjects(panelMeshes);
+                if (hits.length && hits[0].object.userData.url) {
+                    window.open(hits[0].object.userData.url, '_blank');
+                    touchPrev = null;
+                    return;
+                }
+            }
+        }
+        touchPrev = null;
+        globeDragging = false;
+        globeDragLast = null;
     }
 
     function onResize() {
