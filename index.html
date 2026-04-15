@@ -1345,6 +1345,33 @@
             #wr-mobile-controls button[data-key="KeyD"] { grid-column: 3; grid-row: 2; }
             #wr-hint { display: none; }
         }
+        /* 橫屏虛擬搖桿 */
+        #wr-vjoy-base {
+            position: absolute;
+            display: none;
+            pointer-events: none;
+            z-index: 4;
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: rgba(255,120,40,0.14);
+            border: 2px solid rgba(255,140,50,0.45);
+            transform: translate(-50%,-50%);
+        }
+        #wr-vjoy-knob {
+            position: absolute;
+            display: none;
+            pointer-events: none;
+            z-index: 5;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: rgba(255,100,30,0.65);
+            border: 2.5px solid rgba(255,160,60,0.95);
+            box-shadow: 0 0 14px rgba(255,100,30,0.5);
+            transform: translate(-50%,-50%);
+        }
+        @media (hover: none) and (orientation: landscape) {
+            #wr-mobile-controls { display: none !important; }
+        }
 
         /* 戰情室熱點文章面板 */
         #wr-article-panel {
@@ -2692,6 +2719,8 @@
         <button data-key="KeyS">▼</button>
         <button data-key="KeyD">▶</button>
     </div>
+    <div id="wr-vjoy-base" aria-hidden="true"></div>
+    <div id="wr-vjoy-knob" aria-hidden="true"></div>
 </div>
 
 <!-- Three.js (3D 戰情室用，與 globe.gl 內部的 Three.js 互相獨立) -->
@@ -2724,6 +2753,9 @@
     var touchPrev = null;
     // 地球拖拽旋轉
     var globeDragging = false, globeDragLast = null;
+    // 橫屏虛擬搖桿 + 視角觸控
+    var vrJoy = { active: false, id: -1, baseX: 0, baseY: 0, nx: 0, ny: 0, maxR: 44 };
+    var vrLookId = -1, vrLookLast = null;
 
     // ── 終端機互動 UI ──────────────────────────────────────────────
     var TERM_W = 512, TERM_H = 320, TERM_HDR_H = 38, TERM_FOOT_H = 35;
@@ -3491,6 +3523,12 @@
                 // 先繪製再建立紋理，確保第一幀有內容
                 drawTerminal();
                 termUI.tex = new THREE.CanvasTexture(termUI.cv);
+                // iOS Safari / NPOT 相容性設定
+                termUI.tex.generateMipmaps = false;
+                termUI.tex.wrapS = THREE.ClampToEdgeWrapping;
+                termUI.tex.wrapT = THREE.ClampToEdgeWrapping;
+                termUI.tex.minFilter = THREE.LinearFilter;
+                termUI.tex.magFilter = THREE.LinearFilter;
                 termUI.tex.needsUpdate = true;
                 scrTex = termUI.tex;
             } else {
@@ -3727,19 +3765,18 @@
         var HDR = TERM_HDR_H, FOOT = TERM_FOOT_H;
         var listH = H - HDR - FOOT;
 
-        // 背景（比純黑稍亮，讓 3D 場景中可見）
-        ctx.fillStyle = '#061a0e';
+        // 背景
+        ctx.fillStyle = '#0d2918';
         ctx.fillRect(0, 0, W, H);
         // 掃描線
-        ctx.fillStyle = 'rgba(0,255,100,0.04)';
+        ctx.fillStyle = 'rgba(0,255,120,0.06)';
         for (var sl = 0; sl < H; sl += 4) ctx.fillRect(0, sl, W, 2);
 
-        // 頭部漸層條（更亮）
-        var hg = ctx.createLinearGradient(0, 0, W, 0);
-        hg.addColorStop(0, '#006630'); hg.addColorStop(0.5, '#008840'); hg.addColorStop(1, '#006630');
-        ctx.fillStyle = hg; ctx.fillRect(0, 0, W, HDR);
-
-        ctx.fillStyle = '#00ff88'; ctx.font = 'bold 15px "Courier New"';
+        // 頭部條（亮綠）
+        ctx.fillStyle = '#00aa55';
+        ctx.fillRect(0, 0, W, HDR);
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 16px monospace';
         ctx.fillText('[ INTEL TERMINAL ]', 8, 26);
 
         // 篩選標籤
@@ -3751,11 +3788,10 @@
         ];
         tabDefs.forEach(function(tab) {
             var active = termUI.filter === tab.key;
-            ctx.fillStyle = active ? '#00ff88' : '#00331a';
+            ctx.fillStyle = active ? '#ffffff' : '#1a5c35';
             ctx.fillRect(tab.x, 6, 57, 26);
-            if (active) { ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1; ctx.strokeRect(tab.x, 6, 57, 26); }
-            ctx.fillStyle = active ? '#001a0a' : '#009944';
-            ctx.font = (active ? 'bold ' : '') + '12px "Courier New"';
+            ctx.fillStyle = active ? '#003318' : '#aaffcc';
+            ctx.font = 'bold 12px monospace';
             ctx.fillText(tab.label, tab.x + 10, 24);
         });
 
@@ -3769,9 +3805,9 @@
         }
 
         // 頁腳
-        ctx.fillStyle = '#010d06'; ctx.fillRect(0, H - FOOT, W, FOOT);
-        ctx.fillStyle = '#003d1a'; ctx.fillRect(0, H - FOOT, W, 1);
-        ctx.fillStyle = '#00aa55'; ctx.font = '10px "Courier New"';
+        ctx.fillStyle = '#0a2015'; ctx.fillRect(0, H - FOOT, W, FOOT);
+        ctx.fillStyle = '#00cc66'; ctx.fillRect(0, H - FOOT, W, 1);
+        ctx.fillStyle = '#aaffcc'; ctx.font = '11px monospace';
         if (termUI.opened !== null) {
             ctx.fillText('◄ 點 [返回] 回列表  ·  [開啟全文] 在瀏覽器閱讀', 8, H - 10);
         } else {
@@ -3812,7 +3848,7 @@
             ctx.fillText(lbl, 7, ry + 21);
 
             // 標題
-            ctx.fillStyle = isH ? '#ffffff' : '#aaffcc';
+            ctx.fillStyle = isH ? '#ffffff' : '#ccffee';
             ctx.font = 'bold 13px sans-serif';
             var title = art.title;
             while (title.length > 3 && ctx.measureText(title).width > 300) title = title.slice(0, -1);
@@ -3827,7 +3863,7 @@
             if (isH) { ctx.fillStyle = '#00ff88'; ctx.font = '13px monospace'; ctx.fillText('▶', listW - 16, ry + 22); }
 
             // 行分隔
-            ctx.strokeStyle = 'rgba(0,140,50,0.18)'; ctx.lineWidth = 0.5;
+            ctx.strokeStyle = 'rgba(0,200,80,0.35)'; ctx.lineWidth = 0.5;
             ctx.beginPath(); ctx.moveTo(4, ry + ROW - 1); ctx.lineTo(listW - 4, ry + ROW - 1); ctx.stroke();
         });
 
@@ -3835,7 +3871,7 @@
 
         // 滑桿
         var trackH = listH - 2;
-        ctx.fillStyle = '#010d06'; ctx.fillRect(TERM_W - SCR_W, listTop, SCR_W, trackH);
+        ctx.fillStyle = '#0a2015'; ctx.fillRect(TERM_W - SCR_W, listTop, SCR_W, trackH);
         ctx.strokeStyle = '#004422'; ctx.lineWidth = 0.5;
         ctx.strokeRect(TERM_W - SCR_W, listTop, SCR_W, trackH);
         var totalH = arts.length * ROW;
@@ -4073,25 +4109,54 @@
     }
 
     function onTouchStart(e) {
-        if (e.touches.length === 1) {
-            touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            globeDragging = false;
-            termUI.touchActive = false;
-            termUI.touchStartY = e.touches[0].clientY;
-            if (scene && raycaster && camera) {
-                var c2 = document.getElementById('warroom-canvas');
+        var isLand = window.innerWidth > window.innerHeight;
+        var c2 = document.getElementById('warroom-canvas');
+        for (var ti = 0; ti < e.changedTouches.length; ti++) {
+            var t = e.changedTouches[ti];
+            var handled = false;
+            // 終端機碰撞優先
+            if (termUI.mesh && scene && raycaster && camera) {
                 var rect2 = c2.getBoundingClientRect();
-                var mx2 = ((e.touches[0].clientX - rect2.left) / rect2.width) * 2 - 1;
-                var my2 = -((e.touches[0].clientY - rect2.top) / rect2.height) * 2 + 1;
+                var mx2 = ((t.clientX - rect2.left) / rect2.width) * 2 - 1;
+                var my2 = -((t.clientY - rect2.top) / rect2.height) * 2 + 1;
                 raycaster.setFromCamera(new THREE.Vector2(mx2, my2), camera);
-                // 先檢查終端機，再檢查地球
-                if (termUI.mesh) {
-                    var tHits = raycaster.intersectObject(termUI.mesh);
-                    if (tHits.length) { termUI.touchActive = true; return; }
+                var tHits = raycaster.intersectObject(termUI.mesh);
+                if (tHits.length) {
+                    termUI.touchActive = true;
+                    termUI.touchStartY = t.clientY;
+                    handled = true;
                 }
-                if (scene.userData.globeGroup) {
-                    var gHits = raycaster.intersectObject(scene.userData.globeGroup, true);
-                    if (gHits.length) globeDragging = true;
+            }
+            if (handled) continue;
+            if (isLand) {
+                var leftHalf = t.clientX < window.innerWidth / 2;
+                if (leftHalf && !vrJoy.active) {
+                    // 左半邊 → 搖桿
+                    vrJoy.active = true; vrJoy.id = t.identifier;
+                    vrJoy.baseX = t.clientX; vrJoy.baseY = t.clientY;
+                    vrJoy.nx = 0; vrJoy.ny = 0;
+                    var vb = document.getElementById('wr-vjoy-base');
+                    var vk = document.getElementById('wr-vjoy-knob');
+                    if (vb) { vb.style.left = t.clientX + 'px'; vb.style.top = t.clientY + 'px'; vb.style.display = 'block'; }
+                    if (vk) { vk.style.left = t.clientX + 'px'; vk.style.top = t.clientY + 'px'; vk.style.display = 'block'; }
+                } else if (vrLookId === -1) {
+                    // 右半邊（或第二指）→ 視角
+                    vrLookId = t.identifier;
+                    vrLookLast = { x: t.clientX, y: t.clientY };
+                }
+            } else {
+                // 直屏：單點舊邏輯
+                if (e.touches.length === 1) {
+                    touchPrev = { x: t.clientX, y: t.clientY };
+                    globeDragging = false;
+                    if (scene && scene.userData.globeGroup && raycaster && camera) {
+                        var rect3 = c2.getBoundingClientRect();
+                        var mx3 = ((t.clientX - rect3.left) / rect3.width) * 2 - 1;
+                        var my3 = -((t.clientY - rect3.top) / rect3.height) * 2 + 1;
+                        raycaster.setFromCamera(new THREE.Vector2(mx3, my3), camera);
+                        var gHits = raycaster.intersectObject(scene.userData.globeGroup, true);
+                        if (gHits.length) globeDragging = true;
+                    }
                 }
             }
         }
@@ -4289,9 +4354,10 @@
         // 終端機 dirty redraw
         if (termUI.dirty && termUI.ctx) {
             drawTerminal();
-            termUI.tex.needsUpdate = true;
             termUI.dirty = false;
         }
+        // 每幀強制上傳紋理（iOS Safari 相容）
+        if (termUI.tex) termUI.tex.needsUpdate = true;
 
         renderer.render(scene, camera);
     }
