@@ -4163,71 +4163,107 @@
     }
 
     function onTouchMove(e) {
-        if (e.touches.length === 1 && touchPrev) {
-            e.preventDefault();
-            var dx = e.touches[0].clientX - touchPrev.x;
-            var dy = e.touches[0].clientY - touchPrev.y;
+        e.preventDefault();
+        var isLand = window.innerWidth > window.innerHeight;
+        for (var ti = 0; ti < e.changedTouches.length; ti++) {
+            var t = e.changedTouches[ti];
             if (termUI.touchActive) {
-                // 終端機列表捲動
+                var dy0 = t.clientY - (touchPrev ? touchPrev.y : t.clientY);
                 termUI.scroll = Math.max(0, Math.min(termUI.maxScroll,
-                    termUI.scroll - dy * 1.5));
+                    termUI.scroll - dy0 * 1.5));
                 termUI.dirty = true;
-            } else if (globeDragging && scene && scene.userData.globeGroup) {
-                scene.userData.globeGroup.rotation.y += dx * 0.007;
-                scene.userData.globeGroup.rotation.x += dy * 0.007;
-                scene.userData.globeGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, scene.userData.globeGroup.rotation.x));
-            } else {
-                yaw   -= dx * 0.004;
-                pitch -= dy * 0.004;
-                pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                touchPrev = { x: t.clientX, y: t.clientY };
+                continue;
             }
-            touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            if (isLand) {
+                if (vrJoy.active && t.identifier === vrJoy.id) {
+                    var jdx = t.clientX - vrJoy.baseX;
+                    var jdy = t.clientY - vrJoy.baseY;
+                    var jlen = Math.sqrt(jdx * jdx + jdy * jdy);
+                    if (jlen > vrJoy.maxR) { jdx = jdx / jlen * vrJoy.maxR; jdy = jdy / jlen * vrJoy.maxR; }
+                    vrJoy.nx = jdx / vrJoy.maxR;
+                    vrJoy.ny = -jdy / vrJoy.maxR;  // 向上 = 正值 = 前進
+                    var vk = document.getElementById('wr-vjoy-knob');
+                    if (vk) { vk.style.left = (vrJoy.baseX + jdx) + 'px'; vk.style.top = (vrJoy.baseY + jdy) + 'px'; }
+                } else if (t.identifier === vrLookId && vrLookLast) {
+                    yaw   -= (t.clientX - vrLookLast.x) * 0.004;
+                    pitch -= (t.clientY - vrLookLast.y) * 0.004;
+                    pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                    vrLookLast = { x: t.clientX, y: t.clientY };
+                }
+            } else {
+                if (touchPrev) {
+                    var dx = t.clientX - touchPrev.x;
+                    var dy = t.clientY - touchPrev.y;
+                    if (globeDragging && scene && scene.userData.globeGroup) {
+                        scene.userData.globeGroup.rotation.y += dx * 0.007;
+                        scene.userData.globeGroup.rotation.x += dy * 0.007;
+                        scene.userData.globeGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, scene.userData.globeGroup.rotation.x));
+                    } else {
+                        yaw   -= dx * 0.004;
+                        pitch -= dy * 0.004;
+                        pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                    }
+                    touchPrev = { x: t.clientX, y: t.clientY };
+                }
+            }
         }
     }
 
     function onTouchEnd(e) {
-        var wasTouchActive = termUI.touchActive;
-        termUI.touchActive = false;
-
-        if (touchPrev && e.changedTouches.length > 0) {
-            var touch = e.changedTouches[0];
-            var dy = Math.abs(touch.clientY - termUI.touchStartY);
+        var isLand = window.innerWidth > window.innerHeight;
+        for (var ti = 0; ti < e.changedTouches.length; ti++) {
+            var t = e.changedTouches[ti];
+            // 搖桿結束
+            if (vrJoy.active && t.identifier === vrJoy.id) {
+                vrJoy.active = false; vrJoy.id = -1; vrJoy.nx = 0; vrJoy.ny = 0;
+                var vb = document.getElementById('wr-vjoy-base');
+                var vk = document.getElementById('wr-vjoy-knob');
+                if (vb) vb.style.display = 'none';
+                if (vk) vk.style.display = 'none';
+                continue;
+            }
+            // 視角觸控結束
+            if (t.identifier === vrLookId) {
+                vrLookId = -1; vrLookLast = null;
+                continue;
+            }
+            // 終端機觸控
+            var wasTerm = termUI.touchActive;
+            termUI.touchActive = false;
+            var moveDist = Math.abs(t.clientY - termUI.touchStartY);
             var c = document.getElementById('warroom-canvas');
             var rect = c.getBoundingClientRect();
-            var mx = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-            var my = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
-            raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
-
-            if (wasTouchActive && dy < 12) {
-                // 短點擊終端機 → 傳遞給互動邏輯
-                var tHits = raycaster.intersectObject(termUI.mesh);
-                if (tHits.length && tHits[0].uv) {
-                    termHandleClick(tHits[0].uv);
-                    touchPrev = null; return;
+            var mx = ((t.clientX - rect.left) / rect.width) * 2 - 1;
+            var my = -((t.clientY - rect.top) / rect.height) * 2 + 1;
+            if (scene && raycaster && camera) {
+                raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
+                if (wasTerm && moveDist < 12 && termUI.mesh) {
+                    var tHits = raycaster.intersectObject(termUI.mesh);
+                    if (tHits.length && tHits[0].uv) { termHandleClick(tHits[0].uv); continue; }
                 }
-            }
-
-            if (!wasTouchActive && !globeDragging) {
-                // 優先檢測熱點
-                if (scene.userData.hotspotMeshes && scene.userData.hotspotMeshes.length) {
-                    var hHits = raycaster.intersectObjects(scene.userData.hotspotMeshes, false);
-                    if (hHits.length) {
-                        showWRHotspot(hHits[0].object.userData.hotspot);
-                        showWRToast('按 ESC 喚出滑鼠游標，即可點擊文章連結');
-                        touchPrev = null; return;
+                if (!wasTerm) {
+                    // 熱點
+                    if (scene.userData.hotspotMeshes && scene.userData.hotspotMeshes.length) {
+                        var hHits = raycaster.intersectObjects(scene.userData.hotspotMeshes, false);
+                        if (hHits.length) {
+                            showWRHotspot(hHits[0].object.userData.hotspot);
+                            showWRToast('按 ESC 喚出滑鼠游標，即可點擊文章連結');
+                            continue;
+                        }
                     }
-                }
-                // 其他面板
-                var hits = raycaster.intersectObjects(panelMeshes);
-                if (hits.length && hits[0].object !== termUI.mesh && hits[0].object.userData.url) {
-                    window.open(hits[0].object.userData.url, '_blank');
-                    touchPrev = null; return;
+                    var hits = raycaster.intersectObjects(panelMeshes);
+                    if (hits.length && hits[0].object !== termUI.mesh && hits[0].object.userData.url) {
+                        window.open(hits[0].object.userData.url, '_blank');
+                        continue;
+                    }
                 }
             }
         }
-        touchPrev = null;
-        globeDragging = false;
-        globeDragLast = null;
+        // 直屏模式清除舊狀態
+        if (!isLand) {
+            touchPrev = null; globeDragging = false; globeDragLast = null;
+        }
     }
 
     function onResize() {
@@ -4253,6 +4289,11 @@
         if (keys['KeyS']) { px -= fx*spd*dt; pz -= fz*spd*dt; }
         if (keys['KeyA']) { px -= rx*spd*dt; pz -= rz*spd*dt; }
         if (keys['KeyD']) { px += rx*spd*dt; pz += rz*spd*dt; }
+        // 虛擬搖桿（橫屏）
+        if (vrJoy.active) {
+            px += (vrJoy.ny * fx + vrJoy.nx * rx) * spd * dt;
+            pz += (vrJoy.ny * fz + vrJoy.nx * rz) * spd * dt;
+        }
 
         // 邊界（半徑 18 以內，涵蓋指揮室範圍）
         var dist = Math.sqrt(px*px + pz*pz);
