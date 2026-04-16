@@ -3579,42 +3579,74 @@
                 l.position.set(xz[0] + leg[0], 0.45, xz[1] + leg[1]);
                 scene.add(l);
             });
-            // 螢幕：左邊是文章終端機，右邊是工業力試煉
-            var scrMat = (idx === 0)
-                ? new THREE.MeshBasicMaterial({ map: makeHoloTermTex() })  // 全息投影終端機
-                : new THREE.MeshBasicMaterial({ map: makeGameScreenTex() });
+
             var scrW = 2.8, scrH = 1.75;
-            var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), scrMat);
-            scr.position.set(xz[0], 1.65, xz[1] - 0.5);
-            scr.rotation.x = -0.25;
+
             if (idx === 0) {
-                termUI.mesh = scr;  // 互動終端機，不設 url（內部處理點擊）
+                // ── 全息投影終端機（透明浮空顯示）
+                var holoMat = new THREE.MeshBasicMaterial({
+                    map: makeHoloTermTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide
+                });
+                var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), holoMat);
+                scr.position.set(xz[0], 1.65, xz[1] - 0.5);
+                scr.rotation.x = -0.25;
+                termUI.mesh = scr;
                 scr.userData.title = '文章終端機 ── 點擊開啟';
+                panelMeshes.push(scr);
+                scene.add(scr);
+
+                // 投影器底座（桌面上的小發光圓台）
+                var emitMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.8 });
+                var emitter = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.17, 0.07, 16), emitMat);
+                emitter.position.set(xz[0], 0.935, xz[1] - 0.1);
+                scene.add(emitter);
+
+                // 底座光暈環
+                var discMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.18, side: THREE.DoubleSide });
+                var disc = new THREE.Mesh(new THREE.RingGeometry(0.20, 0.42, 28), discMat);
+                disc.rotation.x = -Math.PI / 2;
+                disc.position.set(xz[0], 0.915, xz[1] - 0.1);
+                scene.add(disc);
+
+                // 浮動掃描環（與螢幕同平面傾角）
+                [[scrW * 0.50, 0.25], [scrW * 0.43, 0.15]].forEach(function(rd) {
+                    var ring = new THREE.Mesh(
+                        new THREE.RingGeometry(rd[0] - 0.013, rd[0] + 0.013, 48),
+                        new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: rd[1], side: THREE.DoubleSide })
+                    );
+                    ring.position.set(xz[0], 1.65, xz[1] - 0.5);
+                    ring.rotation.x = -0.25;
+                    scene.add(ring);
+                });
+
             } else {
+                // ── 一般螢幕（工業力試煉）
+                var scrMat = new THREE.MeshBasicMaterial({ map: makeGameScreenTex() });
+                var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), scrMat);
+                scr.position.set(xz[0], 1.65, xz[1] - 0.5);
+                scr.rotation.x = -0.25;
                 scr.userData.url   = window.location.href.replace(/[^\/]*$/, '') + 'game.html';
                 scr.userData.title = '工業力試煉';
+                panelMeshes.push(scr);
+                scene.add(scr);
+                // 螢幕框
+                var frame = new THREE.Mesh(new THREE.BoxGeometry(scrW + 0.1, scrH + 0.1, 0.04), deskMat);
+                frame.position.set(xz[0], 1.65, xz[1] - 0.52);
+                frame.rotation.x = -0.25;
+                scene.add(frame);
+                // 發光邊框條
+                var frameGlow = new THREE.MeshBasicMaterial({ color: 0xff2266, transparent: true, opacity: 0.7 });
+                [[scrW + 0.12, 0.05, 0, (scrH + 0.1) / 2],
+                 [scrW + 0.12, 0.05, 0, -(scrH + 0.1) / 2],
+                 [0.05, scrH + 0.12, -(scrW + 0.1) / 2, 0],
+                 [0.05, scrH + 0.12,  (scrW + 0.1) / 2, 0]
+                ].forEach(function(e) {
+                    var bar = new THREE.Mesh(new THREE.PlaneGeometry(e[0], e[1]), frameGlow);
+                    bar.position.set(xz[0] + e[2], 1.65 + e[3] * Math.cos(-0.25), xz[1] - 0.5 + e[3] * Math.sin(-0.25));
+                    bar.rotation.x = -0.25;
+                    scene.add(bar);
+                });
             }
-            panelMeshes.push(scr);
-            scene.add(scr);
-            // 螢幕框
-            var frame = new THREE.Mesh(new THREE.BoxGeometry(scrW + 0.1, scrH + 0.1, 0.04), deskMat);
-            frame.position.set(xz[0], 1.65, xz[1] - 0.52);
-            frame.rotation.x = -0.25;
-            scene.add(frame);
-            // 發光邊框條
-            var frameGlow = new THREE.MeshBasicMaterial({
-                color: (idx === 0) ? 0x00ffcc : 0xff2266, transparent: true, opacity: 0.7
-            });
-            [[scrW + 0.12, 0.05, 0, (scrH + 0.1) / 2],
-             [scrW + 0.12, 0.05, 0, -(scrH + 0.1) / 2],
-             [0.05, scrH + 0.12, -(scrW + 0.1) / 2, 0],
-             [0.05, scrH + 0.12,  (scrW + 0.1) / 2, 0]
-            ].forEach(function(e) {
-                var bar = new THREE.Mesh(new THREE.PlaneGeometry(e[0], e[1]), frameGlow);
-                bar.position.set(xz[0] + e[2], 1.65 + e[3] * Math.cos(-0.25), xz[1] - 0.5 + e[3] * Math.sin(-0.25));
-                bar.rotation.x = -0.25;
-                scene.add(bar);
-            });
         });
 
         // ── 吊掛指示條（天花板下紅色橫條，半透明）
@@ -3727,48 +3759,44 @@
         var cv = document.createElement('canvas');
         cv.width = W; cv.height = H;
         var c = cv.getContext('2d');
+        // 透明背景（不 fillRect）— 讓場景穿透
 
-        // 深色背景
-        c.fillStyle = '#010c16';
+        // 中心暗暈（增加文字可讀性）
+        var vgn = c.createRadialGradient(W / 2, H / 2, H * 0.05, W / 2, H / 2, H * 0.72);
+        vgn.addColorStop(0, 'rgba(0,12,22,0.60)');
+        vgn.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = vgn;
         c.fillRect(0, 0, W, H);
 
-        // 網格線（極細）
-        c.strokeStyle = 'rgba(0,220,180,0.07)';
-        c.lineWidth = 0.5;
-        for (var gx = 0; gx < W; gx += 40) {
-            c.beginPath(); c.moveTo(gx, 0); c.lineTo(gx, H); c.stroke();
-        }
-        for (var gy = 0; gy < H; gy += 40) {
-            c.beginPath(); c.moveTo(0, gy); c.lineTo(W, gy); c.stroke();
-        }
-
-        // 掃描線
-        for (var sy = 0; sy < H; sy += 4) {
-            c.fillStyle = 'rgba(0,255,200,0.025)';
-            c.fillRect(0, sy, W, 2);
+        // 掃描線（中央區）
+        for (var sy = H * 0.08; sy < H * 0.92; sy += 4) {
+            c.fillStyle = 'rgba(0,255,200,0.03)';
+            c.fillRect(W * 0.05, sy, W * 0.9, 1);
         }
 
         // 頂部標籤
         c.font = 'bold 11px "Courier New", monospace';
         c.textAlign = 'center';
         c.textBaseline = 'top';
-        c.fillStyle = 'rgba(0,255,200,0.45)';
-        c.fillText('\u25c8  I N T E L  T E R M I N A L  \u25c8', W / 2, 15);
+        c.shadowColor = '#00ffcc'; c.shadowBlur = 6;
+        c.fillStyle = 'rgba(0,255,200,0.55)';
+        c.fillText('\u25c8  I N T E L  T E R M I N A L  \u25c8', W / 2, 14);
+        c.shadowBlur = 0;
 
         // 主標題「文章終端機」— 多層疊加全息光暈
-        var mainY = H / 2 - 20;
+        var mainY = H / 2 - 18;
+        c.textBaseline = 'middle';
+        c.textAlign = 'center';
         [
-            { blur: 48, alpha: 0.07, size: 66 },
-            { blur: 22, alpha: 0.18, size: 63 },
-            { blur:  9, alpha: 0.50, size: 60 },
-            { blur:  0, alpha: 0.90, size: 60 }
+            { blur: 50, alpha: 0.08, size: 66 },
+            { blur: 22, alpha: 0.22, size: 63 },
+            { blur:  8, alpha: 0.60, size: 60 },
+            { blur:  0, alpha: 1.00, size: 60 }
         ].forEach(function(p) {
             c.shadowColor = '#00ffcc';
             c.shadowBlur  = p.blur;
             c.fillStyle   = 'rgba(0,255,200,' + p.alpha + ')';
-            c.font        = 'bold ' + p.size + 'px "Noto Sans TC", sans-serif';
-            c.textBaseline = 'middle';
-            c.textAlign   = 'center';
+            c.font        = 'bold ' + p.size + 'px "Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif';
             c.fillText('\u6587\u7ae0\u7d42\u7aef\u6a5f', W / 2, mainY);
         });
         c.shadowBlur = 0;
@@ -3777,30 +3805,32 @@
         c.font = 'bold 15px "Courier New", monospace';
         c.textBaseline = 'middle';
         c.textAlign = 'center';
-        c.fillStyle = 'rgba(0,210,180,0.80)';
-        c.shadowColor = '#00ffcc'; c.shadowBlur = 10;
-        c.fillText('\u25b6  \u9ede\u64ca\u958b\u59cb\u4f7f\u7528', W / 2, mainY + 55);
+        c.fillStyle = 'rgba(0,220,185,0.88)';
+        c.shadowColor = '#00ffcc'; c.shadowBlur = 12;
+        c.fillText('\u25b6  \u9ede\u64ca\u958b\u59cb\u4f7f\u7528', W / 2, mainY + 54);
         c.shadowBlur = 0;
 
-        // 四角裝飾
-        var cs = 24;
-        c.strokeStyle = 'rgba(0,255,200,0.55)';
-        c.lineWidth = 1.5;
-        [[0, 0, 1, 1], [W, 0, -1, 1], [0, H, 1, -1], [W, H, -1, -1]].forEach(function(e) {
-            c.beginPath();
-            c.moveTo(e[0] + e[2] * cs, e[1] + 1);
-            c.lineTo(e[0] + 1 * e[2], e[1] + 1);
-            c.lineTo(e[0] + 1 * e[2], e[1] + e[3] * cs);
-            c.stroke();
+        // 文字上下分隔線
+        [[mainY - 44, 0.55], [mainY + 80, 0.40]].forEach(function(ld) {
+            var lg = c.createLinearGradient(W * 0.12, 0, W * 0.88, 0);
+            lg.addColorStop(0,   'rgba(0,255,200,0)');
+            lg.addColorStop(0.5, 'rgba(0,255,200,' + ld[1] + ')');
+            lg.addColorStop(1,   'rgba(0,255,200,0)');
+            c.fillStyle = lg;
+            c.fillRect(W * 0.12, ld[0], W * 0.76, 1.5);
         });
 
-        // 底部漸層發光條
-        var grad = c.createLinearGradient(W * 0.2, 0, W * 0.8, 0);
-        grad.addColorStop(0,   'rgba(0,255,200,0)');
-        grad.addColorStop(0.5, 'rgba(0,255,200,0.5)');
-        grad.addColorStop(1,   'rgba(0,255,200,0)');
-        c.fillStyle = grad;
-        c.fillRect(W * 0.2, H - 5, W * 0.6, 2);
+        // 四角裝飾括弧
+        var cs = 26;
+        c.strokeStyle = 'rgba(0,255,200,0.60)';
+        c.lineWidth = 1.5;
+        [[4, 4, 1, 1], [W - 4, 4, -1, 1], [4, H - 4, 1, -1], [W - 4, H - 4, -1, -1]].forEach(function(e) {
+            c.beginPath();
+            c.moveTo(e[0] + e[2] * cs, e[1]);
+            c.lineTo(e[0], e[1]);
+            c.lineTo(e[0], e[1] + e[3] * cs);
+            c.stroke();
+        });
 
         return new THREE.CanvasTexture(cv);
     }
