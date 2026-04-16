@@ -2863,7 +2863,6 @@
         geoTargetX: 0, geoTargetY: 0, geoLerping: false,
         _articles: [], _filter: 'all',          // 終端機狀態
     };
-    var ogScreenMeshes = [];  // [{mesh, art, w, h}] 供 loadOGsForScreens() 使用
     // 地理位置關鍵字對照（用於準心懸停時旋轉地球）
     var WR_HOTSPOT_GEO = [
         { lat: 48.38, lng:  31.17, kw: ['烏克蘭','烏軍','澤倫斯基','基輔','烏俄'] },
@@ -2948,7 +2947,6 @@
         buildScreenWall();
         buildParticles();
         buildDecorations();
-        loadOGsForScreens();
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', function() {
@@ -3273,7 +3271,6 @@
         screen.userData.url   = art.url;
         screen.userData.title = art.title;
         panelMeshes.push(screen);
-        ogScreenMeshes.push({ mesh: screen, art: art, w: w, h: h });
         group.add(screen);
 
         scene.add(group);
@@ -3311,7 +3308,6 @@
         screen.userData.url   = art.url;
         screen.userData.title = art.title;
         panelMeshes.push(screen);
-        ogScreenMeshes.push({ mesh: screen, art: art, w: w, h: h });
         group.add(screen);
 
         scene.add(group);
@@ -3338,21 +3334,23 @@
         c.fillStyle = 'rgba(255,255,255,0.92)';
         c.font = 'bold ' + Math.round(PH * 0.056) + 'px "Courier New", monospace';
         c.textBaseline = 'middle';
-        c.textAlign = 'left';
-        c.fillText(art.date.slice(0, 10), 10, PH * 0.055);
+        c.textAlign = 'center';
+        c.fillText(art.date.slice(0, 10), PW / 2, PH * 0.055);
 
-        // 大標題
+        // 大標題（置中）
         c.fillStyle = '#e8dfc8';
         var fs = Math.round(PH * 0.082);
         c.font = fs + 'px "Noto Sans TC", sans-serif';
         c.textBaseline = 'top';
-        drawWrapped(c, art.title, 10, PH * 0.14, PW - 20, fs * 1.35, 5);
+        c.textAlign = 'center';
+        drawWrappedCenter(c, art.title, PW / 2, PH * 0.14, PW - 20, fs * 1.35, 5);
 
-        // 底部提示
+        // 底部提示（置中）
         c.fillStyle = 'rgba(150,175,200,0.45)';
         c.font = Math.round(PH * 0.048) + 'px "Courier New", monospace';
         c.textBaseline = 'bottom';
-        c.fillText('[ CLICK TO OPEN ]', 10, PH - 8);
+        c.textAlign = 'center';
+        c.fillText('[ CLICK TO OPEN ]', PW / 2, PH - 8);
 
         // 底部橫線
         c.strokeStyle = art.color;
@@ -3388,6 +3386,14 @@
             }
         }
         if (line) ctx.fillText(line, x, y + n * lh);
+    }
+
+    // 置中換行版本（cx = 水平中心）
+    function drawWrappedCenter(ctx, text, cx, y, maxW, lh, maxLines) {
+        var savedAlign = ctx.textAlign;
+        ctx.textAlign = 'center';
+        drawWrapped(ctx, text, cx, y, maxW, lh, maxLines);
+        ctx.textAlign = savedAlign;
     }
 
     // ── 熱點點擊面板（戰情室版） ─────────────────────────────────
@@ -3663,14 +3669,15 @@
 
     // Lat/Lng → globeGroup rotation (帶入玩家正面方向 +Z)
     function geoToGlobeRot(lat, lng) {
+        // 必須與 latLngToVec3 使用相同座標系，才能正確將地區轉向玩家（+z 方向）
         var phi   = (90 - lat) * Math.PI / 180;
         var theta = (lng + 180) * Math.PI / 180;
-        var x0 = Math.sin(phi) * Math.sin(theta);
-        var y0 = Math.cos(phi);
-        var z0 = Math.sin(phi) * Math.cos(theta);
-        var ry = Math.atan2(-x0, z0);
-        var z1 = Math.sqrt(x0 * x0 + z0 * z0);
-        var rx = Math.atan2(y0, z1);
+        var Px =  -Math.sin(phi) * Math.cos(theta);  // 同 latLngToVec3
+        var Py =   Math.cos(phi);
+        var Pz =   Math.sin(phi) * Math.sin(theta);  // 同 latLngToVec3
+        var Pxz = Math.sqrt(Px * Px + Pz * Pz);
+        var ry  = Math.atan2(-Px, Pz);   // 轉 Y，使 Pz > 0（面向 +z 即玩家方向）
+        var rx  = Math.atan2(Py, Pxz);   // 傾 X，使緯度對準
         return { x: rx, y: ry };
     }
 
@@ -3856,7 +3863,7 @@
             if (h.object === termUI.mesh) {
                 openTerminalOverlay();  // 左桌終端機 → 開啟 HTML 面板
             } else if (h.object.userData.url) {
-                window.open(h.object.userData.url, '_blank');
+                showOpenConfirm(h.object.userData.url, h.object.userData.title || '');
             }
         }
     }
@@ -4010,7 +4017,7 @@
                     var hits = raycaster.intersectObjects(panelMeshes);
                     if (hits.length) {
                         if (hits[0].object === termUI.mesh) { openTerminalOverlay(); continue; }
-                        if (hits[0].object.userData.url) { window.open(hits[0].object.userData.url, '_blank'); continue; }
+                        if (hits[0].object.userData.url) { showOpenConfirm(hits[0].object.userData.url, hits[0].object.userData.title || ''); continue; }
                     }
                 }
             }
@@ -4295,7 +4302,6 @@
         var safeTitle = art.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         var safeUrl   = art.url.replace(/"/g,'%22');
 
-        // 初始畫面：標題 + 載入中
         detailEl.innerHTML =
             '<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">' +
             '<button id="wr-term-back" style="background:#001f0d;color:#00ff88;border:1px solid #00ff88;' +
@@ -4303,121 +4309,59 @@
             '<span style="background:' + art.color + ';color:#fff;padding:3px 8px;font:bold 10px monospace;border-radius:3px;">' + catName + '</span>' +
             '<span style="color:#00aa55;font:10px monospace;">' + art.date + '</span>' +
             '</div>' +
-            '<h3 style="color:#ccffee;font:bold 13px/1.5 monospace;margin:0 0 10px;">' + safeTitle + '</h3>' +
-            '<div id="wr-term-og" style="min-height:60px;display:flex;align-items:center;justify-content:center;' +
-            'color:#336644;font:11px monospace;margin-bottom:10px;">⏳ 載入封面圖...</div>' +
-            '<a href="' + safeUrl + '" target="_blank" rel="noopener" ' +
-            'style="display:block;background:linear-gradient(135deg,#003a1a,#005c2a);color:#00ff88;' +
-            'text-decoration:none;padding:10px 16px;font:bold 12px monospace;' +
-            'border:1px solid #00ff88;border-radius:6px;text-align:center;">→ 開啟全文（外部連結）</a>';
+            '<h3 style="color:#ccffee;font:bold 13px/1.5 monospace;margin:0 0 14px;">' + safeTitle + '</h3>' +
+            '<div style="background:#001a0c;border:1px solid #004d20;border-radius:8px;padding:16px;text-align:center;">' +
+            '<div style="color:#00cc55;font:bold 12px monospace;margin-bottom:12px;">開啟新聞頁面？</div>' +
+            '<div style="display:flex;gap:10px;justify-content:center;">' +
+            '<button id="wr-term-open-yes" style="background:#005a20;color:#00ff88;border:1px solid #00ff88;' +
+            'padding:8px 24px;font:bold 13px monospace;cursor:pointer;border-radius:5px;">是</button>' +
+            '<button id="wr-term-open-no" style="background:#1a0000;color:#ff6666;border:1px solid #ff4444;' +
+            'padding:8px 24px;font:bold 13px monospace;cursor:pointer;border-radius:5px;">否</button>' +
+            '</div></div>';
 
         document.getElementById('wr-term-back').addEventListener('click', function() { _termRenderList(); });
-
-        // 非同步載入 OG 圖
-        fetchOGImage(art.url).then(function(imgUrl) {
-            var ogEl = document.getElementById('wr-term-og');
-            if (!ogEl) return;
-            if (imgUrl) {
-                ogEl.innerHTML = '<img src="' + imgUrl.replace(/"/g,'%22') + '" ' +
-                    'style="width:100%;max-height:140px;object-fit:cover;border-radius:4px;' +
-                    'border:1px solid #003322;display:block;" ' +
-                    'onerror="this.parentNode.innerHTML=\'（無法顯示封面圖）\'">';
-            } else {
-                ogEl.textContent = '（無封面圖）';
-            }
+        document.getElementById('wr-term-open-yes').addEventListener('click', function() {
+            window.open(art.url, '_blank', 'noopener');
         });
+        document.getElementById('wr-term-open-no').addEventListener('click', function() { _termRenderList(); });
     }
 
-    // ── OG 圖擷取（CORS proxy: allorigins.win）───────────────────
-    function fetchOGImage(url) {
-        var key = 'og:' + url;
-        var hit = sessionStorage.getItem(key);
-        if (hit !== null) return Promise.resolve(hit || null);
-        var proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-        return fetch(proxy)
-            .then(function(r) { return r.json(); })
-            .then(function(d) {
-                var doc = new DOMParser().parseFromString(d.contents || '', 'text/html');
-                var meta = doc.querySelector('meta[property="og:image"]');
-                var img = meta ? meta.getAttribute('content') : null;
-                sessionStorage.setItem(key, img || '');
-                return img;
-            })
-            .catch(function() { sessionStorage.setItem(key, ''); return null; });
-    }
+    // ── 開啟新聞確認對話框 ────────────────────────────────────────
+    function showOpenConfirm(url, title) {
+        // 釋放準心鎖定讓滑鼠可用
+        if (document.pointerLockElement) document.exitPointerLock();
 
-    // ── 指揮牆螢幕 OG 圖更新 ────────────────────────────────────
-    function loadOGsForScreens() {
-        var idx = 0;
-        function next() {
-            if (idx >= ogScreenMeshes.length) return;
-            var entry = ogScreenMeshes[idx++];
-            fetchOGImage(entry.art.url).then(function(imgUrl) {
-                if (!imgUrl) { setTimeout(next, 400); return; }
-                var rawUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(imgUrl);
-                var img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload  = function() { applyOGToScreen(entry, img); setTimeout(next, 400); };
-                img.onerror = function() { setTimeout(next, 400); };
-                img.src = rawUrl;
-            }).catch(function() { setTimeout(next, 400); });
+        var overlay = document.getElementById('wr-open-confirm');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'wr-open-confirm';
+            overlay.style.cssText =
+                'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;' +
+                'background:rgba(0,0,0,0.72);z-index:9999;';
+            document.body.appendChild(overlay);
         }
-        setTimeout(next, 1500);  // 延遲 1.5 秒讓場景先載入
-    }
+        var safeTitle = (title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        overlay.innerHTML =
+            '<div style="background:#0a1e10;border:1.5px solid #00cc55;border-radius:10px;' +
+            'padding:28px 32px;max-width:420px;width:90%;text-align:center;' +
+            'box-shadow:0 0 40px rgba(0,255,100,0.25);font-family:\'Courier New\',monospace;">' +
+            '<div style="color:#00ff88;font:bold 15px monospace;margin-bottom:10px;">開啟新聞頁面？</div>' +
+            (safeTitle ? '<div style="color:#aaccaa;font:12px/1.5 monospace;margin-bottom:18px;word-break:break-all;">' + safeTitle + '</div>' : '<div style="margin-bottom:18px;"></div>') +
+            '<div style="display:flex;gap:14px;justify-content:center;">' +
+            '<button id="wr-oc-yes" style="background:#005a20;color:#00ff88;border:1px solid #00ff88;' +
+            'padding:9px 32px;font:bold 14px monospace;cursor:pointer;border-radius:6px;">是</button>' +
+            '<button id="wr-oc-no" style="background:#1a0000;color:#ff6666;border:1px solid #ff4444;' +
+            'padding:9px 32px;font:bold 14px monospace;cursor:pointer;border-radius:6px;">否</button>' +
+            '</div></div>';
+        overlay.style.display = 'flex';
 
-    function applyOGToScreen(entry, ogImg) {
-        var art = entry.art, w = entry.w, h = entry.h, mesh = entry.mesh;
-        var PW = Math.round(w * 110), PH = Math.round(h * 110);
-        var cv = document.createElement('canvas');
-        cv.width = PW; cv.height = PH;
-        var c = cv.getContext('2d');
-
-        // Cover-fit OG image
-        var ia = ogImg.naturalWidth / ogImg.naturalHeight;
-        var ca = PW / PH;
-        var sx, sy, sw, sh;
-        if (ia > ca) { sh = ogImg.naturalHeight; sw = sh * ca; sx = (ogImg.naturalWidth - sw) / 2; sy = 0; }
-        else         { sw = ogImg.naturalWidth; sh = sw / ca; sx = 0; sy = (ogImg.naturalHeight - sh) / 2; }
-        c.drawImage(ogImg, sx, sy, sw, sh, 0, 0, PW, PH);
-
-        // Dark overlay for legibility
-        var ov2 = c.createLinearGradient(0, 0, 0, PH);
-        ov2.addColorStop(0, 'rgba(0,0,0,0.45)');
-        ov2.addColorStop(1, 'rgba(0,5,20,0.85)');
-        c.fillStyle = ov2;
-        c.fillRect(0, 0, PW, PH);
-
-        // Top colour bar
-        c.fillStyle   = art.color;
-        c.globalAlpha = 0.8;
-        c.fillRect(0, 0, PW, Math.round(PH * 0.11));
-        c.globalAlpha = 1;
-
-        // Date
-        c.fillStyle    = 'rgba(255,255,255,0.92)';
-        c.font         = 'bold ' + Math.round(PH * 0.056) + 'px "Courier New",monospace';
-        c.textBaseline = 'middle';
-        c.textAlign    = 'left';
-        c.fillText(art.date.slice(0, 10), 10, PH * 0.055);
-
-        // Title
-        c.fillStyle    = '#fff';
-        var fs = Math.round(PH * 0.082);
-        c.font         = fs + 'px "Noto Sans TC",sans-serif';
-        c.textBaseline = 'top';
-        drawWrapped(c, art.title, 10, PH * 0.14, PW - 20, fs * 1.35, 5);
-
-        // Footer
-        c.fillStyle    = 'rgba(200,225,255,0.55)';
-        c.font         = Math.round(PH * 0.048) + 'px "Courier New",monospace';
-        c.textBaseline = 'bottom';
-        c.fillText('[ CLICK TO OPEN ]', 10, PH - 8);
-
-        // Update texture
-        var newTex = new THREE.CanvasTexture(cv);
-        if (mesh.material.map) mesh.material.map.dispose();
-        mesh.material.map          = newTex;
-        mesh.material.needsUpdate  = true;
+        document.getElementById('wr-oc-yes').onclick = function() {
+            overlay.style.display = 'none';
+            window.open(url, '_blank', 'noopener');
+        };
+        document.getElementById('wr-oc-no').onclick = function() {
+            overlay.style.display = 'none';
+        };
     }
 
 })();
