@@ -3337,13 +3337,16 @@
         c.textAlign = 'center';
         c.fillText(art.date.slice(0, 10), PW / 2, PH * 0.055);
 
-        // 大標題（置中）
+        // 大標題（上下左右置中）
         c.fillStyle = '#e8dfc8';
         var fs = Math.round(PH * 0.082);
         c.font = fs + 'px "Noto Sans TC", sans-serif';
         c.textBaseline = 'top';
         c.textAlign = 'center';
-        drawWrappedCenter(c, art.title, PW / 2, PH * 0.14, PW - 20, fs * 1.35, 5);
+        var lh = fs * 1.35;
+        var nLines = countWrappedLines(c, art.title, PW - 20, 5);
+        var titleY = (PH * 0.12 + PH * 0.88) / 2 - (nLines * lh) / 2;
+        drawWrappedCenter(c, art.title, PW / 2, titleY, PW - 20, lh, 5);
 
         // 底部提示（置中）
         c.fillStyle = 'rgba(150,175,200,0.45)';
@@ -3363,6 +3366,19 @@
         c.globalAlpha = 1;
 
         return new THREE.CanvasTexture(cv);
+    }
+
+    function countWrappedLines(ctx, text, maxW, maxLines) {
+        var chars = text.split(''), line = '', n = 1;
+        for (var i = 0; i < chars.length; i++) {
+            var t = line + chars[i];
+            if (ctx.measureText(t).width > maxW && line.length) {
+                n++;
+                if (n >= maxLines) return maxLines;
+                line = chars[i];
+            } else { line = t; }
+        }
+        return n;
     }
 
     function drawWrapped(ctx, text, x, y, maxW, lh, maxLines) {
@@ -3565,7 +3581,7 @@
             });
             // 螢幕：左邊是文章終端機，右邊是工業力試煉
             var scrMat = (idx === 0)
-                ? new THREE.MeshBasicMaterial({ color: 0x001a08 })  // 固定深綠色（避免 canvas 黑屏問題）
+                ? new THREE.MeshBasicMaterial({ map: makeHoloTermTex() })  // 全息投影終端機
                 : new THREE.MeshBasicMaterial({ map: makeGameScreenTex() });
             var scrW = 2.8, scrH = 1.75;
             var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), scrMat);
@@ -3587,7 +3603,7 @@
             scene.add(frame);
             // 發光邊框條
             var frameGlow = new THREE.MeshBasicMaterial({
-                color: (idx === 0) ? 0x00ff88 : 0xff2266, transparent: true, opacity: 0.7
+                color: (idx === 0) ? 0x00ffcc : 0xff2266, transparent: true, opacity: 0.7
             });
             [[scrW + 0.12, 0.05, 0, (scrH + 0.1) / 2],
              [scrW + 0.12, 0.05, 0, -(scrH + 0.1) / 2],
@@ -3706,6 +3722,89 @@
     }
 
     // 遊戲螢幕紋理（右邊螢幕）
+    function makeHoloTermTex() {
+        var W = 560, H = 350;
+        var cv = document.createElement('canvas');
+        cv.width = W; cv.height = H;
+        var c = cv.getContext('2d');
+
+        // 深色背景
+        c.fillStyle = '#010c16';
+        c.fillRect(0, 0, W, H);
+
+        // 網格線（極細）
+        c.strokeStyle = 'rgba(0,220,180,0.07)';
+        c.lineWidth = 0.5;
+        for (var gx = 0; gx < W; gx += 40) {
+            c.beginPath(); c.moveTo(gx, 0); c.lineTo(gx, H); c.stroke();
+        }
+        for (var gy = 0; gy < H; gy += 40) {
+            c.beginPath(); c.moveTo(0, gy); c.lineTo(W, gy); c.stroke();
+        }
+
+        // 掃描線
+        for (var sy = 0; sy < H; sy += 4) {
+            c.fillStyle = 'rgba(0,255,200,0.025)';
+            c.fillRect(0, sy, W, 2);
+        }
+
+        // 頂部標籤
+        c.font = 'bold 11px "Courier New", monospace';
+        c.textAlign = 'center';
+        c.textBaseline = 'top';
+        c.fillStyle = 'rgba(0,255,200,0.45)';
+        c.fillText('\u25c8  I N T E L  T E R M I N A L  \u25c8', W / 2, 15);
+
+        // 主標題「文章終端機」— 多層疊加全息光暈
+        var mainY = H / 2 - 20;
+        [
+            { blur: 48, alpha: 0.07, size: 66 },
+            { blur: 22, alpha: 0.18, size: 63 },
+            { blur:  9, alpha: 0.50, size: 60 },
+            { blur:  0, alpha: 0.90, size: 60 }
+        ].forEach(function(p) {
+            c.shadowColor = '#00ffcc';
+            c.shadowBlur  = p.blur;
+            c.fillStyle   = 'rgba(0,255,200,' + p.alpha + ')';
+            c.font        = 'bold ' + p.size + 'px "Noto Sans TC", sans-serif';
+            c.textBaseline = 'middle';
+            c.textAlign   = 'center';
+            c.fillText('\u6587\u7ae0\u7d42\u7aef\u6a5f', W / 2, mainY);
+        });
+        c.shadowBlur = 0;
+
+        // 副標題「▶ 點擊開始使用」
+        c.font = 'bold 15px "Courier New", monospace';
+        c.textBaseline = 'middle';
+        c.textAlign = 'center';
+        c.fillStyle = 'rgba(0,210,180,0.80)';
+        c.shadowColor = '#00ffcc'; c.shadowBlur = 10;
+        c.fillText('\u25b6  \u9ede\u64ca\u958b\u59cb\u4f7f\u7528', W / 2, mainY + 55);
+        c.shadowBlur = 0;
+
+        // 四角裝飾
+        var cs = 24;
+        c.strokeStyle = 'rgba(0,255,200,0.55)';
+        c.lineWidth = 1.5;
+        [[0, 0, 1, 1], [W, 0, -1, 1], [0, H, 1, -1], [W, H, -1, -1]].forEach(function(e) {
+            c.beginPath();
+            c.moveTo(e[0] + e[2] * cs, e[1] + 1);
+            c.lineTo(e[0] + 1 * e[2], e[1] + 1);
+            c.lineTo(e[0] + 1 * e[2], e[1] + e[3] * cs);
+            c.stroke();
+        });
+
+        // 底部漸層發光條
+        var grad = c.createLinearGradient(W * 0.2, 0, W * 0.8, 0);
+        grad.addColorStop(0,   'rgba(0,255,200,0)');
+        grad.addColorStop(0.5, 'rgba(0,255,200,0.5)');
+        grad.addColorStop(1,   'rgba(0,255,200,0)');
+        c.fillStyle = grad;
+        c.fillRect(W * 0.2, H - 5, W * 0.6, 2);
+
+        return new THREE.CanvasTexture(cv);
+    }
+
     function makeGameScreenTex() {
         var cv = document.createElement('canvas');
         cv.width = 512; cv.height = 320;
@@ -4293,7 +4392,7 @@
         if (!detailEl) return;
 
         if (listEl) listEl.style.display = 'none';
-        detailEl.style.display = '';
+        detailEl.style.display = 'block';
         if (footEl) footEl.textContent = '◄ 點 [返回] 回列表　·　ESC 關閉';
 
         termPointGlobeTo(art);
