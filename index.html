@@ -1393,6 +1393,86 @@
         }
         #wr-article-panel::-webkit-scrollbar { width: 4px; }
         #wr-article-panel::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 2px; }
+
+        /* ── 文章終端機 HTML overlay ─────────────────────────────────── */
+        #wr-terminal-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 20;
+            background: rgba(0,0,0,0.88);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+        #wr-term-panel {
+            width: min(700px, 95vw);
+            max-height: 88vh;
+            margin: 4vh auto 0;
+            background: #0a1e10;
+            border: 1.5px solid #00cc55;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,255,100,0.18), 0 0 0 1px rgba(0,200,80,0.25);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Courier New', monospace;
+        }
+        #wr-term-hdr {
+            background: #00aa55;
+            padding: 7px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        #wr-term-hdr-title {
+            color: #002b10;
+            font: bold 14px monospace;
+            flex: 1;
+            white-space: nowrap;
+        }
+        #wr-term-tabs { display: flex; gap: 4px; }
+        #wr-term-tabs button {
+            padding: 3px 10px;
+            font: bold 11px monospace;
+            cursor: pointer;
+            border: 1px solid rgba(0,80,30,0.7);
+            border-radius: 3px;
+            background: #1a5c35;
+            color: #aaffcc;
+        }
+        #wr-term-tabs button.wrt-active { background: #fff; color: #003318; border-color: #003318; }
+        #wr-term-close {
+            background: #c0392b; color: #fff; border: none;
+            padding: 4px 10px; font: bold 11px monospace; cursor: pointer; border-radius: 4px;
+            flex-shrink: 0;
+        }
+        #wr-term-list {
+            flex: 1; overflow-y: auto; min-height: 0;
+            scrollbar-width: thin; scrollbar-color: #00aa55 #0a1e10;
+        }
+        #wr-term-list::-webkit-scrollbar { width: 7px; }
+        #wr-term-list::-webkit-scrollbar-track { background: #0a1e10; }
+        #wr-term-list::-webkit-scrollbar-thumb { background: #00aa55; border-radius: 4px; }
+        .wrt-row {
+            display: flex; align-items: center; padding: 7px 10px; gap: 8px;
+            cursor: pointer; border-bottom: 0.5px solid rgba(0,200,80,0.2);
+        }
+        .wrt-row:hover, .wrt-row:focus { background: rgba(0,255,100,0.11); outline: none; }
+        .wrt-badge {
+            flex-shrink: 0; width: 22px; height: 16px; border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            font: bold 9px monospace; color: #fff;
+        }
+        .wrt-title { flex: 1; color: #ccffee; font: 13px/1.4 monospace; }
+        .wrt-date { flex-shrink: 0; color: #336644; font: 10px monospace; white-space: nowrap; }
+        #wr-term-detail {
+            display: none; flex: 1; overflow-y: auto; padding: 14px; min-height: 0;
+        }
+        #wr-term-foot {
+            background: #0a2015; padding: 5px 10px;
+            border-top: 1px solid #00cc66; color: #aaffcc; font: 11px monospace; flex-shrink: 0;
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -2721,6 +2801,19 @@
     </div>
     <div id="wr-vjoy-base" aria-hidden="true"></div>
     <div id="wr-vjoy-knob" aria-hidden="true"></div>
+    <!-- 文章終端機 overlay（HTML 面板，點擊左桌螢幕開啟） -->
+    <div id="wr-terminal-overlay">
+        <div id="wr-term-panel">
+            <div id="wr-term-hdr">
+                <span id="wr-term-hdr-title">[ INTEL TERMINAL ]</span>
+                <div id="wr-term-tabs"></div>
+                <button id="wr-term-close">✕ 關閉</button>
+            </div>
+            <div id="wr-term-list"></div>
+            <div id="wr-term-detail"></div>
+            <div id="wr-term-foot">共 0 篇</div>
+        </div>
+    </div>
 </div>
 
 <!-- Three.js (3D 戰情室用，與 globe.gl 內部的 Three.js 互相獨立) -->
@@ -2755,19 +2848,13 @@
     var globeDragging = false, globeDragLast = null;
     // 橫屏虛擬搖桿 + 視角觸控
     var vrJoy = { active: false, id: -1, baseX: 0, baseY: 0, nx: 0, ny: 0, maxR: 44 };
-    var vrLookId = -1, vrLookLast = null;
+    var vrLookId = -1, vrLookLast = null, vrLookStart = null;
 
-    // ── 終端機互動 UI ──────────────────────────────────────────────
-    var TERM_W = 512, TERM_H = 320, TERM_HDR_H = 38, TERM_FOOT_H = 35;
-    var TERM_ROW_H = 34, TERM_SCR_W = 14;
+    // ── 終端機（3D 桌面螢幕 mesh + 地球 geo-lerp 狀態）──────────────
     var termUI = {
-        articles: [], filter: 'all', scroll: 0, maxScroll: 0,
-        hovered: -1, opened: null,
-        scrDragging: false, scrDragStartScroll: 0,
-        touchActive: false, touchStartY: 0,
-        mesh: null, tex: null, cv: null, ctx: null,
+        mesh: null,                             // 左桌螢幕 mesh（raycasting 用）
+        touchActive: false, touchStartY: 0,    // 觸控點擊偵測
         geoTargetX: 0, geoTargetY: 0, geoLerping: false,
-        dirty: true, lastUV: null,
     };
     // 地理位置關鍵字對照（用於準心懸停時旋轉地球）
     var WR_HOTSPOT_GEO = [
@@ -2792,7 +2879,11 @@
 
     document.addEventListener('keydown', function(e) {
         keys[e.code] = true;
-        if (e.code === 'Escape' && overlay.style.display !== 'none') exitWarRoom();
+        if (e.code === 'Escape' && overlay.style.display !== 'none') {
+            var tov = document.getElementById('wr-terminal-overlay');
+            if (tov && tov.style.display !== 'none') { closeTerminalOverlay(); return; }
+            exitWarRoom();
+        }
     });
     document.addEventListener('keyup', function(e) { keys[e.code] = false; });
 
@@ -2853,7 +2944,6 @@
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', function() {
             globeDragging = false; globeDragLast = null;
-            termUI.scrDragging = false;
         });
 
         var c = canvas;
@@ -2870,46 +2960,9 @@
                 if (hits.length) { globeDragging = true; globeDragLast = { x: e.clientX, y: e.clientY }; e.preventDefault(); }
             }
         });
-        // 指標鎖定模式：滑桿拖拽（準心在滑桿上按下左鍵）
-        c.addEventListener('mousedown', function(e) {
-            if (document.pointerLockElement === c && termUI.lastUV && termUI.opened === null) {
-                var spx = termUI.lastUV.x * TERM_W;
-                var spy = (1 - termUI.lastUV.y) * TERM_H;
-                if (spx >= TERM_W - TERM_SCR_W && spy >= TERM_HDR_H && spy < TERM_H - TERM_FOOT_H) {
-                    termUI.scrDragging = true;
-                    termUI.scrDragStartScroll = termUI.scroll;
-                    e.stopPropagation();
-                }
-            }
-        });
         c.addEventListener('touchstart', onTouchStart, { passive: true });
         c.addEventListener('touchmove',  onTouchMove,  { passive: false });
         c.addEventListener('touchend',   onTouchEnd,   { passive: true });
-
-        // 終端機滑鼠滾輪捲動
-        c.addEventListener('wheel', function(e) {
-            if (!termUI.mesh) return;
-            if (document.pointerLockElement === c) {
-                if (termUI.lastUV && termUI.opened === null) {
-                    termUI.scroll = Math.max(0, Math.min(termUI.maxScroll,
-                        termUI.scroll + e.deltaY * 0.6));
-                    termUI.dirty = true;
-                    e.preventDefault();
-                }
-            } else {
-                var rect = c.getBoundingClientRect();
-                var mx = ((e.clientX - rect.left) / rect.width)  * 2 - 1;
-                var my = -((e.clientY - rect.top)  / rect.height) * 2 + 1;
-                raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
-                var tw = raycaster.intersectObject(termUI.mesh);
-                if (tw.length) {
-                    termUI.scroll = Math.max(0, Math.min(termUI.maxScroll,
-                        termUI.scroll + e.deltaY * 0.6));
-                    termUI.dirty = true;
-                    e.preventDefault();
-                }
-            }
-        }, { passive: false });
 
         var mobileCtrl = document.getElementById('wr-mobile-controls');
         if (mobileCtrl) {
@@ -3493,47 +3546,8 @@
                 l.position.set(xz[0] + leg[0], 0.45, xz[1] + leg[1]);
                 scene.add(l);
             });
-            // 螢幕：左邊是互動文章終端機，右邊是工業力試煉遊戲
-            var scrTex;
-            if (idx === 0) {
-                // 初始化互動終端機 UI
-                termUI.cv = document.createElement('canvas');
-                termUI.cv.width = TERM_W; termUI.cv.height = TERM_H;
-                termUI.ctx = termUI.cv.getContext('2d');
-                // 解析全部文章
-                termUI.articles = [];
-                document.querySelectorAll('.news-card').forEach(function(card) {
-                    var aEl = card.querySelector('a');
-                    var dtEl = card.querySelector('.date');
-                    var bdEl = card.querySelector('.news-badge');
-                    if (!aEl || !aEl.href) return;
-                    var color = '#e0c050', cat = 'other';
-                    if (bdEl) {
-                        if (bdEl.classList.contains('military'))         { color = '#c0392b'; cat = 'military'; }
-                        else if (bdEl.classList.contains('geopolitics')) { color = '#2980b9'; cat = 'geo'; }
-                        else if (bdEl.classList.contains('analysis'))    { color = '#27ae60'; cat = 'analysis'; }
-                    }
-                    termUI.articles.push({
-                        title: aEl.textContent.trim(), url: aEl.href,
-                        date: dtEl ? dtEl.textContent.trim() : '',
-                        color: color, cat: cat
-                    });
-                });
-                updateTermMaxScroll();
-                // 先繪製再建立紋理，確保第一幀有內容
-                drawTerminal();
-                termUI.tex = new THREE.CanvasTexture(termUI.cv);
-                // iOS Safari / NPOT 相容性設定
-                termUI.tex.generateMipmaps = false;
-                termUI.tex.wrapS = THREE.ClampToEdgeWrapping;
-                termUI.tex.wrapT = THREE.ClampToEdgeWrapping;
-                termUI.tex.minFilter = THREE.LinearFilter;
-                termUI.tex.magFilter = THREE.LinearFilter;
-                termUI.tex.needsUpdate = true;
-                scrTex = termUI.tex;
-            } else {
-                scrTex = makeGameScreenTex();
-            }
+            // 螢幕：左邊是文章終端機（點擊開啟 HTML overlay），右邊是工業力試煉
+            var scrTex = (idx === 0) ? makeTerminalTex() : makeGameScreenTex();
             var scrW = 2.8, scrH = 1.75;
             var scr = new THREE.Mesh(
                 new THREE.PlaneGeometry(scrW, scrH),
@@ -3543,7 +3557,7 @@
             scr.rotation.x = -0.25;
             if (idx === 0) {
                 termUI.mesh = scr;  // 互動終端機，不設 url（內部處理點擊）
-                scr.userData.title = '文章終端機';
+                scr.userData.title = '文章終端機 ── 點擊開啟';
             } else {
                 scr.userData.url   = window.location.href.replace(/[^\/]*$/, '') + 'game.html';
                 scr.userData.title = '工業力試煉';
@@ -3635,19 +3649,7 @@
         return new THREE.CanvasTexture(cv);
     }
 
-    // ── 終端機輔助函式 ────────────────────────────────────────────
-
-    function getTermRows() {
-        if (termUI.filter === 'all') return termUI.articles;
-        return termUI.articles.filter(function(a) { return a.cat === termUI.filter; });
-    }
-
-    function updateTermMaxScroll() {
-        var arts = getTermRows();
-        var listH = TERM_H - TERM_HDR_H - TERM_FOOT_H;
-        termUI.maxScroll = Math.max(0, arts.length * TERM_ROW_H - listH);
-        termUI.scroll = Math.max(0, Math.min(termUI.maxScroll, termUI.scroll));
-    }
+    // ── 終端機地理位置輔助 ───────────────────────────────────────
 
     // Lat/Lng → globeGroup rotation (帶入玩家正面方向 +Z)
     function geoToGlobeRot(lat, lng) {
@@ -3684,259 +3686,6 @@
         termUI.geoTargetX = rot.x;
         termUI.geoTargetY = rot.y;
         termUI.geoLerping = true;
-    }
-
-    // 懸停更新（每幀由 animate 呼叫）
-    function updateTermHover(uv) {
-        if (termUI.opened !== null) { termUI.hovered = -1; return; }
-        var py = (1 - uv.y) * TERM_H;
-        var listY = TERM_HDR_H + 1;
-        var listH = TERM_H - TERM_HDR_H - TERM_FOOT_H;
-        if (py >= listY && py < listY + listH) {
-            var rowIdx = Math.floor((py - listY + termUI.scroll) / TERM_ROW_H);
-            var arts = getTermRows();
-            termUI.hovered = (rowIdx >= 0 && rowIdx < arts.length) ? rowIdx : -1;
-            if (termUI.hovered >= 0) termPointGlobeTo(arts[termUI.hovered]);
-        } else {
-            termUI.hovered = -1;
-        }
-    }
-
-    // 點擊互動（onCanvasClick / touch 呼叫）
-    function termHandleClick(uv) {
-        var px  = uv.x * TERM_W;
-        var py  = (1 - uv.y) * TERM_H;
-        var HDR = TERM_HDR_H;
-        var listH = TERM_H - HDR - TERM_FOOT_H;
-
-        // 頭部篩選標籤
-        if (py < HDR) {
-            var tabs = [
-                { key: 'all', x: 185 }, { key: 'military', x: 249 },
-                { key: 'geo', x: 313 }, { key: 'analysis',  x: 377 },
-            ];
-            for (var i = 0; i < tabs.length; i++) {
-                if (px >= tabs[i].x && px < tabs[i].x + 58) {
-                    termUI.filter = tabs[i].key;
-                    termUI.scroll = 0; termUI.hovered = -1; termUI.opened = null;
-                    updateTermMaxScroll();
-                    termUI.dirty = true;
-                    return;
-                }
-            }
-            return;
-        }
-
-        // 詳情視圖
-        if (termUI.opened !== null) {
-            // [返回] 按鈕：x=6-86, y=HDR+8 ~ HDR+32
-            if (px >= 6 && px <= 86 && py >= HDR + 8 && py <= HDR + 32) {
-                termUI.opened = null; termUI.dirty = true; return;
-            }
-            // 開啟全文按鈕（底部）
-            var btnY = HDR + listH - 52;
-            if (py >= btnY && py <= btnY + 38 && px >= 10 && px <= TERM_W - 10) {
-                var art = getTermRows()[termUI.opened];
-                if (art) window.open(art.url, '_blank');
-                return;
-            }
-            return;
-        }
-
-        // 列表視圖：點文章列
-        if (py >= HDR + 1 && py < HDR + listH) {
-            var rowIdx = Math.floor((py - HDR - 1 + termUI.scroll) / TERM_ROW_H);
-            var arts = getTermRows();
-            if (rowIdx >= 0 && rowIdx < arts.length) {
-                termUI.opened = rowIdx;
-                termPointGlobeTo(arts[rowIdx]);
-                termUI.dirty = true;
-            }
-        }
-    }
-
-    // ── 終端機主繪製函式 ──────────────────────────────────────────
-    function drawTerminal() {
-        var ctx = termUI.ctx;
-        if (!ctx) return;
-        // 每次繪製後立即標記紋理需要更新
-        if (termUI.tex) termUI.tex.needsUpdate = true;
-        var W = TERM_W, H = TERM_H;
-        var HDR = TERM_HDR_H, FOOT = TERM_FOOT_H;
-        var listH = H - HDR - FOOT;
-
-        // 背景
-        ctx.fillStyle = '#0d2918';
-        ctx.fillRect(0, 0, W, H);
-        // 掃描線
-        ctx.fillStyle = 'rgba(0,255,120,0.06)';
-        for (var sl = 0; sl < H; sl += 4) ctx.fillRect(0, sl, W, 2);
-
-        // 頭部條（亮綠）
-        ctx.fillStyle = '#00aa55';
-        ctx.fillRect(0, 0, W, HDR);
-        ctx.fillStyle = '#000';
-        ctx.font = 'bold 16px monospace';
-        ctx.fillText('[ INTEL TERMINAL ]', 8, 26);
-
-        // 篩選標籤
-        var tabDefs = [
-            { key: 'all',      label: '全部', x: 185 },
-            { key: 'military', label: '軍事', x: 249 },
-            { key: 'geo',      label: '地緣', x: 313 },
-            { key: 'analysis', label: '分析', x: 377 },
-        ];
-        tabDefs.forEach(function(tab) {
-            var active = termUI.filter === tab.key;
-            ctx.fillStyle = active ? '#ffffff' : '#1a5c35';
-            ctx.fillRect(tab.x, 6, 57, 26);
-            ctx.fillStyle = active ? '#003318' : '#aaffcc';
-            ctx.font = 'bold 12px monospace';
-            ctx.fillText(tab.label, tab.x + 10, 24);
-        });
-
-        // 分隔線
-        ctx.fillStyle = '#00cc55'; ctx.fillRect(0, HDR, W, 1);
-
-        if (termUI.opened !== null) {
-            _drawDetail(ctx, HDR, listH);
-        } else {
-            _drawList(ctx, HDR, listH);
-        }
-
-        // 頁腳
-        ctx.fillStyle = '#0a2015'; ctx.fillRect(0, H - FOOT, W, FOOT);
-        ctx.fillStyle = '#00cc66'; ctx.fillRect(0, H - FOOT, W, 1);
-        ctx.fillStyle = '#aaffcc'; ctx.font = '11px monospace';
-        if (termUI.opened !== null) {
-            ctx.fillText('◄ 點 [返回] 回列表  ·  [開啟全文] 在瀏覽器閱讀', 8, H - 10);
-        } else {
-            var arts = getTermRows();
-            ctx.fillText('共 ' + arts.length + ' 篇  ·  滾輪 / 觸控滑動 / 拖動右側滑桿翻頁', 8, H - 10);
-        }
-    }
-
-    function _drawList(ctx, HDR, listH) {
-        var SCR_W = TERM_SCR_W;
-        var listW = TERM_W - SCR_W;
-        var ROW = TERM_ROW_H;
-        var arts = getTermRows();
-        var listTop = HDR + 1;
-
-        ctx.save();
-        ctx.beginPath(); ctx.rect(0, listTop, listW, listH - 1); ctx.clip();
-
-        arts.forEach(function(art, i) {
-            var ry = listTop + i * ROW - termUI.scroll;
-            if (ry + ROW <= listTop || ry >= listTop + listH) return;
-            var isH = (termUI.hovered === i);
-
-            // 列背景
-            if (isH) {
-                ctx.fillStyle = 'rgba(0,255,100,0.18)';
-                ctx.fillRect(0, ry, listW, ROW);
-            } else if (i % 2 === 0) {
-                ctx.fillStyle = 'rgba(0,80,30,0.12)';
-                ctx.fillRect(0, ry, listW, ROW);
-            }
-
-            // 類別徽章
-            ctx.fillStyle = art.color;
-            ctx.fillRect(4, ry + 9, 26, 15);
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 8px "Courier New"';
-            var lbl = art.cat === 'military' ? '軍' : art.cat === 'geo' ? '地' : art.cat === 'analysis' ? '析' : '●';
-            ctx.fillText(lbl, 7, ry + 21);
-
-            // 標題
-            ctx.fillStyle = isH ? '#ffffff' : '#ccffee';
-            ctx.font = 'bold 13px sans-serif';
-            var title = art.title;
-            while (title.length > 3 && ctx.measureText(title).width > 300) title = title.slice(0, -1);
-            if (title.length < art.title.length) title += '…';
-            ctx.fillText(title, 38, ry + 22);
-
-            // 日期
-            ctx.fillStyle = '#336644'; ctx.font = '10px "Courier New"';
-            ctx.fillText(art.date, listW - 88, ry + 22);
-
-            // 懸停箭頭
-            if (isH) { ctx.fillStyle = '#00ff88'; ctx.font = '13px monospace'; ctx.fillText('▶', listW - 16, ry + 22); }
-
-            // 行分隔
-            ctx.strokeStyle = 'rgba(0,200,80,0.35)'; ctx.lineWidth = 0.5;
-            ctx.beginPath(); ctx.moveTo(4, ry + ROW - 1); ctx.lineTo(listW - 4, ry + ROW - 1); ctx.stroke();
-        });
-
-        ctx.restore();
-
-        // 滑桿
-        var trackH = listH - 2;
-        ctx.fillStyle = '#0a2015'; ctx.fillRect(TERM_W - SCR_W, listTop, SCR_W, trackH);
-        ctx.strokeStyle = '#004422'; ctx.lineWidth = 0.5;
-        ctx.strokeRect(TERM_W - SCR_W, listTop, SCR_W, trackH);
-        var totalH = arts.length * ROW;
-        if (totalH > listH && termUI.maxScroll > 0) {
-            var thumbH = Math.max(22, Math.round(trackH * listH / totalH));
-            var thumbY = Math.round((termUI.scroll / termUI.maxScroll) * (trackH - thumbH));
-            ctx.fillStyle = termUI.scrDragging ? '#00ff88' : '#00aa55';
-            ctx.fillRect(TERM_W - SCR_W + 2, listTop + thumbY, SCR_W - 4, thumbH);
-            ctx.fillStyle = '#00ff88';
-            for (var gi = 0; gi < 3; gi++)
-                ctx.fillRect(TERM_W - SCR_W + 3, listTop + thumbY + Math.floor(thumbH / 2) - 3 + gi * 3, SCR_W - 6, 1);
-        }
-    }
-
-    function _drawDetail(ctx, HDR, listH) {
-        var arts = getTermRows();
-        var art = arts[termUI.opened];
-        if (!art) { termUI.opened = null; return; }
-
-        // [返回] 按鈕
-        ctx.fillStyle = '#001f0d'; ctx.fillRect(6, HDR + 8, 80, 24);
-        ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1; ctx.strokeRect(6, HDR + 8, 80, 24);
-        ctx.fillStyle = '#00ff88'; ctx.font = 'bold 11px "Courier New"';
-        ctx.fillText('◄ 返回', 16, HDR + 25);
-
-        // 類別徽章
-        ctx.fillStyle = art.color; ctx.fillRect(100, HDR + 8, 72, 24);
-        ctx.fillStyle = '#fff'; ctx.font = 'bold 10px "Courier New"';
-        var catName = { military: '軍事', geo: '地緣政治', analysis: '深度分析' }[art.cat] || '其他';
-        ctx.fillText(catName, 108, HDR + 25);
-
-        // 日期
-        ctx.fillStyle = '#00aa55'; ctx.font = '10px "Courier New"';
-        ctx.fillText(art.date, 184, HDR + 25);
-
-        ctx.fillStyle = '#004422'; ctx.fillRect(0, HDR + 38, TERM_W, 1);
-
-        // 標題（自動換行）
-        ctx.fillStyle = '#aaffd0'; ctx.font = 'bold 15px sans-serif';
-        var maxW = TERM_W - 20;
-        var ty = HDR + 62, line = '';
-        art.title.split('').forEach(function(ch) {
-            var test = line + ch;
-            if (ctx.measureText(test).width > maxW) {
-                ctx.fillText(line, 10, ty); ty += 22; line = ch;
-            } else { line = test; }
-        });
-        if (line) { ctx.fillText(line, 10, ty); ty += 22; }
-
-        ty += 8;
-        ctx.fillStyle = '#003d1a'; ctx.fillRect(0, ty, TERM_W, 1); ty += 14;
-        ctx.fillStyle = '#005a25'; ctx.font = '10px "Courier New"';
-        var urlStr = art.url; if (urlStr.length > 62) urlStr = urlStr.substring(0, 62) + '…';
-        ctx.fillText('URL: ' + urlStr, 10, ty);
-
-        // 開啟全文按鈕
-        var btnY = HDR + listH - 52;
-        var bg2 = ctx.createLinearGradient(10, btnY, TERM_W - 10, btnY + 38);
-        bg2.addColorStop(0, '#004420'); bg2.addColorStop(1, '#002a14');
-        ctx.fillStyle = bg2; ctx.fillRect(10, btnY, TERM_W - 20, 38);
-        ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1.5; ctx.strokeRect(10, btnY, TERM_W - 20, 38);
-        ctx.fillStyle = '#00ff88'; ctx.font = 'bold 14px "Courier New"';
-        ctx.textAlign = 'center';
-        ctx.fillText('▶  開啟全文  OPEN ARTICLE', TERM_W / 2, btnY + 24);
-        ctx.textAlign = 'left';
     }
 
     // 遊戲螢幕紋理（右邊螢幕）
@@ -4045,13 +3794,7 @@
         if (overlay.style.display === 'none') return;
         var c = document.getElementById('warroom-canvas');
         if (document.pointerLockElement === c) {
-            // 滑桿拖拽（優先）
-            if (termUI.scrDragging && termUI.maxScroll > 0) {
-                var trackH = TERM_H - TERM_HDR_H - TERM_FOOT_H;
-                termUI.scroll = Math.max(0, Math.min(termUI.maxScroll,
-                    termUI.scroll + e.movementY * (termUI.maxScroll / trackH) * 2.5));
-                termUI.dirty = true;
-            } else if (keys['KeyG'] && scene && scene.userData.globeGroup) {
+            if (keys['KeyG'] && scene && scene.userData.globeGroup) {
                 // 按住 G 鍵時：準心旋轉地球
                 scene.userData.globeGroup.rotation.y += e.movementX * 0.005;
                 scene.userData.globeGroup.rotation.x += e.movementY * 0.005;
@@ -4100,8 +3843,8 @@
         var hits = raycaster.intersectObjects(panelMeshes);
         if (hits.length) {
             var h = hits[0];
-            if (h.object === termUI.mesh && h.uv) {
-                termHandleClick(h.uv);  // 終端機互動
+            if (h.object === termUI.mesh) {
+                openTerminalOverlay();  // 左桌終端機 → 開啟 HTML 面板
             } else if (h.object.userData.url) {
                 window.open(h.object.userData.url, '_blank');
             }
@@ -4140,9 +3883,10 @@
                     if (vb) { vb.style.left = t.clientX + 'px'; vb.style.top = t.clientY + 'px'; vb.style.display = 'block'; }
                     if (vk) { vk.style.left = t.clientX + 'px'; vk.style.top = t.clientY + 'px'; vk.style.display = 'block'; }
                 } else if (vrLookId === -1) {
-                    // 右半邊（或第二指）→ 視角
+                    // 右半邊（或第二指）→ 視角；記錄起始點以偵測「輕點」
                     vrLookId = t.identifier;
-                    vrLookLast = { x: t.clientX, y: t.clientY };
+                    vrLookLast  = { x: t.clientX, y: t.clientY };
+                    vrLookStart = { x: t.clientX, y: t.clientY };
                 }
             } else {
                 // 直屏：單點舊邏輯
@@ -4168,10 +3912,7 @@
         for (var ti = 0; ti < e.changedTouches.length; ti++) {
             var t = e.changedTouches[ti];
             if (termUI.touchActive) {
-                var dy0 = t.clientY - (touchPrev ? touchPrev.y : t.clientY);
-                termUI.scroll = Math.max(0, Math.min(termUI.maxScroll,
-                    termUI.scroll - dy0 * 1.5));
-                termUI.dirty = true;
+                // 終端機已改為 HTML overlay，觸控滑動不需要 canvas scroll
                 touchPrev = { x: t.clientX, y: t.clientY };
                 continue;
             }
@@ -4223,12 +3964,16 @@
                 if (vk) vk.style.display = 'none';
                 continue;
             }
-            // 視角觸控結束
+            // 視角觸控結束：若移動距離 < 14px 視為「輕點」，繼續做物件偵測
             if (t.identifier === vrLookId) {
-                vrLookId = -1; vrLookLast = null;
-                continue;
+                var ldx = vrLookStart ? t.clientX - vrLookStart.x : 0;
+                var ldy = vrLookStart ? t.clientY - vrLookStart.y : 0;
+                var wasLookTap = Math.abs(ldx) < 14 && Math.abs(ldy) < 14;
+                vrLookId = -1; vrLookLast = null; vrLookStart = null;
+                if (!wasLookTap) continue;  // 拖動視角 → 不觸發點擊
+                // 輕點 → 繼續執行下方物件偵測
             }
-            // 終端機觸控
+            // 終端機 / 面板 觸控點擊
             var wasTerm = termUI.touchActive;
             termUI.touchActive = false;
             var moveDist = Math.abs(t.clientY - termUI.touchStartY);
@@ -4240,7 +3985,7 @@
                 raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
                 if (wasTerm && moveDist < 12 && termUI.mesh) {
                     var tHits = raycaster.intersectObject(termUI.mesh);
-                    if (tHits.length && tHits[0].uv) { termHandleClick(tHits[0].uv); continue; }
+                    if (tHits.length) { openTerminalOverlay(); continue; }
                 }
                 if (!wasTerm) {
                     // 熱點
@@ -4253,9 +3998,9 @@
                         }
                     }
                     var hits = raycaster.intersectObjects(panelMeshes);
-                    if (hits.length && hits[0].object !== termUI.mesh && hits[0].object.userData.url) {
-                        window.open(hits[0].object.userData.url, '_blank');
-                        continue;
+                    if (hits.length) {
+                        if (hits[0].object === termUI.mesh) { openTerminalOverlay(); continue; }
+                        if (hits[0].object.userData.url) { window.open(hits[0].object.userData.url, '_blank'); continue; }
                     }
                 }
             }
@@ -4352,7 +4097,7 @@
         // HUD 座標
         if (coordsEl) coordsEl.textContent = 'SECTOR ' + Math.round(px) + ' , ' + Math.round(pz);
 
-        // Raycasting hover
+        // Raycasting hover（面板縮放 + tooltip）
         var c = document.getElementById('warroom-canvas');
         var rv = (document.pointerLockElement === c)
             ? new THREE.Vector2(0, 0)
@@ -4361,46 +4106,170 @@
         var hits = raycaster.intersectObjects(panelMeshes);
         if (hits.length) {
             var m = hits[0].object;
-            if (m === termUI.mesh) {
-                // 終端機：更新 hover 列，不縮放螢幕
-                if (hits[0].uv) {
-                    var prevH = termUI.hovered;
-                    updateTermHover(hits[0].uv);
-                    termUI.lastUV = { x: hits[0].uv.x, y: hits[0].uv.y };
-                    if (termUI.hovered !== prevH) termUI.dirty = true;
-                }
-                if (hoveredMesh && hoveredMesh !== m) { hoveredMesh.scale.setScalar(1.0); hoveredMesh = null; }
-                if (tooltipEl) tooltipEl.style.display = 'none';
-            } else {
-                if (hoveredMesh !== m) {
-                    if (hoveredMesh) hoveredMesh.scale.setScalar(1.0);
-                    hoveredMesh = m;
-                    m.scale.setScalar(1.07);
-                    if (tooltipEl) { tooltipEl.style.display = 'block'; tooltipEl.textContent = m.userData.title; }
-                }
-                if (termUI.lastUV) {
-                    termUI.lastUV = null;
-                    if (termUI.hovered !== -1) { termUI.hovered = -1; termUI.dirty = true; }
-                }
+            if (hoveredMesh !== m) {
+                if (hoveredMesh) hoveredMesh.scale.setScalar(1.0);
+                hoveredMesh = m;
+                m.scale.setScalar(1.07);
+                if (tooltipEl) { tooltipEl.style.display = 'block'; tooltipEl.textContent = m.userData.title || ''; }
             }
         } else {
             if (hoveredMesh) { hoveredMesh.scale.setScalar(1.0); hoveredMesh = null; }
             if (tooltipEl) tooltipEl.style.display = 'none';
-            if (termUI.lastUV) {
-                termUI.lastUV = null;
-                if (termUI.hovered !== -1) { termUI.hovered = -1; termUI.dirty = true; }
-            }
         }
-
-        // 終端機 dirty redraw
-        if (termUI.dirty && termUI.ctx) {
-            drawTerminal();
-            termUI.dirty = false;
-        }
-        // 每幀強制上傳紋理（iOS Safari 相容）
-        if (termUI.tex) termUI.tex.needsUpdate = true;
 
         renderer.render(scene, camera);
+    }
+
+    // ── 文章終端機 HTML overlay ───────────────────────────────────
+
+    function openTerminalOverlay() {
+        var ov = document.getElementById('wr-terminal-overlay');
+        if (!ov) return;
+
+        // 收集所有文章
+        var articles = [];
+        document.querySelectorAll('.news-card').forEach(function(card) {
+            var aEl = card.querySelector('a');
+            var dtEl = card.querySelector('.date');
+            var bdEl = card.querySelector('.news-badge');
+            if (!aEl || !aEl.href) return;
+            var color = '#e0c050', cat = 'other';
+            if (bdEl) {
+                if (bdEl.classList.contains('military'))         { color = '#c0392b'; cat = 'military'; }
+                else if (bdEl.classList.contains('geopolitics')) { color = '#2980b9'; cat = 'geo'; }
+                else if (bdEl.classList.contains('analysis'))    { color = '#27ae60'; cat = 'analysis'; }
+            }
+            articles.push({
+                title: aEl.textContent.trim(), url: aEl.href,
+                date:  dtEl ? dtEl.textContent.trim() : '',
+                color: color, cat: cat
+            });
+        });
+
+        ov._articles = articles;
+        ov._filter   = 'all';
+
+        // 關閉按鈕 + 點擊半透明背景也可關閉
+        var closeBtn = document.getElementById('wr-term-close');
+        if (closeBtn) { closeBtn.onclick = closeTerminalOverlay; }
+        ov.onclick = function(e) { if (e.target === ov) closeTerminalOverlay(); };
+
+        _termRenderTabs(ov);
+        _termRenderList(ov);
+        ov.style.display = 'block';
+    }
+
+    function closeTerminalOverlay() {
+        var ov = document.getElementById('wr-terminal-overlay');
+        if (ov) ov.style.display = 'none';
+    }
+
+    function _termRenderTabs(ov) {
+        var tabDefs = [
+            { key: 'all',      label: '全部' },
+            { key: 'military', label: '軍事' },
+            { key: 'geo',      label: '地緣' },
+            { key: 'analysis', label: '分析' },
+        ];
+        var el = document.getElementById('wr-term-tabs');
+        if (!el) return;
+        el.innerHTML = '';
+        tabDefs.forEach(function(tab) {
+            var btn = document.createElement('button');
+            btn.textContent = tab.label;
+            if (ov._filter === tab.key) btn.className = 'wrt-active';
+            btn.addEventListener('click', function() {
+                ov._filter = tab.key;
+                _termRenderTabs(ov);
+                _termRenderList(ov);
+            });
+            el.appendChild(btn);
+        });
+    }
+
+    function _termRenderList(ov) {
+        var listEl   = document.getElementById('wr-term-list');
+        var detailEl = document.getElementById('wr-term-detail');
+        var footEl   = document.getElementById('wr-term-foot');
+        if (!listEl) return;
+
+        listEl.style.display   = '';
+        if (detailEl) detailEl.style.display = 'none';
+
+        var arts = ov._filter === 'all'
+            ? ov._articles
+            : ov._articles.filter(function(a) { return a.cat === ov._filter; });
+
+        if (footEl) footEl.textContent = '共 ' + arts.length + ' 篇　·　點擊標題展開詳情　·　ESC 關閉';
+
+        listEl.innerHTML = '';
+        var LABELS = { military: '軍', geo: '地', analysis: '析' };
+
+        arts.forEach(function(art) {
+            var row = document.createElement('div');
+            row.className = 'wrt-row';
+            row.tabIndex  = 0;
+
+            var badge = document.createElement('span');
+            badge.className          = 'wrt-badge';
+            badge.style.background   = art.color;
+            badge.textContent        = LABELS[art.cat] || '●';
+
+            var titleEl = document.createElement('span');
+            titleEl.className   = 'wrt-title';
+            titleEl.textContent = art.title;
+
+            var dateEl = document.createElement('span');
+            dateEl.className   = 'wrt-date';
+            dateEl.textContent = art.date;
+
+            row.appendChild(badge);
+            row.appendChild(titleEl);
+            row.appendChild(dateEl);
+
+            // 滑鼠懸停 → 地球旋轉至關聯地區
+            row.addEventListener('mouseenter', function() { termPointGlobeTo(art); });
+
+            // 點擊 → 詳情
+            row.addEventListener('click', function() { _termShowDetail(ov, art); });
+            row.addEventListener('keydown', function(e) { if (e.key === 'Enter') _termShowDetail(ov, art); });
+
+            listEl.appendChild(row);
+        });
+    }
+
+    function _termShowDetail(ov, art) {
+        var listEl   = document.getElementById('wr-term-list');
+        var detailEl = document.getElementById('wr-term-detail');
+        var footEl   = document.getElementById('wr-term-foot');
+        if (!detailEl) return;
+
+        if (listEl) listEl.style.display = 'none';
+        detailEl.style.display = '';
+        if (footEl) footEl.textContent = '◄ 點 [返回] 回列表　·　[開啟全文] 在瀏覽器閱讀';
+
+        termPointGlobeTo(art);
+
+        var catName = { military: '軍事', geo: '地緣政治', analysis: '深度分析' }[art.cat] || '其他';
+        var safeTitle = art.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        var safeUrl   = art.url.replace(/"/g,'%22');
+
+        detailEl.innerHTML =
+            '<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">' +
+            '<button id="wr-term-back" style="background:#001f0d;color:#00ff88;border:1px solid #00ff88;' +
+            'padding:4px 12px;font:bold 11px monospace;cursor:pointer;border-radius:4px;">◄ 返回</button>' +
+            '<span style="background:' + art.color + ';color:#fff;padding:3px 8px;font:bold 10px monospace;border-radius:3px;">' + catName + '</span>' +
+            '<span style="color:#00aa55;font:10px monospace;">' + art.date + '</span>' +
+            '</div>' +
+            '<h3 style="color:#ccffee;font:bold 14px/1.6 monospace;margin:0 0 14px;">' + safeTitle + '</h3>' +
+            '<p style="color:#336644;font:11px monospace;margin:0 0 14px;">（全文請前往原始連結閱讀）</p>' +
+            '<a href="' + safeUrl + '" target="_blank" rel="noopener" ' +
+            'style="display:block;background:linear-gradient(135deg,#003a1a,#005c2a);color:#00ff88;' +
+            'text-decoration:none;padding:11px 16px;font:bold 13px monospace;' +
+            'border:1px solid #00ff88;border-radius:6px;text-align:center;">→ 開啟全文（外部連結）</a>';
+
+        var back = document.getElementById('wr-term-back');
+        if (back) back.addEventListener('click', function() { _termRenderList(ov); });
     }
 
 })();
