@@ -1394,25 +1394,29 @@
         #wr-article-panel::-webkit-scrollbar { width: 4px; }
         #wr-article-panel::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 2px; }
 
-        /* ── 文章終端機 HTML overlay ─────────────────────────────────── */
-        #wr-terminal-overlay {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 20;
-            background: rgba(0,0,0,0.88);
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
+        /* ── CSS3D in-scene terminal ────────────────────────────────── */
+        #wr-css3d {
+            /* overflow must NOT be hidden — would flatten CSS3D rendering context */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        #wr-css3d-cam {
+            transform-style: preserve-3d;
+            width: 100%; height: 100%;
+            visibility: hidden;
         }
         #wr-term-panel {
-            width: min(700px, 95vw);
-            max-height: 88vh;
-            margin: 4vh auto 0;
+            /* Fixed pixel size — CSS3D scale maps 560px → 2.8 world units */
+            position: absolute; left: 0; top: 0;
+            width: 560px; height: 350px;
+            transform-origin: 50% 50%;
+            pointer-events: auto;
+            backface-visibility: hidden;
             background: #0a1e10;
             border: 1.5px solid #00cc55;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,255,100,0.18), 0 0 0 1px rgba(0,200,80,0.25);
+            box-shadow: 0 0 30px rgba(0,255,100,0.22), 0 0 0 1px rgba(0,200,80,0.3);
             display: flex;
             flex-direction: column;
             font-family: 'Courier New', monospace;
@@ -2801,17 +2805,19 @@
     </div>
     <div id="wr-vjoy-base" aria-hidden="true"></div>
     <div id="wr-vjoy-knob" aria-hidden="true"></div>
-    <!-- 文章終端機 overlay（HTML 面板，點擊左桌螢幕開啟） -->
-    <div id="wr-terminal-overlay">
-        <div id="wr-term-panel">
-            <div id="wr-term-hdr">
-                <span id="wr-term-hdr-title">[ INTEL TERMINAL ]</span>
-                <div id="wr-term-tabs"></div>
-                <button id="wr-term-close">✕ 關閉</button>
+    <!-- CSS3D in-scene terminal -->
+    <div id="wr-css3d">
+        <div id="wr-css3d-cam">
+            <div id="wr-term-panel">
+                <div id="wr-term-hdr">
+                    <span id="wr-term-hdr-title">[ INTEL TERMINAL ]</span>
+                    <div id="wr-term-tabs"></div>
+                    <button id="wr-term-close">✕ 關閉</button>
+                </div>
+                <div id="wr-term-list"></div>
+                <div id="wr-term-detail"></div>
+                <div id="wr-term-foot">共 0 篇</div>
             </div>
-            <div id="wr-term-list"></div>
-            <div id="wr-term-detail"></div>
-            <div id="wr-term-foot">共 0 篇</div>
         </div>
     </div>
 </div>
@@ -2850,12 +2856,15 @@
     var vrJoy = { active: false, id: -1, baseX: 0, baseY: 0, nx: 0, ny: 0, maxR: 44 };
     var vrLookId = -1, vrLookLast = null, vrLookStart = null;
 
-    // ── 終端機（3D 桌面螢幕 mesh + 地球 geo-lerp 狀態）──────────────
+    // ── 終端機（3D 桌面螢幕 mesh + CSS3D overlay + 地球 geo-lerp）──────
     var termUI = {
         mesh: null,                             // 左桌螢幕 mesh（raycasting 用）
+        css3dObj: null,                         // 虛擬 Object3D（CSS3D 定位用，scale=2.8/560）
         touchActive: false, touchStartY: 0,    // 觸控點擊偵測
         geoTargetX: 0, geoTargetY: 0, geoLerping: false,
+        _articles: [], _filter: 'all',          // 終端機狀態（替代 overlay DOM 儲存）
     };
+    var ogScreenMeshes = [];  // [{mesh, art, w, h}] 供 loadOGsForScreens() 使用
     // 地理位置關鍵字對照（用於準心懸停時旋轉地球）
     var WR_HOTSPOT_GEO = [
         { lat: 48.38, lng:  31.17, kw: ['烏克蘭','烏軍','澤倫斯基','基輔','烏俄'] },
@@ -2880,8 +2889,8 @@
     document.addEventListener('keydown', function(e) {
         keys[e.code] = true;
         if (e.code === 'Escape' && overlay.style.display !== 'none') {
-            var tov = document.getElementById('wr-terminal-overlay');
-            if (tov && tov.style.display !== 'none') { closeTerminalOverlay(); return; }
+            var tCam = document.getElementById('wr-css3d-cam');
+            if (tCam && tCam.style.visibility === 'visible') { closeTerminalOverlay(); return; }
             exitWarRoom();
         }
     });
@@ -2940,6 +2949,7 @@
         buildScreenWall();
         buildParticles();
         buildDecorations();
+        loadOGsForScreens();
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', function() {
@@ -3264,6 +3274,7 @@
         screen.userData.url   = art.url;
         screen.userData.title = art.title;
         panelMeshes.push(screen);
+        ogScreenMeshes.push({ mesh: screen, art: art, w: w, h: h });
         group.add(screen);
 
         scene.add(group);
@@ -3301,6 +3312,7 @@
         screen.userData.url   = art.url;
         screen.userData.title = art.title;
         panelMeshes.push(screen);
+        ogScreenMeshes.push({ mesh: screen, art: art, w: w, h: h });
         group.add(screen);
 
         scene.add(group);
@@ -3558,6 +3570,12 @@
             if (idx === 0) {
                 termUI.mesh = scr;  // 互動終端機，不設 url（內部處理點擊）
                 scr.userData.title = '文章終端機 ── 點擊開啟';
+                // 虛擬 Object3D：同 mesh 位置/旋轉，scale=2.8/560 → CSS3D 面板對齊用
+                termUI.css3dObj = new THREE.Object3D();
+                termUI.css3dObj.position.copy(scr.position);
+                termUI.css3dObj.rotation.copy(scr.rotation);
+                termUI.css3dObj.scale.setScalar(2.8 / 560);
+                scene.add(termUI.css3dObj);
             } else {
                 scr.userData.url   = window.location.href.replace(/[^\/]*$/, '') + 'game.html';
                 scr.userData.title = '工業力試煉';
@@ -4117,14 +4135,59 @@
             if (tooltipEl) tooltipEl.style.display = 'none';
         }
 
+        updateCSS3D();
         renderer.render(scene, camera);
+    }
+
+    // ── CSS3D in-scene terminal helpers ──────────────────────────
+    function css3dCamMatrix(e) {
+        // Camera (matrixWorldInverse): negate Y-row → [1],[5],[9],[13]
+        return 'matrix3d(' +
+            e[0]+','+(-e[1])+','+e[2]+','+e[3]+',' +
+            e[4]+','+(-e[5])+','+e[6]+','+e[7]+',' +
+            e[8]+','+(-e[9])+','+e[10]+','+e[11]+',' +
+            e[12]+','+(-e[13])+','+e[14]+','+e[15]+')';
+    }
+    function css3dObjMatrix(e) {
+        // Object (matrixWorld): negate Y-column → [4],[5],[6],[7]
+        return 'translate(-50%,-50%)matrix3d(' +
+            e[0]+','+e[1]+','+e[2]+','+e[3]+',' +
+            (-e[4])+','+(-e[5])+','+(-e[6])+','+(-e[7])+',' +
+            e[8]+','+e[9]+','+e[10]+','+e[11]+',' +
+            e[12]+','+e[13]+','+e[14]+','+e[15]+')';
+    }
+    function updateCSS3D() {
+        var cam = document.getElementById('wr-css3d-cam');
+        if (!cam || cam.style.visibility !== 'visible') return;
+        var cont = document.getElementById('wr-css3d');
+        if (!cont || !renderer || !camera) return;
+        var W = renderer.domElement.clientWidth;
+        var H = renderer.domElement.clientHeight;
+        if (!W || !H) return;
+        // Perspective matching Three.js camera
+        var fov = camera.projectionMatrix.elements[5] * H / 2;
+        cont.style.perspective       = fov + 'px';
+        cont.style.perspectiveOrigin = '0px 0px';
+        // Camera div: CSS3DRenderer pattern
+        camera.updateMatrixWorld();
+        var ci = camera.matrixWorldInverse.elements;
+        cam.style.transform =
+            'translateZ(' + fov + 'px)' +
+            css3dCamMatrix(ci) +
+            'translate(' + (W / 2) + 'px,' + (H / 2) + 'px)';
+        // Panel div: place at virtual Object3D's world matrix
+        var panel = document.getElementById('wr-term-panel');
+        if (panel && termUI.css3dObj) {
+            termUI.css3dObj.updateMatrixWorld(true);
+            panel.style.transform = css3dObjMatrix(termUI.css3dObj.matrixWorld.elements);
+        }
     }
 
     // ── 文章終端機 HTML overlay ───────────────────────────────────
 
     function openTerminalOverlay() {
-        var ov = document.getElementById('wr-terminal-overlay');
-        if (!ov) return;
+        var css3dCam = document.getElementById('wr-css3d-cam');
+        if (!css3dCam) return;
 
         // 收集所有文章
         var articles = [];
@@ -4146,25 +4209,28 @@
             });
         });
 
-        ov._articles = articles;
-        ov._filter   = 'all';
+        termUI._articles = articles;
+        termUI._filter   = 'all';
 
-        // 關閉按鈕 + 點擊半透明背景也可關閉
+        // 關閉按鈕
         var closeBtn = document.getElementById('wr-term-close');
         if (closeBtn) { closeBtn.onclick = closeTerminalOverlay; }
-        ov.onclick = function(e) { if (e.target === ov) closeTerminalOverlay(); };
 
-        _termRenderTabs(ov);
-        _termRenderList(ov);
-        ov.style.display = 'block';
+        _termRenderTabs();
+        _termRenderList();
+
+        // 顯示 CSS3D 面板，釋放滑鼠
+        css3dCam.style.visibility = 'visible';
+        if (document.pointerLockElement) document.exitPointerLock();
     }
 
     function closeTerminalOverlay() {
-        var ov = document.getElementById('wr-terminal-overlay');
-        if (ov) ov.style.display = 'none';
+        var css3dCam = document.getElementById('wr-css3d-cam');
+        if (css3dCam) css3dCam.style.visibility = 'hidden';
+        // 重新進入準心鎖定（下次點擊 canvas 時自動觸發）
     }
 
-    function _termRenderTabs(ov) {
+    function _termRenderTabs() {
         var tabDefs = [
             { key: 'all',      label: '全部' },
             { key: 'military', label: '軍事' },
@@ -4177,17 +4243,17 @@
         tabDefs.forEach(function(tab) {
             var btn = document.createElement('button');
             btn.textContent = tab.label;
-            if (ov._filter === tab.key) btn.className = 'wrt-active';
+            if (termUI._filter === tab.key) btn.className = 'wrt-active';
             btn.addEventListener('click', function() {
-                ov._filter = tab.key;
-                _termRenderTabs(ov);
-                _termRenderList(ov);
+                termUI._filter = tab.key;
+                _termRenderTabs();
+                _termRenderList();
             });
             el.appendChild(btn);
         });
     }
 
-    function _termRenderList(ov) {
+    function _termRenderList() {
         var listEl   = document.getElementById('wr-term-list');
         var detailEl = document.getElementById('wr-term-detail');
         var footEl   = document.getElementById('wr-term-foot');
@@ -4196,9 +4262,9 @@
         listEl.style.display   = '';
         if (detailEl) detailEl.style.display = 'none';
 
-        var arts = ov._filter === 'all'
-            ? ov._articles
-            : ov._articles.filter(function(a) { return a.cat === ov._filter; });
+        var arts = termUI._filter === 'all'
+            ? termUI._articles
+            : termUI._articles.filter(function(a) { return a.cat === termUI._filter; });
 
         if (footEl) footEl.textContent = '共 ' + arts.length + ' 篇　·　點擊標題展開詳情　·　ESC 關閉';
 
@@ -4211,9 +4277,9 @@
             row.tabIndex  = 0;
 
             var badge = document.createElement('span');
-            badge.className          = 'wrt-badge';
-            badge.style.background   = art.color;
-            badge.textContent        = LABELS[art.cat] || '●';
+            badge.className        = 'wrt-badge';
+            badge.style.background = art.color;
+            badge.textContent      = LABELS[art.cat] || '●';
 
             var titleEl = document.createElement('span');
             titleEl.className   = 'wrt-title';
@@ -4227,18 +4293,15 @@
             row.appendChild(titleEl);
             row.appendChild(dateEl);
 
-            // 滑鼠懸停 → 地球旋轉至關聯地區
             row.addEventListener('mouseenter', function() { termPointGlobeTo(art); });
-
-            // 點擊 → 詳情
-            row.addEventListener('click', function() { _termShowDetail(ov, art); });
-            row.addEventListener('keydown', function(e) { if (e.key === 'Enter') _termShowDetail(ov, art); });
+            row.addEventListener('click', function() { _termShowDetail(art); });
+            row.addEventListener('keydown', function(e) { if (e.key === 'Enter') _termShowDetail(art); });
 
             listEl.appendChild(row);
         });
     }
 
-    function _termShowDetail(ov, art) {
+    function _termShowDetail(art) {
         var listEl   = document.getElementById('wr-term-list');
         var detailEl = document.getElementById('wr-term-detail');
         var footEl   = document.getElementById('wr-term-foot');
@@ -4246,30 +4309,137 @@
 
         if (listEl) listEl.style.display = 'none';
         detailEl.style.display = '';
-        if (footEl) footEl.textContent = '◄ 點 [返回] 回列表　·　[開啟全文] 在瀏覽器閱讀';
+        if (footEl) footEl.textContent = '◄ 點 [返回] 回列表　·　ESC 關閉';
 
         termPointGlobeTo(art);
 
-        var catName = { military: '軍事', geo: '地緣政治', analysis: '深度分析' }[art.cat] || '其他';
+        var catName   = { military: '軍事', geo: '地緣政治', analysis: '深度分析' }[art.cat] || '其他';
         var safeTitle = art.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         var safeUrl   = art.url.replace(/"/g,'%22');
 
+        // 初始畫面：標題 + 載入中
         detailEl.innerHTML =
-            '<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">' +
+            '<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">' +
             '<button id="wr-term-back" style="background:#001f0d;color:#00ff88;border:1px solid #00ff88;' +
             'padding:4px 12px;font:bold 11px monospace;cursor:pointer;border-radius:4px;">◄ 返回</button>' +
             '<span style="background:' + art.color + ';color:#fff;padding:3px 8px;font:bold 10px monospace;border-radius:3px;">' + catName + '</span>' +
             '<span style="color:#00aa55;font:10px monospace;">' + art.date + '</span>' +
             '</div>' +
-            '<h3 style="color:#ccffee;font:bold 14px/1.6 monospace;margin:0 0 14px;">' + safeTitle + '</h3>' +
-            '<p style="color:#336644;font:11px monospace;margin:0 0 14px;">（全文請前往原始連結閱讀）</p>' +
+            '<h3 style="color:#ccffee;font:bold 13px/1.5 monospace;margin:0 0 10px;">' + safeTitle + '</h3>' +
+            '<div id="wr-term-og" style="min-height:60px;display:flex;align-items:center;justify-content:center;' +
+            'color:#336644;font:11px monospace;margin-bottom:10px;">⏳ 載入封面圖...</div>' +
             '<a href="' + safeUrl + '" target="_blank" rel="noopener" ' +
             'style="display:block;background:linear-gradient(135deg,#003a1a,#005c2a);color:#00ff88;' +
-            'text-decoration:none;padding:11px 16px;font:bold 13px monospace;' +
+            'text-decoration:none;padding:10px 16px;font:bold 12px monospace;' +
             'border:1px solid #00ff88;border-radius:6px;text-align:center;">→ 開啟全文（外部連結）</a>';
 
-        var back = document.getElementById('wr-term-back');
-        if (back) back.addEventListener('click', function() { _termRenderList(ov); });
+        document.getElementById('wr-term-back').addEventListener('click', function() { _termRenderList(); });
+
+        // 非同步載入 OG 圖
+        fetchOGImage(art.url).then(function(imgUrl) {
+            var ogEl = document.getElementById('wr-term-og');
+            if (!ogEl) return;
+            if (imgUrl) {
+                ogEl.innerHTML = '<img src="' + imgUrl.replace(/"/g,'%22') + '" ' +
+                    'style="width:100%;max-height:140px;object-fit:cover;border-radius:4px;' +
+                    'border:1px solid #003322;display:block;" ' +
+                    'onerror="this.parentNode.innerHTML=\'（無法顯示封面圖）\'">';
+            } else {
+                ogEl.textContent = '（無封面圖）';
+            }
+        });
+    }
+
+    // ── OG 圖擷取（CORS proxy: allorigins.win）───────────────────
+    function fetchOGImage(url) {
+        var key = 'og:' + url;
+        var hit = sessionStorage.getItem(key);
+        if (hit !== null) return Promise.resolve(hit || null);
+        var proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+        return fetch(proxy)
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                var doc = new DOMParser().parseFromString(d.contents || '', 'text/html');
+                var meta = doc.querySelector('meta[property="og:image"]');
+                var img = meta ? meta.getAttribute('content') : null;
+                sessionStorage.setItem(key, img || '');
+                return img;
+            })
+            .catch(function() { sessionStorage.setItem(key, ''); return null; });
+    }
+
+    // ── 指揮牆螢幕 OG 圖更新 ────────────────────────────────────
+    function loadOGsForScreens() {
+        var idx = 0;
+        function next() {
+            if (idx >= ogScreenMeshes.length) return;
+            var entry = ogScreenMeshes[idx++];
+            fetchOGImage(entry.art.url).then(function(imgUrl) {
+                if (!imgUrl) { setTimeout(next, 400); return; }
+                var rawUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(imgUrl);
+                var img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload  = function() { applyOGToScreen(entry, img); setTimeout(next, 400); };
+                img.onerror = function() { setTimeout(next, 400); };
+                img.src = rawUrl;
+            }).catch(function() { setTimeout(next, 400); });
+        }
+        setTimeout(next, 1500);  // 延遲 1.5 秒讓場景先載入
+    }
+
+    function applyOGToScreen(entry, ogImg) {
+        var art = entry.art, w = entry.w, h = entry.h, mesh = entry.mesh;
+        var PW = Math.round(w * 110), PH = Math.round(h * 110);
+        var cv = document.createElement('canvas');
+        cv.width = PW; cv.height = PH;
+        var c = cv.getContext('2d');
+
+        // Cover-fit OG image
+        var ia = ogImg.naturalWidth / ogImg.naturalHeight;
+        var ca = PW / PH;
+        var sx, sy, sw, sh;
+        if (ia > ca) { sh = ogImg.naturalHeight; sw = sh * ca; sx = (ogImg.naturalWidth - sw) / 2; sy = 0; }
+        else         { sw = ogImg.naturalWidth; sh = sw / ca; sx = 0; sy = (ogImg.naturalHeight - sh) / 2; }
+        c.drawImage(ogImg, sx, sy, sw, sh, 0, 0, PW, PH);
+
+        // Dark overlay for legibility
+        var ov2 = c.createLinearGradient(0, 0, 0, PH);
+        ov2.addColorStop(0, 'rgba(0,0,0,0.45)');
+        ov2.addColorStop(1, 'rgba(0,5,20,0.85)');
+        c.fillStyle = ov2;
+        c.fillRect(0, 0, PW, PH);
+
+        // Top colour bar
+        c.fillStyle   = art.color;
+        c.globalAlpha = 0.8;
+        c.fillRect(0, 0, PW, Math.round(PH * 0.11));
+        c.globalAlpha = 1;
+
+        // Date
+        c.fillStyle    = 'rgba(255,255,255,0.92)';
+        c.font         = 'bold ' + Math.round(PH * 0.056) + 'px "Courier New",monospace';
+        c.textBaseline = 'middle';
+        c.textAlign    = 'left';
+        c.fillText(art.date.slice(0, 10), 10, PH * 0.055);
+
+        // Title
+        c.fillStyle    = '#fff';
+        var fs = Math.round(PH * 0.082);
+        c.font         = fs + 'px "Noto Sans TC",sans-serif';
+        c.textBaseline = 'top';
+        drawWrapped(c, art.title, 10, PH * 0.14, PW - 20, fs * 1.35, 5);
+
+        // Footer
+        c.fillStyle    = 'rgba(200,225,255,0.55)';
+        c.font         = Math.round(PH * 0.048) + 'px "Courier New",monospace';
+        c.textBaseline = 'bottom';
+        c.fillText('[ CLICK TO OPEN ]', 10, PH - 8);
+
+        // Update texture
+        var newTex = new THREE.CanvasTexture(cv);
+        if (mesh.material.map) mesh.material.map.dispose();
+        mesh.material.map          = newTex;
+        mesh.material.needsUpdate  = true;
     }
 
 })();
