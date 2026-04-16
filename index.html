@@ -2859,10 +2859,9 @@
     // ── 終端機（3D 桌面螢幕 mesh + CSS3D overlay + 地球 geo-lerp）──────
     var termUI = {
         mesh: null,                             // 左桌螢幕 mesh（raycasting 用）
-        css3dObj: null,                         // 虛擬 Object3D（CSS3D 定位用，scale=2.8/560）
         touchActive: false, touchStartY: 0,    // 觸控點擊偵測
         geoTargetX: 0, geoTargetY: 0, geoLerping: false,
-        _articles: [], _filter: 'all',          // 終端機狀態（替代 overlay DOM 儲存）
+        _articles: [], _filter: 'all',          // 終端機狀態
     };
     var ogScreenMeshes = [];  // [{mesh, art, w, h}] 供 loadOGsForScreens() 使用
     // 地理位置關鍵字對照（用於準心懸停時旋轉地球）
@@ -3558,24 +3557,17 @@
                 l.position.set(xz[0] + leg[0], 0.45, xz[1] + leg[1]);
                 scene.add(l);
             });
-            // 螢幕：左邊是文章終端機（點擊開啟 HTML overlay），右邊是工業力試煉
-            var scrTex = (idx === 0) ? makeTerminalTex() : makeGameScreenTex();
+            // 螢幕：左邊是文章終端機，右邊是工業力試煉
+            var scrMat = (idx === 0)
+                ? new THREE.MeshBasicMaterial({ color: 0x001a08 })  // 固定深綠色（避免 canvas 黑屏問題）
+                : new THREE.MeshBasicMaterial({ map: makeGameScreenTex() });
             var scrW = 2.8, scrH = 1.75;
-            var scr = new THREE.Mesh(
-                new THREE.PlaneGeometry(scrW, scrH),
-                new THREE.MeshBasicMaterial({ map: scrTex })
-            );
+            var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), scrMat);
             scr.position.set(xz[0], 1.65, xz[1] - 0.5);
             scr.rotation.x = -0.25;
             if (idx === 0) {
                 termUI.mesh = scr;  // 互動終端機，不設 url（內部處理點擊）
                 scr.userData.title = '文章終端機 ── 點擊開啟';
-                // 虛擬 Object3D：同 mesh 位置/旋轉，scale=2.8/560 → CSS3D 面板對齊用
-                termUI.css3dObj = new THREE.Object3D();
-                termUI.css3dObj.position.copy(scr.position);
-                termUI.css3dObj.rotation.copy(scr.rotation);
-                termUI.css3dObj.scale.setScalar(2.8 / 560);
-                scene.add(termUI.css3dObj);
             } else {
                 scr.userData.url   = window.location.href.replace(/[^\/]*$/, '') + 'game.html';
                 scr.userData.title = '工業力試煉';
@@ -4139,48 +4131,34 @@
         renderer.render(scene, camera);
     }
 
-    // ── CSS3D in-scene terminal helpers ──────────────────────────
-    function css3dCamMatrix(e) {
-        // Camera (matrixWorldInverse): negate Y-row → [1],[5],[9],[13]
-        return 'matrix3d(' +
-            e[0]+','+(-e[1])+','+e[2]+','+e[3]+',' +
-            e[4]+','+(-e[5])+','+e[6]+','+e[7]+',' +
-            e[8]+','+(-e[9])+','+e[10]+','+e[11]+',' +
-            e[12]+','+(-e[13])+','+e[14]+','+e[15]+')';
-    }
-    function css3dObjMatrix(e) {
-        // Object (matrixWorld): negate Y-column → [4],[5],[6],[7]
-        return 'translate(-50%,-50%)matrix3d(' +
-            e[0]+','+e[1]+','+e[2]+','+e[3]+',' +
-            (-e[4])+','+(-e[5])+','+(-e[6])+','+(-e[7])+',' +
-            e[8]+','+e[9]+','+e[10]+','+e[11]+',' +
-            e[12]+','+e[13]+','+e[14]+','+e[15]+')';
-    }
+    // ── 終端機面板：screen-space projection（可靠，免除 CSS3D 矩陣複雜度）──
     function updateCSS3D() {
         var cam = document.getElementById('wr-css3d-cam');
         if (!cam || cam.style.visibility !== 'visible') return;
-        var cont = document.getElementById('wr-css3d');
-        if (!cont || !renderer || !camera) return;
-        var W = renderer.domElement.clientWidth;
-        var H = renderer.domElement.clientHeight;
-        if (!W || !H) return;
-        // Perspective matching Three.js camera
-        var fov = camera.projectionMatrix.elements[5] * H / 2;
-        cont.style.perspective       = fov + 'px';
-        cont.style.perspectiveOrigin = '0px 0px';
-        // Camera div: CSS3DRenderer pattern
-        camera.updateMatrixWorld();
-        var ci = camera.matrixWorldInverse.elements;
-        cam.style.transform =
-            'translateZ(' + fov + 'px)' +
-            css3dCamMatrix(ci) +
-            'translate(' + (W / 2) + 'px,' + (H / 2) + 'px)';
-        // Panel div: place at virtual Object3D's world matrix
+        if (!termUI.mesh || !camera || !renderer) return;
         var panel = document.getElementById('wr-term-panel');
-        if (panel && termUI.css3dObj) {
-            termUI.css3dObj.updateMatrixWorld(true);
-            panel.style.transform = css3dObjMatrix(termUI.css3dObj.matrixWorld.elements);
-        }
+        if (!panel) return;
+
+        var W = renderer.domElement.clientWidth || window.innerWidth;
+        var H = renderer.domElement.clientHeight || window.innerHeight;
+
+        // 把 mesh 中心投影到螢幕座標
+        var cp = termUI.mesh.position.clone().project(camera);
+        var sx = (cp.x + 1) / 2 * W;
+        var sy = (-cp.y + 1) / 2 * H;
+
+        // 把 mesh 右緣（local +X 1.4 units）投影到螢幕，算出投影寬度
+        var rp = new THREE.Vector3(1.4, 0, 0)
+            .applyMatrix4(termUI.mesh.matrixWorld)
+            .project(camera);
+        var projHalfW = Math.abs((rp.x + 1) / 2 * W - sx);
+        var scale = Math.max(0.3, Math.min(1.8, (projHalfW * 2) / 560));
+
+        // mesh rotation.x = -0.25 ≈ 14° 後仰，用 rotateX 模擬
+        panel.style.left = sx + 'px';
+        panel.style.top  = sy + 'px';
+        panel.style.transform =
+            'translate(-50%,-50%) perspective(600px) rotateX(14deg) scale(' + scale + ')';
     }
 
     // ── 文章終端機 HTML overlay ───────────────────────────────────
