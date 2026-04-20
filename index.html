@@ -3620,31 +3620,40 @@
                 });
 
             } else {
-                // ── 一般螢幕（工業力試煉）
-                var scrMat = new THREE.MeshBasicMaterial({ map: makeGameScreenTex() });
-                var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), scrMat);
+                // ── 全息投影（工業力試煉）
+                var gameMat = new THREE.MeshBasicMaterial({
+                    map: makeGameScreenTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide
+                });
+                var scr = new THREE.Mesh(new THREE.PlaneGeometry(scrW, scrH), gameMat);
                 scr.position.set(xz[0], 1.65, xz[1] - 0.5);
                 scr.rotation.x = -0.25;
                 scr.userData.url   = window.location.href.replace(/[^\/]*$/, '') + 'game.html';
                 scr.userData.title = '工業力試煉';
                 panelMeshes.push(scr);
                 scene.add(scr);
-                // 螢幕框
-                var frame = new THREE.Mesh(new THREE.BoxGeometry(scrW + 0.1, scrH + 0.1, 0.04), deskMat);
-                frame.position.set(xz[0], 1.65, xz[1] - 0.52);
-                frame.rotation.x = -0.25;
-                scene.add(frame);
-                // 發光邊框條
-                var frameGlow = new THREE.MeshBasicMaterial({ color: 0xff2266, transparent: true, opacity: 0.7 });
-                [[scrW + 0.12, 0.05, 0, (scrH + 0.1) / 2],
-                 [scrW + 0.12, 0.05, 0, -(scrH + 0.1) / 2],
-                 [0.05, scrH + 0.12, -(scrW + 0.1) / 2, 0],
-                 [0.05, scrH + 0.12,  (scrW + 0.1) / 2, 0]
-                ].forEach(function(e) {
-                    var bar = new THREE.Mesh(new THREE.PlaneGeometry(e[0], e[1]), frameGlow);
-                    bar.position.set(xz[0] + e[2], 1.65 + e[3] * Math.cos(-0.25), xz[1] - 0.5 + e[3] * Math.sin(-0.25));
-                    bar.rotation.x = -0.25;
-                    scene.add(bar);
+
+                // 投影器底座
+                var emitMatR = new THREE.MeshBasicMaterial({ color: 0xff2266, transparent: true, opacity: 0.80 });
+                var emitterR = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.17, 0.07, 16), emitMatR);
+                emitterR.position.set(xz[0], 0.935, xz[1] - 0.1);
+                scene.add(emitterR);
+
+                // 底座光暈環
+                var discMatR = new THREE.MeshBasicMaterial({ color: 0xff2266, transparent: true, opacity: 0.18, side: THREE.DoubleSide });
+                var discR = new THREE.Mesh(new THREE.RingGeometry(0.20, 0.42, 28), discMatR);
+                discR.rotation.x = -Math.PI / 2;
+                discR.position.set(xz[0], 0.915, xz[1] - 0.1);
+                scene.add(discR);
+
+                // 浮動掃描環
+                [[scrW * 0.50, 0.25], [scrW * 0.43, 0.15]].forEach(function(rd) {
+                    var ring = new THREE.Mesh(
+                        new THREE.RingGeometry(rd[0] - 0.013, rd[0] + 0.013, 48),
+                        new THREE.MeshBasicMaterial({ color: 0xff2266, transparent: true, opacity: rd[1], side: THREE.DoubleSide })
+                    );
+                    ring.position.set(xz[0], 1.65, xz[1] - 0.5);
+                    ring.rotation.x = -0.25;
+                    scene.add(ring);
                 });
             }
         });
@@ -3836,101 +3845,98 @@
     }
 
     function makeGameScreenTex() {
+        var W = 560, H = 350;
         var cv = document.createElement('canvas');
-        cv.width = 512; cv.height = 320;
-        var ctx = cv.getContext('2d');
+        cv.width = W; cv.height = H;
+        var c = cv.getContext('2d');
+        // 透明背景
 
-        // 背景漸層（深紫→黑）
-        var bg = ctx.createLinearGradient(0, 0, 0, 320);
-        bg.addColorStop(0, '#1a0530');
-        bg.addColorStop(1, '#0a0220');
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, 512, 320);
+        // 中心暗暈（深紅色）
+        var vgn = c.createRadialGradient(W / 2, H / 2, H * 0.05, W / 2, H / 2, H * 0.72);
+        vgn.addColorStop(0, 'rgba(25,0,10,0.62)');
+        vgn.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = vgn;
+        c.fillRect(0, 0, W, H);
 
-        // 格線背景（科技感）
-        ctx.strokeStyle = 'rgba(180,0,255,0.1)';
-        ctx.lineWidth = 1;
-        for (var gx = 0; gx < 512; gx += 32) {
-            ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, 320); ctx.stroke();
-        }
-        for (var gy = 0; gy < 320; gy += 32) {
-            ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(512, gy); ctx.stroke();
+        // 掃描線
+        for (var sy = H * 0.08; sy < H * 0.92; sy += 4) {
+            c.fillStyle = 'rgba(255,50,100,0.028)';
+            c.fillRect(W * 0.05, sy, W * 0.9, 1);
         }
 
-        // 頂部標題欄
-        var titleGrad = ctx.createLinearGradient(0, 0, 512, 0);
-        titleGrad.addColorStop(0, '#6600cc');
-        titleGrad.addColorStop(1, '#cc0044');
-        ctx.fillStyle = titleGrad;
-        ctx.fillRect(0, 0, 512, 40);
+        // 頂部標籤
+        c.font = 'bold 11px "Courier New", monospace';
+        c.textAlign = 'center'; c.textBaseline = 'top';
+        c.shadowColor = '#ff2266'; c.shadowBlur = 6;
+        c.fillStyle = 'rgba(255,80,130,0.60)';
+        c.fillText('\u25c8  I N D U S T R I A L  T R I A L  \u25c8', W / 2, 14);
+        c.shadowBlur = 0;
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 20px sans-serif';
-        ctx.fillText('工業力試煉', 16, 28);
-        ctx.font = '12px "Courier New"';
-        ctx.fillStyle = '#ffccee';
-        ctx.fillText('INDUSTRIAL TRIAL  v2.6', 230, 27);
+        // 主標題「工業力試煉」— 多層疊加紅色光暈
+        var mainY = H / 2 - 30;
+        c.textBaseline = 'middle'; c.textAlign = 'center';
+        [
+            { blur: 50, alpha: 0.08, size: 66 },
+            { blur: 22, alpha: 0.22, size: 63 },
+            { blur:  8, alpha: 0.60, size: 60 },
+            { blur:  0, alpha: 1.00, size: 60 }
+        ].forEach(function(p) {
+            c.shadowColor = '#ff2266';
+            c.shadowBlur  = p.blur;
+            c.fillStyle   = 'rgba(255,80,130,' + p.alpha + ')';
+            c.font        = 'bold ' + p.size + 'px "Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif';
+            c.fillText('\u5de5\u696d\u529b\u8a66\u7149', W / 2, mainY);
+        });
+        c.shadowBlur = 0;
 
-        // 分隔線
-        ctx.strokeStyle = '#ff44aa';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(0, 42); ctx.lineTo(512, 42); ctx.stroke();
-
-        // 資源面板標題
-        ctx.fillStyle = '#ff88cc';
-        ctx.font = 'bold 13px "Courier New"';
-        ctx.fillText('RESOURCES', 16, 64);
-
-        // 三個資源條
+        // 資源條（全息樣式）
         var resources = [
-            { name: '鋼鐵', label: 'STEEL',  color: '#888888', pct: 0.72 },
-            { name: '能源', label: 'ENERGY', color: '#ffaa00', pct: 0.55 },
-            { name: '技術', label: 'TECH',   color: '#00aaff', pct: 0.38 },
+            { label: 'STEEL',  color: 'rgba(180,180,200,0.9)', pct: 0.72 },
+            { label: 'ENERGY', color: 'rgba(255,160,40,0.9)',  pct: 0.55 },
+            { label: 'TECH',   color: 'rgba(60,160,255,0.9)',  pct: 0.38 }
         ];
+        var barY = mainY + 42, barW = W * 0.55, barX = W * 0.225;
         resources.forEach(function(r, i) {
-            var bx = 16, by = 76 + i * 38;
-            // 資源名
-            ctx.fillStyle = r.color;
-            ctx.font = 'bold 12px "Courier New"';
-            ctx.fillText(r.name + ' ' + r.label, bx, by + 14);
-            // 條底
-            ctx.fillStyle = 'rgba(255,255,255,0.12)';
-            ctx.fillRect(bx + 130, by, 340, 18);
-            // 條實際值
-            ctx.fillStyle = r.color;
-            ctx.fillRect(bx + 130, by, Math.round(340 * r.pct), 18);
-            // 百分比文字
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '11px "Courier New"';
-            ctx.fillText(Math.round(r.pct * 100) + '%', bx + 130 + Math.round(340 * r.pct) + 6, by + 14);
+            var by = barY + i * 20;
+            c.font = '9px "Courier New", monospace';
+            c.textAlign = 'left'; c.textBaseline = 'middle';
+            c.fillStyle = r.color;
+            c.fillText(r.label, barX, by + 7);
+            c.fillStyle = 'rgba(255,255,255,0.10)';
+            c.fillRect(barX + 46, by, barW - 46, 10);
+            c.fillStyle = r.color;
+            c.fillRect(barX + 46, by, (barW - 46) * r.pct, 10);
         });
 
-        // 中央 CTA 按鈕
-        var btnGrad = ctx.createLinearGradient(136, 190, 376, 240);
-        btnGrad.addColorStop(0, '#9900ff');
-        btnGrad.addColorStop(1, '#ff0066');
-        ctx.fillStyle = btnGrad;
-        ctx.beginPath();
-        ctx.roundRect ? ctx.roundRect(136, 190, 240, 50, 8) : ctx.rect(136, 190, 240, 50);
-        ctx.fill();
+        // 副標題「▶ 點擊進入遊戲」
+        c.font = 'bold 15px "Courier New", monospace';
+        c.textBaseline = 'middle'; c.textAlign = 'center';
+        c.fillStyle = 'rgba(255,80,130,0.88)';
+        c.shadowColor = '#ff2266'; c.shadowBlur = 12;
+        c.fillText('\u25b6  \u9ede\u64ca\u9032\u5165\u904a\u6232', W / 2, barY + 75);
+        c.shadowBlur = 0;
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 22px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('▶  進入遊戲', 256, 224);
-        ctx.textAlign = 'left';
+        // 文字上下分隔線
+        [[mainY - 44, 0.50], [barY + 92, 0.35]].forEach(function(ld) {
+            var lg = c.createLinearGradient(W * 0.12, 0, W * 0.88, 0);
+            lg.addColorStop(0,   'rgba(255,50,100,0)');
+            lg.addColorStop(0.5, 'rgba(255,50,100,' + ld[1] + ')');
+            lg.addColorStop(1,   'rgba(255,50,100,0)');
+            c.fillStyle = lg;
+            c.fillRect(W * 0.12, ld[0], W * 0.76, 1.5);
+        });
 
-        // 邊框發光
-        ctx.strokeStyle = '#ff44aa';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(136, 190, 240, 50);
-
-        // 底部提示
-        ctx.fillStyle = '#330022';
-        ctx.fillRect(0, 290, 512, 30);
-        ctx.fillStyle = '#ff88cc';
-        ctx.font = '11px "Courier New"';
-        ctx.fillText('► 點擊啟動遊戲  CLICK TO LAUNCH', 10, 310);
+        // 四角裝飾括弧
+        var cs = 26;
+        c.strokeStyle = 'rgba(255,60,110,0.60)';
+        c.lineWidth = 1.5;
+        [[4, 4, 1, 1], [W - 4, 4, -1, 1], [4, H - 4, 1, -1], [W - 4, H - 4, -1, -1]].forEach(function(e) {
+            c.beginPath();
+            c.moveTo(e[0] + e[2] * cs, e[1]);
+            c.lineTo(e[0], e[1]);
+            c.lineTo(e[0], e[1] + e[3] * cs);
+            c.stroke();
+        });
 
         return new THREE.CanvasTexture(cv);
     }
