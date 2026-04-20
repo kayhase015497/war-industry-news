@@ -2828,11 +2828,14 @@
 (function() {
     'use strict';
 
-    var overlay   = document.getElementById('warroom-overlay');
-    var enterBtn  = document.getElementById('enter-warroom-btn');
-    var exitBtn   = document.getElementById('wr-exit-btn');
-    var coordsEl  = document.getElementById('wr-coords');
-    var tooltipEl = document.getElementById('wr-tooltip');
+    var overlay    = document.getElementById('warroom-overlay');
+    var enterBtn   = document.getElementById('enter-warroom-btn');
+    var exitBtn    = document.getElementById('wr-exit-btn');
+    var coordsEl   = document.getElementById('wr-coords');
+    var tooltipEl  = document.getElementById('wr-tooltip');
+    var warCanvas  = document.getElementById('warroom-canvas');
+    var css3dCamEl = document.getElementById('wr-css3d-cam');
+    var termPanelEl = document.getElementById('wr-term-panel');
 
     // 若 Three.js 載入失敗則隱藏入口按鈕
     if (typeof THREE === 'undefined') {
@@ -2841,6 +2844,8 @@
     }
 
     // ── 狀態變數 ───────────────────────────────────────────────────
+    function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
+
     var initialized = false;
     var renderer, scene, camera, raycaster;
     var panelMeshes = [];
@@ -2887,8 +2892,7 @@
     document.addEventListener('keydown', function(e) {
         keys[e.code] = true;
         if (e.code === 'Escape' && overlay.style.display !== 'none') {
-            var tCam = document.getElementById('wr-css3d-cam');
-            if (tCam && tCam.style.visibility === 'visible') { closeTerminalOverlay(); return; }
+            if (css3dCamEl && css3dCamEl.style.visibility === 'visible') { closeTerminalOverlay(); return; }
             exitWarRoom();
         }
     });
@@ -2902,8 +2906,7 @@
         if (!initialized) { buildScene(); initialized = true; }
         clockPrev = performance.now();
         renderer.setAnimationLoop(animate);
-        var c = document.getElementById('warroom-canvas');
-        if (c && c.requestPointerLock) c.requestPointerLock();
+        if (warCanvas && warCanvas.requestPointerLock) warCanvas.requestPointerLock();
         if (window.globeInstance) {
             try { window.globeInstance.controls().autoRotate = false; } catch(e) {}
         }
@@ -2923,10 +2926,9 @@
 
     // ── 場景初始化 ────────────────────────────────────────────────
     function buildScene() {
-        var canvas = document.getElementById('warroom-canvas');
         var W = window.innerWidth, H = window.innerHeight;
 
-        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer = new THREE.WebGLRenderer({ canvas: warCanvas, antialias: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(W, H);
 
@@ -2953,12 +2955,10 @@
             globeDragging = false; globeDragLast = null;
         });
 
-        var c = canvas;
-        c.addEventListener('click', onCanvasClick);
-        // 地球拖拽：unlocked 模式下按下滑鼠，偵測是否擊中地球
-        c.addEventListener('mousedown', function(e) {
-            if (document.pointerLockElement === c) return;
-            var rect = c.getBoundingClientRect();
+        warCanvas.addEventListener('click', onCanvasClick);
+        warCanvas.addEventListener('mousedown', function(e) {
+            if (document.pointerLockElement === warCanvas) return;
+            var rect = warCanvas.getBoundingClientRect();
             var mx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
             var my = -((e.clientY - rect.top) / rect.height) * 2 + 1;
             raycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
@@ -2967,9 +2967,9 @@
                 if (hits.length) { globeDragging = true; globeDragLast = { x: e.clientX, y: e.clientY }; e.preventDefault(); }
             }
         });
-        c.addEventListener('touchstart', onTouchStart, { passive: true });
-        c.addEventListener('touchmove',  onTouchMove,  { passive: false });
-        c.addEventListener('touchend',   onTouchEnd,   { passive: true });
+        warCanvas.addEventListener('touchstart', onTouchStart, { passive: true });
+        warCanvas.addEventListener('touchmove',  onTouchMove,  { passive: false });
+        warCanvas.addEventListener('touchend',   onTouchEnd,   { passive: true });
 
         var mobileCtrl = document.getElementById('wr-mobile-controls');
         if (mobileCtrl) {
@@ -3164,9 +3164,7 @@
         });
     }
 
-    // ── 指揮螢幕牆：5 大螢幕頭頂俯視 + 左右翼側牆 ─────────────
-    function buildScreenWall() {
-        // 從 DOM 取得文章
+    function parseNewsCards() {
         var articles = [];
         document.querySelectorAll('.news-card').forEach(function(card) {
             var aEl  = card.querySelector('a');
@@ -3182,6 +3180,12 @@
             articles.push({ title: aEl.textContent.trim(), url: aEl.href,
                 date: dtEl ? dtEl.textContent.trim() : '', color: color, cat: cat });
         });
+        return articles;
+    }
+
+    // ── 指揮螢幕牆：5 大螢幕頭頂俯視 + 左右翼側牆 ─────────────
+    function buildScreenWall() {
+        var articles = parseNewsCards();
 
         var latest   = articles.slice(0, 5);
 
@@ -3238,19 +3242,11 @@
         });
     }
 
-    // 使用 lookAt 定向的螢幕（用於頂部俯瞰螢幕）
-    function addScreenLookAt(art, pos, target, w, h) {
-        var group = new THREE.Group();
-        group.position.copy(pos);
-        group.lookAt(target);
-
-        // 深色框體
+    function _buildScreenMesh(art, group, w, h) {
         group.add(new THREE.Mesh(
             new THREE.BoxGeometry(w + 0.14, h + 0.14, 0.06),
             new THREE.MeshBasicMaterial({ color: 0x000d1a })
         ));
-
-        // 邊框發光條
         var ec = new THREE.Color(art.color);
         var hw = (w + 0.14) / 2, hh = (h + 0.14) / 2;
         [[w + 0.16, 0.04, 0.04, 0, hh], [w + 0.16, 0.04, 0.04, 0, -hh],
@@ -3261,8 +3257,6 @@
             em.position.set(e[3], e[4], 0.035);
             group.add(em);
         });
-
-        // 螢幕面
         var screen = new THREE.Mesh(
             new THREE.PlaneGeometry(w, h),
             new THREE.MeshBasicMaterial({ map: makeScreenTex(art, w, h) })
@@ -3272,45 +3266,21 @@
         screen.userData.title = art.title;
         panelMeshes.push(screen);
         group.add(screen);
-
         scene.add(group);
+    }
+
+    function addScreenLookAt(art, pos, target, w, h) {
+        var group = new THREE.Group();
+        group.position.copy(pos);
+        group.lookAt(target);
+        _buildScreenMesh(art, group, w, h);
     }
 
     function addScreen(art, x, y, z, rx, ry, rz, w, h) {
         var group = new THREE.Group();
         group.position.set(x, y, z);
         group.rotation.set(rx, ry, rz);
-
-        // 深色框體
-        group.add(new THREE.Mesh(
-            new THREE.BoxGeometry(w + 0.14, h + 0.14, 0.06),
-            new THREE.MeshBasicMaterial({ color: 0x000d1a })
-        ));
-
-        // 邊框發光條
-        var ec = new THREE.Color(art.color);
-        var hw = (w + 0.14) / 2, hh = (h + 0.14) / 2;
-        [[w + 0.16, 0.04, 0.04, 0, hh], [w + 0.16, 0.04, 0.04, 0, -hh],
-         [0.04, h + 0.16, 0.04, -hw, 0], [0.04, h + 0.16, 0.04, hw, 0]
-        ].forEach(function(e) {
-            var em = new THREE.Mesh(new THREE.BoxGeometry(e[0], e[1], e[2]),
-                new THREE.MeshBasicMaterial({ color: ec }));
-            em.position.set(e[3], e[4], 0.035);
-            group.add(em);
-        });
-
-        // 螢幕面
-        var screen = new THREE.Mesh(
-            new THREE.PlaneGeometry(w, h),
-            new THREE.MeshBasicMaterial({ map: makeScreenTex(art, w, h) })
-        );
-        screen.position.z = 0.04;
-        screen.userData.url   = art.url;
-        screen.userData.title = art.title;
-        panelMeshes.push(screen);
-        group.add(screen);
-
-        scene.add(group);
+        _buildScreenMesh(art, group, w, h);
     }
 
     function makeScreenTex(art, w, h) {
@@ -3695,33 +3665,6 @@
         return t;
     }
 
-    // 終端機螢幕紋理（程序生成）
-    function makeTerminalTex() {
-        var cv = document.createElement('canvas');
-        cv.width = 256; cv.height = 160;
-        var ctx = cv.getContext('2d');
-        ctx.fillStyle = '#00100a';
-        ctx.fillRect(0, 0, 256, 160);
-        // 掃描線
-        ctx.fillStyle = 'rgba(0,255,100,0.03)';
-        for (var sl = 0; sl < 160; sl += 2) { ctx.fillRect(0, sl, 256, 1); }
-        // 文字
-        ctx.fillStyle = '#00ee55';
-        ctx.font = '9px "Courier New"';
-        var lines = [
-            'WARROOM TERMINAL v2.6',
-            '> SYS: ONLINE  SECURE',
-            '> ZONES TRACKED: 9',
-            '> LAST UPDATE: --:--',
-            '> INTEL: CLASSIFIED',
-            '> ENCRYPTION: AES-256',
-            '',
-            '>>> STANDBY <<<',
-        ];
-        lines.forEach(function(l, i) { ctx.fillText(l, 8, 16 + i * 17); });
-        return new THREE.CanvasTexture(cv);
-    }
-
     // ── 終端機地理位置輔助 ───────────────────────────────────────
 
     // Lat/Lng → globeGroup rotation (帶入玩家正面方向 +Z)
@@ -3944,39 +3887,30 @@
     // ── 輸入處理 ──────────────────────────────────────────────────
     function onMouseMove(e) {
         if (overlay.style.display === 'none') return;
-        var c = document.getElementById('warroom-canvas');
-        if (document.pointerLockElement === c) {
+        if (document.pointerLockElement === warCanvas) {
             if (keys['KeyG'] && scene && scene.userData.globeGroup) {
-                // 按住 G 鍵時：準心旋轉地球
                 scene.userData.globeGroup.rotation.y += e.movementX * 0.005;
-                scene.userData.globeGroup.rotation.x += e.movementY * 0.005;
-                scene.userData.globeGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, scene.userData.globeGroup.rotation.x));
-                termUI.geoLerping = false; // 手動旋轉時停止自動對準
+                scene.userData.globeGroup.rotation.x = clamp(scene.userData.globeGroup.rotation.x + e.movementY * 0.005, -Math.PI / 2, Math.PI / 2);
+                termUI.geoLerping = false;
             } else {
                 yaw   -= e.movementX * 0.002;
-                pitch -= e.movementY * 0.002;
-                pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                pitch  = clamp(pitch - e.movementY * 0.002, -1.3, 1.3);
             }
         } else {
-            var rect = c.getBoundingClientRect();
+            var rect = warCanvas.getBoundingClientRect();
             mouseNDC.x =  ((e.clientX - rect.left) / rect.width)  * 2 - 1;
             mouseNDC.y = -((e.clientY - rect.top)  / rect.height) * 2 + 1;
-            // 地球拖拽旋轉
             if (globeDragging && globeDragLast && scene && scene.userData.globeGroup) {
-                var dx = e.clientX - globeDragLast.x;
-                var dy = e.clientY - globeDragLast.y;
-                scene.userData.globeGroup.rotation.y += dx * 0.005;
-                scene.userData.globeGroup.rotation.x += dy * 0.005;
-                scene.userData.globeGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, scene.userData.globeGroup.rotation.x));
+                scene.userData.globeGroup.rotation.y += (e.clientX - globeDragLast.x) * 0.005;
+                scene.userData.globeGroup.rotation.x = clamp(scene.userData.globeGroup.rotation.x + (e.clientY - globeDragLast.y) * 0.005, -Math.PI / 2, Math.PI / 2);
                 globeDragLast = { x: e.clientX, y: e.clientY };
             }
         }
     }
 
     function onCanvasClick() {
-        var c = document.getElementById('warroom-canvas');
         if (!document.pointerLockElement) {
-            if (c.requestPointerLock) c.requestPointerLock();
+            if (warCanvas.requestPointerLock) warCanvas.requestPointerLock();
             return;
         }
         raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
@@ -4005,13 +3939,11 @@
 
     function onTouchStart(e) {
         var isLand = window.innerWidth > window.innerHeight;
-        var c2 = document.getElementById('warroom-canvas');
         for (var ti = 0; ti < e.changedTouches.length; ti++) {
             var t = e.changedTouches[ti];
             var handled = false;
-            // 終端機碰撞優先
             if (termUI.mesh && scene && raycaster && camera) {
-                var rect2 = c2.getBoundingClientRect();
+                var rect2 = warCanvas.getBoundingClientRect();
                 var mx2 = ((t.clientX - rect2.left) / rect2.width) * 2 - 1;
                 var my2 = -((t.clientY - rect2.top) / rect2.height) * 2 + 1;
                 raycaster.setFromCamera(new THREE.Vector2(mx2, my2), camera);
@@ -4080,8 +4012,7 @@
                     if (vk) { vk.style.left = (vrJoy.baseX + jdx) + 'px'; vk.style.top = (vrJoy.baseY + jdy) + 'px'; }
                 } else if (t.identifier === vrLookId && vrLookLast) {
                     yaw   -= (t.clientX - vrLookLast.x) * 0.004;
-                    pitch -= (t.clientY - vrLookLast.y) * 0.004;
-                    pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                    pitch  = clamp(pitch - (t.clientY - vrLookLast.y) * 0.004, -1.3, 1.3);
                     vrLookLast = { x: t.clientX, y: t.clientY };
                 }
             } else {
@@ -4090,12 +4021,10 @@
                     var dy = t.clientY - touchPrev.y;
                     if (globeDragging && scene && scene.userData.globeGroup) {
                         scene.userData.globeGroup.rotation.y += dx * 0.007;
-                        scene.userData.globeGroup.rotation.x += dy * 0.007;
-                        scene.userData.globeGroup.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, scene.userData.globeGroup.rotation.x));
+                        scene.userData.globeGroup.rotation.x = clamp(scene.userData.globeGroup.rotation.x + dy * 0.007, -Math.PI / 2, Math.PI / 2);
                     } else {
                         yaw   -= dx * 0.004;
-                        pitch -= dy * 0.004;
-                        pitch  = Math.max(-1.3, Math.min(1.3, pitch));
+                        pitch  = clamp(pitch - dy * 0.004, -1.3, 1.3);
                     }
                     touchPrev = { x: t.clientX, y: t.clientY };
                 }
@@ -4129,8 +4058,7 @@
             var wasTerm = termUI.touchActive;
             termUI.touchActive = false;
             var moveDist = Math.abs(t.clientY - termUI.touchStartY);
-            var c = document.getElementById('warroom-canvas');
-            var rect = c.getBoundingClientRect();
+            var rect = warCanvas.getBoundingClientRect();
             var mx = ((t.clientX - rect.left) / rect.width) * 2 - 1;
             var my = -((t.clientY - rect.top) / rect.height) * 2 + 1;
             if (scene && raycaster && camera) {
@@ -4250,8 +4178,7 @@
         if (coordsEl) coordsEl.textContent = 'SECTOR ' + Math.round(px) + ' , ' + Math.round(pz);
 
         // Raycasting hover（面板縮放 + tooltip）
-        var c = document.getElementById('warroom-canvas');
-        var rv = (document.pointerLockElement === c)
+        var rv = (document.pointerLockElement === warCanvas)
             ? new THREE.Vector2(0, 0)
             : new THREE.Vector2(mouseNDC.x, mouseNDC.y);
         raycaster.setFromCamera(rv, camera);
@@ -4275,11 +4202,9 @@
 
     // ── 終端機面板：screen-space projection（可靠，免除 CSS3D 矩陣複雜度）──
     function updateCSS3D() {
-        var cam = document.getElementById('wr-css3d-cam');
-        if (!cam || cam.style.visibility !== 'visible') return;
+        if (!css3dCamEl || css3dCamEl.style.visibility !== 'visible') return;
         if (!termUI.mesh || !camera || !renderer) return;
-        var panel = document.getElementById('wr-term-panel');
-        if (!panel) return;
+        if (!termPanelEl) return;
 
         var W = renderer.domElement.clientWidth || window.innerWidth;
         var H = renderer.domElement.clientHeight || window.innerHeight;
@@ -4296,58 +4221,32 @@
         var projHalfW = Math.abs((rp.x + 1) / 2 * W - sx);
         var scale = Math.max(0.3, Math.min(1.8, (projHalfW * 2) / 560));
 
-        // mesh rotation.x = -0.25 ≈ 14° 後仰，用 rotateX 模擬
-        panel.style.left = sx + 'px';
-        panel.style.top  = sy + 'px';
-        panel.style.transform =
+        termPanelEl.style.left = sx + 'px';
+        termPanelEl.style.top  = sy + 'px';
+        termPanelEl.style.transform =
             'translate(-50%,-50%) perspective(600px) rotateX(14deg) scale(' + scale + ')';
     }
 
     // ── 文章終端機 HTML overlay ───────────────────────────────────
 
     function openTerminalOverlay() {
-        var css3dCam = document.getElementById('wr-css3d-cam');
-        if (!css3dCam) return;
+        if (!css3dCamEl) return;
 
-        // 收集所有文章
-        var articles = [];
-        document.querySelectorAll('.news-card').forEach(function(card) {
-            var aEl = card.querySelector('a');
-            var dtEl = card.querySelector('.date');
-            var bdEl = card.querySelector('.news-badge');
-            if (!aEl || !aEl.href) return;
-            var color = '#e0c050', cat = 'other';
-            if (bdEl) {
-                if (bdEl.classList.contains('military'))         { color = '#c0392b'; cat = 'military'; }
-                else if (bdEl.classList.contains('geopolitics')) { color = '#2980b9'; cat = 'geo'; }
-                else if (bdEl.classList.contains('analysis'))    { color = '#27ae60'; cat = 'analysis'; }
-            }
-            articles.push({
-                title: aEl.textContent.trim(), url: aEl.href,
-                date:  dtEl ? dtEl.textContent.trim() : '',
-                color: color, cat: cat
-            });
-        });
-
-        termUI._articles = articles;
+        termUI._articles = parseNewsCards();
         termUI._filter   = 'all';
 
-        // 關閉按鈕
         var closeBtn = document.getElementById('wr-term-close');
         if (closeBtn) { closeBtn.onclick = closeTerminalOverlay; }
 
         _termRenderTabs();
         _termRenderList();
 
-        // 顯示 CSS3D 面板，釋放滑鼠
-        css3dCam.style.visibility = 'visible';
+        css3dCamEl.style.visibility = 'visible';
         if (document.pointerLockElement) document.exitPointerLock();
     }
 
     function closeTerminalOverlay() {
-        var css3dCam = document.getElementById('wr-css3d-cam');
-        if (css3dCam) css3dCam.style.visibility = 'hidden';
-        // 重新進入準心鎖定（下次點擊 canvas 時自動觸發）
+        if (css3dCamEl) css3dCamEl.style.visibility = 'hidden';
     }
 
     function _termRenderTabs() {
@@ -4435,7 +4334,6 @@
 
         var catName   = { military: '軍事', geo: '地緣政治', analysis: '深度分析' }[art.cat] || '其他';
         var safeTitle = art.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        var safeUrl   = art.url.replace(/"/g,'%22');
 
         detailEl.innerHTML =
             '<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">' +
