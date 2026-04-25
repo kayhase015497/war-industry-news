@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "title": "馬利武裝攻擊地圖",
+    "titleEn": "Mali Armed Attacks",
+    "subtitle": "全國協調行動 — 疑似伊斯蘭和穆斯林支持組織（JNIM）| 事件仍在發展中",
+    "date": "2026年4月25日",
+    "status": "breaking",
+    "sources": ["RFI", "AFP"]
+  },
+  "map": {
+    "center": [15.5, -3.5],
+    "zoom": 6,
+    "bounds": [[10.0, -12.5], [25.0, 4.5]]
+  },
+  "infoPanel": {
+    "title": "⚠️ 事件背景",
+    "paragraphs": [
+      "2026年4月25日清晨，馬利多個城市同時爆發槍聲與爆炸。",
+      "此為<b style=\"color:#f5c518\">全國協調行動</b>，無組織立即宣稱責任，但符合 <b style=\"color:#e74c3c\">伊斯蘭和穆斯林支持組織（JNIM）</b>的跨地區作戰模式。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [12.65, -8.00],
+      "name": "Bamako（巴馬科）",
+      "nameLocal": "巴馬科",
+      "type": "capital",
+      "tag": "馬利首都",
+      "tagClass": "tag-strategic",
+      "desc": "馬利共和國首都，人口約 260 萬。本次全國協調攻擊早晨即在首都周邊觸發，軍方加強安全戒備。機場（Modibo Keïta 國際機場）傳有相關安全動態。",
+      "coords": "12.65°N, 8.00°W",
+      "source": "RFI・AFP 2026.04.25"
+    },
+    {
+      "latlng": [12.74, -8.07],
+      "name": "Kati（卡提）",
+      "nameLocal": "卡提",
+      "type": "confirmed",
+      "tag": "確認槍聲 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "距巴馬科西北約 15–20 公里的軍事重鎮，是馬利軍政府領導人戈伊塔（Assimi Goïta）的主要駐地與軍營所在地。RFI 明確報導此處發生激烈槍聲，為本次攻擊最受矚目的目標之一。",
+      "coords": "12.74°N, 8.07°W",
+      "source": "RFI 2026.04.25（直接確認）"
+    },
+    {
+      "latlng": [12.53, -7.95],
+      "name": "莫迪博·凱塔國際機場",
+      "nameLocal": "巴馬科機場",
+      "type": "possible",
+      "tag": "可能波及",
+      "tagClass": "tag-possible",
+      "desc": "巴馬科莫迪博·凱塔國際機場（Aéroport international Modibo Keïta），過去曾多次成為武裝攻擊目標。本次事件有傳聞指出機場周邊出現相關安全動態，細節待官方確認。",
+      "coords": "12.53°N, 7.95°W",
+      "source": "傳聞（待確認）"
+    },
+    {
+      "latlng": [16.27, -0.05],
+      "name": "Gao（加奧）",
+      "nameLocal": "加奧",
+      "type": "confirmed",
+      "tag": "確認槍聲 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利北部最大城市，重要軍事與戰略據點，聯合國維和部隊與法國部隊曾長期駐紮於此。RFI 確認本次攻擊中加奧有槍聲報告，是北部協調行動的核心節點。",
+      "coords": "16.27°N, 0.05°W",
+      "source": "RFI 2026.04.25（直接確認）"
+    },
+    {
+      "latlng": [18.44, 1.41],
+      "name": "Kidal（基達爾）",
+      "nameLocal": "基達爾",
+      "type": "confirmed",
+      "tag": "確認攻擊 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利東北部圖阿雷格（Tuareg）地區重鎮，長期衝突熱點。2023 年馬利政府軍重新奪回控制後，安全局勢仍高度緊張。本次 RFI 報導確認有攻擊事件。",
+      "coords": "18.44°N, 1.41°E",
+      "source": "RFI 2026.04.25（直接確認）"
+    },
+    {
+      "latlng": [14.53, -4.10],
+      "name": "Sévaré / Mopti（塞瓦雷）",
+      "nameLocal": "塞瓦雷",
+      "type": "confirmed",
+      "tag": "確認衝突 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利中部重要軍事基地與交通樞紐，緊鄰 Mopti。是 Gao–Sévaré 公路走廊（RN16）的南端關鍵節點，中部馬利沙赫勒地帶衝突頻繁。RFI 確認本次有衝突發生。",
+      "coords": "14.53°N, 4.10°W",
+      "source": "RFI 2026.04.25（直接確認）"
+    },
+    {
+      "latlng": [14.45, -4.20],
+      "name": "Mopti（莫普提）",
+      "nameLocal": "莫普提",
+      "type": "reference",
+      "tag": "鄰近參考城市",
+      "tagClass": "tag-reference",
+      "desc": "馬利中部重要城市，與 Sévaré 相距約 10 公里，同為中部地區行政與交通中心。過去曾多次遭受武裝攻擊。",
+      "coords": "14.48°N, 4.18°W",
+      "source": "背景參考"
+    },
+    {
+      "latlng": [13.45, -6.27],
+      "name": "Ségou（塞古）",
+      "nameLocal": "塞古",
+      "type": "reference",
+      "tag": "歷史攻擊地點",
+      "tagClass": "tag-reference",
+      "desc": "過去多次類似協調攻擊中曾波及此地，本次報導主要聚焦於上述確認地點，Ségou 列為參考。",
+      "coords": "13.45°N, 6.27°W",
+      "source": "歷史紀錄參考"
+    },
+    {
+      "latlng": [18.00, -2.73],
+      "name": "Tombouctou / Timbuktu（廷巴克圖）",
+      "nameLocal": "廷巴克圖",
+      "type": "reference",
+      "tag": "歷史衝突熱點",
+      "tagClass": "tag-reference",
+      "desc": "聯合國世界文化遺產城市，過去為伊斯蘭武裝組織佔據（2012–2013），重新收復後仍為北部衝突熱點，本次未有直接報告。",
+      "coords": "16.77°N, 3.00°W",
+      "source": "歷史紀錄參考"
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [16.27, -0.05], [15.80, -0.60], [15.30, -1.20],
+        [14.90, -1.80], [14.53, -4.10], [14.20, -4.50],
+        [13.80, -5.50], [13.52, -6.27]
+      ],
+      "color": "#f39c12",
+      "weight": 3,
+      "opacity": 0.75,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "🛣️ Gao–Sévaré 公路走廊（RN16）",
+        "tag": "高風險路線",
+        "tagClass": "tag-possible",
+        "desc": "連接北部 Gao 與中部 Sévaré/Mopti 的主要幹道，長期為武裝團體伏擊熱點。本次攻擊之 Gao 與 Sévaré 兩端均有衝突報告，此路廊安全形勢極度惡化。",
+        "source": "RFI・ACLED 長期追蹤路線"
+      }
+    },
+    {
+      "points": [[12.65, -8.00], [12.74, -8.07]],
+      "color": "#e74c3c",
+      "weight": 2.5,
+      "opacity": 0.7,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "🔴 Bamako — Kati 軍事走廊",
+        "tag": "本次攻擊核心區域",
+        "tagClass": "tag-confirmed",
+        "desc": "Kati 軍營是 junta 權力核心，距首都僅 15–20 公里。攻擊此地具有高度政治與軍事象徵意義。",
+        "source": null
+      }
+    },
+    {
+      "points": [[16.27, -0.05], [18.44, 1.41]],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.55,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "北部攻擊軸線：Gao — Kidal",
+        "tag": "兩地均確認攻擊",
+        "tagClass": "tag-confirmed",
+        "desc": "兩城同日遭受攻擊，顯示本次為有組織的全國協調行動，符合伊斯蘭和穆斯林支持組織（JNIM）等跨地區武裝團體的作戰模式。",
+        "source": null
+      }
+    }
+  ]
+}

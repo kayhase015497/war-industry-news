@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>互動戰況地圖｜張威翔</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+    }
+
+    #header {
+      background: #0f0f1e;
+      border-bottom: 2px solid #e67e22;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #header .title-block h1 { font-size: 1.08rem; font-weight: 700; color: #f0f0f0; letter-spacing: 0.03em; }
+    #header .title-block h1 span { color: #e67e22; }
+    #header .title-block .sub { font-size: 0.72rem; color: #999; margin-top: 2px; }
+    .badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .badge { padding: 3px 11px; border-radius: 3px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
+    .badge-breaking { background: #c0392b; color: #fff; animation: pulse 1.8s infinite; }
+    .badge-ongoing  { background: #e67e22; color: #fff; }
+    .badge-resolved { background: #27ae60; color: #fff; }
+    .badge-date { background: #e67e22; color: #fff; }
+    .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    #map { width: 100%; height: calc(100vh - 118px); min-height: 480px; }
+
+    .leaflet-popup-content-wrapper {
+      background: rgba(12, 12, 28, 0.96);
+      border: 1px solid #555;
+      border-radius: 7px;
+      color: #eee;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.7);
+      max-width: 300px;
+    }
+    .leaflet-popup-tip { background: rgba(12, 12, 28, 0.96); }
+    .leaflet-popup-content { margin: 13px 16px; font-size: 0.81rem; line-height: 1.65; }
+    .leaflet-popup-content h3 { font-size: 1rem; margin-bottom: 5px; color: #f5c518; }
+    .leaflet-popup-content .tag {
+      display: inline-block; font-size: 0.67rem; padding: 2px 8px;
+      border-radius: 3px; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .tag-confirmed { background: #c0392b; color: #fff; }
+    .tag-possible  { background: #e67e22; color: #fff; }
+    .tag-strategic { background: #2980b9; color: #fff; }
+    .tag-reference { background: #27ae60; color: #fff; }
+    .leaflet-popup-content p { color: #ccc; margin: 3px 0; font-size: 0.79rem; }
+    .leaflet-popup-content .source {
+      margin-top: 8px; padding-top: 7px; border-top: 1px solid #444;
+      font-size: 0.7rem; color: #888;
+    }
+    .leaflet-popup-close-button { color: #aaa !important; font-size: 1rem !important; }
+
+    .legend {
+      background: rgba(12, 12, 28, 0.93); border: 1px solid #444;
+      border-radius: 7px; padding: 13px 16px; color: #eee;
+      font-size: 0.78rem; min-width: 175px; backdrop-filter: blur(4px);
+    }
+    .legend h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 9px; color: #fff; border-bottom: 1px solid #444; padding-bottom: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; line-height: 1.3; }
+    .ld { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+    .ll { width: 26px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+
+    .info-panel {
+      background: rgba(12, 12, 28, 0.93); border: 1px solid #444;
+      border-radius: 7px; padding: 12px 14px; color: #eee;
+      font-size: 0.76rem; max-width: 210px; line-height: 1.55; backdrop-filter: blur(4px);
+    }
+    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #f5c518; }
+    .info-panel hr { border-color: #444; margin: 7px 0; }
+
+    .loc-tooltip {
+      background: rgba(10,10,25,0.88) !important; border: 1px solid #666 !important;
+      border-radius: 4px !important; color: #f0f0f0 !important;
+      font-size: 0.69rem !important; font-weight: 600 !important;
+      padding: 2px 7px !important; white-space: nowrap !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
+    }
+    .loc-tooltip::before { display: none !important; }
+
+    #footer {
+      background: #0f0f1e; border-top: 1px solid #2a2a3e;
+      padding: 7px 22px; font-size: 0.68rem; color: #555;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px;
+    }
+
+    @keyframes ripple { 0% { transform: scale(0.8); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
+
+    #loading {
+      position: fixed; inset: 0; background: #1a1a2e;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: #888; z-index: 9999;
+    }
+    #error-msg {
+      position: fixed; inset: 0; background: #1a1a2e;
+      display: none; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px; color: #e74c3c; z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading">載入地圖資料中…</div>
+<div id="error-msg">
+  <span style="font-size:2rem">⚠️</span>
+  <span id="error-text">找不到地圖資料，請確認網址是否正確。</span>
+</div>
+
+<div id="header" style="display:none">
+  <div class="title-block">
+    <h1 id="h-title"></h1>
+    <div class="sub" id="h-subtitle"></div>
+  </div>
+  <div class="badge-row" id="h-badges"></div>
+</div>
+
+<div id="map"></div>
+
+<div id="footer" style="display:none">
+  <span>底圖：© <a href="https://www.openstreetmap.org/copyright" style="color:#666">OpenStreetMap</a> 貢獻者</span>
+  <span>⚠️ 情況快速變化，本圖為初步整理，請持續追蹤官方聲明</span>
+</div>
+
+<script>
+// ── 從網址讀取要載入的資料檔名 ──────────────────────
+const params = new URLSearchParams(location.search);
+const dataName = params.get('d');
+
+if (!dataName) {
+  showError('網址缺少參數，請使用格式：template.html?d=檔名');
+} else {
+  fetch('data/' + dataName + '.json')
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(initMap)
+    .catch(() => showError('找不到資料檔：data/' + dataName + '.json'));
+}
+
+function showError(msg) {
+  document.getElementById('loading').style.display = 'none';
+  const el = document.getElementById('error-msg');
+  el.style.display = 'flex';
+  document.getElementById('error-text').textContent = msg;
+}
+
+// ── 主程式：資料載入後執行 ────────────────────────────
+function initMap(d) {
+  // 更新頁面標題
+  document.title = d.meta.title + '｜' + d.meta.date;
+
+  // Header
+  document.getElementById('h-title').innerHTML =
+    d.meta.title + ' <span>' + d.meta.titleEn + '</span>';
+  document.getElementById('h-subtitle').textContent = d.meta.subtitle;
+
+  const statusLabel = { breaking: '⚡ BREAKING', ongoing: '▶ ONGOING', resolved: '✓ RESOLVED' };
+  const statusClass = { breaking: 'badge-breaking', ongoing: 'badge-ongoing', resolved: 'badge-resolved' };
+  const sourceBadges = d.meta.sources.map(s =>
+    '<span class="badge badge-news">' + s + '</span>'
+  ).join('');
+  document.getElementById('h-badges').innerHTML =
+    '<span class="badge ' + (statusClass[d.meta.status] || 'badge-ongoing') + '">' +
+    (statusLabel[d.meta.status] || d.meta.status) + '</span>' +
+    '<span class="badge badge-date">' + d.meta.date + '</span>' +
+    sourceBadges;
+
+  document.getElementById('header').style.display = 'flex';
+  document.getElementById('footer').style.display = 'flex';
+  document.getElementById('loading').style.display = 'none';
+
+  // 初始化地圖
+  const map = L.map('map', {
+    center: d.map.center,
+    zoom: d.map.zoom,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18, opacity: 0.82
+  }).addTo(map);
+
+  if (d.map.bounds) map.fitBounds(d.map.bounds);
+
+  // ── 說明面板（左上） ──────────────────────────────
+  const info = L.control({ position: 'topleft' });
+  info.onAdd = function() {
+    const div = L.DomUtil.create('div', 'info-panel');
+    const paras = d.infoPanel.paragraphs.map(p => '<p>' + p + '</p>').join('');
+    div.innerHTML =
+      '<h4>' + d.infoPanel.title + '</h4>' +
+      paras +
+      '<hr><p style="color:#888;font-size:0.71rem">🖱️ 點擊標記查看詳情<br>情況仍在發展，資訊持續更新</p>';
+    return div;
+  };
+  info.addTo(map);
+
+  // ── 路線 ──────────────────────────────────────────
+  d.lines.forEach(function(ln) {
+    const line = L.polyline(ln.points, {
+      color: ln.color,
+      weight: ln.weight,
+      opacity: ln.opacity,
+      dashArray: ln.dashArray || null
+    }).addTo(map);
+
+    if (ln.popup) {
+      const p = ln.popup;
+      const sourceHtml = p.source ? '<div class="source">📰 ' + p.source + '</div>' : '';
+      line.bindPopup(
+        '<h3>' + p.title + '</h3>' +
+        '<span class="tag ' + p.tagClass + '">' + p.tag + '</span>' +
+        '<p>' + p.desc + '</p>' +
+        sourceHtml
+      );
+    }
+  });
+
+  // ── 地點標記 ──────────────────────────────────────
+  d.locations.forEach(function(loc) {
+    const marker = L.marker(loc.latlng, { icon: makeIcon(loc.type) }).addTo(map);
+
+    marker.bindPopup(
+      '<h3>' + loc.name + '</h3>' +
+      '<span class="tag ' + loc.tagClass + '">' + loc.tag + '</span>' +
+      '<p>' + loc.desc + '</p>' +
+      '<p style="margin-top:5px;color:#aaa;font-size:0.73rem">📍 ' + loc.coords + '</p>' +
+      '<div class="source">📰 ' + loc.source + '</div>'
+    );
+
+    marker.bindTooltip(loc.nameLocal, {
+      permanent: true, direction: 'right',
+      offset: [10, 0], className: 'loc-tooltip'
+    });
+  });
+
+  // ── 圖例（右下） ──────────────────────────────────
+  const legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function() {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML =
+      '<h4>📌 圖例</h4>' +
+      '<div class="legend-item"><div class="ld" style="background:#e74c3c;border:2px solid #fff;"></div><span>確認攻擊／槍聲地點</span></div>' +
+      '<div class="legend-item"><div class="ld" style="background:#e67e22;border:2px solid #fff;"></div><span>可能波及（待確認）</span></div>' +
+      '<div class="legend-item"><div class="ld" style="background:#f1c40f;border:2px solid #fff;"></div><span>首都／重要城市</span></div>' +
+      '<div class="legend-item"><div class="ld" style="background:#27ae60;border:2px solid #fff;"></div><span>歷史衝突參考地點</span></div>' +
+      '<div class="legend-item"><div class="ll" style="background:#f39c12;"></div><span>重要公路走廊</span></div>' +
+      '<div class="legend-item"><div class="ll" style="background:#e74c3c;"></div><span>本次攻擊戰略軸線</span></div>';
+    return div;
+  };
+  legend.addTo(map);
+}
+
+// ── 標記圖示工廠 ──────────────────────────────────────
+function makeIcon(type) {
+  if (type === 'capital')   return circleIcon('#f1c40f', 18, false);
+  if (type === 'confirmed') return circleIcon('#e74c3c', 15, true);
+  if (type === 'possible')  return circleIcon('#e67e22', 13, true);
+  return circleIcon('#27ae60', 11, false);
+}
+
+function circleIcon(color, size, pulse) {
+  const ps = size + 6;
+  const pulseHtml = pulse
+    ? '<div style="position:absolute;top:' + (-ps/2+size/2) + 'px;left:' + (-ps/2+size/2) + 'px;' +
+      'width:' + ps + 'px;height:' + ps + 'px;background:' + color + ';opacity:0.35;' +
+      'border-radius:50%;animation:ripple 1.6s ease-out infinite;"></div>'
+    : '';
+  return L.divIcon({
+    className: '',
+    html: '<div style="position:relative;width:' + size + 'px;height:' + size + 'px;">' +
+      pulseHtml +
+      '<div style="position:absolute;top:0;left:0;width:' + size + 'px;height:' + size + 'px;' +
+      'background:' + color + ';border:2.5px solid rgba(255,255,255,0.9);border-radius:50%;' +
+      'box-shadow:0 2px 10px rgba(0,0,0,0.7);z-index:2;"></div></div>',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2]
+  });
+}
+</script>
+</body>
+</html>
