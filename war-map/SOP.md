@@ -76,12 +76,12 @@
 
 ## 地圖網址格式：
 ```
-https://kayhase015497.github.io/war-industry-news/war-map/template.html?d=檔名
+https://kayhase015497.github.io/war-industry-news/war-map/siterep.html?d=檔名
 ```
 
 例：
 ```
-https://kayhase015497.github.io/war-industry-news/war-map/template.html?d=iran_strike_20260501
+https://kayhase015497.github.io/war-industry-news/war-map/siterep.html?d=iran_strike_20260501
 ```
 
 ---
