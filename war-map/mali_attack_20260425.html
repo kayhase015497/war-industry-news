@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馬利武裝攻擊地圖｜2026年4月25日</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+    }
+
+    /* ── Header ── */
+    #header {
+      background: #0f0f1e;
+      border-bottom: 2px solid #e67e22;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #header .title-block h1 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #f0f0f0;
+      letter-spacing: 0.03em;
+    }
+    #header .title-block h1 span { color: #e67e22; }
+    #header .title-block .sub {
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: 2px;
+    }
+    .badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .badge {
+      padding: 3px 11px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .badge-breaking { background: #c0392b; color: #fff; animation: pulse 1.8s infinite; }
+    .badge-date { background: #e67e22; color: #fff; }
+    .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* ── Map ── */
+    #map {
+      width: 100%;
+      height: calc(100vh - 118px);
+      min-height: 480px;
+    }
+
+    /* ── Leaflet popup ── */
+    .leaflet-popup-content-wrapper {
+      background: rgba(12, 12, 28, 0.96);
+      border: 1px solid #555;
+      border-radius: 7px;
+      color: #eee;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.7);
+      max-width: 300px;
+    }
+    .leaflet-popup-tip { background: rgba(12, 12, 28, 0.96); }
+    .leaflet-popup-content { margin: 13px 16px; font-size: 0.81rem; line-height: 1.65; }
+    .leaflet-popup-content h3 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+      color: #f5c518;
+    }
+    .leaflet-popup-content .tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .tag-confirmed { background: #c0392b; color: #fff; }
+    .tag-possible  { background: #e67e22; color: #fff; }
+    .tag-strategic { background: #2980b9; color: #fff; }
+    .tag-reference { background: #27ae60; color: #fff; }
+    .leaflet-popup-content p { color: #ccc; margin: 3px 0; font-size: 0.79rem; }
+    .leaflet-popup-content .source {
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px solid #444;
+      font-size: 0.7rem;
+      color: #888;
+    }
+    .leaflet-popup-close-button { color: #aaa !important; font-size: 1rem !important; }
+
+    /* ── Legend ── */
+    .legend {
+      background: rgba(12, 12, 28, 0.93);
+      border: 1px solid #444;
+      border-radius: 7px;
+      padding: 13px 16px;
+      color: #eee;
+      font-size: 0.78rem;
+      min-width: 175px;
+      backdrop-filter: blur(4px);
+    }
+    .legend h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 9px;
+      color: #fff;
+      border-bottom: 1px solid #444;
+      padding-bottom: 6px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; line-height: 1.3; }
+    .ld { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+    .ll { width: 26px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+    .lsq { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── Info Panel ── */
+    .info-panel {
+      background: rgba(12, 12, 28, 0.93);
+      border: 1px solid #444;
+      border-radius: 7px;
+      padding: 12px 14px;
+      color: #eee;
+      font-size: 0.76rem;
+      max-width: 210px;
+      line-height: 1.55;
+      backdrop-filter: blur(4px);
+    }
+    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #f5c518; }
+    .info-panel hr { border-color: #444; margin: 7px 0; }
+
+    /* ── Tooltip ── */
+    .loc-tooltip {
+      background: rgba(10,10,25,0.88) !important;
+      border: 1px solid #666 !important;
+      border-radius: 4px !important;
+      color: #f0f0f0 !important;
+      font-size: 0.69rem !important;
+      font-weight: 600 !important;
+      padding: 2px 7px !important;
+      white-space: nowrap !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
+    }
+    .loc-tooltip::before { display: none !important; }
+
+    /* ── Footer ── */
+    #footer {
+      background: #0f0f1e;
+      border-top: 1px solid #2a2a3e;
+      padding: 7px 22px;
+      font-size: 0.68rem;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    /* ── Pulse animation for active attack markers ── */
+    .pulse-ring {
+      border-radius: 50%;
+      animation: ripple 1.6s ease-out infinite;
+    }
+    @keyframes ripple {
+      0%   { transform: scale(0.8); opacity: 0.9; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div class="title-block">
+    <h1>馬利武裝攻擊地圖 <span>Mali Armed Attacks</span></h1>
+    <div class="sub">全國協調行動 — 疑似伊斯蘭和穆斯林支持組織（JNIM）| 事件仍在發展中</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge badge-breaking">⚡ BREAKING</span>
+    <span class="badge badge-date">2026年4月25日</span>
+    <span class="badge badge-news">來源：RFI・AFP</span>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div id="footer">
+  <span>底圖：© <a href="https://www.openstreetmap.org/copyright" style="color:#666">OpenStreetMap</a> 貢獻者</span>
+  <span>⚠️ 情況快速變化，本圖為初步整理，請持續追蹤 RFI、AFP、FAMa 官方聲明</span>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  初始化：以馬利中部為中心
+// ════════════════════════════════════════
+const map = L.map('map', {
+  center: [15.5, -3.5],
+  zoom: 6,
+  zoomControl: true,
+  attributionControl: false
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  opacity: 0.82
+}).addTo(map);
+
+// 地圖邊界（馬利全境可見）
+map.fitBounds([[10.0, -12.5], [25.0, 4.5]]);
+
+// ════════════════════════════════════════
+//  輔助：建立脈動攻擊標記圖示
+// ════════════════════════════════════════
+function attackIcon(color, size = 14, pulse = true) {
+  const ps = size + 6;
+  const pulseHtml = pulse ? `
+    <div style="
+      position:absolute;
+      top:${-ps/2 + size/2}px;left:${-ps/2 + size/2}px;
+      width:${ps}px;height:${ps}px;
+      background:${color};opacity:0.35;
+      border-radius:50%;
+      animation:ripple 1.6s ease-out infinite;
+    "></div>` : '';
+  return L.divIcon({
+    className: '',
+    html: `<div style="position:relative;width:${size}px;height:${size}px;">
+      ${pulseHtml}
+      <div style="
+        position:absolute;top:0;left:0;
+        width:${size}px;height:${size}px;
+        background:${color};
+        border:2.5px solid rgba(255,255,255,0.9);
+        border-radius:50%;
+        box-shadow:0 2px 10px rgba(0,0,0,0.7);
+        z-index:2;
+      "></div>
+    </div>`,
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2]
+  });
+}
+
+function capitalIcon() {
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width:18px;height:18px;
+      background:#f1c40f;
+      border:3px solid #fff;
+      border-radius:50%;
+      box-shadow:0 2px 10px rgba(0,0,0,0.8);
+    "></div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
+}
+
+function roadIcon() {
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width:12px;height:12px;
+      background:#f39c12;
+      border:2px solid #fff;
+      border-radius:2px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.6);
+      transform:rotate(45deg);
+    "></div>`,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6]
+  });
+}
+
+// ════════════════════════════════════════
+//  馬利國境大致輪廓（參考線）
+// ════════════════════════════════════════
+// 不畫完整邊境線，讓 OSM 底圖顯示即可
+
+// ════════════════════════════════════════
+//  Gao — Sévaré 公路走廊 (RN16)
+// ════════════════════════════════════════
+const rn16 = L.polyline([
+  [16.27, -0.05],   // Gao
+  [15.80, -0.60],
+  [15.30, -1.20],
+  [14.90, -1.80],
+  [14.53, -4.10],   // Sévaré / Mopti
+  [14.20, -4.50],
+  [13.80, -5.50],
+  [13.52, -6.27]    // Ségou 方向
+], {
+  color: '#f39c12',
+  weight: 3,
+  opacity: 0.75,
+  dashArray: '7,5'
+}).addTo(map).bindPopup(`
+  <h3>🛣️ Gao–Sévaré 公路走廊（RN16）</h3>
+  <span class="tag tag-possible">高風險路線</span>
+  <p>連接北部 Gao 與中部 Sévaré/Mopti 的主要幹道，長期為武裝團體伏擊熱點。</p>
+  <p>本次攻擊之 Gao 與 Sévaré 兩端均有衝突報告，此路廊安全形勢極度惡化。</p>
+  <div class="source">來源：RFI・ACLED 長期追蹤路線</div>
+`);
+
+// ════════════════════════════════════════
+//  地點資料
+// ════════════════════════════════════════
+const locations = [
+
+  // ── 首都圈 ──
+  {
+    latlng: [12.65, -8.00],
+    name: 'Bamako（巴馬科）',
+    nameLocal: '巴馬科',
+    type: 'capital',
+    tag: '馬利首都',
+    tagClass: 'tag-strategic',
+    desc: '馬利共和國首都，人口約 260 萬。本次全國協調攻擊早晨即在首都周邊觸發，軍方加強安全戒備。機場（Modibo Keïta 國際機場）傳有相關安全動態。',
+    coords: '12.65°N, 8.00°W',
+    source: 'RFI・AFP 2026.04.25'
+  },
+  {
+    latlng: [12.74, -8.07],
+    name: 'Kati（卡提）',
+    nameLocal: '卡提',
+    type: 'confirmed',
+    tag: '確認槍聲 ⚡',
+    tagClass: 'tag-confirmed',
+    desc: '距巴馬科西北約 15–20 公里的軍事重鎮，是馬利軍政府領導人戈伊塔（Assimi Goïta）的主要駐地與軍營所在地。RFI 明確報導此處發生激烈槍聲，為本次攻擊最受矚目的目標之一。',
+    coords: '12.74°N, 8.07°W',
+    source: 'RFI 2026.04.25（直接確認）'
+  },
+  {
+    latlng: [12.53, -7.95],
+    name: '莫迪博·凱塔國際機場',
+    nameLocal: '巴馬科機場',
+    type: 'possible',
+    tag: '可能波及',
+    tagClass: 'tag-possible',
+    desc: '巴馬科莫迪博·凱塔國際機場（Aéroport international Modibo Keïta），過去曾多次成為武裝攻擊目標。本次事件有傳聞指出機場周邊出現相關安全動態，細節待官方確認。',
+    coords: '12.53°N, 7.95°W',
+    source: '傳聞（待確認）'
+  },
+
+  // ── 北部 ──
+  {
+    latlng: [16.27, -0.05],
+    name: 'Gao（加奧）',
+    nameLocal: '加奧',
+    type: 'confirmed',
+    tag: '確認槍聲 ⚡',
+    tagClass: 'tag-confirmed',
+    desc: '馬利北部最大城市，重要軍事與戰略據點，聯合國維和部隊與法國部隊曾長期駐紮於此。RFI 確認本次攻擊中加奧有槍聲報告，是北部協調行動的核心節點。',
+    coords: '16.27°N, 0.05°W',
+    source: 'RFI 2026.04.25（直接確認）'
+  },
+  {
+    latlng: [18.44, 1.41],
+    name: 'Kidal（基達爾）',
+    nameLocal: '基達爾',
+    type: 'confirmed',
+    tag: '確認攻擊 ⚡',
+    tagClass: 'tag-confirmed',
+    desc: '馬利東北部圖阿雷格（Tuareg）地區重鎮，長期衝突熱點。2023 年馬利政府軍重新奪回控制後，安全局勢仍高度緊張。本次 RFI 報導確認有攻擊事件。',
+    coords: '18.44°N, 1.41°E',
+    source: 'RFI 2026.04.25（直接確認）'
+  },
+
+  // ── 中部 ──
+  {
+    latlng: [14.53, -4.10],
+    name: 'Sévaré / Mopti（塞瓦雷）',
+    nameLocal: '塞瓦雷',
+    type: 'confirmed',
+    tag: '確認衝突 ⚡',
+    tagClass: 'tag-confirmed',
+    desc: '馬利中部重要軍事基地與交通樞紐，緊鄰 Mopti。是 Gao–Sévaré 公路走廊（RN16）的南端關鍵節點，中部馬利沙赫勒地帶衝突頻繁。RFI 確認本次有衝突發生。',
+    coords: '14.53°N, 4.10°W',
+    source: 'RFI 2026.04.25（直接確認）'
+  },
+  {
+    latlng: [14.45, -4.20],
+    name: 'Mopti（莫普提）',
+    nameLocal: '莫普提',
+    type: 'reference',
+    tag: '鄰近參考城市',
+    tagClass: 'tag-reference',
+    desc: '馬利中部重要城市，與 Sévaré 相距約 10 公里，同為中部地區行政與交通中心。過去曾多次遭受武裝攻擊。',
+    coords: '14.48°N, 4.18°W',
+    source: '背景參考'
+  },
+
+  // ── 過去類似事件參考地點 ──
+  {
+    latlng: [13.45, -6.27],
+    name: 'Ségou（塞古）',
+    nameLocal: '塞古',
+    type: 'reference',
+    tag: '歷史攻擊地點',
+    tagClass: 'tag-reference',
+    desc: '過去多次類似協調攻擊中曾波及此地，本次報導主要聚焦於上述確認地點，Ségou 列為參考。',
+    coords: '13.45°N, 6.27°W',
+    source: '歷史紀錄參考'
+  },
+  {
+    latlng: [18.00, -2.73],
+    name: 'Tombouctou / Timbuktu（廷巴克圖）',
+    nameLocal: '廷巴克圖',
+    type: 'reference',
+    tag: '歷史衝突熱點',
+    tagClass: 'tag-reference',
+    desc: '聯合國世界文化遺產城市，過去為伊斯蘭武裝組織佔據（2012–2013），重新收復後仍為北部衝突熱點，本次未有直接報告。',
+    coords: '16.77°N, 3.00°W',
+    source: '歷史紀錄參考'
+  }
+];
+
+// ════════════════════════════════════════
+//  繪製地點標記
+// ════════════════════════════════════════
+locations.forEach(loc => {
+  let icon;
+  if (loc.type === 'capital') {
+    icon = capitalIcon();
+  } else if (loc.type === 'confirmed') {
+    icon = attackIcon('#e74c3c', 15, true);
+  } else if (loc.type === 'possible') {
+    icon = attackIcon('#e67e22', 13, true);
+  } else {
+    icon = attackIcon('#27ae60', 11, false);
+  }
+
+  const marker = L.marker(loc.latlng, { icon }).addTo(map);
+
+  marker.bindPopup(`
+    <h3>${loc.name}</h3>
+    <span class="tag ${loc.tagClass}">${loc.tag}</span>
+    <p>${loc.desc}</p>
+    <p style="margin-top:5px;color:#aaa;font-size:0.73rem">📍 ${loc.coords}</p>
+    <div class="source">📰 ${loc.source}</div>
+  `);
+
+  // 城市名稱浮動標籤
+  marker.bindTooltip(loc.nameLocal, {
+    permanent: true,
+    direction: 'right',
+    offset: [10, 0],
+    className: 'loc-tooltip'
+  });
+});
+
+// ════════════════════════════════════════
+//  Kati → Bamako 連接線（軍事走廊）
+// ════════════════════════════════════════
+L.polyline([
+  [12.65, -8.00],
+  [12.74, -8.07]
+], {
+  color: '#e74c3c',
+  weight: 2.5,
+  opacity: 0.7,
+  dashArray: '5,4'
+}).addTo(map).bindPopup(`
+  <h3>🔴 Bamako — Kati 軍事走廊</h3>
+  <span class="tag tag-confirmed">本次攻擊核心區域</span>
+  <p>Kati 軍營是 junta 權力核心，距首都僅 15–20 公里。攻擊此地具有高度政治與軍事象徵意義。</p>
+`);
+
+// ════════════════════════════════════════
+//  Gao ↔ Kidal 連線（北部戰略軸線）
+// ════════════════════════════════════════
+L.polyline([
+  [16.27, -0.05],
+  [18.44, 1.41]
+], {
+  color: '#e74c3c',
+  weight: 2,
+  opacity: 0.55,
+  dashArray: '6,5'
+}).addTo(map).bindPopup(`
+  <h3>北部攻擊軸線：Gao — Kidal</h3>
+  <span class="tag tag-confirmed">兩地均確認攻擊</span>
+  <p>兩城同日遭受攻擊，顯示本次為有組織的全國協調行動，符合伊斯蘭和穆斯林支持組織（JNIM）等跨地區武裝團體的作戰模式。</p>
+`);
+
+// ════════════════════════════════════════
+//  圖例
+// ════════════════════════════════════════
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = function() {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = `
+    <h4>📌 圖例</h4>
+    <div class="legend-item">
+      <div class="ld" style="background:#e74c3c;border:2px solid #fff;"></div>
+      <span>確認攻擊／槍聲地點</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#e67e22;border:2px solid #fff;"></div>
+      <span>可能波及（待確認）</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#f1c40f;border:2px solid #fff;"></div>
+      <span>首都巴馬科</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#27ae60;border:2px solid #fff;"></div>
+      <span>歷史衝突參考地點</span>
+    </div>
+    <div class="legend-item">
+      <div class="ll" style="background:#f39c12;border:none;"></div>
+      <span>Gao–Sévaré 公路（RN16）</span>
+    </div>
+    <div class="legend-item">
+      <div class="ll" style="background:#e74c3c;border:none;"></div>
+      <span>本次攻擊戰略軸線</span>
+    </div>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+// ════════════════════════════════════════
+//  說明面板（左上角）
+// ════════════════════════════════════════
+const info = L.control({ position: 'topleft' });
+info.onAdd = function() {
+  const div = L.DomUtil.create('div', 'info-panel');
+  div.innerHTML = `
+    <h4>⚠️ 事件背景</h4>
+    <p>2026年4月25日清晨，馬利多個城市同時爆發槍聲與爆炸。</p>
+    <p>此為<b style="color:#f5c518">全國協調行動</b>，無組織立即宣稱責任，但符合 <b style="color:#e74c3c">伊斯蘭和穆斯林支持組織（JNIM）</b>的跨地區作戰模式。</p>
+    <hr>
+    <p style="color:#888;font-size:0.71rem">🖱️ 點擊標記查看詳情<br>情況仍在發展，資訊持續更新</p>
+  `;
+  return div;
+};
+info.addTo(map);
+
+// ════════════════════════════════════════
+//  自動注入 Tooltip 樣式
+// ════════════════════════════════════════
+const style = document.createElement('style');
+style.textContent = `
+  .loc-tooltip {
+    background: rgba(10,10,25,0.88) !important;
+    border: 1px solid #666 !important;
+    border-radius: 4px !important;
+    color: #f0f0f0 !important;
+    font-size: 0.69rem !important;
+    font-weight: 600 !important;
+    padding: 2px 7px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
+  }
+  .loc-tooltip::before { display:none !important; }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
