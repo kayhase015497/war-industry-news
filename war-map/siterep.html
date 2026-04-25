@@ -72,7 +72,7 @@
       border-radius: 7px; padding: 13px 16px; color: #eee;
       font-size: 0.78rem; min-width: 175px; backdrop-filter: blur(4px);
     }
-    .legend h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 9px; color: #fff; border-bottom: 1px solid #444; padding-bottom: 6px; }
+    .legend h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 9px; color: #fff; border-bottom: 1px solid #444; padding-bottom: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
     .legend-item { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; line-height: 1.3; }
     .ld { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
     .ll { width: 26px; height: 4px; border-radius: 2px; flex-shrink: 0; }
@@ -82,8 +82,20 @@
       border-radius: 7px; padding: 12px 14px; color: #eee;
       font-size: 0.76rem; max-width: 210px; line-height: 1.55; backdrop-filter: blur(4px);
     }
-    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #f5c518; }
+    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #f5c518; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
     .info-panel hr { border-color: #444; margin: 7px 0; }
+
+    .panel-toggle { font-size: 0.65rem; color: #888; margin-left: 8px; flex-shrink: 0; }
+    .panel-collapsed .panel-body { display: none; }
+    .panel-collapsed.legend { padding-bottom: 11px; }
+    .panel-collapsed.info-panel h4 { margin-bottom: 0; }
+    .panel-collapsed.legend h4 { margin-bottom: 0; border-bottom-color: transparent; padding-bottom: 0; }
+
+    @media (max-width: 600px) {
+      .info-panel { max-width: 160px; font-size: 0.71rem; padding: 8px 10px; }
+      .legend { min-width: 130px; font-size: 0.72rem; padding: 8px 10px; }
+      .legend h4, .info-panel h4 { font-size: 0.74rem; }
+    }
 
     .loc-tooltip {
       background: rgba(10,10,25,0.88) !important; border: 1px solid #666 !important;
@@ -201,11 +213,20 @@ function initMap(d) {
   const info = L.control({ position: 'topleft' });
   info.onAdd = function() {
     const div = L.DomUtil.create('div', 'info-panel');
+    const isMobile = window.innerWidth < 600;
+    if (isMobile) div.classList.add('panel-collapsed');
     const paras = d.infoPanel.paragraphs.map(p => '<p>' + p + '</p>').join('');
     div.innerHTML =
-      '<h4>' + d.infoPanel.title + '</h4>' +
+      '<h4>' + d.infoPanel.title + '<span class="panel-toggle">' + (isMobile ? '▶' : '▼') + '</span></h4>' +
+      '<div class="panel-body">' +
       paras +
-      '<hr><p style="color:#888;font-size:0.71rem">🖱️ 點擊標記查看詳情<br>情況仍在發展，資訊持續更新</p>';
+      '<hr><p style="color:#888;font-size:0.71rem">🖱️ 點擊標記查看詳情<br>情況仍在發展，資訊持續更新</p>' +
+      '</div>';
+    div.querySelector('h4').addEventListener('click', function() {
+      div.classList.toggle('panel-collapsed');
+      div.querySelector('.panel-toggle').textContent = div.classList.contains('panel-collapsed') ? '▶' : '▼';
+    });
+    L.DomEvent.disableClickPropagation(div);
     return div;
   };
   info.addTo(map);
@@ -253,14 +274,23 @@ function initMap(d) {
   const legend = L.control({ position: 'bottomright' });
   legend.onAdd = function() {
     const div = L.DomUtil.create('div', 'legend');
+    const isMobile = window.innerWidth < 600;
+    if (isMobile) div.classList.add('panel-collapsed');
     div.innerHTML =
-      '<h4>📌 圖例</h4>' +
+      '<h4>📌 圖例<span class="panel-toggle">' + (isMobile ? '▶' : '▼') + '</span></h4>' +
+      '<div class="panel-body">' +
       '<div class="legend-item"><div class="ld" style="background:#e74c3c;border:2px solid #fff;"></div><span>確認攻擊／槍聲地點</span></div>' +
       '<div class="legend-item"><div class="ld" style="background:#e67e22;border:2px solid #fff;"></div><span>可能波及（待確認）</span></div>' +
       '<div class="legend-item"><div class="ld" style="background:#f1c40f;border:2px solid #fff;"></div><span>首都／重要城市</span></div>' +
       '<div class="legend-item"><div class="ld" style="background:#27ae60;border:2px solid #fff;"></div><span>歷史衝突參考地點</span></div>' +
       '<div class="legend-item"><div class="ll" style="background:#f39c12;"></div><span>重要公路走廊</span></div>' +
-      '<div class="legend-item"><div class="ll" style="background:#e74c3c;"></div><span>本次攻擊戰略軸線</span></div>';
+      '<div class="legend-item"><div class="ll" style="background:#e74c3c;"></div><span>本次攻擊戰略軸線</span></div>' +
+      '</div>';
+    div.querySelector('h4').addEventListener('click', function() {
+      div.classList.toggle('panel-collapsed');
+      div.querySelector('.panel-toggle').textContent = div.classList.contains('panel-collapsed') ? '▶' : '▼';
+    });
+    L.DomEvent.disableClickPropagation(div);
     return div;
   };
   legend.addTo(map);
