@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "title": "馬利局勢概況",
+    "titleEn": "Mali Situation Overview",
+    "subtitle": "JNIM擴張與各方勢力控制區｜2026年4月",
+    "date": "2026-04-25",
+    "status": "ongoing",
+    "sources": ["RFI", "AFP", "ACLED", "CNA"]
+  },
+  "map": {
+    "center": [16.0, -2.5],
+    "zoom": 6,
+    "bounds": [[10.0, -12.5], [25.0, 4.5]]
+  },
+  "infoPanel": {
+    "title": "馬利局勢概況",
+    "paragraphs": [
+      "馬利自2012年政變及圖阿雷格族叛亂後長期陷入動盪。2021、2022年連續兩次軍事政變後，現由阿西米·戈伊塔領導的軍政府執政，驅逐法國駐軍，轉而引進俄羅斯非洲軍團（前瓦格納傭兵團）。",
+      "北部及中部地區持續受「伊斯蘭和穆斯林支持組織」（JNIM）控制或騷擾。JNIM為蓋達組織西非分支，活躍於基達爾、加奧、莫普提等省。2023年聯合國MINUSMA撤離後，北部安全真空加速惡化。",
+      "圖阿雷格族武裝（CSP-PSD聯盟）與政府軍及俄羅斯部隊在北部持續衝突，基達爾於2023年11月落入政府控制，但周邊農村仍不穩定。",
+      "南部巴馬科、塞古、卡耶斯等城市中心相對穩定，但JNIM滲透日益向南延伸，持續威脅中部幹線交通。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [12.65, -8.00],
+      "name": "Bamako",
+      "nameLocal": "巴馬科",
+      "type": "capital",
+      "tag": "首都",
+      "tagClass": "tag-strategic",
+      "desc": "馬利首都，軍政府駐地。俄羅斯非洲軍團後勤基地設於近郊卡提。城區相對穩定，戒備嚴格。",
+      "coords": "12°39'N 8°00'W",
+      "source": "CNA"
+    },
+    {
+      "latlng": [12.75, -8.07],
+      "name": "Kati",
+      "nameLocal": "卡提",
+      "type": "reference",
+      "tag": "軍事重鎮",
+      "tagClass": "tag-strategic",
+      "desc": "巴馬科西北郊主要軍營所在地，歷次政變發動地點。俄羅斯非洲軍團主要駐紮地，為全國軍事行動指揮核心。",
+      "coords": "12°45'N 8°04'W",
+      "source": "AFP"
+    },
+    {
+      "latlng": [14.45, -11.43],
+      "name": "Kayes",
+      "nameLocal": "卡耶斯",
+      "type": "reference",
+      "tag": "西部重鎮",
+      "tagClass": "tag-reference",
+      "desc": "馬利最西部主要城市，靠近塞內加爾邊境。局勢相對穩定，為重要糧食及礦產輸出地。",
+      "coords": "14°27'N 11°26'W",
+      "source": "RFI"
+    },
+    {
+      "latlng": [11.32, -5.67],
+      "name": "Sikasso",
+      "nameLocal": "錫卡索",
+      "type": "reference",
+      "tag": "南部重鎮",
+      "tagClass": "tag-reference",
+      "desc": "馬利南部最大城市之一，農業重鎮，靠近科特迪瓦與幾內亞邊境。局勢穩定。",
+      "coords": "11°19'N 5°40'W",
+      "source": "RFI"
+    },
+    {
+      "latlng": [13.45, -6.27],
+      "name": "Ségou",
+      "nameLocal": "塞古",
+      "type": "reference",
+      "tag": "中部重鎮",
+      "tagClass": "tag-reference",
+      "desc": "中南部重要商業城市，目前政府控制，但周邊鄉村JNIM活動日趨活躍，物資補給線受威脅。",
+      "coords": "13°27'N 6°16'W",
+      "source": "RFI"
+    },
+    {
+      "latlng": [14.50, -4.20],
+      "name": "Mopti",
+      "nameLocal": "莫普提",
+      "type": "confirmed",
+      "tag": "衝突頻繁",
+      "tagClass": "tag-confirmed",
+      "desc": "中部交通樞紐，JNIM頻繁攻擊目標。尼日河三角洲入口，為南北物流咽喉。2025年以來攻擊次數顯著上升，人道狀況惡化。",
+      "coords": "14°30'N 4°12'W",
+      "source": "ACLED"
+    },
+    {
+      "latlng": [16.77, -3.00],
+      "name": "Timbuktu",
+      "nameLocal": "廷巴克圖",
+      "type": "possible",
+      "tag": "局勢緊張",
+      "tagClass": "tag-possible",
+      "desc": "撒哈拉南緣歷史名城，政府名義控制但周邊JNIM活動頻繁。2023年MINUSMA撤離後安全形勢明顯惡化，對外道路時有封鎖。",
+      "coords": "16°46'N 3°00'W",
+      "source": "AFP"
+    },
+    {
+      "latlng": [16.27, 0.05],
+      "name": "Gao",
+      "nameLocal": "加奧",
+      "type": "possible",
+      "tag": "局勢緊張",
+      "tagClass": "tag-possible",
+      "desc": "東北部重要城市，政府與俄羅斯非洲軍團駐守，但周邊遭JNIM及伊斯蘭國撒赫勒省（ISS）持續滲透，近郊攻擊頻率偏高。",
+      "coords": "16°16'N 0°03'E",
+      "source": "RFI"
+    },
+    {
+      "latlng": [15.92, 2.40],
+      "name": "Ménaka",
+      "nameLocal": "梅納卡",
+      "type": "confirmed",
+      "tag": "衝突區",
+      "tagClass": "tag-confirmed",
+      "desc": "東部省份首府，靠近尼日邊境。伊斯蘭國撒赫勒省（ISS）主要活動地帶，攻擊頻率高，政府實際控制力極為有限。",
+      "coords": "15°55'N 2°24'E",
+      "source": "ACLED"
+    },
+    {
+      "latlng": [18.44, 1.41],
+      "name": "Kidal",
+      "nameLocal": "基達爾",
+      "type": "confirmed",
+      "tag": "衝突區",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利極北城市，圖阿雷格族大本營。2023年11月政府軍（含俄羅斯部隊）奪取後，周邊農村仍不穩定，武裝衝突持續，JNIM滲透明顯。",
+      "coords": "18°26'N 1°25'E",
+      "source": "AFP"
+    },
+    {
+      "latlng": [20.17, 1.08],
+      "name": "Tessalit",
+      "nameLocal": "泰薩利特",
+      "type": "confirmed",
+      "tag": "極北前線",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利最北端城鎮，鄰近阿爾及利亞邊境。圖阿雷格族傳統活動區，MINUSMA撤離後安全態勢極不穩定，對外聯繫幾近中斷。",
+      "coords": "20°10'N 1°05'E",
+      "source": "RFI"
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [12.65, -8.00],
+        [13.45, -6.27],
+        [14.50, -4.20],
+        [15.80, -3.00],
+        [16.27, 0.05]
+      ],
+      "color": "#e67e22",
+      "weight": 3,
+      "opacity": 0.75,
+      "dashArray": null,
+      "popup": {
+        "title": "RN1 國道主幹線（巴馬科—加奧）",
+        "tag": "主要補給線",
+        "tagClass": "tag-reference",
+        "desc": "馬利南北交通大動脈，全長約1,800公里。莫普提至加奧段遭JNIM頻繁伏擊，物資運送面臨重大風險，為政府最重要的後勤命脈。",
+        "source": null
+      }
+    },
+    {
+      "points": [
+        [16.27, 0.05],
+        [17.10, 0.75],
+        [18.44, 1.41]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "6,6",
+      "popup": {
+        "title": "加奧—基達爾走廊",
+        "tag": "衝突地帶",
+        "tagClass": "tag-confirmed",
+        "desc": "連接加奧與基達爾的道路走廊。2023年政府軍推進路線，沿線衝突持續，圖阿雷格族武裝與JNIM均活躍於此。",
+        "source": null
+      }
+    },
+    {
+      "points": [
+        [16.77, -3.00],
+        [16.27, 0.05],
+        [15.92, 2.40]
+      ],
+      "color": "#8e44ad",
+      "weight": 2,
+      "opacity": 0.60,
+      "dashArray": "4,8",
+      "popup": {
+        "title": "北部武裝活動帶（廷巴克圖—加奧—梅納卡）",
+        "tag": "武裝活躍區",
+        "tagClass": "tag-possible",
+        "desc": "JNIM與ISS在北部的主要橫向活動帶。MINUSMA撤離後武裝組織活動範圍大幅擴展，多座城鎮已遭滲透或包圍。此為示意線，非精確邊界。",
+        "source": "ACLED 2025"
+      }
+    },
+    {
+      "points": [
+        [13.45, -6.27],
+        [14.00, -5.50],
+        [14.50, -4.20],
+        [15.00, -2.50],
+        [15.92, 2.40]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.45,
+      "dashArray": "3,9",
+      "popup": {
+        "title": "JNIM南向滲透走廊（概略）",
+        "tag": "JNIM擴張方向",
+        "tagClass": "tag-possible",
+        "desc": "JNIM自中部向南延伸的滲透走廊示意，涵蓋莫普提省至塞古省邊緣地帶。為示意線，非精確邊界。",
+        "source": "ACLED 2025"
+      }
+    }
+  ]
+}
