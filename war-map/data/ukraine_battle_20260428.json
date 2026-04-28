@@ -145,7 +145,7 @@
     {
       "latlng": [48.555, 37.596],
       "name": "1月初戰線",
-      "nameLocal": "🟢 1月初",
+      "nameLocal": "🟢 1月初戰線",
       "type": "reference",
       "tag": "1月初基準線",
       "tagClass": "tag-reference",
@@ -156,7 +156,7 @@
     {
       "latlng": [48.543, 37.572],
       "name": "2月26日戰線",
-      "nameLocal": "🔵 2月26日",
+      "nameLocal": "🔵 2月底戰線",
       "type": "reference",
       "tag": "2月26日戰線",
       "tagClass": "tag-reference",
@@ -167,7 +167,7 @@
     {
       "latlng": [48.528, 37.548],
       "name": "3月底戰線",
-      "nameLocal": "🟣 3月底",
+      "nameLocal": "🟣 3月底戰線",
       "type": "reference",
       "tag": "3月底戰線",
       "tagClass": "tag-reference",
@@ -178,7 +178,7 @@
     {
       "latlng": [48.68, 37.62],
       "name": "4月28日現況",
-      "nameLocal": "🔴 4月28日",
+      "nameLocal": "🔴 4月底戰線",
       "type": "confirmed",
       "tag": "當前戰線（最新）",
       "tagClass": "tag-confirmed",
