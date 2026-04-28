@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "康斯坦丁諾夫卡戰役",
-    "titleEn": "Battle of Konstantinovka — April 28, 2026",
+    "title": "烏克蘭東部戰線演變",
+    "titleEn": "Ukraine Eastern Front — April 28, 2026",
     "subtitle": "2026年1月—4月28日戰線月份對比｜康斯坦丁諾夫卡戰役重點標示",
     "date": "2026-04-28",
     "status": "ongoing",
@@ -143,6 +143,50 @@
       "source": "OSINT 2026.01"
     },
     {
+      "latlng": [48.555, 37.596],
+      "name": "1月初戰線",
+      "nameLocal": "▶ 1月初",
+      "type": "reference",
+      "tag": "1月初基準線",
+      "tagClass": "tag-reference",
+      "desc": "2026年1月初戰線位置（綠色虛線）。波克羅夫斯克甫於2025年12月落入俄軍，俄軍剛進入康斯坦丁諾夫卡東郊。",
+      "coords": "",
+      "source": "OSINT 2026.01初"
+    },
+    {
+      "latlng": [48.543, 37.572],
+      "name": "2月26日戰線",
+      "nameLocal": "▶ 2月26日",
+      "type": "reference",
+      "tag": "2月26日戰線",
+      "tagClass": "tag-reference",
+      "desc": "2026年2月26日戰線位置（藍色虛線），同步自RIA俄新社。俄軍已進入康斯坦丁諾夫卡東緣，察夫蘇雅持續巷戰。",
+      "coords": "",
+      "source": "RIA Novosti 2026.02.26"
+    },
+    {
+      "latlng": [48.528, 37.548],
+      "name": "3月底戰線",
+      "nameLocal": "▶ 3月底",
+      "type": "reference",
+      "tag": "3月底戰線",
+      "tagClass": "tag-reference",
+      "desc": "2026年3月底戰線位置（紫色虛線）。俄軍深入東南部（Berestok、Ivanopillya一帶），控制比例升至俄方聲稱的30–40%。",
+      "coords": "",
+      "source": "TASS・RIA 2026.03"
+    },
+    {
+      "latlng": [48.68, 37.62],
+      "name": "4月28日現況",
+      "nameLocal": "▶ 4月28日",
+      "type": "confirmed",
+      "tag": "當前戰線（最新）",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年4月28日當前戰線位置（紅色實線）。Pushilin宣稱控制超過60%城區，前線穿越城市中部。",
+      "coords": "",
+      "source": "TASS・Pushilin 2026.04.28"
+    },
+    {
       "latlng": [49.68, 37.62],
       "name": "Kupiansk（庫皮揚斯克）",
       "nameLocal": "庫皮揚斯克",
@@ -211,9 +255,9 @@
         [46.30, 34.58],
         [46.15, 34.55]
       ],
-      "color": "#f39c12",
+      "color": "#27ae60",
       "weight": 2,
-      "opacity": 0.65,
+      "opacity": 0.80,
       "dashArray": "8,6",
       "popup": {
         "title": "2026年1月初戰線（基準線）",
@@ -249,9 +293,9 @@
         [46.30, 34.57],
         [46.15, 34.55]
       ],
-      "color": "#e67e22",
+      "color": "#2980b9",
       "weight": 2,
-      "opacity": 0.70,
+      "opacity": 0.85,
       "dashArray": "6,5",
       "popup": {
         "title": "2026年2月26日戰線",
@@ -288,9 +332,9 @@
         [46.30, 34.57],
         [46.15, 34.55]
       ],
-      "color": "#e74c3c",
+      "color": "#8e44ad",
       "weight": 2,
-      "opacity": 0.60,
+      "opacity": 0.85,
       "dashArray": "5,5",
       "popup": {
         "title": "2026年3月底戰線",
