@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "康斯坦丁諾夫卡戰役",
-    "titleEn": "Battle of Konstantinovka — April 28, 2026",
+    "title": "烏克蘭東部戰線演變",
+    "titleEn": "Ukraine Eastern Front — April 28, 2026",
     "subtitle": "2026年1月—4月28日戰線月份對比｜康斯坦丁諾夫卡戰役重點標示",
     "date": "2026-04-28",
     "status": "ongoing",
     "sources": ["TASS", "RIA Novosti", "Pushilin (DPR)", "OSINT/DeepState", "Reuters"]
   },
   "map": {
-    "center": [48.60, 37.55],
-    "zoom": 9,
+    "center": [48.52, 37.63],
+    "zoom": 11,
     "bounds": [[47.5, 35.5], [50.5, 39.8]]
   },
   "infoPanel": {
@@ -145,7 +145,7 @@
     {
       "latlng": [48.555, 37.596],
       "name": "1月初戰線",
-      "nameLocal": "▶ 1月初",
+      "nameLocal": "🟢 1月初",
       "type": "reference",
       "tag": "1月初基準線",
       "tagClass": "tag-reference",
@@ -156,7 +156,7 @@
     {
       "latlng": [48.543, 37.572],
       "name": "2月26日戰線",
-      "nameLocal": "▶ 2月26日",
+      "nameLocal": "🔵 2月26日",
       "type": "reference",
       "tag": "2月26日戰線",
       "tagClass": "tag-reference",
@@ -167,7 +167,7 @@
     {
       "latlng": [48.528, 37.548],
       "name": "3月底戰線",
-      "nameLocal": "▶ 3月底",
+      "nameLocal": "🟣 3月底",
       "type": "reference",
       "tag": "3月底戰線",
       "tagClass": "tag-reference",
@@ -178,7 +178,7 @@
     {
       "latlng": [48.68, 37.62],
       "name": "4月28日現況",
-      "nameLocal": "▶ 4月28日",
+      "nameLocal": "🔴 4月28日",
       "type": "confirmed",
       "tag": "當前戰線（最新）",
       "tagClass": "tag-confirmed",
