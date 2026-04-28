@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "title": "馬利戰情地圖",
+    "titleEn": "Mali Battle Map — April 28",
+    "subtitle": "JNIM擴大戰果・俄羅斯非洲軍團撤出基達爾・政府軍退守泰西特｜2026年4月28日",
+    "date": "2026-04-28",
+    "status": "breaking",
+    "sources": ["Reuters", "RFI", "AFP", "TASS", "RT", "Al Jazeera"]
+  },
+  "map": {
+    "center": [15.5, -2.0],
+    "zoom": 6,
+    "bounds": [[10.0, -12.5], [25.0, 4.5]]
+  },
+  "infoPanel": {
+    "title": "⚠️ 4月28日戰況",
+    "paragraphs": [
+      "伊斯蘭和穆斯林支持組織（JNIM）宣稱，馬利政府軍已從東部城鎮泰西特（Tessit）繳械撤離。俄羅斯非洲軍團同步確認撤出基達爾，稱係「戰術性重新部署」。",
+      "週末連串攻擊中，JNIM與圖阿雷格族武裝「阿扎瓦德解放陣線」（FLA）聯合發動攻勢，規模為馬利近年最大協同叛亂行動。卡提軍事重鎮遭攻擊，傳出國防部長罹難，軍政府領導人戈伊塔自週六起未公開露面。",
+      "馬利政府與軍方尚未正式回應傷亡與撤退說法，參謀總長迪亞拉（Oumar Diarra）僅稱進行「戰術性重新部署」，作戰行動仍在持續中。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [12.65, -8.00],
+      "name": "Bamako（巴馬科）",
+      "nameLocal": "巴馬科",
+      "type": "capital",
+      "tag": "首都・戒嚴狀態",
+      "tagClass": "tag-strategic",
+      "desc": "馬利首都。軍政府領導人戈伊塔（Assimi Goïta）自週六攻擊事件爆發後至今未公開露面，引發外界高度關注。政府發言人在國營電視僅對罹難軍民表達哀悼，未提供具體傷亡人數。",
+      "coords": "12°39'N 8°00'W",
+      "source": "Reuters 2026.04.28"
+    },
+    {
+      "latlng": [12.74, -8.07],
+      "name": "Kati（卡提）",
+      "nameLocal": "卡提",
+      "type": "confirmed",
+      "tag": "國防部長傳亡 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利最重要軍事基地，距巴馬科西北約15公里。週末攻擊中遭受重創，JNIM與FLA宣稱對此負責。多方消息指出馬利國防部長在此次攻擊中喪生，官方尚未確認。俄羅斯非洲軍團亦在此駐有兵力。",
+      "coords": "12°44'N 8°04'W",
+      "source": "Reuters・RFI・Al Jazeera 2026.04.26–28"
+    },
+    {
+      "latlng": [12.53, -7.95],
+      "name": "莫迪博·凱塔國際機場",
+      "nameLocal": "巴馬科機場",
+      "type": "possible",
+      "tag": "安全動態持續",
+      "tagClass": "tag-possible",
+      "desc": "巴馬科國際機場周邊安全動態持續。攻擊發生後部分航班受影響，官方尚未公布詳情。",
+      "coords": "12°32'N 7°57'W",
+      "source": "AFP 2026.04.25–28"
+    },
+    {
+      "latlng": [14.53, -4.10],
+      "name": "Sévaré（塞瓦雷）",
+      "nameLocal": "塞瓦雷",
+      "type": "confirmed",
+      "tag": "確認衝突 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "中部重要軍事基地，緊鄰莫普提。週末攻擊中遭受波及，JNIM宣稱對此次全國協調攻勢負責，塞瓦雷為中部核心節點。RN16公路走廊兩端均有戰事，補給線近乎癱瘓。",
+      "coords": "14°32'N 4°06'W",
+      "source": "RFI 2026.04.25–28"
+    },
+    {
+      "latlng": [16.27, -0.05],
+      "name": "Gao（加奧）",
+      "nameLocal": "加奧",
+      "type": "confirmed",
+      "tag": "確認攻擊 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利北部最大城市，週末攻擊中確認有槍聲及衝突。政府軍仍守城，但外圍壓力持續。JNIM北部推進軸線以加奧為支點，向東延伸至泰西特。",
+      "coords": "16°16'N 0°03'W",
+      "source": "RFI・TASS 2026.04.25–28"
+    },
+    {
+      "latlng": [18.44, 1.41],
+      "name": "Kidal（基達爾）",
+      "nameLocal": "基達爾",
+      "type": "confirmed",
+      "tag": "俄軍撤出 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "俄羅斯非洲軍團週一（28日）宣布撤出基達爾，稱係週末激烈交戰後的「戰術調整」。馬利參謀總長迪亞拉稱此為「戰術性重新部署」，作戰仍在持續。基達爾為圖阿雷格族FLA組織大本營之一，此次FLA與JNIM合作攻擊。",
+      "coords": "18°26'N 1°25'E",
+      "source": "Reuters・RT・TASS 2026.04.28"
+    },
+    {
+      "latlng": [15.77, 0.88],
+      "name": "Tessit（泰西特）",
+      "nameLocal": "泰西特",
+      "type": "confirmed",
+      "tag": "JNIM已控制 ⚡",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利東部梅納卡省城鎮，靠近尼日邊境。JNIM週一（28日）聲明，已允許駐守的馬利政府軍繳械並安全撤離。此為JNIM本輪攻勢中最具體的領土得失變化，標誌政府軍東部防線崩潰。",
+      "coords": "15°46'N 0°53'E",
+      "source": "Reuters 2026.04.28（直接確認）"
+    },
+    {
+      "latlng": [15.92, 2.40],
+      "name": "Ménaka（梅納卡）",
+      "nameLocal": "梅納卡",
+      "type": "possible",
+      "tag": "壓力持續",
+      "tagClass": "tag-possible",
+      "desc": "梅納卡省首府，泰西特陷落後面臨更大壓力。伊斯蘭國撒赫爾省（ISS）同樣活躍於此區域，JNIM控制泰西特後，梅納卡孤立態勢加劇。",
+      "coords": "15°55'N 2°24'E",
+      "source": "Al Jazeera・ACLED 2026.04.28"
+    },
+    {
+      "latlng": [16.77, -3.00],
+      "name": "Tombouctou（廷巴克圖）",
+      "nameLocal": "廷巴克圖",
+      "type": "possible",
+      "tag": "孤立風險上升",
+      "tagClass": "tag-possible",
+      "desc": "北部重要城市，隨加奧壓力上升與RN16走廊受阻，廷巴克圖對外補給線進一步緊縮。未有本輪直接攻擊報告，但局勢高度敏感。",
+      "coords": "16°46'N 3°00'W",
+      "source": "RFI 背景分析"
+    },
+    {
+      "latlng": [13.45, -6.27],
+      "name": "Ségou（塞古）",
+      "nameLocal": "塞古",
+      "type": "reference",
+      "tag": "後方城市",
+      "tagClass": "tag-reference",
+      "desc": "中南部城市，目前無直接衝突報告。隨JNIM南向滲透加劇，塞古為政府控制的最後緩衝地帶之一。",
+      "coords": "13°27'N 6°16'W",
+      "source": "背景參考"
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [16.27, -0.05],
+        [15.80, -0.60],
+        [15.30, -1.20],
+        [14.90, -1.80],
+        [14.53, -4.10],
+        [14.20, -4.50],
+        [13.80, -5.50],
+        [13.52, -6.27]
+      ],
+      "color": "#f39c12",
+      "weight": 3,
+      "opacity": 0.75,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "RN16 公路走廊（加奧—塞瓦雷）",
+        "tag": "補給線近瘓",
+        "tagClass": "tag-possible",
+        "desc": "馬利南北主要補給幹道。加奧與塞瓦雷兩端均爆發衝突後，此走廊實際已近癱瘓，北部城市補給嚴重受阻。",
+        "source": "RFI・ACLED"
+      }
+    },
+    {
+      "points": [
+        [12.65, -8.00],
+        [12.74, -8.07]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.80,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "巴馬科 — 卡提 軍事走廊",
+        "tag": "國防部長傳亡",
+        "tagClass": "tag-confirmed",
+        "desc": "卡提為馬利軍政府核心要地，週末攻擊造成重大傷亡，傳出國防部長罹難。官方尚未確認。",
+        "source": "Reuters・Al Jazeera 2026.04.26–28"
+      }
+    },
+    {
+      "points": [
+        [16.27, -0.05],
+        [16.90, 0.50],
+        [18.44, 1.41]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "北部戰略軸線：加奧 — 基達爾",
+        "tag": "俄軍已撤出基達爾",
+        "tagClass": "tag-confirmed",
+        "desc": "俄羅斯非洲軍團撤出基達爾，馬利政府軍進行「戰術性重新部署」。此軸線現由JNIM與FLA聯合控制壓力。",
+        "source": "Reuters・RT・TASS 2026.04.28"
+      }
+    },
+    {
+      "points": [
+        [16.27, -0.05],
+        [16.10, 0.30],
+        [15.95, 0.60],
+        [15.77, 0.88]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.80,
+      "dashArray": null,
+      "popup": {
+        "title": "JNIM 東向推進：加奧 → 泰西特",
+        "tag": "泰西特已易手",
+        "tagClass": "tag-confirmed",
+        "desc": "JNIM從加奧方向推進，已確認控制泰西特，政府軍繳械撤離。此為本輪攻勢最具體的領土得失，東部防線出現缺口。",
+        "source": "Reuters 2026.04.28"
+      }
+    },
+    {
+      "points": [
+        [18.44, 1.41],
+        [18.44, 1.41]
+      ],
+      "color": "#8e44ad",
+      "weight": 3,
+      "opacity": 0.75,
+      "dashArray": "3,6",
+      "popup": {
+        "title": "俄羅斯非洲軍團撤退方向（基達爾）",
+        "tag": "戰術撤退確認",
+        "tagClass": "tag-possible",
+        "desc": "非洲軍團宣布撤出基達爾，方向未明確公開。RT及TASS報導稱係週末激戰後的「戰術調整」，外界普遍解讀為實質撤退。",
+        "source": "RT・TASS 2026.04.28"
+      }
+    },
+    {
+      "points": [
+        [14.53, -4.10],
+        [13.90, -5.00],
+        [13.45, -6.27]
+      ],
+      "color": "#c0392b",
+      "weight": 1,
+      "opacity": 0.40,
+      "dashArray": "3,9",
+      "popup": {
+        "title": "JNIM 南向滲透壓力",
+        "tag": "警示走廊",
+        "tagClass": "tag-possible",
+        "desc": "隨塞瓦雷遭攻擊，JNIM對中部至南部走廊的壓力進一步增大。示意線，非精確邊界。",
+        "source": "Al Jazeera・ACLED 分析"
+      }
+    }
+  ]
+}
