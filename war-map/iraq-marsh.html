@@ -68,27 +68,49 @@
       background: #424242;
       color: #eee;
     }
-    /* 資訊面板 */
-    #info-panel {
+    /* 資訊面板（新增收合樣式） */
+    #info-panel-container {
       position: absolute;
       top: 90px;
       left: 15px;
-      width: 320px;
-      max-width: 90vw;
-      background: rgba(0, 0, 0, 0.85);
-      border-radius: 8px;
-      padding: 15px;
       z-index: 1000;
+      max-width: 90vw;
+    }
+    #info-panel-toggle {
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid #333;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 320px;
+    }
+    #info-panel-toggle h2 {
+      font-size: 1rem;
+      color: #2196F3;
+      margin: 0;
+    }
+    #info-panel-toggle .toggle-icon {
+      font-size: 1.2rem;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+    #info-panel {
+      width: 320px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 0 0 8px 8px;
+      padding: 15px;
       border: 1px solid #333;
       max-height: 70vh;
       overflow-y: auto;
+      display: block; /* 預設展開 */
+      transition: all 0.3s ease;
     }
-    #info-panel h2 {
-      font-size: 1rem;
-      color: #2196F3;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #444;
-      padding-bottom: 5px;
+    #info-panel.collapsed {
+      display: none;
     }
     #info-panel p {
       font-size: 0.85rem;
@@ -130,24 +152,28 @@
       color: #ccc;
       font-size: 0.75rem;
     }
-    /* 圖例樣式 */
+    /* 圖例樣式（強化視覺） */
     .info.legend {
       background: rgba(0, 0, 0, 0.85);
       padding: 10px 15px;
       border-radius: 8px;
       border: 1px solid #333;
       font-size: 0.8rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     .info.legend h4 {
       color: #2196F3;
       margin-bottom: 8px;
       font-size: 0.9rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
     }
     .legend-item {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 6px;
+      padding: 2px 0;
     }
     .legend-item:last-child {
       margin-bottom: 0;
@@ -155,7 +181,7 @@
     /* 響應式調整 */
     @media (max-width: 768px) {
       #header h1 { font-size: 1rem; }
-      #info-panel { width: 280px; }
+      #info-panel-toggle, #info-panel { width: 280px; }
     }
   </style>
 </head>
@@ -172,15 +198,20 @@
       </div>
     </div>
 
-    <!-- 側邊資訊面板 -->
-    <div id="info-panel">
-      <h2>阿赫瓦爾沼澤水情概況</h2>
-      <p>美索不達米亞沼澤（阿赫瓦爾，Ahwar）2021年起連續4年以上近乎乾涸，為40年最嚴重乾旱，部分核心區（如胡韋扎沼澤）浸水率一度降至8%以下，水牛減少76%、逾3萬馬丹人（Ma'dan）被迫遷移。</p>
-      <p>2026年2月底至4月初，受豐沛降雨與融雪洪水補給影響，胡韋扎沼澤水深從接近0升至50公分以上，浸水率達85%；濟加爾省幼發拉底河入沼水位從45公分升至62公分。蘆葦床再生、魚類、水鳥與水牛群開始回歸，馬丹人捕魚、養水牛等傳統活動局部復甦。</p>
-      <p>⚠️ 恢復仍脆弱：夏季高溫蒸發即將來臨，若無持續河水補給易逆轉。上游土耳其GAP計畫與伊朗邊境大壩長期截流仍是根本威脅。<br>
-      🔵 深藍填充 = 高恢復度沼澤（浸水率≥70%）<br>
-      🟦 淺藍填充 = 中恢復度沼澤（浸水率50-70%）<br>
-      🟢 綠色虛線 = 歷史最大範圍（1970s前）</p>
+    <!-- 資訊面板（新增收合容器） -->
+    <div id="info-panel-container">
+      <div id="info-panel-toggle">
+        <h2>阿赫瓦爾沼澤水情概況</h2>
+        <span class="toggle-icon">−</span>
+      </div>
+      <div id="info-panel">
+        <p>美索不達米亞沼澤（阿赫瓦爾，Ahwar）2021年起連續4年以上近乎乾涸，為40年最嚴重乾旱，部分核心區（如胡韋扎沼澤）浸水率一度降至8%以下，水牛減少76%、逾3萬馬丹人（Ma'dan）被迫遷移。</p>
+        <p>2026年2月底至4月初，受豐沛降雨與融雪洪水補給影響，胡韋扎沼澤水深從接近0升至50公分以上，浸水率達85%；濟加爾省幼發拉底河入沼水位從45公分升至62公分。蘆葦床再生、魚類、水鳥與水牛群開始回歸，馬丹人捕魚、養水牛等傳統活動局部復甦。</p>
+        <p>⚠️ 恢復仍脆弱：夏季高溫蒸發即將來臨，若無持續河水補給易逆轉。上游土耳其GAP計畫與伊朗邊境大壩長期截流仍是根本威脅。<br>
+        🔵 深藍填充 = 高恢復度沼澤（浸水率≥70%）<br>
+        🟦 淺藍填充 = 中恢復度沼澤（浸水率50-70%）<br>
+        🟢 綠色虛線 = 歷史最大範圍（1970s前）</p>
+      </div>
     </div>
 
     <!-- 地圖容器 -->
@@ -649,7 +680,7 @@
       `);
     });
 
-    // 4. 渲染自定義圖例
+    // 4. 渲染自定義圖例（強化樣式）
     const legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
@@ -691,6 +722,18 @@
 
     // 限制地圖視圖範圍
     map.setMaxBounds(marshData.map.bounds);
+
+    // ===== 新增：資訊面板收合功能 =====
+    const panelToggle = document.getElementById('info-panel-toggle');
+    const infoPanel = document.getElementById('info-panel');
+    const toggleIcon = panelToggle.querySelector('.toggle-icon');
+
+    // 點擊切換收合/展開
+    panelToggle.addEventListener('click', () => {
+      infoPanel.classList.toggle('collapsed');
+      // 切換圖示（−/＋）
+      toggleIcon.textContent = infoPanel.classList.contains('collapsed') ? '+' : '−';
+    });
   </script>
 </body>
 </html>
