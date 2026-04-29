@@ -458,5 +458,17 @@
         "source": "OSINT 2026.04"
       }
     }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#27ae60", "dash": "8,6",  "weight": 2, "label": "1月初戰線" },
+    { "symbol": "line", "color": "#2980b9", "dash": "6,5",  "weight": 2, "label": "2月26日戰線（RIA）" },
+    { "symbol": "line", "color": "#8e44ad", "dash": "5,5",  "weight": 2, "label": "3月底戰線" },
+    { "symbol": "line", "color": "#c0392b", "dash": null,   "weight": 4, "label": "4月28日現況戰線" },
+    { "symbol": "line", "color": "#f5c518", "dash": "4,4",  "weight": 1, "label": "城市範圍輪廓" },
+    { "symbol": "line", "color": "#e67e22", "dash": "7,5",  "weight": 2, "label": "公路走廊／補給線" },
+    { "symbol": "dot",  "color": "#c0392b", "pulse": true,  "label": "激烈交戰區" },
+    { "symbol": "dot",  "color": "#e67e22", "pulse": true,  "label": "局勢緊張／壓力上升" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "重要城市" },
+    { "symbol": "dot",  "color": "#27ae60", "pulse": false, "label": "參考地點" }
   ]
 }

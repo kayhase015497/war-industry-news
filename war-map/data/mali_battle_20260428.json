@@ -245,5 +245,15 @@
         "source": "Al Jazeera・ACLED 分析"
       }
     }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#f39c12", "dash": null,   "weight": 3, "label": "主要公路走廊（RN16）" },
+    { "symbol": "line", "color": "#e74c3c", "dash": "6,6",  "weight": 2, "label": "攻擊軸線／戰術走廊" },
+    { "symbol": "line", "color": "#c0392b", "dash": null,   "weight": 2, "label": "JNIM東向推進（泰西特）" },
+    { "symbol": "line", "color": "#8e44ad", "dash": "4,8",  "weight": 2, "label": "北部武裝活動帶（JNIM）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "首都巴馬科" },
+    { "symbol": "dot",  "color": "#c0392b", "pulse": true,  "label": "確認衝突／JNIM控制" },
+    { "symbol": "dot",  "color": "#e67e22", "pulse": true,  "label": "局勢緊張／孤立壓力" },
+    { "symbol": "dot",  "color": "#27ae60", "pulse": false, "label": "後方參考城市" }
   ]
 }
