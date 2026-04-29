@@ -734,16 +734,6 @@
       // 切換圖示（−/＋）
       toggleIcon.textContent = infoPanel.classList.contains('collapsed') ? '+' : '−';
     });
-
-    // ===== 圖例面板收合功能（新增）=====
-    const legendToggle = document.getElementById('legend-toggle');
-    const legendContent = document.getElementById('legend-content');
-    const legendToggleIcon = legendToggle.querySelector('.toggle-icon');
-
-    legendToggle.addEventListener('click', () => {
-      legendContent.classList.toggle('collapsed');
-      legendToggleIcon.textContent = legendContent.classList.contains('collapsed') ? '+' : '−';
-    });
   </script>
 </body>
 </html>
