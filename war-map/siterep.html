@@ -287,23 +287,37 @@ function initMap(d) {
     if (isMobile) div.classList.add('panel-collapsed');
 
     const defaultItems = [
-      { type: 'dot',  color: '#e74c3c', label: '確認攻擊／槍聲地點' },
-      { type: 'dot',  color: '#e67e22', label: '可能波及（待確認）' },
-      { type: 'dot',  color: '#f1c40f', label: '首都／重要城市' },
-      { type: 'dot',  color: '#27ae60', label: '歷史衝突參考地點' },
-      { type: 'line', color: '#f39c12', label: '重要公路走廊' },
-      { type: 'line', color: '#e74c3c', label: '本次攻擊戰略軸線' }
+      { symbol: 'dot',  color: '#e74c3c', pulse: true,  label: '確認攻擊／槍聲地點' },
+      { symbol: 'dot',  color: '#e67e22', pulse: true,  label: '可能波及（待確認）' },
+      { symbol: 'dot',  color: '#f1c40f', pulse: false, label: '首都／重要城市' },
+      { symbol: 'dot',  color: '#27ae60', pulse: false, label: '歷史衝突參考地點' },
+      { symbol: 'line', color: '#f39c12', dash: null,   weight: 3, label: '重要公路走廊' },
+      { symbol: 'line', color: '#e74c3c', dash: '6,4',  weight: 2, label: '本次攻擊戰略軸線' }
     ];
     const items = (d.legend && d.legend.length) ? d.legend : defaultItems;
 
     function makeSwatch(item) {
-      if (item.type === 'dot') {
-        return '<div class="ld" style="background:' + item.color + ';border:2px solid rgba(255,255,255,0.8);"></div>';
+      if (item.symbol === 'dot') {
+        const c = item.color;
+        const inner = '<div style="position:absolute;top:0;left:0;width:12px;height:12px;' +
+          'background:' + c + ';border:2px solid rgba(255,255,255,0.8);border-radius:50%;z-index:1;"></div>';
+        const ring = item.pulse
+          ? '<div style="position:absolute;top:-4px;left:-4px;width:20px;height:20px;' +
+            'background:' + c + ';opacity:0.35;border-radius:50%;animation:ripple 1.6s ease-out infinite;"></div>'
+          : '';
+        return '<div style="position:relative;width:12px;height:12px;flex-shrink:0;">' + ring + inner + '</div>';
       }
-      var h = item.thick ? '6px' : '4px';
-      var bg = item.dash
-        ? 'repeating-linear-gradient(90deg,' + item.color + ' 0,' + item.color + ' 6px,transparent 6px,transparent 10px)'
-        : item.color;
+      // line
+      const h = Math.round((item.weight || 2) * 1.6) + 'px';
+      var bg;
+      if (item.dash) {
+        const parts = String(item.dash).split(',').map(Number);
+        const on = parts[0] || 6, off = parts[1] || 4;
+        bg = 'repeating-linear-gradient(90deg,' + item.color + ' 0,' +
+          item.color + ' ' + on + 'px,transparent ' + on + 'px,transparent ' + (on + off) + 'px)';
+      } else {
+        bg = item.color;
+      }
       return '<div class="ll" style="height:' + h + ';background:' + bg + ';"></div>';
     }
 
