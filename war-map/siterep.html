@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>互動戰況地圖｜張威翔</title>
 
-  <script>
-    // 獨立開啟（非 iframe 嵌入）時，改用 flex 填滿視窗
-    // 跨域 iframe 內存取 window.top 會拋錯，catch 到代表在 iframe 裡
-    var _inIframe = (function(){ try { return window.self !== window.top; } catch(e){ return true; } })();
-    if (!_inIframe) {
-      document.addEventListener('DOMContentLoaded', function() {
-        document.body.style.cssText += ';height:100vh;display:flex;flex-direction:column;overflow:hidden;';
-        var m = document.getElementById('map');
-        if (m) { m.style.height = 'auto'; m.style.flex = '1'; m.style.minHeight = '0'; }
-      });
-    }
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
@@ -27,6 +15,7 @@
       font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial, sans-serif;
       background: #1a1a2e;
       color: #eee;
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
     }
 
     #header {
@@ -51,7 +40,7 @@
     .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    #map { width: 100%; height: 460px; }
+    #map { width: 100%; flex: 1; min-height: 0; }
 
     .leaflet-popup-content-wrapper {
       background: rgba(12, 12, 28, 0.96);
@@ -112,8 +101,8 @@
     .panel-collapsed.legend h4 { margin-bottom: 0; border-bottom-color: transparent; padding-bottom: 0; }
 
     @media (max-width: 600px) {
-      .info-panel { max-width: 160px; font-size: 0.71rem; padding: 8px 10px; max-height: calc(100vh - 140px); }
-      .legend { min-width: 130px; font-size: 0.72rem; padding: 8px 10px; max-height: calc(100vh - 140px); }
+      .info-panel { max-width: 160px; font-size: 0.71rem; padding: 8px 10px; }
+      .legend { min-width: 130px; font-size: 0.72rem; padding: 8px 10px; }
       .legend h4, .info-panel h4 { font-size: 0.74rem; }
     }
 
@@ -314,6 +303,17 @@ function initMap(d) {
     return div;
   };
   legend.addTo(map);
+
+  // 用地圖實際高度設定面板 max-height，避免 vh/svh 在 iframe 中計算失準
+  function syncPanelHeight() {
+    var h = document.getElementById('map').clientHeight;
+    var limit = Math.max(80, h - 40) + 'px';
+    document.querySelectorAll('.info-panel, .legend').forEach(function(el) {
+      el.style.maxHeight = limit;
+    });
+  }
+  map.on('resize', syncPanelHeight);
+  setTimeout(syncPanelHeight, 0);
 }
 
 // ── 標記圖示工廠 ──────────────────────────────────────
