@@ -391,5 +391,17 @@
         "source": "地理參考"
       }
     }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#e74c3c", "dash": "12,5", "weight": 3, "label": "伊拉克—伊朗國境線" },
+    { "symbol": "line", "color": "#2471a3", "dash": null,   "weight": 3, "label": "主要河流（底格里斯／幼發拉底／阿拉伯河）" },
+    { "symbol": "line", "color": "#5dade2", "dash": "6,5",  "weight": 2, "label": "支流（卡爾赫河）" },
+    { "symbol": "line", "color": "#2980b9", "dash": null,   "weight": 2, "label": "沼澤現況輪廓（2026年4月）" },
+    { "symbol": "line", "color": "#7fb3d3", "dash": "4,3",  "weight": 2, "label": "胡爾阿齊姆（伊朗側）" },
+    { "symbol": "line", "color": "#1e8449", "dash": "8,5",  "weight": 1, "label": "歷史最大範圍（1970年代前）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "主要城市" },
+    { "symbol": "dot",  "color": "#e67e22", "pulse": true,  "label": "恢復中・水位上升區（脆弱）" },
+    { "symbol": "dot",  "color": "#c0392b", "pulse": true,  "label": "上游截流威脅（大壩）" },
+    { "symbol": "dot",  "color": "#27ae60", "pulse": false, "label": "環境監測／UNEP試點" }
   ]
 }
