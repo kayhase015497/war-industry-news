@@ -68,7 +68,7 @@
       background: #424242;
       color: #eee;
     }
-    /* 資訊面板（新增收合樣式） */
+    /* 資訊面板收合樣式 */
     #info-panel-container {
       position: absolute;
       top: 90px;
@@ -118,6 +118,62 @@
       margin-bottom: 10px;
       color: #eee;
     }
+    /* 圖例收合樣式（新增） */
+    #legend-container {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      z-index: 1000;
+      max-width: 90vw;
+    }
+    #legend-toggle {
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid #333;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 280px;
+    }
+    #legend-toggle h4 {
+      font-size: 0.9rem;
+      color: #2196F3;
+      margin: 0;
+    }
+    #legend-toggle .toggle-icon {
+      font-size: 1.2rem;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+    #legend-content {
+      width: 280px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 0 0 8px 8px;
+      padding: 10px 15px;
+      border: 1px solid #333;
+      max-height: 60vh;
+      overflow-y: auto;
+      display: block; /* 預設展開 */
+      transition: all 0.3s ease;
+    }
+    #legend-content.collapsed {
+      display: none;
+    }
+    /* 圖例項目樣式 */
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding: 2px 0;
+      font-size: 0.8rem;
+    }
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
     /* 自定義彈窗樣式 */
     .leaflet-popup-content-wrapper {
       background: rgba(0, 0, 0, 0.9);
@@ -143,45 +199,27 @@
       margin-bottom: 8px;
       font-weight: 600;
     }
-    .tag-high-recovery { background: #2196F3; color: #fff; }
-    .tag-medium-recovery { background: #64B5F6; color: #000; }
-    .tag-reference { background: #4CAF50; color: #fff; }
-    .tag-city { background: #FFC107; color: #000; }
-    .tag-dam { background: #F44336; color: #fff; }
+    .tag-possible { background: #2196F3; color: #fff; }
+    .tag-reference { background: #64B5F6; color: #000; }
+    .tag-strategic { background: #FFC107; color: #000; }
+    .tag-confirmed { background: #F44336; color: #fff; }
     .leaflet-popup-content small {
       color: #ccc;
       font-size: 0.75rem;
     }
-    /* 圖例樣式（強化視覺） */
-    .info.legend {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 10px 15px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      font-size: 0.8rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .info.legend h4 {
-      color: #2196F3;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #444;
-      padding-bottom: 5px;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-      padding: 2px 0;
-    }
-    .legend-item:last-child {
-      margin-bottom: 0;
-    }
-    /* 響應式調整 */
+    /* 響應式調整（優化手機端） */
     @media (max-width: 768px) {
       #header h1 { font-size: 1rem; }
       #info-panel-toggle, #info-panel { width: 280px; }
+      #legend-toggle, #legend-content { width: 250px; }
+      .legend-item { font-size: 0.75rem; }
+      #info-panel-container { top: 110px; }
+    }
+    @media (max-width: 480px) {
+      #info-panel-toggle, #info-panel { width: 250px; }
+      #legend-toggle, #legend-content { width: 220px; }
+      #header .meta { flex-direction: column; gap: 4px; }
+      #header .badge { font-size: 0.65rem; padding: 2px 8px; }
     }
   </style>
 </head>
@@ -198,7 +236,7 @@
       </div>
     </div>
 
-    <!-- 資訊面板（新增收合容器） -->
+    <!-- 資訊面板（收合功能） -->
     <div id="info-panel-container">
       <div id="info-panel-toggle">
         <h2>阿赫瓦爾沼澤水情概況</h2>
@@ -211,6 +249,48 @@
         🔵 深藍填充 = 高恢復度沼澤（浸水率≥70%）<br>
         🟦 淺藍填充 = 中恢復度沼澤（浸水率50-70%）<br>
         🟢 綠色虛線 = 歷史最大範圍（1970s前）</p>
+      </div>
+    </div>
+
+    <!-- 圖例面板（新增收合功能） -->
+    <div id="legend-container">
+      <div id="legend-toggle">
+        <h4>圖例 | Legend</h4>
+        <span class="toggle-icon">−</span>
+      </div>
+      <div id="legend-content">
+        <div class="legend-item">
+          <span style="display:inline-block; width:20px; height:15px; background:#2980b9; opacity:0.6; border:1px solid #154360;"></span>
+          高恢復度沼澤（浸水率≥70%）
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:20px; height:15px; background:#7fb3d3; opacity:0.5; border:1px solid #2980b9; border-style:dashed;"></span>
+          中恢復度沼澤（浸水率50-70%）
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:20px; height:15px; background:#1e8449; opacity:0.2; border:1px solid #196f3d; border-style:dashed;"></span>
+          沼澤歷史最大範圍（1970s前）
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:30px; background:#2471a3; height:3px;"></span>
+          主要河流（底格里斯/幼發拉底）
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:30px; border-bottom:2px dashed #5dade2;"></span>
+          次要河流（卡爾赫河）
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:30px; border-bottom:3px dashed #e74c3c;"></span>
+          國際邊界
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#FFC107;"></span>
+          首府/主要城市
+        </div>
+        <div class="legend-item">
+          <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#F44336;"></span>
+          水壩/水利設施
+        </div>
       </div>
     </div>
 
@@ -234,14 +314,22 @@
         "zoom": 8,
         "bounds": [[29.5, 43.5], [34.5, 50.0]]
       },
+      "infoPanel": {
+        "title": "阿赫瓦爾沼澤水情概況",
+        "paragraphs": [
+          "美索不達米亞沼澤（阿赫瓦爾，Ahwar）2021年起連續4年以上近乎乾涸，為40年最嚴重乾旱，部分核心區（如胡韋扎沼澤）浸水率一度降至8%以下，水牛減少76%、逾3萬馬丹人（Ma'dan）被迫遷移。",
+          "2026年2月底至4月初，受豐沛降雨與融雪洪水補給影響，胡韋扎沼澤水深從接近0升至50公分以上，浸水率達85%；濟加爾省幼發拉底河入沼水位從45公分升至62公分。蘆葦床再生、魚類、水鳥與水牛群開始回歸，馬丹人捕魚、養水牛等傳統活動局部復甦。",
+          "⚠️ 恢復仍脆弱：夏季高溫蒸發即將來臨，若無持續河水補給易逆轉。上游土耳其GAP計畫與伊朗邊境大壩長期截流仍是根本威脅。🔵 藍色輪廓 = 2026年4月現況沼澤範圍　🟢 綠色虛線 = 歷史最大範圍（1970s前）"
+        ]
+      },
       "locations": [
         {
           "latlng": [31.50, 47.65],
           "name": "Al-Huwaizeh / Hawizeh Marsh（胡韋扎沼澤）",
           "nameLocal": "胡韋扎沼澤",
-          "type": "high_recovery",
+          "type": "possible",
           "tag": "水位回升至85%浸水率",
-          "tagClass": "tag-high-recovery",
+          "tagClass": "tag-possible",
           "desc": "跨伊拉克-伊朗邊界的核心沼澤，米桑省（Maysan）境內。薩達姆時期未被完全排乾，是鳥類最後避難所。2021-2025年近乎全乾（浸水率最低降至8%，對比2019年97%高峰）。2026年3月起水深超過50公分，浸水率回升至85%，蘆葦快速生長，水鳥群重返。伊朗一側稱「胡爾阿齊姆」（Hoor al-Azim）。",
           "coords": "31°30'N 47°39'E",
           "source": "France24・UNEP 2026.04"
@@ -250,9 +338,9 @@
           "latlng": [31.65, 48.20],
           "name": "Hoor al-Azim（胡爾阿齊姆）",
           "nameLocal": "胡爾阿齊姆",
-          "type": "medium_recovery",
+          "type": "reference",
           "tag": "伊朗境內沼澤區",
-          "tagClass": "tag-medium-recovery",
+          "tagClass": "tag-reference",
           "desc": "胡韋扎沼澤的伊朗部分（胡澤斯坦省），由卡爾赫河注水。歷史上與伊拉克側本為一體的大型沼澤，1990年代薩達姆排水工程及伊朗截流使兩側同步萎縮。近期降雨後伊朗側亦有部分回升，但水資源政治爭議持續。",
           "coords": "31°39'N 48°12'E",
           "source": "背景資料"
@@ -261,9 +349,9 @@
           "latlng": [30.97, 46.69],
           "name": "Al-Chibayish（希巴伊什）",
           "nameLocal": "希巴伊什",
-          "type": "high_recovery",
+          "type": "possible",
           "tag": "中央沼澤核心聚落",
-          "tagClass": "tag-high-recovery",
+          "tagClass": "tag-possible",
           "desc": "濟加爾省（Dhi Qar）中央沼澤地帶最重要的馬丹人聚落。2023-2025年乾旱高峰期周邊幾近全乾，大量居民遷離。2026年春季水道重現，居民開始回流，捕魚與蘆葦編織傳統活動局部復甦。UNESCO世界遺產「阿赫瓦爾」主要遊客參觀地點之一。",
           "coords": "30°58'N 46°41'E",
           "source": "France24・IOM 2026.04"
@@ -272,9 +360,9 @@
           "latlng": [31.18, 47.02],
           "name": "Umm al-Wada（烏姆瓦達）",
           "nameLocal": "烏姆瓦達",
-          "type": "medium_recovery",
+          "type": "reference",
           "tag": "中央沼澤區",
-          "tagClass": "tag-medium-recovery",
+          "tagClass": "tag-reference",
           "desc": "中央沼澤北部水域，濟加爾省境內。2026年幼發拉底河入沼水位從45公分上升至62公分，此區是水位回升最顯著的觀測點之一。",
           "coords": "31°11'N 47°01'E",
           "source": "France24 2026.04"
@@ -294,9 +382,9 @@
           "latlng": [30.52, 47.77],
           "name": "Basra（巴士拉）",
           "nameLocal": "巴士拉",
-          "type": "city",
+          "type": "capital",
           "tag": "南部最大城市",
-          "tagClass": "tag-city",
+          "tagClass": "tag-strategic",
           "desc": "伊拉克南部最大城市，阿拉伯河（Shatt al-Arab）沿岸重要港口。2018年曾爆發大規模抗議，起因之一是底格里斯河水質污染與供水短缺。距波斯灣約55公里，為伊拉克主要石油出口港。",
           "coords": "30°31'N 47°46'E",
           "source": "背景資料"
@@ -305,9 +393,9 @@
           "latlng": [31.05, 46.25],
           "name": "Nasiriyah（納西里耶）",
           "nameLocal": "納西里耶",
-          "type": "city",
+          "type": "capital",
           "tag": "濟加爾省首府",
-          "tagClass": "tag-city",
+          "tagClass": "tag-strategic",
           "desc": "濟加爾省（Dhi Qar）首府，幼發拉底河沿岸城市，靠近烏爾古城遺址。為中央沼澤地帶行政中心，省內沼澤恢復工作的協調基地。2026年春季幼發拉底河水位顯著回升，帶動周邊沼澤補水。",
           "coords": "31°03'N 46°15'E",
           "source": "背景資料"
@@ -316,9 +404,9 @@
           "latlng": [31.84, 47.15],
           "name": "Amarah（阿馬拉）",
           "nameLocal": "阿馬拉",
-          "type": "city",
+          "type": "capital",
           "tag": "米桑省首府",
-          "tagClass": "tag-city",
+          "tagClass": "tag-strategic",
           "desc": "米桑省（Maysan）首府，底格里斯河沿岸，緊鄰胡韋扎沼澤西側。為沼澤恢復監測重要基地，部分馬丹人遷居於此後開始陸續返鄉。",
           "coords": "31°50'N 47°09'E",
           "source": "背景資料"
@@ -327,9 +415,9 @@
           "latlng": [33.00, 48.17],
           "name": "Karkheh Dam（卡爾赫大壩）",
           "nameLocal": "卡爾赫大壩",
-          "type": "dam",
+          "type": "confirmed",
           "tag": "上游截流主因之一",
-          "tagClass": "tag-dam",
+          "tagClass": "tag-confirmed",
           "desc": "位於伊朗胡澤斯坦省，卡爾赫河（Karkheh）上的主要大壩，完工於2000年代。大幅減少流入伊拉克胡韋扎沼澤的水量，被視為沼澤乾旱主因之一。伊朗境內沿卡爾赫河另有多座中小型水壩。2026年2月美以對伊朗開戰後，伊朗境內部分水利基礎設施傳出受損，但未有公開報導顯示此直接改變入沼水量。",
           "coords": "33°00'N 48°10'E",
           "source": "背景資料"
@@ -338,110 +426,12 @@
           "latlng": [33.34, 44.40],
           "name": "Baghdad（巴格達）",
           "nameLocal": "巴格達",
-          "type": "city",
+          "type": "capital",
           "tag": "伊拉克首都",
-          "tagClass": "tag-city",
+          "tagClass": "tag-strategic",
           "desc": "伊拉克首都，底格里斯河沿岸。伊拉克水資源部與環境部在此主導全國沼澤恢復政策，但長期受限於上游土耳其GAP計畫截流、伊朗大壩及國內資金不足問題。",
           "coords": "33°20'N 44°24'E",
           "source": "背景資料"
-        }
-      ],
-      "polygons": [
-        {
-          "points": [
-            [32.05, 47.38], [31.92, 47.28], [31.65, 47.28], [31.18, 47.30], 
-            [31.00, 47.42], [31.00, 47.58], [31.20, 47.65], [31.65, 47.70], 
-            [31.95, 47.65], [32.05, 47.55], [32.08, 47.45], [32.05, 47.38]
-          ],
-          "fillColor": "#1E88E5",
-          "fillOpacity": 0.6,
-          "borderColor": "#0D47A1",
-          "borderWeight": 2,
-          "borderOpacity": 0.9,
-          "popup": {
-            "title": "胡韋扎沼澤（伊拉克側）— 2026年4月現況",
-            "tag": "浸水率達85%｜核心恢復區",
-            "tagClass": "tag-high-recovery",
-            "desc": "2026年3–4月水位顯著回升：水深從接近0升至超過50公分，浸水率達85%（對比2025年8月幾近全乾）。蘆葦快速生長，水牛群、魚類與候鳥（如彩鷸、紫鷺）重返。馬丹人捕魚、養水牛傳統活動局部復甦，部分遷居阿馬拉的家庭開始返鄉。此為伊拉克境內部分，東側跨邊界為伊朗的胡爾阿齊姆。",
-            "source": "France24・UNEP 2026.04"
-          }
-        },
-        {
-          "points": [
-            [31.65, 47.70], [31.85, 47.78], [32.00, 48.05], [32.00, 48.38], 
-            [31.72, 48.48], [31.38, 48.38], [31.08, 48.18], [31.00, 47.92], 
-            [31.08, 47.72], [31.30, 47.65], [31.65, 47.70]
-          ],
-          "fillColor": "#64B5F6",
-          "fillOpacity": 0.5,
-          "borderColor": "#1976D2",
-          "borderWeight": 2,
-          "borderOpacity": 0.8,
-          "borderDashArray": "4,3",
-          "popup": {
-            "title": "胡爾阿齊姆（伊朗側）— 2026年4月現況",
-            "tag": "伊朗境內胡韋扎延伸區",
-            "tagClass": "tag-medium-recovery",
-            "desc": "胡韋扎沼澤的伊朗部分（胡澤斯坦省境內），由卡爾赫河注水。歷史上與伊拉克側本為一體。近期降雨後有部分回升，但水資源政治爭議仍持續。",
-            "source": "背景資料"
-          }
-        },
-        {
-          "points": [
-            [31.50, 46.58], [31.48, 46.92], [31.30, 47.18], [31.00, 47.22], 
-            [30.80, 47.02], [30.75, 46.68], [30.90, 46.42], [31.20, 46.38], [31.50, 46.58]
-          ],
-          "fillColor": "#2196F3",
-          "fillOpacity": 0.55,
-          "borderColor": "#0D47A1",
-          "borderWeight": 2,
-          "borderOpacity": 0.9,
-          "popup": {
-            "title": "中央沼澤（濟加爾省）— 2026年4月現況",
-            "tag": "幼發拉底河入沼水位+17公分",
-            "tagClass": "tag-high-recovery",
-            "desc": "位於底格里斯河與幼發拉底河之間，濟加爾省（Dhi Qar）境內。核心地帶包含希巴伊什（Al-Chibayish）、烏姆瓦達（Umm al-Wada）等馬丹人聚落。2026年4月幼發拉底河入沼水位從45公分升至62公分，水道重現，UNESCO世界遺產遊客參訪已局部恢復。",
-            "source": "France24 2026.04"
-          }
-        },
-        {
-          "points": [
-            [30.92, 46.68], [31.08, 46.55], [31.18, 46.75], [31.20, 47.22], 
-            [30.98, 47.42], [30.70, 47.35], [30.52, 47.12], [30.58, 46.88], [30.92, 46.68]
-          ],
-          "fillColor": "#90CAF9",
-          "fillOpacity": 0.5,
-          "borderColor": "#1976D2",
-          "borderWeight": 2,
-          "borderOpacity": 0.8,
-          "popup": {
-            "title": "哈馬爾沼澤（Al-Hammar）— 2026年4月現況",
-            "tag": "幼發拉底河南側沼澤",
-            "tagClass": "tag-medium-recovery",
-            "desc": "幼發拉底河南側至阿拉伯河之間的沼澤地帶，靠近巴士拉省北部。薩達姆時期曾被大規模排乾，2003年後逐步恢復。2026年春季水位回升，但因靠近農業開發區，水質污染問題仍嚴重。UNEP在本區阿布茲里格（Abu Zirig）設有人工濕地廢水處理試點。",
-            "source": "UNEP・背景資料"
-          }
-        },
-        {
-          "points": [
-            [32.30, 47.10], [32.20, 47.70], [32.05, 48.20], [31.60, 48.60], 
-            [31.10, 48.45], [30.78, 47.80], [30.55, 47.20], [30.62, 46.55], 
-            [30.90, 46.20], [31.35, 46.08], [31.80, 46.15], [32.05, 46.65], 
-            [32.20, 47.10], [32.30, 47.10]
-          ],
-          "fillColor": "#81C784",
-          "fillOpacity": 0.2,
-          "borderColor": "#2E7D32",
-          "borderWeight": 1.5,
-          "borderOpacity": 0.7,
-          "borderDashArray": "8,5",
-          "popup": {
-            "title": "沼澤歷史最大範圍（1970年代前）",
-            "tag": "歷史基準｜15,000–20,000 km²",
-            "tagClass": "tag-reference",
-            "desc": "美索不達米亞沼澤歷史最大範圍概略輪廓（1970年代前，薩達姆大規模排水前）。面積達15,000–20,000平方公里。1991–2000年薩達姆政府人為排乾後縮減90%以上；2003年後部分恢復，2021–2026年乾旱期再度萎縮至歷史30%以下。2026年4月現況仍遠低於此歷史輪廓。",
-            "source": "UNEP・UNESCO 歷史記錄"
-          }
         }
       ],
       "lines": [
@@ -451,14 +441,14 @@
             [31.85, 47.12], [31.38, 47.55], [31.08, 47.76], [30.72, 48.02], 
             [30.35, 48.28], [30.05, 48.45]
           ],
-          "color": "#E53935",
+          "color": "#e74c3c",
           "weight": 3,
-          "opacity": 0.8,
+          "opacity": 0.92,
           "dashArray": "12,5",
           "popup": {
             "title": "伊拉克 — 伊朗 國境線",
             "tag": "國際邊界",
-            "tagClass": "tag-reference",
+            "tagClass": "tag-confirmed",
             "desc": "伊拉克與伊朗國際邊界（南段，馬尼德里至波斯灣）。胡韋扎沼澤（伊拉克側）與胡爾阿齊姆（伊朗側）即位於此邊境線兩側，兩國長期存在沼澤水資源分配爭議。",
             "source": "地理參考"
           }
@@ -468,9 +458,9 @@
             [33.34, 44.40], [32.50, 45.82], [32.00, 46.20], [31.84, 47.15], 
             [31.45, 47.38], [31.18, 47.50], [31.00, 47.43]
           ],
-          "color": "#0D47A1",
-          "weight": 4,
-          "opacity": 0.9,
+          "color": "#2471a3",
+          "weight": 3,
+          "opacity": 0.85,
           "dashArray": null,
           "popup": {
             "title": "底格里斯河（Tigris）",
@@ -485,9 +475,9 @@
             [32.60, 44.05], [32.10, 44.78], [31.32, 45.28], [31.05, 46.25], 
             [30.88, 46.65], [30.72, 47.05], [31.00, 47.43]
           ],
-          "color": "#1565C0",
-          "weight": 4,
-          "opacity": 0.9,
+          "color": "#2e86c1",
+          "weight": 3,
+          "opacity": 0.85,
           "dashArray": null,
           "popup": {
             "title": "幼發拉底河（Euphrates）",
@@ -501,9 +491,9 @@
           "points": [
             [33.00, 48.17], [32.20, 47.90], [31.85, 47.78], [31.45, 47.72]
           ],
-          "color": "#42A5F5",
-          "weight": 3,
-          "opacity": 0.8,
+          "color": "#5dade2",
+          "weight": 2,
+          "opacity": 0.75,
           "dashArray": "6,5",
           "popup": {
             "title": "卡爾赫河（Karkheh）",
@@ -517,9 +507,9 @@
           "points": [
             [31.00, 47.43], [30.52, 47.77], [30.15, 48.10], [29.97, 48.47]
           ],
-          "color": "#002984",
-          "weight": 5,
-          "opacity": 0.9,
+          "color": "#1a5276",
+          "weight": 4,
+          "opacity": 0.80,
           "dashArray": null,
           "popup": {
             "title": "阿拉伯河（Shatt al-Arab）",
@@ -531,79 +521,111 @@
         },
         {
           "points": [
+            [32.05, 47.38], [31.92, 47.28], [31.65, 47.28], [31.18, 47.30], 
+            [31.00, 47.42], [31.00, 47.58], [31.20, 47.65], [31.65, 47.70], 
+            [31.95, 47.65], [32.05, 47.55], [32.08, 47.45], [32.05, 47.38]
+          ],
+          "color": "#2980b9",
+          "weight": 2,
+          "opacity": 0.85,
+          "dashArray": null,
+          "popup": {
+            "title": "胡韋扎沼澤（伊拉克側）— 2026年4月現況",
+            "tag": "浸水率達85%｜核心恢復區",
+            "tagClass": "tag-possible",
+            "desc": "2026年3–4月水位顯著回升：水深從接近0升至超過50公分，浸水率達85%（對比2025年8月幾近全乾）。蘆葦快速生長，水牛群、魚類與候鳥（如彩鷸、紫鷺）重返。馬丹人捕魚、養水牛傳統活動局部復甦，部分遷居阿馬拉的家庭開始返鄉。此為伊拉克境內部分，東側跨邊界為伊朗的胡爾阿齊姆。",
+            "source": "France24・UNEP 2026.04"
+          }
+        },
+        {
+          "points": [
+            [31.65, 47.70], [31.85, 47.78], [32.00, 48.05], [32.00, 48.38], 
+            [31.72, 48.48], [31.38, 48.38], [31.08, 48.18], [31.00, 47.92], 
+            [31.08, 47.72], [31.30, 47.65], [31.65, 47.70]
+          ],
+          "color": "#7fb3d3",
+          "weight": 2,
+          "opacity": 0.75,
+          "dashArray": "4,3",
+          "popup": {
+            "title": "胡爾阿齊姆（伊朗側）— 2026年4月現況",
+            "tag": "伊朗境內胡韋扎延伸區",
+            "tagClass": "tag-reference",
+            "desc": "胡韋扎沼澤的伊朗部分（胡澤斯坦省境內），由卡爾赫河注水。歷史上與伊拉克側本為一體。近期降雨後有部分回升，但水資源政治爭議仍持續。",
+            "source": "背景資料"
+          }
+        },
+        {
+          "points": [
+            [31.50, 46.58], [31.48, 46.92], [31.30, 47.18], [31.00, 47.22], 
+            [30.80, 47.02], [30.75, 46.68], [30.90, 46.42], [31.20, 46.38], [31.50, 46.58]
+          ],
+          "color": "#2980b9",
+          "weight": 2,
+          "opacity": 0.85,
+          "dashArray": null,
+          "popup": {
+            "title": "中央沼澤（濟加爾省）— 2026年4月現況",
+            "tag": "幼發拉底河入沼水位+17公分",
+            "tagClass": "tag-possible",
+            "desc": "位於底格里斯河與幼發拉底河之間，濟加爾省（Dhi Qar）境內。核心地帶包含希巴伊什（Al-Chibayish）、烏姆瓦達（Umm al-Wada）等馬丹人聚落。2026年4月幼發拉底河入沼水位從45公分升至62公分，水道重現，UNESCO世界遺產遊客參訪已局部恢復。",
+            "source": "France24 2026.04"
+          }
+        },
+        {
+          "points": [
+            [30.92, 46.68], [31.08, 46.55], [31.18, 46.75], [31.20, 47.22], 
+            [30.98, 47.42], [30.70, 47.35], [30.52, 47.12], [30.58, 46.88], [30.92, 46.68]
+          ],
+          "color": "#2980b9",
+          "weight": 2,
+          "opacity": 0.80,
+          "dashArray": null,
+          "popup": {
+            "title": "哈馬爾沼澤（Al-Hammar）— 2026年4月現況",
+            "tag": "幼發拉底河南側沼澤",
+            "tagClass": "tag-reference",
+            "desc": "幼發拉底河南側至阿拉伯河之間的沼澤地帶，靠近巴士拉省北部。薩達姆時期曾被大規模排乾，2003年後逐步恢復。2026年春季水位回升，但因靠近農業開發區，水質污染問題仍嚴重。UNEP在本區阿布茲里格（Abu Zirig）設有人工濕地廢水處理試點。",
+            "source": "UNEP・背景資料"
+          }
+        },
+        {
+          "points": [
+            [32.30, 47.10], [32.20, 47.70], [32.05, 48.20], [31.60, 48.60], 
+            [31.10, 48.45], [30.78, 47.80], [30.55, 47.20], [30.62, 46.55], 
+            [30.90, 46.20], [31.35, 46.08], [31.80, 46.15], [32.05, 46.65], 
+            [32.20, 47.10], [32.30, 47.10]
+          ],
+          "color": "#1e8449",
+          "weight": 1.5,
+          "opacity": 0.65,
+          "dashArray": "8,5",
+          "popup": {
+            "title": "沼澤歷史最大範圍（1970年代前）",
+            "tag": "歷史基準｜15,000–20,000 km²",
+            "tagClass": "tag-reference",
+            "desc": "美索不達米亞沼澤歷史最大範圍概略輪廓（1970年代前，薩達姆大規模排水前）。面積達15,000–20,000平方公里。1991–2000年薩達姆政府人為排乾後縮減90%以上；2003年後部分恢復，2021–2026年乾旱期再度萎縮至歷史30%以下。2026年4月現況仍遠低於此歷史輪廓。",
+            "source": "UNEP・UNESCO 歷史記錄"
+          }
+        },
+        {
+          "points": [
             [37.10, 44.79], [36.15, 45.60], [35.40, 45.80], [34.70, 45.95], 
             [34.00, 46.15], [33.80, 45.92]
           ],
-          "color": "#E53935",
+          "color": "#e74c3c",
           "weight": 2,
-          "opacity": 0.7,
+          "opacity": 0.70,
           "dashArray": "10,5",
           "popup": {
             "title": "伊拉克 — 伊朗 國境線（北段）",
             "tag": "國際邊界（北段參考）",
-            "tagClass": "tag-reference",
+            "tagClass": "tag-confirmed",
             "desc": "伊拉克-伊朗北段邊界（扎格羅斯山區至曼達利段），連接南段（近沼澤區）。此段主要為山地邊界，爭議較少，但伊朗境內上游水壩多沿此山區河流興建。",
             "source": "地理參考"
           }
         }
-      ],
-      "legend": {
-        "title": "圖例 | Legend",
-        "items": [
-          {
-            "type": "polygon",
-            "fillColor": "#1E88E5",
-            "fillOpacity": 0.6,
-            "borderColor": "#0D47A1",
-            "label": "高恢復度沼澤（浸水率≥70%）"
-          },
-          {
-            "type": "polygon",
-            "fillColor": "#64B5F6",
-            "fillOpacity": 0.5,
-            "borderColor": "#1976D2",
-            "label": "中恢復度沼澤（浸水率50-70%）"
-          },
-          {
-            "type": "polygon",
-            "fillColor": "#81C784",
-            "fillOpacity": 0.2,
-            "borderColor": "#2E7D32",
-            "borderDashArray": "8,5",
-            "label": "沼澤歷史最大範圍（1970s前）"
-          },
-          {
-            "type": "line",
-            "color": "#0D47A1",
-            "weight": 4,
-            "label": "主要河流（底格里斯/幼發拉底）"
-          },
-          {
-            "type": "line",
-            "color": "#42A5F5",
-            "weight": 3,
-            "dashArray": "6,5",
-            "label": "次要河流（卡爾赫河）"
-          },
-          {
-            "type": "line",
-            "color": "#E53935",
-            "weight": 3,
-            "dashArray": "12,5",
-            "label": "國際邊界"
-          },
-          {
-            "type": "marker",
-            "color": "#FFC107",
-            "label": "首府/主要城市"
-          },
-          {
-            "type": "marker",
-            "color": "#F44336",
-            "label": "水壩/水利設施"
-          }
-        ]
-      }
+      ]
     };
 
     // 初始化地圖
@@ -615,29 +637,7 @@
       maxZoom: 14
     }).addTo(map);
 
-    // 1. 渲染填充多邊形（沼澤區域）
-    marshData.polygons.forEach(polygon => {
-      // 轉換坐標格式（Leaflet 要求 [緯度, 經度]）
-      const coords = polygon.points.map(pt => [pt[0], pt[1]]);
-      const poly = L.polygon(coords, {
-        fillColor: polygon.fillColor,
-        fillOpacity: polygon.fillOpacity,
-        color: polygon.borderColor,
-        weight: polygon.borderWeight,
-        opacity: polygon.borderOpacity,
-        dashArray: polygon.borderDashArray
-      }).addTo(map);
-      
-      // 綁定彈窗
-      poly.bindPopup(`
-        <h4>${polygon.popup.title}</h4>
-        <span class="tag ${polygon.popup.tagClass}">${polygon.popup.tag}</span>
-        <p>${polygon.popup.desc}</p>
-        <small>來源：${polygon.popup.source}</small>
-      `);
-    });
-
-    // 2. 渲染線條（河流/邊界）
+    // 1. 渲染線條（河流/邊界/沼澤輪廓）
     marshData.lines.forEach(line => {
       const coords = line.points.map(pt => [pt[0], pt[1]]);
       const polyline = L.polyline(coords, {
@@ -655,13 +655,13 @@
       `);
     });
 
-    // 3. 渲染標記點（城市/水壩等）
+    // 2. 渲染標記點（城市/水壩等）
     marshData.locations.forEach(loc => {
       // 定義標記顏色
       let markerColor = '#FFC107'; // 預設城市色
-      if (loc.type === 'dam') markerColor = '#F44336';
-      if (loc.type === 'high_recovery') markerColor = '#2196F3';
-      if (loc.type === 'medium_recovery') markerColor = '#64B5F6';
+      if (loc.type === 'confirmed') markerColor = '#F44336'; // 水壩
+      if (loc.type === 'possible') markerColor = '#2196F3'; // 高恢復區
+      if (loc.type === 'reference') markerColor = '#64B5F6'; // 參考點
       
       // 自定義標記樣式
       const markerIcon = L.divIcon({
@@ -680,59 +680,27 @@
       `);
     });
 
-    // 4. 渲染自定義圖例（強化樣式）
-    const legend = L.control({position: 'bottomright'});
-    legend.onAdd = function () {
-      const div = L.DomUtil.create('div', 'info legend');
-      div.innerHTML = `<h4>${marshData.legend.title}</h4>`;
-      
-      marshData.legend.items.forEach(item => {
-        if (item.type === 'polygon') {
-          div.innerHTML += `
-            <div class="legend-item">
-              <span style="display:inline-block; width:20px; height:15px; background:${item.fillColor}; 
-                opacity:${item.fillOpacity}; border:1px solid ${item.borderColor};
-                ${item.borderDashArray ? 'border-style:dashed;' : ''}"></span>
-              ${item.label}
-            </div>
-          `;
-        } else if (item.type === 'line') {
-          div.innerHTML += `
-            <div class="legend-item">
-              <span style="display:inline-block; width:30px; 
-                ${item.dashArray ? 
-                  `border-bottom:${item.weight}px dashed ${item.color};` : 
-                  `background:${item.color}; height:${item.weight}px;`
-                }"></span>
-              ${item.label}
-            </div>
-          `;
-        } else if (item.type === 'marker') {
-          div.innerHTML += `
-            <div class="legend-item">
-              <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${item.color};"></span>
-              ${item.label}
-            </div>
-          `;
-        }
-      });
-      return div;
-    };
-    legend.addTo(map);
-
     // 限制地圖視圖範圍
     map.setMaxBounds(marshData.map.bounds);
 
-    // ===== 新增：資訊面板收合功能 =====
+    // ===== 資訊面板收合功能 =====
     const panelToggle = document.getElementById('info-panel-toggle');
     const infoPanel = document.getElementById('info-panel');
-    const toggleIcon = panelToggle.querySelector('.toggle-icon');
+    const infoToggleIcon = panelToggle.querySelector('.toggle-icon');
 
-    // 點擊切換收合/展開
     panelToggle.addEventListener('click', () => {
       infoPanel.classList.toggle('collapsed');
-      // 切換圖示（−/＋）
-      toggleIcon.textContent = infoPanel.classList.contains('collapsed') ? '+' : '−';
+      infoToggleIcon.textContent = infoPanel.classList.contains('collapsed') ? '+' : '−';
+    });
+
+    // ===== 圖例面板收合功能（新增）=====
+    const legendToggle = document.getElementById('legend-toggle');
+    const legendContent = document.getElementById('legend-content');
+    const legendToggleIcon = legendToggle.querySelector('.toggle-icon');
+
+    legendToggle.addEventListener('click', () => {
+      legendContent.classList.toggle('collapsed');
+      legendToggleIcon.textContent = legendContent.classList.contains('collapsed') ? '+' : '−';
     });
   </script>
 </body>
