@@ -218,7 +218,32 @@ function initMap(d) {
 
   if (d.map.bounds) map.fitBounds(d.map.bounds);
 
-  // ── 說明面板（左上） ──────────────────────────────
+  // WKWebView 修正：100vh 在 iOS app 內嵌時可能解析為 0，需手動計算地圖高度
+  function fixMapHeight() {
+    var vh = window.innerHeight;
+    var mapEl = document.getElementById('map');
+    var headerEl = document.getElementById('header');
+    var footerEl = document.getElementById('footer');
+    if (!mapEl) return;
+    if (vh < 150) {
+      // WKWebView auto-sizing 模式：viewport 高度無效，改用固定高度
+      document.body.style.height = 'auto';
+      document.body.style.overflow = 'visible';
+      mapEl.style.height = '460px';
+      mapEl.style.flex = 'none';
+    } else {
+      var hh = headerEl ? headerEl.offsetHeight : 0;
+      var fh = footerEl ? footerEl.offsetHeight : 0;
+      mapEl.style.height = Math.max(260, vh - hh - fh) + 'px';
+      mapEl.style.flex = 'none';
+    }
+    map.invalidateSize();
+  }
+  window.addEventListener('resize', fixMapHeight);
+  fixMapHeight();
+  setTimeout(fixMapHeight, 300);
+
+
   const info = L.control({ position: 'topleft' });
   info.onAdd = function() {
     const div = L.DomUtil.create('div', 'info-panel');
