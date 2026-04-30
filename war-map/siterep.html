@@ -240,6 +240,29 @@ function initMap(d) {
   };
   info.addTo(map);
 
+  // ── 填充多邊形 ──────────────────────────────────────
+  if (d.polygons) {
+    d.polygons.forEach(function(pg) {
+      var poly = L.polygon(pg.points, {
+        fillColor: pg.fillColor,
+        fillOpacity: pg.fillOpacity,
+        color: pg.borderColor,
+        weight: pg.borderWeight || 1,
+        opacity: pg.borderOpacity || 1,
+        dashArray: pg.borderDashArray || null
+      }).addTo(map);
+      if (pg.popup) {
+        var p = pg.popup;
+        poly.bindPopup(
+          '<h3>' + p.title + '</h3>' +
+          '<span class="tag ' + (p.tagClass || 'tag-reference') + '">' + p.tag + '</span>' +
+          '<p>' + p.desc + '</p>' +
+          (p.source ? '<div class="source">📰 ' + p.source + '</div>' : '')
+        );
+      }
+    });
+  }
+
   // ── 路線 ──────────────────────────────────────────
   d.lines.forEach(function(ln) {
     const line = L.polyline(ln.points, {
@@ -297,6 +320,13 @@ function initMap(d) {
     const items = (d.legend && d.legend.length) ? d.legend : defaultItems;
 
     function makeSwatch(item) {
+      if (item.symbol === 'polygon') {
+        var bd = item.borderDash ? 'dashed' : 'solid';
+        return '<div style="width:20px;height:13px;flex-shrink:0;' +
+          'background:' + item.fillColor + ';' +
+          'border:2px ' + bd + ' ' + (item.borderColor || item.fillColor) + ';' +
+          'border-radius:2px;"></div>';
+      }
       if (item.symbol === 'dot') {
         const c = item.color;
         const inner = '<div style="position:absolute;top:0;left:0;width:12px;height:12px;' +
@@ -351,9 +381,12 @@ function initMap(d) {
 
 // ── 標記圖示工廠 ──────────────────────────────────────
 function makeIcon(type) {
-  if (type === 'capital')   return circleIcon('#f1c40f', 18, false);
-  if (type === 'confirmed') return circleIcon('#e74c3c', 15, true);
-  if (type === 'possible')  return circleIcon('#e67e22', 13, true);
+  if (type === 'capital' || type === 'city') return circleIcon('#f1c40f', 14, false);
+  if (type === 'confirmed')    return circleIcon('#e74c3c', 15, true);
+  if (type === 'possible')     return circleIcon('#e67e22', 13, true);
+  if (type === 'dam')          return circleIcon('#f44336', 12, true);
+  if (type === 'high_recovery')   return circleIcon('#2196F3', 11, false);
+  if (type === 'medium_recovery') return circleIcon('#64B5F6', 10, false);
   return circleIcon('#27ae60', 11, false);
 }
 
