@@ -9,6 +9,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
   <style>
+    :root {
+      --accent: #e67e22;
+      --accent-dark: #d35400;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -20,7 +25,7 @@
 
     #header {
       background: #0f0f1e;
-      border-bottom: 2px solid #e67e22;
+      border-bottom: 2px solid var(--accent);
       padding: 12px 22px;
       display: flex;
       align-items: center;
@@ -29,14 +34,14 @@
       gap: 8px;
     }
     #header .title-block h1 { font-size: 1.08rem; font-weight: 700; color: #f0f0f0; letter-spacing: 0.03em; }
-    #header .title-block h1 span { color: #e67e22; }
+    #header .title-block h1 span { color: var(--accent); }
     #header .title-block .sub { font-size: 0.72rem; color: #999; margin-top: 2px; }
     .badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .badge { padding: 3px 11px; border-radius: 3px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
     .badge-breaking { background: #c0392b; color: #fff; animation: pulse 1.8s infinite; }
-    .badge-ongoing  { background: #e67e22; color: #fff; }
+    .badge-ongoing  { background: var(--accent); color: #fff; }
     .badge-resolved { background: #27ae60; color: #fff; }
-    .badge-date { background: #e67e22; color: #fff; }
+    .badge-date { background: var(--accent-dark); color: #fff; }
     .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 
@@ -52,7 +57,7 @@
     }
     .leaflet-popup-tip { background: rgba(12, 12, 28, 0.96); }
     .leaflet-popup-content { margin: 13px 16px; font-size: 0.81rem; line-height: 1.65; }
-    .leaflet-popup-content h3 { font-size: 1rem; margin-bottom: 5px; color: #f5c518; }
+    .leaflet-popup-content h3 { font-size: 1rem; margin-bottom: 5px; color: var(--accent); }
     .leaflet-popup-content .tag {
       display: inline-block; font-size: 0.67rem; padding: 2px 8px;
       border-radius: 3px; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.04em;
@@ -78,7 +83,7 @@
       font-size: 0.76rem; max-width: 210px; line-height: 1.55; backdrop-filter: blur(4px);
       max-height: calc(100vh - 160px); display: flex; flex-direction: column;
     }
-    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #f5c518; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; flex-shrink: 0; }
+    .info-panel h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: var(--accent); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; flex-shrink: 0; }
     .info-panel hr { border-color: #444; margin: 7px 0; }
 
     .legend {
@@ -179,8 +184,25 @@ function showError(msg) {
   document.getElementById('error-text').textContent = msg;
 }
 
+// ── 色系定義 ──────────────────────────────────────────
+const THEMES = {
+  orange: { accent: '#e67e22', accentDark: '#d35400' },
+  blue:   { accent: '#2196F3', accentDark: '#1565C0' },
+  red:    { accent: '#e53935', accentDark: '#c62828' },
+  green:  { accent: '#27ae60', accentDark: '#1e8449' }
+};
+
+function applyTheme(name) {
+  const t = THEMES[name] || THEMES.orange;
+  const r = document.documentElement;
+  r.style.setProperty('--accent', t.accent);
+  r.style.setProperty('--accent-dark', t.accentDark);
+}
+
 // ── 主程式：資料載入後執行 ────────────────────────────
 function initMap(d) {
+  applyTheme(d.meta.theme);
+
   // 更新頁面標題
   document.title = d.meta.title + '｜' + d.meta.date;
 
