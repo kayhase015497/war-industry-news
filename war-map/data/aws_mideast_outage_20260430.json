@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "AWS 中東雲端區域受損",
+    "titleEn": "AWS Middle East Regions Outage — April 2026",
+    "subtitle": "巴林・阿聯基礎設施因中東衝突受損，恢復需數月",
+    "date": "2026-04-30",
+    "status": "ongoing",
+    "theme": "red",
+    "sources": ["Reuters", "AWS", "路透社"]
+  },
+  "map": {
+    "center": [27.5, 51.5],
+    "zoom": 6,
+    "bounds": [[18.0, 34.0], [38.0, 65.0]]
+  },
+  "infoPanel": {
+    "title": "AWS 中東區域停機事件",
+    "paragraphs": [
+      "AWS（亞馬遜雲端運算部門）於2026年4月30日宣布，位於巴林（ME-SOUTH-1）與阿拉伯聯合大公國（ME-CENTRAL-1）的兩個雲端區域因中東衝突遭受嚴重損壞，目前無法正常支援客戶應用程式。",
+      "受損原因包含：資料中心結構性破壞、電力中斷、火災，以及消防系統啟動造成的水損。AWS表示，受影響的客戶應將工作負載遷移至其他區域，預計恢復時程長達數月。",
+      "🔴 紅點閃爍 = AWS 受損區域（基礎設施中斷）　🟡 黃點 = 主要城市（地理參考）　🟢 綠點 = 鄰近 AWS 區域（未受影響）"
+    ]
+  },
+  "polygons": [],
+  "lines": [],
+  "locations": [
+    {
+      "latlng": [26.0667, 50.5577], "name": "AWS ME-SOUTH-1（巴林）", "nameLocal": "AWS 巴林",
+      "type": "confirmed", "tag": "基礎設施受損｜服務中斷", "tagClass": "tag-confirmed",
+      "desc": "AWS 中東第一個雲端區域（2019年啟用），含三個可用區（AZ），資料中心分散於巴林島。本次衝突造成結構性破壞、電力中斷、火災及水損，AWS宣布恢復需數月。受影響服務涵蓋 EC2、S3、RDS 等核心服務。",
+      "coords": "26°04'N 50°33'E", "source": "Reuters・AWS 2026.04.30"
+    },
+    {
+      "latlng": [25.2048, 55.2708], "name": "AWS ME-CENTRAL-1（阿聯／杜拜）", "nameLocal": "AWS 阿聯",
+      "type": "confirmed", "tag": "基礎設施受損｜服務中斷", "tagClass": "tag-confirmed",
+      "desc": "AWS 阿拉伯聯合大公國雲端區域（2022年啟用），資料中心主要位於杜拜周邊，部分設施可能在阿布達比。本次衝突同樣造成電力中斷與設備損毀，恢復時程與巴林區域相同，預計數月。",
+      "coords": "25°12'N 55°16'E", "source": "Reuters・AWS 2026.04.30"
+    },
+    {
+      "latlng": [24.4539, 54.3773], "name": "Abu Dhabi（阿布達比）", "nameLocal": "阿布達比",
+      "type": "capital", "tag": "阿聯首都", "tagClass": "tag-strategic",
+      "desc": "阿拉伯聯合大公國首都，AWS ME-CENTRAL-1 可能有部分設施位於此地。阿布達比是中東重要金融與科技中心，多家跨國企業在此設有區域總部。",
+      "coords": "24°27'N 54°22'E", "source": "背景資料"
+    },
+    {
+      "latlng": [26.2235, 50.5876], "name": "Manama（馬納馬）", "nameLocal": "馬納馬",
+      "type": "capital", "tag": "巴林首都", "tagClass": "tag-strategic",
+      "desc": "巴林王國首都，AWS ME-SOUTH-1 資料中心主要分布於馬納馬附近。巴林是中東重要金融中心，AWS 選擇此地建立中東首個雲端區域。",
+      "coords": "26°13'N 50°35'E", "source": "背景資料"
+    },
+    {
+      "latlng": [24.7136, 46.6753], "name": "Riyadh（利雅德）", "nameLocal": "利雅德",
+      "type": "capital", "tag": "沙烏地阿拉伯首都", "tagClass": "tag-strategic",
+      "desc": "沙烏地阿拉伯首都，中東最大經濟體中心。AWS 在利雅德設有 AWS Local Zone，與受損的 ME-SOUTH-1 及 ME-CENTRAL-1 共同服務中東企業客戶。Local Zone 目前未受本次事件影響。",
+      "coords": "24°42'N 46°40'E", "source": "背景資料"
+    },
+    {
+      "latlng": [29.3759, 47.9774], "name": "Kuwait City（科威特市）", "nameLocal": "科威特市",
+      "type": "capital", "tag": "科威特首都", "tagClass": "tag-strategic",
+      "desc": "科威特首都，波斯灣沿岸重要石油出口國。科威特企業是 AWS 巴林區域（ME-SOUTH-1）的主要客戶之一，受本次中斷影響。",
+      "coords": "29°22'N 47°58'E", "source": "背景資料"
+    },
+    {
+      "latlng": [32.0853, 34.7818], "name": "Tel Aviv（特拉維夫）", "nameLocal": "特拉維夫",
+      "type": "possible", "tag": "衝突主要方之一", "tagClass": "tag-possible",
+      "desc": "以色列最大城市，AWS 以色列區域（IL-CENTRAL-1）所在地。本次中東衝突的主要參與方之一，AWS 以色列區域未受本次事件波及，但地區緊張局勢持續影響雲端基礎設施風險評估。",
+      "coords": "32°04'N 34°46'E", "source": "背景資料"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "AWS 受損區域（基礎設施中斷）" },
+    { "symbol": "dot", "color": "#e67e22", "pulse": true,  "label": "衝突相關地點" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "主要城市（地理參考）" }
+  ]
+}
