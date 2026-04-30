@@ -823,14 +823,19 @@ function updateStats() {
   const prices = countries.map(c=>({c, v:item.prices[c.id]}));
   prices.sort((a,b)=>a.v-b.v);
   const minP = prices[0], maxP = prices[prices.length-1];
-  const twRank = prices.findIndex(p=>p.c.id==='tw') + 1;
+  
+  // 按最貴到最便宜排序，找台灣的排名
+  const pricesByExpensive = countries.map(c=>({c, v:item.prices[c.id]}));
+  pricesByExpensive.sort((a,b)=>b.v-a.v); // 從貴到便宜
+  const twRank = pricesByExpensive.findIndex(p=>p.c.id==='tw') + 1;
+  const totalCountries = countries.length;
 
   document.getElementById('st-item').textContent = `${item.name} ${item.unit}`;
   document.getElementById('st-min').textContent   = `NT$${minP.v}`;
   document.getElementById('st-min-c').textContent = `${minP.c.flag} ${minP.c.name}`;
   document.getElementById('st-max').textContent   = `NT$${maxP.v}`;
   document.getElementById('st-max-c').textContent = `${maxP.c.flag} ${maxP.c.name}`;
-  document.getElementById('st-rank').textContent  = `#${twRank} / ${prices.length}`;
+  document.getElementById('st-rank').textContent  = `#${twRank} / ${totalCountries}`;
 
   document.getElementById('bar-item-tag').textContent = `${item.name} ${item.unit}`;
 }
