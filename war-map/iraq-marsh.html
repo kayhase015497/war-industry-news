@@ -167,7 +167,26 @@
       font-size: 0.9rem;
       border-bottom: 1px solid #444;
       padding-bottom: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
     }
+    .info.legend h4 .legend-toggle {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-left: 8px;
+    }
+    .info.legend.collapsed h4 {
+      margin-bottom: 0;
+      border-bottom-color: transparent;
+      padding-bottom: 0;
+    }
+    .info.legend.collapsed .legend-body {
+      display: none;
+    }
+    .legend-body { }
     .legend-item {
       display: flex;
       align-items: center;
@@ -684,31 +703,31 @@
     const legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
-      div.innerHTML = `<h4>${marshData.legend.title}</h4>`;
-      
+
+      let itemsHtml = '';
       marshData.legend.items.forEach(item => {
         if (item.type === 'polygon') {
-          div.innerHTML += `
+          itemsHtml += `
             <div class="legend-item">
-              <span style="display:inline-block; width:20px; height:15px; background:${item.fillColor}; 
+              <span style="display:inline-block; width:20px; height:15px; background:${item.fillColor};
                 opacity:${item.fillOpacity}; border:1px solid ${item.borderColor};
                 ${item.borderDashArray ? 'border-style:dashed;' : ''}"></span>
               ${item.label}
             </div>
           `;
         } else if (item.type === 'line') {
-          div.innerHTML += `
+          itemsHtml += `
             <div class="legend-item">
-              <span style="display:inline-block; width:30px; 
-                ${item.dashArray ? 
-                  `border-bottom:${item.weight}px dashed ${item.color};` : 
+              <span style="display:inline-block; width:30px;
+                ${item.dashArray ?
+                  `border-bottom:${item.weight}px dashed ${item.color};` :
                   `background:${item.color}; height:${item.weight}px;`
                 }"></span>
               ${item.label}
             </div>
           `;
         } else if (item.type === 'marker') {
-          div.innerHTML += `
+          itemsHtml += `
             <div class="legend-item">
               <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${item.color};"></span>
               ${item.label}
@@ -716,6 +735,19 @@
           `;
         }
       });
+
+      div.innerHTML = `
+        <h4>${marshData.legend.title}<span class="legend-toggle">▼</span></h4>
+        <div class="legend-body">${itemsHtml}</div>
+      `;
+
+      div.querySelector('h4').addEventListener('click', () => {
+        div.classList.toggle('collapsed');
+        div.querySelector('.legend-toggle').textContent =
+          div.classList.contains('collapsed') ? '▶' : '▼';
+      });
+
+      L.DomEvent.disableClickPropagation(div);
       return div;
     };
     legend.addTo(map);
