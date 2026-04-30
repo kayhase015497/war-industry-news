@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>賴蔡十年國家隊儀表板 · BI版＆詳細版</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+:root {
+  --bg:#f0f2f5; --surface:#fff; --surface2:#f7f8fa; --border:#e2e5ea;
+  --accent:#1557a8; --accent-light:#e8f0fb;
+  --accent2:#c0392b; --accent2-light:#fdecea;
+  --accent3:#0e7c6e; --accent3-light:#e6f4f2;
+  --amber:#b45309; --amber-light:#fef3e2;
+  --text:#1a1d23; --text-dim:#5a6270; --text-dimmer:#9aa0ab;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;min-height:100vh;}
+
+.view-toggle{position:sticky;top:0;z-index:999;background:linear-gradient(to bottom,var(--accent),rgba(21,87,168,.95));color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.view-toggle label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;}
+.view-toggle input[type="radio"]{margin:0;cursor:pointer;}
+.view-toggle .sep{width:1px;height:20px;background:rgba(255,255,255,.3);margin:0 8px;}
+
+.view{display:none;}
+.view.active{display:block;}
+
+.top-bar{background:var(--accent);color:#fff;padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.top-bar-title{font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap;}
+.top-bar-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.7;white-space:nowrap;}
+.top-bar-badge{background:rgba(255,255,255,.18);border-radius:4px;padding:3px 10px;font-size:11px;font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+.page{padding:20px 24px 32px;max-width:1440px;margin:0 auto;}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+.kpi-card{background:var(--surface);border-radius:8px;padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:8px 8px 0 0;}
+.kpi-card.blue::before{background:var(--accent);}.kpi-card.red::before{background:var(--accent2);}.kpi-card.green::before{background:var(--accent3);}.kpi-card.amber::before{background:var(--amber);}.kpi-card.gray::before{background:var(--text-dimmer);}
+.kpi-label{font-size:11px;color:var(--text-dimmer);font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;margin-bottom:8px;text-transform:uppercase;}
+.kpi-value{font-size:26px;font-weight:900;letter-spacing:-.02em;line-height:1;margin-bottom:4px;}
+.kpi-card.blue .kpi-value{color:var(--accent);}.kpi-card.red .kpi-value{color:var(--accent2);}.kpi-card.green .kpi-value{color:var(--accent3);}.kpi-card.amber .kpi-value{color:var(--amber);}.kpi-card.gray .kpi-value{color:var(--text-dim);}
+.kpi-sub{font-size:11px;color:var(--text-dimmer);line-height:1.5;}
+.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:6px;padding:2px 7px;border-radius:99px;}
+.kpi-delta.up{background:#fdecea;color:var(--accent2);}.kpi-delta.neutral{background:var(--accent-light);color:var(--accent);}
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.full-width{margin-bottom:16px;}
+.card{background:var(--surface);border-radius:8px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;}
+.card-header{padding:14px 20px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.card-title{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:7px;}
+.card-title .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-blue{background:var(--accent);}.dot-red{background:var(--accent2);}.dot-green{background:var(--accent3);}.dot-amber{background:var(--amber);}
+.card-subtitle{font-size:11px;color:var(--text-dimmer);font-family:'IBM Plex Mono',monospace;}
+.card-body{padding:16px 20px;}
+canvas{display:block;}
+.bar-chart{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;flex-direction:column;gap:4px;}
+.bar-label-row{display:flex;justify-content:space-between;align-items:baseline;}
+.bar-name{font-size:12px;color:var(--text);font-weight:500;white-space:nowrap;}
+.bar-val{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--text-dim);}
+.bar-track{height:10px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--border);}
+.bar-fill-css{height:100%;border-radius:99px;}
+.donut-wrap{display:flex;align-items:center;gap:20px;}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:8px;}
+.legend-item{display:flex;align-items:center;gap:8px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.legend-name{font-size:12px;color:var(--text-dim);flex:1;}
+.legend-pct{font-size:12px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.data-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.data-table thead tr{background:var(--surface2);}
+.data-table th{padding:9px 14px;text-align:left;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--text-dimmer);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;}
+.data-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.data-table tbody tr:last-child td{border-bottom:none;}.data-table tbody tr:hover{background:var(--surface2);}
+.tag{display:inline-block;font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 7px;border-radius:3px;font-weight:600;}
+.tag-blue{background:var(--accent-light);color:var(--accent);}.tag-green{background:var(--accent3-light);color:var(--accent3);}.tag-amber{background:var(--amber-light);color:var(--amber);}.tag-gray{background:#f0f2f5;color:var(--text-dimmer);}
+.num-cell{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;white-space:nowrap;}
+.num-cell.c-blue{color:var(--accent);}.num-cell.c-amber{color:var(--amber);}.num-cell.c-gray{color:var(--text-dimmer);font-weight:400;}
+.controversy-cell{font-size:11.5px;color:var(--accent2);line-height:1.5;}.note-cell{font-size:11.5px;color:var(--text-dim);line-height:1.5;}
+.mini-bar-wrap{display:flex;align-items:center;gap:6px;margin-top:3px;}.mini-bar-track{flex:1;height:5px;background:var(--bg);border-radius:99px;overflow:hidden;min-width:50px;}.mini-bar-fill{height:100%;border-radius:99px;}
+.controversy-list{display:flex;flex-direction:column;}
+.controversy-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}.controversy-item:last-child{border-bottom:none;}
+.c-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.c-icon.red{background:var(--accent2-light);}.c-icon.amber{background:var(--amber-light);}
+.c-body{flex:1;}.c-title{font-size:13px;font-weight:700;margin-bottom:3px;}.c-desc{font-size:12px;color:var(--text-dim);line-height:1.6;}
+.c-pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-top:5px;}
+.c-pill.red{background:var(--accent2-light);color:var(--accent2);}.c-pill.amber{background:var(--amber-light);color:var(--amber);}
+.data-note{background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;font-size:11.5px;color:var(--text-dim);margin-bottom:16px;border-radius:0 6px 6px 0;font-family:'IBM Plex Mono',monospace;line-height:1.6;}
+footer{margin-top:8px;padding:14px 0 0;font-size:11px;color:var(--text-dimmer);font-family:'IBM Plex Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;border-top:1px solid var(--border);}
+
+/* Detailed view styles */
+.wrap{max-width:1240px;margin:0 auto;padding:32px 24px 80px}
+.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .mark{width:36px;height:36px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;letter-spacing:.05em;border-radius:4px}
+.brand .meta{font-size:11px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase}
+.brand .name{font-size:14px;font-weight:700;color:var(--text)}
+.topbar .tags{font-size:11px;color:var(--text-dim);display:flex;gap:14px;align-items:center}
+.topbar .tags b{color:var(--accent);font-weight:700}
+h1{font-family:'Noto Serif TC',serif;font-size:34px;line-height:1.3;margin:8px 0 12px;font-weight:700;color:var(--text);letter-spacing:.01em}
+h1 .sub{display:block;font-family:'Noto Sans TC',sans-serif;font-size:15px;color:var(--text-dim);font-weight:400;margin-top:10px;letter-spacing:0}
+.lede{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:4px;padding:18px 22px;margin:18px 0 28px;font-size:14.5px;color:var(--text-dim);box-shadow:var(--shadow)}
+h2{font-size:20px;margin:48px 0 18px;color:var(--text);padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;letter-spacing:.02em}
+h2 .num{font-family:'Noto Serif TC',serif;color:var(--accent2);font-size:14px;font-weight:700;letter-spacing:.1em}
+h3{font-size:15px;margin:20px 0 10px;color:var(--accent);font-weight:700;letter-spacing:.02em}
+p{color:var(--text-dim)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0 8px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px;position:relative;box-shadow:var(--shadow)}
+.kpi .lbl{font-size:11px;color:var(--text-dimmer);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.kpi .num{font-family:'Noto Serif TC',serif;font-size:30px;font-weight:700;line-height:1.05;margin:8px 0 6px;color:var(--accent)}
+.kpi .num.bad{color:var(--accent2)}
+.kpi .desc{font-size:12px;color:var(--text-dimmer);line-height:1.55}
+.kpi .badge{position:absolute;top:14px;right:14px;font-size:10px;letter-spacing:.1em;padding:2px 8px;border-radius:2px;font-weight:700}
+.kpi .badge.up{background:var(--accent2-light);color:var(--accent2)}.kpi .badge.dn{background:var(--accent3-light);color:var(--accent3)}.kpi .badge.flat{background:#f0f2f5;color:var(--text-dim)}
+.dash{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin:14px 0 8px}
+.card h4{margin:0 0 4px;font-size:14px;font-weight:700;color:var(--text);letter-spacing:.02em}
+.card .cap{font-size:11px;color:var(--text-dimmer);letter-spacing:.05em;margin-bottom:14px}
+.dash2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.dash3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0}
+svg.chart{width:100%;height:auto;display:block;font-family:inherit}
+.axis text{fill:var(--text-dimmer);font-size:10.5px}
+.axis line,.axis path{stroke:var(--text-dimmer);stroke-width:.5}
+.grid line{stroke:var(--border);stroke-width:.5;stroke-dasharray:2 2}
+.bar-label{fill:var(--text);font-size:10.5px;font-weight:700}
+.bar-num{fill:#fff;font-size:11px;font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-dim);margin:6px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;display:inline-block;border-radius:1px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;font-size:13.5px;box-shadow:var(--shadow);margin:8px 0}
+thead th{background:var(--accent);color:#fff;text-align:left;padding:11px 12px;font-weight:700;font-size:12px;letter-spacing:.04em;border-bottom:1px solid var(--accent);white-space:nowrap}
+td{padding:13px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-dim)}
+tbody tr:nth-child(even) td{background:var(--surface2)}
+tbody tr:last-child td{border-bottom:none}
+td.name{font-weight:700;color:var(--text);white-space:nowrap;font-size:14px;line-height:1.4}
+td.budget{font-family:'Noto Serif TC',serif;color:var(--accent);font-weight:600;font-size:14px;white-space:nowrap}
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0}
+.case{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:4px;padding:16px 20px;box-shadow:var(--shadow)}
+.case.policy{border-left-color:var(--accent)}.case.audit{border-left-color:var(--amber)}
+.case .ttl{font-weight:700;color:var(--text);font-size:15px;margin:0 0 8px;line-height:1.45}
+.case .meta{font-size:11px;color:var(--text-dimmer);margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap}
+.case .desc{font-size:13px;color:var(--text-dim);line-height:1.65;margin:0}
+.case .desc b{color:var(--accent2)}
+
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}.main-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}.dash,.dash2,.dash3{grid-template-columns:1fr}.cases{grid-template-columns:1fr}}
+@media(max-width:600px){.kpi-row{grid-template-columns:repeat(2,1fr)}.top-bar-meta,.top-bar-badge{display:none}.view-toggle{flex-direction:column;gap:8px;padding:10px 16px}.view-toggle label{font-size:12px}}
+</style>
+</head>
+<body>
+
+<div class="view-toggle">
+  <label><input type="radio" name="view" value="bi" checked> 📊 BI 儀表板版</label>
+  <div class="sep"></div>
+  <label><input type="radio" name="view" value="detail"> 📋 詳細爭議版</label>
+</div>
+
+<!-- BI VIEW -->
+<div id="bi-view" class="view active">
+<div class="top-bar">
+  <div class="top-bar-title">🇹🇼 賴蔡十年 · 國家隊與辦公室預算儀表板</div>
+  <div class="top-bar-meta">資料區間：2016–2025</div>
+  <div class="top-bar-badge">⚠ 估算值 · 僅供參考</div>
+</div>
+<div class="page">
+<div class="data-note">⚠ 多數「國家隊」無獨立預算，資金分散於各部會特別預算。本頁數據為公開報導與立院審議紀錄之最佳估算值。</div>
+<div class="kpi-row">
+  <div class="kpi-card blue"><div class="kpi-label">已知預算總估算</div><div class="kpi-value">7,100億+</div><div class="kpi-sub">新台幣，各項目合計</div><div class="kpi-delta neutral">↑ 含特別預算</div></div>
+  <div class="kpi-card red"><div class="kpi-label">人事費10年增幅</div><div class="kpi-value">+877億</div><div class="kpi-sub">4,142億 → 5,019億</div><div class="kpi-delta up">↑ +21.2%</div></div>
+  <div class="kpi-card amber"><div class="kpi-label">2025預算遭刪減</div><div class="kpi-value">2,075億</div><div class="kpi-sub">史上最高刪幅</div><div class="kpi-delta up">↑ 占6.64%</div></div>
+  <div class="kpi-card green"><div class="kpi-label">新增任務編組機構</div><div class="kpi-value">39+</div><div class="kpi-sub">部會、署級、辦公室</div><div class="kpi-delta neutral">無法定員額上限</div></div>
+  <div class="kpi-card gray"><div class="kpi-label">聘雇約雇人員增加</div><div class="kpi-value">~500人</div><div class="kpi-sub">同期全國機關</div><div class="kpi-delta neutral">結構性膨脹</div></div>
+</div>
+<div class="main-grid">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-blue"></span>主要項目預算規模比較（億）</div><div class="card-subtitle">已知金額項目</div></div>
+    <div class="card-body"><div class="bar-chart" id="barChart"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-amber"></span>預算類別占比</div><div class="card-subtitle">估算合計 ~7,200億</div></div>
+    <div class="card-body"><div class="donut-wrap"><canvas id="donutCanvas" width="180" height="180" style="flex-shrink:0"></canvas><div class="donut-legend" id="donutLegend"></div></div></div>
+  </div>
+</div>
+<div class="main-grid">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-red"></span>中央政府人事費趨勢（億）</div><div class="card-subtitle">2017–2025</div></div>
+    <div class="card-body" style="padding-bottom:8px;"><canvas id="lineCanvas" height="200"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-red"></span>打詐國家隊三版預算分解</div><div class="card-subtitle">累計超過100億</div></div>
+    <div class="card-body" style="padding-bottom:8px;"><canvas id="antiScamCanvas" height="180"></canvas><div style="margin-top:10px;font-size:11.5px;color:var(--accent2);background:var(--accent2-light);padding:8px 12px;border-radius:6px;line-height:1.6;">⚠ 1.5版13億中，逾 <strong>10億（76.9%）</strong>花在場地整修與防詐宣導</div></div>
+  </div>
+</div>
+<div class="full-width">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-blue"></span>國家隊 · 辦公室完整明細</div></div>
+    <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>單位名稱</th><th>類型</th><th>估算預算</th><th>規模</th><th>預算性質</th><th>爭議／備註</th></tr></thead><tbody id="mainTable"></tbody></table></div>
+  </div>
+</div>
+<div class="main-grid">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-red"></span>重大酬庸與浪費爭議</div></div>
+    <div class="card-body"><div class="controversy-list">
+      <div class="controversy-item"><div class="c-icon red">💸</div><div class="c-body"><div class="c-title">綠能國家隊 · 聯合再生能源屏東辦公室</div><div class="c-desc">設辦公室花費5,600萬，以年薪近300萬聘前屏東縣府官員，民眾黨立委指控政治酬庸</div><div class="c-pill red">涉及金額：5,600萬</div></div></div>
+      <div class="controversy-item"><div class="c-icon red">🏗️</div><div class="c-body"><div class="c-title">打詐國家隊 1.5版 · 10億裝修爭議</div><div class="c-desc">13億預算中近10億用於場地整修及防詐宣導；裁罰數始終為0</div><div class="c-pill red">浪費疑慮：10億+</div></div></div>
+      <div class="controversy-item"><div class="c-icon amber">🏢</div><div class="c-body"><div class="c-title">行政院中部辦公室 · 酬庸爭議</div><div class="c-desc">嘉義地震期間未關心災情反發政治文，被批圈養政治人物的酬庸機構</div><div class="c-pill amber">制度爭議</div></div></div>
+    </div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="dot dot-amber"></span>結構性問題</div></div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="background:var(--accent-light);border-radius:6px;padding:12px;font-size:12px;color:var(--text-dim);line-height:1.6;"><b style="color:var(--accent)">📋 法外行政空間</b><br/>任務編組型機構不受《政府組織法》規範，無需立法院設立審查。</div>
+      <div style="background:var(--accent2-light);border-radius:6px;padding:12px;font-size:12px;color:var(--text-dim);line-height:1.6;"><b style="color:var(--accent2)">💰 預算分散化</b><br/>多數國家隊無獨立預算書，資金隱沒於各部會。</div>
+      <div style="background:var(--amber-light);border-radius:6px;padding:12px;font-size:12px;color:var(--text-dim);line-height:1.6;"><b style="color:var(--amber)">📈 人事膨脹</b><br/>2017→2025年人事費增加877億，聘雇約雇人員近500人。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div>資料來源：立法院審議紀錄、行政院主計總處、報導者、聯合報、中時電子報、公視新聞網</div>
+  <div>最後更新：2025年4月</div>
+</footer>
+</div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detail-view" class="view">
+<div class="wrap">
+<div class="topbar">
+  <div class="brand">
+    <div class="mark">DPP</div>
+    <div>
+      <div class="meta">台灣政府預算追蹤 · 2016–2025</div>
+      <div class="name">國家隊與辦公室爭議儀表板</div>
+    </div>
+  </div>
+  <div class="tags">
+    <span>資料截止 <b>2026-04</b></span>
+    <span>分析項目 <b>30+</b></span>
+  </div>
+</div>
+<h1>賴蔡十年：近 50 個國家隊、45 個辦公室委員會
+  <span class="sub">預算規模、爭議事件、司法判決與政策成效綜合儀表板（詳細版）</span>
+</h1>
+<div class="lede">
+本報告整理民進黨執政十年間任務編組型「國家隊」與「辦公室委員會」之預算規模、爭議焦點、司法案件與政策成效。<b style="color:var(--accent2)">資料來源</b>包含立法院審議紀錄、立法院預算中心、行政院主計總處、監察院糾正案、各地檢署起訴書、地方法院判決書，以及媒體深度調查報導。
+</div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <span class="badge up">↑ +21.2%</span>
+    <div class="lbl">人事費用增幅</div>
+    <div class="num bad">+877億</div>
+    <div class="desc">2017→2025 中央人事費由 4,142 億增至 5,019 億</div>
+  </div>
+  <div class="kpi">
+    <span class="badge up">↑ 11×</span>
+    <div class="lbl">2024 詐騙財損</div>
+    <div class="num bad">1,300億</div>
+    <div class="desc">5 年內成長 11 倍，全年 22 萬件</div>
+  </div>
+  <div class="kpi">
+    <span class="badge flat">NEW</span>
+    <div class="lbl">新設任務編組機構</div>
+    <div class="num">39+</div>
+    <div class="desc">部會署級任務編組，無《政府組織法》規範</div>
+  </div>
+  <div class="kpi">
+    <span class="badge up">↑ 6.64%</span>
+    <div class="lbl">2025 預算遭刪減</div>
+    <div class="num bad">2,075億</div>
+    <div class="desc">占總預算 6.64%，史上最高刪幅</div>
+  </div>
+</div>
+<h2><span class="num">01</span>預算規模對比</h2>
+<div class="dash">
+  <div class="card">
+    <h4>國家隊估算預算規模 Top 10</h4>
+    <div class="cap">含特別預算、國營事業投資；單位：新台幣億元</div>
+    <svg class="chart" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid meet">
+      <g class="grid"><line x1="160" y1="20" x2="160" y2="340"/><line x1="240" y1="20" x2="240" y2="340"/><line x1="320" y1="20" x2="320" y2="340"/><line x1="400" y1="20" x2="400" y2="340"/><line x1="480" y1="20" x2="480" y2="340"/><line x1="560" y1="20" x2="560" y2="340"/><line x1="640" y1="20" x2="640" y2="340"/></g>
+      <g class="axis"><text x="160" y="358" text-anchor="middle">0</text><text x="240" y="358" text-anchor="middle">500</text><text x="320" y="358" text-anchor="middle">1,000</text><text x="400" y="358" text-anchor="middle">1,500</text><text x="480" y="358" text-anchor="middle">2,000</text><text x="560" y="358" text-anchor="middle">2,500</text><text x="640" y="358" text-anchor="middle">3,000+</text></g>
+      <g><text class="bar-label" x="155" y="44" text-anchor="end">綠能國家隊</text><rect x="160" y="30" width="519" height="22" fill="#1557a8"/><text class="bar-num" x="675" y="46" text-anchor="end">3,240</text></g>
+      <g><text class="bar-label" x="155" y="74" text-anchor="end">潛艦國家隊</text><rect x="160" y="60" width="455" height="22" fill="#1557a8"/><text class="bar-num" x="607" y="76" text-anchor="end">2,840</text></g>
+      <g><text class="bar-label" x="155" y="104" text-anchor="end">無人機國家隊</text><rect x="160" y="90" width="71" height="22" fill="#1557a8"/><text class="bar-num" x="225" y="106" text-anchor="end">442</text></g>
+      <g><text class="bar-label" x="155" y="134" text-anchor="end">太空國家隊</text><rect x="160" y="120" width="40" height="22" fill="#1557a8"/><text class="bar-num" x="194" y="136" text-anchor="end">251</text></g>
+      <g><text class="bar-label" x="155" y="164" text-anchor="end">打詐國家隊（累計）</text><rect x="160" y="150" width="16" height="22" fill="#c0392b"/><text class="bar-num" x="170" y="166" text-anchor="end">100</text></g>
+      <g><text class="bar-label" x="155" y="194" text-anchor="end">電動巴士國家隊</text><rect x="160" y="180" width="134" height="22" fill="#b45309"/><text class="bar-num" x="288" y="196" text-anchor="end">643</text></g>
+      <g><text class="bar-label" x="155" y="224" text-anchor="end">新南向整體計畫</text><rect x="160" y="210" width="9" height="22" fill="#0e7c6e"/><text class="bar-num" x="173" y="226" text-anchor="end">57</text></g>
+      <g><text class="bar-label" x="155" y="254" text-anchor="end">疫苗國家隊</text><rect x="160" y="240" width="8" height="22" fill="#c0392b"/><text class="bar-num" x="172" y="256" text-anchor="end">50</text></g>
+      <g><text class="bar-label" x="155" y="284" text-anchor="end">口罩國家隊</text><rect x="160" y="270" width="18" height="22" fill="#b45309"/><text class="bar-num" x="182" y="286" text-anchor="end">110</text></g>
+    </svg>
+  </div>
+  <div class="card">
+    <h4>爭議案件統計</h4>
+    <div class="cap">司法判決 / 監察糾正</div>
+    <div style="padding:20px 0;text-align:center;font-size:32px;font-weight:900;color:var(--accent2)">9</div>
+    <p style="text-align:center;font-size:12px;color:var(--text-dimmer)">司法案件 / 監察糾正</p>
+    <hr style="margin:12px 0;border:none;border-top:1px solid var(--border)">
+    <div class="legend"><span><i style="background:var(--accent2)"></i>司法判決</span><span><i style="background:var(--accent)"></i>政策失誤</span><span><i style="background:var(--amber)"></i>監察糾正</span></div>
+  </div>
+</div>
+<h2><span class="num">02</span>重大爭議案例 & 司法判決</h2>
+<div class="cases">
+  <div class="case"><div class="ttl">打詐國家隊 1.5 版 · 13 億預算浪費爭議</div><div class="meta"><span class="tag" style="background:var(--accent2-light);color:var(--accent2)">民眾黨質詢</span><span class="tag" style="background:var(--accent2-light);color:var(--accent2)">立委爆料</span></div><div class="desc">陳建仁內閣「打詐 1.5 版」編列 13 億預算，<b>10 億（76.9%）用於場地裝修與宣導</b>，裁罰件數始終為 0。同年詐騙損失反而逆勢成長至 1,300 億元。</div></div>
+  <div class="case"><div class="ttl">綠能國家隊 · 聯合再生能源屏東辦公室</div><div class="meta"><span class="tag" style="background:var(--accent2-light);color:var(--accent2)">民眾黨立委</span><span class="tag" style="background:var(--amber-light);color:var(--amber)">酬庸爭議</span></div><div class="desc">國家隊成員聯合再生能源設立屏東辦公室花費 <b>5,600 萬</b>，以年薪近 300 萬聘前屏東縣府官員，民眾黨立委指控典型政治酬庸案例。</div></div>
+  <div class="case policy"><div class="ttl">少子化辦公室 · 「幽靈機構」風波</div><div class="meta"><span class="tag" style="background:var(--accent-light);color:var(--accent)">行政院</span><span class="tag" style="background:var(--amber-light);color:var(--amber)">全代遭刪</span></div><div class="desc">2026年國民黨提案刪除 90% 預算後，黨產會自爆「不存在」 —— <b>已運作 7 年、編列數千億，卻無辦公地點、員額編制</b>。典型「法外行政」極端案例。</div></div>
+  <div class="case"><div class="ttl">行政院中部辦公室 · 「酬庸旗艦店」</div><div class="meta"><span class="tag" style="background:var(--accent2-light);color:var(--accent2)">在野黨批評</span><span class="tag" style="background:var(--amber-light);color:var(--amber)">應變失當</span></div><div class="desc">嘉義地震期間未第一時間關心災情，反發政治文鬥爭，被在野黨批為<b>圈養政治人物的典型酬庸機構</b>。</div></div>
+  <div class="case"><div class="ttl">疫苗國家隊 · 高端採購爭議</div><div class="meta"><span class="tag" style="background:var(--accent2-light);color:var(--accent2)">媒體調查</span><span class="tag" style="background:var(--amber-light);color:var(--amber)">程序失當</span></div><div class="desc">高端疫苗<b>未完成三期臨床試驗即獲採購與緊急授權</b>，涉及數十億採購案，成為跨政黨共同詬病。</div></div>
+  <div class="case policy"><div class="ttl">不當黨產處理委員會 · 預算遭砍 90%</div><div class="meta"><span class="tag" style="background:var(--accent-light);color:var(--accent)">2025預算審議</span><span class="tag" style="background:var(--amber-light);color:var(--amber)">報復性預算</span></div><div class="desc">2025 年國民黨提案刪除 90% 預算，黨產會稱核心業務將<b>全面停擺</b>；33 個民團發聲抗議「以民主摧毀民主」。</div></div>
+</div>
+<h2><span class="num">03</span>系統性結構問題</h2>
+<div class="dash3">
+  <div class="card">
+    <h4 style="color:var(--accent2)">1. 預算分散化難追蹤</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin:8px 0 0;line-height:1.7">多數國家隊沒有獨立預算書，資金隱沒於各部會，立委難以追蹤整體花費。監察院 2024/8 對進口蛋案提出之 5 項糾正即點名：驗收、履約、經費核銷「全都便宜行事」。</p>
+  </div>
+  <div class="card">
+    <h4 style="color:var(--accent2)">2. 法外行政空間</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin:8px 0 0;line-height:1.7">任務編組型機構不受《政府組織法》規範，無需通過立法院設立審查，人事任命亦無公開審議程序，形同「法外行政」。</p>
+  </div>
+  <div class="card">
+    <h4 style="color:var(--accent2)">3. 政治酬庸鏈</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin:8px 0 0;line-height:1.7">各行政院派駐辦公室正職及政務職缺被批圈養政治人物。能源減碳辦公室→綠推中心→台船環海→台智電的人事鏈案例。</p>
+  </div>
+</div>
+<footer>
+資料來源：立法院審議紀錄、立法院預算中心、行政院主計總處、監察院 113 年糾正案、各地檢署起訴書、地方法院判決書；媒體深度調查報導等。
+<br>最後更新：2026 年 4 月（合併版）· 部分數據為估算值，精確數字應參照行政院主計總處官方預算書。
+</footer>
+</div>
+</div>
+
+<script>
+document.querySelectorAll('input[name="view"]').forEach(radio=>{
+  radio.addEventListener('change',e=>{
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(e.target.value+'-view').classList.add('active');
+    window.scrollTo(0,0);
+  });
+});
+
+const tableData=[
+  {name:'綠能國家隊',type:'國家隊',tc:'tag-blue',budget:'約 3,240 億',bc:'c-blue',n:3270,note:'含特別預算及國營事業投資',con:'聯合再生能源設屏東辦公室花費5,600萬，以年薪近300萬聘前縣府官員',hc:true},
+  {name:'潛艦國家隊',type:'國家隊',tc:'tag-blue',budget:'後續艦 2,840 億',bc:'c-blue',n:2840,note:'2026年起逐年編列；2025預算僅10億（凍結50%）',con:'立院凍結首艦海測前不得動支',hc:true},
+  {name:'無人機國家隊',type:'國家隊',tc:'tag-blue',budget:'6年 442 億',bc:'c-blue',n:442,note:'行政院無人載具產業發展計畫',con:'',hc:false},
+  {name:'太空國家隊',type:'國家隊',tc:'tag-blue',budget:'10年 251 億',bc:'c-blue',n:251,note:'第三期太空科技發展長程計畫',con:'',hc:false},
+  {name:'打詐國家隊',type:'國家隊',tc:'tag-blue',budget:'三版合計 100億+',bc:'c-amber',n:100,note:'1.0版14億、1.5版13億、2.0版73億',con:'1.5版13億中逾10億花在場地整修；裁罰數為0',hc:true},
+  {name:'口罩國家隊',type:'國家隊',tc:'tag-blue',budget:'約 110 億',bc:'c-amber',n:110,note:'新冠疫情期間',con:'',hc:false},
+  {name:'電動巴士國家隊',type:'國家隊',tc:'tag-blue',budget:'約 85–600 億',bc:'c-amber',n:110,note:'含採購補貼及電動大客車計畫',con:'',hc:false},
+  {name:'疫苗國家隊',type:'國家隊',tc:'tag-blue',budget:'估計數十億',bc:'c-amber',n:50,note:'含國產疫苗研發補助',con:'高端疫苗未完成三期試驗即採購',hc:true},
+  {name:'新南向辦公室',type:'辦公室',tc:'tag-green',budget:'整體計畫 42–72.6 億',bc:'c-amber',n:57,note:'2016年成立',con:'',hc:false},
+  {name:'少子化辦公室',type:'辦公室',tc:'tag-green',budget:'約 7.9 億',bc:'c-amber',n:7.9,note:'行政院任務編組',con:'出生率仍持續下降',hc:true},
+];
+
+const tbody=document.getElementById('mainTable');
+if(tbody){
+  tableData.forEach(d=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:700;">${d.name}</td><td><span class="tag ${d.tc}">${d.type}</span></td><td class="num-cell ${d.bc}">${d.budget}</td><td>${d.n>0?`<div class="mini-bar-wrap"><div class="mini-bar-track"><div class="mini-bar-fill" style="width:${Math.min(100,d.n/3270*100)}%;background:${d.bc==='c-blue'?'var(--accent)':'var(--amber)'}"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dimmer);">${d.n.toFixed(1)}億</span></div>`:'<span style="font-size:11px;color:var(--text-dimmer);">—</span>'}</td><td class="note-cell">${d.note}</td><td class="${d.hc?'controversy-cell':'note-cell'}">${d.con||'—'}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+const barData=[{name:'綠能國家隊',val:3270,color:'#1557a8'},{name:'潛艦國家隊',val:2840,color:'#1557a8'},{name:'無人機國家隊',val:442,color:'#2878d0'},{name:'太空國家隊',val:251,color:'#4a97e8'},{name:'打詐國家隊（三版）',val:100,color:'#c0392b'},{name:'電動巴士國家隊',val:110,color:'#b45309'},{name:'疫苗國家隊',val:50,color:'#d45a4a'},{name:'新南向整體計畫',val:57,color:'#0e7c6e'},{name:'影劇國家隊',val:15,color:'#0e7c6e'}];
+const maxVal=3270;
+const bc=document.getElementById('barChart');
+if(bc){
+  barData.forEach(d=>{const pct=(d.val/maxVal*100).toFixed(1);bc.innerHTML+=`<div class="bar-row"><div class="bar-label-row"><span class="bar-name">${d.name}</span><span class="bar-val">${d.val}億</span></div><div class="bar-track"><div class="bar-fill-css" style="width:${pct}%;background:${d.color};"></div></div></div>`;});
+}
+
+(function(){
+  const canvas=document.getElementById('donutCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const segs=[{label:'國防／能源大項',val:6080,color:'#1557a8'},{label:'疫情相關',val:160,color:'#c0392b'},{label:'打詐累計',val:100,color:'#e05a3a'},{label:'科技產業',val:308,color:'#0e7c6e'},{label:'其他小項',val:552,color:'#b45309'}];
+  const total=segs.reduce((s,d)=>s+d.val,0);
+  const cx=90,cy=90,r=72,ir=44;
+  let start=-Math.PI/2;
+  segs.forEach(seg=>{const angle=(seg.val/total)*2*Math.PI;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,start+angle);ctx.closePath();ctx.fillStyle=seg.color;ctx.fill();start+=angle;});
+  ctx.beginPath();ctx.arc(cx,cy,ir,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle='#1a1d23';ctx.font='bold 14px IBM Plex Mono,monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('7,200億',cx,cy-8);
+  ctx.font='10px Noto Sans TC,sans-serif';ctx.fillStyle='#9aa0ab';
+  ctx.fillText('估算合計',cx,cy+10);
+  const leg=document.getElementById('donutLegend');
+  if(leg){segs.forEach(seg=>{const pct=(seg.val/total*100).toFixed(1);leg.innerHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${seg.color}"></div><span class="legend-name">${seg.label}</span><span class="legend-pct" style="color:${seg.color}">${pct}%</span></div>`;});}
+})();
+
+(function(){
+  const canvas=document.getElementById('lineCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.parentElement.clientWidth-40||520;
+  const H=200;
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+  const years=['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+  const vals=[4142,4280,4390,4510,4620,4730,4850,4940,5019];
+  const pad={top:24,right:20,bottom:36,left:58};
+  const cw=W-pad.left-pad.right,ch=H-pad.top-pad.bottom;
+  const minV=3900,maxV=5200;
+  const xPos=i=>pad.left+(i/(years.length-1))*cw;
+  const yPos=v=>pad.top+ch-((v-minV)/(maxV-minV))*ch;
+  [4000,4200,4400,4600,4800,5000].forEach(v=>{const y=yPos(v);ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(pad.left+cw,y);ctx.strokeStyle='#e2e5ea';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#9aa0ab';ctx.font='10px IBM Plex Mono,monospace';ctx.textAlign='right';ctx.fillText(v+'億',pad.left-6,y+4);});
+  const grad=ctx.createLinearGradient(0,pad.top,0,pad.top+ch);
+  grad.addColorStop(0,'rgba(21,87,168,0.15)');grad.addColorStop(1,'rgba(21,87,168,0)');
+  ctx.beginPath();ctx.moveTo(xPos(0),yPos(vals[0]));
+  vals.forEach((v,i)=>{if(i>0)ctx.lineTo(xPos(i),yPos(v));});
+  ctx.lineTo(xPos(vals.length-1),pad.top+ch);ctx.lineTo(xPos(0),pad.top+ch);
+  ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();ctx.moveTo(xPos(0),yPos(vals[0]));
+  vals.forEach((v,i)=>{if(i>0)ctx.lineTo(xPos(i),yPos(v));});
+  ctx.strokeStyle='#1557a8';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
+  vals.forEach((v,i)=>{const x=xPos(i),y=yPos(v);ctx.beginPath();ctx.arc(x,y,4,0,2*Math.PI);ctx.fillStyle='#1557a8';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#9aa0ab';ctx.font='10px IBM Plex Mono,monospace';ctx.textAlign='center';ctx.fillText(years[i],x,H-8);});
+  ctx.fillStyle='#c0392b';ctx.font='bold 11px Noto Sans TC,sans-serif';ctx.textAlign='left';ctx.fillText('↑ 十年增加 877億（+21.2%）',xPos(3),pad.top+12);
+})();
+
+(function(){
+  const canvas=document.getElementById('antiScamCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.parentElement.clientWidth-40||280;
+  const H=180;
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+  const versions=[{label:['1.0版','蘇貞昌'],total:14,waste:0},{label:['1.5版','陳建仁'],total:13,waste:9.9},{label:['2.0版','卓榮泰'],total:73,waste:0}];
+  const maxT=73;
+  const pad={top:20,right:16,bottom:44,left:20};
+  const ch=H-pad.top-pad.bottom;
+  const slots=versions.length;
+  const bw=(W-pad.left-pad.right)/slots*0.5;
+  const gap=(W-pad.left-pad.right)/slots;
+  versions.forEach((v,i)=>{const x=pad.left+i*gap+(gap-bw)/2;const totalH=(v.total/maxT)*ch;const wasteH=v.waste>0?(v.waste/maxT)*ch:0;const legitH=totalH-wasteH;ctx.fillStyle='#1557a8';ctx.fillRect(x,pad.top+ch-totalH,bw,legitH);if(wasteH>0){ctx.fillStyle='#c0392b';ctx.fillRect(x,pad.top+ch-totalH,bw,wasteH);}ctx.fillStyle='#1a1d23';ctx.font='bold 12px IBM Plex Mono,monospace';ctx.textAlign='center';ctx.fillText(v.total+'億',x+bw/2,pad.top+ch-totalH-6);if(v.waste>0){ctx.fillStyle='#fff';ctx.font='bold 10px IBM Plex Mono,monospace';ctx.fillText(v.waste+'億',x+bw/2,pad.top+ch-totalH+wasteH/2+4);}v.label.forEach((l,li)=>{ctx.fillStyle='#5a6270';ctx.font='11px Noto Sans TC,sans-serif';ctx.textAlign='center';ctx.fillText(l,x+bw/2,H-28+li*14);});});
+  ctx.fillStyle='#1557a8';ctx.fillRect(pad.left,H-7,10,7);ctx.fillStyle='#5a6270';ctx.font='10px Noto Sans TC,sans-serif';ctx.textAlign='left';ctx.fillText('正常支出',pad.left+14,H-1);
+  const lx=W/2+10;ctx.fillStyle='#c0392b';ctx.fillRect(lx,H-7,10,7);ctx.fillStyle='#5a6270';ctx.fillText('爭議支出',lx+14,H-1);
+})();
+</script>
+</body>
+</html>
