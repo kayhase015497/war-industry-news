@@ -197,6 +197,10 @@
     .legend-item:last-child {
       margin-bottom: 0;
     }
+    /* 縮放控制移至右上，下移避開標題橫幅 */
+    .leaflet-top.leaflet-right {
+      margin-top: 90px;
+    }
     /* 響應式調整 */
     @media (max-width: 768px) {
       #header h1 { font-size: 1rem; }
@@ -221,9 +225,9 @@
     <div id="info-panel-container">
       <div id="info-panel-toggle">
         <h2>阿赫瓦爾沼澤水情概況</h2>
-        <span class="toggle-icon">−</span>
+        <span class="toggle-icon">+</span>
       </div>
-      <div id="info-panel">
+      <div id="info-panel" class="collapsed">
         <p>美索不達米亞沼澤（阿赫瓦爾，Ahwar）2021年起連續4年以上近乎乾涸，為40年最嚴重乾旱，部分核心區（如胡韋扎沼澤）浸水率一度降至8%以下，水牛減少76%、逾3萬馬丹人（Ma'dan）被迫遷移。</p>
         <p>2026年2月底至4月初，受豐沛降雨與融雪洪水補給影響，胡韋扎沼澤水深從接近0升至50公分以上，浸水率達85%；濟加爾省幼發拉底河入沼水位從45公分升至62公分。蘆葦床再生、魚類、水鳥與水牛群開始回歸，馬丹人捕魚、養水牛等傳統活動局部復甦。</p>
         <p>⚠️ 恢復仍脆弱：夏季高溫蒸發即將來臨，若無持續河水補給易逆轉。上游土耳其GAP計畫與伊朗邊境大壩長期截流仍是根本威脅。<br>
@@ -626,7 +630,8 @@
     };
 
     // 初始化地圖
-    const map = L.map('map').setView(marshData.map.center, marshData.map.zoom);
+    const map = L.map('map', { zoomControl: false }).setView(marshData.map.center, marshData.map.zoom);
+    L.control.zoom({ position: 'topright' }).addTo(map);
     
     // 加載底圖層（OpenStreetMap）
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -736,8 +741,9 @@
         }
       });
 
+      div.classList.add('collapsed');
       div.innerHTML = `
-        <h4>${marshData.legend.title}<span class="legend-toggle">▼</span></h4>
+        <h4>${marshData.legend.title}<span class="legend-toggle">▶</span></h4>
         <div class="legend-body">${itemsHtml}</div>
       `;
 
