@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球食品比價 Dashboard · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:      #0D0F13;
+  --bg2:     #141720;
+  --bg3:     #1C2030;
+  --bg4:     #242840;
+  --ink:     #E8EAF0;
+  --ink2:    #8890A8;
+  --ink3:    #555D75;
+  --rule:    #252A3A;
+  --rule2:   #2E3448;
+  --accent:  #4F8EF7;
+  --accent2: #2ECC71;
+  --warn:    #F7934F;
+  --danger:  #E05C5C;
+  --mono:    'DM Mono', monospace;
+  --sans:    'Noto Sans TC', sans-serif;
+
+  /* Country colors */
+  --tw: #4F8EF7;
+  --es: #E05C5C;
+  --de: #C8C8C8;
+  --fr: #5C8BE0;
+  --us: #7B68EE;
+  --jp: #E05C8A;
+  --kr: #5CB8E0;
+  --cn: #E0745C;
+  --ru: #E0A45C;
+}
+
+body.light {
+  --bg:      #F9FAFB;
+  --bg2:     #FFFFFF;
+  --bg3:     #F3F4F6;
+  --bg4:     #E5E7EB;
+  --ink:     #1F2937;
+  --ink2:    #6B7280;
+  --ink3:    #9CA3AF;
+  --rule:    #E5E7EB;
+  --rule2:   #D1D5DB;
+  --accent:  #3B82F6;
+  --accent2: #10B981;
+  --warn:    #F59E0B;
+  --danger:  #EF4444;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:13px; line-height:1.6; min-height:100vh; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background:var(--bg2);
+  border-bottom:1px solid var(--rule2);
+  padding:.75rem 1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.logo {
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.1em;
+  color:var(--accent);
+  white-space:nowrap;
+}
+.logo span { color:var(--ink2); font-weight:300; }
+.search-wrap {
+  flex:1;
+  max-width:340px;
+  position:relative;
+}
+.search-wrap input {
+  width:100%;
+  background:var(--bg3);
+  border:1px solid var(--rule2);
+  border-radius:4px;
+  color:var(--ink);
+  font-family:var(--mono);
+  font-size:12px;
+  padding:6px 12px 6px 32px;
+  outline:none;
+  transition:border-color .15s;
+}
+.search-wrap input:focus { border-color:var(--accent); }
+.search-wrap::before {
+  content:'⌕';
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--ink3);
+  font-size:15px;
+  pointer-events:none;
+}
+.topbar-meta { font-family:var(--mono); font-size:10px; color:var(--ink3); letter-spacing:.06em; white-space:nowrap; }
+
+/* ── LAYOUT ── */
+.shell { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 49px); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background:var(--bg2);
+  border-right:1px solid var(--rule);
+  padding:1.25rem 0;
+  overflow-y:auto;
+}
+.sidebar-section { padding:0 1.25rem; margin-bottom:1.5rem; }
+.sb-label {
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink3);
+  margin-bottom:.6rem;
+  padding-bottom:.4rem;
+  border-bottom:1px solid var(--rule);
+}
+.country-list { display:flex; flex-direction:column; gap:3px; }
+.c-chip {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 8px;
+  border-radius:3px;
+  cursor:pointer;
+  transition:background .12s;
+  user-select:none;
+}
+.c-chip:hover { background:var(--bg3); }
+.c-chip.active { background:var(--bg4); }
+.c-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.c-name { font-family:var(--mono); font-size:11px; color:var(--ink2); }
+.c-chip.active .c-name { color:var(--ink); }
+.c-idx { margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--ink3); }
+
+.item-list { display:flex; flex-direction:column; gap:2px; }
+.item-btn {
+  padding:5px 8px;
+  border-radius:3px;
+  cursor:pointer;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink2);
+  transition:background .12s, color .12s;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.item-btn:hover { background:var(--bg3); color:var(--ink); }
+.item-btn.active {
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ── MAIN ── */
+.main { padding:1.5rem; overflow-y:auto; display:flex; flex-direction:column; gap:1.5rem; }
+
+/* ── SUMMARY CARDS ── */
+.stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:6px; overflow:hidden; }
+.stat-card { background:var(--bg2); padding:1rem 1.25rem; }
+.stat-label { font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); margin-bottom:.3rem; }
+.stat-value { font-family:var(--mono); font-size:1.5rem; font-weight:500; line-height:1; }
+.stat-sub { font-family:var(--mono); font-size:10px; color:var(--ink3); margin-top:.3rem; }
+
+/* ── PANELS ── */
+.panel-row { display:grid; gap:1.5rem; }
+.panel-row.two { grid-template-columns:1fr 1fr; }
+.panel-row.three { grid-template-columns:2fr 1fr 1fr; }
+.panel {
+  background:var(--bg2);
+  border:1px solid var(--rule2);
+  border-radius:6px;
+  overflow:hidden;
+}
+.panel-head {
+  padding:.75rem 1.25rem;
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.panel-title {
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink2);
+}
+.panel-tag {
+  font-family:var(--mono);
+  font-size:10px;
+  padding:2px 7px;
+  border-radius:2px;
+  background:var(--bg4);
+  color:var(--ink3);
+}
+.panel-body { padding:1.25rem; }
+
+/* ── CHART CONTAINERS ── */
+.chart-wrap { position:relative; width:100%; }
+.chart-wrap.bar-h { height:320px; }
+.chart-wrap.pie-h { height:260px; }
+.chart-wrap.bubble-h { height:280px; }
+
+/* ── RANKING TABLE ── */
+.rank-table { width:100%; }
+.rank-row {
+  display:grid;
+  grid-template-columns:16px 1fr 70px 90px;
+  gap:8px;
+  align-items:center;
+  padding:6px 0;
+  border-bottom:1px solid var(--rule);
+}
+.rank-row:last-child { border-bottom:none; }
+.rank-n { font-family:var(--mono); font-size:10px; color:var(--ink3); }
+.rank-name { font-family:var(--mono); font-size:11px; display:flex; align-items:center; gap:6px; }
+.rank-idx { font-family:var(--mono); font-size:11px; text-align:right; }
+.rank-bar-wrap { height:4px; background:var(--bg3); border-radius:2px; overflow:hidden; }
+.rank-bar-fill { height:100%; border-radius:2px; }
+
+/* ── ITEM COMPARE TABLE ── */
+.compare-table { width:100%; border-collapse:collapse; }
+.compare-table th {
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink3);
+  padding:6px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--rule);
+  font-weight:400;
+}
+.compare-table th:not(:first-child) { text-align:right; }
+.compare-table td {
+  padding:6px 10px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);
+  font-size:11px;
+  vertical-align:middle;
+}
+.compare-table td:not(:first-child) { text-align:right; }
+.compare-table tr:last-child td { border-bottom:none; }
+.compare-table tr:hover td { background:var(--bg3); }
+.twd-val { color:var(--ink); font-weight:500; }
+.local-val { color:var(--ink3); font-size:10px; display:block; }
+.vs-badge {
+  display:inline-block;
+  font-size:9px;
+  padding:1px 6px;
+  border-radius:2px;
+  font-weight:500;
+}
+.vs-up { background:rgba(224,92,92,.15); color:#E05C5C; }
+.vs-dn { background:rgba(46,204,113,.15); color:#2ECC71; }
+.vs-eq { background:rgba(85,93,117,.2); color:var(--ink3); }
+
+/* ── NO RESULTS ── */
+.empty-state { padding:2rem; text-align:center; font-family:var(--mono); font-size:12px; color:var(--ink3); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--rule2); border-radius:2px; }
+
+#themeToggle:hover {
+  background:var(--bg4);
+  border-color:var(--rule);
+  color:var(--ink);
+}
+
+body.light #themeToggle {
+  background:var(--bg3);
+}
+body.light #themeToggle:hover {
+  background:var(--bg4);
+}
+
+@media(max-width:900px) {
+  .shell { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .panel-row.two, .panel-row.three { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">GROCER<span>/</span>INDEX</div>
+  <div class="search-wrap">
+    <input type="text" id="globalSearch" placeholder="搜尋品項或國家…" autocomplete="off">
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div class="topbar-meta">Numbeo · IMF · 2026.04 · TWD 基準</div>
+    <button id="themeToggle" style="
+      background:var(--bg3);
+      border:1px solid var(--rule2);
+      color:var(--ink2);
+      font-family:var(--mono);
+      font-size:13px;
+      padding:4px 10px;
+      border-radius:4px;
+      cursor:pointer;
+      transition:all .15s;
+      user-select:none;
+    " title="切換深色/明亮模式">🌙 深色</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="sidebar-section">
+    <div class="sb-label">國家篩選</div>
+    <div class="country-list" id="countryList"></div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sb-label">品項索引</div>
+    <div class="item-list" id="itemList"></div>
+  </div>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- SUMMARY STATS -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-label">已選品項</div>
+      <div class="stat-value" id="st-item" style="color:var(--accent)">牛奶 1L</div>
+      <div class="stat-sub">點擊左欄切換</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">最便宜（選國）</div>
+      <div class="stat-value" id="st-min" style="color:var(--accent2)">—</div>
+      <div class="stat-sub" id="st-min-c">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">最貴（選國）</div>
+      <div class="stat-value" id="st-max" style="color:var(--danger)">—</div>
+      <div class="stat-sub" id="st-max-c">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">台灣相對排名</div>
+      <div class="stat-value" id="st-rank" style="color:var(--warn)">—</div>
+      <div class="stat-sub">在所有已選國家中</div>
+    </div>
+  </div>
+
+  <!-- ROW 1: BAR + PIE -->
+  <div class="panel-row two">
+
+    <!-- BAR CHART -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">各國比價直條圖</span>
+        <span class="panel-tag" id="bar-item-tag">牛奶 1L</span>
+      </div>
+      <div class="panel-body">
+        <div class="chart-wrap bar-h">
+          <canvas id="barChart" role="img" aria-label="各國比價直條圖"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIE CHART -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">選國食品支出結構</span>
+        <select id="pieCountrySelect" style="background:var(--bg3);border:1px solid var(--rule2);color:var(--ink);font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:3px;outline:none;">
+        </select>
+      </div>
+      <div class="panel-body">
+        <div class="chart-wrap pie-h">
+          <canvas id="pieChart" role="img" aria-label="食品支出結構圓餅圖"></canvas>
+        </div>
+        <div id="pieLegend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font-family:var(--mono);font-size:10px;color:var(--ink2);"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: BUBBLE + RANKING -->
+  <div class="panel-row two">
+
+    <!-- BUBBLE / PPP -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">PPP 購買力 vs 雜貨指數</span>
+        <span class="panel-tag">氣泡 = 食品占收入%</span>
+      </div>
+      <div class="panel-body">
+        <div class="chart-wrap bubble-h">
+          <canvas id="bubbleChart" role="img" aria-label="PPP vs 雜貨指數氣泡圖"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANKING -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">雜貨指數排行</span>
+        <span class="panel-tag">越低越便宜</span>
+      </div>
+      <div class="panel-body" style="padding:.75rem 1.25rem;">
+        <div class="rank-table" id="rankTable"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 3: DETAIL TABLE -->
+  <div class="panel">
+    <div class="panel-head">
+      <span class="panel-title">品項明細對照</span>
+      <span class="panel-tag" id="table-item-tag">全部品項</span>
+    </div>
+    <div class="panel-body" style="padding:0;overflow-x:auto;">
+      <table class="compare-table" id="detailTable">
+        <thead id="detailHead"></thead>
+        <tbody id="detailBody"></tbody>
+      </table>
+      <div class="empty-state" id="detailEmpty" style="display:none;">找不到符合條件的資料</div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════
+const COUNTRIES = [
+  { id:'tw', flag:'🇹🇼', name:'台灣',   color:'#4F8EF7', grocIdx:64, ppp:52000, foodPct:20, currency:'TWD', sym:'NT$', rate:1    },
+  { id:'es', flag:'🇪🇸', name:'西班牙', color:'#E05C5C', grocIdx:51, ppp:58000, foodPct:9,  currency:'EUR', sym:'€',   rate:35   },
+  { id:'de', flag:'🇩🇪', name:'德國',   color:'#B0B8C8', grocIdx:55, ppp:65000, foodPct:7,  currency:'EUR', sym:'€',   rate:35   },
+  { id:'fr', flag:'🇫🇷', name:'法國',   color:'#5C8BE0', grocIdx:61, ppp:57000, foodPct:9,  currency:'EUR', sym:'€',   rate:35   },
+  { id:'us', flag:'🇺🇸', name:'美國',   color:'#9B8EE0', grocIdx:67, ppp:85000, foodPct:11, currency:'USD', sym:'$',   rate:32   },
+  { id:'jp', flag:'🇯🇵', name:'日本',   color:'#E05C8A', grocIdx:70, ppp:55000, foodPct:17, currency:'JPY', sym:'¥',   rate:0.213},
+  { id:'kr', flag:'🇰🇷', name:'南韓',   color:'#5CB8E0', grocIdx:74, ppp:57000, foodPct:20, currency:'KRW', sym:'₩',   rate:0.0229},
+  { id:'cn', flag:'🇨🇳', name:'中國',   color:'#E0745C', grocIdx:41, ppp:24000, foodPct:17, currency:'CNY', sym:'¥',   rate:4.4  },
+  { id:'ru', flag:'🇷🇺', name:'俄羅斯', color:'#E0A45C', grocIdx:29, ppp:43000, foodPct:14, currency:'RUB', sym:'₽',   rate:0.35 },
+];
+
+// All prices in TWD
+const ITEMS = [
+  { id:'milk',   name:'牛奶',     unit:'1 公升',   cat:'乳製品', prices:{tw:96,  es:37,  de:44,  fr:54,  us:61,  jp:53,  kr:69,  cn:67,  ru:27  } },
+  { id:'bread',  name:'麵包',     unit:'500g',      cat:'烘焙',   prices:{tw:52,  es:42,  de:53,  fr:52,  us:89,  jp:38,  kr:55,  cn:35,  ru:32  } },
+  { id:'rice',   name:'白米',     unit:'1 公斤',   cat:'烘焙',   prices:{tw:89,  es:46,  de:60,  fr:63,  us:116, jp:213, kr:115, cn:29,  ru:26  } },
+  { id:'eggs',   name:'雞蛋',     unit:'12 顆',    cat:'乳製品', prices:{tw:85,  es:101, de:105, fr:112, us:85,  jp:77,  kr:172, cn:52,  ru:49  } },
+  { id:'cheese', name:'起司',     unit:'1 公斤',   cat:'乳製品', prices:{tw:589, es:438, de:630, fr:770, us:435, jp:490, kr:366, cn:220, ru:315 } },
+  { id:'chicken',name:'雞胸肉',   unit:'1 公斤',   cat:'肉類',   prices:{tw:283, es:258, de:350, fr:350, us:291, jp:298, kr:252, cn:132, ru:157 } },
+  { id:'beef',   name:'牛肉',     unit:'1 公斤',   cat:'肉類',   prices:{tw:651, es:498, de:560, fr:630, us:774, jp:1579,kr:801, cn:308, ru:350 } },
+  { id:'tomato', name:'番茄',     unit:'1 公斤',   cat:'蔬菜',   prices:{tw:126, es:78,  de:105, fr:105, us:128, jp:128, kr:160, cn:23,  ru:42  } },
+  { id:'potato', name:'馬鈴薯',   unit:'1 公斤',   cat:'蔬菜',   prices:{tw:93,  es:56,  de:49,  fr:56,  us:48,  jp:107, kr:92,  cn:14,  ru:18  } },
+  { id:'onion',  name:'洋蔥',     unit:'1 公斤',   cat:'蔬菜',   prices:{tw:74,  es:61,  de:49,  fr:56,  us:45,  jp:85,  kr:92,  cn:18,  ru:25  } },
+  { id:'lettuce',name:'萵苣',     unit:'1 顆',     cat:'蔬菜',   prices:{tw:64,  es:44,  de:56,  fr:60,  us:96,  jp:107, kr:92,  cn:22,  ru:35  } },
+  { id:'apple',  name:'蘋果',     unit:'1 公斤',   cat:'水果',   prices:{tw:148, es:77,  de:91,  fr:105, us:106, jp:256, kr:183, cn:53,  ru:70  } },
+  { id:'banana', name:'香蕉',     unit:'1 公斤',   cat:'水果',   prices:{tw:88,  es:62,  de:70,  fr:70,  us:39,  jp:107, kr:138, cn:22,  ru:42  } },
+  { id:'orange', name:'柳橙',     unit:'1 公斤',   cat:'水果',   prices:{tw:93,  es:65,  de:77,  fr:84,  us:86,  jp:171, kr:160, cn:26,  ru:49  } },
+  { id:'wine',   name:'紅酒',     unit:'1 瓶（中價位）', cat:'飲料', prices:{tw:450, es:175, de:210, fr:280, us:448, jp:960, kr:344, cn:132, ru:350 } },
+  { id:'beer',   name:'國產啤酒', unit:'0.5L',     cat:'飲料',   prices:{tw:53,  es:40,  de:42,  fr:49,  us:64,  jp:64,  kr:57,  cn:13,  ru:28  } },
+];
+
+// Pie data per country: category-level estimated monthly spend in TWD
+const PIE_DATA = {
+  tw: { '乳蛋':2100, '肉類':4200, '蔬菜':2800, '水果':2400, '主食穀類':1800, '飲料':1400 },
+  es: { '乳蛋':1500, '肉類':3500, '蔬菜':2000, '水果':1800, '主食穀類':1200, '飲料':900  },
+  de: { '乳蛋':2200, '肉類':4000, '蔬菜':2200, '水果':2000, '主食穀類':1600, '飲料':1100 },
+  fr: { '乳蛋':2600, '肉類':4600, '蔬菜':2400, '水果':2200, '主食穀類':1700, '飲料':1500 },
+  us: { '乳蛋':2200, '肉類':5200, '蔬菜':2600, '水果':2400, '主食穀類':1900, '飲料':2000 },
+  jp: { '乳蛋':1800, '肉類':4500, '蔬菜':2800, '水果':3200, '主食穀類':2500, '飲料':1100 },
+  kr: { '乳蛋':2800, '肉類':4800, '蔬菜':3600, '水果':3500, '主食穀類':2000, '飲料':1200 },
+  cn: { '乳蛋':1000, '肉類':2400, '蔬菜':900,  '水果':1100, '主食穀類':700,  '飲料':500  },
+  ru: { '乳蛋':900,  '肉類':2200, '蔬菜':800,  '水果':900,  '主食穀類':600,  '飲料':500  },
+};
+
+const PIE_COLORS = ['#4F8EF7','#2ECC71','#E0A45C','#E05C8A','#9B8EE0','#5CB8E0'];
+const LOCAL_LABELS = {
+  milk:'牛奶', bread:'麵包', rice:'白米', eggs:'雞蛋', cheese:'起司',
+  chicken:'雞胸肉', beef:'牛肉', tomato:'番茄', potato:'馬鈴薯',
+  onion:'洋蔥', lettuce:'萵苣', apple:'蘋果', banana:'香蕉',
+  orange:'柳橙', wine:'紅酒', beer:'國產啤酒'
+};
+
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+let activeCountries = new Set(COUNTRIES.map(c=>c.id));
+let activeItem = ITEMS[0].id;
+let pieCountry = 'tw';
+let searchQ = '';
+
+// ══════════════════════════════════════════════════════
+// RENDER SIDEBAR
+// ══════════════════════════════════════════════════════
+function renderCountryList() {
+  const sorted = [...COUNTRIES].sort((a,b)=>a.grocIdx-b.grocIdx);
+  const el = document.getElementById('countryList');
+  el.innerHTML = sorted.map(c=>`
+    <div class="c-chip ${activeCountries.has(c.id)?'active':''}" onclick="toggleCountry('${c.id}')">
+      <div class="c-dot" style="background:${c.color}"></div>
+      <span class="c-name">${c.flag} ${c.name}</span>
+      <span class="c-idx">${c.grocIdx}</span>
+    </div>
+  `).join('');
+}
+
+function renderItemList() {
+  const q = searchQ.toLowerCase();
+  const el = document.getElementById('itemList');
+  const filtered = ITEMS.filter(it=>
+    it.name.includes(q) || it.unit.includes(q) || it.cat.includes(q) || !q
+  );
+  el.innerHTML = filtered.map(it=>`
+    <div class="item-btn ${it.id===activeItem?'active':''}" onclick="selectItem('${it.id}')" title="${it.name} ${it.unit}">${it.name} <span style="opacity:.5;font-size:9px;">${it.unit}</span></div>
+  `).join('');
+  if(!filtered.length) el.innerHTML = '<div class="empty-state" style="padding:.5rem;font-size:11px;">無符合品項</div>';
+}
+
+// ══════════════════════════════════════════════════════
+// CHARTS
+// ══════════════════════════════════════════════════════
+let barChart, pieChart, bubbleChart;
+
+function getActiveCountries() {
+  return COUNTRIES.filter(c=>activeCountries.has(c.id));
+}
+
+function buildBarChart() {
+  const item = ITEMS.find(i=>i.id===activeItem);
+  const countries = getActiveCountries();
+  const labels = countries.map(c=>`${c.flag} ${c.name}`);
+  const data   = countries.map(c=>item.prices[c.id]);
+  const colors = countries.map(c=>c.color+'CC');
+  const twPrice = item.prices['tw'];
+
+  if(barChart) barChart.destroy();
+  const ctx = document.getElementById('barChart').getContext('2d');
+  barChart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'NT$',
+        data,
+        backgroundColor: colors,
+        borderColor: countries.map(c=>c.color),
+        borderWidth:1,
+        borderRadius:3,
+        hoverBackgroundColor: countries.map(c=>c.color),
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      indexAxis:'y',
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#1C2030',
+          borderColor:'#2E3448',
+          borderWidth:1,
+          titleFont:{family:'DM Mono',size:11},
+          bodyFont:{family:'DM Mono',size:12},
+          callbacks:{
+            label: ctx => {
+              const v = ctx.raw;
+              const diff = ((v-twPrice)/twPrice*100).toFixed(0);
+              const sign = diff>0?'+':'';
+              return `NT$${v}  (${sign}${diff}% vs 台灣)`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{ color:'rgba(255,255,255,0.04)' },
+          ticks:{ color:'#8890A8', font:{family:'DM Mono',size:10}, callback:v=>`NT$${v}` },
+          border:{ color:'#252A3A' }
+        },
+        y:{
+          grid:{ display:false },
+          ticks:{ color:'#E8EAF0', font:{family:'DM Mono',size:11} },
+          border:{ color:'#252A3A' }
+        }
+      }
+    }
+  });
+}
+
+function buildPieChart(countryId) {
+  const c = COUNTRIES.find(x=>x.id===countryId);
+  const cats = Object.keys(PIE_DATA[countryId]);
+  const vals = Object.values(PIE_DATA[countryId]);
+  const total = vals.reduce((a,b)=>a+b,0);
+
+  if(pieChart) pieChart.destroy();
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  pieChart = new Chart(ctx, {
+    type:'doughnut',
+    data:{
+      labels:cats,
+      datasets:[{
+        data:vals,
+        backgroundColor: PIE_COLORS.map(x=>x+'BB'),
+        borderColor: PIE_COLORS,
+        borderWidth:1.5,
+        hoverOffset:8,
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      cutout:'62%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#1C2030',
+          borderColor:'#2E3448',
+          borderWidth:1,
+          titleFont:{family:'DM Mono',size:11},
+          bodyFont:{family:'DM Mono',size:11},
+          callbacks:{
+            label: ctx => {
+              const v = ctx.raw;
+              const pct = (v/total*100).toFixed(1);
+              return `NT$${v.toLocaleString()} (${pct}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+  // legend
+  const leg = document.getElementById('pieLegend');
+  leg.innerHTML = cats.map((cat,i)=>`
+    <span style="display:flex;align-items:center;gap:4px;">
+      <span style="width:8px;height:8px;border-radius:2px;background:${PIE_COLORS[i]};display:inline-block;"></span>${cat} ${(vals[i]/total*100).toFixed(0)}%
+    </span>
+  `).join('');
+}
+
+function buildBubbleChart() {
+  if(bubbleChart) bubbleChart.destroy();
+  const countries = getActiveCountries();
+  const datasets = countries.map(c=>({
+    label: c.name,
+    data:[{
+      x: c.grocIdx,
+      y: Math.round(c.ppp/1000),
+      r: Math.max(6, c.foodPct * 1.2)
+    }],
+    backgroundColor: c.color+'99',
+    borderColor: c.color,
+    borderWidth:1.5,
+  }));
+  const ctx = document.getElementById('bubbleChart').getContext('2d');
+  bubbleChart = new Chart(ctx, {
+    type:'bubble',
+    data:{ datasets },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      layout:{ padding:{top:10,right:20,bottom:10,left:10} },
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#1C2030',
+          borderColor:'#2E3448',
+          borderWidth:1,
+          titleFont:{family:'DM Mono',size:11},
+          bodyFont:{family:'DM Mono',size:11},
+          callbacks:{
+            title: ctx => `${COUNTRIES.find(c=>c.name===ctx[0].dataset.label)?.flag} ${ctx[0].dataset.label}`,
+            label: ctx => [
+              `雜貨指數: ${ctx.raw.x}`,
+              `人均GDP(PPP): $${ctx.raw.y}k USD`,
+              `食品占收入: ~${COUNTRIES.find(c=>c.name===ctx.dataset.label)?.foodPct}%`
+            ]
+          }
+        }
+      },
+      scales:{
+        x:{
+          title:{ display:true, text:'Groceries Index', color:'#555D75', font:{family:'DM Mono',size:10} },
+          grid:{ color:'rgba(255,255,255,0.04)' },
+          ticks:{ color:'#8890A8', font:{family:'DM Mono',size:10} },
+          border:{ color:'#252A3A' },
+          min:20, max:90
+        },
+        y:{
+          title:{ display:true, text:'GDP PPP ($k USD)', color:'#555D75', font:{family:'DM Mono',size:10} },
+          grid:{ color:'rgba(255,255,255,0.04)' },
+          ticks:{ color:'#8890A8', font:{family:'DM Mono',size:10}, callback:v=>`$${v}k` },
+          border:{ color:'#252A3A' },
+          min:10, max:100
+        }
+      }
+    }
+  });
+
+  // add country labels after render
+  const meta = bubbleChart.getDatasetMeta;
+}
+
+// ══════════════════════════════════════════════════════
+// RANKING TABLE
+// ══════════════════════════════════════════════════════
+function buildRankTable() {
+  const countries = getActiveCountries();
+  const sorted = [...countries].sort((a,b)=>a.grocIdx-b.grocIdx);
+  const max = Math.max(...sorted.map(c=>c.grocIdx));
+  const el = document.getElementById('rankTable');
+  el.innerHTML = sorted.map((c,i)=>`
+    <div class="rank-row">
+      <span class="rank-n">${i+1}</span>
+      <span class="rank-name">
+        <span class="c-dot" style="background:${c.color};width:6px;height:6px;"></span>
+        ${c.flag} ${c.name}
+      </span>
+      <span class="rank-idx" style="color:${c.grocIdx<50?'#2ECC71':c.grocIdx>70?'#E05C5C':'#E0A45C'}">${c.grocIdx}</span>
+      <div>
+        <div class="rank-bar-wrap">
+          <div class="rank-bar-fill" style="width:${c.grocIdx/max*100}%;background:${c.color};"></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// DETAIL TABLE
+// ══════════════════════════════════════════════════════
+function buildDetailTable() {
+  const q = searchQ.toLowerCase();
+  const countries = getActiveCountries();
+  const twPrices = {};
+  ITEMS.forEach(it => twPrices[it.id] = it.prices['tw']);
+
+  // filter items by search
+  const items = ITEMS.filter(it =>
+    !q || it.name.includes(q) || it.unit.includes(q) || it.cat.includes(q)
+  );
+
+  const head = document.getElementById('detailHead');
+  const body = document.getElementById('detailBody');
+  const empty = document.getElementById('detailEmpty');
+
+  head.innerHTML = `<tr>
+    <th style="min-width:90px;">品項</th>
+    ${countries.map(c=>`<th>${c.flag} ${c.name}</th>`).join('')}
+  </tr>`;
+
+  if(!items.length) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('table-item-tag').textContent = '0 筆';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('table-item-tag').textContent = `${items.length} 筆`;
+
+  body.innerHTML = items.map(it => {
+    const prices = countries.map(c=>({c, v:it.prices[c.id]}));
+    const minV = Math.min(...prices.map(p=>p.v));
+    const maxV = Math.max(...prices.map(p=>p.v));
+    const twV  = it.prices['tw'];
+
+    return `<tr>
+      <td style="color:var(--ink2);font-size:11px;">${it.name}<span style="display:block;font-size:9px;color:var(--ink3);">${it.unit}</span></td>
+      ${prices.map(({c,v})=>{
+        const diff = twV > 0 ? Math.round((v-twV)/twV*100) : 0;
+        const badge = c.id==='tw' ? '' :
+          diff > 10  ? `<span class="vs-badge vs-up">+${diff}%</span>` :
+          diff < -10 ? `<span class="vs-badge vs-dn">${diff}%</span>` :
+          `<span class="vs-badge vs-eq">≈</span>`;
+        const isMin = v===minV;
+        const isMax = v===maxV;
+        // local price
+        const localP = c.id==='tw' ? '' : (() => {
+          const raw = Math.round(v / c.rate);
+          return `<span class="local-val">${c.sym}${raw.toLocaleString()}</span>`;
+        })();
+        return `<td>
+          <span class="twd-val" style="color:${isMin?'#2ECC71':isMax?'#E05C5C':'var(--ink)'}">${'NT$'+v}</span>
+          ${localP}
+          ${badge}
+        </td>`;
+      }).join('')}
+    </tr>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// SUMMARY STATS
+// ══════════════════════════════════════════════════════
+function updateStats() {
+  const item = ITEMS.find(i=>i.id===activeItem);
+  const countries = getActiveCountries();
+  const prices = countries.map(c=>({c, v:item.prices[c.id]}));
+  prices.sort((a,b)=>a.v-b.v);
+  const minP = prices[0], maxP = prices[prices.length-1];
+  const twRank = prices.findIndex(p=>p.c.id==='tw') + 1;
+
+  document.getElementById('st-item').textContent = `${item.name} ${item.unit}`;
+  document.getElementById('st-min').textContent   = `NT$${minP.v}`;
+  document.getElementById('st-min-c').textContent = `${minP.c.flag} ${minP.c.name}`;
+  document.getElementById('st-max').textContent   = `NT$${maxP.v}`;
+  document.getElementById('st-max-c').textContent = `${maxP.c.flag} ${maxP.c.name}`;
+  document.getElementById('st-rank').textContent  = `#${twRank} / ${prices.length}`;
+
+  document.getElementById('bar-item-tag').textContent = `${item.name} ${item.unit}`;
+}
+
+// ══════════════════════════════════════════════════════
+// PIE SELECT
+// ══════════════════════════════════════════════════════
+function buildPieSelect() {
+  const sel = document.getElementById('pieCountrySelect');
+  sel.innerHTML = COUNTRIES.map(c=>`<option value="${c.id}" ${c.id===pieCountry?'selected':''}>${c.flag} ${c.name}</option>`).join('');
+  sel.onchange = e => { pieCountry = e.target.value; buildPieChart(pieCountry); };
+}
+
+// ══════════════════════════════════════════════════════
+// INTERACTIONS
+// ══════════════════════════════════════════════════════
+function toggleCountry(id) {
+  if(activeCountries.has(id)) {
+    if(activeCountries.size <= 2) return; // keep at least 2
+    activeCountries.delete(id);
+  } else {
+    activeCountries.add(id);
+  }
+  renderAll();
+}
+
+function selectItem(id) {
+  activeItem = id;
+  renderAll();
+}
+
+function renderAll() {
+  renderCountryList();
+  renderItemList();
+  updateStats();
+  buildBarChart();
+  buildBubbleChart();
+  buildRankTable();
+  buildDetailTable();
+}
+
+// Search
+document.getElementById('globalSearch').addEventListener('input', e => {
+  searchQ = e.target.value.trim();
+  // match country name → toggle filter
+  const matchedC = COUNTRIES.find(c=>c.name.includes(searchQ));
+  renderItemList();
+  buildDetailTable();
+  if(matchedC && searchQ.length >= 2) {
+    document.getElementById('itemList').insertAdjacentHTML('beforebegin',
+      `<div style="font-family:var(--mono);font-size:10px;color:var(--accent);padding:4px 0 8px 8px;">↓ 搜尋: ${matchedC.flag} ${matchedC.name}</div>`
+    );
+  }
+});
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+
+// Theme toggle
+function initTheme() {
+  const saved = localStorage.getItem('grocery-theme') || 'dark';
+  if(saved === 'light') {
+    document.body.classList.add('light');
+    document.getElementById('themeToggle').textContent = '☀️ 明亮';
+  }
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  localStorage.setItem('grocery-theme', isLight ? 'light' : 'dark');
+  document.getElementById('themeToggle').textContent = isLight ? '☀️ 明亮' : '🌙 深色';
+});
+
+initTheme();
+buildPieSelect();
+renderAll();
+buildPieChart(pieCountry);
+</script>
+</body>
+</html>
