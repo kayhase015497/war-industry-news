@@ -122,17 +122,57 @@ const ROUTES = [
   }
 ];
 
-// ── 邊境線（固定，不走 OSRM） ──
-const BORDER = {
-  type: 'Feature',
-  properties: { title: '巴基斯坦—伊朗 邊界', tag: '國際邊界', tagClass: 'tag-confirmed',
-    desc: '巴基斯坦與伊朗國際邊界（俾路支省段）。北端為塔夫坦口岸，南端為加布德口岸。',
-    source: 'Natural Earth / 地理參考', color: '#e53935', weight: 2, dashArray: '10,5' },
-  geometry: { type: 'LineString', coordinates: [
-    [61.60,28.96],[61.58,28.6],[61.55,28.2],[61.52,27.8],[61.50,27.4],
-    [61.48,27.0],[61.47,26.6],[61.47,26.2],[61.47,25.8],[61.47,25.4],[61.48,25.15]
-  ]}
+// ── 邊境線 fallback（Overpass 失敗時使用） ──
+const BORDER_FALLBACK_COORDS = [
+  [61.60,28.96],[61.58,28.6],[61.55,28.2],[61.52,27.8],[61.50,27.4],
+  [61.48,27.0],[61.47,26.6],[61.47,26.2],[61.47,25.8],[61.47,25.4],[61.48,25.15]
+];
+const BORDER_PROPS = {
+  title: '巴基斯坦—伊朗 邊界', tag: '國際邊界', tagClass: 'tag-confirmed',
+  desc: '巴基斯坦與伊朗國際邊界（俾路支省段）。北端為塔夫坦口岸，南端為加布德口岸。',
+  color: '#e53935', weight: 2, dashArray: '10,5'
 };
+
+// ── 從 Overpass API 抓真實邊境線（巴—伊 admin_level=2 共享線段） ──
+async function fetchBorder() {
+  // 查詢巴基斯坦行政邊界中，位於巴—伊交界 bbox 的 ways
+  // bbox: 25–29.5°N, 60.8–62°E（涵蓋 Taftan→Gabd，排除阿富汗側邊界）
+  const query = `[out:json][timeout:30];
+relation["boundary"="administrative"]["admin_level"="2"]["name:en"="Pakistan"]->.pak;
+way(r.pak)(25.0,60.8,29.5,62.0);
+out geom;`;
+
+  log('抓取邊境線（Overpass API）…', 'info');
+  setPill('border', 'active');
+
+  const res = await fetch('https://overpass-api.de/api/interpreter', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'data=' + encodeURIComponent(query)
+  });
+  if (!res.ok) throw new Error('Overpass HTTP ' + res.status);
+  const data = await res.json();
+
+  // 收集所有 way 的節點座標
+  const all = [];
+  for (const el of data.elements) {
+    if (el.type === 'way' && el.geometry) {
+      for (const n of el.geometry) all.push([n.lon, n.lat]);
+    }
+  }
+  if (all.length === 0) throw new Error('Overpass 未返回邊界資料');
+
+  // 由北至南排序，去除重複點，再 DP 簡化（0.02°≈2km，邊界精度需求較高）
+  all.sort((a, b) => b[1] - a[1]);
+  const deduped = all.filter((p, i) =>
+    i === 0 || Math.abs(p[0]-all[i-1][0]) > 0.001 || Math.abs(p[1]-all[i-1][1]) > 0.001
+  );
+  const coords = dpSimplify(deduped, 0.02);
+
+  log(`✓ 邊境線完成：${all.length} → ${coords.length} 點（OSM Overpass）`, 'ok');
+  setPill('border', 'done');
+  return { coords, source: 'OpenStreetMap / Overpass API' };
+}
 
 // ── 完整 JSON 框架（非路線部分，直接保留原檔） ──
 const BASE_JSON = {
@@ -257,9 +297,21 @@ async function fetchAll() {
     }
   }
 
-  log('邊境線：使用固定座標', 'info');
-  setPill('border', 'done');
-  features.push(BORDER);
+  let borderCoords = BORDER_FALLBACK_COORDS;
+  let borderSource = 'Natural Earth / 地理參考（fallback）';
+  try {
+    const result = await fetchBorder();
+    borderCoords = result.coords;
+    borderSource = result.source;
+  } catch (e) {
+    log(`✗ 邊境線 Overpass 失敗：${e.message}，使用 fallback 座標`, 'warn');
+    setPill('border', 'done');
+  }
+  features.push({
+    type: 'Feature',
+    properties: { ...BORDER_PROPS, source: borderSource },
+    geometry: { type: 'LineString', coordinates: borderCoords }
+  });
 
   // 組裝完整 JSON
   const fullJSON = {
