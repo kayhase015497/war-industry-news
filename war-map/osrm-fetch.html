@@ -171,6 +171,23 @@ const BASE_JSON = {
   ]
 };
 
+// ── Douglas-Peucker 簡化（tolerance 單位：度，0.05° ≈ 5km，縮放 6 足夠） ──
+function dpSimplify(pts, tol) {
+  if (pts.length <= 2) return pts;
+  let maxDist = 0, maxIdx = 0;
+  const [x1, y1] = pts[0], [x2, y2] = pts[pts.length - 1];
+  const dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx*dx + dy*dy);
+  for (let i = 1; i < pts.length - 1; i++) {
+    const d = len < 1e-10
+      ? Math.sqrt((pts[i][0]-x1)**2 + (pts[i][1]-y1)**2)
+      : Math.abs(dy*pts[i][0] - dx*pts[i][1] + x2*y1 - y2*x1) / len;
+    if (d > maxDist) { maxDist = d; maxIdx = i; }
+  }
+  if (maxDist <= tol) return [pts[0], pts[pts.length - 1]];
+  return [...dpSimplify(pts.slice(0, maxIdx + 1), tol).slice(0, -1),
+          ...dpSimplify(pts.slice(maxIdx), tol)];
+}
+
 // ── 工具函式 ──
 let resultJSON = null;
 
@@ -198,9 +215,10 @@ async function fetchRoute(r) {
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const data = await res.json();
   if (data.code !== 'Ok') throw new Error('OSRM: ' + data.code);
-  const pts = data.routes[0].geometry.coordinates;
+  const raw = data.routes[0].geometry.coordinates;
   const km = (data.routes[0].distance / 1000).toFixed(0);
-  log(`✓ ${r.label} 完成：${pts.length} 點（${km} km）`, 'ok');
+  const pts = dpSimplify(raw, 0.05);  // 0.05° ≈ 5km，縮放 5–8 足夠精準
+  log(`✓ ${r.label} 完成：${raw.length} → ${pts.length} 點（${km} km）`, 'ok');
   setPill(r.id, 'done');
   return pts;
 }
