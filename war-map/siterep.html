@@ -286,6 +286,40 @@ function initMap(d) {
     });
   }
 
+  // ── GeoJSON 圖層（精確路線／邊境線） ──────────────
+  if (d.geojsonLayers) {
+    d.geojsonLayers.forEach(function(layer) {
+      var ls = layer.style || {};
+      L.geoJSON(layer.data, {
+        style: function(feature) {
+          var fp = (feature && feature.properties) || {};
+          return {
+            color:     fp.color     || ls.color     || '#e67e22',
+            weight:    fp.weight    || ls.weight    || 2,
+            opacity:   fp.opacity   || ls.opacity   || 0.85,
+            dashArray: fp.dashArray || ls.dashArray || null,
+            fillColor:   fp.fillColor   || ls.fillColor   || null,
+            fillOpacity: fp.fillOpacity !== undefined ? fp.fillOpacity : (ls.fillOpacity !== undefined ? ls.fillOpacity : 0.3)
+          };
+        },
+        onEachFeature: function(feature, lyr) {
+          var p = (feature && feature.properties) || {};
+          if (!p.title && !p.name) return;
+          var tagHtml = p.tag
+            ? '<span class="tag ' + (p.tagClass || 'tag-reference') + '">' + p.tag + '</span>'
+            : '';
+          var sourceHtml = p.source ? '<div class="source">📰 ' + p.source + '</div>' : '';
+          lyr.bindPopup(
+            '<h3>' + (p.title || p.name) + '</h3>' +
+            tagHtml +
+            (p.desc ? '<p>' + p.desc + '</p>' : '') +
+            sourceHtml
+          );
+        }
+      }).addTo(map);
+    });
+  }
+
   // ── 路線 ──────────────────────────────────────────
   d.lines.forEach(function(ln) {
     const line = L.polyline(ln.points, {
