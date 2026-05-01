@@ -135,13 +135,14 @@ const BORDER_PROPS = {
 
 // ── 從 Overpass API 抓真實邊境線（巴—伊 admin_level=2 共享線段） ──
 async function fetchBorder() {
-  // bbox 25–29.5°N, 60.8–62°E：涵蓋塔夫坦→加布德，排除阿富汗側邊界
-  const query = `[out:json][timeout:30];
+  // 只抓同時屬於巴基斯坦 AND 伊朗兩個 boundary relation 的 ways（真正的共享邊界）
+  const query = `[out:json][timeout:60];
 relation["boundary"="administrative"]["admin_level"="2"]["name:en"="Pakistan"]->.pak;
-way(r.pak)(25.0,60.8,29.5,62.0);
+relation["boundary"="administrative"]["admin_level"="2"]["name:en"="Iran"]->.irn;
+way(r.pak)(r.irn);
 out geom;`;
 
-  log('抓取邊境線（Overpass API）…', 'info');
+  log('抓取邊境線（Overpass API — 巴伊共享段）…', 'info');
   setPill('border', 'active');
 
   const res = await fetch('https://overpass-api.de/api/interpreter', {
@@ -152,22 +153,47 @@ out geom;`;
   if (!res.ok) throw new Error('Overpass HTTP ' + res.status);
   const data = await res.json();
 
-  const all = [];
-  for (const el of data.elements) {
-    if (el.type === 'way' && el.geometry) {
-      for (const n of el.geometry) all.push([n.lon, n.lat]);
-    }
+  const ways = data.elements.filter(el => el.type === 'way' && el.geometry && el.geometry.length >= 2);
+  if (ways.length === 0) throw new Error('Overpass 未返回邊界 ways');
+
+  // 把每條 way 轉成 [lng, lat] 陣列
+  const segments = ways.map(w => w.geometry.map(n => [n.lon, n.lat]));
+
+  // 接龍演算法：從最北端出發，每次找最近端點的未用 segment 拼接
+  function ptDist(a, b) { return Math.hypot(a[0]-b[0], a[1]-b[1]); }
+
+  // 找最北的起點
+  let startIdx = 0;
+  let maxLat = -Infinity;
+  segments.forEach((seg, i) => {
+    const lat = Math.max(...seg.map(p => p[1]));
+    if (lat > maxLat) { maxLat = lat; startIdx = i; }
+  });
+
+  const chain = [...segments[startIdx]];
+  const used = new Set([startIdx]);
+
+  while (used.size < segments.length) {
+    const tail = chain[chain.length - 1];
+    let bestIdx = -1, bestReverse = false, bestDist = Infinity;
+
+    segments.forEach((seg, i) => {
+      if (used.has(i)) return;
+      const dStart = ptDist(tail, seg[0]);
+      const dEnd   = ptDist(tail, seg[seg.length - 1]);
+      if (dStart < bestDist) { bestDist = dStart; bestIdx = i; bestReverse = false; }
+      if (dEnd   < bestDist) { bestDist = dEnd;   bestIdx = i; bestReverse = true;  }
+    });
+
+    if (bestIdx === -1 || bestDist > 0.5) break; // 缺口 > ~55km，停止接龍
+    const seg = segments[bestIdx];
+    chain.push(...(bestReverse ? [...seg].reverse() : seg));
+    used.add(bestIdx);
   }
-  if (all.length === 0) throw new Error('Overpass 未返回邊界資料');
 
-  // 由北至南排序 → 去重 → DP 簡化（0.02°≈2km）
-  all.sort((a, b) => b[1] - a[1]);
-  const deduped = all.filter((p, i) =>
-    i === 0 || Math.abs(p[0]-all[i-1][0]) > 0.001 || Math.abs(p[1]-all[i-1][1]) > 0.001
-  );
-  const coords = dpSimplify(deduped, 0.02);
-
-  log(`✓ 邊境線完成：${all.length} → ${coords.length} 點（OSM Overpass）`, 'ok');
+  // DP 簡化（0.02°≈2km）
+  const coords = dpSimplify(chain, 0.02);
+  log(`✓ 邊境線完成：${chain.length} → ${coords.length} 點（${ways.length} ways，OSM Overpass）`, 'ok');
   setPill('border', 'done');
   return { coords, source: 'OpenStreetMap / Overpass API' };
 }
