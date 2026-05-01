@@ -13,10 +13,10 @@
     .controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
     button { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; }
     #fetchBtn { background: #238636; color: #fff; }
-    #fetchBtn:hover { background: #2ea043; }
+    #fetchBtn:hover:not(:disabled) { background: #2ea043; }
     #fetchBtn:disabled { background: #21262d; color: #484f58; cursor: default; }
     #copyBtn { background: #1f6feb; color: #fff; }
-    #copyBtn:hover { background: #388bfd; }
+    #copyBtn:hover:not(:disabled) { background: #388bfd; }
     #copyBtn:disabled { background: #21262d; color: #484f58; cursor: default; }
     #clearBtn { background: #21262d; color: #8b949e; border: 1px solid #30363d; }
     .log { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-bottom: 16px; min-height: 80px; max-height: 200px; overflow-y: auto; font-size: 12px; }
@@ -26,184 +26,170 @@
     .log-line.warn  { color: #d29922; }
     .log-line.err   { color: #f85149; }
     .output-label { color: #8b949e; font-size: 12px; margin-bottom: 6px; }
-    #output { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 14px; font-size: 11px; max-height: 500px; overflow-y: auto; white-space: pre; color: #c9d1d9; }
+    #output { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 14px; font-size: 11px; max-height: 400px; overflow-y: auto; white-space: pre; color: #c9d1d9; }
     .progress { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
     .pill { padding: 3px 10px; border-radius: 12px; font-size: 11px; background: #21262d; color: #8b949e; border: 1px solid #30363d; }
-    .pill.done { background: #1a4428; color: #3fb950; border-color: #2ea043; }
+    .pill.done   { background: #1a4428; color: #3fb950; border-color: #2ea043; }
     .pill.active { background: #1c2d3f; color: #79c0ff; border-color: #1f6feb; }
-    .pill.fail { background: #3d1a1a; color: #f85149; border-color: #f85149; }
+    .pill.fail   { background: #3d1a1a; color: #f85149; border-color: #f85149; }
+    .sop { background: #161b22; border: 1px solid #388bfd; border-radius: 6px; padding: 14px; margin-bottom: 20px; font-size: 13px; line-height: 1.9; display: none; }
+    .sop h3 { color: #58a6ff; margin-bottom: 10px; }
+    .sop ol { padding-left: 20px; }
+    .sop li { margin-bottom: 4px; }
+    .sop .key { background: #21262d; border: 1px solid #484f58; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #e3b341; }
   </style>
 </head>
 <body>
 
 <h1>🗺️ OSRM 路線精準化工具</h1>
-<p class="subtitle">呼叫 router.project-osrm.org，將各路線座標替換為真實道路走線</p>
+<p class="subtitle">輸出完整 JSON 檔案，可直接全選貼上至 GitHub 更新 pakistan_iran_routes_20260425.json</p>
 
 <div class="info">
-  <strong>使用說明：</strong><br>
-  1. 點擊「開始抓取」，工具會依序向 OSRM 公開 API 查詢各路線的真實道路座標<br>
-  2. 完成後點「複製 JSON」，將輸出貼入 <code>pakistan_iran_routes_20260425.json</code> 的 <code>geojsonLayers[0].data.features</code><br>
-  3. 邊境線（路線7）不透過 OSRM，保留現有座標<br>
-  <br>
-  <strong>OSRM 端點：</strong> <code>https://router.project-osrm.org/route/v1/driving/{lng,lat;…}?overview=full&geometries=geojson</code>
+  <strong>模式：</strong><code>overview=simplified</code>（減少 90% 點數，縮放 5–8 仍精準貼合公路）<br>
+  <strong>完成後 SOP：</strong>複製完整 JSON → GitHub 編輯 → <kbd>Ctrl+A</kbd> 全選 → 貼上 → Commit
 </div>
 
 <div class="controls">
   <button id="fetchBtn" onclick="fetchAll()">🚀 開始抓取所有路線</button>
-  <button id="copyBtn" onclick="copyOutput()" disabled>📋 複製 JSON</button>
+  <button id="copyBtn" onclick="copyOutput()" disabled>📋 複製完整 JSON</button>
   <button id="clearBtn" onclick="clearAll()">✕ 清除</button>
+</div>
+
+<div class="sop" id="sop">
+  <h3>✅ 抓取完成！請依以下步驟更新 GitHub：</h3>
+  <ol>
+    <li>點上方「📋 複製完整 JSON」</li>
+    <li>前往 GitHub：<code>war-map/data/pakistan_iran_routes_20260425.json</code></li>
+    <li>點鉛筆 ✏️ 圖示開啟編輯器</li>
+    <li>按 <span class="key">Ctrl+A</span>（Mac：<span class="key">⌘A</span>）全選</li>
+    <li>按 <span class="key">Ctrl+V</span>（Mac：<span class="key">⌘V</span>）貼上</li>
+    <li>填 commit message（例如：<code>pakistan_iran_routes: update with OSRM road-following coords</code>）</li>
+    <li>點「Commit changes」完成</li>
+  </ol>
 </div>
 
 <div class="progress" id="progress"></div>
 <div class="log" id="log"></div>
-<p class="output-label">輸出（可直接替換 geojsonLayers[0].data.features）：</p>
-<div id="output">點擊「開始抓取」後，結果將顯示於此…</div>
+<p class="output-label" id="outputLabel">點擊「開始抓取」後，完整 JSON 將顯示於此（可直接全選貼上至 GitHub）：</p>
+<div id="output">等待抓取…</div>
 
 <script>
 const OSRM = 'https://router.project-osrm.org/route/v1/driving';
 
+// ── 路線定義（路標點足夠讓 OSRM 走正確公路即可，simplified 會自動適量輸出點） ──
 const ROUTES = [
   {
-    id: 'r1',
-    label: '路線1',
-    title: '路線1：瓜達爾—加布德（主力走廊）',
-    tag: '89km｜2–3小時｜最短路線',
-    tagClass: 'tag-reference',
-    desc: '官方指定主力走廊。瓜達爾港沿海岸公路西行直通加布德口岸，是六條通道中距離最短、耗時最少的路線。',
-    source: 'CPEC Authority 2026.04',
-    color: '#27ae60',
-    weight: 5,
-    waypoints: [
-      [62.3254, 25.1216],   // Gwadar
-      [61.48,   25.15],     // Gabd
-    ]
+    id: 'r1', label: '路線1',
+    props: { title: '路線1：瓜達爾—加布德（主力走廊）', tag: '89km｜2–3小時｜最短路線', tagClass: 'tag-reference',
+      desc: '官方指定主力走廊。瓜達爾港沿海岸公路西行直通加布德口岸，是六條通道中距離最短、耗時最少的路線。',
+      source: 'CPEC Authority 2026.04', color: '#27ae60', weight: 5 },
+    waypoints: [[62.3254,25.1216],[61.48,25.15]]
   },
   {
-    id: 'r2',
-    label: '路線2',
-    title: '路線2：喀拉蚩—沿海公路(M-10)—加布德',
-    tag: '瑪克蘭沿海公路(M-10)｜16–18小時',
-    tagClass: 'tag-reference',
-    desc: '從喀拉蚩港沿瑪克蘭沿海公路(M-10)西行，經Hub、奧爾馬拉、帕斯尼、瓜達爾抵加布德。全程沿阿拉伯海岸線。',
-    source: '路線規劃資料 2026.04',
-    color: '#2196F3',
-    weight: 3,
-    waypoints: [
-      [67.0011, 24.8607],   // Karachi
-      [66.99,   25.07],     // Hub
-      [64.63,   25.21],     // Ormara
-      [63.47,   25.27],     // Pasni
-      [62.3254, 25.1216],   // Gwadar
-      [61.48,   25.15],     // Gabd
-    ]
+    id: 'r2', label: '路線2',
+    props: { title: '路線2：喀拉蚩—沿海公路(M-10)—加布德', tag: '瑪克蘭沿海公路(M-10)｜16–18小時', tagClass: 'tag-reference',
+      desc: '從喀拉蚩港沿瑪克蘭沿海公路(M-10)西行，經Hub、奧爾馬拉、帕斯尼、瓜達爾抵加布德。全程沿阿拉伯海岸線。',
+      source: '路線規劃資料 2026.04', color: '#2196F3', weight: 3 },
+    waypoints: [[67.0011,24.8607],[66.99,25.07],[64.63,25.21],[63.47,25.27],[62.3254,25.1216],[61.48,25.15]]
   },
   {
-    id: 'r3',
-    label: '路線3',
-    title: '路線3：卡西姆港—沿海公路—加布德',
-    tag: '卡西姆港替代線',
-    tagClass: 'tag-reference',
-    desc: '從卡西姆港出發接入M-10沿海公路，與路線2匯合後共用瓜達爾至加布德段。',
-    source: '路線規劃資料 2026.04',
-    color: '#64B5F6',
-    weight: 2,
-    dashArray: '6,4',
-    waypoints: [
-      [67.3197, 24.7748],   // Port Qasim
-      [67.0011, 24.8607],   // Karachi (junction)
-      [66.99,   25.07],     // Hub
-      [64.63,   25.21],     // Ormara
-      [63.47,   25.27],     // Pasni
-      [62.3254, 25.1216],   // Gwadar
-      [61.48,   25.15],     // Gabd
-    ]
+    id: 'r3', label: '路線3',
+    props: { title: '路線3：卡西姆港—沿海公路—加布德', tag: '卡西姆港替代線', tagClass: 'tag-reference',
+      desc: '從卡西姆港出發接入M-10沿海公路，與路線2匯合後共用瓜達爾至加布德段。',
+      source: '路線規劃資料 2026.04', color: '#64B5F6', weight: 2, dashArray: '6,4' },
+    waypoints: [[67.3197,24.7748],[67.0011,24.8607],[66.99,25.07],[64.63,25.21],[63.47,25.27],[62.3254,25.1216],[61.48,25.15]]
   },
   {
-    id: 'r4',
-    label: '路線4',
-    title: '路線4：喀拉蚩—奎達—塔夫坦（內陸主幹線）',
-    tag: 'N-25/N-40 國道｜內陸幹線',
-    tagClass: 'tag-possible',
-    desc: '從喀拉蚩港北上，沿N-25國道經Hub、庫茲達爾、奎達，再轉N-40西行經努什基、達爾班丁抵塔夫坦。巴伊長期傳統陸路貿易幹線。',
-    source: '路線規劃資料 2026.04',
-    color: '#e67e22',
-    weight: 3.5,
-    waypoints: [
-      [67.0011, 24.8607],   // Karachi
-      [66.99,   25.07],     // Hub
-      [66.617,  27.812],    // Khuzdar
-      [66.975,  30.1798],   // Quetta
-      [65.99,   29.55],     // Nushki
-      [64.4057, 28.8886],   // Dalbandin
-      [61.5962, 28.9609],   // Taftan
-    ]
+    id: 'r4', label: '路線4',
+    props: { title: '路線4：喀拉蚩—奎達—塔夫坦（內陸主幹線）', tag: 'N-25/N-40 國道｜內陸幹線', tagClass: 'tag-possible',
+      desc: '從喀拉蚩港北上，沿N-25國道經Hub、庫茲達爾、奎達，再轉N-40西行經努什基、達爾班丁抵塔夫坦。巴伊長期傳統陸路貿易幹線。',
+      source: '路線規劃資料 2026.04', color: '#e67e22', weight: 3.5 },
+    waypoints: [[67.0011,24.8607],[66.99,25.07],[66.617,27.812],[66.975,30.1798],[65.99,29.55],[64.4057,28.8886],[61.5962,28.9609]]
   },
   {
-    id: 'r5',
-    label: '路線5',
-    title: '路線5：瓜達爾—圖爾巴特—奎達—塔夫坦',
-    tag: 'M-8/N-85 走廊｜CPEC延伸線',
-    tagClass: 'tag-possible',
-    desc: '從瓜達爾港北上，沿M-8公路經圖爾巴特、潘吉古爾深入俾路支省，再經N-85至蘇拉布接N-25至奎達，轉N-40西行抵塔夫坦。CPEC戰略走廊核心路線。',
-    source: 'CPEC Authority 2026.04',
-    color: '#f39c12',
-    weight: 2.5,
-    dashArray: '8,4',
-    waypoints: [
-      [62.3254, 25.1216],   // Gwadar
-      [63.044,  26.0022],   // Turbat
-      [64.0956, 26.9686],   // Panjgur
-      [66.975,  30.1798],   // Quetta (via N-85→N-25)
-      [65.99,   29.55],     // Nushki
-      [64.4057, 28.8886],   // Dalbandin
-      [61.5962, 28.9609],   // Taftan
-    ]
+    id: 'r5', label: '路線5',
+    props: { title: '路線5：瓜達爾—圖爾巴特—奎達—塔夫坦', tag: 'M-8/N-85 走廊｜CPEC延伸線', tagClass: 'tag-possible',
+      desc: '從瓜達爾港北上，沿M-8公路經圖爾巴特、潘吉古爾深入俾路支省，再經N-85至蘇拉布接N-25至奎達，轉N-40西行抵塔夫坦。CPEC戰略走廊核心路線。',
+      source: 'CPEC Authority 2026.04', color: '#f39c12', weight: 2.5, dashArray: '8,4' },
+    waypoints: [[62.3254,25.1216],[63.044,26.0022],[64.0956,26.9686],[66.975,30.1798],[65.99,29.55],[64.4057,28.8886],[61.5962,28.9609]]
   },
   {
-    id: 'r6',
-    label: '路線6',
-    title: '路線6：俾路支省機動路線（待確認）',
-    tag: '具體路線未公開',
-    tagClass: 'tag-reference',
-    desc: '巴基斯坦官方未公開第6條路線具體線型，屬俾路支省境內機動連接線，可能視安全情勢動態調整。',
-    source: '官方未公開 2026.04',
-    color: '#aaaaaa',
-    weight: 2,
-    dashArray: '5,5',
-    skip: true,   // 路線未公開，保留原估算座標
-    fallback: [
-      [66.97, 30.18], [66.2, 29.9], [65.42, 28.58],
-      [64.7, 27.8],   [63.8, 27.0], [62.9, 26.2],
-      [62.1, 25.6],   [61.6, 25.2], [61.48, 25.15]
-    ]
+    id: 'r6', label: '路線6', skip: true,
+    props: { title: '路線6：俾路支省機動路線（待確認）', tag: '具體路線未公開', tagClass: 'tag-reference',
+      desc: '巴基斯坦官方未公開第6條路線具體線型，屬俾路支省境內機動連接線，可能視安全情勢動態調整。',
+      source: '官方未公開 2026.04', color: '#aaaaaa', weight: 2, dashArray: '5,5' },
+    fallback: [[66.97,30.18],[66.2,29.9],[65.42,28.58],[64.7,27.8],[63.8,27.0],[62.9,26.2],[62.1,25.6],[61.6,25.2],[61.48,25.15]]
   }
 ];
 
-// 邊境線 — 不用 OSRM，固定座標
-const BORDER_FEATURE = {
+// ── 邊境線（固定，不走 OSRM） ──
+const BORDER = {
   type: 'Feature',
-  properties: {
-    title: '巴基斯坦—伊朗 邊界',
-    tag: '國際邊界',
-    tagClass: 'tag-confirmed',
+  properties: { title: '巴基斯坦—伊朗 邊界', tag: '國際邊界', tagClass: 'tag-confirmed',
     desc: '巴基斯坦與伊朗國際邊界（俾路支省段）。北端為塔夫坦口岸，南端為加布德口岸。',
-    source: 'Natural Earth / 地理參考',
-    color: '#e53935',
-    weight: 2,
-    dashArray: '10,5'
-  },
-  geometry: {
-    type: 'LineString',
-    coordinates: [
-      [61.60, 28.96], [61.58, 28.6], [61.55, 28.2],
-      [61.52, 27.8],  [61.50, 27.4], [61.48, 27.0],
-      [61.47, 26.6],  [61.47, 26.2], [61.47, 25.8],
-      [61.47, 25.4],  [61.48, 25.15]
-    ]
-  }
+    source: 'Natural Earth / 地理參考', color: '#e53935', weight: 2, dashArray: '10,5' },
+  geometry: { type: 'LineString', coordinates: [
+    [61.60,28.96],[61.58,28.6],[61.55,28.2],[61.52,27.8],[61.50,27.4],
+    [61.48,27.0],[61.47,26.6],[61.47,26.2],[61.47,25.8],[61.47,25.4],[61.48,25.15]
+  ]}
 };
 
-let resultFeatures = null;
+// ── 完整 JSON 框架（非路線部分，直接保留原檔） ──
+const BASE_JSON = {
+  meta: { title: '巴基斯坦—伊朗陸路通道', titleEn: 'Pakistan–Iran Land Corridors — Six Routes 2026',
+    subtitle: '巴林義務令後六條陸路通道啟用，允許第三國貨物經巴繞行伊朗',
+    date: '2026-04-25', status: 'ongoing', theme: 'orange', sources: ['Reuters','CPEC Authority','路透社'] },
+  map: { center: [27.5, 64.0], zoom: 6, bounds: [[22.5,58.0],[33.0,70.0]] },
+  infoPanel: { title: '六條陸路通道概況', paragraphs: [
+    '巴基斯坦商務部於2026年4月25日正式發布《2026年過境貨物命令》，即日起開通六條連接巴基斯坦港口與伊朗邊境口岸的陸路通道，允許第三國貨物經巴進入伊朗，繞行美國制裁封鎖。',
+    '此舉直接回應了美國海軍對霍爾木茲海峽及伊朗港口的實施封鎖。超過3,000艘伊朗貨輪無法抵達，糧食、藥物等匱乏至卡拉蚩危機。同時，境外異重新審視美國制裁體系實際效能。',
+    '🟢 綠線 = 瓜達爾—加布德主力走廊（最短89km）　🔵 藍線 = 沿海公路　🟠 橘線 = 內陸主幹線　⬜ 灰虛線 = 待確認機動路線（第6條）'
+  ]},
+  polygons: [], lines: [],
+  locations: [
+    { latlng:[24.8607,67.0011], name:'Karachi Port（喀拉蚩港）', nameLocal:'喀拉蚩港', type:'city', tag:'巴基斯坦最大港口｜路線2起點', tagClass:'tag-strategic', desc:'巴基斯坦最大港口，也是南亞重要的貨運樞紐。路線2（沿海公路）及路線4（內陸主幹線）的起點。2026年制裁令後，喀拉蚩港成為伊朗過境貨物最主要的海運入境點。', coords:"24°51'N 67°00'E", source:'CPEC Authority' },
+    { latlng:[24.7748,67.3197], name:'Port Qasim（卡西姆港）', nameLocal:'卡西姆港', type:'city', tag:'巴基斯坦第二大港｜路線3起點', tagClass:'tag-strategic', desc:'巴基斯坦第二大港口，位於喀拉蚩東方約35公里。路線3的起點，具備較大貨櫃吞吐能力，可作為喀拉蚩港的分流替代方案，共同承擔伊朗過境貨物轉運任務。', coords:"24°46'N 67°19'E", source:'CPEC Authority' },
+    { latlng:[25.1216,62.3254], name:'Gwadar Port（瓜達爾港）', nameLocal:'瓜達爾港', type:'high_recovery', tag:'主力走廊起點｜CPEC核心港', tagClass:'tag-strategic', desc:'巴基斯坦西南端深水港，CPEC（中巴經濟走廊）核心基礎設施。路線1（最短主力走廊）起點，距加布德僅89公里。本次六條通道中地位最關鍵，是對伊朗物資供給最高效的轉運節點。', coords:"25°07'N 62°19'E", source:'CPEC Authority' },
+    { latlng:[27.812,66.617], name:'Khuzdar（庫茲達爾）', nameLocal:'庫茲達爾', type:'reference', tag:'路線4中繼節點', tagClass:'tag-reference', desc:'俾路支省重要城鎮，N-25國道沿線重要中繼點。路線4（喀拉蚩—奎達—塔夫坦）經過此地北上。庫茲達爾周邊地區歷史上有俾路支分離武裝活動，為運輸安全的潛在風險節點。', coords:"27°48'N 66°37'E", source:'路線資料' },
+    { latlng:[30.1798,66.975], name:'Quetta（奎達）', nameLocal:'奎達', type:'city', tag:'俾路支省首府｜路線4/5中繼', tagClass:'tag-strategic', desc:'俾路支省首府，海拔約1,680公尺。路線4與路線5的共同中繼樞紐，是巴基斯坦西南部最重要的行政與交通中心。奎達距塔夫坦約690公里，為內陸通道的關鍵轉接點。', coords:"30°10'N 66°58'E", source:'路線資料' },
+    { latlng:[26.0022,63.044], name:'Turbat（圖爾巴特）', nameLocal:'圖爾巴特', type:'reference', tag:'路線5中繼節點', tagClass:'tag-reference', desc:'俾路支省馬克蘭地區最大城鎮，路線5（瓜達爾—奎達—塔夫坦）的第一個中繼節點。圖爾巴特有機場，在緊急情況下可提供空運補給支援。', coords:"26°00'N 63°02'E", source:'路線資料' },
+    { latlng:[26.9686,64.0956], name:'Panjgur（潘吉古爾）', nameLocal:'潘吉古爾', type:'reference', tag:'路線5中繼節點', tagClass:'tag-reference', desc:'俾路支省馬克蘭地區內陸城鎮，路線5的第二中繼節點。潘吉古爾位於俾路支高原，是連結瓜達爾沿海與奎達高原的重要交通節點。', coords:"26°58'N 64°05'E", source:'路線資料' },
+    { latlng:[28.8886,64.4057], name:'Dalbandin（達爾班丁）', nameLocal:'達爾班丁', type:'reference', tag:'路線4中繼節點', tagClass:'tag-reference', desc:'俾路支省查蓋地區城鎮，路線4（喀拉蚩—奎達—塔夫坦）在奎達之後的最後一個主要中繼點。達爾班丁以西進入巴伊邊境荒漠地帶，補給與安全條件均較困難。', coords:"28°53'N 64°24'E", source:'路線資料' },
+    { latlng:[28.9609,61.5962], name:'Taftan（塔夫坦）', nameLocal:'塔夫坦', type:'dam', tag:'巴—伊北部邊境口岸', tagClass:'tag-confirmed', desc:'巴基斯坦—伊朗主要陸路口岸，對接伊朗東南部米爾賈維（Mirjaveh）。路線4（內陸主幹線）及路線5（瓜達爾內陸線）的終點。長期是巴伊陸路貿易的核心口岸，每日有大量卡車往來。', coords:"28°57'N 61°35'E", source:'CPEC Authority' },
+    { latlng:[25.15,61.48], name:'Gabd（加布德）', nameLocal:'加布德', type:'dam', tag:'巴—伊南部邊境口岸｜主力走廊終點', tagClass:'tag-confirmed', desc:'俾路支省西南角邊境口岸，對接伊朗俾路支斯坦省。路線1（瓜達爾主力走廊）、路線2（喀拉蚩沿海）與路線3（卡西姆沿海）的共同終點。本次六條通道中最具戰略價值的口岸，距瓜達爾僅89公里。', coords:"25°09'N 61°28'E", source:'CPEC Authority' }
+  ],
+  legend: [
+    { symbol:'line', color:'#27ae60', weight:5, dash:null, label:'路線1：瓜達爾—加布德（主力走廊）' },
+    { symbol:'line', color:'#2196F3', weight:3, dash:null, label:'路線2：喀拉蚩沿海公路—加布德' },
+    { symbol:'line', color:'#64B5F6', weight:2, dash:'6,4', label:'路線3：卡西姆港沿海—加布德' },
+    { symbol:'line', color:'#e67e22', weight:4, dash:null, label:'路線4：喀拉蚩—奎達—塔夫坦（內陸）' },
+    { symbol:'line', color:'#f39c12', weight:3, dash:'8,4', label:'路線5：瓜達爾—奎達—塔夫坦' },
+    { symbol:'line', color:'#aaaaaa', weight:2, dash:'5,5', label:'路線6：待確認機動路線' },
+    { symbol:'line', color:'#e53935', weight:2, dash:'10,5', label:'巴基斯坦—伊朗 邊界' },
+    { symbol:'dot', color:'#f1c40f', pulse:false, label:'起點港口／主要城市' },
+    { symbol:'dot', color:'#e74c3c', pulse:true, label:'邊境口岸（巴—伊）' }
+  ]
+};
+
+// ── Douglas-Peucker 簡化（tolerance 單位：度，0.05° ≈ 5km，縮放 6 足夠） ──
+function dpSimplify(pts, tol) {
+  if (pts.length <= 2) return pts;
+  let maxDist = 0, maxIdx = 0;
+  const [x1, y1] = pts[0], [x2, y2] = pts[pts.length - 1];
+  const dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx*dx + dy*dy);
+  for (let i = 1; i < pts.length - 1; i++) {
+    const d = len < 1e-10
+      ? Math.sqrt((pts[i][0]-x1)**2 + (pts[i][1]-y1)**2)
+      : Math.abs(dy*pts[i][0] - dx*pts[i][1] + x2*y1 - y2*x1) / len;
+    if (d > maxDist) { maxDist = d; maxIdx = i; }
+  }
+  if (maxDist <= tol) return [pts[0], pts[pts.length - 1]];
+  return [...dpSimplify(pts.slice(0, maxIdx + 1), tol).slice(0, -1),
+          ...dpSimplify(pts.slice(maxIdx), tol)];
+}
+
+// ── 工具函式 ──
+let resultJSON = null;
 
 function log(msg, type = 'info') {
   const el = document.getElementById('log');
@@ -216,26 +202,23 @@ function log(msg, type = 'info') {
 
 function setPill(id, state) {
   const el = document.getElementById('pill-' + id);
-  if (el) { el.className = 'pill ' + state; }
-}
-
-function buildProps(r) {
-  const p = { title: r.title, tag: r.tag, tagClass: r.tagClass, desc: r.desc, source: r.source, color: r.color, weight: r.weight };
-  if (r.dashArray) p.dashArray = r.dashArray;
-  return p;
+  if (el) el.className = 'pill ' + state;
 }
 
 async function fetchRoute(r) {
   const coords = r.waypoints.map(p => p[0] + ',' + p[1]).join(';');
-  const url = `${OSRM}/${coords}?overview=full&geometries=geojson`;
-  log(`抓取 ${r.label}：${r.waypoints.length} 個路標點…`, 'info');
+  // overview=simplified：OSRM 自動適量簡化，縮放 5–8 仍貼合公路
+  const url = `${OSRM}/${coords}?overview=simplified&geometries=geojson`;
+  log(`抓取 ${r.label}（${r.waypoints.length} 個路標點）…`, 'info');
   setPill(r.id, 'active');
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const data = await res.json();
-  if (data.code !== 'Ok') throw new Error('OSRM error: ' + data.code);
-  const pts = data.routes[0].geometry.coordinates;
-  log(`✓ ${r.label} 完成：${pts.length} 個道路座標點（${(data.routes[0].distance/1000).toFixed(0)} km）`, 'ok');
+  if (data.code !== 'Ok') throw new Error('OSRM: ' + data.code);
+  const raw = data.routes[0].geometry.coordinates;
+  const km = (data.routes[0].distance / 1000).toFixed(0);
+  const pts = dpSimplify(raw, 0.05);  // 0.05° ≈ 5km，縮放 5–8 足夠精準
+  log(`✓ ${r.label} 完成：${raw.length} → ${pts.length} 點（${km} km）`, 'ok');
   setPill(r.id, 'done');
   return pts;
 }
@@ -243,15 +226,15 @@ async function fetchRoute(r) {
 async function fetchAll() {
   document.getElementById('fetchBtn').disabled = true;
   document.getElementById('copyBtn').disabled = true;
+  document.getElementById('sop').style.display = 'none';
   document.getElementById('log').innerHTML = '';
   document.getElementById('output').textContent = '抓取中…';
-  resultFeatures = null;
+  resultJSON = null;
 
-  // 建立進度指示
+  // 進度 pills
   const prog = document.getElementById('progress');
-  prog.innerHTML = ROUTES.map(r =>
-    `<span class="pill" id="pill-${r.id}">${r.label}</span>`
-  ).join('') + '<span class="pill" id="pill-border">邊境線</span>';
+  prog.innerHTML = ROUTES.map(r => `<span class="pill" id="pill-${r.id}">${r.label}</span>`).join('')
+    + '<span class="pill" id="pill-border">邊境線</span>';
 
   const features = [];
 
@@ -259,48 +242,56 @@ async function fetchAll() {
     if (r.skip) {
       log(`⏭ ${r.label} 略過（路線未公開，保留估算座標）`, 'warn');
       setPill(r.id, 'done');
-      features.push({ type: 'Feature', properties: buildProps(r), geometry: { type: 'LineString', coordinates: r.fallback } });
+      const f = { type: 'Feature', properties: { ...r.props }, geometry: { type: 'LineString', coordinates: r.fallback } };
+      features.push(f);
       continue;
     }
     try {
       const coords = await fetchRoute(r);
-      features.push({ type: 'Feature', properties: buildProps(r), geometry: { type: 'LineString', coordinates: coords } });
-      await new Promise(res => setTimeout(res, 400)); // 稍作限速，避免被封
+      const f = { type: 'Feature', properties: { ...r.props }, geometry: { type: 'LineString', coordinates: coords } };
+      features.push(f);
+      await new Promise(res => setTimeout(res, 350));
     } catch (e) {
       log(`✗ ${r.label} 失敗：${e.message}`, 'err');
       setPill(r.id, 'fail');
-      log(`  → 保留現有估算座標`, 'warn');
     }
   }
 
-  // 加入邊境線
-  log('邊境線：使用固定座標（非 OSRM 路線）', 'info');
+  log('邊境線：使用固定座標', 'info');
   setPill('border', 'done');
-  features.push(BORDER_FEATURE);
+  features.push(BORDER);
 
-  resultFeatures = features;
-  document.getElementById('output').textContent = JSON.stringify(features, null, 2);
+  // 組裝完整 JSON
+  const fullJSON = {
+    ...BASE_JSON,
+    geojsonLayers: [{ style: {}, data: { type: 'FeatureCollection', features } }]
+  };
+
+  resultJSON = JSON.stringify(fullJSON, null, 2);
+  document.getElementById('output').textContent = resultJSON;
   document.getElementById('copyBtn').disabled = false;
   document.getElementById('fetchBtn').disabled = false;
-  log('✅ 全部完成！點「複製 JSON」後貼入 geojsonLayers[0].data.features。', 'ok');
+  document.getElementById('sop').style.display = 'block';
+
+  const totalPts = features.filter(f => f.geometry.coordinates).reduce((s, f) => s + f.geometry.coordinates.length, 0);
+  log(`✅ 完成！共 ${totalPts} 個座標點，完整 JSON 約 ${(resultJSON.length/1024).toFixed(0)} KB`, 'ok');
 }
 
 function copyOutput() {
-  if (!resultFeatures) return;
-  const text = JSON.stringify(resultFeatures, null, 2);
-  navigator.clipboard.writeText(text)
-    .then(() => log('📋 已複製到剪貼簿！', 'ok'))
+  if (!resultJSON) return;
+  navigator.clipboard.writeText(resultJSON)
+    .then(() => log('📋 已複製！請到 GitHub 開啟 JSON 檔案 → Ctrl+A → 貼上 → Commit', 'ok'))
     .catch(() => log('複製失敗，請在輸出區按 Ctrl+A 手動複製。', 'err'));
 }
 
 function clearAll() {
   document.getElementById('log').innerHTML = '';
-  document.getElementById('output').textContent = '點擊「開始抓取」後，結果將顯示於此…';
+  document.getElementById('output').textContent = '等待抓取…';
   document.getElementById('progress').innerHTML = '';
   document.getElementById('copyBtn').disabled = true;
-  resultFeatures = null;
+  document.getElementById('sop').style.display = 'none';
+  resultJSON = null;
 }
 </script>
-
 </body>
 </html>
