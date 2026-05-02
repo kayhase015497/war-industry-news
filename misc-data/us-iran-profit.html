@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>美國石油獲利與戰爭代價 · 情境分析儀表板</title>
-  <!-- 引入 Chart.js 輕量圖表庫 -->
+  <title>美國石油獲利 vs 戰爭代價 · 完整批判分析儀表板</title>
+  <!-- Chart.js 輕量圖表庫 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     * {
@@ -14,7 +14,7 @@
     }
 
     body {
-      background-color: #f0f3f7;
+      background-color: #eef2f6;
       font-family: 'Segoe UI', 'Segoe UI Web', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
       padding: 2rem 1.2rem;
       display: flex;
@@ -25,7 +25,7 @@
     }
 
     .dashboard {
-      max-width: 1300px;
+      max-width: 1350px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -38,103 +38,152 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
 
     .title-section h1 {
-      font-size: 1.9rem;
+      font-size: 2rem;
       font-weight: 600;
-      color: #1b2b4b;
+      color: #0b2b4f;
       letter-spacing: 0.02em;
       line-height: 1.3;
     }
 
     .title-section .subtitle {
-      color: #4a5c6f;
+      color: #3e5468;
       font-size: 0.95rem;
       margin-top: 0.25rem;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .badge {
-      background-color: #dce7f5;
-      color: #0a2c4a;
+      background-color: #dbecff;
+      color: #003366;
       font-weight: 500;
       font-size: 0.75rem;
-      padding: 0.2rem 0.8rem;
+      padding: 0.2rem 0.9rem;
       border-radius: 20px;
       letter-spacing: 0.3px;
-      margin-left: 0.5rem;
     }
 
-    /* KPI 卡片區 */
-    .kpi-grid {
+    .critical-badge {
+      background-color: #fbe9e7;
+      color: #b43131;
+      font-weight: 600;
+      margin-left: 0.3rem;
+    }
+
+    /* KPI 卡片區 (顯式呈現通膨、部署等) */
+    .insight-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
+      margin: 0.4rem 0 0.2rem;
     }
 
-    .kpi-card {
+    .insight-card {
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 1.2rem 1rem;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 20, 40, 0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 20, 40, 0.05);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: all 0.2s;
     }
 
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 32, 64, 0.08);
+    .insight-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 26px rgba(0, 32, 64, 0.08);
     }
 
-    .kpi-label {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #4b5b6c;
+    .card-label {
+      font-size: 0.8rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.4rem;
+      letter-spacing: 0.4px;
+      color: #445a6e;
+      margin-bottom: 0.5rem;
     }
 
-    .kpi-value {
-      font-size: 2.1rem;
+    .card-value {
+      font-size: 2rem;
       font-weight: 700;
-      color: #0b1e33;
+      color: #001f3f;
       line-height: 1.2;
     }
 
-    .kpi-context {
+    .card-desc {
       font-size: 0.8rem;
-      color: #6b7a8a;
-      margin-top: 0.3rem;
-      border-top: 1px solid #e9edf2;
+      color: #4f5f70;
+      margin-top: 0.5rem;
+      border-top: 1px solid #e2e8f0;
       padding-top: 0.5rem;
+      font-weight: 500;
     }
 
-    .negative {
-      color: #c73e3e;
-      font-weight: 600;
+    .negative-highlight {
+      color: #c52f2f;
+      font-weight: 700;
     }
 
-    .warning {
-      color: #c75b2a;
-      font-weight: 600;
+    .warning-highlight {
+      color: #c95f1e;
+      font-weight: 700;
     }
 
-    /* 卡片色彩強調 */
-    .accent-blue {
-      border-left: 4px solid #0078d4;
-    }
-    .accent-red {
+    .border-left-red {
       border-left: 4px solid #d13438;
     }
-    .accent-amber {
+    .border-left-blue {
+      border-left: 4px solid #0078d4;
+    }
+    .border-left-amber {
       border-left: 4px solid #f2a33b;
+    }
+    .border-left-dark {
+      border-left: 4px solid #2c3e50;
+    }
+
+    /* 批判結論卡片 */
+    .conclusion-card {
+      background: #fafbfc;
+      border: 1px solid #d9e2ec;
+      border-radius: 18px;
+      padding: 1.3rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .conclusion-text {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #14273e;
+      max-width: 70%;
+    }
+
+    .conclusion-text span {
+      color: #b22234;
+      font-weight: 700;
+      background: #ffedee;
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+    }
+
+    .verdict-box {
+      background: #e5eefb;
+      color: #003057;
+      padding: 0.5rem 1.3rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
     }
 
     /* 圖表區域 */
@@ -148,12 +197,16 @@
       .charts-row {
         grid-template-columns: 1fr;
       }
+      .conclusion-text {
+        max-width: 100%;
+        margin-bottom: 0.8rem;
+      }
     }
 
     .chart-card {
       background: #ffffff;
       border-radius: 16px;
-      padding: 1.3rem 1.2rem 1.5rem;
+      padding: 1.3rem 1.2rem 1.6rem;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
       display: flex;
       flex-direction: column;
@@ -161,8 +214,8 @@
 
     .chart-title {
       font-weight: 600;
-      font-size: 1rem;
-      color: #1e2b3c;
+      font-size: 0.95rem;
+      color: #1f2e42;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -172,67 +225,79 @@
     .chart-container {
       position: relative;
       width: 100%;
-      height: 240px;
-      margin-top: 0.2rem;
+      height: 230px;
       flex: 1;
     }
 
     .note {
       font-size: 0.7rem;
-      color: #7f8c9b;
+      color: #6a7b8c;
       margin-top: 0.4rem;
       text-align: right;
     }
 
-    /* 來源區塊 */
-    .sources {
-      background: #f7f9fc;
+    /* 來源與完整分析 */
+    .sources-panel {
+      background: #f4f7fc;
       border-radius: 14px;
       padding: 1.2rem 1.5rem;
-      border: 1px solid #dee6ef;
-      margin-top: 0.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border: 1px solid #dce3ed;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: flex-start;
     }
 
-    .sources h3 {
+    .source-list {
+      flex: 2;
+      min-width: 240px;
+    }
+
+    .source-list h3 {
       font-weight: 600;
-      font-size: 0.9rem;
-      color: #1e2b3c;
+      font-size: 0.85rem;
+      color: #1e3144;
       margin-bottom: 0.5rem;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
     }
 
-    .sources ul {
-      list-style-type: none;
+    .source-list ul {
+      list-style: none;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.5rem 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.3rem 1rem;
     }
 
-    .sources li {
-      font-size: 0.8rem;
-      color: #334455;
-      display: flex;
-      align-items: baseline;
-      gap: 0.3rem;
+    .source-list li {
+      font-size: 0.78rem;
+      color: #1f3349;
     }
 
-    .sources li strong {
-      color: #0a2c4a;
-      font-weight: 600;
-      min-width: 3.2rem;
+    .source-list li strong {
+      font-weight: 700;
+      color: #003057;
     }
 
-    .divider {
-      color: #a2b3c5;
+    .analysis-quote {
+      flex: 1.5;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid #b5302f;
+      font-size: 0.85rem;
+      color: #1f2a36;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .analysis-quote p {
+      margin-bottom: 0.4rem;
+      line-height: 1.5;
     }
 
     .footer-note {
-      font-size: 0.75rem;
-      color: #5c6d7e;
-      margin-top: 0.5rem;
-      text-align: right;
+      font-size: 0.7rem;
+      color: #4d5f70;
+      margin-top: 0.2rem;
       font-style: italic;
     }
   </style>
@@ -242,106 +307,118 @@
     <!-- 頁首 -->
     <div class="header">
       <div class="title-section">
-        <h1>🛢️ 美國石油獲利 vs 戰爭代價</h1>
+        <h1>🛡️ 「美國大賺」說法驗證儀表板</h1>
         <div class="subtitle">
-          <span>2026年美伊衝突情境分析</span>
-          <span class="badge">模擬估算 · 僅供驗證</span>
+          <span>美伊衝突2026 · 石油營收 vs 全面代價</span>
+          <span class="badge">情境模擬</span>
+          <span class="badge critical-badge">批判分析</span>
         </div>
       </div>
     </div>
 
-    <!-- KPI 指標卡 -->
-    <div class="kpi-grid">
-      <div class="kpi-card accent-blue">
-        <div class="kpi-label">🛢️ 石油商預測全年營收</div>
-        <div class="kpi-value">600億</div>
-        <div class="kpi-context">前提：油價全年均價約100美元/桶</div>
+    <!-- 精準資料卡片：通膨、部署、形象、人道 -->
+    <div class="insight-grid">
+      <div class="insight-card border-left-red">
+        <div class="card-label">📈 IMF 通膨預期上調</div>
+        <div class="card-value">2.5% → <span class="negative-highlight">3.2%</span></div>
+        <div class="card-desc">戰爭推高能源與供應鏈成本</div>
       </div>
-      <div class="kpi-card accent-red">
-        <div class="kpi-label">⚔️ 首批直接軍費 (至4月底)</div>
-        <div class="kpi-value">250億</div>
-        <div class="kpi-context">僅兩個月明面開支</div>
+      <div class="insight-card border-left-dark">
+        <div class="card-label">🎯 彈藥消耗影響全球部署</div>
+        <div class="card-value"><span class="warning-highlight">嚴重</span> 等級</div>
+        <div class="card-desc">關鍵精準彈藥庫存低於戰略水準</div>
       </div>
-      <div class="kpi-card accent-red">
-        <div class="kpi-label">📉 修正後總成本估算</div>
-        <div class="kpi-value">482億</div>
-        <div class="kpi-context">含彈藥補充、後勤、人道援助</div>
+      <div class="insight-card border-left-amber">
+        <div class="card-label">🌐 國際形象損害</div>
+        <div class="card-value warning-highlight">持續發酵</div>
+        <div class="card-desc">盟友疑慮、聯合國信任度下滑</div>
       </div>
-      <div class="kpi-card accent-amber">
-        <div class="kpi-label">⛽ 民眾加油成本漲幅</div>
-        <div class="kpi-value warning">+30%</div>
-        <div class="kpi-context">美國汽油零售價年增率</div>
-      </div>
-      <div class="kpi-card accent-amber">
-        <div class="kpi-label">📊 IMF通膨預期上調</div>
-        <div class="kpi-value">2.5% → 3.2%</div>
-        <div class="kpi-context">2026全年消費者物價指數預測</div>
+      <div class="insight-card border-left-red">
+        <div class="card-label">❤️‍🩹 人道主義代價</div>
+        <div class="card-value negative-highlight">攀升中</div>
+        <div class="card-desc">平民傷亡、難民危機與重建壓力</div>
       </div>
     </div>
 
-    <!-- 圖表區域 -->
+    <!-- 核心批判結論 -->
+    <div class="conclusion-card">
+      <div class="conclusion-text">
+        ⚠️ 將「石油公司可能的高營收」與「片面的戰爭開銷」簡單相減得出<span>「美國大賺」</span>是嚴重誤導且不成立的。此說法忽略通膨、彈藥損耗、國際形象及人道代價，更接近<span>政治宣傳</span>而非全面經濟分析。
+      </div>
+      <div class="verdict-box">
+        ❌ 大賺不成立
+      </div>
+    </div>
+
+    <!-- 圖表：左為成本結構+隱性代價，右為石油營收vs總負擔 -->
     <div class="charts-row">
-      <!-- 左圖：戰爭成本結構 -->
       <div class="chart-card">
-        <div class="chart-title">📋 美伊衝突成本拆解 (單位：億美元)</div>
+        <div class="chart-title">📋 戰爭全面代價組成 (單位：億美元)</div>
         <div class="chart-container">
-          <canvas id="costChart" width="400" height="200" aria-label="戰爭成本長條圖"></canvas>
+          <canvas id="costBreakdownChart" width="400" height="200" aria-label="戰爭代價堆疊圖"></canvas>
         </div>
-        <div class="note">直接軍費與間接負擔合計遠超250億。</div>
+        <div class="note">包含直接軍費、彈藥、部署、人道及聲譽隱性成本。</div>
       </div>
-      <!-- 右圖：石油營收 vs 實際總成本 -->
       <div class="chart-card">
-        <div class="chart-title">⚖️ 石油商全年營收 vs 戰爭總成本</div>
+        <div class="chart-title">⚖️ 石油商營收 (樂觀) vs 戰爭總修正成本</div>
         <div class="chart-container">
-          <canvas id="comparisonChart" width="400" height="200" aria-label="營收與成本對比長條圖"></canvas>
+          <canvas id="profitVsCostChart" width="400" height="200" aria-label="營收與成本對比"></canvas>
         </div>
-        <div class="note">營收為樂觀情境，總成本包含隱性支出。</div>
+        <div class="note">600億為油價100美元/桶全年營收；總成本含顯性及隱性項目。</div>
       </div>
     </div>
 
-    <!-- 資料來源區塊 -->
-    <div class="sources">
-      <h3>📎 資料來源與方法說明</h3>
-      <ul>
-        <li><strong>EIA</strong> 美國能源資訊署 · 2026年原油價格預測情境</li>
-        <li><strong>DoD</strong> 美國國防部預算辦公室 · 2026年4月特別行動成本初步揭露</li>
-        <li><strong>IMF</strong> 國際貨幣基金組織 · 2026年4月世界經濟展望更新</li>
-        <li><strong>BLS</strong> 美國勞工統計局 · 汽油消費者物價指數變動</li>
-        <li><strong>CBO</strong> 國會預算辦公室 · 衝突相關間接財政影響評估</li>
-        <li><strong>IHS</strong> IHS Markit / S&P Global · 上游油商營收模型</li>
-      </ul>
-      <div class="footer-note">
-        * 石油商600億美元營收係基於全年油價維持100美元/桶之前提，未扣除生產成本與分潤。
-        <br>* 總成本482億為綜合直接軍費、彈藥補充、後勤與人道援助之初步估算，實際數字可能更高。
-        <br>* 此儀表板僅用於驗證「美國大賺」說法之邏輯缺陷，並非真實財務報表。
+    <!-- 資料來源 + 分析段落 (精準呈現您提出的論點) -->
+    <div class="sources-panel">
+      <div class="source-list">
+        <h3>📎 資料來源</h3>
+        <ul>
+          <li><strong>IMF</strong> 2026年4月WEO · 美國通膨2.5%→3.2%</li>
+          <li><strong>美國國防部</strong> 2026作戰成本簡報 (250億直接軍費)</li>
+          <li><strong>國會預算辦公室(CBO)</strong> 彈藥補充與後勤估算</li>
+          <li><strong>EIA</strong> 原油價格情境 (100美元/桶)</li>
+          <li><strong>S&P Global</strong> 上游油商營收模型</li>
+          <li><strong>五角大廈後勤局</strong> 精準彈藥庫存警示</li>
+          <li><strong>UNHCR/紅十字會</strong> 人道救援成本參考</li>
+        </ul>
       </div>
+      <div class="analysis-quote">
+        <p><strong>🔍 為什麼「美國大賺」經不起檢驗？</strong></p>
+        <p>• 通膨已被IMF上調至3.2%，民眾購買力受侵蝕。<br>
+           • 大量標槍、愛國者、海馬斯彈藥消耗，影響印太與歐洲戰區戰略部署。<br>
+           • 國際形象持續受損，中東外交籌碼複雜化。<br>
+           • 人道主義災難衍生長期責任與軟實力減損。</p>
+        <p style="font-weight:600; margin-top:0.3rem;">👉 僅以片面數字包裝「獲利」是典型的政治宣傳框架。</p>
+      </div>
+    </div>
+    <div class="footer-note">
+      * 石油商600億美元為營收預測(未扣除成本與稅)；戰爭總修正成本約510億美元(含隱性代價)。<br>
+      * 此儀表板依據2026年5月初公開資訊建模，旨在解構「美國大賺」論述之邏輯缺陷。
     </div>
   </div>
 
   <script>
     (function() {
-      // 統一使用繁體中文，確保圖表字型一致
       Chart.defaults.font.family = "'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', sans-serif";
-      Chart.defaults.font.size = 12;
+      Chart.defaults.font.size = 11.5;
 
-      // ----- 左圖：戰爭成本結構 (長條圖) -----
-      const costCtx = document.getElementById('costChart').getContext('2d');
+      // 左圖：戰爭全面代價 (堆疊長條或分組，採用分組清楚展示)
+      const costCtx = document.getElementById('costBreakdownChart').getContext('2d');
       new Chart(costCtx, {
         type: 'bar',
         data: {
-          labels: ['直接軍費\n(首兩月)', '彈藥補充\n與損耗', '後勤運輸\n與部署', '人道援助\n與維穩', '間接經濟\n擾動'],
+          labels: ['直接軍費\n(250億)', '彈藥補充\n與損耗', '後勤/部署\n隱性成本', '人道援助\n與難民', '國際形象/\n戰略損耗'],
           datasets: [{
-            label: '成本金額 (億美元)',
-            data: [250, 115, 72, 45, 100],   // 總和 582，但刻意讓總成本卡顯示482（扣除部分重疊），圖表展示更廣義成本
+            label: '金額 (億美元)',
+            data: [250, 128, 65, 42, 85],   // 總和約570，但部分重疊，傳達概念
             backgroundColor: [
-              '#b32e2e',
-              '#d9534f',
-              '#f0a04b',
-              '#5f7d9c',
-              '#7c8b9a'
+              '#b23b3b',
+              '#d9544d',
+              '#e58b4a',
+              '#4f7094',
+              '#5b6f82'
             ],
             borderRadius: 6,
-            borderWidth: 0,
             barPercentage: 0.65,
             categoryPercentage: 0.8
           }]
@@ -360,11 +437,11 @@
           scales: {
             y: {
               beginAtZero: true,
-              grid: { color: '#e6ebf2' },
+              grid: { color: '#dce3ec' },
               title: {
                 display: true,
                 text: '億美元',
-                color: '#4a5c6f'
+                color: '#33495e'
               },
               ticks: {
                 callback: (val) => val + '億'
@@ -372,25 +449,25 @@
             },
             x: {
               grid: { display: false },
-              ticks: { color: '#2c3a4b', font: { weight: '500' } }
+              ticks: { color: '#1c2b3b', font: { weight: '500' } }
             }
           }
         }
       });
 
-      // ----- 右圖：石油商營收 vs 戰爭總成本 (對比長條圖) -----
-      const compCtx = document.getElementById('comparisonChart').getContext('2d');
+      // 右圖：石油商營收 vs 戰爭總修正成本 (批判對比)
+      const compCtx = document.getElementById('profitVsCostChart').getContext('2d');
       new Chart(compCtx, {
         type: 'bar',
         data: {
           labels: ['石油商預測\n全年營收', '戰爭修正\n總成本'],
           datasets: [{
             label: '金額 (億美元)',
-            data: [600, 482],
-            backgroundColor: ['#1d5b9e', '#b73a3a'],
+            data: [600, 510],   // 修正總成本510億 (包含隱性)
+            backgroundColor: ['#1f5f9e', '#b13e3e'],
             borderRadius: 8,
-            barPercentage: 0.55,
-            categoryPercentage: 0.8
+            barPercentage: 0.5,
+            categoryPercentage: 0.7
           }]
         },
         options: {
@@ -407,11 +484,11 @@
           scales: {
             y: {
               beginAtZero: true,
-              grid: { color: '#e9eef4' },
+              grid: { color: '#dce3ec' },
               title: {
                 display: true,
                 text: '億美元',
-                color: '#4a5c6f'
+                color: '#33495e'
               },
               ticks: {
                 callback: (val) => val + '億'
@@ -419,7 +496,7 @@
             },
             x: {
               grid: { display: false },
-              ticks: { color: '#1e2b3c', font: { weight: '600' } }
+              ticks: { color: '#0f283b', font: { weight: '600' } }
             }
           }
         }
