@@ -38,9 +38,10 @@
     #header .title-block .sub { font-size: 0.72rem; color: #999; margin-top: 2px; }
     .badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .badge { padding: 3px 11px; border-radius: 3px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
-    .badge-breaking { background: #c0392b; color: #fff; animation: pulse 1.8s infinite; }
-    .badge-ongoing  { background: var(--accent); color: #fff; }
-    .badge-resolved { background: #27ae60; color: #fff; }
+    .badge-breaking  { background: #c0392b; color: #fff; animation: pulse 1.8s infinite; }
+    .badge-ongoing   { background: var(--accent); color: #fff; }
+    .badge-resolved  { background: #27ae60; color: #fff; }
+    .badge-resource  { background: #1565C0; color: #fff; }
     .badge-date { background: var(--accent-dark); color: #fff; }
     .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -62,10 +63,16 @@
       display: inline-block; font-size: 0.67rem; padding: 2px 8px;
       border-radius: 3px; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.04em;
     }
-    .tag-confirmed { background: #c0392b; color: #fff; }
-    .tag-possible  { background: #e67e22; color: #fff; }
-    .tag-strategic { background: #2980b9; color: #fff; }
-    .tag-reference { background: #27ae60; color: #fff; }
+    .tag-confirmed  { background: #c0392b; color: #fff; }
+    .tag-possible   { background: #e67e22; color: #fff; }
+    .tag-strategic  { background: #2980b9; color: #fff; }
+    .tag-reference  { background: #27ae60; color: #fff; }
+    .tag-ree        { background: #7B1FA2; color: #fff; }
+    .tag-bauxite    { background: #C62828; color: #fff; }
+    .tag-coal       { background: #455A64; color: #fff; }
+    .tag-titanium   { background: #00838F; color: #fff; }
+    .tag-tungsten   { background: #E65100; color: #fff; }
+    .tag-phosphate  { background: #33691E; color: #fff; }
     .leaflet-popup-content p { color: #ccc; margin: 3px 0; font-size: 0.79rem; }
     .leaflet-popup-content .source {
       margin-top: 8px; padding-top: 7px; border-top: 1px solid #444;
@@ -211,8 +218,8 @@ function initMap(d) {
     d.meta.title + ' <span>' + d.meta.titleEn + '</span>';
   document.getElementById('h-subtitle').textContent = d.meta.subtitle;
 
-  const statusLabel = { breaking: '⚡ BREAKING', ongoing: '▶ ONGOING', resolved: '✓ RESOLVED' };
-  const statusClass = { breaking: 'badge-breaking', ongoing: 'badge-ongoing', resolved: 'badge-resolved' };
+  const statusLabel = { breaking: '⚡ BREAKING', ongoing: '▶ ONGOING', resolved: '✓ RESOLVED', resource: '🗺 RESOURCE MAP' };
+  const statusClass = { breaking: 'badge-breaking', ongoing: 'badge-ongoing', resolved: 'badge-resolved', resource: 'badge-resource' };
   const sourceBadges = d.meta.sources.map(s =>
     '<span class="badge badge-news">' + s + '</span>'
   ).join('');

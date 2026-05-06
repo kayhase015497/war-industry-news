@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "title": "越南礦產與稀土資源分布",
+    "titleEn": "Vietnam Mineral & Rare Earth Resource Map",
+    "subtitle": "鋁土礦・稀土・鎢・鈦礦・磷灰石・煤炭｜USGS《礦物商品摘要 2025》",
+    "date": "2026-05-06",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["USGS 2025", "Vietnam MOIT", "Masan High-Tech Materials", "VINACOMIN"]
+  },
+  "map": {
+    "center": [16.5, 106.5],
+    "zoom": 6,
+    "bounds": [[8.5, 102.0], [23.5, 110.5]]
+  },
+  "infoPanel": {
+    "title": "越南：東南亞礦產富國",
+    "paragraphs": [
+      "越南擁有超過5,000個礦床、逾60種礦物類型，為東南亞第三大礦產生產國。根據USGS 2025年資料，越南鋁土礦儲量達58億噸（全球前三）、稀土儲量約350萬噸（2025年修訂值）、鈦礦儲量約6億噸。",
+      "稀土礦床集中於北部沿紅河斷裂帶；中部高原（得農、林同）擁有亞洲最大鋁土礦帶之一；沿岸線綿延的鈦礦帶從中部延伸至南部。太原省努普寶（Nui Phao）礦是中國以外全球最大的鎢礦之一，並同時產出螢石、鉍、銅。",
+      "資源格局為「地質富國、開發窪地」——龐大儲量長期缺乏精煉技術與資本，現階段生產仍以原礦出口為主，稀土、鎢等戰略礦產加工鏈尚待完善。越南2022年為全球第二大鎢生產國（5.7%）、第六大稀土生產國（1.4%）。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [22.8, 102.4], [23.0, 103.5], [22.9, 104.5],
+        [22.3, 105.0], [21.5, 104.8], [21.0, 104.0],
+        [21.2, 103.0], [21.8, 102.5]
+      ],
+      "fillColor": "#9C27B0",
+      "fillOpacity": 0.22,
+      "borderColor": "#CE93D8",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "北部稀土礦帶",
+        "tag": "稀土 REE",
+        "tagClass": "tag-ree",
+        "desc": "沿紅河斷裂帶分布，涵蓋萊州省、老街省、安沛省。東寶礦（Dong Pao）為越南最大稀土礦床，估計REO儲量達700萬噸含60個礦體。USGS 2025年將越南稀土儲量修訂至350萬噸（已評估270萬噸、潛在1,800萬噸待確認）。",
+        "source": "USGS Mineral Commodity Summaries 2025・Rare Earth Exchanges"
+      }
+    },
+    {
+      "points": [
+        [12.5, 107.2], [12.6, 107.8], [12.3, 108.5],
+        [11.7, 108.8], [11.0, 108.5], [10.8, 107.8],
+        [11.2, 107.1], [12.0, 106.9]
+      ],
+      "fillColor": "#E53935",
+      "fillOpacity": 0.22,
+      "borderColor": "#EF9A9A",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "中部高原鋁土礦帶",
+        "tag": "鋁土礦 Bauxite",
+        "tagClass": "tag-bauxite",
+        "desc": "越南鋁土礦核心產區，涵蓋得農省（佔全國儲量73%）及林同省（另有近10億噸）。全國總儲量58億噸，居全球第三。坦萊（Tan Rai）與仁科（Nhan Co）兩座氧化鋁廠各年產65萬噸，目前尚無完整冶煉至金屬鋁的加工鏈。",
+        "source": "Vietnam Briefing・VINACOMIN・USGS 2025"
+      }
+    },
+    {
+      "points": [
+        [21.5, 106.7], [21.8, 107.2], [21.75, 107.9],
+        [21.3, 108.2], [20.8, 107.9], [20.7, 107.2],
+        [21.0, 106.8]
+      ],
+      "fillColor": "#607D8B",
+      "fillOpacity": 0.3,
+      "borderColor": "#B0BEC5",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "廣寧煤炭礦區",
+        "tag": "煤炭 Coal",
+        "tagClass": "tag-coal",
+        "desc": "越南最大煤炭產區，廣寧省集中全國大部分產量，全國煤炭總儲量近80億噸，主要為無煙煤。主要礦區集中於河龍—錦普走廊，由越南煤炭礦產集團（VINACOMIN）管理，供電力廠及出口使用。",
+        "source": "VINACOMIN・Vietnam MOIT"
+      }
+    },
+    {
+      "points": [
+        [17.2, 108.1], [17.0, 108.5], [16.0, 108.9],
+        [15.0, 109.2], [14.0, 109.4], [13.0, 109.3],
+        [11.5, 109.0], [10.8, 108.6],
+        [10.7, 108.1],
+        [11.5, 108.5], [13.0, 108.95],
+        [14.0, 108.95], [15.0, 108.75],
+        [16.0, 108.5], [17.0, 107.8]
+      ],
+      "fillColor": "#00ACC1",
+      "fillOpacity": 0.18,
+      "borderColor": "#80DEEA",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "borderDashArray": "5,3",
+      "popup": {
+        "title": "沿海鈦礦帶",
+        "tag": "鈦礦 Titanium",
+        "tagClass": "tag-titanium",
+        "desc": "越南鈦礦沿中南部海岸線綿延分布，全國儲量約6億噸，主要礦物為鈦鐵礦與白鈦礦精礦。2022年產量達33.15萬噸（年增10%），分布於平定省、平順省及廣南省沿岸沙丘礦帶。鈦礦出口以精礦為主，加工鏈仍待完善。",
+        "source": "Vietnam Briefing・USGS 2025"
+      }
+    },
+    {
+      "points": [
+        [21.5, 105.6], [21.75, 105.62], [21.88, 105.96],
+        [21.68, 106.08], [21.42, 105.92], [21.46, 105.64]
+      ],
+      "fillColor": "#FFA000",
+      "fillOpacity": 0.32,
+      "borderColor": "#FFD54F",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "太原省鎢／螢石礦區（Nui Phao）",
+        "tag": "鎢＋螢石 W / Fluorite",
+        "tagClass": "tag-tungsten",
+        "desc": "Nui Phao多金屬礦床（Masan High-Tech Materials運營），中國以外全球最大鎢礦之一，同時為全球第五大螢石礦。同一礦體同步產出鎢、螢石、鉍、銅四至五種礦物，均屬戰略礦物。越南鎢佔美國進口量22%、歐洲供應8%，是西方供應鏈多元化的關鍵節點。",
+        "source": "Masan High-Tech Materials 2025・USGS 2025"
+      }
+    },
+    {
+      "points": [
+        [22.2, 103.8], [22.62, 104.02], [22.55, 104.62],
+        [22.02, 104.42], [21.82, 103.92], [22.02, 103.72]
+      ],
+      "fillColor": "#558B2F",
+      "fillOpacity": 0.25,
+      "borderColor": "#AED581",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "老街省磷灰石礦帶",
+        "tag": "磷灰石 Phosphate",
+        "tagClass": "tag-phosphate",
+        "desc": "老街省擁有亞洲最大磷灰石礦床之一，是越南農業化肥工業的主要原料來源。礦帶沿紅河谷地分布，由越南化學集團（Vinachem）負責開採與加工。磷灰石礦帶與稀土礦帶地質上高度相關，部分礦體同時含稀土元素。",
+        "source": "Vietnam MOIT・Vinachem"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [22.25, 103.15],
+      "name": "東寶稀土礦（Dong Pao Mine）",
+      "nameLocal": "東寶礦",
+      "type": "confirmed",
+      "tag": "🏔 越南最大稀土礦床",
+      "tagClass": "tag-ree",
+      "desc": "萊州省東寶稀土礦，越南最大稀土礦床，估計稀土氧化物（REO）儲量達700萬噸，含60個礦體。由國有萊州-VIMICO稀土公司（Lavreco）持有採礦許可，積極尋求外資合作，預計年產能可達3萬噸REO，潛力媲美美國Mountain Pass礦。目前尚未大規模商業生產。",
+      "coords": "22°15'N 103°09'E",
+      "source": "Rare Earth Exchanges・Vietnam MOIT 2025"
+    },
+    {
+      "latlng": [21.64, 105.72],
+      "name": "努普寶礦（Nui Phao Mine）",
+      "nameLocal": "努普寶礦",
+      "type": "confirmed",
+      "tag": "⛏ 中國外最大鎢礦",
+      "tagClass": "tag-tungsten",
+      "desc": "太原省努普寶多金屬礦，Masan High-Tech Materials公司運營。中國以外全球最大鎢礦之一，同時為全球第五大螢石礦。同一礦體產出鎢、螢石、鉍、銅，均為戰略礦物。越南鎢佔全球產量5.7%（全球第二，2022年），是西方供應鏈去中化的關鍵資產。",
+      "coords": "21°38'N 105°43'E",
+      "source": "Masan High-Tech Materials 2025・USGS"
+    },
+    {
+      "latlng": [11.58, 107.75],
+      "name": "坦萊氧化鋁廠（Tan Rai）",
+      "nameLocal": "坦萊鋁廠",
+      "type": "possible",
+      "tag": "🏭 氧化鋁廠 65萬噸/年",
+      "tagClass": "tag-bauxite",
+      "desc": "林同省坦萊氧化鋁廠，VINACOMIN運營，年產65萬噸，2017年起盈利。越南目前鋁業加工僅到氧化鋁（alumina）階段，尚無完整冶煉至金屬鋁的能力，全鏈條增值仍付之闕如。",
+      "coords": "11°35'N 107°45'E",
+      "source": "VINACOMIN・Vietnam Briefing 2025"
+    },
+    {
+      "latlng": [12.02, 107.82],
+      "name": "仁科氧化鋁廠（Nhan Co）",
+      "nameLocal": "仁科鋁廠",
+      "type": "possible",
+      "tag": "🏭 氧化鋁廠 65萬噸/年",
+      "tagClass": "tag-bauxite",
+      "desc": "得農省仁科氧化鋁廠，VINACOMIN運營，年產65萬噸，2017年起盈利。得農省擁有全國73%鋁土礦儲量，2021–2030年計畫年均開採1.145億噸，2031年後提升至1.18億噸。",
+      "coords": "12°01'N 107°49'E",
+      "source": "VINACOMIN・Vietnam Briefing 2025"
+    },
+    {
+      "latlng": [21.02, 107.32],
+      "name": "錦普煤礦區（Cam Pha）",
+      "nameLocal": "錦普礦區",
+      "type": "possible",
+      "tag": "⛏ 廣寧核心煤礦區",
+      "tagClass": "tag-coal",
+      "desc": "廣寧省錦普礦區，越南最大煤炭產地之一。廣寧省集中了越南絕大多數煤炭產量（近80億噸全國儲量），主要為無煙煤，供電廠及出口使用，由VINACOMIN統籌管理。",
+      "coords": "21°01'N 107°19'E",
+      "source": "VINACOMIN 2025"
+    },
+    {
+      "latlng": [22.48, 103.97],
+      "name": "老街磷灰石礦帶（Lao Cai）",
+      "nameLocal": "老街磷礦",
+      "type": "possible",
+      "tag": "🪨 亞洲最大磷灰石礦帶",
+      "tagClass": "tag-phosphate",
+      "desc": "老街省擁有亞洲最大磷灰石礦床之一，是越南化肥原料主要來源，由越南化學集團（Vinachem）管理。礦帶沿紅河谷地延伸，地質上與稀土礦帶高度相關，部分礦體同時含稀土元素。",
+      "coords": "22°29'N 103°58'E",
+      "source": "Vietnam MOIT・Vinachem 2025"
+    },
+    {
+      "latlng": [21.03, 105.85],
+      "name": "河內（Hanoi）",
+      "nameLocal": "河內",
+      "type": "capital",
+      "tag": "越南首都",
+      "tagClass": "tag-reference",
+      "desc": "越南首都，礦產政策制定中心，礦業主管機關工業貿易部（MOIT）及自然資源部（MONRE）所在地。越南政府對稀土戰略地位高度重視，但大規模商業生產迄今未啟動。",
+      "coords": "21°02'N 105°51'E",
+      "source": "參考地點"
+    },
+    {
+      "latlng": [10.82, 106.66],
+      "name": "胡志明市（Ho Chi Minh City）",
+      "nameLocal": "胡志明市",
+      "type": "capital",
+      "tag": "越南最大城市",
+      "tagClass": "tag-reference",
+      "desc": "越南最大城市與商業中心，礦產及資源出口的主要貿易港口所在地。鋁土礦、鈦礦等原礦多經此出口。",
+      "coords": "10°49'N 106°40'E",
+      "source": "參考地點"
+    }
+  ],
+  "lines": [],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#9C27B0", "fillOpacity": 0.3, "borderColor": "#CE93D8", "label": "稀土礦帶（北部・紅河斷裂帶）" },
+    { "symbol": "polygon", "fillColor": "#E53935", "fillOpacity": 0.3, "borderColor": "#EF9A9A", "label": "鋁土礦帶（中部高原・得農/林同）" },
+    { "symbol": "polygon", "fillColor": "#607D8B", "fillOpacity": 0.35, "borderColor": "#B0BEC5", "label": "煤炭礦區（廣寧省）" },
+    { "symbol": "polygon", "fillColor": "#00ACC1", "fillOpacity": 0.25, "borderColor": "#80DEEA", "borderDash": true, "label": "鈦礦沿海帶（中南部海岸線）" },
+    { "symbol": "polygon", "fillColor": "#FFA000", "fillOpacity": 0.35, "borderColor": "#FFD54F", "label": "鎢／螢石礦區（太原省 Nui Phao）" },
+    { "symbol": "polygon", "fillColor": "#558B2F", "fillOpacity": 0.3, "borderColor": "#AED581", "label": "磷灰石礦帶（老街省）" },
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "主要開採礦山（確認運作中）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "加工廠／氧化鋁精煉設施" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "主要城市" }
+  ]
+}
