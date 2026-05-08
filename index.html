@@ -1394,6 +1394,41 @@
         #wr-article-panel::-webkit-scrollbar { width: 4px; }
         #wr-article-panel::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 2px; }
 
+        /* ── 後牆情報螢幕面板 ───────────────────────────────────────── */
+        #wr-data-panel {
+            position: absolute;
+            top: 50%; right: 18px;
+            transform: translateY(-50%);
+            width: min(540px, 88vw);
+            max-height: 78vh;
+            background: rgba(0,5,16,0.97);
+            border: 1px solid rgba(0,160,255,0.45);
+            border-radius: 4px;
+            z-index: 10003;
+            display: none;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 32px rgba(0,120,255,0.18);
+        }
+        #wr-data-panel-hdr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 14px;
+            background: rgba(0,25,55,0.9);
+            border-bottom: 1px solid rgba(0,160,255,0.28);
+            font-size: 0.73rem;
+            color: #00c8ff;
+            letter-spacing: 0.07em;
+        }
+        #wr-data-panel iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            display: block;
+            background: #f6fafd;
+        }
+
         /* ── CSS3D in-scene terminal ────────────────────────────────── */
         #wr-css3d {
             /* overflow must NOT be hidden — would flatten CSS3D rendering context */
@@ -2811,6 +2846,7 @@
     <div id="wr-hint">WASD 移動 ｜ 滑鼠視角 ｜ 按住 G 旋轉地球 ｜ 點擊熱點 / 螢幕 ｜ ESC 退出</div>
     <div id="wr-tooltip"></div>
     <div id="wr-article-panel"></div>
+    <div id="wr-data-panel"></div>
     <button id="wr-exit-btn">[ ESC ] 退出戰情室</button>
     <div id="wr-mobile-controls">
         <button data-key="KeyW">▲</button>
@@ -2964,6 +3000,7 @@
         buildScreenWall();
         buildParticles();
         buildDecorations();
+        buildWallScreens();
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', function() {
@@ -3430,6 +3467,22 @@
         panel.style.display = 'block';
     }
 
+    // ── 後牆情報螢幕：開啟 iframe 面板 ──────────────────────────
+    function openDataPanel(src, title) {
+        if (document.pointerLockElement) document.exitPointerLock();
+        var panel = document.getElementById('wr-data-panel');
+        if (!panel) return;
+        var safeTitle = (title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        panel.innerHTML =
+            '<div id="wr-data-panel-hdr">'
+            + '<span>◈ ' + safeTitle + '</span>'
+            + '<button onclick="document.getElementById(\'wr-data-panel\').style.display=\'none\'" '
+            + 'style="background:none;border:none;color:#4a8aaa;font-size:1.1rem;cursor:pointer;padding:0;line-height:1;">✕</button>'
+            + '</div>'
+            + '<iframe src="' + src + '" title="' + safeTitle + '"></iframe>';
+        panel.style.display = 'block';
+    }
+
     // ── 提示 Toast ────────────────────────────────────────────────
     function showWRToast(msg) {
         var t = document.getElementById('wr-toast');
@@ -3651,6 +3704,137 @@
             banner.position.set(0, 11.5, bn);
             scene.add(banner);
         }
+    }
+
+    // ── 後牆情報螢幕設定 ─────────────────────────────────────────
+    var WALL_SCREENS = [
+        { src: 'misc-data/foreign-labors-tw.html', title: '外籍勞工統計',   code: 'LBR', sub: 'Taiwan Labor Data',   x: -7.5, y: 9.5,  z: -15.7, ry: 0            },
+        { src: 'misc-data/us-iran-profit.html',    title: '美伊利益分析',   code: 'ECO', sub: 'US-Iran Economics',   x:  7.5, y: 9.5,  z: -15.7, ry: 0            },
+        { src: 'misc-data/taiwan-world-ppp.html',  title: '台灣全球購買力', code: 'PPP', sub: 'Taiwan World PPP',    x: -7.5, y: 5.8,  z: -15.7, ry: 0            },
+        { src: 'misc-data/spain_tw_ppp.html',      title: '西班牙台灣對比', code: 'CMP', sub: 'Spain vs Taiwan',     x:  7.5, y: 5.8,  z: -15.7, ry: 0            },
+        { src: 'misc-data/nicotine.html',          title: '尼古丁科學',     code: 'BIO', sub: 'Nicotine Science',    x: -15.7, y: 6.5, z: 2,     ry:  Math.PI / 2 },
+        { src: 'misc-data/animate-code.html',      title: '動態代碼視覺化', code: 'SYS', sub: 'Animate Code',        x:  15.7, y: 6.5, z: 2,     ry: -Math.PI / 2 },
+    ];
+
+    function makeWallScreenTex(cfg) {
+        var cv = document.createElement('canvas');
+        cv.width = 512; cv.height = 300;
+        var ctx = cv.getContext('2d');
+
+        // 背景
+        ctx.fillStyle = '#020b14';
+        ctx.fillRect(0, 0, 512, 300);
+
+        // 細格線底紋
+        ctx.strokeStyle = 'rgba(0,80,140,0.10)';
+        ctx.lineWidth = 1;
+        for (var gx = 0; gx < 512; gx += 32) { ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,300); ctx.stroke(); }
+        for (var gy = 0; gy < 300; gy += 32) { ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(512,gy); ctx.stroke(); }
+
+        // 外框
+        ctx.strokeStyle = 'rgba(0,130,210,0.55)';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(3, 3, 506, 294);
+
+        // 內框
+        ctx.strokeStyle = 'rgba(0,160,255,0.10)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(8, 8, 496, 284);
+
+        // 四角括號
+        var cs = 22;
+        ctx.strokeStyle = 'rgba(0,200,255,0.65)';
+        ctx.lineWidth = 2;
+        [[8,8,1,1],[504,8,-1,1],[8,292,1,-1],[504,292,-1,-1]].forEach(function(c) {
+            ctx.beginPath();
+            ctx.moveTo(c[0], c[1] + cs * c[3]); ctx.lineTo(c[0], c[1]); ctx.lineTo(c[0] + cs * c[2], c[1]);
+            ctx.stroke();
+        });
+
+        // 水平掃描線
+        ctx.fillStyle = 'rgba(0,100,180,0.04)';
+        for (var sl = 14; sl < 286; sl += 10) { ctx.fillRect(8, sl, 496, 1); }
+
+        // 頂部狀態列
+        ctx.fillStyle = 'rgba(0,35,70,0.75)';
+        ctx.fillRect(8, 8, 496, 22);
+        ctx.font = '11px "Courier New",monospace';
+        ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(0,180,255,0.7)';
+        ctx.fillText('DATA TERMINAL  //  CLASSIFIED', 14, 23);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = 'rgba(255,80,80,0.75)';
+        ctx.fillText('STANDBY', 500, 23);
+
+        // 中央圓形圖示底
+        ctx.beginPath();
+        ctx.arc(256, 128, 30, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,90,170,0.18)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,180,255,0.45)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // 代號文字
+        ctx.font = 'bold 24px "Courier New",monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = 'rgba(0,210,255,0.92)';
+        ctx.fillText(cfg.code, 256, 137);
+
+        // 標題
+        ctx.font = 'bold 19px "Courier New",monospace';
+        ctx.fillStyle = 'rgba(180,235,255,0.92)';
+        ctx.fillText(cfg.title, 256, 190);
+
+        // 副標題
+        ctx.font = '12px "Courier New",monospace';
+        ctx.fillStyle = 'rgba(0,160,220,0.55)';
+        ctx.fillText(cfg.sub, 256, 213);
+
+        // 底部提示
+        ctx.font = '11px "Courier New",monospace';
+        ctx.fillStyle = 'rgba(0,140,200,0.38)';
+        ctx.fillText('[ CLICK TO ACTIVATE ]', 256, 263);
+
+        // 底部三點
+        for (var di = 0; di < 3; di++) {
+            ctx.beginPath();
+            ctx.arc(248 + di * 8, 277, 2, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0,180,255,' + (0.25 + di * 0.1) + ')';
+            ctx.fill();
+        }
+
+        return new THREE.CanvasTexture(cv);
+    }
+
+    function buildWallScreens() {
+        WALL_SCREENS.forEach(function(cfg) {
+            var mat = new THREE.MeshBasicMaterial({
+                map: makeWallScreenTex(cfg),
+                transparent: true,
+                depthWrite: false,
+                side: THREE.DoubleSide
+            });
+            var mesh = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 3.2), mat);
+            mesh.position.set(cfg.x, cfg.y, cfg.z);
+            mesh.rotation.y = cfg.ry;
+            mesh.userData.wallscreen = true;
+            mesh.userData.src   = cfg.src;
+            mesh.userData.title = cfg.title;
+            panelMeshes.push(mesh);
+            scene.add(mesh);
+
+            // 發光外框線
+            var edgesGeo = new THREE.EdgesGeometry(new THREE.PlaneGeometry(5.6, 3.3));
+            var edgesMat = new THREE.LineBasicMaterial({ color: 0x004466, transparent: true, opacity: 0.6 });
+            var frame = new THREE.LineSegments(edgesGeo, edgesMat);
+            // 稍微偏移以免 z-fighting
+            var off = new THREE.Vector3(0, 0, 0.008);
+            if (cfg.ry !==  0) off.set(0.008, 0, 0);
+            frame.position.set(cfg.x + off.x, cfg.y, cfg.z + off.z);
+            frame.rotation.y = cfg.ry;
+            scene.add(frame);
+        });
     }
 
     // 金屬板格紋理（程序生成，CC0 等效）
@@ -3947,6 +4131,8 @@
             var h = hits[0];
             if (h.object === termUI.mesh) {
                 openTerminalOverlay();  // 左桌終端機 → 開啟 HTML 面板
+            } else if (h.object.userData.wallscreen) {
+                openDataPanel(h.object.userData.src, h.object.userData.title || '');
             } else if (h.object.userData.url) {
                 showOpenConfirm(h.object.userData.url, h.object.userData.title || '');
             }
@@ -4096,6 +4282,7 @@
                     var hits = raycaster.intersectObjects(panelMeshes);
                     if (hits.length) {
                         if (hits[0].object === termUI.mesh) { openTerminalOverlay(); continue; }
+                        if (hits[0].object.userData.wallscreen) { openDataPanel(hits[0].object.userData.src, hits[0].object.userData.title || ''); continue; }
                         if (hits[0].object.userData.url) { showOpenConfirm(hits[0].object.userData.url, hits[0].object.userData.title || ''); continue; }
                     }
                 }
