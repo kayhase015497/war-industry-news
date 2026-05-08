@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Particle Animation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a0a;
+      color: #ccc;
+      font-family: monospace;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+      min-height: 100vh;
+    }
+    #canvas-container canvas {
+      display: block;
+      border: 1px solid #222;
+    }
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 230px;
+      padding: 18px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+    }
+    h3 {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #222;
+    }
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .slider-label {
+      font-size: 11px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .slider-label .val {
+      color: #4af;
+      min-width: 42px;
+      text-align: right;
+    }
+    input[type=range] {
+      width: 100%;
+      height: 4px;
+      accent-color: #4af;
+      cursor: pointer;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    button {
+      flex: 1;
+      padding: 7px 0;
+      background: #1e1e1e;
+      color: #bbb;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 11px;
+      transition: background 0.15s;
+    }
+    button:hover { background: #2a2a2a; }
+    button.active { color: #fa4; border-color: #fa4; }
+    .section-title {
+      font-size: 10px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="controls">
+    <h3>參數調整</h3>
+
+    <div class="section-title">動畫</div>
+
+    <div class="slider-group">
+      <div class="slider-label">速度 <span class="val" id="v-speed">1.0×</span></div>
+      <input type="range" id="s-speed" min="0" max="4" step="0.05" value="1">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">粒子數 <span class="val" id="v-particles">10000</span></div>
+      <input type="range" id="s-particles" min="500" max="20000" step="500" value="10000">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">不透明度 <span class="val" id="v-alpha">116</span></div>
+      <input type="range" id="s-alpha" min="10" max="255" step="1" value="116">
+    </div>
+
+    <div class="section-title">形狀</div>
+
+    <div class="slider-group">
+      <div class="slider-label">k 振幅 <span class="val" id="v-kamp">4.0</span></div>
+      <input type="range" id="s-kamp" min="0.5" max="12" step="0.1" value="4">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">波頻率 <span class="val" id="v-freq">14.0</span></div>
+      <input type="range" id="s-freq" min="1" max="40" step="0.5" value="14">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">時間倍率 <span class="val" id="v-tmul">2.0</span></div>
+      <input type="range" id="s-tmul" min="0" max="10" step="0.1" value="2">
+    </div>
+
+    <div class="section-title">空間</div>
+
+    <div class="slider-group">
+      <div class="slider-label">軌道半徑 <span class="val" id="v-orbit">50</span></div>
+      <input type="range" id="s-orbit" min="0" max="180" step="1" value="50">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">深度縮放 <span class="val" id="v-depth">39</span></div>
+      <input type="range" id="s-depth" min="5" max="100" step="1" value="39">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">大小閾值 <span class="val" id="v-thresh">15.0</span></div>
+      <input type="range" id="s-thresh" min="1" max="50" step="0.5" value="15">
+    </div>
+
+    <div class="btn-row">
+      <button id="btn-pause">暫停</button>
+      <button id="btn-reset">重置</button>
+    </div>
+  </div>
+
+  <script>
+    const defaults = {
+      speed:     1,
+      particles: 10000,
+      alpha:     116,
+      kamp:      4,
+      freq:      14,
+      tmul:      2,
+      orbit:     50,
+      depth:     39,
+      thresh:    15,
+    };
+
+    const params = { ...defaults };
+
+    const sliders = [
+      { key: 'speed',     fmt: v => v.toFixed(1) + '×' },
+      { key: 'particles', fmt: v => Math.round(v).toString() },
+      { key: 'alpha',     fmt: v => Math.round(v).toString() },
+      { key: 'kamp',      fmt: v => v.toFixed(1) },
+      { key: 'freq',      fmt: v => v.toFixed(1) },
+      { key: 'tmul',      fmt: v => v.toFixed(1) },
+      { key: 'orbit',     fmt: v => Math.round(v).toString() },
+      { key: 'depth',     fmt: v => Math.round(v).toString() },
+      { key: 'thresh',    fmt: v => v.toFixed(1) },
+    ];
+
+    sliders.forEach(({ key, fmt }) => {
+      const input = document.getElementById('s-' + key);
+      const disp  = document.getElementById('v-' + key);
+      input.addEventListener('input', () => {
+        params[key] = parseFloat(input.value);
+        disp.textContent = fmt(params[key]);
+      });
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      Object.assign(params, defaults);
+      sliders.forEach(({ key, fmt }) => {
+        const input = document.getElementById('s-' + key);
+        input.value = defaults[key];
+        document.getElementById('v-' + key).textContent = fmt(defaults[key]);
+      });
+    });
+
+    new p5(p => {
+      let t = 0;
+      let paused = false;
+      const W = 400;
+
+      const pauseBtn = document.getElementById('btn-pause');
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? '繼續' : '暫停';
+        pauseBtn.classList.toggle('active', paused);
+      });
+
+      p.setup = () => {
+        const cnv = p.createCanvas(W, W);
+        cnv.parent('canvas-container');
+        p.noStroke();
+      };
+
+      p.draw = () => {
+        if (paused) return;
+
+        p.background(9);
+        p.fill(W, params.alpha);
+
+        t += (p.PI / 240) * params.speed;
+
+        const n = Math.round(params.particles);
+        for (let i = n; i--;) {
+          const x = i, y = i / 235;
+          const k = params.kamp * p.cos(x / 21);
+          const e = y / 8 - 20;
+          const d = p.mag(k, e);
+          const c = d - t;
+          const q = 3 * p.sin(k * 2) + 0.3 / k
+                  + p.sin(y / 19) * k * (9 + 2 * p.sin(e * params.freq - d * 3 + t * params.tmul));
+          const cx = q + params.orbit * p.cos(c) + 200;
+          const cy = q * p.sin(c) + d * params.depth - 475;
+          const r  = k * k > params.thresh ? 2 : 1;
+          p.circle(cx, cy, r);
+        }
+      };
+    });
+  </script>
+</body>
+</html>
