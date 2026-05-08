@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>尼古丁雙面解析：食物極微量 vs 受體益智機制 | 科學視覺化</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f6fafd;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        /* 標題與說明 */
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #136b4c, #2f8b5e, #3a6c8b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .hero p {
+            font-size: 1rem;
+            color: #2c5f7a;
+            max-width: 800px;
+            margin: 0.8rem auto 0;
+        }
+        .disclaimer {
+            background: #eef3fa;
+            border-radius: 60px;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #005f73;
+            margin-top: 0.8rem;
+        }
+        /* 雙視角分割 */
+        .dual-perspective {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 2rem 0 2rem;
+        }
+        .perspective-card {
+            flex: 1;
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            border: 1px solid #dfecf2;
+        }
+        .perspective-header {
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid;
+        }
+        .left-header {
+            background: #fef6e8;
+            border-bottom-color: #c96f0e;
+        }
+        .right-header {
+            background: #e9f3f0;
+            border-bottom-color: #2c7a4b;
+        }
+        .perspective-content {
+            padding: 1.5rem;
+        }
+        /* 含量對比卡片內部 */
+        .showdown-mini {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+        .mini-compare {
+            background: #f8fafc;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+        }
+        .cig-badge { color:#b22222; font-weight:800; }
+        .food-badge { color:#2c7a4b; font-weight:800; }
+        .big-number {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .scale-note {
+            background: #fef2e0;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+            margin: 1rem 0;
+        }
+        .food-list-compact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+        .food-item {
+            font-size: 0.85rem;
+            background: #f7f9fc;
+            border-radius: 1rem;
+            padding: 0.5rem 0.8rem;
+        }
+        /* 益智機制卡片 */
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+        .mech-card {
+            background: #ffffffea;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            border: 1px solid #cfe3ed;
+            transition: 0.1s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .mech-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.2rem;
+        }
+        .mech-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0.3rem 0;
+            color: #1b543b;
+        }
+        .mech-desc {
+            font-size: 0.78rem;
+            line-height: 1.4;
+            color: #2c4e62;
+        }
+        .receptor-path {
+            background: #eef1f5;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            border-left: 4px solid #347c5c;
+        }
+        /* 表格區 縮放 */
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 1.2rem;
+            margin: 1rem 0;
+            border: 1px solid #e2edf2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+        th, td {
+            padding: 8px 8px;
+            border-bottom: 1px solid #e0eef4;
+            text-align: left;
+        }
+        th {
+            background: #ecf3f7;
+            font-weight: 600;
+        }
+        .footnote {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 1rem;
+            background: #eef3f7;
+            border-radius: 1rem;
+            margin: 1rem 0;
+        }
+        hr {
+            margin: 0.5rem 0;
+        }
+        .btn-warning {
+            background: #ffe0b5;
+            border-radius: 40px;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+            .perspective-header {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🧬 尼古丁的二重奏：極微量食物 vs 受體科學</h1>
+        <p>天然蔬果中的尼古丁含量微乎其微，與香菸相差千萬倍；但學術研究證實，純尼古丁透過菸鹼型乙醯膽鹼受體 (nAChRs) 展現神經保護、認知增強與抗發炎潛力。<br>本圖表呈現「含量事實」與「分子機制」雙向知識，理性看待科學證據。</p>
+        <div class="disclaimer">⚠️ 免責聲明：吸菸/電子煙危害健康，所述有益機制來自基礎研究中「純尼古丁」或特定製劑，絕不等同吸菸行為。</div>
+    </div>
+
+    <!-- 左右雙欄呈現主要兩大塊 -->
+    <div class="dual-perspective">
+        <!-- 左：含量對比 - 食物 vs 菸草 -->
+        <div class="perspective-card">
+            <div class="perspective-header left-header">
+                <span>🌿🍅</span> 含量天壤之別 · 食物微量到奈克級
+            </div>
+            <div class="perspective-content">
+                <div class="showdown-mini">
+                    <div class="mini-compare">
+                        <div class="cig-badge">🚬 每支香菸</div>
+                        <div class="big-number">10–12 mg</div>
+                        <div style="font-size:0.7rem;">菸草本身含量</div>
+                        <div>吸收約 <strong>1–2 mg</strong>／支</div>
+                    </div>
+                    <div class="mini-compare">
+                        <div class="food-badge">🥗 每日總飲食</div>
+                        <div class="big-number">≈ 1.4 μg</div>
+                        <div style="font-size:0.7rem;">(微克) 約0.0014 mg</div>
+                        <div>95%高攝取者 ~2.25 μg</div>
+                    </div>
+                </div>
+                <div class="scale-note">
+                    📊 比例可視化：如果1支菸的尼古丁相當於一座101大樓(508m)，每日來自蔬果的攝取量僅約半粒米🌾 (低於1公分)<br>
+                    換算：1 mg = 1000 μg，抽一支菸吸收的量 = 每日飲食總量的 <strong>700~1400倍</strong>
+                </div>
+
+                <div style="font-weight:600; margin: 10px 0 5px;">🍆 常見食物含量與需吃多少才等於1mg尼古丁？</div>
+                <div class="food-list-compact">
+                    <div class="food-item">🍆 茄子：0.5–1 μg/顆 → 需 <span class="cig-badge">1000~2000顆</span></div>
+                    <div class="food-item">🍅 番茄：0.3–2 μg/顆 → 需 <span class="cig-badge">500~3000顆</span></div>
+                    <div class="food-item">🥔 馬鈴薯：1.4–2.3 μg/200g → 需 <span class="cig-badge">500~700顆</span></div>
+                    <div class="food-item">🫑 甜椒：極低 → 數百公斤</div>
+                    <div class="food-item">🍃 茶：0.3–1 μg/杯 → 上千杯</div>
+                    <div class="food-item">🥦 花椰菜：微量 → 超大規模</div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>來源</th><th>尼古丁含量對比</th><th>與1mg比較</th></tr></thead>
+                        <tbody>
+                            <tr><td>🚬 香菸(吸收)</td><td>1–2 mg / 支</td><td>基準</td></tr>
+                            <tr><td>🍆 茄子(整顆)</td><td>~0.5–1 μg</td><td>約1/2000支</td></tr>
+                            <tr><td>🍅 番茄(中型)</td><td>~0.3–2 μg</td><td>極小於1mg</td></tr>
+                            <tr><td>🥔 馬鈴薯(200g)</td><td>~1.4–2.3 μg</td><td>需上百顆</td></tr>
+                            <tr><td>🌿 每日飲食總和</td><td>平均1.4 μg</td><td>≈ 0.00014 % 菸一支</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="font-size:0.7rem; background:#eef2f0; padding: 0.5rem; border-radius: 1rem;">
+                    🧪 量級差異：食物中尼古丁濃度 ng/g (十億分之一)，菸草為 mg/g (千分之一)，相差百萬倍，且食物經消化與首渡代謝，無生理影響。
+                </div>
+            </div>
+        </div>
+
+        <!-- 右：有益機制 尼古丁 -> nAChRs 作用 -->
+        <div class="perspective-card">
+            <div class="perspective-header right-header">
+                <span>⚙️🧠</span> 尼古丁潛在有益機制 · 神經科學視角
+            </div>
+            <div class="perspective-content">
+                <div class="receptor-path">
+                    🧬 核心靶點：<strong>菸鹼型乙醯膽鹼受體 (nAChRs)</strong> (α7, α4β2等亞型)<br>
+                    尼古丁模擬乙醯膽鹼 → 調控鈣離子流入 → 啟動神經保護/抗發炎級聯反應
+                </div>
+                <div class="mechanism-grid">
+                    <div class="mech-card">
+                        <div class="mech-icon">🧠🛡️</div>
+                        <div class="mech-title">神經保護</div>
+                        <div class="mech-desc">活化α7受體 → PI3K/Akt路徑 → 上調抗凋亡蛋白、抗氧化酶(Nrf2)，減少神經元退化，支持腦部健康。</div>
+                    </div>
+                    <div class="mech-card">
+                        <div class="mech-icon">⚡📚</div>
+                        <div class="mech-title">認知增強</div>
+                        <div class="mech-desc">促進前額葉/海馬迴釋放乙醯膽鹼、多巴胺、正腎上腺素 → 改善注意力、工作記憶、資訊處理速度。</div>
+                    </div>
+                    <div class="mech-card">
+                        <div class="mech-icon">🛡️🔥</div>
+                        <div class="mech-title">抗發炎效應</div>
+                        <div class="mech-desc">免疫細胞上α7受體 → 抑制NF-κB → 降低TNF-α、IL-6等促發炎細胞激素，平衡免疫。</div>
+                    </div>
+                    <div class="mech-card">
+                        <div class="mech-icon">😌🎭</div>
+                        <div class="mech-title">情緒調節</div>
+                        <div class="mech-desc">調節多巴胺與血清素系統，在特定情境下緩解焦慮、憂鬱症狀，改善ADHD等認知缺損。</div>
+                    </div>
+                    <div class="mech-card">
+                        <div class="mech-icon">🔋🧬</div>
+                        <div class="mech-title">粒線體功能</div>
+                        <div class="mech-desc">支持細胞能量代謝、潛在調節蛋白質聚集，對老化相關膽鹼能衰退具改善潛力。</div>
+                    </div>
+                </div>
+                <div style="background:#f0f6ea; border-radius: 1rem; padding: 0.8rem; margin-top: 0.8rem;">
+                    📖 <strong>平衡觀點：劑量與純度是關鍵</strong><br>
+                    上述機制來自純尼古丁製劑 (貼片/口香糖) 研究或基礎實驗，與吸菸產生的有害物質完全不同。天然食物中的尼古丁含量極低，無法引發上述生理效應；而非成癮性純尼古丁在老化、輕度認知障礙領域正被探索。❌ 吸菸危害遠大於任何潛在益處。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 更詳細的受體機制表格與核心五要點 整合成簡潔折疊卡? 不妨放在下方豐富資訊 -->
+    <div style="background: #fffef7; border-radius: 1.6rem; padding: 1.2rem; margin: 1rem 0 0.5rem; border: 1px solid #e2e9f0;">
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 1.8rem;">🔬</span>
+            <span style="font-weight: 700; font-size: 1.3rem;">核心機制深度圖解</span>
+            <span style="background: #cfe3db; border-radius: 40px; padding: 0.2rem 0.8rem; font-size:0.7rem;">nAChRs 信號軸</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+            <div style="flex: 1; min-width: 200px;">
+                <div style="font-weight: 700;">✨ 神經保護 & 存活</div>
+                <p style="font-size: 0.8rem;">鈣離子流入 → PI3K/Akt → 上調抗凋亡蛋白 (Bcl-2) 與抗氧化酶，降低氧化壓力，對抗神經退化。</p>
+                <div style="font-weight: 700; margin-top: 8px;">🧠 認知促進</div>
+                <p style="font-size: 0.8rem;">前額葉皮質、海馬迴神經傳導物質釋放 ↑ 乙醯膽鹼/多巴胺/正腎上腺素 → 注意力、工作記憶提升。</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <div style="font-weight: 700;">🩸 膽鹼能抗發炎路徑</div>
+                <p style="font-size: 0.8rem;">α7 nAChRs 活化 → 抑制 NF-κB → 減少 TNF-α、IL-1β，HMGB1 釋放，提升抗發炎細胞激素 IL-10。</p>
+                <div style="font-weight: 700; margin-top: 8px;">😌 情緒與精神支持</div>
+                <p style="font-size: 0.8rem;">多巴胺/血清素調節效果，對注意力不足過動症、憂鬱症狀有輔助效益 (限臨床探索)。</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <div style="font-weight: 700;">⚙️ 粒線體 & 代謝</div>
+                <p style="font-size: 0.8rem;">促進細胞呼吸功能，調節蛋白質聚集(神經退化模型)，輔助能量代謝與食慾調節。</p>
+                <div class="btn-warning" style="margin-top: 8px;">🧪 研究重點：低劑量純尼古丁用於老化相關認知衰退、輕度認知障礙。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 額外表格：主要有益機制比較總結 -->
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>有益機制</th><th>受體亞型/路徑</th><th>主要效果</th><th>應用潛力</th></tr></thead>
+            <tbody>
+                <tr><td>神經保護</td><td>α7, α4β2 / PI3K/Akt, Nrf2</td><td>抗凋亡、抗氧化、提升神經營養因子</td><td>帕金森氏症、阿茲海默症輔助研究</td></tr>
+                <tr><td>認知賦能</td><td>nAChRs 調控神經傳導</td><td>注意力、工作記憶、處理速度改善</td><td>健康老化、ADHD 潛在應用</td></tr>
+                <tr><td>抗發炎</td><td>α7 / NF-κB 抑制</td><td>減少促炎激素 (TNF-α, IL-6)</td><td>慢性發炎疾病、免疫調節</td></tr>
+                <tr><td>情緒調節</td><td>多巴胺/血清素系統</td><td>抗憂鬱、減輕焦慮</td><td>與傳統精神治療協同探索</td></tr>
+                <tr><td>粒線體支持</td><td>未知細節通路</td><td>增加能量代謝、減少蛋白質聚集</td><td>神經退行性疾病模型</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 總結附註：劑量及天然食物對比再次呼應 -->
+    <div class="footnote">
+        🌟 總結｜從「餐桌到受體」知識彙整：<br>
+        1️⃣ 天然蔬果中的尼古丁含量極低 (ng/g)，每日總攝取約1.4微克，無任何藥理活性，安全無虞。<br>
+        2️⃣ 在嚴格科學條件下，純尼古丁透過活化腦部與免疫細胞的菸鹼型受體，展現神經保護、抗發炎與認知增強效應，引發轉譯醫學興趣。<br>
+        3️⃣ 吸菸或電子煙會攝入數千種有害物質，與純尼古丁研究結果不可混為一談，且成癮性極高。<br>
+        4️⃣ 目前純尼古丁製劑(貼片/口香糖)主要用於戒菸輔助，其潛在益智效果仍需更多臨床試驗驗證。<br>
+        📊 本圖表資料整合自《尼古丁含量科學文獻》與nAChRs基礎研究，僅供科普教育。
+    </div>
+    <div style="text-align: right; font-size: 0.65rem; opacity:0.6; margin-top: 0.5rem;">設計基於公開數據 · 視覺化解讀含量差距與受體機制</div>
+</div>
+</body>
+</html>
