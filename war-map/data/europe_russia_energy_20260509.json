@@ -1,0 +1,404 @@
+{
+  "meta": {
+    "title": "俄羅斯能源管道：戰後仍購買的歐洲國家",
+    "titleEn": "Russian Energy Pipelines — Post-War European Buyers 2026",
+    "subtitle": "友誼管道（石油）・土耳其溪（天然氣）｜斯洛伐克・匈牙利・奧地利・塞爾維亞・保加利亞",
+    "date": "2026-05-09",
+    "status": "ongoing",
+    "theme": "orange",
+    "sources": ["IEA 2025", "Bruegel", "Reuters 2026", "Eurostat 2025"]
+  },
+  "map": {
+    "center": [46.5, 27.0],
+    "zoom": 4,
+    "bounds": [[35.0, 9.0], [57.0, 56.0]]
+  },
+  "infoPanel": {
+    "title": "俄羅斯能源：戰後仍在輸送中",
+    "paragraphs": [
+      "2022年俄烏戰爭爆發後，多數歐盟國家大幅削減對俄能源進口，但斯洛伐克、匈牙利等內陸國家至今仍高度仰賴俄方供應。費科（Slovakia）與歐爾班（Hungary）政府明確反對跟進歐盟制裁。",
+      "「友誼管道」（Druzhba，石油）蘇聯時期興建，全長約4,000公里，穿越白俄羅斯、烏克蘭，向斯洛伐克、匈牙利、捷克輸送俄羅斯原油。2025年初烏克蘭終止過境協議後，南支線運量受衝擊，2026年4月部分恢復。",
+      "「土耳其溪」（TurkStream，天然氣）2020年啟用，繞過烏克蘭，經黑海海底抵達土耳其，再向北輸往保加利亞、塞爾維亞、匈牙利、斯洛伐克、奧地利，成為俄羅斯天然氣進入歐洲的新幹線。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [49.6, 16.9], [50.2, 17.0], [50.0, 18.4], [49.6, 20.5],
+        [49.6, 22.6], [49.0, 22.6], [48.5, 22.1], [47.8, 21.5],
+        [47.7, 20.0], [47.7, 17.0], [48.5, 16.9]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.18,
+      "borderColor": "#e74c3c",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "斯洛伐克（Slovakia）",
+        "tag": "⛽ 友誼管道＋土耳其溪",
+        "tagClass": "tag-confirmed",
+        "desc": "歐盟中對俄能源依賴度最高的國家之一。費科（Fico）政府強烈反對停購俄能源，以「轉換基礎設施成本極高」為由多次阻撓歐盟制裁。友誼管道供石油，土耳其溪供天然氣，兩條管線均維持運作。",
+        "source": "IEA 2025・Reuters 2026"
+      }
+    },
+    {
+      "points": [
+        [48.6, 16.1], [48.6, 22.9], [48.0, 22.8], [47.2, 22.5],
+        [46.0, 21.0], [45.7, 18.5], [45.8, 17.0], [46.5, 16.0]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.18,
+      "borderColor": "#e74c3c",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "匈牙利（Hungary）",
+        "tag": "⛽ 友誼管道＋土耳其溪",
+        "tagClass": "tag-confirmed",
+        "desc": "歐爾班（Orbán）政府是俄羅斯能源在歐盟內最堅定的擁護者，多次動用否決權阻攔歐盟對俄能源制裁。友誼管道供石油，土耳其溪（經塞爾維亞）供天然氣，並與俄羅斯簽署長期供氣協議延伸至2036年。",
+        "source": "Reuters 2026・Bruegel"
+      }
+    },
+    {
+      "points": [
+        [47.0, 9.6], [48.5, 9.6], [48.7, 13.4], [48.6, 16.9],
+        [48.1, 17.1], [47.5, 16.5], [46.5, 15.7], [46.4, 13.0], [46.7, 9.8]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.15,
+      "borderColor": "#f39c12",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "奧地利（Austria）",
+        "tag": "🔥 土耳其溪（天然氣）",
+        "tagClass": "tag-possible",
+        "desc": "長期是俄羅斯天然氣進入西歐的樞紐。OMV公司持有俄方長期供氣合約，截至2025年俄氣仍佔奧地利天然氣需求約57%。鮑姆加滕（Baumgarten）是歐洲最重要的天然氣交割中心之一，亦是土耳其溪西端終點。",
+        "source": "IEA 2025・Eurostat"
+      }
+    },
+    {
+      "points": [
+        [46.2, 19.0], [46.2, 22.5], [44.5, 22.8], [43.1, 22.4],
+        [42.3, 21.5], [43.0, 20.0], [43.8, 19.2], [44.5, 19.0]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.15,
+      "borderColor": "#f39c12",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "塞爾維亞（Serbia）",
+        "tag": "🔥 土耳其溪（天然氣・過境＋消費）",
+        "tagClass": "tag-possible",
+        "desc": "非歐盟成員，不受歐盟對俄制裁約束，與俄羅斯維持密切能源合作。土耳其溪管線穿越保加利亞後進入塞爾維亞，塞爾維亞既是匈牙利與斯洛伐克的天然氣過境走廊，本身也高度依賴俄羅斯天然氣。",
+        "source": "Bruegel 2025"
+      }
+    },
+    {
+      "points": [
+        [51.1, 12.1], [51.1, 13.5], [50.5, 15.3], [51.0, 16.5],
+        [50.5, 18.8], [49.5, 18.9], [48.6, 16.5], [49.0, 12.5]
+      ],
+      "fillColor": "#f39c12",
+      "fillOpacity": 0.12,
+      "borderColor": "#f1c40f",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.7,
+      "popup": {
+        "title": "捷克（Czech Republic）",
+        "tag": "🛢 友誼管道（石油・縮減中）",
+        "tagClass": "tag-possible",
+        "desc": "透過友誼管道南支線進口俄羅斯石油，但已積極推動多元化。持續擴大 TAL 管線（義大利里雅斯特→捷克）的替代供應量，並開發北海原油替代路線，目標在2027年前大幅降低對俄石油依賴。",
+        "source": "Reuters 2025・Eurostat"
+      }
+    },
+    {
+      "points": [
+        [44.2, 22.4], [44.2, 28.5], [43.7, 28.7], [42.1, 28.5],
+        [41.2, 26.3], [41.4, 23.0], [42.2, 22.0]
+      ],
+      "fillColor": "#7f8c8d",
+      "fillOpacity": 0.13,
+      "borderColor": "#95a5a6",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.7,
+      "popup": {
+        "title": "保加利亞（Bulgaria）",
+        "tag": "🔀 土耳其溪歐洲第一過境國",
+        "tagClass": "tag-strategic",
+        "desc": "土耳其溪進入歐盟的第一站，俄羅斯天然氣由此向北輸入巴爾幹半島。2022年因拒絕以盧布付款遭俄方斷氣，之後透過第三方部分恢復進口。普羅瓦迪亞（Provadia）為保境內重要加壓站。",
+        "source": "Bruegel 2025・IEA"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [54.89, 52.32], [53.24, 50.22], [53.0, 45.0],
+        [52.7, 40.0], [53.25, 34.37], [52.86, 32.69]
+      ],
+      "color": "#c0392b",
+      "weight": 4,
+      "opacity": 0.88,
+      "popup": {
+        "title": "友誼管道（Druzhba）主幹線",
+        "tag": "🛢 俄羅斯→白俄羅斯",
+        "tagClass": "tag-confirmed",
+        "desc": "蘇聯1960年代興建，全長約4,000公里，為全球最長原油輸送管道之一。起源於韃靼斯坦州阿爾梅捷夫斯克（Almetyevsk），穿越薩馬拉、布良斯克州抵達白俄羅斯邊界的烏涅查（Unecha）泵站。",
+        "source": "IEA・Wikipedia"
+      }
+    },
+    {
+      "points": [
+        [52.86, 32.69], [52.03, 29.22],
+        [51.7, 28.5], [51.1, 27.8],
+        [50.6, 26.3], [50.08, 25.15]
+      ],
+      "color": "#c0392b",
+      "weight": 4,
+      "opacity": 0.88,
+      "popup": {
+        "title": "友誼管道南支線（白俄羅斯→烏克蘭）",
+        "tag": "🛢 馬澤爾→布羅德伊",
+        "tagClass": "tag-confirmed",
+        "desc": "從白俄羅斯馬澤爾（Mozyr）分岔點進入烏克蘭，穿越西烏克蘭抵達布羅德伊（Brody）樞紐。2025年初烏克蘭終止五年過境協議，一度中斷，2026年4月部分協議恢復後重新運作。",
+        "source": "Reuters 2026"
+      }
+    },
+    {
+      "points": [
+        [50.08, 25.15], [49.7, 23.8], [49.3, 22.9],
+        [48.62, 22.29], [48.74, 21.2], [48.4, 20.0],
+        [48.3, 19.0], [48.15, 17.11]
+      ],
+      "color": "#c0392b",
+      "weight": 3.5,
+      "opacity": 0.85,
+      "popup": {
+        "title": "友誼管道南支線（烏克蘭→斯洛伐克）",
+        "tag": "🛢 布羅德伊→布拉提斯拉瓦",
+        "tagClass": "tag-confirmed",
+        "desc": "從布羅德伊（Brody）往西穿越卡爾巴阡山脈，經烏日霍羅德（Uzhhorod）越境進入斯洛伐克，是斯洛伐克原油進口的主動脈，亦是斯洛伐克精煉廠（Slovnaft）的主要供油來源。",
+        "source": "IEA・Reuters 2026"
+      }
+    },
+    {
+      "points": [
+        [48.15, 17.11], [49.2, 16.8], [50.08, 14.42]
+      ],
+      "color": "#c0392b",
+      "weight": 3,
+      "opacity": 0.7,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "友誼管道支線（斯洛伐克→捷克）",
+        "tag": "🛢 縮減中",
+        "tagClass": "tag-possible",
+        "desc": "從斯洛伐克布拉提斯拉瓦延伸至捷克布拉格方向的支線，供應捷克精煉廠。捷克正積極透過 TAL 管線擴大替代供應，此支線俄油輸量已逐年下降。",
+        "source": "Eurostat 2025"
+      }
+    },
+    {
+      "points": [
+        [50.08, 25.15], [49.0, 24.0], [48.2, 23.2],
+        [47.7, 22.3], [47.32, 18.91]
+      ],
+      "color": "#c0392b",
+      "weight": 3.5,
+      "opacity": 0.85,
+      "popup": {
+        "title": "友誼管道南支線（烏克蘭→匈牙利）",
+        "tag": "🛢 布羅德伊→布達佩斯",
+        "tagClass": "tag-confirmed",
+        "desc": "從布羅德伊（Brody）南向穿越烏克蘭西南部，越境進入匈牙利，輸往薩扎赫蘭鮑塔（Százhalombatta）精煉廠。匈牙利Mol公司為主要接收方，歐爾班政府明確要求維持此供應不受制裁影響。",
+        "source": "Reuters 2026・IEA"
+      }
+    },
+    {
+      "points": [
+        [44.89, 37.32], [44.0, 36.0], [43.2, 33.5],
+        [42.3, 30.8], [41.64, 28.09]
+      ],
+      "color": "#2980b9",
+      "weight": 3.5,
+      "opacity": 0.85,
+      "dashArray": "9,5",
+      "popup": {
+        "title": "土耳其溪（TurkStream）— 黑海海底段",
+        "tag": "🔵 海底管道 930公里",
+        "tagClass": "tag-strategic",
+        "desc": "2020年1月正式啟用，從俄羅斯克拉斯諾達爾州阿納帕（Anapa）出發，穿越約930公里的黑海海底，抵達土耳其色雷斯基伊科伊（Kıyıköy）。繞過烏克蘭過境，是俄羅斯規避地緣風險的戰略管道。年輸送量設計達315億立方公尺。",
+        "source": "Gazprom・IEA 2025"
+      }
+    },
+    {
+      "points": [
+        [41.64, 28.09], [41.5, 27.5],
+        [42.04, 27.02], [42.5, 26.0],
+        [42.7, 23.3], [43.1, 22.6],
+        [43.32, 21.90], [44.80, 20.47],
+        [46.15, 19.97], [47.0, 19.5],
+        [47.32, 18.91], [47.8, 17.5],
+        [48.0, 17.1], [48.31, 16.87]
+      ],
+      "color": "#2980b9",
+      "weight": 3.5,
+      "opacity": 0.88,
+      "popup": {
+        "title": "土耳其溪陸上段（Balkan Stream）",
+        "tag": "🔵 土耳其→保加利亞→塞爾維亞→匈牙利→奧地利",
+        "tagClass": "tag-strategic",
+        "desc": "又稱「巴爾幹溪」（Balkan Stream），從土耳其登陸點穿越保加利亞、塞爾維亞，北上進入匈牙利，最終抵達奧地利鮑姆加滕（Baumgarten）天然氣樞紐。全程繞開烏克蘭，使俄羅斯天然氣可不受烏克蘭過境風險影響向歐洲輸送。",
+        "source": "IEA 2025・Bruegel"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [54.89, 52.32],
+      "name": "阿爾梅捷夫斯克（Almetyevsk）",
+      "nameLocal": "友誼管道起點",
+      "type": "confirmed",
+      "tag": "🛢 友誼管道發源地",
+      "tagClass": "tag-confirmed",
+      "desc": "俄羅斯韃靼斯坦州，友誼管道（Druzhba）的主要起始點，也是俄羅斯重要的石油開採重鎮。管道自此向西延伸，全程約4,000公里，是全球最長的原油輸送管道之一。",
+      "coords": "54°53'N 52°19'E",
+      "source": "IEA・Global Energy Monitor"
+    },
+    {
+      "latlng": [44.89, 37.32],
+      "name": "阿納帕（Anapa）",
+      "nameLocal": "土耳其溪起點",
+      "type": "confirmed",
+      "tag": "🔵 土耳其溪海底管道起點",
+      "tagClass": "tag-strategic",
+      "desc": "俄羅斯克拉斯諾達爾邊疆區黑海岸邊，土耳其溪（TurkStream）的陸端起點。管道從此進入黑海海底，穿越約930公里抵達土耳其。2017年動工，2020年1月正式啟用，年設計輸氣量315億立方公尺。",
+      "coords": "44°53'N 37°19'E",
+      "source": "Gazprom・Reuters"
+    },
+    {
+      "latlng": [52.03, 29.22],
+      "name": "馬澤爾（Mozyr）",
+      "nameLocal": "馬澤爾分岔點",
+      "type": "reference",
+      "tag": "🔀 南北支線分岔點",
+      "tagClass": "tag-reference",
+      "desc": "白俄羅斯馬澤爾（Mozyr/Mazyr）是友誼管道的關鍵分岔樞紐：北支線穿越波蘭前往德國（歐盟已大幅削減，德國2022年已停止進口），南支線向西南進入烏克蘭，繼續供應斯洛伐克、匈牙利、捷克。",
+      "coords": "52°02'N 29°13'E",
+      "source": "IEA・Global Energy Monitor"
+    },
+    {
+      "latlng": [50.08, 25.15],
+      "name": "布羅德伊（Brody）",
+      "nameLocal": "布羅德伊樞紐",
+      "type": "reference",
+      "tag": "🔀 烏克蘭西部分流點",
+      "tagClass": "tag-reference",
+      "desc": "烏克蘭西部重要泵送站，俄羅斯石油於此向北分往斯洛伐克（經烏日霍羅德），或向南進入匈牙利。2025年初烏克蘭五年過境協議到期後，此節點運量大幅下降，但2026年4月後部分協議重啟。",
+      "coords": "50°05'N 25°09'E",
+      "source": "Reuters 2026"
+    },
+    {
+      "latlng": [41.64, 28.09],
+      "name": "基伊科伊（Kıyıköy）",
+      "nameLocal": "土耳其溪登陸點",
+      "type": "possible",
+      "tag": "🔵 黑海海底段終點",
+      "tagClass": "tag-strategic",
+      "desc": "土耳其色雷斯海岸，土耳其溪黑海海底管道的登陸點。管道在此分為兩條支線：一條（Line 1）向南供應土耳其國內市場，另一條（Line 2，即Balkan Stream）繼續北上進入歐洲，輸往保加利亞、塞爾維亞、匈牙利、斯洛伐克、奧地利。",
+      "coords": "41°38'N 28°05'E",
+      "source": "Gazprom・IEA"
+    },
+    {
+      "latlng": [43.18, 27.43],
+      "name": "普羅瓦迪亞（Provadia）",
+      "nameLocal": "普羅瓦迪亞加壓站",
+      "type": "reference",
+      "tag": "🔀 保加利亞幹線加壓站",
+      "tagClass": "tag-reference",
+      "desc": "保加利亞境內土耳其溪（Balkan Stream）的重要加壓站，天然氣在此加壓後繼續向西輸往索菲亞方向，再轉向北進入塞爾維亞。是俄羅斯天然氣流經保加利亞的關鍵中繼節點。",
+      "coords": "43°11'N 27°26'E",
+      "source": "Bruegel 2025・Global Energy Monitor"
+    },
+    {
+      "latlng": [48.31, 16.87],
+      "name": "鮑姆加滕（Baumgarten）",
+      "nameLocal": "奧地利天然氣樞紐",
+      "type": "possible",
+      "tag": "🔵 歐洲天然氣交割中心",
+      "tagClass": "tag-strategic",
+      "desc": "奧地利鮑姆加滕天然氣樞紐，是土耳其溪陸上段的西端終點，也是歷史上俄羅斯天然氣進入西歐的核心交割點。斯洛伐克、奧地利、甚至義大利和德國過去的俄氣均經此節點流通。OMV公司在此持有重要資產。",
+      "coords": "48°19'N 16°52'E",
+      "source": "IEA・Eurostat 2025"
+    },
+    {
+      "latlng": [48.15, 17.11],
+      "name": "布拉提斯拉瓦（Bratislava）",
+      "nameLocal": "斯洛伐克首都",
+      "type": "capital",
+      "tag": "🇸🇰 高度依賴（石油＋天然氣）",
+      "tagClass": "tag-confirmed",
+      "desc": "斯洛伐克首都，費科（Robert Fico）政府是歐盟對俄能源政策的最強硬反對者之一。Slovnaft煉油廠（匈牙利Mol旗下）完全仰賴友誼管道俄油，天然氣亦由土耳其溪供應。費科曾威脅若強制斷俄能源將對烏克蘭採反制措施。",
+      "coords": "48°09'N 17°07'E",
+      "source": "Reuters 2026・Bruegel"
+    },
+    {
+      "latlng": [47.50, 19.04],
+      "name": "布達佩斯（Budapest）",
+      "nameLocal": "匈牙利首都",
+      "type": "capital",
+      "tag": "🇭🇺 高度依賴（石油＋天然氣）",
+      "tagClass": "tag-confirmed",
+      "desc": "匈牙利首都，歐爾班（Viktor Orbán）政府為俄羅斯能源在歐盟內最堅定的擁護者。Mol公司旗下Százhalombatta煉油廠依賴友誼管道俄油；天然氣方面，匈牙利與Gazprom簽署了延伸至2036年的長期供氣協議。多次動用否決權阻止歐盟對俄能源制裁。",
+      "coords": "47°30'N 19°03'E",
+      "source": "Reuters 2026"
+    },
+    {
+      "latlng": [48.21, 16.37],
+      "name": "維也納（Vienna）",
+      "nameLocal": "奧地利首都",
+      "type": "capital",
+      "tag": "🇦🇹 中度依賴（天然氣）",
+      "tagClass": "tag-possible",
+      "desc": "奧地利首都，OMV公司持有俄羅斯Gazprom的長期供氣合約。截至2025年，俄羅斯天然氣仍佔奧地利天然氣需求約57%。奧地利宣稱積極推動多元化，但實際轉換進度緩慢，距完全去俄化仍有相當距離。",
+      "coords": "48°13'N 16°22'E",
+      "source": "IEA 2025・Eurostat"
+    },
+    {
+      "latlng": [44.80, 20.47],
+      "name": "貝爾格勒（Belgrade）",
+      "nameLocal": "塞爾維亞首都",
+      "type": "capital",
+      "tag": "🇷🇸 土耳其溪（過境＋消費）",
+      "tagClass": "tag-possible",
+      "desc": "塞爾維亞首都，非歐盟成員，不受歐盟對俄制裁拘束。土耳其溪穿越保加利亞後進入塞爾維亞，是匈牙利與斯洛伐克俄氣的主要過境走廊。塞爾維亞本身高度依賴俄羅斯天然氣，武契奇（Vučić）政府與俄羅斯維持實質能源合作。",
+      "coords": "44°48'N 20°28'E",
+      "source": "Bruegel 2025"
+    },
+    {
+      "latlng": [50.08, 14.42],
+      "name": "布拉格（Prague）",
+      "nameLocal": "捷克首都",
+      "type": "capital",
+      "tag": "🇨🇿 縮減中（石油）",
+      "tagClass": "tag-possible",
+      "desc": "捷克首都，透過友誼管道進口俄羅斯石油，但已積極推動替代方案。持續擴大TAL管線（Transalpine Pipeline，里雅斯特→捷克）的供應比例，預計2027年前可將俄油依賴降至最低。",
+      "coords": "50°05'N 14°25'E",
+      "source": "Reuters 2025・Eurostat"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#c0392b", "fillOpacity": 0.22, "borderColor": "#e74c3c", "label": "高度依賴（友誼管道＋土耳其溪）" },
+    { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.18, "borderColor": "#f39c12", "label": "中度依賴（土耳其溪或友誼管道）" },
+    { "symbol": "polygon", "fillColor": "#f39c12", "fillOpacity": 0.15, "borderColor": "#f1c40f", "label": "部分依賴（積極縮減中）" },
+    { "symbol": "polygon", "fillColor": "#7f8c8d", "fillOpacity": 0.15, "borderColor": "#95a5a6", "label": "過境國" },
+    { "symbol": "line", "color": "#c0392b", "dash": null,  "weight": 4, "label": "友誼管道（Druzhba）— 石油" },
+    { "symbol": "line", "color": "#c0392b", "dash": "7,4", "weight": 3, "label": "友誼管道支線（縮減中）" },
+    { "symbol": "line", "color": "#2980b9", "dash": "9,5", "weight": 3, "label": "土耳其溪 — 黑海海底段" },
+    { "symbol": "line", "color": "#2980b9", "dash": null,  "weight": 3, "label": "土耳其溪陸上段（Balkan Stream）" },
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "俄羅斯管道起點" },
+    { "symbol": "dot",  "color": "#2980b9", "pulse": false, "label": "戰略管道節點" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "仍購買俄能源的國家首都" }
+  ]
+}
