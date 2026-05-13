@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>整個納斯達克都搬去了——川普訪中商業代表團市值圖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e8334a;
+    --blue: #2563eb;
+    --teal: #0891b2;
+    --amber: #f59e0b;
+    --ink: #1e293b;
+    --bg: #f0f7ff;
+    --surface: #ffffff;
+    --surface2: #e8f4fd;
+    --muted: #64748b;
+    --line: #cbd5e1;
+    --bar-tech: #2563eb;
+    --bar-fin: #0891b2;
+    --bar-other: #7c3aed;
+    --gdp-color: #f59e0b;
+    --accent: #e8334a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif TC', serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .masthead {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0891b2 100%);
+    color: #ffffff;
+    padding: 32px 40px 24px;
+    border-bottom: 4px solid var(--amber);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .masthead::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 80px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #fcd34d;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .headline {
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    max-width: 700px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .subhead {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+  }
+
+  /* ── Section labels ── */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blue);
+    border-top: 2px solid var(--blue);
+    padding-top: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ── Top 5 cards ── */
+  .top5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 680px) {
+    .top5 { grid-template-columns: repeat(2, 1fr); }
+    .top5 .card:first-child { grid-column: 1/-1; }
+  }
+
+  .card {
+    background: var(--surface);
+    color: var(--ink);
+    padding: 16px 14px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(37,99,235,0.08);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.15);
+  }
+
+  .card.rank-1 {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+  }
+
+  .card::before {
+    content: attr(data-rank);
+    position: absolute;
+    top: -6px; right: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 52px;
+    font-weight: 700;
+    color: rgba(37,99,235,0.08);
+    line-height: 1;
+  }
+
+  .card.rank-1::before {
+    color: rgba(255,255,255,0.08);
+  }
+
+  .card-company {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    opacity: 0.55;
+    margin-bottom: 4px;
+  }
+
+  .card-name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .card-cap {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--amber);
+  }
+
+  .card.rank-1 .card-cap { color: #fcd34d; }
+
+  .card-cap-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    opacity: 0.45;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .card-ceo {
+    font-size: 11px;
+    opacity: 0.5;
+    margin-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 8px;
+  }
+
+  .card.rank-1 .card-ceo { border-color: rgba(255,255,255,0.15); }
+
+  /* ── All companies bar chart ── */
+  .bar-chart {
+    margin-bottom: 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 20px 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 110px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .bar-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .bar-label .en {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .bar-track {
+    background: var(--surface2);
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    position: absolute;
+    left: 0; top: 0;
+    transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 0;
+    border-radius: 3px;
+  }
+
+  .bar-fill.tech { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+  .bar-fill.fin  { background: linear-gradient(90deg, #0891b2, #06b6d4); }
+  .bar-fill.other{ background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+
+  .bar-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  /* ── GDP comparison ── */
+  .gdp-section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .gdp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .gdp-grid { grid-template-columns: 1fr; }
+  }
+
+  .gdp-block {
+    border-left: 4px solid;
+    padding-left: 16px;
+    background: var(--surface2);
+    padding: 16px 16px 16px 20px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .gdp-block.total { border-color: var(--blue); }
+  .gdp-block.china { border-color: var(--amber); }
+
+  .gdp-num {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .gdp-block.total .gdp-num { color: var(--blue); }
+  .gdp-block.china .gdp-num { color: var(--amber); }
+
+  .gdp-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .gdp-ratio {
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .gdp-ratio strong { color: #b45309; }
+
+  /* comparison bar visual */
+  .compare-vis {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .compare-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .compare-lbl {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    width: 100px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+
+  .compare-bar {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 3px;
+  }
+
+  .compare-bar.del { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; }
+  .compare-bar.chi { background: linear-gradient(90deg, #f59e0b, #fcd34d); color: #78350f; }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── Footer ── */
+  .footnote {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    margin-top: 32px;
+  }
+
+  /* ── FX Rate bar ── */
+  .fx-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .fx-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .fx-rate {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: #1e40af;
+  }
+  .fx-rate strong { color: #e8334a; }
+  .fx-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+  }
+
+  .bar-twd {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: #0891b2;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  .bar-value {
+    line-height: 1.3;
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">中時新聞網 · 財經特報 · 2026.05.13</div>
+  <div class="headline">整個納斯達克都搬去了<br>川普訪中商業代表團市值圖解</div>
+  <div class="subhead">Trump China Summit Business Delegation · Market Capitalization Analysis</div>
+</div>
+
+<div class="container">
+
+  <!-- Top 5 -->
+  <div class="section-label">市值前五大企業 Top 5 by Market Cap</div>
+
+  <div class="top5">
+    <div class="card rank-1" data-rank="1">
+      <div class="card-company">NVDA · 科技</div>
+      <div class="card-name">輝達<br>Nvidia</div>
+      <div class="card-cap">$5.37兆</div>
+      <div class="card-cap-label">USD TRILLION</div>
+      <div class="card-ceo">Jensen Huang 黃仁勳</div>
+    </div>
+    <div class="card" data-rank="2">
+      <div class="card-company">AAPL · 科技</div>
+      <div class="card-name">蘋果<br>Apple</div>
+      <div class="card-cap">$3.90兆</div>
+      <div class="card-cap-label">USD TRILLION</div>
+      <div class="card-ceo">Tim Cook 庫克</div>
+    </div>
+    <div class="card" data-rank="3">
+      <div class="card-company">TSLA · 科技</div>
+      <div class="card-name">特斯拉<br>Tesla</div>
+      <div class="card-cap">$1.40兆</div>
+      <div class="card-cap-label">USD TRILLION</div>
+      <div class="card-ceo">Elon Musk 馬斯克</div>
+    </div>
+    <div class="card" data-rank="4">
+      <div class="card-company">MU · 半導體</div>
+      <div class="card-name">美光<br>Micron</div>
+      <div class="card-cap">$847B</div>
+      <div class="card-cap-label">USD BILLION</div>
+      <div class="card-ceo">Sanjay Mehrotra</div>
+    </div>
+    <div class="card" data-rank="5">
+      <div class="card-company">V · 金融</div>
+      <div class="card-name">威士卡<br>Visa</div>
+      <div class="card-cap">$624B</div>
+      <div class="card-cap-label">USD BILLION</div>
+      <div class="card-ceo">Ryan McInerney</div>
+    </div>
+  </div>
+
+  <!-- All companies bar chart -->
+  <div class="section-label">全部18家企業市值一覽 All Companies by Market Cap</div>
+
+  <div class="fx-bar">
+    <span class="fx-label">即時匯率換算基準</span>
+    <span class="fx-rate">USD 1 = <strong>TWD 32</strong></span>
+    <span class="fx-note">各欄位同步顯示新台幣換算金額</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> 科技／半導體 Tech</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div> 金融 Financial</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div> 航太／其他 Aerospace & Other</div>
+  </div>
+
+  <div class="bar-chart" id="barChart"></div>
+
+  <!-- GDP comparison -->
+  <div class="section-label">與中國GDP比較 vs China GDP 2025</div>
+
+  <div class="gdp-section">
+    <div class="gdp-grid">
+      <div class="gdp-block total">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:#64748b;letter-spacing:2px;margin-bottom:8px;">DELEGATION TOTAL</div>
+        <div class="gdp-num" id="totalNum">$0兆</div>
+        <div class="gdp-num-twd" id="totalNumTWD" style="font-family:'Space Mono',monospace;font-size:16px;color:#0891b2;margin-top:4px;"></div>
+        <div class="gdp-desc">18家隨行企業合計市值<br>（2026年5月估值，USD 1 = TWD 32）</div>
+      </div>
+      <div class="gdp-block china">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:#64748b;letter-spacing:2px;margin-bottom:8px;">CHINA GDP 2025</div>
+        <div class="gdp-num">$20兆</div>
+        <div class="gdp-desc">中國2025年名目GDP<br>約20兆美元（NBS官方數據）</div>
+      </div>
+    </div>
+
+    <div class="compare-vis" id="compareVis">
+      <div class="compare-row">
+        <div class="compare-lbl">代表團市值</div>
+        <div class="compare-bar del" id="delBar">$14.4兆</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-lbl">中國GDP</div>
+        <div class="compare-bar chi" id="chiBar">$20兆</div>
+      </div>
+    </div>
+
+    <div class="gdp-ratio">
+      代表團企業合計市值約<strong>16.4兆美元（約新台幣524兆元）</strong>，相當於中國2025年名目GDP的<strong>約82%</strong>。若以輝達一家（美元5.37兆／約新台幣172兆元）比照，則已超越德國全年GDP（約4.5兆美元）。
+    </div>
+  </div>
+
+  <div class="footnote">
+    數據來源：CompaniesMarketCap / MacroTrends / Robinhood / 中國國家統計局 · 市值為2026年5月13日前後估值，供參考 · Cargill為私人公司，市值採估算值約300億美元 · 台幣換算匯率 USD 1 = TWD 32（即時參考值） · 中時新聞網整理製圖
+  </div>
+
+</div>
+
+<script>
+const companies = [
+  { name: '輝達', en: 'Nvidia (NVDA)', cap: 5370, type: 'tech' },
+  { name: '蘋果', en: 'Apple (AAPL)', cap: 3900, type: 'tech' },
+  { name: '特斯拉', en: 'Tesla (TSLA)', cap: 1400, type: 'tech' },
+  { name: '美光', en: 'Micron (MU)', cap: 847, type: 'tech' },
+  { name: '威士卡', en: 'Visa (V)', cap: 624, type: 'fin' },
+  { name: '思科', en: 'Cisco (CSCO)', cap: 392, type: 'tech' },
+  { name: '萬事達卡', en: 'Mastercard (MA)', cap: 438, type: 'fin' },
+  { name: 'GE航太', en: 'GE Aerospace (GE)', cap: 320, type: 'other' },
+  { name: '高通', en: 'Qualcomm (QCOM)', cap: 280, type: 'tech' },
+  { name: 'Meta', en: 'Meta (META)', cap: 1700, type: 'tech' },
+  { name: '高盛', en: 'Goldman Sachs (GS)', cap: 276, type: 'fin' },
+  { name: '花旗', en: 'Citigroup (C)', cap: 223, type: 'fin' },
+  { name: '波音', en: 'Boeing (BA)', cap: 171, type: 'other' },
+  { name: '貝萊德', en: 'BlackRock (BLK)', cap: 170, type: 'fin' },
+  { name: '黑石', en: 'Blackstone (BX)', cap: 149, type: 'fin' },
+  { name: '科亦倫', en: 'Coherent (COHR)', cap: 62, type: 'tech' },
+  { name: '愛照明', en: 'Illumina (ILMN)', cap: 22, type: 'other' },
+  { name: '嘉吉', en: 'Cargill (private)', cap: 30, type: 'other' },
+];
+
+// Sort descending
+companies.sort((a, b) => b.cap - a.cap);
+
+const MAX = companies[0].cap;
+const chart = document.getElementById('barChart');
+
+companies.forEach((c, i) => {
+  const pct = (c.cap / MAX * 100).toFixed(1);
+  const TWD_RATE = 32;
+  // cap unit = billions USD; capTWD = billions TWD
+  const capTWD = c.cap * TWD_RATE;
+  const usdStr = c.cap >= 1000
+    ? `US$${(c.cap/1000).toFixed(2)}兆`
+    : `US$${c.cap}B`;
+  // 1兆TWD = 1,000 billions TWD
+  const twdStr = capTWD >= 1000
+    ? `NT$${(capTWD/1000).toFixed(1)}兆`
+    : capTWD >= 100
+    ? `NT$${Math.round(capTWD)}B`
+    : `NT$${Math.round(capTWD)}B`;
+  const display = usdStr;
+  const display2 = twdStr;
+
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.style.animationDelay = `${i * 0.06}s`;
+  row.innerHTML = `
+    <div class="bar-label">${c.name}<span class="en">${c.en}</span></div>
+    <div class="bar-track">
+      <div class="bar-fill ${c.type}" data-pct="${pct}" style="width:0%"></div>
+    </div>
+    <div class="bar-value">${display}<span class="bar-twd">${display2}</span></div>
+  `;
+  chart.appendChild(row);
+});
+
+// Animate bars on load
+setTimeout(() => {
+  document.querySelectorAll('.bar-fill').forEach(bar => {
+    const pct = bar.dataset.pct;
+    bar.style.width = pct + '%';
+  });
+
+  // GDP comparison bars
+  const CHINA_GDP = 20000;
+  const TOTAL = companies.reduce((s, c) => s + c.cap, 0);
+  const totalPct = Math.min((TOTAL / CHINA_GDP * 100), 100).toFixed(0);
+
+  document.getElementById('delBar').style.width = `${totalPct}%`;
+  document.getElementById('chiBar').style.width = '100%';
+
+  const totalT = (TOTAL / 1000).toFixed(1);
+  document.getElementById('totalNum').textContent = `US$${totalT}兆`;
+  const totalTWD = TOTAL * 32; // billions TWD
+  const totalTWDStr = `≈ NT$${(totalTWD / 1000).toFixed(0)}兆`;
+  document.getElementById('totalNumTWD').textContent = totalTWDStr;
+}, 200);
+</script>
+</body>
+</html>
