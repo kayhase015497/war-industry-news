@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菲律賓權力鬥爭：2026年5月</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    padding: 32px 20px 48px;
+  }
+
+  /* ── Header ── */
+  .header { text-align: center; margin-bottom: 32px; }
+  .header .kicker {
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: #f0b400; margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: clamp(17px, 3vw, 22px);
+    font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 6px;
+  }
+  .header .subtitle { font-size: clamp(12px, 1.5vw, 13px); color: #8b949e; }
+
+  /* ── Faction bar ── */
+  .faction-bar {
+    display: flex; gap: 8px; justify-content: center;
+    margin-bottom: 32px; flex-wrap: wrap;
+  }
+  .faction {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 4px 10px;
+    border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+  }
+  .faction .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .f-marcos  { background: #3b82f610; border-color: #3b82f670; }
+  .f-marcos  .dot { background: #3b82f6; }
+  .f-duterte { background: #ef444410; border-color: #ef444470; }
+  .f-duterte .dot { background: #ef4444; }
+  .f-icc     { background: #a855f710; border-color: #a855f770; }
+  .f-icc     .dot { background: #a855f7; }
+  .f-senate  { background: #f0b40010; border-color: #f0b40070; }
+  .f-senate  .dot { background: #f0b400; }
+
+  /* ── Timeline: Desktop two-column ── */
+  .timeline { position: relative; max-width: 860px; margin: 0 auto; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, #f0b400, #3b82f6, #ef4444, #a855f7);
+    transform: translateX(-50%); opacity: 0.35;
+  }
+
+  .event { display: flex; align-items: flex-start; margin-bottom: 24px; position: relative; }
+  .event.left  { flex-direction: row-reverse; }
+  .node {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 3px solid #0d1117; z-index: 2; top: 14px;
+  }
+  .card {
+    width: 44%; background: #161b22;
+    border-radius: 10px; padding: 13px 15px;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.18); }
+  .event.left  .card { margin-right: calc(6% + 13px); }
+  .event.right .card { margin-left: calc(6% + 13px); }
+
+  /* ── Timeline: Mobile single-column ── */
+  @media (max-width: 600px) {
+    .timeline::before { left: 18px; transform: none; }
+    .event,
+    .event.left { flex-direction: row; }
+    .node { left: 18px; transform: translateX(-50%); top: 12px; }
+    .card { width: 100%; }
+    .event.left  .card { margin-right: 0; margin-left: 40px; }
+    .event.right .card { margin-left: 40px; }
+  }
+
+  /* ── Card internals ── */
+  .date-tag {
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 5px;
+  }
+  .card h3 {
+    font-size: clamp(12px, 1.4vw, 13.5px);
+    font-weight: 700; color: #e6edf3; line-height: 1.35; margin-bottom: 6px;
+  }
+  .card p { font-size: clamp(11px, 1.2vw, 12px); color: #8b949e; line-height: 1.6; }
+  .tag-row { margin-top: 8px; display: flex; gap: 5px; flex-wrap: wrap; }
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+  .stat-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .stat-chip { background: #21262d; border-radius: 6px; padding: 4px 8px; text-align: center; }
+  .stat-chip .num { font-size: 15px; font-weight: 700; }
+  .stat-chip .lbl { font-size: 9px; color: #8b949e; }
+
+  /* ── Faction colour themes ── */
+  .marcos  .node { background: #3b82f6; }
+  .marcos  .date-tag { color: #3b82f6; }
+  .marcos  .card { border-left: 3px solid #3b82f6; }
+  .marcos  .tag { background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f640; }
+
+  .duterte .node { background: #ef4444; }
+  .duterte .date-tag { color: #ef4444; }
+  .duterte .card { border-left: 3px solid #ef4444; }
+  .duterte .tag { background: #ef444420; color: #ef4444; border: 1px solid #ef444440; }
+
+  .icc     .node { background: #a855f7; }
+  .icc     .date-tag { color: #a855f7; }
+  .icc     .card { border-left: 3px solid #a855f7; }
+  .icc     .tag { background: #a855f720; color: #a855f7; border: 1px solid #a855f740; }
+
+  .senate  .node { background: #f0b400; }
+  .senate  .date-tag { color: #f0b400; }
+  .senate  .card { border-left: 3px solid #f0b400; }
+  .senate  .tag { background: #f0b40020; color: #f0b400; border: 1px solid #f0b40040; }
+
+  .chaos   .node { background: #ff6b35; }
+  .chaos   .date-tag { color: #ff6b35; }
+  .chaos   .card { border-left: 3px solid #ff6b35; }
+  .chaos   .tag { background: #ff6b3520; color: #ff6b35; border: 1px solid #ff6b3540; }
+
+  /* ── Outcome cards ── */
+  .outcomes {
+    max-width: 860px; margin: 32px auto 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  @media (max-width: 600px) {
+    .outcomes { grid-template-columns: 1fr; }
+  }
+  .outcome-card {
+    background: #161b22; border-radius: 10px;
+    padding: 14px 16px; border: 1px solid rgba(255,255,255,0.07);
+  }
+  .outcome-card .icon { font-size: 18px; margin-bottom: 7px; }
+  .outcome-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+  .outcome-card p { font-size: 11px; color: #8b949e; line-height: 1.55; }
+
+  /* ── Footer ── */
+  .divider { height: 1px; background: rgba(255,255,255,0.06); max-width: 860px; margin: 28px auto 0; }
+  .footer { text-align: center; font-size: 10px; color: #484f58; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="kicker">Philippines Political Crisis · May 2026</div>
+  <h1>菲律賓權力鬥爭：彈劾、政變與逮捕混亂</h1>
+  <div class="subtitle">小馬可仕 vs. 杜特蒂家族決裂後最激烈的政治對決</div>
+</div>
+
+<div class="faction-bar">
+  <div class="faction f-marcos"><div class="dot"></div>馬可仕陣營</div>
+  <div class="faction f-duterte"><div class="dot"></div>杜特蒂陣營</div>
+  <div class="faction f-senate"><div class="dot"></div>參議院</div>
+  <div class="faction f-icc"><div class="dot"></div>ICC / 司法</div>
+</div>
+
+<div class="timeline">
+
+  <div class="event right duterte">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">背景 · 2025年</div>
+      <h3>羅德里戈·杜特蒂依ICC逮捕令被捕</h3>
+      <p>前總統因禁毒戰爭人道罪被ICC逮捕，馬可仕與杜特蒂兩大家族聯盟全面破裂，政治角力進入白熱化。</p>
+      <div class="tag-row"><span class="tag">ICC逮捕令</span><span class="tag">禁毒戰爭</span></div>
+    </div>
+  </div>
+
+  <div class="event left marcos">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">2026年5月11日</div>
+      <h3>眾議院通過彈劾薩拉·杜特蒂（第二次）</h3>
+      <p>以壓倒性票數通過，罪名含濫用機密資金、威脅暗殺總統小馬可仕。案件送交參議院，需16票定罪。</p>
+      <div class="stat-row">
+        <div class="stat-chip"><div class="num" style="color:#22c55e">257</div><div class="lbl">贊成</div></div>
+        <div class="stat-chip"><div class="num" style="color:#ef4444">25</div><div class="lbl">反對</div></div>
+        <div class="stat-chip"><div class="num" style="color:#8b949e">9</div><div class="lbl">棄權</div></div>
+      </div>
+      <div class="tag-row"><span class="tag">彈劾</span><span class="tag">眾議院</span><span class="tag">馬可仕主導</span></div>
+    </div>
+  </div>
+
+  <div class="event right senate">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">2026年5月11日 · 同日</div>
+      <h3>參議院「宮廷政變」：索托被罷免，卡耶塔諾接任議長</h3>
+      <p>13票支持下罷免原議長索托三世，由杜特蒂時期外交部長卡耶塔諾接任，將主導彈劾審判程序。</p>
+      <div class="stat-row">
+        <div class="stat-chip"><div class="num" style="color:#f0b400">13</div><div class="lbl">支持票</div></div>
+      </div>
+      <div class="tag-row"><span class="tag">參議院政變</span><span class="tag">卡耶塔諾</span><span class="tag">杜特蒂盟友</span></div>
+    </div>
+  </div>
+
+  <div class="event left duterte">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">2026年5月11日</div>
+      <h3>德拉羅沙現身投票，逃脫NBI逮捕</h3>
+      <p>缺席參議院數月的前國警總長「巴托」突然現身，投票支持卡耶塔諾，隨後逃脫NBI逮捕，獲參議院「保護性拘留」。</p>
+      <div class="tag-row"><span class="tag">ICC逮捕令</span><span class="tag">保護性拘留</span><span class="tag">德拉羅沙</span></div>
+    </div>
+  </div>
+
+  <div class="event right senate">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">2026年5月11日</div>
+      <h3>卡耶塔諾宣示：參議院只認菲律賓法院令狀</h3>
+      <p>新任議長公開表態不配合ICC相關行動，只接受本國法院逮捕令，為杜特蒂陣營人員築起防線。</p>
+      <div class="tag-row"><span class="tag">ICC立場</span><span class="tag">司法主權</span></div>
+    </div>
+  </div>
+
+  <div class="event left chaos">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">2026年5月13日</div>
+      <h3>參議院傳出槍響，現場一片混亂</h3>
+      <p>NBI探員與參議院警隊在大樓天橋附近對峙，雙方相互鳴槍示警，議員逃命，參議院進入封鎖。小馬可仕否認政府部隊介入，稱「政府安全部隊當時並未進入參院」。</p>
+      <div class="tag-row"><span class="tag">槍響事件</span><span class="tag">NBI</span><span class="tag">小馬可仕否認</span></div>
+    </div>
+  </div>
+
+  <div class="event right duterte">
+    <div class="node"></div>
+    <div class="card">
+      <div class="date-tag">後續發展</div>
+      <h3>彈劾審判前景：薩拉暫時佔優</h3>
+      <p>參議院新領導層掌控審判程序，可能拖延定罪進程。定罪需16票，杜特蒂陣營積極鞏固封鎖票數。</p>
+      <div class="stat-row">
+        <div class="stat-chip"><div class="num" style="color:#ef4444">16</div><div class="lbl">定罪門檻</div></div>
+      </div>
+      <div class="tag-row"><span class="tag">參議院審判</span><span class="tag">前景未明</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card">
+    <div class="icon">⚖️</div>
+    <h4 style="color:#3b82f6">馬可仕陣營</h4>
+    <p>眾議院彈劾成功，但參議院失守。ICC執法受阻，司法壓力難以轉化為政治勝果。</p>
+  </div>
+  <div class="outcome-card">
+    <div class="icon">🛡️</div>
+    <h4 style="color:#ef4444">杜特蒂陣營</h4>
+    <p>奪取參議院議長職位為最大斬獲，德拉羅沙藏身參議院，薩拉彈劾審判暫獲緩衝。</p>
+  </div>
+  <div class="outcome-card">
+    <div class="icon">🌐</div>
+    <h4 style="color:#a855f7">ICC / 國際法</h4>
+    <p>菲律賓雖已退出ICC，仍面臨執行壓力。本國司法與國際法院管轄衝突持續激化。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="footer">資料來源：法新社、路透社、自由時報、中央廣播電臺 · 2026年5月 · 中國時報國際組</div>
+
+</body>
+</html>
