@@ -1,0 +1,437 @@
+{
+  "meta": {
+    "title": "伊朗周邊：美軍・以色列部署與伊朗戰略資產",
+    "titleEn": "US/Israeli Military Deployments & Iranian Strategic Assets",
+    "subtitle": "Operation Epic Fury・阿拉伯海雙航母封鎖・以色列空軍基地・伊朗核能源基礎設施｜2026年5月",
+    "date": "2026-05-16",
+    "status": "breaking",
+    "theme": "red",
+    "sources": [
+      "USNI News 2026",
+      "The War Zone 2026",
+      "AP News 2026",
+      "Atlantic Council 2026",
+      "IAEA 2026",
+      "Army Recognition 2026"
+    ]
+  },
+  "map": {
+    "center": [30.0, 51.0],
+    "zoom": 5,
+    "bounds": [
+      [13.0, 29.0],
+      [42.0, 70.0]
+    ]
+  },
+  "infoPanel": {
+    "title": "Operation Epic Fury：美軍中東有史以來最大集結",
+    "paragraphs": [
+      "2026年1月起，美國在中東進行二十餘年來最大軍事集結。截至2026年5月11日，USS Abraham Lincoln（CVN-72）與USS George H.W. Bush（CVN-77）兩個航母打擊群（CSG）共超過20艘艦艇，正在阿拉伯海執行對伊朗的封鎖任務（Operation Epic Fury）。地面部隊方面，82空降師司令部及第1旅戰鬥隊已前進部署至CENTCOM AOR，31st及11th海軍陸戰隊遠征部隊（MEU，合計約5,000人）由USS Tripoli與USS Boxer搭載進入中東海域。CENTCOM總兵力估計超過50,000人。",
+      "以色列空軍在2024年10月26日首次直接打擊伊朗本土——逾百架F-35I Adir從內瓦提姆（Nevatim）基地起飛，飛行約2,000公里，摧毀伊朗防空陣地、無人機工廠及飛彈生產設施。2025年「十二日戰爭」期間，以色列進一步擴大攻擊規模，Arrow-3飛彈防禦系統攔截86%來自伊朗的彈道飛彈。美軍B-2 Spirit匿蹤轟炸機於2025年6月22日以12枚GBU-57A/B巨型鑽地炸彈（MOP）攻擊福爾多（Fordow）地下核設施，納坦茲（Natanz）地面濃縮廠已由IAEA確認「完全摧毀」。",
+      "伊朗的戰略資產分三類：①核設施——納坦茲（Natanz）已摧毀，福爾多（Fordow）遭MOP攻擊，伊斯法罕（Isfahan）核技術中心及阿拉克（Arak）重水反應爐為潛在後續目標；②油氣基礎設施——哈爾格島（Kharg Island）佔伊朗90%石油出口，阿薩魯耶南帕斯（Assaluyeh）是世界最大天然氣田的出口終端；③水壩——胡澤斯坦省的卡倫河水壩系統（Karun-3/4、Dez、Karkheh）供應伊朗主要農業灌溉用水及數千兆瓦水力發電，是最高民生打擊目標。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [39.5, 44.5],
+        [38.5, 48.5],
+        [37.2, 56.5],
+        [36.5, 61.0],
+        [31.0, 61.5],
+        [25.8, 60.0],
+        [25.5, 57.5],
+        [27.0, 54.0],
+        [26.5, 51.0],
+        [29.0, 48.5],
+        [32.0, 47.0],
+        [34.0, 45.5],
+        [37.0, 44.5],
+        [39.5, 44.5]
+      ],
+      "fillColor": "#B71C1C",
+      "fillOpacity": 0.07,
+      "borderColor": "#EF5350",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.50,
+      "borderDashArray": "5,4",
+      "popup": {
+        "title": "伊朗（Islamic Republic of Iran）",
+        "tag": "⚔ Operation Epic Fury 封鎖目標",
+        "tagClass": "tag-confirmed",
+        "desc": "面積164萬平方公里，人口約8,800萬。全球第四大石油儲量、第二大天然氣儲量。2025-2026年成為美軍及以色列打擊目標，核設施遭大規模攻擊，霍爾木茲海峽（每日通過全球約20%石油）已被美軍航母打擊群控制。CENTCOM宣稱正在執行「遏制伊朗核武能力」任務。",
+        "source": "Atlantic Council 2026・IAEA"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [31.2, 35.0],
+        [28.5, 35.5],
+        [26.0, 39.5],
+        [27.5, 44.5],
+        [31.0, 46.5],
+        [33.6, 46.5]
+      ],
+      "color": "#1565C0",
+      "weight": 2.5,
+      "opacity": 0.80,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "以色列F-35I打擊伊朗路線（2024年10月26日）",
+        "tag": "✈ 逾100架F-35I・2,000公里作戰半徑",
+        "tagClass": "tag-strategic",
+        "desc": "2024年10月26日，以色列空軍逾百架F-35I Adir從內瓦提姆（Nevatim）起飛，沿紅海南下經沙烏地空域，北上進入伊朗西部。打擊目標包含德黑蘭附近防空系統陣地、伊拉姆省（Ilam）軍事基地、胡澤斯坦省設施、無人機工廠及飛彈生產設施。飛行距離約2,000公里，需多次空中加油。路線為根據媒體報導及公開分析之推估，非官方確認路徑。",
+        "source": "Wikipedia・AP News・Times of Israel 2024"
+      }
+    },
+    {
+      "points": [
+        [33.7, 51.7],
+        [33.5, 47.0],
+        [33.0, 42.0],
+        [32.5, 38.5],
+        [31.8, 35.5],
+        [31.2, 35.0]
+      ],
+      "color": "#E53935",
+      "weight": 2.5,
+      "opacity": 0.80,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "伊朗彈道飛彈攻擊路線（2024年10月1日）",
+        "tag": "🚀 約200枚飛彈・「真實承諾二號」",
+        "tagClass": "tag-confirmed",
+        "desc": "2024年10月1日伊朗發射約200枚彈道飛彈攻擊以色列，代號「真實承諾二號」（True Promise II）。飛彈從伊朗中西部多處基地發射，飛越伊拉克、約旦上空，攻擊內瓦提姆（Nevatim）及特諾夫（Tel Nof）空軍基地。以色列Arrow-3、David's Sling及美國THAAD聯合攔截，以色列稱攔截率達99%，Nevatim機庫及滑行道仍受損。路線為推估示意。",
+        "source": "BBC・Reuters・Times of Israel 2024"
+      }
+    },
+    {
+      "points": [
+        [26.8, 55.8],
+        [26.4, 56.3],
+        [26.2, 56.9]
+      ],
+      "color": "#F57F17",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "荷莫茲海峽（Strait of Hormuz）",
+        "tag": "⚓ 全球石油運輸最重要咽喉",
+        "tagClass": "tag-strategic",
+        "desc": "荷莫茲海峽最窄處約33公里，每日通過全球約20%石油（約2,100萬桶/日）及大量LNG。美國航母打擊群在此外圍的阿拉伯海巡邏，事實上控制伊朗石油出口的生命線。若伊朗試圖封閉海峽，5th Fleet及美軍航母CSG可立即介入反制。沙烏地、UAE、科威特的石油出口亦全部依賴此海峽。",
+        "source": "IEA・EIA"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [20.5, 63.0],
+      "name": "USS Abraham Lincoln（CVN-72）航母打擊群",
+      "nameLocal": "阿拉伯海・Operation Epic Fury",
+      "type": "confirmed",
+      "tag": "⚓ 阿拉伯海・CVW-9航空聯隊",
+      "tagClass": "tag-confirmed",
+      "desc": "USS Abraham Lincoln（CVN-72）航母打擊群，2026年1月26日抵達CENTCOM AOR，執行Operation Epic Fury對伊作戰封鎖任務。搭載CVW-9航空聯隊，含F/A-18E/F Super Hornet、F-35C、EA-18G Growler等機型，艦載機約90架。伴隨驅逐艦、巡洋艦護航。座標為阿拉伯海作戰區域大略位置，非精確停泊座標。",
+      "coords": "約20°N 63°E（阿拉伯海）",
+      "source": "USNI News 2026・The War Zone 2026"
+    },
+    {
+      "latlng": [18.0, 60.5],
+      "name": "USS George H.W. Bush（CVN-77）航母打擊群",
+      "nameLocal": "阿拉伯海・Operation Epic Fury",
+      "type": "confirmed",
+      "tag": "⚓ 阿拉伯海・2026年4月23日抵達",
+      "tagClass": "tag-confirmed",
+      "desc": "USS George H.W. Bush（CVN-77）航母打擊群，2026年3月31日從諾福克出發，4月23日抵達CENTCOM AOR，成為第三個加入中東部署的CSG。伴隨驅逐艦USS Ross（DDG-71）、USS Donald Cook（DDG-75）、USS Mason（DDG-87）護航。與Abraham Lincoln CSG形成雙航母作戰群，共超過20艘艦艇執行封鎖任務。",
+      "coords": "約18°N 60°E（阿拉伯海）",
+      "source": "USNI News 2026・Army Recognition 2026"
+    },
+    {
+      "latlng": [15.5, 43.0],
+      "name": "紅海DDG任務群（Operation Prosperity Guardian）",
+      "nameLocal": "紅海・反胡塞攔截任務",
+      "type": "confirmed",
+      "tag": "🚀 持續攔截胡塞飛彈/無人機",
+      "tagClass": "tag-confirmed",
+      "desc": "美軍在紅海部署多艘伯克級導彈驅逐艦（DDG），執行胡塞武裝飛彈及無人機攔截任務，已確認參與艦艇包含：USS Thomas Hudner（DDG-116）、USS Gravely（DDG-107）、USS Laboon（DDG-58）、USS Carney（DDG-64）、USS Spruance（DDG-111）、USS Stockdale（DDG-106）等。2025年5月美國與胡塞武裝停火後攻擊次數下降，但美軍艦艇持續戒備巡邏。座標為紅海中部代表位置。",
+      "coords": "約15°N 43°E（紅海）",
+      "source": "USNI News 2026・Wikipedia/Operation Prosperity Guardian"
+    },
+    {
+      "latlng": [25.117, 51.315],
+      "name": "烏代德空軍基地（Al Udeid AB）",
+      "nameLocal": "Al Udeid Air Base, Qatar",
+      "type": "capital",
+      "tag": "✈ CENTCOM前進空軍指揮所・~10,000美軍",
+      "tagClass": "tag-confirmed",
+      "desc": "美國在中東最大空軍基地，CENTCOM前進空中作戰中心（CAOC）所在地，約10,000名美軍人員。部署機型包含KC-135 Stratotanker（大批增援）、F-22 Raptor、E-3 AWACS、MQ-9無人機等。所有對伊朗及伊拉克/敘利亞的空中作戰任務皆從此協調指揮。基地由卡達提供，美軍使用協議延至2030年代。",
+      "coords": "25°07'N 51°19'E",
+      "source": "Wikipedia・Pentagon 2026"
+    },
+    {
+      "latlng": [24.248, 54.548],
+      "name": "達夫拉空軍基地（Al Dhafra AB）",
+      "nameLocal": "Al Dhafra Air Base, UAE",
+      "type": "confirmed",
+      "tag": "✈ 第380空中遠征聯隊・F-22・U-2S・RQ-4",
+      "tagClass": "tag-confirmed",
+      "desc": "美軍在UAE的主要空軍基地，約5,000名美軍，第380空中遠征聯隊（380th AEW）。部署機型含F-15C/E、F-22A Raptor、KC-10 Extender、E-3 Sentry、U-2S偵察機、RQ-4 Global Hawk無人偵察機。THAAD飛彈防禦系統部署於基地附近提供防護。UAE曾於2024年2月要求美軍對葉門/伊拉克攻擊須事先通報。",
+      "coords": "24°15'N 54°33'E",
+      "source": "Wikipedia・Defense One 2025"
+    },
+    {
+      "latlng": [26.20, 50.51],
+      "name": "NSA巴林（NSA Bahrain）/ 美國第五艦隊",
+      "nameLocal": "Naval Support Activity Bahrain / US 5th Fleet HQ",
+      "type": "capital",
+      "tag": "⚓ 美國第五艦隊司令部",
+      "tagClass": "tag-confirmed",
+      "desc": "美國第五艦隊（U.S. 5th Fleet）司令部及NSA巴林海軍支援活動基地，位於馬納馬（Manama）南側。負責波斯灣、紅海、阿拉伯海及北印度洋共230萬平方英里海域的美國海軍作戰指揮。Operation Epic Fury及Operation Prosperity Guardian均由5th Fleet指揮協調。",
+      "coords": "26°12'N 50°31'E",
+      "source": "US Navy"
+    },
+    {
+      "latlng": [29.18, 47.92],
+      "name": "阿里賈恩營（Camp Arifjan）+ 82空降師",
+      "nameLocal": "Camp Arifjan, Kuwait / 82nd Airborne HQ",
+      "type": "confirmed",
+      "tag": "🪖 82空降師前進部署・潛在強制進入任務",
+      "tagClass": "tag-confirmed",
+      "desc": "科威特美軍主要陸地後勤及指揮基地。2026年3月25日五角大廈確認部署第82空降師司令部及第1旅戰鬥隊（約1,000-3,000人），任務定位為「建立潛在聯合強制進入任務的前進指揮與管制」。同時，31st MEU（USS Tripoli搭載）及11th MEU（USS Boxer搭載）在周邊海域待命。CENTCOM AOR總兵力估計超過50,000人。",
+      "coords": "29°11'N 47°55'E（估）",
+      "source": "Army Recognition 2026・The War Zone 2026"
+    },
+    {
+      "latlng": [31.205, 35.007],
+      "name": "內瓦提姆空軍基地（Nevatim Airbase）",
+      "nameLocal": "Nevatim Airbase, Israel",
+      "type": "confirmed",
+      "tag": "✈ F-35I Adir主力基地・打擊伊朗起飛點",
+      "tagClass": "tag-strategic",
+      "desc": "以色列空軍F-35I Adir（第5代匿蹤戰機）主要作戰基地，位於內蓋夫沙漠貝爾謝巴東方約15公里。2024年10月26日對伊朗打擊行動中，逾百架F-35I從此起飛，飛行2,000公里攻擊伊朗軍事設施。2024年10月1日伊朗「真實承諾二號」攻擊期間，20-32枚彈道飛彈擊中基地，機庫與滑行道受損，但跑道迅速修復。",
+      "coords": "31°12'N 35°00'E",
+      "source": "Wikipedia・Times of Israel 2024"
+    },
+    {
+      "latlng": [31.837, 34.820],
+      "name": "特諾夫空軍基地（Tel Nof Airbase）",
+      "nameLocal": "Tel Nof Airbase, Israel",
+      "type": "confirmed",
+      "tag": "✈ F-15C/D・推測核武儲存地點",
+      "tagClass": "tag-strategic",
+      "desc": "以色列空軍F-15C/D Baz作戰基地，位於以色列中部雷霍沃特（Rehovot）南方5公里。被外界分析人士推測可能是以色列核武器儲存設施之一（未經官方證實）。2024年10月1日伊朗飛彈攻擊中至少3枚著彈，並引發存放彈藥的二次爆炸。以色列2024年10月反擊行動有F-15C/D自此起飛參與。",
+      "coords": "31°50'N 34°49'E",
+      "source": "Wikipedia・Haaretz 2024"
+    },
+    {
+      "latlng": [30.776, 34.667],
+      "name": "拉蒙空軍基地（Ramon Airbase）",
+      "nameLocal": "Ramon Airbase, Israel",
+      "type": "confirmed",
+      "tag": "✈ F-16I Sufa・內蓋夫沙漠深處",
+      "tagClass": "tag-strategic",
+      "desc": "以色列空軍F-16I Sufa戰鬥機主要基地，位於內蓋夫沙漠深處，貝爾謝巴南方約50公里。在伊朗2024年攻擊清單中被點名，但多波次攔截保護了基地完整性。以色列2024年10月反擊伊朗行動有F-16I Sufa自此出發參與。距埃及邊境約20公里，具備緊急轉移能力。",
+      "coords": "30°46'N 34°40'E",
+      "source": "Wikipedia・latitude.to"
+    },
+    {
+      "latlng": [33.717, 51.717],
+      "name": "納坦茲核設施（Natanz）",
+      "nameLocal": "Natanz Nuclear Facility — 已摧毀",
+      "type": "confirmed",
+      "tag": "☢ 已摧毀｜IAEA確認地面設施全毀",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗最大鈾濃縮設施，距德黑蘭約250公里。2025年6月「十二日戰爭」期間以色列大規模打擊，IAEA隨後確認地面濃縮廠「完全摧毀」。伊朗隨後在納坦茲以南約1.6公里「斧頭山」（Kuh-e Kolang Gaz La）加速建設更深層地下替代設施。地下部分是否倖存尚有爭議。2015年核協議時此設施約有19,000台離心機在運作。",
+      "coords": "33°43'N 51°43'E",
+      "source": "IAEA 2025・Reuters 2025"
+    },
+    {
+      "latlng": [34.884, 50.998],
+      "name": "福爾多燃料濃縮廠（Fordow）",
+      "nameLocal": "Fordow Fuel Enrichment Plant — 遭MOP攻擊",
+      "type": "confirmed",
+      "tag": "☢ 遭US B-2/MOP攻擊｜深入山體80-90公尺",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗最具爭議的地下核設施，埋於石灰岩山體下方80-90公尺，距庫姆（Qom）約30公里東北。2025年6月22日凌晨2:30，美國空軍6架B-2 Spirit匿蹤轟炸機投下12枚GBU-57A/B「巨型炸彈穿透者」（MOP，每枚13,608公斤），是有史以來最重型鑽地炸彈攻擊。福爾多是否完全摧毀仍有爭議，部分分析人士認為最深層設施可能倖存。",
+      "coords": "34°53'N 50°60'E",
+      "source": "AP News 2025・Wikipedia"
+    },
+    {
+      "latlng": [32.581, 51.827],
+      "name": "伊斯法罕核技術中心（Isfahan）",
+      "nameLocal": "Isfahan Nuclear Technology Center",
+      "type": "possible",
+      "tag": "☢ 核研究中心・鈾轉化設施（UCF）",
+      "tagClass": "tag-possible",
+      "desc": "伊朗最大核科學研究中心，含10MW研究反應爐及鈾轉化設施（UCF），負責將黃餅（uranium ore）轉化為六氟化鈾（UF6）供濃縮使用。是伊朗核燃料循環的關鍵節點。2025年攻擊事件中列為以色列打擊目標清單，地面部分據報受損。位於伊斯法罕市約15公里外。",
+      "coords": "32°35'N 51°50'E",
+      "source": "IAEA・Wikipedia"
+    },
+    {
+      "latlng": [34.372, 49.241],
+      "name": "阿拉克重水反應爐（Arak，IR-40）",
+      "nameLocal": "Arak Heavy Water Reactor (IR-40)",
+      "type": "possible",
+      "tag": "☢ 重水反應爐・可產生武器級鈽",
+      "tagClass": "tag-possible",
+      "desc": "阿拉克IR-40重水研究反應爐，設計上可生產武器級鈽。2015年伊核協議（JCPOA）要求改建為輕水堆，降低鈽生產能力。伊朗於2019年後暫停改建合作。在近期打擊行動中未見直接攻擊報告，但因其潛在鈽生產能力，仍是IAEA監測及戰略考量中的敏感設施。",
+      "coords": "34°22'N 49°14'E",
+      "source": "IAEA・Wikipedia"
+    },
+    {
+      "latlng": [28.829, 50.887],
+      "name": "布什爾核電廠（Bushehr NPP）",
+      "nameLocal": "Bushehr Nuclear Power Plant",
+      "type": "reference",
+      "tag": "⚡ 1,000MW・伊朗唯一民用核電廠",
+      "tagClass": "tag-reference",
+      "desc": "伊朗唯一民用核電廠，1,000MW容量，由俄羅斯Rosatom建造並提供濃縮鈾燃料。位於波斯灣岸布什爾市東南17公里。2011年正式商業運轉。因使用俄羅斯燃料且受IAEA監督，通常被視為「民用設施」，但其戰略爭議性在於伊朗借此培養了大量核工程師及核電運作專業人才。國際法框架下對其進行打擊具高度爭議性。",
+      "coords": "28°50'N 50°53'E",
+      "source": "IAEA・Wikipedia"
+    },
+    {
+      "latlng": [29.24, 50.32],
+      "name": "哈爾格島石油出口終端（Kharg Island）",
+      "nameLocal": "Kharg Island Oil Terminal",
+      "type": "reference",
+      "tag": "🛢 伊朗90%石油出口・日裝載能力700萬桶",
+      "tagClass": "tag-reference",
+      "desc": "伊朗最關鍵石油出口基礎設施，位於波斯灣中部，距阿巴丹（Abadan）約25公里。約佔伊朗90%石油出口，日裝載能力達700萬桶，可同時停泊10艘超級油輪，儲油能力3,000萬桶。伊朗石油收入的幾乎全部依賴哈爾格島正常運作。被軍事分析人士視為最具戰略價值的單一打擊目標——一旦癱瘓，伊朗政府收入將立即斷崖式下跌。",
+      "coords": "29°14'N 50°19'E",
+      "source": "IranOpenData・Wikipedia・Al Jazeera 2026"
+    },
+    {
+      "latlng": [27.47, 52.61],
+      "name": "阿薩魯耶南帕斯（Assaluyeh / South Pars）",
+      "nameLocal": "South Pars LNG Terminal, Assaluyeh",
+      "type": "reference",
+      "tag": "🔵 全球最大天然氣田出口終端",
+      "tagClass": "tag-reference",
+      "desc": "阿薩魯耶是南帕斯（South Pars）天然氣田的主要工業及出口基地。南帕斯氣田是全球最大天然氣田（與卡達North Field共享），提供伊朗90%以上氣體凝析油及約40%國家天然氣儲量。由此出口的LNG、凝析油是伊朗在石油制裁壓力下的重要替代收入來源。複雜的管線、液化及儲存設施使其成為難以快速修復的高價值目標。",
+      "coords": "27°28'N 52°37'E",
+      "source": "NIOC・Wikipedia"
+    },
+    {
+      "latlng": [30.36, 48.27],
+      "name": "阿巴丹煉油廠（Abadan Refinery）",
+      "nameLocal": "Abadan Refinery, Khuzestan",
+      "type": "reference",
+      "tag": "🛢 429,000桶/日・全球最老煉油廠之一",
+      "tagClass": "tag-reference",
+      "desc": "1912年建成，全球最古老大型煉油廠之一，日煉能力429,000桶。位於胡澤斯坦省（Khuzestan），鄰近伊拉克邊境，伊朗西南邊境最重要的工業設施。精煉產品是伊朗汽油、柴油的主要內需來源。2024年10月以色列曾打擊胡澤斯坦省軍事目標，煉油廠因未被列為直接打擊對象而倖存，但其鄰近位置使其高度脆弱。",
+      "coords": "30°22'N 48°16'E",
+      "source": "Wikipedia・Reuters"
+    },
+    {
+      "latlng": [33.998, 49.499],
+      "name": "沙贊德熱力電廠（Shazand Power Plant）",
+      "nameLocal": "Shazand (Arak) Thermal Power Plant",
+      "type": "reference",
+      "tag": "⚡ 1,300MW・伊朗中部主要電力來源",
+      "tagClass": "tag-reference",
+      "desc": "位於馬爾卡茲省（Markazi Province）阿拉克附近，裝置容量1,300MW，以天然氣及燃油為燃料。是伊朗中部地區（德黑蘭以南）最重要的電力供應設施之一，同時為核設施及軍事工業用電提供電力基礎。電網打擊被認為是對伊作戰中「低傷亡高影響」的選項之一。",
+      "coords": "34°00'N 49°30'E",
+      "source": "Global Energy Monitor"
+    },
+    {
+      "latlng": [31.806, 50.089],
+      "name": "卡倫3號水壩（Karun-3 Dam）",
+      "nameLocal": "Karun-3 Dam, Khuzestan",
+      "type": "reference",
+      "tag": "💧 2,280MW水電・伊朗發電主力",
+      "tagClass": "tag-reference",
+      "desc": "位於胡澤斯坦省伊澤赫（Izeh）東南28公里的卡倫河（Karun River），壩高205公尺，裝置水電容量2,280MW，是伊朗最重要的水力發電設施之一。伊朗水電裝置總量的相當大比例集中於胡澤斯坦省的卡倫河流域水壩群（Karun 1/2/3/4及Dez、Karkheh等）。一旦水壩遭到破壞，不僅影響電力，更將對下游灌溉農田及城市供水造成災難性影響。",
+      "coords": "31°48'N 50°05'E",
+      "source": "Wikipedia"
+    },
+    {
+      "latlng": [32.605, 48.464],
+      "name": "德茲水壩（Dez Dam）",
+      "nameLocal": "Dez Dam, Khuzestan",
+      "type": "reference",
+      "tag": "💧 203公尺・520MW・農業灌溉命脈",
+      "tagClass": "tag-reference",
+      "desc": "位於胡澤斯坦省安迪梅什克（Andimeshk）東北20公里的德茲河（Dez River），壩高203公尺，庫容334億立方公尺，水電裝置容量520MW。1963年竣工，伊朗最重要的多功能水壩之一，兼具電力生產及農業灌溉功能，供應胡澤斯坦省大型農業灌溉網絡。",
+      "coords": "32°36'N 48°28'E",
+      "source": "Wikipedia"
+    },
+    {
+      "latlng": [32.38, 48.15],
+      "name": "卡爾赫水壩（Karkheh Dam）",
+      "nameLocal": "Karkheh Dam, Khuzestan",
+      "type": "reference",
+      "tag": "💧 伊朗最大土石壩・59億立方公尺庫容",
+      "tagClass": "tag-reference",
+      "desc": "位於胡澤斯坦省卡爾赫河（Karkheh River）上，壩高127公尺，庫容59億立方公尺，是伊朗最大土石壩。供應伊朗最重要的農業灌溉系統，胡澤斯坦平原的甘蔗、小麥等農作物高度依賴此壩。同時具備水力發電功能（400MW）。一旦遭到打擊，下游農業灌溉系統將在數週內崩潰。",
+      "coords": "32°23'N 48°09'E",
+      "source": "Wikipedia"
+    },
+    {
+      "latlng": [32.275, 48.836],
+      "name": "戈特萬德水壩（Gotvand Dam）",
+      "nameLocal": "Upper Gotvand Dam, Khuzestan",
+      "type": "reference",
+      "tag": "💧 卡倫河最下游主壩・控制下游水量",
+      "tagClass": "tag-reference",
+      "desc": "位於胡澤斯坦省戈特萬德（Gotvand）東北，是卡倫河最下游的主要水壩，控制流入胡澤斯坦平原的水量。完工後因壩體下方含大量鹽礦，水庫鹽度問題嚴重，影響農業灌溉水質——此特點使其在戰略打擊評估中具有特殊意義。",
+      "coords": "32°17'N 48°50'E",
+      "source": "Wikipedia"
+    }
+  ],
+  "legend": [
+    {
+      "symbol": "line",
+      "color": "#1565C0",
+      "dash": "8,5",
+      "weight": 2,
+      "label": "以色列F-35I打擊路線（2024年10月，推估）"
+    },
+    {
+      "symbol": "line",
+      "color": "#E53935",
+      "dash": "6,4",
+      "weight": 2,
+      "label": "伊朗彈道飛彈攻擊路線（2024年10月，推估）"
+    },
+    {
+      "symbol": "line",
+      "color": "#F57F17",
+      "dash": null,
+      "weight": 3,
+      "label": "荷莫茲海峽（全球石油咽喉）"
+    },
+    {
+      "symbol": "polygon",
+      "fillColor": "#B71C1C",
+      "fillOpacity": 0.35,
+      "borderColor": "#EF5350",
+      "label": "伊朗（Operation Epic Fury封鎖目標）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": true,
+      "label": "美軍/以色列主動作戰資產（紅・脈動）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#1565C0",
+      "pulse": false,
+      "label": "以色列空軍基地（藍）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#f1c40f",
+      "pulse": false,
+      "label": "伊朗核設施（黃，部分已摧毀）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#90A4AE",
+      "pulse": false,
+      "label": "伊朗能源／水壩戰略資產（灰）"
+    }
+  ]
+}
