@@ -7,20 +7,29 @@
     "status": "breaking",
     "theme": "red",
     "sources": [
-      "USNI News 2026",
-      "The War Zone 2026",
-      "AP News 2026",
-      "Atlantic Council 2026",
-      "IAEA 2026",
-      "Army Recognition 2026"
+      "美國海軍研究所 2026",
+      "戰區雜誌 2026",
+      "美聯社 2026",
+      "大西洋理事會 2026",
+      "國際原子能總署 2026",
+      "軍事識別 2026"
     ]
   },
   "map": {
-    "center": [30.0, 51.0],
+    "center": [
+      30.0,
+      51.0
+    ],
     "zoom": 5,
     "bounds": [
-      [13.0, 29.0],
-      [42.0, 70.0]
+      [
+        13.0,
+        29.0
+      ],
+      [
+        42.0,
+        70.0
+      ]
     ]
   },
   "infoPanel": {
@@ -34,26 +43,68 @@
   "polygons": [
     {
       "points": [
-        [39.5, 44.5],
-        [38.5, 48.5],
-        [37.2, 56.5],
-        [36.5, 61.0],
-        [31.0, 61.5],
-        [25.8, 60.0],
-        [25.5, 57.5],
-        [27.0, 54.0],
-        [26.5, 51.0],
-        [29.0, 48.5],
-        [32.0, 47.0],
-        [34.0, 45.5],
-        [37.0, 44.5],
-        [39.5, 44.5]
+        [
+          39.5,
+          44.5
+        ],
+        [
+          38.5,
+          48.5
+        ],
+        [
+          37.2,
+          56.5
+        ],
+        [
+          36.5,
+          61.0
+        ],
+        [
+          31.0,
+          61.5
+        ],
+        [
+          25.8,
+          60.0
+        ],
+        [
+          25.5,
+          57.5
+        ],
+        [
+          27.0,
+          54.0
+        ],
+        [
+          26.5,
+          51.0
+        ],
+        [
+          29.0,
+          48.5
+        ],
+        [
+          32.0,
+          47.0
+        ],
+        [
+          34.0,
+          45.5
+        ],
+        [
+          37.0,
+          44.5
+        ],
+        [
+          39.5,
+          44.5
+        ]
       ],
       "fillColor": "#B71C1C",
       "fillOpacity": 0.07,
       "borderColor": "#EF5350",
       "borderWeight": 1.5,
-      "borderOpacity": 0.50,
+      "borderOpacity": 0.5,
       "borderDashArray": "5,4",
       "popup": {
         "title": "伊朗（Islamic Republic of Iran）",
@@ -67,16 +118,34 @@
   "lines": [
     {
       "points": [
-        [31.2, 35.0],
-        [28.5, 35.5],
-        [26.0, 39.5],
-        [27.5, 44.5],
-        [31.0, 46.5],
-        [33.6, 46.5]
+        [
+          31.2,
+          35.0
+        ],
+        [
+          28.5,
+          35.5
+        ],
+        [
+          26.0,
+          39.5
+        ],
+        [
+          27.5,
+          44.5
+        ],
+        [
+          31.0,
+          46.5
+        ],
+        [
+          33.6,
+          46.5
+        ]
       ],
       "color": "#1565C0",
       "weight": 2.5,
-      "opacity": 0.80,
+      "opacity": 0.8,
       "dashArray": "8,5",
       "popup": {
         "title": "以色列F-35I打擊伊朗路線（2024年10月26日）",
@@ -88,16 +157,34 @@
     },
     {
       "points": [
-        [33.7, 51.7],
-        [33.5, 47.0],
-        [33.0, 42.0],
-        [32.5, 38.5],
-        [31.8, 35.5],
-        [31.2, 35.0]
+        [
+          33.7,
+          51.7
+        ],
+        [
+          33.5,
+          47.0
+        ],
+        [
+          33.0,
+          42.0
+        ],
+        [
+          32.5,
+          38.5
+        ],
+        [
+          31.8,
+          35.5
+        ],
+        [
+          31.2,
+          35.0
+        ]
       ],
       "color": "#E53935",
       "weight": 2.5,
-      "opacity": 0.80,
+      "opacity": 0.8,
       "dashArray": "6,4",
       "popup": {
         "title": "伊朗彈道飛彈攻擊路線（2024年10月1日）",
@@ -109,9 +196,18 @@
     },
     {
       "points": [
-        [26.8, 55.8],
-        [26.4, 56.3],
-        [26.2, 56.9]
+        [
+          26.8,
+          55.8
+        ],
+        [
+          26.4,
+          56.3
+        ],
+        [
+          26.2,
+          56.9
+        ]
       ],
       "color": "#F57F17",
       "weight": 3,
@@ -127,9 +223,12 @@
   ],
   "locations": [
     {
-      "latlng": [20.5, 63.0],
+      "latlng": [
+        20.5,
+        63.0
+      ],
       "name": "USS Abraham Lincoln（CVN-72）航母打擊群",
-      "nameLocal": "阿拉伯海・Operation Epic Fury",
+      "nameLocal": "阿拉伯海・神聖憤怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・CVW-9航空聯隊",
       "tagClass": "tag-confirmed",
@@ -138,9 +237,12 @@
       "source": "USNI News 2026・The War Zone 2026"
     },
     {
-      "latlng": [18.0, 60.5],
+      "latlng": [
+        18.0,
+        60.5
+      ],
       "name": "USS George H.W. Bush（CVN-77）航母打擊群",
-      "nameLocal": "阿拉伯海・Operation Epic Fury",
+      "nameLocal": "阿拉伯海・神聖憤怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・2026年4月23日抵達",
       "tagClass": "tag-confirmed",
@@ -149,9 +251,12 @@
       "source": "USNI News 2026・Army Recognition 2026"
     },
     {
-      "latlng": [15.5, 43.0],
+      "latlng": [
+        15.5,
+        43.0
+      ],
       "name": "紅海DDG任務群（Operation Prosperity Guardian）",
-      "nameLocal": "紅海・反胡塞攔截任務",
+      "nameLocal": "紅海・繁榮守護者行動",
       "type": "confirmed",
       "tag": "🚀 持續攔截胡塞飛彈/無人機",
       "tagClass": "tag-confirmed",
@@ -160,9 +265,12 @@
       "source": "USNI News 2026・Wikipedia/Operation Prosperity Guardian"
     },
     {
-      "latlng": [25.117, 51.315],
+      "latlng": [
+        25.117,
+        51.315
+      ],
       "name": "烏代德空軍基地（Al Udeid AB）",
-      "nameLocal": "Al Udeid Air Base, Qatar",
+      "nameLocal": "烏代德空軍基地・卡達",
       "type": "capital",
       "tag": "✈ CENTCOM前進空軍指揮所・~10,000美軍",
       "tagClass": "tag-confirmed",
@@ -171,9 +279,12 @@
       "source": "Wikipedia・Pentagon 2026"
     },
     {
-      "latlng": [24.248, 54.548],
+      "latlng": [
+        24.248,
+        54.548
+      ],
       "name": "達法拉空軍基地（Al Dhafra AB）",
-      "nameLocal": "Al Dhafra Air Base, UAE",
+      "nameLocal": "達法拉空軍基地・阿拉伯聯合大公國",
       "type": "confirmed",
       "tag": "✈ 第380空中遠征聯隊・F-22・U-2S・RQ-4",
       "tagClass": "tag-confirmed",
@@ -182,9 +293,12 @@
       "source": "Wikipedia・Defense One 2025"
     },
     {
-      "latlng": [26.20, 50.51],
+      "latlng": [
+        26.2,
+        50.51
+      ],
       "name": "NSA巴林（NSA Bahrain）/ 美國第五艦隊",
-      "nameLocal": "Naval Support Activity Bahrain / US 5th Fleet HQ",
+      "nameLocal": "NSA巴林・美國第五艦隊司令部",
       "type": "capital",
       "tag": "⚓ 美國第五艦隊司令部",
       "tagClass": "tag-confirmed",
@@ -193,9 +307,12 @@
       "source": "US Navy"
     },
     {
-      "latlng": [29.18, 47.92],
+      "latlng": [
+        29.18,
+        47.92
+      ],
       "name": "阿里賈恩營（Camp Arifjan）+ 82空降師",
-      "nameLocal": "Camp Arifjan, Kuwait / 82nd Airborne HQ",
+      "nameLocal": "阿里賈恩營・科威特 / 82空降師前進指揮所",
       "type": "confirmed",
       "tag": "🪖 82空降師前進部署・潛在強制進入任務",
       "tagClass": "tag-confirmed",
@@ -204,9 +321,12 @@
       "source": "Army Recognition 2026・The War Zone 2026"
     },
     {
-      "latlng": [31.205, 35.007],
+      "latlng": [
+        31.205,
+        35.007
+      ],
       "name": "內瓦提姆空軍基地（Nevatim Airbase）",
-      "nameLocal": "Nevatim Airbase, Israel",
+      "nameLocal": "內瓦提姆空軍基地・以色列",
       "type": "confirmed",
       "tag": "✈ F-35I Adir主力基地・打擊伊朗起飛點",
       "tagClass": "tag-strategic",
@@ -215,9 +335,12 @@
       "source": "Wikipedia・Times of Israel 2024"
     },
     {
-      "latlng": [31.837, 34.820],
+      "latlng": [
+        31.837,
+        34.82
+      ],
       "name": "特諾夫空軍基地（Tel Nof Airbase）",
-      "nameLocal": "Tel Nof Airbase, Israel",
+      "nameLocal": "特諾夫空軍基地・以色列",
       "type": "confirmed",
       "tag": "✈ F-15C/D・推測核武儲存地點",
       "tagClass": "tag-strategic",
@@ -226,9 +349,12 @@
       "source": "Wikipedia・Haaretz 2024"
     },
     {
-      "latlng": [30.776, 34.667],
+      "latlng": [
+        30.776,
+        34.667
+      ],
       "name": "拉蒙空軍基地（Ramon Airbase）",
-      "nameLocal": "Ramon Airbase, Israel",
+      "nameLocal": "拉蒙空軍基地・以色列",
       "type": "confirmed",
       "tag": "✈ F-16I Sufa・內蓋夫沙漠深處",
       "tagClass": "tag-strategic",
@@ -237,9 +363,12 @@
       "source": "Wikipedia・latitude.to"
     },
     {
-      "latlng": [33.717, 51.717],
+      "latlng": [
+        33.717,
+        51.717
+      ],
       "name": "納坦茲核設施（Natanz）",
-      "nameLocal": "Natanz Nuclear Facility — 已摧毀",
+      "nameLocal": "納坦茲核設施 — 已摧毀",
       "type": "confirmed",
       "tag": "☢ 已摧毀｜IAEA確認地面設施全毀",
       "tagClass": "tag-confirmed",
@@ -248,9 +377,12 @@
       "source": "IAEA 2025・Reuters 2025"
     },
     {
-      "latlng": [34.884, 50.998],
+      "latlng": [
+        34.884,
+        50.998
+      ],
       "name": "福爾多燃料濃縮廠（Fordow）",
-      "nameLocal": "Fordow Fuel Enrichment Plant — 遭MOP攻擊",
+      "nameLocal": "福爾多燃料濃縮廠 — 遭MOP鑽地彈攻擊",
       "type": "confirmed",
       "tag": "☢ 遭US B-2/MOP攻擊｜深入山體80-90公尺",
       "tagClass": "tag-confirmed",
@@ -259,9 +391,12 @@
       "source": "AP News 2025・Wikipedia"
     },
     {
-      "latlng": [32.581, 51.827],
+      "latlng": [
+        32.581,
+        51.827
+      ],
       "name": "伊斯法罕核技術中心（Isfahan）",
-      "nameLocal": "Isfahan Nuclear Technology Center",
+      "nameLocal": "伊斯法罕核技術中心",
       "type": "possible",
       "tag": "☢ 核研究中心・鈾轉化設施（UCF）",
       "tagClass": "tag-possible",
@@ -270,9 +405,12 @@
       "source": "IAEA・Wikipedia"
     },
     {
-      "latlng": [34.372, 49.241],
+      "latlng": [
+        34.372,
+        49.241
+      ],
       "name": "阿拉克重水反應爐（Arak，IR-40）",
-      "nameLocal": "Arak Heavy Water Reactor (IR-40)",
+      "nameLocal": "阿拉克重水反應爐（IR-40）",
       "type": "possible",
       "tag": "☢ 重水反應爐・可產生武器級鈽",
       "tagClass": "tag-possible",
@@ -281,9 +419,12 @@
       "source": "IAEA・Wikipedia"
     },
     {
-      "latlng": [28.829, 50.887],
+      "latlng": [
+        28.829,
+        50.887
+      ],
       "name": "布希爾核電廠（Bushehr NPP）",
-      "nameLocal": "Bushehr Nuclear Power Plant",
+      "nameLocal": "布希爾核電廠",
       "type": "reference",
       "tag": "⚡ 1,000MW・伊朗唯一民用核電廠",
       "tagClass": "tag-reference",
@@ -292,9 +433,12 @@
       "source": "IAEA・Wikipedia"
     },
     {
-      "latlng": [29.24, 50.32],
+      "latlng": [
+        29.24,
+        50.32
+      ],
       "name": "哈爾克島石油出口終端（Kharg Island）",
-      "nameLocal": "Kharg Island Oil Terminal",
+      "nameLocal": "哈爾克島石油出口終端",
       "type": "reference",
       "tag": "🛢 伊朗90%石油出口・日裝載能力700萬桶",
       "tagClass": "tag-reference",
@@ -303,9 +447,12 @@
       "source": "IranOpenData・Wikipedia・Al Jazeera 2026"
     },
     {
-      "latlng": [27.47, 52.61],
+      "latlng": [
+        27.47,
+        52.61
+      ],
       "name": "阿薩盧耶南帕爾斯（Assaluyeh / South Pars）",
-      "nameLocal": "South Pars LNG Terminal, Assaluyeh",
+      "nameLocal": "南帕爾斯LNG終端・阿薩盧耶",
       "type": "reference",
       "tag": "🔵 全球最大天然氣田出口終端",
       "tagClass": "tag-reference",
@@ -314,9 +461,12 @@
       "source": "NIOC・Wikipedia"
     },
     {
-      "latlng": [30.36, 48.27],
+      "latlng": [
+        30.36,
+        48.27
+      ],
       "name": "阿巴丹煉油廠（Abadan Refinery）",
-      "nameLocal": "Abadan Refinery, Khuzestan",
+      "nameLocal": "阿巴丹煉油廠・胡齊斯坦",
       "type": "reference",
       "tag": "🛢 429,000桶/日・全球最老煉油廠之一",
       "tagClass": "tag-reference",
@@ -325,9 +475,12 @@
       "source": "Wikipedia・Reuters"
     },
     {
-      "latlng": [33.998, 49.499],
+      "latlng": [
+        33.998,
+        49.499
+      ],
       "name": "沙贊德熱力電廠（Shazand Power Plant）",
-      "nameLocal": "Shazand (Arak) Thermal Power Plant",
+      "nameLocal": "沙贊德熱力電廠（阿拉克）",
       "type": "reference",
       "tag": "⚡ 1,300MW・伊朗中部主要電力來源",
       "tagClass": "tag-reference",
@@ -336,9 +489,12 @@
       "source": "Global Energy Monitor"
     },
     {
-      "latlng": [31.806, 50.089],
+      "latlng": [
+        31.806,
+        50.089
+      ],
       "name": "卡倫3號水壩（Karun-3 Dam）",
-      "nameLocal": "Karun-3 Dam, Khuzestan",
+      "nameLocal": "卡倫3號水壩・胡齊斯坦",
       "type": "reference",
       "tag": "💧 2,280MW水電・伊朗發電主力",
       "tagClass": "tag-reference",
@@ -347,9 +503,12 @@
       "source": "Wikipedia"
     },
     {
-      "latlng": [32.605, 48.464],
+      "latlng": [
+        32.605,
+        48.464
+      ],
       "name": "德茲水壩（Dez Dam）",
-      "nameLocal": "Dez Dam, Khuzestan",
+      "nameLocal": "德茲水壩・胡齊斯坦",
       "type": "reference",
       "tag": "💧 203公尺・520MW・農業灌溉命脈",
       "tagClass": "tag-reference",
@@ -358,9 +517,12 @@
       "source": "Wikipedia"
     },
     {
-      "latlng": [32.38, 48.15],
+      "latlng": [
+        32.38,
+        48.15
+      ],
       "name": "卡爾赫水壩（Karkheh Dam）",
-      "nameLocal": "Karkheh Dam, Khuzestan",
+      "nameLocal": "卡爾赫水壩・胡齊斯坦",
       "type": "reference",
       "tag": "💧 伊朗最大土石壩・59億立方公尺庫容",
       "tagClass": "tag-reference",
@@ -369,9 +531,12 @@
       "source": "Wikipedia"
     },
     {
-      "latlng": [32.275, 48.836],
+      "latlng": [
+        32.275,
+        48.836
+      ],
       "name": "戈特萬德水壩（Gotvand Dam）",
-      "nameLocal": "Upper Gotvand Dam, Khuzestan",
+      "nameLocal": "戈特萬德水壩・胡齊斯坦",
       "type": "reference",
       "tag": "💧 卡倫河最下游主壩・控制下游水量",
       "tagClass": "tag-reference",
