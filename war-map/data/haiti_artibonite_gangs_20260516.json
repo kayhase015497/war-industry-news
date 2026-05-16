@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "title": "海地幫派攻擊：阿蒂博尼特大屠殺路徑",
+    "titleEn": "Haiti Gang Violence: Artibonite Massacre Routes",
+    "subtitle": "Gran Grif・Viv Ansanm｜2026年3月大屠殺・5月農村滲透｜資料來源：海地時報",
+    "date": "2026-05-16",
+    "status": "breaking",
+    "theme": "red",
+    "sources": [
+      "Haitian Times",
+      "AP News 2026",
+      "Reuters 2026",
+      "UN OCHA 2026"
+    ]
+  },
+  "map": {
+    "center": [19.15, -72.62],
+    "zoom": 10,
+    "bounds": [
+      [18.3, -73.4],
+      [19.75, -71.8]
+    ]
+  },
+  "infoPanel": {
+    "title": "Gran Grif / Viv Ansanm：系統性農村攻擊",
+    "paragraphs": [
+      "2026年3月28日至30日，Gran Grif幫派（隸屬Viv Ansanm聯盟）對阿蒂博尼特省Petite Rivière de l'Artibonite公社發動大規模協調攻擊，造成至少70人死亡，超過50棟民宅遭焚毀，數千名村民流離失所。Jean-Denis村首當其衝——幫派採夜間突襲、封鎖道路、焚燒農舍的系統性戰術，複製其在太子港圈奪取基礎設施的手法。",
+      "2026年5月上旬，暴力擴散至沿海城市Saint-Marc的Carrefour Robert社區，至少8人死亡。5月15日夜間，武裝份子持T65突擊步槍再度夜襲阿蒂博尼特農村，焚燒多間民宅，影片在社群媒體廣泛流傳。此模式顯示幫派正從城市邊緣向農業腹地系統性推進。",
+      "Viv Ansanm（『我們一起』）是由G9 en Fanmi et Alliés與G-Pèp組成的超級幫派聯盟，2024年2月起控制太子港，2025-2026年沿Route Nationale 1北進阿蒂博尼特。其目標是控制海地最重要的稻米產區——透過斷糧、勒索農民與逼遷來鞏固社會控制，是繼首都奪權後的第二階段擴張。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [19.72, -73.10],
+        [19.70, -72.40],
+        [19.40, -72.15],
+        [18.95, -72.18],
+        [18.80, -72.58],
+        [18.85, -73.05],
+        [19.20, -73.22],
+        [19.72, -73.10]
+      ],
+      "fillColor": "#B71C1C",
+      "fillOpacity": 0.07,
+      "borderColor": "#EF5350",
+      "borderWeight": 1.2,
+      "borderOpacity": 0.40,
+      "borderDashArray": "5,4",
+      "popup": {
+        "title": "阿蒂博尼特省（Artibonite Department）",
+        "tag": "🌾 海地最大農業省份・幫派主要擴張目標",
+        "tagClass": "tag-strategic",
+        "desc": "阿蒂博尼特是海地面積最大的省份（4,887平方公里），人口約180萬，全國70%稻米產自阿蒂博尼特河灌溉平原，是海地的「糧倉」。自2025年底起成為Gran Grif和Viv Ansanm幫派聯盟的主要擴張目標。幫派透過控制農業區、切斷食物供應鏈、勒索農民的方式系統性鞏固影響力。",
+        "source": "UN OCHA 2026"
+      }
+    },
+    {
+      "points": [
+        [19.23, -72.63],
+        [19.23, -72.42],
+        [19.07, -72.42],
+        [19.07, -72.63],
+        [19.23, -72.63]
+      ],
+      "fillColor": "#7f0000",
+      "fillOpacity": 0.22,
+      "borderColor": "#E53935",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "popup": {
+        "title": "主要屠殺核心區（Jean-Denis / Petite Rivière）",
+        "tag": "🔥 2026年3月28-31日：70+人死亡",
+        "tagClass": "tag-confirmed",
+        "desc": "2026年3月28日至31日Gran Grif幫派主要攻擊範圍，涵蓋Jean-Denis村、Marchand Dessalines、Pont Benoit周邊農村地帶。幫派於夜間多點同時突襲，封鎖所有對外道路，焚燒超過50棟民宅，造成至少70人死亡。估計5,000至10,000名村民被迫逃離，是海地近年農村單一事件中規模最大的幫派屠殺行動之一。",
+        "source": "Haitian Times・AP News 2026"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [18.594, -72.199],
+        [18.77, -72.52],
+        [19.117, -72.700],
+        [19.45, -72.68]
+      ],
+      "color": "#757575",
+      "weight": 2,
+      "opacity": 0.50,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "Route Nationale 1（國家公路1號）",
+        "tag": "🛣 幫派北進主軸",
+        "tagClass": "tag-strategic",
+        "desc": "海地主要南北幹道，從首都太子港沿西岸北上，經聖馬克（Saint-Marc）抵達阿蒂博尼特省首府戈納伊夫（Gonaïves）。Viv Ansanm幫派聯盟2024年控制太子港後，持續沿此公路向北推進，設置路障勒索、劫持物資。Route Nationale 1的控制等同掌握全國南北交通咽喉。",
+        "source": "UN OCHA 2026・Reuters"
+      }
+    },
+    {
+      "points": [
+        [19.183, -72.552],
+        [19.178, -72.540],
+        [19.158, -72.510],
+        [19.133, -72.483]
+      ],
+      "color": "#C62828",
+      "weight": 3.5,
+      "opacity": 0.90,
+      "popup": {
+        "title": "路徑A：2026年3月Gran Grif大屠殺主路徑",
+        "tag": "🔥 3月28-31日：Gran Grif夜間突擊路線",
+        "tagClass": "tag-confirmed",
+        "desc": "2026年3月28至31日Gran Grif幫派主要突擊路線。自Jean-Denis村發動夜間攻擊後，向南轉移至Pont Benoit / Marchand Dessalines地區持續焚燒，最後回撤至Petite Rivière公社中心鞏固控制。幫派採分批推進、封路截退路、焚燒農舍驅散農民的系統性戰術——此戰法與其在太子港圈攻城如出一轍，顯示具備專業軍事規劃。",
+        "source": "Haitian Times・AP News 2026"
+      }
+    },
+    {
+      "points": [
+        [19.117, -72.700],
+        [19.120, -72.610],
+        [19.130, -72.480]
+      ],
+      "color": "#E65100",
+      "weight": 3,
+      "opacity": 0.82,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "路徑B：2026年5月農村滲透路徑",
+        "tag": "⚠ 5月初至5月15日：城市→農村擴散",
+        "tagClass": "tag-possible",
+        "desc": "2026年5月暴力擴散路徑。Saint-Marc（Carrefour Robert社區）爆發幫派突襲（至少8死）後，暴力向東延伸至阿蒂博尼特農村內陸。5月15日夜間，武裝份子持T65突擊步槍夜襲農村，焚燒民宅，完整複製3月模式。此路徑顯示幫派正從沿海城市向農業腹地系統性滲透，5月15日夜襲村落確切位置依當地報告推定。",
+        "source": "Haitian Times 2026・Reuters"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [19.183, -72.552],
+      "name": "Jean-Denis村",
+      "nameLocal": "Jean-Denis, Petite Rivière de l'Artibonite",
+      "type": "confirmed",
+      "tag": "🔥 70+死・50+棟焚毀・數千人流離",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年3月28至30日Gran Grif幫派主要屠殺現場。幫派於夜間突然湧入這個農業村莊，以AK系列與AR步槍無差別射殺平民，同時縱火焚燒民宅，造成至少70人死亡、超過50棟房屋化為灰燼。估計3,000至5,000人被迫逃往Petite Rivière公社或更遠地區避難。事件發生後超過24小時，政府安全部隊才抵達現場。",
+      "coords": "19°11'N 72°33'W",
+      "source": "Haitian Times・AP News 2026"
+    },
+    {
+      "latlng": [19.18, -72.548],
+      "name": "Pont Benoit / Marchand Dessalines",
+      "nameLocal": "Marchand Dessalines / Pont Benoit周邊",
+      "type": "confirmed",
+      "tag": "🔥 3月31日持續焚燒・橋樑封鎖",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年3月31日攻擊擴散地點。Jean-Denis村屠殺後，Gran Grif幫派向南轉移至Pont Benoit橋附近及Marchand Dessalines周邊農村持續焚燒，並封鎖橋樑截斷逃生路線與外部救援。橋樑控制是幫派困鎖村民、阻止援助進入的核心戰術。政府直升機抵達時，地面仍有幫派槍手活躍。",
+      "coords": "19°11'N 72°33'W",
+      "source": "Haitian Times 2026"
+    },
+    {
+      "latlng": [19.133, -72.483],
+      "name": "Petite Rivière de l'Artibonite",
+      "nameLocal": "Petite Rivière公社中心",
+      "type": "confirmed",
+      "tag": "⚔ Gran Grif主要控制據點・農業核心失守",
+      "tagClass": "tag-confirmed",
+      "desc": "阿蒂博尼特省Petite Rivière公社中心，是2026年3月攻擊的主要策劃與鞏固基地。Gran Grif幫派在此建立對周邊農村的控制網絡，封鎖道路、徵收「過路費」、強迫農民繳納實物糧食。公社中心落入幫派控制意味著整個Petite Rivière灌溉農業區（全國最重要的稻米產區之一）被切斷。",
+      "coords": "19°08'N 72°29'W",
+      "source": "Haitian Times・UN OCHA 2026"
+    },
+    {
+      "latlng": [19.13, -72.48],
+      "name": "5月15日夜襲村落（位置推估）",
+      "nameLocal": "阿蒂博尼特農村（官方未公布確切村名）",
+      "type": "possible",
+      "tag": "🔥 2026年5月15日夜間・T65步槍焚村",
+      "tagClass": "tag-possible",
+      "desc": "2026年5月15日夜間，持T65突擊步槍的武裝份子突然衝入阿蒂博尼特省某農業村落，焚燒多間民宅，數名平民死傷。事件影片在社群媒體廣泛流傳。官方尚未公布確切村名及死亡人數。此座標為基於事件描述及周邊已知幫派活動區域的推估位置（Petite Rivière附近）。",
+      "coords": "19°08'N 72°29'W（推估）",
+      "source": "Haitian Times 2026・社群媒體影片紀錄"
+    },
+    {
+      "latlng": [19.117, -72.700],
+      "name": "聖馬克（Saint-Marc）",
+      "nameLocal": "Saint-Marc / Carrefour Robert社區",
+      "type": "confirmed",
+      "tag": "💀 2026年5月上旬：8人死亡",
+      "tagClass": "tag-confirmed",
+      "desc": "阿蒂博尼特省最大城市（人口約10萬），Route Nationale 1沿線重要港口城市。2026年5月上旬，幫派突襲Carrefour Robert社區，至少8人死亡，大批居民被迫逃往親屬家或北方避難。聖馬克同時是武器與補給品流入阿蒂博尼特農村的主要入口，其失控標誌著農業腹地最後一道門戶的崩潰。",
+      "coords": "19°07'N 72°42'W",
+      "source": "Haitian Times 2026"
+    },
+    {
+      "latlng": [19.45, -72.68],
+      "name": "戈納伊夫（Gonaïves）",
+      "nameLocal": "Gonaïves（阿蒂博尼特省省會）",
+      "type": "reference",
+      "tag": "⚠ 幫派擴張下一潛在目標",
+      "tagClass": "tag-reference",
+      "desc": "阿蒂博尼特省首府（人口約25萬），1804年1月1日海地獨立宣言發表地。2026年幫派尚未完全控制城區，但周邊農村已有滲透報告。若幫派完全控制從太子港至戈納伊夫的Route Nationale 1走廊（約180公里），將等同切斷海地北部與首都的主要陸路聯繫，並包圍整個阿蒂博尼特農業區。",
+      "coords": "19°27'N 72°41'W",
+      "source": "UN OCHA 2026"
+    },
+    {
+      "latlng": [18.594, -72.199],
+      "name": "太子港（Port-au-Prince）",
+      "nameLocal": "Port-au-Prince（海地首都）",
+      "type": "capital",
+      "tag": "⚔ Viv Ansanm 2024年起控制大部分市區",
+      "tagClass": "tag-strategic",
+      "desc": "海地首都，2024年2月起Viv Ansanm幫派聯盟（G9+G-Pèp）發動系統性攻城，佔領中央監獄、主要港口及70%以上市區。首都的失控直接為北進阿蒂博尼特打開戰略通道。現任總理Garry Conille在國際社會壓力下，引入肯亞領導的多國安全支援任務（MSS），但實際效果有限，幫派持續擴張。",
+      "coords": "18°35'N 72°12'W",
+      "source": "Reuters 2026・UN OCHA"
+    }
+  ],
+  "legend": [
+    {
+      "symbol": "polygon",
+      "fillColor": "#B71C1C",
+      "fillOpacity": 0.35,
+      "borderColor": "#EF5350",
+      "label": "阿蒂博尼特省（幫派滲透區域）"
+    },
+    {
+      "symbol": "polygon",
+      "fillColor": "#7f0000",
+      "fillOpacity": 0.45,
+      "borderColor": "#E53935",
+      "label": "主要屠殺核心區（3月28-31日）"
+    },
+    {
+      "symbol": "line",
+      "color": "#C62828",
+      "dash": null,
+      "weight": 3,
+      "label": "路徑A：3月Gran Grif大屠殺路線（實線）"
+    },
+    {
+      "symbol": "line",
+      "color": "#E65100",
+      "dash": "8,5",
+      "weight": 3,
+      "label": "路徑B：5月農村滲透擴散路徑（虛線）"
+    },
+    {
+      "symbol": "line",
+      "color": "#757575",
+      "dash": "7,5",
+      "weight": 2,
+      "label": "Route Nationale 1（幫派北進走廊）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": true,
+      "label": "確認攻擊地點（紅・脈動）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#f1c40f",
+      "pulse": false,
+      "label": "推估/可能攻擊位置（黃）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#90A4AE",
+      "pulse": false,
+      "label": "背景參考地點（灰）"
+    }
+  ]
+}
