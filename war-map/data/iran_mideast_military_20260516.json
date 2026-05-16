@@ -33,7 +33,7 @@
     ]
   },
   "infoPanel": {
-    "title": "Operation Epic Fury：美軍中東有史以來最大集結",
+    "title": "史詩狂怒行動：美軍中東有史以來最大集結",
     "paragraphs": [
       "2026年1月起，美國在中東進行二十餘年來最大軍事集結。截至2026年5月11日，USS Abraham Lincoln（CVN-72）與USS George H.W. Bush（CVN-77）兩個航母打擊群（CSG）共超過20艘艦艇，正在阿拉伯海執行對伊朗的封鎖任務（Operation Epic Fury）。地面部隊方面，82空降師司令部及第1旅戰鬥隊已前進部署至CENTCOM AOR，31st及11th海軍陸戰隊遠征部隊（MEU，合計約5,000人）由USS Tripoli與USS Boxer搭載進入中東海域。CENTCOM總兵力估計超過50,000人。",
       "以色列空軍在2024年10月26日首次直接打擊伊朗本土——逾百架F-35I Adir從內瓦提姆（Nevatim）基地起飛，飛行約2,000公里，摧毀伊朗防空陣地、無人機工廠及飛彈生產設施。2025年「十二日戰爭」期間，以色列進一步擴大攻擊規模，Arrow-3飛彈防禦系統攔截86%來自伊朗的彈道飛彈。美軍B-2 Spirit匿蹤轟炸機於2025年6月22日以12枚GBU-57A/B巨型鑽地炸彈（MOP）攻擊福爾多（Fordow）地下核設施，納坦茲（Natanz）地面濃縮廠已由IAEA確認「完全摧毀」。",
@@ -110,7 +110,7 @@
         "title": "伊朗（Islamic Republic of Iran）",
         "tag": "⚔ Operation Epic Fury 封鎖目標",
         "tagClass": "tag-confirmed",
-        "desc": "面積164萬平方公里，人口約8,800萬。全球第四大石油儲量、第二大天然氣儲量。2025-2026年成為美軍及以色列打擊目標，核設施遭大規模攻擊，霍爾木茲海峽（每日通過全球約20%石油）已被美軍航母打擊群控制。CENTCOM宣稱正在執行「遏制伊朗核武能力」任務。",
+        "desc": "面積164萬平方公里，人口約8,800萬。全球第四大石油儲量、第二大天然氣儲量。2025-2026年成為美軍及以色列打擊目標，核設施遭大規模攻擊，荷莫茲海峽每日通過全球約20%石油。",
         "source": "Atlantic Council 2026・IAEA"
       }
     }
@@ -227,12 +227,12 @@
         20.5,
         63.0
       ],
-      "name": "USS Abraham Lincoln（CVN-72）航母打擊群",
+      "name": "林肯號航母打擊群（CVN-72）",
       "nameLocal": "阿拉伯海・神聖憤怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・CVW-9航空聯隊",
       "tagClass": "tag-confirmed",
-      "desc": "USS Abraham Lincoln（CVN-72）航母打擊群，2026年1月26日抵達CENTCOM AOR，執行Operation Epic Fury對伊作戰封鎖任務。搭載CVW-9航空聯隊，含F/A-18E/F Super Hornet、F-35C、EA-18G Growler等機型，艦載機約90架。伴隨驅逐艦、巡洋艦護航。座標為阿拉伯海作戰區域大略位置，非精確停泊座標。",
+      "desc": "USS Abraham Lincoln（CVN-72）林肯號航母打擊群，2026年1月26日抵達CENTCOM AOR，執行Operation Epic Fury對伊作戰封鎖任務。搭載CVW-9航空聯隊，含F/A-18E/F Super Hornet、F-35C、EA-18G Growler等機型，艦載機約90架。伴隨驅逐艦、巡洋艦護航。座標為阿拉伯海作戰區域大略位置，非精確停泊座標。",
       "coords": "約20°N 63°E（阿拉伯海）",
       "source": "USNI News 2026・The War Zone 2026"
     },
@@ -241,7 +241,7 @@
         18.0,
         60.5
       ],
-      "name": "USS George H.W. Bush（CVN-77）航母打擊群",
+      "name": "布希號航母打擊群",
       "nameLocal": "阿拉伯海・神聖憤怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・2026年4月23日抵達",
