@@ -265,7 +265,7 @@
         63.0
       ],
       "name": "林肯號航母打擊群（CVN-72）",
-      "nameLocal": "阿拉伯海・神聖憤怒行動",
+      "nameLocal": "阿拉伯海・史詩狂怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・CVW-9航空聯隊",
       "tagClass": "tag-confirmed",
@@ -279,7 +279,7 @@
         60.5
       ],
       "name": "布希號航母打擊群",
-      "nameLocal": "阿拉伯海・神聖憤怒行動",
+      "nameLocal": "阿拉伯海・史詩狂怒行動",
       "type": "confirmed",
       "tag": "⚓ 阿拉伯海・2026年4月23日抵達",
       "tagClass": "tag-confirmed",
@@ -600,9 +600,16 @@
     {
       "symbol": "line",
       "color": "#1565C0",
-      "dash": "8,5",
+      "dash": null,
       "weight": 2,
-      "label": "以色列F-35I打擊路線（2024年10月，推估）"
+      "label": "以色列空襲路線（2025年6月，十二日戰爭）"
+    },
+    {
+      "symbol": "line",
+      "color": "#6A0DAD",
+      "dash": null,
+      "weight": 3,
+      "label": "美以聯合空襲路線（2026年2月，史詩狂怒行動）"
     },
     {
       "symbol": "line",
