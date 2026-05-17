@@ -1,10 +1,15 @@
 {
   "meta": {
     "title": "古巴周邊美軍部署態勢（2026年）",
+    "titleEn": "US Military Posture Around Cuba (2026)",
+    "subtitle": "硫磺島號兩棲戰鬥群・第四艦隊・關塔那摩灣｜來源：華盛頓郵報・紐約時報",
     "date": "2026-05-17",
     "status": "ongoing",
     "theme": "blue",
-    "lang": "zh-TW"
+    "sources": [
+      "華盛頓郵報 2026",
+      "紐約時報 2026"
+    ]
   },
   "map": {
     "center": [22.5, -77.5],
@@ -13,20 +18,15 @@
   },
   "infoPanel": {
     "title": "古巴周邊美軍部署態勢（2026年）",
-    "summary": "美國海軍資產已廣泛在加勒比海地區活動，特別是委內瑞拉行動之後。「硫磺島號」（USS Iwo Jima）兩棲戰鬥群，搭配聖安東尼奧號（USS San Antonio）與勞德代爾堡號（USS Fort Lauderdale），已在2026年初重新部署至古巴北方海域。然而，根據最新報導，這些艦艇並未在古巴緊鄰海域形成持續性的大規模集結。美國第四艦隊持續進行例行的南方海域部署。由於制裁、古巴能源危機以及美國情報活動，區域緊張局勢有所升高，但目前可見的美軍資產主要為空中及無人機偵察行動，以及常駐的關塔那摩灣基地。公開來源尚未顯示有大型航母打擊群或入侵艦隊部署在古巴周邊。",
-    "sources": [
-      { "label": "華盛頓郵報 2026" },
-      { "label": "紐約時報 2026" }
+    "paragraphs": [
+      "美國海軍資產已廣泛在加勒比海地區活動，特別是委內瑞拉行動之後。「硫磺島號」（USS Iwo Jima, LHD-7）兩棲戰鬥群，搭配聖安東尼奧號（USS San Antonio, LPD-17）與勞德代爾堡號（USS Fort Lauderdale, LPD-28），已在2026年初重新部署至古巴北方海域。",
+      "然而，這些艦艇並未在古巴緊鄰海域形成持續性的大規模集結。美國第四艦隊持續進行例行的南方海域部署，第四艦隊司令部設於佛羅里達州傑克遜維爾，隸屬美國南方司令部（SOUTHCOM）。",
+      "由於制裁、古巴能源危機以及美國情報活動，區域緊張局勢有所升高。目前可見的美軍資產主要為空中及無人機偵察行動，以及常駐的關塔那摩灣基地。公開來源尚未顯示有大型航母打擊群或入侵艦隊部署在古巴周邊。"
     ]
   },
   "polygons": [
     {
-      "name": "古巴",
-      "color": "#8B0000",
-      "fillColor": "#8B0000",
-      "fillOpacity": 0.08,
-      "weight": 1.5,
-      "coords": [
+      "points": [
         [22.03, -84.95],
         [22.47, -84.11],
         [22.93, -82.49],
@@ -45,12 +45,24 @@
         [20.97, -80.66],
         [21.83, -82.56],
         [22.03, -84.95]
-      ]
+      ],
+      "fillColor": "#8B0000",
+      "fillOpacity": 0.08,
+      "borderColor": "#EF5350",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.5,
+      "borderDashArray": "5,4",
+      "popup": {
+        "title": "古巴（Republic of Cuba）",
+        "tag": "🇨🇺 加勒比海最大島國・冷戰遺緒持續至今",
+        "tagClass": "tag-reference",
+        "desc": "面積110,860平方公里，人口約1,100萬。2026年能源危機持續，全國多地長時間停電，國內經濟困境加劇政治不穩。美古關係因制裁與情報活動維持高度緊張。",
+        "source": "紐約時報 2026"
+      }
     }
   ],
   "lines": [
     {
-      "name": "硫磺島號戰鬥群部署路線（推估）",
       "points": [
         [10.5, -66.9],
         [14.0, -71.0],
@@ -61,10 +73,15 @@
       "weight": 2,
       "opacity": 0.85,
       "dashArray": "6,4",
-      "popup": "硫磺島號（USS Iwo Jima, LHD-7）兩棲戰鬥群自委內瑞拉行動後北調，2026年初重新部署至古巴北方海域（推估路線）。搭配聖安東尼奧號（LPD-17）及勞德代爾堡號（LPD-28）。"
+      "popup": {
+        "title": "硫磺島號戰鬥群部署路線（推估）",
+        "tag": "🚢 委內瑞拉行動後北調・2026年初",
+        "tagClass": "tag-confirmed",
+        "desc": "硫磺島號（USS Iwo Jima, LHD-7）兩棲戰鬥群自委內瑞拉行動後北調，2026年初重新部署至古巴北方海域（推估路線）。搭配聖安東尼奧號（LPD-17）及勞德代爾堡號（LPD-28），可搭載海軍陸戰隊遠征部隊（MEU）。",
+        "source": "華盛頓郵報 2026"
+      }
     },
     {
-      "name": "第四艦隊例行巡邏走廊（示意）",
       "points": [
         [25.5, -80.1],
         [22.5, -80.8],
@@ -77,107 +94,122 @@
       "weight": 1.5,
       "opacity": 0.5,
       "dashArray": "4,6",
-      "popup": "美國第四艦隊（US 4th Fleet）例行南方海域巡邏走廊示意。第四艦隊負責加勒比海及中南美洲海域的美國海軍行動。"
+      "popup": {
+        "title": "第四艦隊例行巡邏走廊（示意）",
+        "tag": "🌊 US 4th Fleet・南方海域例行部署",
+        "tagClass": "tag-strategic",
+        "desc": "美國第四艦隊（US 4th Fleet）例行南方海域巡邏走廊示意。第四艦隊負責加勒比海及中南美洲海域的美國海軍行動，司令部設於佛羅里達州傑克遜維爾。",
+        "source": "美國海軍"
+      }
     }
   ],
   "locations": [
     {
+      "latlng": [19.9, -75.1],
       "name": "關塔那摩灣海軍基地",
       "nameLocal": "關塔那摩灣基地",
-      "type": "base",
-      "tag": "已確認",
+      "type": "confirmed",
+      "tag": "🔵 美軍永久基地・1903年起租用",
       "tagClass": "tag-confirmed",
-      "desc": "美軍在古巴境內的永久軍事基地（NAVSTA Guantanamo Bay），持續運作中。設有海軍基地及關塔那摩灣拘留中心，租約自1903年沿用至今。",
-      "coords": [19.9, -75.1],
+      "desc": "美軍在古巴境內的永久軍事基地（NAVSTA Guantanamo Bay），持續運作中。設有海軍基地及關塔那摩灣拘留中心，租約自1903年沿用至今，古巴政府多次要求撤離未果。",
+      "coords": "19°54'N 75°06'W",
       "source": "美國國防部"
     },
     {
+      "latlng": [24.8, -79.0],
       "name": "硫磺島號（USS Iwo Jima, LHD-7）",
       "nameLocal": "硫磺島號 LHD-7",
-      "type": "carrier",
-      "tag": "已部署",
+      "type": "confirmed",
+      "tag": "🚢 黃蜂級兩棲突擊艦・ARG旗艦",
       "tagClass": "tag-confirmed",
-      "desc": "黃蜂級兩棲突擊艦，作為兩棲戰鬥群（ARG）旗艦，2026年初重新部署至古巴北方海域。可搭載海軍陸戰隊遠征部隊（MEU）及直升機、F-35B戰機。",
-      "coords": [24.8, -79.0],
+      "desc": "黃蜂級兩棲突擊艦，作為兩棲戰鬥群（ARG）旗艦，2026年初重新部署至古巴北方海域。可搭載海軍陸戰隊遠征部隊（MEU）及直升機、F-35B短場起降戰機，是美軍最具靈活性的兩棲打擊平台之一。",
+      "coords": "24°48'N 79°00'W（推估）",
       "source": "華盛頓郵報 2026"
     },
     {
+      "latlng": [24.4, -78.3],
       "name": "聖安東尼奧號（USS San Antonio, LPD-17）",
       "nameLocal": "聖安東尼奧號 LPD-17",
-      "type": "carrier",
-      "tag": "已部署",
+      "type": "confirmed",
+      "tag": "🚢 兩棲船塢運輸艦・ARG成員",
       "tagClass": "tag-confirmed",
-      "desc": "聖安東尼奧級兩棲船塢運輸艦，隸屬硫磺島號兩棲戰鬥群，可搭載兩棲突擊氣墊艇（LCAC）及陸戰隊。",
-      "coords": [24.4, -78.3],
+      "desc": "聖安東尼奧級兩棲船塢運輸艦，隸屬硫磺島號兩棲戰鬥群，可搭載兩棲突擊氣墊艇（LCAC）、直升機及海軍陸戰隊，具備兩棲突擊及人道救援能力。",
+      "coords": "24°24'N 78°18'W（推估）",
       "source": "華盛頓郵報 2026"
     },
     {
+      "latlng": [25.1, -78.5],
       "name": "勞德代爾堡號（USS Fort Lauderdale, LPD-28）",
       "nameLocal": "勞德代爾堡號 LPD-28",
-      "type": "carrier",
-      "tag": "已部署",
+      "type": "confirmed",
+      "tag": "🚢 聖安東尼奧級・2022年服役",
       "tagClass": "tag-confirmed",
-      "desc": "聖安東尼奧級兩棲船塢運輸艦，隸屬硫磺島號兩棲戰鬥群。",
-      "coords": [25.1, -78.5],
+      "desc": "聖安東尼奧級兩棲船塢運輸艦，2022年服役，隸屬硫磺島號兩棲戰鬥群。為美國海軍最新型兩棲艦艇之一，強化了網路戰及作戰指揮能力。",
+      "coords": "25°06'N 78°30'W（推估）",
       "source": "華盛頓郵報 2026"
     },
     {
+      "latlng": [24.55, -81.75],
       "name": "基韋斯特海軍航空站",
       "nameLocal": "基韋斯特 NAS",
-      "type": "airbase",
-      "tag": "常駐",
-      "tagClass": "tag-confirmed",
-      "desc": "美國海軍航空站（NAS Key West），距古巴約150公里。承擔加勒比海偵察、反潛及反毒任務，並部署P-8A海神式反潛巡邏機及無人機。",
-      "coords": [24.55, -81.75],
+      "type": "possible",
+      "tag": "✈ 距古巴150公里・反潛偵察任務",
+      "tagClass": "tag-strategic",
+      "desc": "美國海軍航空站（NAS Key West），距古巴約150公里。承擔加勒比海偵察、反潛及反毒任務，部署P-8A海神式反潛巡邏機及MQ-4C無人偵察機，是監控古巴周邊海域的主要前進基地。",
+      "coords": "24°33'N 81°45'W",
       "source": "美國海軍"
     },
     {
+      "latlng": [30.33, -81.66],
+      "name": "第四艦隊司令部（美國南方司令部）",
+      "nameLocal": "第四艦隊司令部",
+      "type": "possible",
+      "tag": "🏛 傑克遜維爾・SOUTHCOM轄下",
+      "tagClass": "tag-strategic",
+      "desc": "美國第四艦隊（US 4th Fleet）司令部，隸屬美國南方司令部（SOUTHCOM），設於佛羅里達州傑克遜維爾海軍航空站，負責加勒比海及中南美洲海域行動。",
+      "coords": "30°20'N 81°40'W",
+      "source": "美國海軍"
+    },
+    {
+      "latlng": [23.13, -82.38],
       "name": "哈瓦那",
       "nameLocal": "哈瓦那（古巴首都）",
-      "type": "city",
-      "tag": "參考",
+      "type": "reference",
+      "tag": "🏙 古巴首都・人口約210萬",
       "tagClass": "tag-reference",
       "desc": "古巴首都，人口約210萬。2026年能源危機持續，全國多地停電嚴重，國內經濟困境加劇政治不穩。",
-      "coords": [23.13, -82.38],
+      "coords": "23°08'N 82°23'W",
       "source": "紐約時報 2026"
     },
     {
-      "name": "邁阿密",
-      "nameLocal": "邁阿密（美國）",
-      "type": "city",
-      "tag": "參考",
-      "tagClass": "tag-reference",
-      "desc": "美國佛羅里達州南部大城，距古巴約360公里。為美國南方司令部（SOUTHCOM）總部所在地，也是美國對古巴政策的重要政治中心。",
-      "coords": [25.77, -80.19],
-      "source": ""
-    },
-    {
+      "latlng": [20.02, -75.82],
       "name": "聖地亞哥（古巴）",
       "nameLocal": "聖地亞哥（古巴）",
-      "type": "city",
-      "tag": "參考",
+      "type": "reference",
+      "tag": "🏙 古巴第二大城・革命發源地",
       "tagClass": "tag-reference",
-      "desc": "古巴第二大城市，位於島嶼東部，鄰近關塔那摩灣。歷史上為古巴革命策源地。",
-      "coords": [20.02, -75.82],
+      "desc": "古巴第二大城市，位於島嶼東部，鄰近關塔那摩灣。歷史上為古巴革命策源地，卡斯楚1953年攻打蒙卡達兵營即在此地。",
+      "coords": "20°01'N 75°49'W",
       "source": ""
     },
     {
-      "name": "第四艦隊司令部（美國南方司令部）",
-      "nameLocal": "第四艦隊司令部",
-      "type": "base",
-      "tag": "常駐",
-      "tagClass": "tag-confirmed",
-      "desc": "美國第四艦隊（US 4th Fleet）司令部，隸屬美國南方司令部（SOUTHCOM），設於佛羅里達州傑克遜維爾，負責加勒比海及中南美洲海域行動。",
-      "coords": [30.33, -81.66],
-      "source": "美國海軍"
+      "latlng": [25.77, -80.19],
+      "name": "邁阿密",
+      "nameLocal": "邁阿密（美國）",
+      "type": "reference",
+      "tag": "🏙 SOUTHCOM所在地・距古巴360公里",
+      "tagClass": "tag-reference",
+      "desc": "美國佛羅里達州南部大城，距古巴約360公里。為美國南方司令部（SOUTHCOM）總部所在地，也是美國對古巴政策的重要政治中心，古巴流亡社群聚居於此。",
+      "coords": "25°46'N 80°11'W",
+      "source": ""
     }
   ],
   "legend": [
-    { "type": "line", "color": "#1565C0", "dash": "6,4", "label": "硫磺島號戰鬥群部署路線（推估）" },
-    { "type": "line", "color": "#0288D1", "dash": "4,6", "label": "第四艦隊例行巡邏走廊（示意）" },
-    { "type": "polygon", "color": "#8B0000", "label": "古巴領土" },
-    { "type": "dot", "color": "blue", "label": "美軍艦艇（已部署）" },
-    { "type": "dot", "color": "green", "label": "美軍基地／航空站" },
-    { "type": "dot", "color": "gray", "label": "參考城市" }
+    { "symbol": "line", "color": "#1565C0", "dash": "6,4", "label": "硫磺島號戰鬥群部署路線（推估）" },
+    { "symbol": "line", "color": "#0288D1", "dash": "4,6", "label": "第四艦隊例行巡邏走廊（示意）" },
+    { "symbol": "polygon", "borderColor": "#EF5350", "fillColor": "#8B0000", "fillOpacity": 0.08, "label": "古巴領土" },
+    { "symbol": "dot", "color": "#1565C0", "label": "美軍艦艇（已部署）" },
+    { "symbol": "dot", "color": "#2196F3", "label": "美軍基地／航空站" },
+    { "symbol": "dot", "color": "#27ae60", "label": "參考城市" }
   ]
 }
