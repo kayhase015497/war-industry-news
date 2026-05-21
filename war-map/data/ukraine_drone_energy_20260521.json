@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "title": "烏克蘭無人機攻擊俄羅斯能源設施",
+    "titleEn": "Ukrainian Drone Strikes on Russian Energy Infrastructure — Apr–May 2026",
+    "subtitle": "2026年4月—5月21日｜煉油廠・石油出口終端・燃料庫遭攻擊事件彙整",
+    "date": "2026-05-21",
+    "status": "ongoing",
+    "theme": "red",
+    "sources": ["Reuters", "Kyiv Independent", "The Moscow Times", "Ukrainska Pravda", "Euromaidan Press", "U.S. News"]
+  },
+  "map": {
+    "center": [56, 40],
+    "zoom": 4,
+    "bounds": [[40, 22], [63, 62]]
+  },
+  "infoPanel": {
+    "title": "烏克蘭無人機能源打擊行動",
+    "paragraphs": [
+      "2026年4月至5月，烏克蘭對俄羅斯能源基礎設施發動密集無人機攻擊，波及從波羅的海出口終端至烏拉山脈煉油廠，打擊範圍遠達烏克蘭邊境後方1,400公里處。據估計，烏克蘭打擊已使俄羅斯每日石油產出減少約30–40萬桶，2026年迄今使俄方能源產業損失逾70億美元。",
+      "重點打擊目標包括：圖阿普謝（四次攻擊，24座儲油罐摧毀，黑海海岸50公里遭石油汙染）；基里希（停工，俄羅斯第二大煉油廠）；梁贊（4人死亡）；烏法巴什石油（距前線1,400公里，為此輪打擊最遠紀錄）；波羅的海出口終端普里莫爾斯克、烏斯季盧加（影響俄羅斯25–35%的海運石油出口）。",
+      "⚠️ 無人機攻擊路線為概略示意，實際飛行軌跡依地形與防空佈署而異；各事件日期與損害程度依俄方媒體及OSINT綜合報導，部分損害細節仍有爭議。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [50.5, 30.5], [53.0, 30.8], [55.5, 31.0],
+        [57.0, 31.5], [57.6, 34.0], [57.6, 39.9]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.45,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "北方走廊示意（基輔→雅羅斯拉夫爾）",
+        "tag": "✈ 攻擊路線示意",
+        "tagClass": "tag-possible",
+        "desc": "從基輔/蘇梅方向飛越俄羅斯西部，打擊莫斯科東北的雅羅斯拉夫爾煉油廠，直線距離約1,100公里。此走廊亦覆蓋梁贊及莫斯科卡波特尼亞等目標。",
+        "source": "OSINT 分析"
+      }
+    },
+    {
+      "points": [
+        [51.5, 34.5], [52.5, 40.0], [52.8, 46.0],
+        [53.5, 50.5], [54.73, 55.91]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.45,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "東方深度打擊示意（哈爾科夫→烏法）",
+        "tag": "✈ 極深穿透示意",
+        "tagClass": "tag-possible",
+        "desc": "4月2日攻擊巴什科爾托斯坦共和國烏法市巴什石油煉油廠，是此輪打擊行動中距離最遠的紀錄。從烏克蘭前線至烏法直線距離約1,400公里，飛越伏爾加河流域，前所未有地抵達烏拉山脈腳下。",
+        "source": "Kyiv Independent · Militarnyi"
+      }
+    },
+    {
+      "points": [
+        [46.7, 32.8], [45.5, 34.5], [44.5, 37.0], [44.1, 39.1]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.45,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "南方走廊示意（赫爾松→圖阿普謝）",
+        "tag": "✈ 黑海沿岸走廊示意",
+        "tagClass": "tag-possible",
+        "desc": "沿黑海東岸打擊克拉斯諾達爾邊疆區的圖阿普謝煉油廠及出口港，為此輪打擊中次數最多的目標（4月至5月共四次攻擊）。",
+        "source": "Kyiv Independent · The Moscow Times"
+      }
+    },
+    {
+      "points": [
+        [50.5, 30.5], [53.5, 30.2], [55.5, 29.5],
+        [58.0, 29.0], [59.4, 28.4], [60.0, 28.5]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.40,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "波羅的海走廊示意（基輔→普里莫爾斯克）",
+        "tag": "✈ 波羅的海出口打擊示意",
+        "tagClass": "tag-possible",
+        "desc": "從基輔方向飛越俄羅斯西北部，打擊列寧格勒州波羅的海沿岸的基里希煉油廠、普里莫爾斯克及烏斯季盧加出口終端。此走廊直線距離達1,100–1,300公里，嚴重影響俄羅斯波羅的海石油出口。",
+        "source": "Euromaidan Press · Kyiv Independent"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [44.10, 39.08],
+      "name": "圖阿普謝煉油廠",
+      "nameLocal": "Tuapse · 克拉斯諾達爾邊疆區",
+      "type": "confirmed",
+      "tag": "🔥 4次攻擊 · 停工 · 海岸汙染",
+      "tagClass": "tag-confirmed",
+      "desc": "4月16日、20日、28日、5月1日連續四次遭無人機攻擊，為此輪打擊次數最多的目標。24座儲油罐摧毀、4座受損，設施無限期停工，年處理量1,200萬噸。石油外洩汙染黑海海岸約50公里，苯中毒危機延燒。至少3人死亡。",
+      "coords": "44°06'N 39°05'E",
+      "source": "Kyiv Independent · The Moscow Times · U.S. News"
+    },
+    {
+      "latlng": [59.445, 32.023],
+      "name": "基里希煉油廠",
+      "nameLocal": "Kirishi · 列寧格勒州",
+      "type": "confirmed",
+      "tag": "🔥 停工 · 俄第二大煉油廠",
+      "tagClass": "tag-confirmed",
+      "desc": "5月5日遭烏克蘭無人機打擊，四個原油蒸餾裝置中三個受損，二次加工裝置亦被擊中，設施全面停工。年處理量約1,750萬噸（35萬桶/日），為俄羅斯第二大煉油廠。",
+      "coords": "59°27'N 32°01'E",
+      "source": "Reuters · The Moscow Times · Kyiv Independent"
+    },
+    {
+      "latlng": [60.357, 28.640],
+      "name": "普里莫爾斯克石油出口終端",
+      "nameLocal": "Primorsk · 列寧格勒州波羅的海",
+      "type": "possible",
+      "tag": "🛢 4月5日・5月2–3日",
+      "tagClass": "tag-possible",
+      "desc": "俄羅斯最大波羅的海石油出口港，處理俄羅斯25–35%的海運石油出口。4月5日及5月2–3日兩度遭攻擊，NASA衛星確認儲油罐火災，出口一度暫停。",
+      "coords": "60°21'N 28°38'E",
+      "source": "Euromaidan Press · Kyiv Independent"
+    },
+    {
+      "latlng": [59.693, 28.380],
+      "name": "烏斯季盧加石油終端",
+      "nameLocal": "Ust-Luga · 列寧格勒州波羅的海",
+      "type": "possible",
+      "tag": "🛢 4月7日 · 3座儲罐受損",
+      "tagClass": "tag-possible",
+      "desc": "4月7日遭無人機攻擊，三座石油儲罐受損，石油及燃料船運暫停。烏斯季盧加是俄羅斯最大的多功能港口之一，亦承擔天然氣出口功能。",
+      "coords": "59°41'N 28°23'E",
+      "source": "Kyiv Independent · The Moscow Times"
+    },
+    {
+      "latlng": [57.648, 39.977],
+      "name": "雅羅斯拉夫爾煉油廠",
+      "nameLocal": "Yaroslavl · 雅羅斯拉夫爾州",
+      "type": "confirmed",
+      "tag": "🔥 4月26日・5月19日（兩次）",
+      "tagClass": "tag-confirmed",
+      "desc": "4月26日及5月19日兩度遭攻擊，均引發大規模火災。Slavneft-YANOS煉油廠年處理量約1,500萬噸，為俄羅斯戰略性能源設施，2026年已累計遭烏克蘭攻擊五次。",
+      "coords": "57°39'N 39°59'E",
+      "source": "Kyiv Independent · Al Jazeera"
+    },
+    {
+      "latlng": [55.615, 37.830],
+      "name": "莫斯科煉油廠（卡波特尼亞）",
+      "nameLocal": "Kapotnya · 莫斯科市",
+      "type": "confirmed",
+      "tag": "🔥 5月17日 · 300架無人機波次",
+      "tagClass": "tag-confirmed",
+      "desc": "5月17日作為大規模攻勢（300架以上無人機）的一部分遭到打擊，為戰爭期間針對莫斯科地區規模最大的無人機攻擊。同日附近索爾涅奇諾格爾斯克輸油站亦中彈。",
+      "coords": "55°37'N 37°50'E",
+      "source": "Russia Matters · Al Jazeera"
+    },
+    {
+      "latlng": [54.666, 39.649],
+      "name": "梁贊煉油廠",
+      "nameLocal": "Ryazan · 梁贊州",
+      "type": "confirmed",
+      "tag": "🔥 5月15日 · 4人死亡",
+      "tagClass": "tag-confirmed",
+      "desc": "5月15日遭無人機攻擊，引發大規模火災，造成至少4人死亡、數十人受傷，附近民宅亦中彈起火，為2026年此波打擊中人員傷亡最嚴重的事件。Rosneft旗下設施，2026年累計第三次遭攻擊。",
+      "coords": "54°40'N 39°39'E",
+      "source": "The Moscow Times · Ukrainska Pravda · Kyiv Post"
+    },
+    {
+      "latlng": [56.155, 44.180],
+      "name": "盧克石油下諾夫哥羅德煉油廠",
+      "nameLocal": "Kstovo · 下諾夫哥羅德州",
+      "type": "confirmed",
+      "tag": "🔥 4月5日・5月20日（兩次）",
+      "tagClass": "tag-confirmed",
+      "desc": "4月5日兩處設施起火，5月20日AVT-6蒸餾裝置再次被擊中。LUKOIL旗下，年處理量1,700萬噸，為莫斯科地區燃油主要供應來源之一。距烏克蘭邊境約800公里。",
+      "coords": "56°09'N 44°11'E",
+      "source": "Al Jazeera · The Moscow Times · Kyiv Independent"
+    },
+    {
+      "latlng": [53.155, 48.457],
+      "name": "西茲蘭煉油廠",
+      "nameLocal": "Syzran · 薩馬拉州",
+      "type": "confirmed",
+      "tag": "🔥 5月20–21日 · 大規模火災",
+      "tagClass": "tag-confirmed",
+      "desc": "5月20–21日遭無人機攻擊，引發大規模火災。Rosneft旗下，年處理量約900萬噸，同時向俄羅斯民用及軍用航空供應燃料。距烏克蘭邊境逾800公里。",
+      "coords": "53°09'N 48°27'E",
+      "source": "U.S. News & World Report · Ukrainska Pravda"
+    },
+    {
+      "latlng": [54.733, 55.910],
+      "name": "烏法巴什石油煉油廠",
+      "nameLocal": "Ufa · 巴什科爾托斯坦共和國",
+      "type": "confirmed",
+      "tag": "🔥 4月2日 · 距前線1,400公里",
+      "tagClass": "tag-confirmed",
+      "desc": "4月2日遭攻擊，AVT-5主蒸餾裝置起火，附近民宅受損。Bashneft-Novoil旗下，年處理量約740萬噸。距烏克蘭邊境約1,400公里，為此輪打擊行動中突破縱深最遠的紀錄，抵達烏拉山脈西麓。",
+      "coords": "54°44'N 55°55'E",
+      "source": "Kyiv Independent · Euromaidan Press · Militarnyi"
+    },
+    {
+      "latlng": [50.45, 30.52],
+      "name": "基輔",
+      "nameLocal": "Kyiv · 烏克蘭首都",
+      "type": "capital",
+      "tag": "🇺🇦 烏克蘭首都（參考）",
+      "tagClass": "tag-reference",
+      "desc": "烏克蘭首都，無人機攻擊行動的決策中心。各攻擊任務從烏克蘭境內不同位置發射，此標記僅供地理參考。",
+      "coords": "50°27'N 30°31'E",
+      "source": ""
+    }
+  ],
+  "legend": [
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "已確認遭攻擊・起火/停工（煉油廠）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "已確認遭攻擊（出口終端）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "參考城市" },
+    { "symbol": "line", "color": "#e74c3c", "dash": "6,5",  "weight": 2, "label": "無人機攻擊路線（概略示意）" }
+  ]
+}
