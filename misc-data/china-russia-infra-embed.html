@@ -1,0 +1,311 @@
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+.cri-wrap *,.cri-wrap *::before,.cri-wrap *::after{box-sizing:border-box;margin:0;padding:0}
+.cri-wrap{font-family:'Noto Serif TC',serif;color:#0f172a;background:#f0f4f8;overflow:hidden}
+
+/* masthead */
+.cri-head{
+  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 55%,#7f1d1d 100%);
+  color:#fff;padding:22px 32px 18px;
+  border-bottom:4px solid #f59e0b;position:relative;overflow:hidden
+}
+.cri-head::before{content:'';position:absolute;top:-50px;right:-50px;width:280px;height:280px;
+  border-radius:50%;background:rgba(204,26,26,.10);pointer-events:none}
+.cri-flags{position:absolute;top:18px;right:28px;display:flex;align-items:center;gap:8px}
+.cri-flag{font-size:26px;line-height:1}
+.cri-badge{font-family:'Space Mono',monospace;font-size:9px;
+  background:rgba(245,158,11,.18);border:1px solid rgba(245,158,11,.45);
+  color:#fcd34d;padding:2px 8px;letter-spacing:1px}
+.cri-kicker{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
+  color:#fcd34d;text-transform:uppercase;margin-bottom:8px}
+.cri-hl{font-size:clamp(17px,2.6vw,27px);font-weight:900;line-height:1.18;max-width:640px}
+.cri-sub{font-family:'Space Mono',monospace;font-size:9.5px;
+  color:rgba(255,255,255,.55);margin-top:8px;line-height:1.65;max-width:620px}
+
+/* map */
+#cri-map{width:100%;height:520px}
+
+/* legend */
+.cri-legend{
+  background:#fff;border:1px solid #e2e8f0;padding:12px 14px 14px;
+  border-radius:4px;min-width:205px;max-width:225px;
+  box-shadow:0 3px 14px rgba(0,0,0,.13);
+  max-height:500px;overflow-y:auto;font-size:12px
+}
+.cri-ltitle{
+  font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:2px;
+  text-transform:uppercase;color:#64748b;
+  border-bottom:1px solid #e2e8f0;padding-bottom:6px;margin-bottom:8px
+}
+.cri-lsect{
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;
+  text-transform:uppercase;color:#64748b;margin:9px 0 4px
+}
+.cri-li{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;
+  cursor:pointer;user-select:none}
+.cri-li:hover{opacity:.7}
+.cri-li input[type=checkbox]{width:12px;height:12px;cursor:pointer;
+  flex-shrink:0;margin-top:3px}
+.cri-sw{width:24px;height:4px;border-radius:2px;flex-shrink:0;margin-top:5px}
+.cri-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.18);margin-top:3px}
+.cri-ll{font-size:11px;line-height:1.25;color:#0f172a;font-weight:700}
+.cri-ls{font-family:'Space Mono',monospace;font-size:8.5px;color:#64748b;margin-top:1px}
+
+/* source */
+.cri-src{
+  background:#1e293b;color:rgba(255,255,255,.45);
+  font-family:'Space Mono',monospace;font-size:8.5px;
+  padding:7px 28px;letter-spacing:.3px;line-height:1.7
+}
+.cri-src a{color:rgba(255,255,255,.6);text-decoration:none}
+.cri-src a:hover{color:#fcd34d}
+
+/* popup */
+.cri-wrap .leaflet-popup-content-wrapper{
+  border-radius:4px;font-family:'Noto Serif TC',serif;
+  font-size:12px;max-width:280px;
+  box-shadow:0 4px 16px rgba(0,0,0,.18)
+}
+.cri-wrap .leaflet-popup-content{line-height:1.6}
+</style>
+
+<div class="cri-wrap">
+
+  <div class="cri-head">
+    <div class="cri-flags">
+      <span class="cri-flag">🇷🇺</span>
+      <span class="cri-flag">🇨🇳</span>
+      <div class="cri-badge">2026.05.19–20 · 北京峰會</div>
+    </div>
+    <div class="cri-kicker">戰略地圖 · Strategic Infrastructure</div>
+    <div class="cri-hl">中俄「互聯互通」版圖<br>2026年習普峰會基礎設施全覽</div>
+    <div class="cri-sub">習近平與普丁北京峰會簽署42份合作文件——從西伯利亞天然氣管道、跨境鐵路、北極航道到核電站，<br>全面盤點聯合聲明涉及的基礎設施網絡。點擊各線段或標記查看詳情。</div>
+  </div>
+
+  <div id="cri-map"></div>
+
+  <div class="cri-src">
+    來源：中華人民共和國外交部《中俄聯合聲明》（2026.05.21）· 克里姆林宮 · 新華社 · 彭博社 ／
+    製圖：戰報 ／ 底圖：© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  if(typeof L==='undefined'){console.warn('cri-map: Leaflet not loaded');return}
+
+  const map=L.map('cri-map',{
+    center:[55,92],zoom:3,
+    worldCopyJump:false,
+    maxBounds:[[-75,-30],[83,200]]
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    attribution:'© OpenStreetMap contributors © CARTO',
+    maxZoom:12,subdomains:'abcd'
+  }).addTo(map);
+
+  function badge(t){
+    const cfg={new:['NEW · 2026','#dc2626'],op:['已通車/通氣','#16a34a'],
+      build:['在建','#ea580c'],plan:['路線已定','#f59e0b'],prop:['提案中','#64748b']};
+    const[l,bg]=cfg[t]||['','#64748b'];
+    return`<br><span style="display:inline-block;background:${bg};color:#fff;font-family:'Space Mono',monospace;font-size:9px;padding:1px 6px;border-radius:2px;letter-spacing:1px;margin-top:3px">${l}</span>`;
+  }
+
+  /* ── lines ── */
+  const pos1=L.polyline([[60.3,130.4],[56.5,129.8],[53.8,128.5],[50.3,127.5],[50.24,127.49],[47.35,130.07],[45.8,126.5],[41.8,123.2],[39.9,116.4]],
+    {color:'#cc1a1a',weight:3.5,opacity:.9})
+  .bindPopup(`<b>西伯利亞力量1號 (Power of Siberia)</b>${badge('op')}<br><br>恰揚達/科維克金氣田 → 黑河 → 哈爾濱 → 北京<br>年輸氣量：380億立方米（規劃升至440億）<br>2019年12月通氣`);
+
+  const pos2=L.polyline([[65.5,74.5],[59.5,80],[55,82.9],[52,84.5],[51.4,86.2],[49.8,88.4],[47,96.5],[47.9,106.9],[43.7,111.9],[41,112.5],[39.9,116.4]],
+    {color:'#cc1a1a',weight:3.5,opacity:.85,dashArray:'9 5'})
+  .bindPopup(`<b>西伯利亞力量2號 (Power of Siberia 2)</b>${badge('plan')}<br><br>烏連戈伊（西西伯利亞）→ 阿爾泰山 → 蒙古 → 中國<br>設計年輸氣量：<b>500億立方米</b><br>2026年5月峰會：確認路線<br>⚠️ 定價機制尚未完成`);
+
+  const espo=L.polyline([[55.9,98],[53.5,103.5],[54,123.9],[53.5,122.5],[50.2,124],[46.6,125.1]],
+    {color:'#b45309',weight:3,opacity:.85})
+  .bindPopup(`<b>中俄原油管道（斯科沃羅季諾—大慶）</b>${badge('op')}<br><br>泰舍特 → 斯科沃羅季諾 → 漠河 → 大慶<br>年輸油量：3,000萬噸，2011年通油`);
+
+  const manzhRail=L.polyline([[49.6,117.5],[49.7,117.3]],
+    {color:'#e07030',weight:5,opacity:1})
+  .bindPopup(`<b>滿洲里—後貝加爾跨境鐵路1435mm標準軌二線</b>${badge('new')}<br><br><b>2026年5月19日習普峰會見證簽署</b><br>採用1435mm標準軌，與俄方換軌對接<br>預計2030年前建成`);
+
+  const tongRail=L.polyline([[47.65,132.50],[48,132.88]],
+    {color:'#e07030',weight:3.5,opacity:.85,dashArray:'5 3'})
+  .bindPopup(`<b>同江—下列寧斯科耶鐵路大橋</b>${badge('op')}<br><br>黑龍江首座鐵路大橋，設計年貨運量2,100萬噸<br>2022年4月通車`);
+
+  const heiheRoad=L.polyline([[50.24,127.49],[50.27,127.53]],
+    {color:'#f59e0b',weight:4,opacity:1})
+  .bindPopup(`<b>黑河—布拉戈維申斯克公路大橋</b>${badge('op')}<br><br>黑龍江首座現代化公路大橋，全長1,080公尺<br>2022年6月通車`);
+
+  const arctic=L.polyline([[68.97,33.08],[70.5,48],[72,60],[73.5,73.5],[71.3,72.2],[74.5,85],[76.5,97],[74,120],[71.7,128.9],[70,140],[69,155],[66,169],[64.5,178.5]],
+    {color:'#06b6d4',weight:2.5,opacity:.85,dashArray:'11 5'})
+  .bindPopup(`<b>北極航道（Northern Sea Route）</b><br><br>摩爾曼斯克 → 薩別達 → 北極沿岸 → 符拉迪沃斯托克（繼續至上海/寧波）<br>比蘇伊士運河縮短約<b>40%</b>航程<br>2026年5月：中俄同意聯合開發<br>合資建造5艘ARC7級破冰貨輪（首艘2027年交付）`);
+
+  const cmor=L.polyline([[39.9,116.4],[41.5,112],[43.6,112.3],[47.9,106.9],[51.8,107.6],[52.3,104.3],[56,92.8],[55,82.9],[56.8,60.6],[55.8,37.6]],
+    {color:'#7c3aed',weight:2.2,opacity:.72,dashArray:'12 6'})
+  .bindPopup(`<b>中蒙俄經濟走廊</b><br><br>北京 → 二連浩特 → 烏蘭巴托 → 烏蘭烏德 → 莫斯科<br>聲明：高度評價三方機制合作前景`);
+
+  const ewcor=L.polyline([[31.2,121.5],[34.7,113.7],[34.3,108.9],[36.1,103.8],[43.8,87.6],[43.3,77],[41.3,69.2],[51.2,71.4],[55.2,61.4],[55.8,37.6],[52.4,31],[51.5,23.7],[52.5,13.4]],
+    {color:'#7c3aed',weight:2,opacity:.6,dashArray:'12 6'})
+  .bindPopup(`<b>歐洲—中國西部國際走廊</b><br><br>上海 → 西安 → 烏魯木齊 → 阿拉木圖 → 塔什干 → 莫斯科 → 歐盟<br>聲明：推動中俄哈公路互聯互通`);
+
+  const h2=L.polyline([[53.5,128.5],[50.3,127.5],[50.24,127.49],[47.35,130],[45.8,126.5],[41.8,123.5]],
+    {color:'#0891b2',weight:2.5,opacity:.7,dashArray:'4 8'})
+  .bindPopup(`<b>跨境氫能走廊（規劃中）</b>${badge('prop')}<br><br>中俄首條跨境氫能運輸走廊<br>2026年4月：中俄企業簽署合作備忘錄<br>路線：俄羅斯阿穆爾州 → 中國東北`);
+
+  const cre=L.polyline([[31.2,121.5],[45.8,126.5],[49.6,117.5],[49.7,117.3],[51.8,107.6],[55,82.9],[56.8,60.6],[55.8,37.6],[52.4,31],[51.5,23.7],[52.5,13.4],[48.8,2.3]],
+    {color:'#d97706',weight:1.8,opacity:.55,dashArray:'6 4'})
+  .bindPopup(`<b>中歐班列（主要路線示意）</b><br><br>上海/成都 → 滿洲里 → 西伯利亞 → 莫斯科 → 歐洲<br>聲明：中俄共同保持運價穩定`);
+
+  /* ── markers ── */
+  function mk(bg,t,s){
+    const z=s||28;
+    return L.divIcon({html:`<div style="background:${bg};color:#fff;width:${z}px;height:${z}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:${Math.round(z*.46)}px;box-shadow:0 2px 6px rgba(0,0,0,.32);border:2px solid #fff;font-weight:700;font-family:sans-serif;line-height:1">${t}</div>`,
+      className:'',iconSize:[z,z],iconAnchor:[z/2,z/2]});
+  }
+
+  const nucI =mk('#16a34a','⚛',30);
+  const prtI =mk('#f59e0b','口',28);
+  const arcI =mk('#06b6d4','❄',28);
+  const gasI =mk('#cc1a1a','⛽',28);
+  const rlI  =mk('#e07030','鐵',28);
+
+  const tianwan=L.marker([34.61,119.46],{icon:nucI})
+  .bindPopup(`<b>⚛ 田灣核電站</b> — 江蘇連雲港${badge('build')}<br><br>俄式VVER-1200（AES-2006）三代機組<br>7、8號機組預計2026—2027年投運<br>規劃裝機容量：900萬千瓦`);
+
+  const xudabao=L.marker([40.70,121.10],{icon:nucI})
+  .bindPopup(`<b>⚛ 徐大堡核電站</b> — 遼寧葫蘆島${badge('build')}<br><br>俄式VVER-1200機組，3、4號在建<br>另簽：可控核聚變科技合作備忘錄（中科技部×Rosatom）`);
+
+  const heixiazi=L.marker([48.38,134.75],{icon:prtI})
+  .bindPopup(`<b>黑瞎子島（大烏蘇里島）口岸</b>${badge('build')}<br><br>中俄聯合保護開發<br>中方公路口岸2024年10月開工<br>納入「十五五」規劃<br>2026年峰會：加快推進，力爭早日投用`);
+
+  const manPort=L.marker([49.6,117.5],{icon:rlI})
+  .bindPopup(`<b>滿洲里口岸</b> — 中俄最大陸路口岸${badge('new')}<br><br>2026年峰會：新建1435mm標準軌二線正式簽署<br>現年貨運量：逾3,000萬噸`);
+
+  const tongM=L.marker([47.65,132.50],{icon:rlI})
+  .bindPopup(`<b>同江鐵路橋</b>${badge('op')}<br>年設計過貨：2,100萬噸`);
+
+  const heiheM=L.marker([50.24,127.49],{icon:prtI})
+  .bindPopup(`<b>黑河—布拉戈維申斯克公路橋</b>${badge('op')}<br>全長1,080公尺，2022年通車`);
+
+  const sabetta=L.marker([71.3,72.2],{icon:arcI})
+  .bindPopup(`<b>❄ 薩別達港 Sabetta</b><br>亞馬爾LNG終端，中國持股約20%<br>LNG經北極航道輸往中國`);
+
+  const murm=L.marker([68.97,33.08],{icon:arcI})
+  .bindPopup(`<b>❄ 摩爾曼斯克</b><br>北極航道西端起點，全年不凍港`);
+
+  const pevek=L.marker([69.7,170.3],{icon:arcI})
+  .bindPopup(`<b>❄ 佩韋克港</b><br>北極航道最北端港口，浮動核電站供電`);
+
+  const uren=L.marker([65.9,78.4],{icon:gasI})
+  .bindPopup(`<b>⛽ 烏連戈伊氣田</b><br>西伯利亞力量2號主要氣源地`);
+
+  const chay=L.marker([60.3,130.4],{icon:gasI})
+  .bindPopup(`<b>⛽ 恰揚達氣田</b><br>西伯利亞力量1號主氣源，儲量1.24兆m³`);
+
+  /* ── layer groups ── */
+  const ly={
+    gas:     L.layerGroup([pos1,pos2,uren,chay]),
+    oil:     L.layerGroup([espo]),
+    railway: L.layerGroup([manzhRail,tongRail,manPort,tongM,cre]),
+    road:    L.layerGroup([heiheRoad,heiheM]),
+    nuclear: L.layerGroup([tianwan,xudabao]),
+    arctic:  L.layerGroup([arctic,sabetta,murm,pevek]),
+    corridor:L.layerGroup([cmor,ewcor]),
+    h2:      L.layerGroup([h2]),
+    port:    L.layerGroup([heixiazi])
+  };
+  Object.values(ly).forEach(g=>g.addTo(map));
+
+  /* ── legend ── */
+  const LC=L.Control.extend({
+    options:{position:'topright'},
+    onAdd(){
+      const d=L.DomUtil.create('div','cri-legend');
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.disableScrollPropagation(d);
+      d.innerHTML=`
+        <div class="cri-ltitle">圖例 — 點擊切換</div>
+
+        <div class="cri-lsect">── 天然氣管道</div>
+        <label class="cri-li"><input type=checkbox id=cri-gas checked>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="display:flex;align-items:center;gap:6px"><div class="cri-sw" style="background:#cc1a1a"></div><div><div class="cri-ll">西伯利亞力量1號</div><div class="cri-ls">已通氣 2019</div></div></div>
+            <div style="display:flex;align-items:center;gap:6px"><div class="cri-sw" style="background:repeating-linear-gradient(90deg,#cc1a1a 0,#cc1a1a 9px,transparent 9px,transparent 14px);height:3px"></div><div><div class="cri-ll">西伯利亞力量2號</div><div class="cri-ls">路線確認，定價談判中</div></div></div>
+          </div>
+        </label>
+
+        <div class="cri-lsect">── 原油管道</div>
+        <label class="cri-li"><input type=checkbox id=cri-oil checked>
+          <div class="cri-sw" style="background:#b45309"></div>
+          <div><div class="cri-ll">中俄原油管道</div><div class="cri-ls">斯科沃羅季諾—大慶</div></div>
+        </label>
+
+        <div class="cri-lsect">── 鐵路</div>
+        <label class="cri-li"><input type=checkbox id=cri-rail checked>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="display:flex;align-items:center;gap:6px"><div class="cri-sw" style="background:#e07030;height:5px"></div><div><div class="cri-ll">滿洲里標準軌二線 <span style="background:#dc2626;color:#fff;font-size:8px;padding:0 3px;border-radius:2px">NEW</span></div><div class="cri-ls">2026峰會簽署</div></div></div>
+            <div style="display:flex;align-items:center;gap:6px"><div class="cri-sw" style="background:repeating-linear-gradient(90deg,#d97706 0,#d97706 6px,transparent 6px,transparent 10px);height:3px"></div><div><div class="cri-ll">中歐班列示意路線</div></div></div>
+          </div>
+        </label>
+
+        <div class="cri-lsect">── 公路大橋</div>
+        <label class="cri-li"><input type=checkbox id=cri-road checked>
+          <div class="cri-sw" style="background:#f59e0b;height:5px"></div>
+          <div><div class="cri-ll">黑河—布拉戈維申斯克</div><div class="cri-ls">已通車 2022</div></div>
+        </label>
+
+        <div class="cri-lsect">── 北極航道</div>
+        <label class="cri-li"><input type=checkbox id=cri-arc checked>
+          <div class="cri-sw" style="background:repeating-linear-gradient(90deg,#06b6d4 0,#06b6d4 11px,transparent 11px,transparent 16px);height:3px"></div>
+          <div><div class="cri-ll">北極航道（NSR）</div><div class="cri-ls">極地絲綢之路，聯合開發</div></div>
+        </label>
+
+        <div class="cri-lsect">── 核能</div>
+        <label class="cri-li"><input type=checkbox id=cri-nuc checked>
+          <div class="cri-dot" style="background:#16a34a"></div>
+          <div><div class="cri-ll">核電站</div><div class="cri-ls">田灣・徐大堡（俄式VVER機組）</div></div>
+        </label>
+
+        <div class="cri-lsect">── 多邊走廊</div>
+        <label class="cri-li"><input type=checkbox id=cri-cor checked>
+          <div class="cri-sw" style="background:repeating-linear-gradient(90deg,#7c3aed 0,#7c3aed 12px,transparent 12px,transparent 18px);height:3px"></div>
+          <div><div class="cri-ll">中蒙俄走廊 / 歐中西部走廊</div></div>
+        </label>
+
+        <div class="cri-lsect">── 氫能</div>
+        <label class="cri-li"><input type=checkbox id=cri-h2 checked>
+          <div class="cri-sw" style="background:repeating-linear-gradient(90deg,#0891b2 0,#0891b2 4px,transparent 4px,transparent 11px);height:3px"></div>
+          <div><div class="cri-ll">跨境氫能走廊</div><div class="cri-ls">提案中，備忘錄已簽</div></div>
+        </label>
+
+        <div class="cri-lsect">── 口岸建設</div>
+        <label class="cri-li"><input type=checkbox id=cri-prt checked>
+          <div class="cri-dot" style="background:#f59e0b"></div>
+          <div><div class="cri-ll">黑瞎子島口岸</div><div class="cri-ls">在建，峰會重申加快推進</div></div>
+        </label>
+
+        <div style="border-top:1px solid #e2e8f0;margin-top:9px;padding-top:7px;font-family:'Space Mono',monospace;font-size:8px;color:#64748b;line-height:1.7">
+          實線=已建成 &nbsp;虛線=規劃/在建
+        </div>
+      `;
+      return d;
+    }
+  });
+  new LC().addTo(map);
+
+  [['cri-gas',ly.gas],['cri-oil',ly.oil],['cri-rail',ly.railway],
+   ['cri-road',ly.road],['cri-nuc',ly.nuclear],['cri-arc',ly.arctic],
+   ['cri-cor',ly.corridor],['cri-h2',ly.h2],['cri-prt',ly.port]
+  ].forEach(([id,g])=>{
+    const cb=document.getElementById(id);
+    if(cb)cb.addEventListener('change',()=>cb.checked?map.addLayer(g):map.removeLayer(g));
+  });
+})();
+</script>
