@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "title": "衣索比亞多線衝突與厄利垂亞緊張態勢",
+    "titleEn": "Ethiopia: Multi-Front Conflict & Eritrea Tensions — May 2026",
+    "subtitle": "2026年5月｜提格雷・阿姆哈拉・奧羅米亞衝突帶與紅海出海口角力",
+    "date": "2026-05-23",
+    "status": "ongoing",
+    "theme": "red",
+    "sources": ["Atlantic Council", "Reuters", "Al Jazeera", "BBC", "Addis Standard"]
+  },
+  "map": {
+    "center": [11, 39],
+    "zoom": 6,
+    "bounds": [[3, 30], [20, 48]]
+  },
+  "infoPanel": {
+    "title": "衣索比亞多線衝突態勢",
+    "paragraphs": [
+      "2026年5月，衣索比亞總理阿比（Abiy Ahmed）執政第八年面臨多線衝突壓力。北部提格雷地區緊張態勢再起，聯邦軍隊已重新部署；阿姆哈拉的法諾（Fano）民兵倒戈聯邦，奧羅米亞的奧羅莫解放軍（OLA）持續活躍，兩支武裝疑皆與TPLF及厄利垂亞存在軍事協調關係，符合非洲之角代理人間接戰爭模式。",
+      "對外方面，阿比多次宣示「紅海與衣索比亞不可能永遠分離」，圖謀恢復對厄利垂亞阿薩布港的使用，引發兩國關係急劇惡化。厄利垂亞以代理人策略反制，讓衣索比亞國防軍深陷國內多處衝突無力北向。目前衣索比亞仍依賴吉布地港，每年支付約15億美元使用費。6月大選若因TPLF法律地位未解無法在提格雷舉行，緊張局勢恐突破不可逆轉的臨界點。",
+      "⚠️ 衝突態勢依大西洋理事會（Atlantic Council）報導及開源情報綜合研判，部分衝突細節仍在更新中；地圖為態勢示意，非精確前線標示。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [15.33, 38.93], [14.5, 39.3], [13.50, 39.48]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.5,
+      "dashArray": "5,5",
+      "popup": {
+        "title": "厄利垂亞—TPLF疑似暗中協調",
+        "tag": "⚠ 代理人關係示意",
+        "tagClass": "tag-possible",
+        "desc": "聯邦政府指控厄利垂亞暗中與提格雷人民解放陣線（TPLF）某派系協調行動，法諾民兵及OLA亦疑有類似聯繫。此協調若屬實，將使多線衝突形成包圍態勢，令阿迪斯阿貝巴陷入戰略困境。",
+        "source": "Atlantic Council · Addis Standard"
+      }
+    },
+    {
+      "points": [
+        [15.33, 38.93], [14.0, 40.5], [13.00, 42.73]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.4,
+      "dashArray": "3,7",
+      "popup": {
+        "title": "衣索比亞覬覦阿薩布港（戰略野心）",
+        "tag": "🔴 阿比紅海野心",
+        "tagClass": "tag-confirmed",
+        "desc": "阿比多次宣稱紅海出海口是衣索比亞不可分割的戰略目標，2026年2月閱兵典禮出現士兵衝破港口大門圖像，外界普遍解讀為針對厄利垂亞阿薩布港的戰略野心示意。",
+        "source": "Atlantic Council"
+      }
+    },
+    {
+      "points": [
+        [9.03, 38.74], [10.2, 41.5], [11.59, 43.15]
+      ],
+      "color": "#3498db",
+      "weight": 2,
+      "opacity": 0.5,
+      "dashArray": "4,4",
+      "popup": {
+        "title": "衣索比亞—吉布地現役港口通道",
+        "tag": "🚢 年費15億美元",
+        "tagClass": "tag-reference",
+        "desc": "衣索比亞自1993年厄利垂亞獨立後淪為內陸國，目前每年支付吉布地約15億美元使用港口，為唯一主要出海口。對此長期高昂依賴成本是阿比積極尋求替代出海口的核心動因。",
+        "source": "Atlantic Council"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [9.03, 38.74],
+      "name": "阿迪斯阿貝巴",
+      "nameLocal": "Addis Ababa · 衣索比亞首都",
+      "type": "capital",
+      "tag": "🇪🇹 衣索比亞首都",
+      "tagClass": "tag-reference",
+      "desc": "衣索比亞首都暨政治中心。阿比政府面臨北部提格雷、中部阿姆哈拉、南部奧羅米亞三線武裝衝突，同時在6月大選前力圖維持政治穩定。6月大選若無法在提格雷順利舉行，政治危機恐進一步惡化。",
+      "coords": "9°01'N 38°44'E",
+      "source": ""
+    },
+    {
+      "latlng": [13.50, 39.48],
+      "name": "默克萊（提格雷衝突區）",
+      "nameLocal": "Mekelle · 提格雷州首府",
+      "type": "confirmed",
+      "tag": "🔥 聯邦軍重新部署 · TPLF緊張",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年2月以來聯邦政府重新在提格雷部署部隊，默克萊飛往首都航班時斷時續，銀行業務受阻。TPLF不顧聯邦反對於5月5日恢復戰前立法委員會，並要求歸還遭阿姆哈拉民兵奪占農地，使局勢急速升高。四年前提格雷戰爭估計造成60萬人喪生。",
+      "coords": "13°30'N 39°29'E",
+      "source": "Atlantic Council · Addis Standard"
+    },
+    {
+      "latlng": [11.80, 37.90],
+      "name": "阿姆哈拉衝突區",
+      "nameLocal": "Amhara Region · 法諾民兵活躍",
+      "type": "confirmed",
+      "tag": "🔥 法諾（Fano）民兵倒戈",
+      "tagClass": "tag-confirmed",
+      "desc": "曾與聯邦政府並肩作戰的阿姆哈拉法諾（Fano）民兵，因不滿政府解散整編計畫而倒戈，目前持續武裝對抗聯邦軍隊。法諾據報與TPLF及厄利垂亞存在軍事協調關係。",
+      "coords": "11°48'N 37°54'E",
+      "source": "Atlantic Council"
+    },
+    {
+      "latlng": [7.80, 38.80],
+      "name": "奧羅米亞衝突區",
+      "nameLocal": "Oromia Region · OLA活躍",
+      "type": "confirmed",
+      "tag": "🔥 奧羅莫解放軍（OLA）",
+      "tagClass": "tag-confirmed",
+      "desc": "聯邦部隊在奧羅米亞持續清剿奧羅莫解放軍（OLA/Oromo Liberation Army）。OLA據報亦與TPLF及厄利垂亞在軍事規劃上有所合作，三支武裝形成對聯邦政府的多方牽制格局。",
+      "coords": "7°48'N 38°48'E",
+      "source": "Atlantic Council"
+    },
+    {
+      "latlng": [15.33, 38.93],
+      "name": "阿斯馬拉",
+      "nameLocal": "Asmara · 厄利垂亞首都",
+      "type": "capital",
+      "tag": "🇪🇷 厄利垂亞首都",
+      "tagClass": "tag-reference",
+      "desc": "厄利垂亞首都。厄利垂亞以代理人策略應對衣索比亞的威脅，令衣索比亞國防軍疲於奔命、無力北向，同時收容反厄政府的阿法爾族武裝作為反制籌碼。阿比曾因促成衣厄和解獲頒諾貝爾和平獎，兩國關係如今急轉直下。",
+      "coords": "15°20'N 38°56'E",
+      "source": ""
+    },
+    {
+      "latlng": [13.00, 42.73],
+      "name": "阿薩布港",
+      "nameLocal": "Assab · 厄利垂亞紅海港口",
+      "type": "possible",
+      "tag": "⚠ 衣索比亞覬覦目標",
+      "tagClass": "tag-possible",
+      "desc": "衣索比亞1993年失去的紅海出海口，現屬厄利垂亞主權。阿比多次暗示要重奪阿薩布使用權，2026年2月閱兵典禮出現衝破港口大門象徵圖像。厄利垂亞視此為直接威脅，此為當前兩國緊張最核心爭點。",
+      "coords": "13°00'N 42°44'E",
+      "source": "Atlantic Council"
+    },
+    {
+      "latlng": [11.59, 43.15],
+      "name": "吉布地港",
+      "nameLocal": "Djibouti · 衣索比亞現役出海口",
+      "type": "possible",
+      "tag": "🚢 現役出海口・年費15億美元",
+      "tagClass": "tag-possible",
+      "desc": "衣索比亞目前唯一主要出海口。衣索比亞每年支付吉布地約15億美元港口使用費，對高昂依賴成本的長期不滿，是阿比積極尋求替代出海口（阿薩布）的核心動因之一。",
+      "coords": "11°35'N 43°09'E",
+      "source": "Atlantic Council"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "已確認武裝衝突區（TPLF・法諾・OLA）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "戰略爭點（阿薩布港・吉布地）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "首都（阿迪斯阿貝巴・阿斯馬拉）" },
+    { "symbol": "line", "color": "#e74c3c", "dash": "5,5",  "weight": 2, "label": "厄利垂亞—TPLF/武裝派系疑似協調" },
+    { "symbol": "line", "color": "#3498db", "dash": "4,4",  "weight": 2, "label": "現役港口通道（衣索比亞—吉布地）" }
+  ]
+}
