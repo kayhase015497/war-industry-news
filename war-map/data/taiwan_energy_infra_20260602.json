@@ -62,7 +62,7 @@
     {
       "latlng": [22.815, 120.178],
       "name": "永安LNG接收站",
-      "nameLocal": "Yung-an LNG Terminal · 高雄市永安區",
+      "nameLocal": "永安LNG接收站 · 高雄市永安區",
       "type": "confirmed",
       "tag": "🔴 LNG接收站 · 儲量約10–14天",
       "tagClass": "tag-confirmed",
@@ -73,7 +73,7 @@
     {
       "latlng": [24.222, 120.481],
       "name": "台中LNG接收站",
-      "nameLocal": "Taichung LNG Terminal · 台中港工業區",
+      "nameLocal": "台中LNG接收站 · 台中港工業區",
       "type": "confirmed",
       "tag": "🔴 LNG接收站 · 北部供氣樞紐",
       "tagClass": "tag-confirmed",
@@ -84,7 +84,7 @@
     {
       "latlng": [25.062, 121.117],
       "name": "大潭LNG接收站",
-      "nameLocal": "Tatan LNG Terminal · 桃園市大園區",
+      "nameLocal": "大潭LNG接收站 · 桃園市大園區",
       "type": "confirmed",
       "tag": "🔴 LNG接收站 · 北台灣發電樞紐",
       "tagClass": "tag-confirmed",
@@ -95,7 +95,7 @@
     {
       "latlng": [24.217, 120.493],
       "name": "台中電廠（燃煤）",
-      "nameLocal": "Taichung Power Plant · 台中市龍井區",
+      "nameLocal": "台中電廠 · 台中市龍井區",
       "type": "possible",
       "tag": "⚡ 燃煤 · 裝置容量5,500MW",
       "tagClass": "tag-possible",
@@ -106,7 +106,7 @@
     {
       "latlng": [22.786, 120.176],
       "name": "興達電廠（燃煤+燃氣）",
-      "nameLocal": "Hsinta Power Plant · 高雄市茄萣區",
+      "nameLocal": "興達電廠 · 高雄市茄萣區",
       "type": "possible",
       "tag": "⚡ 燃煤+燃氣 · 南部電網主力",
       "tagClass": "tag-possible",
@@ -117,7 +117,7 @@
     {
       "latlng": [25.087, 121.269],
       "name": "林口電廠（燃煤）",
-      "nameLocal": "Linkou Power Plant · 新北市林口區",
+      "nameLocal": "林口電廠 · 新北市林口區",
       "type": "possible",
       "tag": "⚡ 燃煤 · 北部電網支柱",
       "tagClass": "tag-possible",
@@ -128,7 +128,7 @@
     {
       "latlng": [22.574, 120.352],
       "name": "大林電廠（燃煤）",
-      "nameLocal": "Dalin Power Plant · 高雄市小港區",
+      "nameLocal": "大林電廠 · 高雄市小港區",
       "type": "possible",
       "tag": "⚡ 燃煤 · 高雄港區電廠",
       "tagClass": "tag-possible",
@@ -139,7 +139,7 @@
     {
       "latlng": [24.272, 121.501],
       "name": "和平電廠（燃煤）",
-      "nameLocal": "Hoping Power Plant · 花蓮縣秀林鄉",
+      "nameLocal": "和平電廠 · 花蓮縣秀林鄉",
       "type": "possible",
       "tag": "⚡ 燃煤 · 東部唯一火力電廠",
       "tagClass": "tag-possible",
@@ -150,7 +150,7 @@
     {
       "latlng": [25.127, 121.739],
       "name": "基隆港",
-      "nameLocal": "Keelung Port · 台灣北部第一大港",
+      "nameLocal": "基隆港 · 台灣北部第一大港",
       "type": "capital",
       "tag": "⚓ 北部主力商港・軍事後勤港",
       "tagClass": "tag-reference",
@@ -161,7 +161,7 @@
     {
       "latlng": [25.162, 121.376],
       "name": "台北港",
-      "nameLocal": "Taipei Port (Bali) · 新北市八里區",
+      "nameLocal": "台北港（八里）· 新北市八里區",
       "type": "capital",
       "tag": "⚓ 新興深水港・林口卸煤港",
       "tagClass": "tag-reference",
@@ -172,7 +172,7 @@
     {
       "latlng": [24.269, 120.499],
       "name": "台中港（主要卸煤港）",
-      "nameLocal": "Taichung Port · 台中市梧棲區",
+      "nameLocal": "台中港 · 台中市梧棲區",
       "type": "capital",
       "tag": "⚓ 全台最大卸煤港 · 能源咽喉",
       "tagClass": "tag-reference",
@@ -183,7 +183,7 @@
     {
       "latlng": [22.615, 120.276],
       "name": "高雄港",
-      "nameLocal": "Kaohsiung Port · 台灣最大商港",
+      "nameLocal": "高雄港 · 台灣最大商港",
       "type": "capital",
       "tag": "⚓ 全台最大商港・南部物流樞紐",
       "tagClass": "tag-reference",
@@ -194,7 +194,7 @@
     {
       "latlng": [23.974, 121.621],
       "name": "花蓮港",
-      "nameLocal": "Hualien Port · 台灣東部第一大港",
+      "nameLocal": "花蓮港 · 台灣東部第一大港",
       "type": "capital",
       "tag": "⚓ 東部戰略備援港・中央山脈屏障",
       "tagClass": "tag-reference",
@@ -205,7 +205,7 @@
     {
       "latlng": [24.596, 121.858],
       "name": "蘇澳港",
-      "nameLocal": "Suao Port · 宜蘭縣蘇澳鎮",
+      "nameLocal": "蘇澳港 · 宜蘭縣蘇澳鎮",
       "type": "capital",
       "tag": "⚓ 東部軍商兩用港・備援補給",
       "tagClass": "tag-reference",
@@ -216,7 +216,7 @@
     {
       "latlng": [25.214, 121.648],
       "name": "核二廠（國聖核電廠）",
-      "nameLocal": "Kuosheng NPP · 新北市萬里區",
+      "nameLocal": "核二廠（國聖）· 新北市萬里區",
       "type": "dam",
       "tag": "☢ 核二廠 · 機組陸續停機",
       "tagClass": "tag-possible",
@@ -227,7 +227,7 @@
     {
       "latlng": [22.001, 120.744],
       "name": "核三廠（馬鞍山核電廠）",
-      "nameLocal": "Maanshan NPP · 屏東縣恆春鎮",
+      "nameLocal": "核三廠（馬鞍山）· 屏東縣恆春鎮",
       "type": "dam",
       "tag": "☢ 核三廠 · 運轉中",
       "tagClass": "tag-possible",
@@ -238,7 +238,7 @@
     {
       "latlng": [23.872, 120.928],
       "name": "明潭水力電廠（日月潭）",
-      "nameLocal": "Mingtan Pumped Storage · 南投縣魚池鄉",
+      "nameLocal": "明潭水力電廠 · 南投縣魚池鄉",
       "type": "dam",
       "tag": "💧 抽蓄水力 · 調峰備援電源",
       "tagClass": "tag-possible",
