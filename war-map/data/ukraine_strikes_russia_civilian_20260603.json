@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "title": "烏克蘭砲擊・無人機攻擊俄羅斯平民設施事件彙整",
+    "titleEn": "Ukrainian Strikes on Russian Civilian Areas — 2024–2026",
+    "subtitle": "2024年1月—2026年6月｜依俄新社（RIA Novosti）、塔斯社（TASS）、RT報導彙整",
+    "date": "2026-06-03",
+    "status": "ongoing",
+    "theme": "red",
+    "sources": ["RIA Novosti（俄新社）", "TASS（塔斯社）", "RT", "Baza", "Shot"]
+  },
+  "map": {
+    "center": [51, 38],
+    "zoom": 5,
+    "bounds": [[43.5, 30], [57.5, 48]]
+  },
+  "infoPanel": {
+    "title": "烏克蘭攻擊俄羅斯平民設施事件",
+    "paragraphs": [
+      "2024年至2026年間，俄新社、塔斯社、RT等俄羅斯官方及國家媒體密集報導烏克蘭對俄羅斯境內平民區與民用設施的攻擊事件。受衝擊地區涵蓋毗鄰前線的邊境州（白哥羅德、庫爾斯克、布良斯克）、後方工業城市（沃羅涅日、恩格斯）乃至莫斯科郊區，並包括俄方宣稱已併入的頓巴斯城市（頓涅茨克、盧甘斯克）及克里米亞（塞瓦斯托波爾）。",
+      "最具代表性的事件包括：2024年1月30日白哥羅德市場砲擊（25人遇難、百餘人受傷）；2024年6月23日塞瓦斯托波爾海灘ATACMS攻擊（4至6人遇難、逾150人受傷）；謝別金諾約2萬居民遭迫撤離；2024年8月烏克蘭軍隊越境進入庫爾斯克州蘇扎地區，造成大規模平民疏散。",
+      "⚠️ 本圖資料來源為俄羅斯官方及國家媒體，所有描述均反映俄方報導視角。傷亡數字及事件定性仍存爭議，部分設施（頓巴斯、克里米亞）法律地位在國際上亦有不同認定。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [50.4, 34.8], [50.6, 35.8], [50.6, 36.6]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.35,
+      "dashArray": "5,6",
+      "popup": {
+        "title": "白哥羅德邊境砲擊走廊（示意）",
+        "tag": "💥 邊境砲擊示意",
+        "tagClass": "tag-possible",
+        "desc": "烏克蘭哈爾科夫州與蘇梅州方向對白哥羅德市區、謝別金諾、格拉伊沃羅恩的持續砲擊走廊示意。塔斯社報導，2024年僅白哥羅德州平民傷亡即達數百人。",
+        "source": "TASS · RIA Novosti"
+      }
+    },
+    {
+      "points": [
+        [51.2, 35.3], [51.4, 35.8], [51.7, 36.2]
+      ],
+      "color": "#e74c3c",
+      "weight": 1.5,
+      "opacity": 0.35,
+      "dashArray": "5,6",
+      "popup": {
+        "title": "庫爾斯克州越境攻擊走廊（示意）",
+        "tag": "💥 庫爾斯克越境示意",
+        "tagClass": "tag-possible",
+        "desc": "2024年8月6日烏克蘭軍隊從蘇梅州越境進入庫爾斯克州，蘇扎（Sudzha）及周邊村鎮遭控制，約15萬平民被迫疏散。俄新社稱此為「前所未有的入侵」。",
+        "source": "RIA Novosti · TASS"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [50.60, 36.60],
+      "name": "白哥羅德市",
+      "nameLocal": "Belgorod · 白哥羅德州首府",
+      "type": "confirmed",
+      "tag": "💥 2024年1月30日 · 25人遇難",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年1月30日，烏克蘭MLRS火箭彈密集打擊白哥羅德市中心，市場、公寓樓及停車場中彈，至少25人遇難、逾百人受傷，為俄新社記錄的2024年俄境平民死亡最慘烈單次事件。2024–2026年間城市亦持續遭無人機及砲擊，機場多次關閉。",
+      "coords": "50°36'N 36°36'E",
+      "source": "RIA Novosti · TASS · RT"
+    },
+    {
+      "latlng": [50.41, 36.90],
+      "name": "謝別金諾",
+      "nameLocal": "Shebekino · 白哥羅德州",
+      "type": "confirmed",
+      "tag": "💥 長期砲擊 · 逾2萬人撤離",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年起持續遭到烏克蘭跨境砲擊，住宅樓、學校、醫院多次中彈，約2萬名居民被迫疏散。塔斯社稱謝別金諾為2024年俄境受砲擊最嚴重的邊境城市之一，部分居民至今無法返家。",
+      "coords": "50°25'N 36°54'E",
+      "source": "TASS · RIA Novosti"
+    },
+    {
+      "latlng": [50.47, 35.67],
+      "name": "格拉伊沃羅恩",
+      "nameLocal": "Grayvoron · 白哥羅德州邊境",
+      "type": "possible",
+      "tag": "💥 跨境砲擊 · 多次平民傷亡",
+      "tagClass": "tag-possible",
+      "desc": "緊鄰烏克蘭邊境的小城，2024年多次遭砲擊，民宅、道路受損，居民被迫疏散。俄新社報導稱當地頻繁出現平民傷亡及財產損毀。2023年曾發生武裝分子越境事件（俄方稱與烏克蘭有關）。",
+      "coords": "50°28'N 35°40'E",
+      "source": "RIA Novosti · TASS"
+    },
+    {
+      "latlng": [51.73, 36.19],
+      "name": "庫爾斯克市",
+      "nameLocal": "Kursk · 庫爾斯克州首府",
+      "type": "confirmed",
+      "tag": "💥 2024年8月 · 無人機攻擊・平民疏散",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年8月烏克蘭越境攻勢期間，庫爾斯克市遭無人機及導彈多次攻擊，民宅和電力設施受損。俄新社報導逾15萬庫爾斯克州平民被迫疏散，是俄烏戰爭中俄境最大規模平民疏散行動。",
+      "coords": "51°44'N 36°11'E",
+      "source": "RIA Novosti · TASS · RT"
+    },
+    {
+      "latlng": [51.19, 35.27],
+      "name": "蘇扎（庫爾斯克州）",
+      "nameLocal": "Sudzha · 庫爾斯克州",
+      "type": "confirmed",
+      "tag": "💥 2024年8月 · 烏軍越境占領",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年8月6日，烏克蘭軍隊從蘇梅方向越過俄境並短暫控制蘇扎鎮及周邊村莊，俄新社稱數千名居民被迫倉皇撤離，部分無法及時逃離的老弱居民滯留。此為1941年以來外國軍隊首度佔領俄羅斯本土城鎮，具重大象徵意義。",
+      "coords": "51°11'N 35°16'E",
+      "source": "RIA Novosti · TASS · RT"
+    },
+    {
+      "latlng": [53.25, 34.37],
+      "name": "布良斯克",
+      "nameLocal": "Bryansk · 布良斯克州首府",
+      "type": "confirmed",
+      "tag": "💥 無人機攻擊 · 燃料庫起火",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年多次遭無人機攻擊，塔斯社報導燃料儲存設施起火、住宅區受損，多名平民傷亡。布良斯克州與烏克蘭及白俄羅斯交界，俄方稱為無人機主要滲透方向之一，2024–2025年間共發生逾百起無人機攻擊事件。",
+      "coords": "53°15'N 34°22'E",
+      "source": "TASS · RIA Novosti"
+    },
+    {
+      "latlng": [51.67, 39.19],
+      "name": "沃羅涅日",
+      "nameLocal": "Voronezh · 沃羅涅日州首府",
+      "type": "possible",
+      "tag": "💥 無人機攻擊 · 油庫起火",
+      "tagClass": "tag-possible",
+      "desc": "2024–2025年間多次遭無人機攻擊，石油儲存設施起火，俄新社報導有平民受傷及住宅受損。沃羅涅日是俄方主要後方補給城市，機場多次因防空警報關閉。",
+      "coords": "51°40'N 39°11'E",
+      "source": "RIA Novosti · TASS"
+    },
+    {
+      "latlng": [55.75, 37.80],
+      "name": "莫斯科郊區",
+      "nameLocal": "Moscow Region · 莫斯科州",
+      "type": "confirmed",
+      "tag": "💥 大規模無人機波次 · 機場關閉",
+      "tagClass": "tag-confirmed",
+      "desc": "2024–2026年間莫斯科及周邊郊區多次遭遇大規模無人機攻擊波次，RT報導民宅、工業設施中彈，謝列梅捷沃、多莫傑多沃、伏努科沃等機場屢次臨時關閉。2026年5月17日一波300架以上無人機規模的攻擊創歷史紀錄，波及莫斯科南郊工業區，多人受傷。",
+      "coords": "55°45'N 37°48'E",
+      "source": "RT · RIA Novosti · TASS"
+    },
+    {
+      "latlng": [51.50, 46.12],
+      "name": "恩格斯",
+      "nameLocal": "Engels · 薩拉托夫州",
+      "type": "confirmed",
+      "tag": "💥 無人機攻擊 · 戰略轟炸機基地",
+      "tagClass": "tag-confirmed",
+      "desc": "恩格斯空軍基地是俄羅斯Tu-95MS戰略轟炸機的主要基地，2024–2025年間多次遭無人機攻擊，塔斯社報導基地周邊住宅區受損、平民受傷。距烏克蘭邊境逾1,000公里，為此波攻擊縱深最遠的平民城市目標之一。",
+      "coords": "51°30'N 46°07'E",
+      "source": "TASS · RIA Novosti"
+    },
+    {
+      "latlng": [44.62, 33.53],
+      "name": "塞瓦斯托波爾",
+      "nameLocal": "Sevastopol · 克里米亞",
+      "type": "confirmed",
+      "tag": "💥 2024年6月23日 · 海灘ATACMS攻擊",
+      "tagClass": "tag-confirmed",
+      "desc": "2024年6月23日，烏克蘭使用美制ATACMS導彈攻擊塞瓦斯托波爾烏丘庫耶夫卡海灘，時值夏季旅遊旺季，俄新社稱4至6人遇難、逾150人受傷（含多名兒童），為俄方引用最多的烏克蘭攻擊平民「罪行」之一。2024–2026年間塞瓦斯托波爾海軍基地及市區多次遭無人機及導彈攻擊。",
+      "coords": "44°37'N 33°32'E",
+      "source": "RIA Novosti · TASS · RT"
+    },
+    {
+      "latlng": [48.00, 37.80],
+      "name": "頓涅茨克市",
+      "nameLocal": "Donetsk · 頓涅茨克人民共和國",
+      "type": "confirmed",
+      "tag": "💥 持續砲擊 · 市中心民宅受損",
+      "tagClass": "tag-confirmed",
+      "desc": "自2022年俄方宣稱併入以來，塔斯社、俄新社持續報導烏克蘭對頓涅茨克市中心、市場、醫院的砲擊，稱每年均有數百名平民傷亡。頓涅茨克是頓巴斯最大城市，人口約90萬，砲擊不分晝夜，城市基礎設施持續損毀。",
+      "coords": "48°00'N 37°48'E",
+      "source": "TASS · RIA Novosti · RT"
+    },
+    {
+      "latlng": [48.30, 38.05],
+      "name": "戈爾洛夫卡",
+      "nameLocal": "Gorlovka · 頓涅茨克州",
+      "type": "possible",
+      "tag": "💥 持續砲擊 · 工業城市",
+      "tagClass": "tag-possible",
+      "desc": "頓涅茨克州第二大城市（人口約22萬），俄新社長期報導烏克蘭對該市的砲擊，民宅、學校、醫院頻繁受損，平民傷亡持續。該市包含多座化工廠，俄方稱砲擊引發多次化學品外洩風險。",
+      "coords": "48°18'N 38°03'E",
+      "source": "RIA Novosti · TASS"
+    },
+    {
+      "latlng": [48.57, 39.33],
+      "name": "盧甘斯克市",
+      "nameLocal": "Luhansk · 盧甘斯克人民共和國",
+      "type": "possible",
+      "tag": "💥 砲擊・無人機攻擊",
+      "tagClass": "tag-possible",
+      "desc": "俄方宣稱併入的盧甘斯克人民共和國首府，塔斯社報導烏克蘭對該市的砲擊與無人機攻擊，民宅及基礎設施受損。盧甘斯克距前線較遠，攻擊頻率低於頓涅茨克，但重大事件時有發生。",
+      "coords": "48°34'N 39°20'E",
+      "source": "TASS · RIA Novosti"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "重大平民傷亡事件（依俄方媒體確認）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "持續砲擊・無人機攻擊・平民設施受損" },
+    { "symbol": "line", "color": "#e74c3c", "dash": "5,6",  "weight": 1.5, "label": "攻擊走廊示意（白哥羅德・庫爾斯克方向）" }
+  ]
+}
