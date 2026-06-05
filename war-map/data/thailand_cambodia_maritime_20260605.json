@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "title": "泰國—柬埔寨泰國灣海上邊界爭端",
+    "titleEn": "Thailand–Cambodia Gulf of Thailand Maritime Boundary Dispute",
+    "subtitle": "2026年6月5日｜UNCLOS強制調解啟動・26,000平方公里重疊主張區・潛在油氣資源逾3千億美元",
+    "date": "2026-06-05",
+    "status": "ongoing",
+    "theme": "blue",
+    "sources": ["Reuters", "Bangkok Post", "Khmer Times", "UNCLOS", "RFA"]
+  },
+  "map": {
+    "center": [11.0, 102.3],
+    "zoom": 6,
+    "bounds": [[8.5, 99.0], [14.5, 106.0]]
+  },
+  "infoPanel": {
+    "title": "泰柬海上邊界爭端・UNCLOS調解啟動",
+    "paragraphs": [
+      "泰柬海上邊界爭議源於1970年代兩國各自發布的大陸礁層主張令，在泰國灣形成約2萬6千平方公里的重疊聲索區。2026年6月5日，泰國外交部長希哈薩克（Sihasak Phuangketkeow）宣布泰國將任命兩名調解員，加入柬埔寨本週二依《聯合國海洋法公約》（UNCLOS）啟動的強制調解程序。調解委員會由5人組成（兩國各任命2人、1名主席），須在12個月內提出建議。",
+      "重疊區據信蘊藏豐富油氣資源，潛在經濟價值高達3千億美元（約新台幣9.5兆），為雙方爭端核心所在。2001年兩國曾簽署備忘錄，同意透過談判及可能共同開發方式處理，但進展有限。2025年5月柬方宣布廢止該備忘錄後，轉向UNCLOS國際仲裁機制。",
+      "⚠️ 重疊聲索區範圍及雙方聲索線為概略示意，依公開資料繪製，非精確法律主張邊界。雙方主張最終邊界仍待調解委員會及後續程序確定。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [11.64, 102.89],
+        [10.80, 101.65],
+        [9.60, 101.20],
+        [9.20, 102.10],
+        [9.60, 103.30],
+        [10.80, 103.50],
+        [11.64, 102.89]
+      ],
+      "fillColor": "#f59e0b",
+      "fillOpacity": 0.22,
+      "borderColor": "#b45309",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.7,
+      "borderDashArray": "4,4",
+      "popup": {
+        "title": "泰柬重疊大陸礁層主張區",
+        "tag": "⚠ 約26,000平方公里",
+        "tagClass": "tag-possible",
+        "desc": "泰柬兩國依各自大陸礁層主張形成的重疊爭議區域，面積約2萬6千平方公里。據信蘊藏大量油氣資源，潛在經濟價值逾3千億美元，為雙方爭端的核心關鍵。雙方自1970年代起長期未能就劃界達成共識，2026年6月啟動UNCLOS強制調解程序。",
+        "source": "Reuters · Bangkok Post · UNCLOS"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [11.64, 102.89],
+        [10.80, 101.65],
+        [9.60, 101.20],
+        [8.80, 100.85]
+      ],
+      "color": "#1d4ed8",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "泰國大陸礁層聲索線（1973年皇家法令）",
+        "tag": "🇹🇭 泰國聲索線",
+        "tagClass": "tag-reference",
+        "desc": "泰國依1973年皇家法令宣告的大陸礁層外部界限，從泰柬陸地邊界海岸終點起算，向西南方延伸。泰方主張依等距中線原則劃界，目前主張線構成重疊爭議區的西北邊界。",
+        "source": "Bangkok Post · UNCLOS"
+      }
+    },
+    {
+      "points": [
+        [11.64, 102.89],
+        [10.80, 103.50],
+        [9.60, 103.30],
+        [8.80, 103.00]
+      ],
+      "color": "#b91c1c",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "柬埔寨大陸礁層聲索線（1972年皇家法令）",
+        "tag": "🇰🇭 柬埔寨聲索線",
+        "tagClass": "tag-confirmed",
+        "desc": "柬埔寨依1972年皇家法令宣告的海洋主張線，從泰柬陸地邊界海岸終點起算，向南偏西方向延伸。柬方主張線與泰方主張形成交叉，構成重疊爭議區的東南邊界。2026年5月柬方依UNCLOS第15部分第二節啟動強制調解。",
+        "source": "Khmer Times · UNCLOS"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [11.64, 102.89],
+      "name": "泰柬陸地邊界海洋起點",
+      "nameLocal": "哈烈／占葉 · 泰柬邊境海岸",
+      "type": "confirmed",
+      "tag": "📍 陸地邊界終點・聲索線起算點",
+      "tagClass": "tag-confirmed",
+      "desc": "泰國哈烈（Hat Lek）與柬埔寨占葉（Cham Yeam）之間的陸海邊境起算點。兩國大陸礁層聲索線均由此點向海中延伸，因角度差異形成龐大重疊主張區。此點是調解委員會確定最終海上邊界時的關鍵基準點。",
+      "coords": "11°38'N 102°53'E",
+      "source": "UNCLOS · Reuters"
+    },
+    {
+      "latlng": [10.2, 102.2],
+      "name": "重疊區核心油氣資源帶",
+      "nameLocal": "泰國灣 · 爭議油氣資源估逾3千億美元",
+      "type": "possible",
+      "tag": "🛢 潛在油氣資源 · 3千億美元",
+      "tagClass": "tag-possible",
+      "desc": "重疊大陸礁層主張區核心地帶，據信蘊藏豐富天然氣及石油資源，潛在經濟價值逾3千億美元（約新台幣9.5兆）。資源開發前景是兩國長期無法達成劃界共識、且拒絕共同開發方案的核心動因。調解結果將直接決定哪一方（或兩方如何分配）取得勘探開發權。",
+      "coords": "10°12'N 102°12'E",
+      "source": "Reuters · Bangkok Post"
+    },
+    {
+      "latlng": [11.67, 102.55],
+      "name": "庫德島（泰國）",
+      "nameLocal": "Koh Kut · 達叻府",
+      "type": "possible",
+      "tag": "🏝 泰國島嶼・爭議區附近",
+      "tagClass": "tag-possible",
+      "desc": "泰國達叻府最大島嶼，位於重疊主張區邊緣。泰方在劃定大陸礁層主張時以周邊島嶼為基點，庫德島的地位在最終劃界計算中具一定重要性。目前為熱帶旅遊勝地，距泰柬陸地邊界約50公里。",
+      "coords": "11°40'N 102°33'E",
+      "source": "Bangkok Post"
+    },
+    {
+      "latlng": [12.24, 102.52],
+      "name": "達叻府",
+      "nameLocal": "Trat · 泰國東部海岸省",
+      "type": "possible",
+      "tag": "🇹🇭 泰國東部沿海省份",
+      "tagClass": "tag-reference",
+      "desc": "泰國最東南端省份，與柬埔寨接壤，是距重疊爭議區最近的泰方行政中心。達叻省的漁民長期在爭議海域作業，漁業糾紛是雙方邊界問題的具體體現之一。",
+      "coords": "12°14'N 102°31'E",
+      "source": "Bangkok Post"
+    },
+    {
+      "latlng": [10.63, 103.52],
+      "name": "西哈努克維爾",
+      "nameLocal": "Sihanoukville · 柬埔寨最大海港",
+      "type": "possible",
+      "tag": "🇰🇭 柬埔寨最大深水港",
+      "tagClass": "tag-reference",
+      "desc": "柬埔寨唯一深水港及最重要的海洋門戶，距重疊爭議區東側約100公里。柬方視爭議區的未來開發收益對西哈努克維爾及周邊地區的經濟發展至關重要，是柬方積極推動UNCLOS調解的重要動因之一。",
+      "coords": "10°38'N 103°31'E",
+      "source": "Khmer Times"
+    },
+    {
+      "latlng": [13.75, 100.52],
+      "name": "曼谷",
+      "nameLocal": "Bangkok · 泰國首都",
+      "type": "capital",
+      "tag": "🇹🇭 泰國首都",
+      "tagClass": "tag-reference",
+      "desc": "泰國首都。2026年6月5日，泰國外交部長希哈薩克（Sihasak Phuangketkeow）在曼谷宣布泰國將任命兩名調解員，加入柬埔寨依UNCLOS啟動的強制調解程序，調解委員會須在12個月內提出不具法律約束力的建議。",
+      "coords": "13°45'N 100°31'E",
+      "source": "Reuters"
+    },
+    {
+      "latlng": [11.56, 104.93],
+      "name": "金邊",
+      "nameLocal": "Phnom Penh · 柬埔寨首都",
+      "type": "capital",
+      "tag": "🇰🇭 柬埔寨首都",
+      "tagClass": "tag-reference",
+      "desc": "柬埔寨首都。柬方已於2026年6月3日依UNCLOS第15部分第二節正式啟動強制調解程序，任命外交部長索洪（Prak Sokhonn）為代理人，以及丹麥外交官塔格索-詹森（Peter Taksøe-Jensen）和法國學者圖弗南（Jean-Marc Thouvenin）為調解員。",
+      "coords": "11°34'N 104°56'E",
+      "source": "Khmer Times · Reuters"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#f59e0b", "fillOpacity": 0.4, "label": "重疊大陸礁層主張區（約26,000平方公里）" },
+    { "symbol": "line", "color": "#1d4ed8", "dash": "7,4", "weight": 2.5, "label": "泰國聲索線（1973年皇家法令）" },
+    { "symbol": "line", "color": "#b91c1c", "dash": "7,4", "weight": 2.5, "label": "柬埔寨聲索線（1972年皇家法令）" },
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "關鍵邊界節點・油氣資源區" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "沿岸城市（達叻・西哈努克維爾）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "首都（曼谷・金邊）" }
+  ]
+}
