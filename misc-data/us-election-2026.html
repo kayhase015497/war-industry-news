@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 美國期中選舉｜即時開票結果</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<style>
+/* ── Reset & Root ── */
+*,.ue-wrap *,.ue-wrap *::before,.ue-wrap *::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-bg:#0b0f1a;--c-card:#131929;--c-border:#1e2a3d;
+  --c-rep:#ef4444;--c-rep-dim:#7f1d1d;--c-rep-glow:rgba(239,68,68,.18);
+  --c-dem:#3b82f6;--c-dem-dim:#1e3a8a;--c-dem-glow:rgba(59,130,246,.18);
+  --c-ind:#a855f7;--c-unc:#374151;
+  --c-text:#e2e8f0;--c-muted:#64748b;--c-accent:#f0b400;
+  --ff-body:'Noto Sans TC',sans-serif;--ff-mono:'Space Mono',monospace;
+  --r:6px;
+}
+
+/* ── Wrapper ── */
+.ue-wrap{
+  font-family:var(--ff-body);
+  background:var(--c-bg);color:var(--c-text);
+  min-height:100vh;padding:0;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Header ── */
+.ue-head{
+  background:linear-gradient(135deg,#080d18 0%,#0f1d3a 60%,#1a0a0a 100%);
+  padding:20px 20px 16px;
+  border-bottom:3px solid var(--c-accent);
+  position:relative;overflow:hidden;
+}
+.ue-head::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(239,68,68,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ue-head::after{
+  content:'';position:absolute;bottom:-40px;left:20%;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,130,246,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ue-kicker{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:3px;
+  color:var(--c-accent);text-transform:uppercase;margin-bottom:8px;
+}
+.ue-title{
+  font-size:clamp(18px,3vw,28px);font-weight:900;line-height:1.2;
+  color:#fff;margin-bottom:6px;
+}
+.ue-head-meta{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:8px;
+}
+.ue-live-dot{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--ff-mono);font-size:10px;color:#4ade80;
+}
+.ue-live-dot::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:#4ade80;box-shadow:0 0 8px #4ade80;
+  animation:ue-pulse 2s infinite;
+}
+@keyframes ue-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ue-updated{
+  font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);
+}
+.ue-reporting-tag{
+  font-family:var(--ff-mono);font-size:10px;
+  background:rgba(240,180,0,.12);border:1px solid rgba(240,180,0,.3);
+  color:var(--c-accent);padding:2px 8px;
+}
+
+/* ── Scoreboards ── */
+.ue-boards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:12px;padding:16px 16px 0;
+}
+.ue-board{
+  background:var(--c-card);border:1px solid var(--c-border);
+  border-radius:var(--r);overflow:hidden;
+}
+.ue-board-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px 8px;border-bottom:1px solid var(--c-border);
+}
+.ue-board-title{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--c-muted);
+}
+.ue-board-ctrl{
+  font-family:var(--ff-mono);font-size:10px;
+  padding:2px 8px;border-radius:3px;font-weight:700;
+}
+.ctrl-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
+.ctrl-D{background:var(--c-dem-glow);color:var(--c-dem);border:1px solid rgba(59,130,246,.3);}
+.ctrl-?{background:rgba(100,116,139,.1);color:var(--c-muted);border:1px solid rgba(100,116,139,.2);}
+
+.ue-counts{
+  display:flex;align-items:stretch;justify-content:space-between;
+  padding:12px 14px 8px;gap:8px;
+}
+.ue-count{text-align:center;flex:1;}
+.ue-count-n{
+  font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.ue-count-n.dem{color:var(--c-dem);}
+.ue-count-n.rep{color:var(--c-rep);}
+.ue-count-n.unc{color:var(--c-muted);font-size:clamp(20px,3vw,30px);}
+.ue-count-lbl{
+  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  margin-top:4px;letter-spacing:1px;
+}
+.ue-count-net{
+  font-family:var(--ff-mono);font-size:9px;margin-top:2px;
+}
+.net-pos{color:#4ade80;} .net-neg{color:#f87171;} .net-zero{color:var(--c-muted);}
+.ue-count-sep{width:1px;background:var(--c-border);align-self:stretch;margin:0 4px;}
+
+.ue-bar-wrap{padding:8px 14px 14px;}
+.ue-bar-labels{
+  display:flex;justify-content:space-between;
+  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  margin-bottom:4px;
+}
+.ue-bar{
+  height:14px;display:flex;border-radius:3px;overflow:hidden;
+  background:var(--c-unc);position:relative;
+}
+.ue-bar-d{background:var(--c-dem);transition:width .6s ease;}
+.ue-bar-r{background:var(--c-rep);transition:width .6s ease;}
+.ue-bar-i{background:var(--c-ind);transition:width .6s ease;}
+.ue-threshold{
+  position:absolute;top:-3px;bottom:-3px;width:2px;
+  background:var(--c-accent);z-index:2;
+}
+.ue-threshold-lbl{
+  position:absolute;top:-18px;
+  font-family:var(--ff-mono);font-size:8px;color:var(--c-accent);
+  white-space:nowrap;transform:translateX(-50%);
+}
+
+/* ── Main Layout ── */
+.ue-main{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;padding:12px 16px 16px;
+}
+@media(min-width:900px){
+  .ue-main{grid-template-columns:1fr 380px;}
+}
+@media(min-width:1200px){
+  .ue-main{grid-template-columns:1fr 420px;}
+}
+
+/* ── Map Panel ── */
+.ue-map-panel{
+  background:var(--c-card);border:1px solid var(--c-border);
+  border-radius:var(--r);overflow:hidden;
+}
+.ue-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid var(--c-border);
+  flex-wrap:wrap;gap:8px;
+}
+.ue-panel-title{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--c-muted);
+}
+.ue-map-legend{
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+.ue-leg-item{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+}
+.ue-leg-swatch{width:10px;height:10px;border-radius:2px;}
+#ue-map-svg{width:100%;height:auto;display:block;cursor:pointer;}
+.ue-map-note{
+  padding:8px 14px;font-family:var(--ff-mono);font-size:9px;
+  color:var(--c-muted);border-top:1px solid var(--c-border);
+  text-align:center;
+}
+
+/* ── State Hover/Click Styles ── */
+.ue-state{stroke:#0b0f1a;stroke-width:.5;transition:opacity .15s;}
+.ue-state:hover{opacity:.75;stroke:var(--c-accent);stroke-width:1.5;}
+.ue-state.winner-R{fill:var(--c-rep);}
+.ue-state.winner-D{fill:var(--c-dem);}
+.ue-state.winner-I{fill:var(--c-ind);}
+.ue-state.winner-null{fill:var(--c-unc);}
+.ue-state.lean-R{fill:#9f1515;opacity:.7;}
+.ue-state.lean-D{fill:#1a4a9f;opacity:.7;}
+
+/* ── Tooltip ── */
+.ue-tooltip{
+  position:fixed;background:#1e293b;border:1px solid var(--c-border);
+  border-radius:var(--r);padding:10px 14px;
+  font-family:var(--ff-body);font-size:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  pointer-events:none;z-index:1000;
+  opacity:0;transition:opacity .15s;max-width:220px;
+  transform:translate(-50%,-110%);
+}
+.ue-tooltip.visible{opacity:1;}
+.ue-tt-state{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:1px;
+  color:var(--c-accent);margin-bottom:6px;text-transform:uppercase;
+}
+.ue-tt-winner{font-weight:700;font-size:13px;margin-bottom:4px;}
+.ue-tt-winner.R{color:var(--c-rep);}
+.ue-tt-winner.D{color:var(--c-dem);}
+.ue-tt-winner.unc{color:var(--c-muted);}
+.ue-tt-pct{font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);}
+
+/* ── Race Panel ── */
+.ue-race-panel{
+  background:var(--c-card);border:1px solid var(--c-border);
+  border-radius:var(--r);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.ue-tabs{
+  display:flex;border-bottom:1px solid var(--c-border);
+}
+.ue-tab{
+  flex:1;padding:10px 8px;text-align:center;cursor:pointer;
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--c-muted);
+  border-bottom:2px solid transparent;transition:all .2s;
+  user-select:none;
+}
+.ue-tab:hover{color:var(--c-text);}
+.ue-tab.active{color:var(--c-accent);border-bottom-color:var(--c-accent);}
+
+.ue-filter-row{
+  display:flex;gap:6px;padding:10px 12px;
+  border-bottom:1px solid var(--c-border);flex-wrap:wrap;
+}
+.ue-filter-btn{
+  font-family:var(--ff-mono);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;padding:3px 8px;border-radius:3px;
+  border:1px solid var(--c-border);background:transparent;
+  color:var(--c-muted);cursor:pointer;transition:all .15s;
+}
+.ue-filter-btn:hover,.ue-filter-btn.active{
+  border-color:var(--c-accent);color:var(--c-accent);
+  background:rgba(240,180,0,.08);
+}
+
+.ue-race-list{
+  overflow-y:auto;flex:1;
+  scrollbar-width:thin;scrollbar-color:var(--c-border) transparent;
+}
+.ue-race-list::-webkit-scrollbar{width:4px;}
+.ue-race-list::-webkit-scrollbar-track{background:transparent;}
+.ue-race-list::-webkit-scrollbar-thumb{background:var(--c-border);}
+
+.ue-race-item{
+  padding:11px 14px;border-bottom:1px solid var(--c-border);
+  cursor:pointer;transition:background .15s;
+}
+.ue-race-item:hover{background:rgba(255,255,255,.03);}
+.ue-race-item:last-child{border-bottom:none;}
+
+.ue-race-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;
+}
+.ue-race-label{
+  display:flex;align-items:center;gap:8px;
+}
+.ue-state-badge{
+  font-family:var(--ff-mono);font-size:11px;font-weight:700;
+  color:#fff;background:rgba(255,255,255,.08);
+  padding:2px 6px;border-radius:3px;letter-spacing:.5px;
+}
+.ue-race-office{
+  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  letter-spacing:1px;text-transform:uppercase;
+}
+.ue-race-status{
+  display:flex;align-items:center;gap:6px;
+}
+.ue-called-badge{
+  font-family:var(--ff-mono);font-size:9px;padding:2px 6px;
+  border-radius:3px;letter-spacing:.5px;
+}
+.called-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
+.called-D{background:var(--c-dem-glow);color:var(--c-dem);border:1px solid rgba(59,130,246,.3);}
+.called-null{background:rgba(100,116,139,.1);color:var(--c-muted);border:1px solid rgba(100,116,139,.2);}
+.ue-pct-reporting{
+  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+}
+
+.ue-candidates{display:flex;flex-direction:column;gap:5px;}
+.ue-candidate{display:flex;align-items:center;gap:8px;}
+.ue-cand-party{
+  width:12px;height:12px;border-radius:2px;flex-shrink:0;
+}
+.party-D{background:var(--c-dem);}
+.party-R{background:var(--c-rep);}
+.ue-cand-name{
+  font-size:12px;flex:1;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.ue-cand-name.winner{font-weight:700;}
+.ue-winner-mark{
+  font-size:10px;color:var(--c-accent);margin-left:2px;
+}
+.ue-cand-pct{
+  font-family:var(--ff-mono);font-size:11px;font-weight:700;
+  min-width:38px;text-align:right;
+}
+.pct-D{color:var(--c-dem);}
+.pct-R{color:var(--c-rep);}
+.ue-cand-bar-wrap{
+  width:100%;margin-top:2px;
+}
+.ue-cand-bar{
+  height:3px;border-radius:2px;background:var(--c-border);
+  overflow:hidden;
+}
+.ue-cand-bar-fill{height:100%;transition:width .5s ease;}
+.fill-D{background:var(--c-dem);}
+.fill-R{background:var(--c-rep);}
+
+/* ── State Detail Modal ── */
+.ue-modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  z-index:900;display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.ue-modal-bg.open{display:flex;}
+.ue-modal{
+  background:#141e30;border:1px solid var(--c-border);
+  border-radius:var(--r);max-width:480px;width:100%;
+  max-height:85vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
+}
+.ue-modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--c-border);
+  position:sticky;top:0;background:#141e30;z-index:1;
+}
+.ue-modal-close{
+  background:none;border:none;color:var(--c-muted);
+  font-size:20px;cursor:pointer;padding:4px;line-height:1;
+}
+.ue-modal-close:hover{color:var(--c-text);}
+.ue-modal-body{padding:16px;}
+
+/* ── Footer ── */
+.ue-foot{
+  padding:12px 16px;border-top:1px solid var(--c-border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.ue-foot-note{font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);}
+.ue-refresh-btn{
+  font-family:var(--ff-mono);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;padding:4px 10px;
+  border:1px solid var(--c-border);border-radius:3px;
+  background:transparent;color:var(--c-muted);cursor:pointer;
+  transition:all .2s;
+}
+.ue-refresh-btn:hover{border-color:var(--c-accent);color:var(--c-accent);}
+.ue-refresh-btn.loading{animation:ue-spin 1s linear infinite;}
+@keyframes ue-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ── Embed notice (hidden in iframe) ── */
+.ue-embed-bar{
+  background:#0d1520;border-bottom:1px solid var(--c-border);
+  padding:8px 16px;display:flex;align-items:center;gap:10px;
+}
+.ue-embed-url{
+  font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);
+  flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.ue-embed-copy{
+  font-family:var(--ff-mono);font-size:9px;padding:3px 8px;
+  border:1px solid var(--c-border);background:transparent;
+  color:var(--c-muted);cursor:pointer;border-radius:3px;
+  white-space:nowrap;transition:all .2s;
+}
+.ue-embed-copy:hover{border-color:var(--c-accent);color:var(--c-accent);}
+
+@media(max-width:480px){
+  .ue-head{padding:14px 14px 12px;}
+  .ue-boards{padding:10px 10px 0;gap:8px;}
+  .ue-main{padding:8px 10px 12px;gap:8px;}
+  .ue-embed-bar{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="ue-wrap" id="ue-root">
+
+  <!-- Embed code bar (shown outside iframe) -->
+  <div class="ue-embed-bar" id="ue-embed-bar">
+    <span style="font-family:var(--ff-mono);font-size:9px;color:#f0b400;letter-spacing:1px;">EMBED</span>
+    <span class="ue-embed-url" id="ue-embed-url"></span>
+    <button class="ue-embed-copy" onclick="copyEmbed()">複製嵌入碼</button>
+  </div>
+
+  <!-- Header -->
+  <div class="ue-head">
+    <div class="ue-kicker">🇺🇸 Breaking · 2026 Midterms</div>
+    <div class="ue-title">2026 美國期中選舉<br>即時開票結果</div>
+    <div class="ue-head-meta">
+      <span class="ue-live-dot">直播開票中</span>
+      <span class="ue-updated" id="ue-updated">更新中…</span>
+      <span class="ue-reporting-tag" id="ue-reporting">載入中</span>
+    </div>
+  </div>
+
+  <!-- Scoreboards -->
+  <div class="ue-boards" id="ue-boards">
+    <!-- Rendered by JS -->
+  </div>
+
+  <!-- Main: Map + Race List -->
+  <div class="ue-main">
+
+    <!-- Map Panel -->
+    <div class="ue-map-panel">
+      <div class="ue-panel-head">
+        <span class="ue-panel-title">各州選情地圖</span>
+        <div class="ue-map-legend">
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#3b82f6"></div>民主黨勝</div>
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#ef4444"></div>共和黨勝</div>
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#374151"></div>未決定</div>
+        </div>
+      </div>
+      <svg id="ue-map-svg" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="ue-map-note">點擊各州查看詳細選情 · 深色為選情膠著</div>
+    </div>
+
+    <!-- Race Panel -->
+    <div class="ue-race-panel">
+      <div class="ue-tabs">
+        <div class="ue-tab active" data-tab="senate" onclick="switchTab('senate')">參議院</div>
+        <div class="ue-tab" data-tab="house" onclick="switchTab('house')">眾議院</div>
+        <div class="ue-tab" data-tab="governor" onclick="switchTab('governor')">州長</div>
+      </div>
+      <div class="ue-filter-row">
+        <button class="ue-filter-btn active" data-filter="all" onclick="setFilter('all',this)">全部</button>
+        <button class="ue-filter-btn" data-filter="competitive" onclick="setFilter('competitive',this)">競爭選區</button>
+        <button class="ue-filter-btn" data-filter="called" onclick="setFilter('called',this)">已確定</button>
+        <button class="ue-filter-btn" data-filter="uncalled" onclick="setFilter('uncalled',this)">未確定</button>
+      </div>
+      <div class="ue-race-list" id="ue-race-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="ue-foot">
+    <span class="ue-foot-note" id="ue-foot-note">來源：美聯社、各州選務委員會 · 數據每60秒自動更新</span>
+    <button class="ue-refresh-btn" id="ue-refresh-btn" onclick="manualRefresh()">↻ 立即更新</button>
+  </div>
+
+</div>
+
+<!-- Tooltip -->
+<div class="ue-tooltip" id="ue-tooltip"></div>
+
+<!-- State Detail Modal -->
+<div class="ue-modal-bg" id="ue-modal-bg" onclick="closeModal(event)">
+  <div class="ue-modal">
+    <div class="ue-modal-head">
+      <span id="ue-modal-title" style="font-weight:700;font-size:15px;"></span>
+      <button class="ue-modal-close" onclick="closeModalDirect()">×</button>
+    </div>
+    <div class="ue-modal-body" id="ue-modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════════ */
+const DATA_URL = './us-election-2026-data.json';
+const REFRESH_INTERVAL = 60000; // 60s
+
+/* ══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let electionData = null;
+let currentTab = 'senate';
+let currentFilter = 'all';
+let refreshTimer = null;
+let topoLoaded = false;
+let usGeo = null;
+
+/* ══════════════════════════════════════════════
+   FIPS → State Abbr map
+═══════════════════════════════════════════════ */
+const FIPS = {
+  '01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT',
+  '10':'DE','11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL',
+  '18':'IN','19':'IA','20':'KS','21':'KY','22':'LA','23':'ME','24':'MD',
+  '25':'MA','26':'MI','27':'MN','28':'MS','29':'MO','30':'MT','31':'NE',
+  '32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND',
+  '39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD',
+  '47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA','54':'WV',
+  '55':'WI','56':'WY'
+};
+
+const STATE_NAMES = {
+  AL:'阿拉巴馬州',AK:'阿拉斯加州',AZ:'亞利桑那州',AR:'阿肯色州',
+  CA:'加利福尼亞州',CO:'科羅拉多州',CT:'康乃狄克州',DE:'德拉瓦州',
+  FL:'佛羅里達州',GA:'喬治亞州',HI:'夏威夷州',ID:'愛達荷州',
+  IL:'伊利諾州',IN:'印第安納州',IA:'愛荷華州',KS:'堪薩斯州',
+  KY:'肯塔基州',LA:'路易斯安那州',ME:'緬因州',MD:'馬里蘭州',
+  MA:'麻薩諸塞州',MI:'密西根州',MN:'明尼蘇達州',MS:'密西西比州',
+  MO:'密蘇里州',MT:'蒙大拿州',NE:'內布拉斯加州',NV:'內華達州',
+  NH:'新罕布夏州',NJ:'紐澤西州',NM:'新墨西哥州',NY:'紐約州',
+  NC:'北卡羅來納州',ND:'北達科他州',OH:'俄亥俄州',OK:'奧克拉荷馬州',
+  OR:'奧勒岡州',PA:'賓夕法尼亞州',RI:'羅德島州',SC:'南卡羅來納州',
+  SD:'南達科他州',TN:'田納西州',TX:'德克薩斯州',UT:'猶他州',
+  VT:'佛蒙特州',VA:'維吉尼亞州',WA:'華盛頓州',WV:'西維吉尼亞州',
+  WI:'威斯康辛州',WY:'懷俄明州'
+};
+
+/* ══════════════════════════════════════════════
+   DATA LOADING
+═══════════════════════════════════════════════ */
+async function loadData() {
+  try {
+    const res = await fetch(DATA_URL + '?_=' + Date.now());
+    electionData = await res.json();
+  } catch(e) {
+    console.warn('Could not load data file, using fallback.');
+    electionData = getFallbackData();
+  }
+  renderAll();
+  scheduleRefresh();
+}
+
+function scheduleRefresh() {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(async () => {
+    await loadData();
+  }, REFRESH_INTERVAL);
+}
+
+async function manualRefresh() {
+  const btn = document.getElementById('ue-refresh-btn');
+  btn.classList.add('loading');
+  btn.textContent = '↻ 更新中';
+  await loadData();
+  btn.classList.remove('loading');
+  btn.textContent = '↻ 立即更新';
+}
+
+/* ══════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════ */
+function renderAll() {
+  if (!electionData) return;
+  renderHeader();
+  renderBoards();
+  renderMap();
+  renderRaceList();
+}
+
+function renderHeader() {
+  const d = electionData.meta;
+  const ts = new Date(d.lastUpdated);
+  const fmt = ts.toLocaleString('zh-TW',{
+    month:'numeric',day:'numeric',
+    hour:'2-digit',minute:'2-digit',timeZoneName:'short'
+  });
+  document.getElementById('ue-updated').textContent = '最後更新：' + fmt;
+  document.getElementById('ue-reporting').textContent = d.reporting;
+}
+
+function renderBoards() {
+  const d = electionData;
+  const wrap = document.getElementById('ue-boards');
+  wrap.innerHTML = [
+    boardHTML('參議院 Senate', d.senate, 'senate'),
+    boardHTML('眾議院 House', d.house, 'house'),
+    boardHTML('州長 Governor', d.governor, 'governor'),
+  ].join('');
+}
+
+function boardHTML(title, data, type) {
+  const total = data.total;
+  const threshold = data.threshold || Math.ceil(total/2);
+  const dSeats = data.dem.seats;
+  const rSeats = data.rep.seats;
+  const iSeats = (data.ind || {}).seats || 0;
+  const unc = data.uncalled || (total - dSeats - rSeats - iSeats);
+  const ctrl = data.currentControl;
+  const ctrlLabel = ctrl === 'R' ? '共和黨控制' : ctrl === 'D' ? '民主黨控制' : '懸峙議會';
+  const ctrlClass = ctrl ? `ctrl-${ctrl}` : 'ctrl-?';
+
+  const dNet = data.dem.net || 0;
+  const rNet = data.rep.net || 0;
+
+  const dW = (dSeats / total * 100).toFixed(1);
+  const rW = (rSeats / total * 100).toFixed(1);
+  const iW = (iSeats / total * 100).toFixed(1);
+  const threshPct = (threshold / total * 100).toFixed(2);
+
+  return `
+  <div class="ue-board">
+    <div class="ue-board-head">
+      <span class="ue-board-title">${title}</span>
+      <span class="ue-board-ctrl ${ctrlClass}">${ctrlLabel}</span>
+    </div>
+    <div class="ue-counts">
+      <div class="ue-count">
+        <div class="ue-count-n dem">${dSeats}</div>
+        <div class="ue-count-lbl">民主黨</div>
+        <div class="ue-count-net ${netClass(dNet)}">${netStr(dNet)}</div>
+      </div>
+      <div class="ue-count-sep"></div>
+      <div class="ue-count" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);">門檻</div>
+        <div style="font-family:var(--ff-mono);font-size:18px;font-weight:700;color:var(--c-accent);">${threshold}</div>
+        ${unc > 0 ? `<div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);">+${unc} 未確定</div>` : ''}
+      </div>
+      <div class="ue-count-sep"></div>
+      <div class="ue-count">
+        <div class="ue-count-n rep">${rSeats}</div>
+        <div class="ue-count-lbl">共和黨</div>
+        <div class="ue-count-net ${netClass(rNet)}">${netStr(rNet)}</div>
+      </div>
+    </div>
+    <div class="ue-bar-wrap">
+      <div class="ue-bar-labels">
+        <span style="color:var(--c-dem)">民主黨 ${dSeats}</span>
+        <span style="color:var(--c-rep)">共和黨 ${rSeats}</span>
+      </div>
+      <div class="ue-bar">
+        <div class="ue-bar-d" style="width:${dW}%"></div>
+        ${iSeats > 0 ? `<div class="ue-bar-i" style="width:${iW}%"></div>` : ''}
+        <div class="ue-bar-r" style="width:${rW}%;margin-left:auto"></div>
+        <div class="ue-threshold" style="left:${threshPct}%">
+          <span class="ue-threshold-lbl">${threshold}</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function netClass(n) {
+  if (n > 0) return 'net-pos';
+  if (n < 0) return 'net-neg';
+  return 'net-zero';
+}
+function netStr(n) {
+  if (n > 0) return `▲ +${n}`;
+  if (n < 0) return `▼ ${n}`;
+  return '─ 持平';
+}
+
+/* ══════════════════════════════════════════════
+   MAP
+═══════════════════════════════════════════════ */
+function renderMap() {
+  if (!electionData) return;
+  if (!usGeo) {
+    loadTopoJSON();
+  } else {
+    drawMap();
+  }
+}
+
+function loadTopoJSON() {
+  d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    .then(us => {
+      usGeo = us;
+      drawMap();
+    })
+    .catch(err => {
+      console.error('Map load failed:', err);
+      document.getElementById('ue-map-svg').innerHTML =
+        '<text x="480" y="300" fill="#64748b" text-anchor="middle" font-family="monospace" font-size="14">地圖載入失敗（需要網路連線）</text>';
+    });
+}
+
+function drawMap() {
+  const svg = d3.select('#ue-map-svg');
+  svg.selectAll('*').remove();
+
+  const projection = d3.geoAlbersUsa().scale(1280).translate([487.5, 305]);
+  const path = d3.geoPath().projection(projection);
+  const states = topojson.feature(usGeo, usGeo.objects.states);
+  const mesh = topojson.mesh(usGeo, usGeo.objects.states, (a,b) => a !== b);
+
+  const tooltip = document.getElementById('ue-tooltip');
+
+  svg.selectAll('.ue-state')
+    .data(states.features)
+    .join('path')
+    .attr('class', d => {
+      const abbr = FIPS[String(d.id).padStart(2,'0')];
+      if (!abbr) return 'ue-state winner-null';
+      const st = electionData.states[abbr];
+      if (!st) return 'ue-state winner-null';
+      const w = st.called ? (st.winner || 'null') : 'null';
+      const isClose = st.called && st.margin !== null && st.margin < 4;
+      return `ue-state winner-${w}${isClose ? ' is-close' : ''}`;
+    })
+    .attr('d', path)
+    .style('opacity', d => {
+      const abbr = FIPS[String(d.id).padStart(2,'0')];
+      if (!abbr || !electionData.states[abbr]) return 0.5;
+      const st = electionData.states[abbr];
+      if (!st.called) return 0.6;
+      if (st.margin !== null && st.margin < 4) return 0.8;
+      return 1;
+    })
+    .on('mousemove', function(event, d) {
+      const abbr = FIPS[String(d.id).padStart(2,'0')];
+      if (!abbr) return;
+      const st = electionData.states[abbr];
+      showTooltip(event, abbr, st);
+    })
+    .on('mouseleave', () => {
+      tooltip.classList.remove('visible');
+    })
+    .on('click', (event, d) => {
+      const abbr = FIPS[String(d.id).padStart(2,'0')];
+      if (abbr) showStateModal(abbr);
+    });
+
+  // State borders
+  svg.append('path')
+    .datum(mesh)
+    .attr('fill','none')
+    .attr('stroke','#0b0f1a')
+    .attr('stroke-width',1)
+    .attr('d', path);
+}
+
+function showTooltip(event, abbr, st) {
+  const tooltip = document.getElementById('ue-tooltip');
+  const name = STATE_NAMES[abbr] || abbr;
+  let winnerText = '未確定';
+  let winnerClass = 'unc';
+  if (st && st.called && st.winner) {
+    winnerText = st.winner === 'D' ? '民主黨勝出' : st.winner === 'R' ? '共和黨勝出' : '獨立人士勝出';
+    winnerClass = st.winner;
+  }
+  const marginText = st && st.called && st.margin ? `差距 ${st.margin.toFixed(1)}%` : '';
+
+  tooltip.innerHTML = `
+    <div class="ue-tt-state">${abbr} · ${name}</div>
+    <div class="ue-tt-winner ${winnerClass}">${winnerText}</div>
+    ${marginText ? `<div class="ue-tt-pct">${marginText}</div>` : ''}
+    <div class="ue-tt-pct" style="margin-top:4px;font-size:8px">點擊查看詳細</div>
+  `;
+  tooltip.style.left = event.clientX + 'px';
+  tooltip.style.top = event.clientY + 'px';
+  tooltip.classList.add('visible');
+}
+
+/* ══════════════════════════════════════════════
+   RACE LIST
+═══════════════════════════════════════════════ */
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.ue-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  renderRaceList();
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.ue-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === filter);
+  });
+  renderRaceList();
+}
+
+function renderRaceList() {
+  if (!electionData) return;
+  const list = document.getElementById('ue-race-list');
+  let races = electionData.keyRaces || [];
+
+  // Filter by tab
+  const officeMap = { senate:'Senate', house:'House', governor:'Governor' };
+  const office = officeMap[currentTab];
+  races = races.filter(r => r.office === office);
+
+  // Filter by status
+  if (currentFilter === 'competitive') races = races.filter(r => r.competitive);
+  if (currentFilter === 'called') races = races.filter(r => r.called);
+  if (currentFilter === 'uncalled') races = races.filter(r => !r.called);
+
+  if (races.length === 0) {
+    list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-mono);font-size:11px;color:var(--c-muted);">此分類目前無資料</div>`;
+    return;
+  }
+
+  list.innerHTML = races.map(r => raceItemHTML(r)).join('');
+}
+
+function raceItemHTML(r) {
+  const dPct = r.dem ? r.dem.pct : 0;
+  const rPct = r.rep ? r.rep.pct : 0;
+  const total = dPct + rPct;
+  const dBar = total > 0 ? ((dPct/total)*100).toFixed(1) : 50;
+  const rBar = total > 0 ? ((rPct/total)*100).toFixed(1) : 50;
+
+  const dWinner = r.called && r.winner === 'D';
+  const repWinner = r.called && r.winner === 'R';
+
+  let statusBadge;
+  if (r.called) {
+    const cl = r.winner === 'D' ? 'called-D' : r.winner === 'R' ? 'called-R' : 'called-null';
+    const lbl = r.winner === 'D' ? '民主黨勝' : r.winner === 'R' ? '共和黨勝' : '確定';
+    statusBadge = `<span class="ue-called-badge ${cl}">${lbl}</span>`;
+  } else {
+    statusBadge = `<span class="ue-called-badge called-null">計票中</span>`;
+  }
+
+  return `
+  <div class="ue-race-item" onclick="showRaceModal('${r.id}')">
+    <div class="ue-race-top">
+      <div class="ue-race-label">
+        <span class="ue-state-badge">${r.state}</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;">${r.stateName}</div>
+          <div class="ue-race-office">${r.office === 'Senate' ? '參議院' : r.office === 'House' ? '眾議院' : '州長'}</div>
+        </div>
+      </div>
+      <div class="ue-race-status">
+        ${statusBadge}
+      </div>
+    </div>
+    <div class="ue-candidates">
+      <div class="ue-candidate">
+        <div class="ue-cand-party party-D"></div>
+        <span class="ue-cand-name ${dWinner ? 'winner' : ''}">${r.dem ? r.dem.name : '民主黨候選人'}${dWinner ? '<span class="ue-winner-mark">✓</span>' : ''}</span>
+        <span class="ue-cand-pct pct-D">${r.dem ? r.dem.pct.toFixed(1) + '%' : '—'}</span>
+      </div>
+      <div class="ue-cand-bar-wrap">
+        <div class="ue-cand-bar">
+          <div class="ue-cand-bar-fill fill-D" style="width:${dBar}%"></div>
+        </div>
+      </div>
+      <div class="ue-candidate">
+        <div class="ue-cand-party party-R"></div>
+        <span class="ue-cand-name ${repWinner ? 'winner' : ''}">${r.rep ? r.rep.name : '共和黨候選人'}${repWinner ? '<span class="ue-winner-mark">✓</span>' : ''}</span>
+        <span class="ue-cand-pct pct-R">${r.rep ? r.rep.pct.toFixed(1) + '%' : '—'}</span>
+      </div>
+      <div class="ue-cand-bar-wrap">
+        <div class="ue-cand-bar">
+          <div class="ue-cand-bar-fill fill-R" style="width:${rBar}%"></div>
+        </div>
+      </div>
+    </div>
+    ${r.reporting ? `<div class="ue-pct-reporting" style="margin-top:6px;">${r.reporting}% 選區已開出</div>` : ''}
+  </div>`;
+}
+
+/* ══════════════════════════════════════════════
+   MODALS
+═══════════════════════════════════════════════ */
+function showStateModal(abbr) {
+  const name = STATE_NAMES[abbr] || abbr;
+  const st = electionData.states[abbr];
+  const races = (electionData.keyRaces || []).filter(r => r.state === abbr);
+
+  document.getElementById('ue-modal-title').textContent = `${abbr} · ${name}`;
+
+  let bodyHTML = '';
+
+  if (st) {
+    const wText = !st.called ? '計票中' : st.winner === 'D' ? '民主黨勝出' : st.winner === 'R' ? '共和黨勝出' : '未確定';
+    const wColor = st.winner === 'D' ? 'var(--c-dem)' : st.winner === 'R' ? 'var(--c-rep)' : 'var(--c-muted)';
+    bodyHTML += `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);margin-bottom:4px;">選舉結果</div>
+          <div style="font-size:16px;font-weight:700;color:${wColor}">${wText}</div>
+        </div>
+        ${st.margin ? `<div style="text-align:right;"><div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);margin-bottom:4px;">領先差距</div><div style="font-family:var(--ff-mono);font-size:20px;font-weight:700;color:${wColor}">${st.margin.toFixed(1)}%</div></div>` : ''}
+      </div>`;
+  }
+
+  if (races.length > 0) {
+    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">競選資訊</div>`;
+    bodyHTML += races.map(r => `
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--c-border);border-radius:4px;padding:12px;margin-bottom:8px;">
+        ${raceItemHTML(r)}
+      </div>`
+    ).join('');
+  } else {
+    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:11px;color:var(--c-muted);text-align:center;padding:20px 0;">此州詳細選情資料尚未收錄</div>`;
+  }
+
+  document.getElementById('ue-modal-body').innerHTML = bodyHTML;
+  document.getElementById('ue-modal-bg').classList.add('open');
+}
+
+function showRaceModal(id) {
+  const race = (electionData.keyRaces || []).find(r => r.id === id);
+  if (!race) return;
+  showStateModal(race.state);
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('ue-modal-bg')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('ue-modal-bg').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════════
+   EMBED COPY
+═══════════════════════════════════════════════ */
+function setupEmbedBar() {
+  const url = window.location.href.split('?')[0];
+  const iframe = `<iframe src="${url}" width="100%" height="800" frameborder="0" scrolling="auto" style="border:none;max-width:100%;"></iframe>`;
+  document.getElementById('ue-embed-url').textContent = iframe;
+  if (window.self !== window.top) {
+    document.getElementById('ue-embed-bar').style.display = 'none';
+  }
+}
+
+function copyEmbed() {
+  const url = window.location.href.split('?')[0];
+  const iframe = `<iframe src="${url}" width="100%" height="800" frameborder="0" scrolling="auto" style="border:none;max-width:100%;"></iframe>`;
+  navigator.clipboard.writeText(iframe).then(() => {
+    const btn = document.querySelector('.ue-embed-copy');
+    btn.textContent = '✓ 已複製';
+    setTimeout(() => btn.textContent = '複製嵌入碼', 2000);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   FALLBACK DATA
+═══════════════════════════════════════════════ */
+function getFallbackData() {
+  return {
+    meta:{lastUpdated:'2026-11-03T21:00:00-05:00',reporting:'資料載入中',source:''},
+    senate:{dem:{seats:44,net:-2},rep:{seats:50,net:2},ind:{seats:2,net:0},uncalled:4,total:100,threshold:51,currentControl:'R'},
+    house:{dem:{seats:195,net:-8},rep:{seats:222,net:8},ind:{seats:0,net:0},uncalled:18,total:435,threshold:218,currentControl:'R'},
+    governor:{dem:{seats:19,net:-1},rep:{seats:27,net:1},ind:{seats:0,net:0},uncalled:4,total:50,racing:36,currentControl:'?'},
+    states:{},keyRaces:[]
+  };
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  setupEmbedBar();
+  loadData();
+});
+
+// ESC to close modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModalDirect();
+});
+</script>
+</body>
+</html>
