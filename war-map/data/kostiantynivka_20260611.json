@@ -204,7 +204,7 @@
     {
       "latlng": [48.533, 37.705],
       "name": "康斯坦丁諾夫卡市中心",
-      "nameLocal": "Kostyantynivka · 頓涅茨克州",
+      "nameLocal": "康士坦丁諾夫卡 · 頓涅茨克州",
       "type": "confirmed",
       "tag": "🔥 市內巷戰持續",
       "tagClass": "tag-confirmed",
@@ -215,7 +215,7 @@
     {
       "latlng": [48.535, 37.700],
       "name": "鐵路站（俄軍重點目標）",
-      "nameLocal": "Kostyantynivka Station · 鐵路樞紐",
+      "nameLocal": "康士坦丁諾夫卡火車站 · 鐵路樞紐",
       "type": "confirmed",
       "tag": "🚂 鐵路站・激烈爭奪中",
       "tagClass": "tag-confirmed",
@@ -226,7 +226,7 @@
     {
       "latlng": [48.522, 37.762],
       "name": "東部工業區（俄方完全控制）",
-      "nameLocal": "Eastern Industrial Zone · 俄控",
+      "nameLocal": "東部工業區 · 俄控",
       "type": "confirmed",
       "tag": "🔴 東部工業區・俄完全控制",
       "tagClass": "tag-confirmed",
@@ -237,7 +237,7 @@
     {
       "latlng": [48.498, 37.707],
       "name": "西南孤立區（俄稱烏軍受困）",
-      "nameLocal": "SW Pocket · 俄方聲稱包圍",
+      "nameLocal": "西南孤立區 · 俄方聲稱包圍",
       "type": "possible",
       "tag": "⚠ 俄方聲稱烏軍遭殲",
       "tagClass": "tag-possible",
@@ -248,7 +248,7 @@
     {
       "latlng": [48.575, 37.748],
       "name": "東北郊（俄軍推進中）",
-      "nameLocal": "NE Suburbs · 俄軍推進",
+      "nameLocal": "東北郊區 · 俄軍推進",
       "type": "possible",
       "tag": "🔴 東北郊・俄正推進",
       "tagClass": "tag-possible",
@@ -259,7 +259,7 @@
     {
       "latlng": [48.410, 37.850],
       "name": "托雷茨克（俄控）",
-      "nameLocal": "Toretsk · 2025年秋俄方佔領",
+      "nameLocal": "托雷茨克 · 2025年秋俄方佔領",
       "type": "capital",
       "tag": "🔴 俄控城市・東部攻擊基地",
       "tagClass": "tag-reference",
@@ -270,7 +270,7 @@
     {
       "latlng": [48.445, 37.655],
       "name": "伊利尼夫卡（俄控）",
-      "nameLocal": "Ilyinivka · 南部攻擊方向",
+      "nameLocal": "伊利尼夫卡 · 南部攻擊方向",
       "type": "confirmed",
       "tag": "🔴 俄控・南部施壓方向",
       "tagClass": "tag-confirmed",
@@ -281,7 +281,7 @@
     {
       "latlng": [48.628, 37.527],
       "name": "德魯日基夫卡（烏控）",
-      "nameLocal": "Druzhkivka · 烏軍補給終點",
+      "nameLocal": "德魯士科夫卡 · 烏軍補給終點",
       "type": "possible",
       "tag": "🇺🇦 烏控・補給通道終點",
       "tagClass": "tag-possible",
