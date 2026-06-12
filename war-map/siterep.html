@@ -178,7 +178,7 @@ const dataName = params.get('d');
 if (!dataName) {
   showError('網址缺少參數，請使用格式：template.html?d=檔名');
 } else {
-  fetch('data/' + dataName + '.json')
+  fetch('data/' + dataName + '.json', { cache: 'no-cache' })
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(initMap)
     .catch(() => showError('找不到資料檔：data/' + dataName + '.json'));
