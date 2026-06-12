@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "title": "絲路時代的帝國格局（約公元100年）",
+    "titleEn": "Imperial World of the Silk Road Era — c. 100 CE",
+    "subtitle": "羅馬帝國・帕提亞帝國・貴霜帝國・東漢王朝・北匈奴｜安息帝國作為歐亞絲路核心中介",
+    "date": "2026-06-12",
+    "status": "reference",
+    "theme": "orange",
+    "sources": ["絲路遺產", "漢書・張騫傳", "史記", "Encyclopaedia Iranica", "Cambridge Ancient History"]
+  },
+  "map": {
+    "center": [38, 62],
+    "zoom": 3,
+    "bounds": [[14, -16], [62, 135]]
+  },
+  "infoPanel": {
+    "title": "帕提亞帝國——被遺忘的絲路霸主",
+    "paragraphs": [
+      "約公元前247年，帕爾尼人首領阿爾薩息斯率部入侵塞琉古王國東部行省帕提亞建國，帕提亞帝國（安息，公元前247年—公元224年）由此而生。米特里達提一世（約前171—前138年）時，帝國積極擴張，東占中亞木鹿、西吞米底進入兩河，發展為橫跨伊朗高原的大帝國。米特里達提二世（約前124—前88年）時，解決東境塞人邊患、挫敗塞琉古，並取得亞美尼亞，與羅馬漸成對峙之勢。",
+      "約公元前115年，漢武帝使者到達安息，「安息王令將二萬騎迎於東界」，漢代中國與帕提亞官方外交關係確立，絲綢之路通過帕提亞延伸至羅馬世界。帕提亞天然充當著聯通東漢與羅馬帝國的最大中介者——向西輸出絲綢、向東傳遞地中海文明。公元1世紀後帝國陷入王室內鬥，公元224年薩珊家族阿爾達希爾推翻帕提亞，在泰西封自封「眾王之王」，阿爾薩息斯王朝覆滅。",
+      "本圖所示為約公元100年的世界帝國格局：羅馬帝國控制地中海；帕提亞帝國居間連接東西；貴霜帝國橫跨中亞至印度；東漢王朝主導東亞並向西域擴展；北匈奴被漢軍擊敗後退入蒙古草原深處。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [36, -9], [44, -9], [51, 3], [52, 9],
+        [48, 22], [44, 28], [42, 38], [42, 40],
+        [37, 44], [34, 38], [31, 36], [30, 33],
+        [22, 34], [20, 16], [24, 2], [33, -8], [36, -9]
+      ],
+      "fillColor": "#8B2200",
+      "fillOpacity": 0.32,
+      "borderColor": "#5C1500",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "羅馬帝國（Imperium Romanum）",
+        "tag": "🏛 公元前27年—公元395年",
+        "tagClass": "tag-confirmed",
+        "desc": "羅馬帝國全盛期（圖拉真時代，約117年）版圖覆蓋地中海全域，含西班牙、高盧、不列顛、北非、希臘、安納托利亞、敘利亞及埃及。首都羅馬（Roma），人口逾百萬。與帕提亞以幼發拉底河為界，長期爭奪亞美尼亞控制權。",
+        "source": "Cambridge Ancient History"
+      }
+    },
+    {
+      "points": [
+        [42, 38], [42, 40], [43, 50], [40, 62],
+        [36, 65], [30, 62], [25, 57], [24, 52],
+        [27, 48], [30, 45], [33, 44], [37, 44],
+        [38, 40], [42, 38]
+      ],
+      "fillColor": "#4A2888",
+      "fillOpacity": 0.35,
+      "borderColor": "#2E1A5C",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "帕提亞帝國（Imperium Parthicum / Arsacid Empire）",
+        "tag": "⚜ 公元前247年—公元224年",
+        "tagClass": "tag-confirmed",
+        "desc": "兩漢史籍稱「安息國」，以創建者家族命名為「阿什康尼王朝」。全盛期版圖東抵中亞木鹿、西至幼發拉底河，首都泰西封（Ctesiphon）。帝國是連通漢代中國與羅馬帝國的最大中介，絲路上最重要的轉口貿易商。公元224年被薩珊波斯取代。",
+        "source": "漢書 · Encyclopaedia Iranica"
+      }
+    },
+    {
+      "points": [
+        [42, 60], [42, 76], [35, 78],
+        [23, 73], [25, 65], [28, 60],
+        [35, 58], [38, 58], [42, 60]
+      ],
+      "fillColor": "#C47020",
+      "fillOpacity": 0.35,
+      "borderColor": "#8B4C00",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "貴霜帝國（Kushan Empire / Kushana）",
+        "tag": "🏺 約公元1年—375年",
+        "tagClass": "tag-confirmed",
+        "desc": "由大月氏後裔建立，鼎盛期版圖涵蓋今阿富汗、巴基斯坦、烏茲別克南部及印度西北部，首都迦膩色迦城（Kapisa/Peshawar附近）。貴霜帝國是絲路佛教傳播的重要通道，連結地中海、中亞與印度洋貿易圈。迦膩色迦一世（約127年）時帝國達於極盛。",
+        "source": "Encyclopaedia Iranica · 漢書"
+      }
+    },
+    {
+      "points": [
+        [44, 76], [48, 90], [51, 100],
+        [52, 122], [42, 130], [32, 122],
+        [20, 111], [18, 110], [20, 104],
+        [28, 98], [36, 96], [42, 82], [44, 76]
+      ],
+      "fillColor": "#9B2050",
+      "fillOpacity": 0.28,
+      "borderColor": "#6B0030",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.8,
+      "popup": {
+        "title": "東漢王朝（Eastern Han Dynasty / 漢 Hàn）",
+        "tag": "🐉 公元25年—220年",
+        "tagClass": "tag-confirmed",
+        "desc": "東漢首都洛陽，疆域北至漠南、東至朝鮮半島、南至越南，並透過西域都護府控制塔里木盆地。張騫出使西域後，漢代與安息（帕提亞）建立官方外交，絲路正式通暢。班超以36人縱橫西域，使漢帝國影響力延伸至伊朗高原邊緣。",
+        "source": "後漢書 · 漢書・西域傳"
+      }
+    },
+    {
+      "points": [
+        [48, 68], [55, 80], [60, 100],
+        [58, 120], [50, 120], [46, 108],
+        [45, 88], [48, 72], [48, 68]
+      ],
+      "fillColor": "#B8860B",
+      "fillOpacity": 0.28,
+      "borderColor": "#8B6508",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.7,
+      "popup": {
+        "title": "北匈奴（Northern Xiongnu / Hunni Septentrionales）",
+        "tag": "🏹 公元前3世紀—公元2世紀",
+        "tagClass": "tag-possible",
+        "desc": "公元89年被東漢大將竇憲在稽落山大敗後，北匈奴主力西遷，退入蒙古草原深處及西伯利亞。部分殘部繼續西遷至中亞，最終與日耳曼民族大遷徙相互影響。此區域為北匈奴殘餘勢力的大致活動範圍。",
+        "source": "後漢書 · 匈奴列傳"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [41.9, 12.5], [36.2, 36.2], [33.1, 44.6],
+        [37.6, 62.2], [39.7, 67.0], [39.5, 76.0],
+        [40.5, 82.9], [40.1, 94.7], [34.3, 108.9],
+        [34.7, 112.5]
+      ],
+      "color": "#D4A017",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "陸上絲綢之路主幹線",
+        "tag": "🐪 絲路・約公元前2世紀—公元15世紀",
+        "tagClass": "tag-reference",
+        "desc": "從羅馬出發，經安條克、泰西封（帕提亞首都）、木鹿、撒馬爾罕、喀什、敦煌抵達東漢首都洛陽，全程約8,000公里。帕提亞帝國控制幼發拉底河至中亞的關鍵路段，是東西方貿易的最大中介者，收取豐厚過境稅。",
+        "source": "漢書・西域傳 · 史記"
+      }
+    },
+    {
+      "points": [
+        [31.2, 29.9], [12.8, 45.0],
+        [14.0, 50.5], [21.0, 57.0],
+        [11.0, 77.0], [8.5, 77.3],
+        [1.3, 104.0]
+      ],
+      "color": "#1A6FA5",
+      "weight": 2,
+      "opacity": 0.55,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "海上絲綢之路（示意）",
+        "tag": "⛵ 海路・亞歷山大城→南亞→東南亞",
+        "tagClass": "tag-reference",
+        "desc": "從亞歷山大城（Alexandria）出發，沿紅海、亞丁灣、阿拉伯海，抵達印度西岸（馬拉巴海岸）再至東南亞。海路在帕提亞控制陸路後對羅馬商人尤為重要，可繞過中間商直接與印度貿易，換取香料、象牙、棉布等物資。",
+        "source": "《厄立特里亞海航行記》(Periplus of the Erythraean Sea)"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [41.90, 12.50],
+      "name": "羅馬",
+      "nameLocal": "Roma · Caput Mundi（世界之都）",
+      "type": "capital",
+      "tag": "🏛 羅馬帝國首都",
+      "tagClass": "tag-reference",
+      "desc": "羅馬帝國首都，人口約100萬，為古代世界最大城市之一。政治、文化、宗教中心，「條條大路通羅馬」。對中國絲綢需求旺盛，帝國政府甚至一度立法限制購買絲綢以防白銀外流。",
+      "coords": "41°54'N 12°30'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [33.10, 44.58],
+      "name": "泰西封",
+      "nameLocal": "Ctesiphon · 帕提亞帝國首都",
+      "type": "capital",
+      "tag": "⚜ 帕提亞首都・絲路核心",
+      "tagClass": "tag-reference",
+      "desc": "帕提亞帝國首都（亦是後來薩珊波斯帝國首都），位於底格里斯河東岸，緊鄰塞琉西亞城。兩河流域最重要的商業中心，絲路東西貿易的核心轉口地。漢代使節出使安息時，安息王在此接待。",
+      "coords": "33°06'N 44°35'E",
+      "source": "漢書 · Encyclopaedia Iranica"
+    },
+    {
+      "latlng": [34.68, 112.45],
+      "name": "洛陽",
+      "nameLocal": "Luoyang · 東漢帝都",
+      "type": "capital",
+      "tag": "🐉 東漢首都",
+      "tagClass": "tag-reference",
+      "desc": "東漢帝國首都，人口約50萬，是絲路東端的終點城市。光武帝劉秀定都於此，此後二百年為東亞政治文化中心。張騫開通西域後，洛陽的絲綢、瓷器等商品經由絲路西傳至帕提亞與羅馬。",
+      "coords": "34°41'N 112°27'E",
+      "source": "後漢書"
+    },
+    {
+      "latlng": [34.10, 71.50],
+      "name": "迦膩色迦城（白沙瓦附近）",
+      "nameLocal": "Kapisa / Purushapura · 貴霜帝國首都",
+      "type": "capital",
+      "tag": "🏺 貴霜帝國首都",
+      "tagClass": "tag-reference",
+      "desc": "貴霜帝國迦膩色迦一世（約127年）時的首都地區（白沙瓦/Peshawar附近），帝國鼎盛時期的政治與佛教文化中心。迦膩色迦積極推動佛教，主持第四次佛典結集，貴霜因此成為佛教東傳中國的重要橋梁。",
+      "coords": "34°06'N 71°30'E",
+      "source": "Encyclopaedia Iranica"
+    },
+    {
+      "latlng": [36.20, 36.16],
+      "name": "安條克",
+      "nameLocal": "Antiochia ad Orontem · 敘利亞安條克",
+      "type": "possible",
+      "tag": "🏛 羅馬東部首府・絲路起點",
+      "tagClass": "tag-reference",
+      "desc": "羅馬帝國東部最重要的城市，人口約50萬，地位僅次於羅馬與亞歷山大城。絲路西端的主要起點城市，向東連結幼發拉底河和帕提亞帝國境內的貿易網絡。今土耳其南部安塔基亞（Antakya）。",
+      "coords": "36°12'N 36°10'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [34.56, 38.27],
+      "name": "帕爾米拉",
+      "nameLocal": "Palmyra / Tadmor · 敘利亞沙漠中繼站",
+      "type": "possible",
+      "tag": "🐪 絲路沙漠商隊城市",
+      "tagClass": "tag-reference",
+      "desc": "敘利亞沙漠中的商隊城市，連結羅馬帝國與帕提亞帝國之間的貿易路線，因課徵過境商稅而致富。西元3世紀芝諾比婭女王時期短暫脫離羅馬控制。今敘利亞境內，現列世界遺產。",
+      "coords": "34°33'N 38°16'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [37.64, 62.18],
+      "name": "木鹿",
+      "nameLocal": "Merv / Margiana · 中亞絲路樞紐",
+      "type": "possible",
+      "tag": "🐪 帕提亞東境要衝・中亞最大綠洲城",
+      "tagClass": "tag-reference",
+      "desc": "中亞最重要的絲路城市之一，位於卡拉庫姆沙漠邊緣的綠洲，帕提亞帝國東方重鎮。漢書記載帕提亞東占「木鹿抵河中」，即以此為東部邊境據點。今土庫曼斯坦馬雷（Mary）附近，曾為全球最大城市之一。",
+      "coords": "37°38'N 62°11'E",
+      "source": "漢書 · Encyclopaedia Iranica"
+    },
+    {
+      "latlng": [39.65, 66.98],
+      "name": "撒馬爾罕",
+      "nameLocal": "Samarkand / Marakanda · 粟特商業中心",
+      "type": "possible",
+      "tag": "🐪 粟特都城・絲路十字路口",
+      "tagClass": "tag-reference",
+      "desc": "粟特人（Sogdians）的核心城市，絲路上最重要的商業樞紐之一。粟特商人是中世紀絲路貿易最活躍的民族，活躍於中亞、波斯、中國等地。亞歷山大大帝曾在此地（稱Marakanda）娶波斯公主羅克珊娜。今烏茲別克第二大城。",
+      "coords": "39°39'N 66°59'E",
+      "source": "Cambridge Ancient History · 史記"
+    },
+    {
+      "latlng": [40.14, 94.67],
+      "name": "敦煌",
+      "nameLocal": "Dunhuang · 絲路東端門戶",
+      "type": "possible",
+      "tag": "🏯 漢帝國西域門戶",
+      "tagClass": "tag-reference",
+      "desc": "漢代絲路東端最重要的關口城市，玉門關（陽關）設於此地附近，為漢帝國勢力進出西域的咽喉。莫高窟（千佛洞）中保存了大量漢唐時代的佛教壁畫與絲路文物，今列世界文化遺產。",
+      "coords": "40°08'N 94°40'E",
+      "source": "漢書・西域傳"
+    },
+    {
+      "latlng": [34.27, 108.95],
+      "name": "長安",
+      "nameLocal": "Chang'an / Xi'an · 前漢舊都",
+      "type": "possible",
+      "tag": "🏯 前漢首都・絲路商貿中心",
+      "tagClass": "tag-reference",
+      "desc": "西漢帝國首都（今西安），張騫出使西域的派遣地，絲路的實際起點城市。雖東漢遷都洛陽，長安仍為關中地區最重要的政治、軍事據點與絲路貿易中心。",
+      "coords": "34°16'N 108°57'E",
+      "source": "史記 · 漢書・張騫傳"
+    },
+    {
+      "latlng": [38.00, 58.21],
+      "name": "尼薩",
+      "nameLocal": "Nisa / Asaak · 帕提亞發源地",
+      "type": "possible",
+      "tag": "⚜ 帕提亞帝國發源地・阿爾薩息斯陵寢",
+      "tagClass": "tag-reference",
+      "desc": "帕提亞帝國的發源聖地，阿爾薩息斯王朝諸王的陵寢所在。當年帕爾尼人首領阿爾薩息斯從此地率部出發，入侵塞琉古帕提亞行省建國。今土庫曼斯坦阿什哈巴德附近，列世界遺產。",
+      "coords": "38°00'N 58°13'E",
+      "source": "Encyclopaedia Iranica"
+    },
+    {
+      "latlng": [36.76, 66.90],
+      "name": "巴克特拉（大夏）",
+      "nameLocal": "Bactra / Balkh · 貴霜重鎮",
+      "type": "possible",
+      "tag": "🏺 古代中亞最重要城市",
+      "tagClass": "tag-reference",
+      "desc": "「城市之母」（Umm al-Bilad），古代中亞最重要的城市之一，亞歷山大大帝東征時曾駐軍於此。貴霜帝國的重要城市，佛教與希臘化文化融合之地，今阿富汗巴爾赫省。",
+      "coords": "36°46'N 66°54'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [31.20, 29.92],
+      "name": "亞歷山大城",
+      "nameLocal": "Alexandria · 希臘化世界文化首都",
+      "type": "possible",
+      "tag": "📚 古代文化中心・海路貿易港",
+      "tagClass": "tag-reference",
+      "desc": "亞歷山大大帝建立，當時世界最重要的學術中心，著名的亞歷山大圖書館所在地。羅馬帝國在地中海—紅海—印度洋海上貿易的核心樞紐，東方香料、紙莎草、玻璃等商品在此集散。今埃及亞歷山卓港。",
+      "coords": "31°12'N 29°55'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [47, 38],
+      "name": "薩爾馬特人",
+      "nameLocal": "Sarmatae · 黑海北岸遊牧民族",
+      "type": "dam",
+      "tag": "🏹 黑海北岸・遊牧民族",
+      "tagClass": "tag-possible",
+      "desc": "伊朗語系遊牧民族，約公元前2世紀取代斯基泰人（Scythians）成為黑海北岸的主導勢力，向西曾威脅羅馬多瑙河防線，向東與帕提亞帝國有複雜的外交與軍事互動。",
+      "coords": "47°00'N 38°00'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [44, 47],
+      "name": "阿蘭人",
+      "nameLocal": "Alani · 高加索遊牧民族",
+      "type": "dam",
+      "tag": "🏹 高加索地區遊牧民族",
+      "tagClass": "tag-possible",
+      "desc": "活躍於高加索地區的伊朗語系遊牧民族，曾多次入侵帕提亞、亞美尼亞及羅馬帝國邊境。後期隨西遷大潮部分融入歐洲，其後裔包括今奧賽梯人（Ossetians）。",
+      "coords": "44°00'N 47°00'E",
+      "source": "Cambridge Ancient History"
+    },
+    {
+      "latlng": [32, 88],
+      "name": "西藏諸部落王國",
+      "nameLocal": "Tibetan Tribal Kingdoms · 吐蕃前身",
+      "type": "dam",
+      "tag": "⛰ 高原諸部落聯盟",
+      "tagClass": "tag-possible",
+      "desc": "西藏高原地區尚未統一的眾多部落聯盟，約公元7世紀才由松贊干布統一建立吐蕃王朝。此時期高原諸部處於漢帝國（西南）、貴霜帝國（西）、匈奴（北）的包圍之中，地理隔絕維持了相對的獨立。",
+      "coords": "32°00'N 88°00'E",
+      "source": "漢書"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#8B2200", "fillOpacity": 0.45, "label": "羅馬帝國（Imperium Romanum）" },
+    { "symbol": "polygon", "fillColor": "#4A2888", "fillOpacity": 0.50, "label": "帕提亞帝國（Arsacid / Imperium Parthicum）" },
+    { "symbol": "polygon", "fillColor": "#C47020", "fillOpacity": 0.50, "label": "貴霜帝國（Kushan Empire）" },
+    { "symbol": "polygon", "fillColor": "#9B2050", "fillOpacity": 0.45, "label": "東漢王朝（Eastern Han Dynasty）" },
+    { "symbol": "polygon", "fillColor": "#B8860B", "fillOpacity": 0.45, "label": "北匈奴（Northern Xiongnu）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "帝國首都（羅馬・泰西封・洛陽・貴霜）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "絲路重要城市・遊牧民族活動區" },
+    { "symbol": "line", "color": "#D4A017", "dash": "8,5",  "weight": 2.5, "label": "陸上絲綢之路主幹線" },
+    { "symbol": "line", "color": "#1A6FA5", "dash": "6,5",  "weight": 2, "label": "海上絲綢之路（示意）" }
+  ]
+}
