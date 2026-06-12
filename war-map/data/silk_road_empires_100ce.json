@@ -165,7 +165,7 @@
     {
       "latlng": [41.90, 12.50],
       "name": "羅馬",
-      "nameLocal": "Roma · Caput Mundi（世界之都）",
+      "nameLocal": "羅馬（Roma · Caput Mundi）",
       "type": "capital",
       "tag": "🏛 羅馬帝國首都",
       "tagClass": "tag-reference",
@@ -176,7 +176,7 @@
     {
       "latlng": [33.10, 44.58],
       "name": "泰西封",
-      "nameLocal": "Ctesiphon · 帕提亞帝國首都",
+      "nameLocal": "泰西封（Ctesiphon）",
       "type": "capital",
       "tag": "⚜ 帕提亞首都・絲路核心",
       "tagClass": "tag-reference",
@@ -187,7 +187,7 @@
     {
       "latlng": [34.68, 112.45],
       "name": "洛陽",
-      "nameLocal": "Luoyang · 東漢帝都",
+      "nameLocal": "洛陽（Luoyang）",
       "type": "capital",
       "tag": "🐉 東漢首都",
       "tagClass": "tag-reference",
@@ -198,7 +198,7 @@
     {
       "latlng": [34.10, 71.50],
       "name": "迦膩色迦城（白沙瓦附近）",
-      "nameLocal": "Kapisa / Purushapura · 貴霜帝國首都",
+      "nameLocal": "迦膩色迦城（Kapisa / Purushapura）",
       "type": "capital",
       "tag": "🏺 貴霜帝國首都",
       "tagClass": "tag-reference",
@@ -209,7 +209,7 @@
     {
       "latlng": [36.20, 36.16],
       "name": "安條克",
-      "nameLocal": "Antiochia ad Orontem · 敘利亞安條克",
+      "nameLocal": "敘利亞安條克（Antiochia ad Orontem）",
       "type": "possible",
       "tag": "🏛 羅馬東部首府・絲路起點",
       "tagClass": "tag-reference",
@@ -220,7 +220,7 @@
     {
       "latlng": [34.56, 38.27],
       "name": "帕爾米拉",
-      "nameLocal": "Palmyra / Tadmor · 敘利亞沙漠中繼站",
+      "nameLocal": "帕爾米拉（Palmyra / Tadmor）",
       "type": "possible",
       "tag": "🐪 絲路沙漠商隊城市",
       "tagClass": "tag-reference",
@@ -231,7 +231,7 @@
     {
       "latlng": [37.64, 62.18],
       "name": "木鹿",
-      "nameLocal": "Merv / Margiana · 中亞絲路樞紐",
+      "nameLocal": "木鹿（Merv / Margiana）",
       "type": "possible",
       "tag": "🐪 帕提亞東境要衝・中亞最大綠洲城",
       "tagClass": "tag-reference",
@@ -242,7 +242,7 @@
     {
       "latlng": [39.65, 66.98],
       "name": "撒馬爾罕",
-      "nameLocal": "Samarkand / Marakanda · 粟特商業中心",
+      "nameLocal": "撒馬爾罕（Samarkand / Marakanda）",
       "type": "possible",
       "tag": "🐪 粟特都城・絲路十字路口",
       "tagClass": "tag-reference",
@@ -253,7 +253,7 @@
     {
       "latlng": [40.14, 94.67],
       "name": "敦煌",
-      "nameLocal": "Dunhuang · 絲路東端門戶",
+      "nameLocal": "敦煌（Dunhuang）",
       "type": "possible",
       "tag": "🏯 漢帝國西域門戶",
       "tagClass": "tag-reference",
@@ -264,7 +264,7 @@
     {
       "latlng": [34.27, 108.95],
       "name": "長安",
-      "nameLocal": "Chang'an / Xi'an · 前漢舊都",
+      "nameLocal": "長安（Chang'an / Xi'an）",
       "type": "possible",
       "tag": "🏯 前漢首都・絲路商貿中心",
       "tagClass": "tag-reference",
@@ -275,7 +275,7 @@
     {
       "latlng": [38.00, 58.21],
       "name": "尼薩",
-      "nameLocal": "Nisa / Asaak · 帕提亞發源地",
+      "nameLocal": "尼薩（Nisa / Asaak）",
       "type": "possible",
       "tag": "⚜ 帕提亞帝國發源地・阿爾薩息斯陵寢",
       "tagClass": "tag-reference",
@@ -286,7 +286,7 @@
     {
       "latlng": [36.76, 66.90],
       "name": "巴克特拉（大夏）",
-      "nameLocal": "Bactra / Balkh · 貴霜重鎮",
+      "nameLocal": "巴克特拉（Bactra / Balkh）",
       "type": "possible",
       "tag": "🏺 古代中亞最重要城市",
       "tagClass": "tag-reference",
@@ -297,7 +297,7 @@
     {
       "latlng": [31.20, 29.92],
       "name": "亞歷山大城",
-      "nameLocal": "Alexandria · 希臘化世界文化首都",
+      "nameLocal": "亞歷山大城（Alexandria）",
       "type": "possible",
       "tag": "📚 古代文化中心・海路貿易港",
       "tagClass": "tag-reference",
@@ -308,7 +308,7 @@
     {
       "latlng": [47, 38],
       "name": "薩爾馬特人",
-      "nameLocal": "Sarmatae · 黑海北岸遊牧民族",
+      "nameLocal": "薩爾馬特人（Sarmatae）",
       "type": "dam",
       "tag": "🏹 黑海北岸・遊牧民族",
       "tagClass": "tag-possible",
@@ -319,7 +319,7 @@
     {
       "latlng": [44, 47],
       "name": "阿蘭人",
-      "nameLocal": "Alani · 高加索遊牧民族",
+      "nameLocal": "阿蘭人（Alani）",
       "type": "dam",
       "tag": "🏹 高加索地區遊牧民族",
       "tagClass": "tag-possible",
@@ -330,7 +330,7 @@
     {
       "latlng": [32, 88],
       "name": "西藏諸部落王國",
-      "nameLocal": "Tibetan Tribal Kingdoms · 吐蕃前身",
+      "nameLocal": "西藏諸部落王國（Tibetan Tribal Kingdoms）",
       "type": "dam",
       "tag": "⛰ 高原諸部落聯盟",
       "tagClass": "tag-possible",
