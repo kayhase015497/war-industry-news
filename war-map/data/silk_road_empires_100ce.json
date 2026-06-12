@@ -165,6 +165,279 @@
         "desc": "公元89年被東漢大將竇憲在稽落山大敗後，北匈奴主力西遷，退入蒙古草原深處及西伯利亞。部分殘部繼續西遷至中亞，最終與日耳曼民族大遷徙相互影響。此區域為北匈奴殘餘勢力的大致活動範圍。",
         "source": "後漢書 · 匈奴列傳"
       }
+    },
+    {
+      "points": [
+        [41.5, 38.5], [42.0, 41.0], [41.5, 44.0], [41.0, 47.0],
+        [39.5, 48.0], [38.0, 47.0], [37.5, 45.0], [37.0, 42.0],
+        [37.5, 39.5], [39.0, 38.0], [40.5, 37.5], [41.5, 38.5]
+      ],
+      "fillColor": "#2D7A1F",
+      "fillOpacity": 0.40,
+      "borderColor": "#1A5C00",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "亞美尼亞王國（Regnum Armeniae）",
+        "tag": "🏔 羅馬帝國與帕提亞帝國之間的緩衝王國",
+        "tagClass": "tag-possible",
+        "desc": "亞美尼亞是羅馬與帕提亞長期爭奪的戰略緩衝國，兩大強權輪流扶植親己王室。公元52–63年爆發羅馬—帕提亞亞美尼亞戰爭，以王位由帕提亞人擔任、但須接受羅馬皇帝冊封告終。公元100年前後屬帕提亞扶植的阿爾薩息斯支系統治。",
+        "source": "Tacitus, Annales · Cambridge Ancient History"
+      }
+    },
+    {
+      "points": [
+        [54.0, 26.0], [54.5, 32.0], [53.5, 38.0], [54.0, 44.0],
+        [54.5, 50.0], [52.0, 54.0], [49.0, 54.0], [46.5, 52.0],
+        [44.5, 50.0], [43.5, 47.0], [43.5, 43.0], [44.5, 39.0],
+        [45.0, 34.0], [46.5, 30.0], [48.5, 26.5], [51.0, 24.5],
+        [54.0, 26.0]
+      ],
+      "fillColor": "#4A7FA5",
+      "fillOpacity": 0.30,
+      "borderColor": "#2E5C7A",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "popup": {
+        "title": "薩爾馬特人（Sarmatae）",
+        "tag": "🏹 黑海北岸伊朗語系遊牧民族聯盟",
+        "tagClass": "tag-possible",
+        "desc": "伊朗語系的遊牧民族聯盟，約公元前2世紀取代斯基泰人成為黑海北岸草原的主導勢力。分為多個部落（羅克索拉尼、亞澤吉、西拉吉等），活躍於多瑙河至頓河間的龐廷草原。羅馬帝國多次在多瑙河防線與薩爾馬特人發生衝突，圖拉真達契亞戰爭中亞澤吉為達契亞盟友。",
+        "source": "Cambridge Ancient History · Strabo, Geographica"
+      }
+    },
+    {
+      "points": [
+        [48.5, 42.0], [48.0, 48.0], [47.5, 54.0], [45.5, 56.0],
+        [43.5, 54.0], [42.5, 50.0], [42.0, 46.0], [43.0, 42.5],
+        [44.0, 40.0], [46.0, 40.0], [48.5, 42.0]
+      ],
+      "fillColor": "#20A090",
+      "fillOpacity": 0.32,
+      "borderColor": "#0E6B62",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "popup": {
+        "title": "阿蘭人（Alani / Alans）",
+        "tag": "🏹 高加索北麓伊朗語系遊牧民族",
+        "tagClass": "tag-possible",
+        "desc": "阿蘭人是薩爾馬特人中最東方的分支，活躍於高加索北麓、裏海西岸至頓河間草原。公元1世紀多次入侵帕提亞帝國米底亞行省及亞美尼亞，是帕提亞東北方的長期威脅。部分阿蘭人後來隨西遷大潮進入歐洲，後裔即今日奧賽梯人（Ossetians）。",
+        "source": "Josephus, Jewish War · Cambridge Ancient History"
+      }
+    },
+    {
+      "points": [
+        [41.5, 58.5], [42.0, 62.0], [41.5, 66.5], [42.5, 70.5],
+        [44.0, 73.5], [46.0, 73.5], [47.5, 70.0], [47.5, 66.0],
+        [47.0, 62.0], [46.0, 58.5], [44.0, 57.0], [42.5, 57.5],
+        [41.5, 58.5]
+      ],
+      "fillColor": "#8B7355",
+      "fillOpacity": 0.38,
+      "borderColor": "#5C4A2A",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "popup": {
+        "title": "康居（Kangju / Kang-chü）",
+        "tag": "🐪 鹹海東岸・錫爾河流域王國",
+        "tagClass": "tag-possible",
+        "desc": "漢代史籍所記「康居國」，位於今哈薩克南部及烏茲別克北部，錫爾河（藥殺水）流域。曾收留匈奴郅支單于抗衡漢朝，後被甘延壽、陳湯擊破（前36年）。公元100年前後仍是中亞舉足輕重的政治體，連接貴霜、大宛與烏孫之間的貿易網絡。",
+        "source": "漢書・西域傳 · 史記・大宛列傳"
+      }
+    },
+    {
+      "points": [
+        [48.5, 82.0], [49.5, 87.0], [51.0, 93.0], [52.5, 99.0],
+        [54.0, 105.0], [56.0, 108.0], [57.5, 106.0], [57.5, 100.0],
+        [56.0, 94.0], [54.0, 88.0], [51.5, 83.5], [49.5, 80.5],
+        [48.5, 82.0]
+      ],
+      "fillColor": "#6B8E23",
+      "fillOpacity": 0.30,
+      "borderColor": "#4A6200",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "popup": {
+        "title": "高車部落（丁零 / Dingling / Gaoche）",
+        "tag": "🏹 貝加爾湖西南・蒙古北部遊牧民族",
+        "tagClass": "tag-possible",
+        "desc": "「丁零」是漢代史書對生活在貝加爾湖以南、蒙古北部草原的遊牧民族稱呼，即後來突厥史料中的「高車」。北匈奴被漢軍擊敗後，丁零趁機南下侵奪匈奴殘部牧地，從北方加速了匈奴的崩潰。其後裔與鐵勒諸部及突厥民族的起源有深厚關聯。",
+        "source": "後漢書 · 匈奴列傳"
+      }
+    },
+    {
+      "points": [
+        [53.0, 87.5], [55.0, 93.0], [57.5, 98.0], [59.0, 104.0],
+        [58.0, 108.0], [56.5, 108.0], [55.5, 103.0], [53.5, 97.0],
+        [51.5, 93.5], [51.5, 89.5], [53.0, 87.5]
+      ],
+      "fillColor": "#5F8FA0",
+      "fillOpacity": 0.28,
+      "borderColor": "#3A6070",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "popup": {
+        "title": "堅昆（葉尼塞柯爾克孜 / Jiankun / Yenisei Kyrgyz）",
+        "tag": "🏕 葉尼塞河上游・西伯利亞南緣",
+        "tagClass": "tag-possible",
+        "desc": "漢代史籍所記「堅昆」，位於葉尼塞河上游地區（今俄羅斯哈卡斯共和國附近），為丁零的近鄰。後代史料（唐代）稱其後裔為「黠戛斯」，即現代柯爾克孜人（吉爾吉斯）的先祖。在匈奴時代曾臣服於北匈奴，匈奴衰亡後逐漸獨立。",
+        "source": "漢書・匈奴傳 · 後漢書"
+      }
+    },
+    {
+      "points": [
+        [29.5, 36.5], [30.0, 40.0], [28.5, 44.5], [26.0, 49.0],
+        [23.0, 53.5], [19.5, 56.5], [14.5, 50.5], [12.5, 44.5],
+        [13.5, 40.0], [15.5, 37.5], [18.5, 37.0], [22.5, 38.0],
+        [26.0, 37.5], [29.5, 36.5]
+      ],
+      "fillColor": "#C8A000",
+      "fillOpacity": 0.26,
+      "borderColor": "#8B6D00",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "popup": {
+        "title": "阿拉伯遊牧民族（Arabes / Saraceni）",
+        "tag": "🐪 阿拉伯半島・前伊斯蘭時代部落社會",
+        "tagClass": "tag-possible",
+        "desc": "公元100年前後，阿拉伯半島絕大部分由各遊牧部落鬆散控制。西北端的那巴泰王國（Nabataean Kingdom）是最重要的定居政治體，但已於106年被羅馬帝國併吞為阿拉比亞行省。阿拉伯商隊壟斷乳香、沒藥等香料貿易，是連結印度洋與地中海的關鍵中間人。",
+        "source": "Strabo, Geographica · Pliny the Elder, Historia Naturalis"
+      }
+    },
+    {
+      "points": [
+        [22.5, 30.5], [23.0, 33.5], [22.0, 37.0], [19.5, 38.5],
+        [17.0, 38.0], [15.0, 37.0], [14.0, 35.0], [13.5, 32.5],
+        [15.0, 30.0], [17.5, 29.0], [19.5, 29.5], [21.5, 30.0],
+        [22.5, 30.5]
+      ],
+      "fillColor": "#006400",
+      "fillOpacity": 0.38,
+      "borderColor": "#003F00",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.80,
+      "popup": {
+        "title": "麥羅埃王國（Kingdom of Meroe / 庫施王國）",
+        "tag": "🏺 努比亞・尼羅河流域古文明",
+        "tagClass": "tag-possible",
+        "desc": "麥羅埃王國是古埃及文明南方的努比亞繼承文明，首都麥羅埃城位於今蘇丹境內，以豐富的鐵器工業和努比亞式陡坡金字塔著稱。公元前30年羅馬征服埃及後，麥羅埃曾武力入侵羅馬埃及邊境（前24年），最終劃定邊界維持外交關係。王國存續至約公元350年被阿克蘇姆王國征服。",
+        "source": "Strabo, Geographica · Cambridge Ancient History"
+      }
+    },
+    {
+      "points": [
+        [29.5, 8.5], [29.0, 12.0], [28.0, 16.5], [27.0, 18.5],
+        [25.5, 18.5], [24.0, 16.0], [23.5, 12.0], [24.0, 8.5],
+        [26.0, 7.0], [28.5, 7.0], [29.5, 8.5]
+      ],
+      "fillColor": "#CD8500",
+      "fillOpacity": 0.38,
+      "borderColor": "#8B5A00",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "popup": {
+        "title": "加拉曼特人（Garamantes）",
+        "tag": "🏜 撒哈拉費贊地區沙漠王國",
+        "tagClass": "tag-possible",
+        "desc": "加拉曼特人是撒哈拉中部費贊地區（今利比亞西南）的古代柏柏爾人系王國，以發達的地下輸水系統（foggaras）在乾旱沙漠中維持農耕聞名。曾多次與羅馬北非行省發生武裝衝突，也是撒哈拉跨沙漠貿易的重要參與者，連結地中海世界與撒哈拉以南非洲。",
+        "source": "Pliny the Elder, Historia Naturalis · Herodotus"
+      }
+    },
+    {
+      "points": [
+        [22.0, 73.0], [22.5, 77.0], [21.5, 80.5], [20.0, 82.5],
+        [17.5, 82.5], [15.5, 80.5], [14.5, 77.5], [15.0, 74.5],
+        [17.0, 73.0], [19.0, 72.5], [21.0, 72.5], [22.0, 73.0]
+      ],
+      "fillColor": "#8B008B",
+      "fillOpacity": 0.32,
+      "borderColor": "#5C005C",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.80,
+      "popup": {
+        "title": "百乘王朝（Sātavāhana / 安達羅王朝）",
+        "tag": "🏺 德干高原・印度中部王朝",
+        "tagClass": "tag-possible",
+        "desc": "百乘王朝（Satavahana，又稱安達羅王朝）是公元前後德干高原最強大的印度王朝，控制今馬哈拉施特拉邦、安得拉邦及部分卡納塔克邦。積極參與印度洋海上貿易，與羅馬帝國有通過紅海和波斯灣的間接商業往來，出口棉布、香料、珠寶等。與西薩特拉普長期爭奪德干西北地區。",
+        "source": "Encyclopaedia Iranica · Cambridge Ancient History"
+      }
+    },
+    {
+      "points": [
+        [27.5, 67.5], [27.0, 71.0], [25.5, 75.0], [24.0, 76.5],
+        [22.0, 76.5], [20.5, 74.5], [20.0, 71.0], [21.0, 68.5],
+        [23.0, 67.0], [25.5, 66.5], [27.5, 67.5]
+      ],
+      "fillColor": "#556B2F",
+      "fillOpacity": 0.35,
+      "borderColor": "#2F4000",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "popup": {
+        "title": "西薩特拉普（Western Satraps / 西方薩特拉普）",
+        "tag": "🏺 古吉拉特・拉賈斯坦・印度河下游",
+        "tagClass": "tag-possible",
+        "desc": "西薩特拉普由印度—斯基泰人（Indo-Scythians）及印度—帕提亞人後裔建立，控制今印度古吉拉特邦、拉賈斯坦邦及印度河下游地區。巴拉查港（Bharuch/Barygaza）為羅馬商船前往印度的主要目的地，《厄立特里亞海航行記》有詳細記載。與百乘王朝長期交戰爭奪德干西北。",
+        "source": "《厄立特里亞海航行記》· Encyclopaedia Iranica"
+      }
+    },
+    {
+      "points": [
+        [14.5, 76.5], [14.5, 79.5], [12.0, 80.5], [10.0, 80.0],
+        [8.5, 78.5], [8.0, 77.0], [8.5, 76.0], [10.0, 76.5],
+        [12.5, 75.5], [14.0, 76.0], [14.5, 76.5]
+      ],
+      "fillColor": "#008080",
+      "fillOpacity": 0.32,
+      "borderColor": "#005555",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "popup": {
+        "title": "達羅毗荼諸王國（Dravidian Kingdoms / 泰米爾三王國）",
+        "tag": "🌊 印度南端・朱羅・班底亞・哲羅三王國",
+        "tagClass": "tag-possible",
+        "desc": "印度南端達羅毗荼語系民族建立的三個主要王國：朱羅（Chola）、班底亞（Pandya）、哲羅（Chera）。此時期泰米爾地區高度融入印度洋貿易，與羅馬帝國有直接海上往來，出口胡椒、肉桂、象牙、珍珠等奢侈品。大量羅馬金幣在南印度考古遺址中被發現。",
+        "source": "《厄立特里亞海航行記》· Strabo, Geographica"
+      }
+    },
+    {
+      "points": [
+        [47.5, 122.0], [47.0, 126.5], [45.0, 130.5], [43.0, 130.5],
+        [43.0, 126.5], [43.5, 122.5], [45.0, 120.5], [47.0, 120.5],
+        [47.5, 122.0]
+      ],
+      "fillColor": "#483D8B",
+      "fillOpacity": 0.35,
+      "borderColor": "#2A2060",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.75,
+      "popup": {
+        "title": "扶餘（夫餘 / Buyeo）",
+        "tag": "🏯 滿洲・東北亞農耕王國",
+        "tagClass": "tag-possible",
+        "desc": "扶餘（夫餘）是公元前2世紀至公元494年存在於今中國吉林省及黑龍江省南部的王國，農耕與遊牧混合的政治體。漢代文獻記載扶餘與東漢帝國保持朝貢關係。扶餘是高句麗、百濟等朝鮮半島國家王室的傳說起源地，最終於494年為高句麗所滅。",
+        "source": "三國志 · 後漢書・東夷傳"
+      }
+    },
+    {
+      "points": [
+        [58.0, 20.0], [57.5, 26.0], [57.0, 32.0], [55.5, 36.0],
+        [54.0, 38.0], [52.0, 36.0], [50.0, 32.0], [50.0, 26.0],
+        [50.5, 22.0], [52.5, 18.5], [55.0, 18.0], [57.0, 18.5],
+        [58.0, 20.0]
+      ],
+      "fillColor": "#9370DB",
+      "fillOpacity": 0.26,
+      "borderColor": "#5C3D9E",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "popup": {
+        "title": "斯拉夫人（Slaveni / Proto-Slavs）",
+        "tag": "🏕 東歐森林地帶・維斯瓦河至第聶伯河流域",
+        "tagClass": "tag-possible",
+        "desc": "公元100年前後，原始斯拉夫人尚處於部落分散狀態，生活在今波蘭、烏克蘭至俄羅斯西部的森林地帶。羅馬史料中的「溫德人」（Venethi/Venedi）可能即早期斯拉夫人。真正大規模斯拉夫擴張要等到公元5–7世紀民族大遷徙時代。",
+        "source": "Tacitus, Germania · Pliny the Elder · Cambridge Ancient History"
+      }
     }
   ],
   "lines": [
@@ -383,6 +656,61 @@
       "desc": "西藏高原地區尚未統一的眾多部落聯盟，約公元7世紀才由松贊干布統一建立吐蕃王朝。此時期高原諸部處於漢帝國（西南）、貴霜帝國（西）、匈奴（北）的包圍之中，地理隔絕維持了相對的獨立。",
       "coords": "32°00'N 88°00'E",
       "source": "漢書"
+    },
+    {
+      "latlng": [40.4, 71.8],
+      "name": "大宛（費爾干納）",
+      "nameLocal": "大宛（Dayuan / Ferghana）",
+      "type": "possible",
+      "tag": "🐎 汗血寶馬產地・漢朝遠征目標",
+      "tagClass": "tag-possible",
+      "desc": "大宛（Dayuan）即今費爾干納盆地（今烏茲別克、塔吉克、吉爾吉斯交界），以出產「汗血馬」聞名於世。漢武帝為取得大宛馬，兩度派兵遠征（前104年、前102年），最終迫使大宛獻馬稱臣。大宛是絲路上重要的農耕城市國家，連接帕提亞與漢帝國西域。",
+      "coords": "40°24'N 71°46'E",
+      "source": "史記・大宛列傳 · 漢書・西域傳"
+    },
+    {
+      "latlng": [30.3, 35.5],
+      "name": "那巴泰王國",
+      "nameLocal": "那巴泰王國（Nabataean Kingdom）",
+      "type": "possible",
+      "tag": "🏙 阿拉伯香料商路王國・公元106年併入羅馬",
+      "tagClass": "tag-possible",
+      "desc": "那巴泰王國（Nabataean Kingdom）以玫瑰紅色石城佩特拉（Petra）為首都，長期壟斷阿拉伯香料商路。公元100年前後由阿瑞塔斯四世（Aretas IV）統治，仍維持名義獨立。公元106年，羅馬皇帝圖拉真將其併吞，設「阿拉比亞行省」（Provincia Arabia）。佩特拉的建築奇蹟今日仍列世界遺產。",
+      "coords": "30°20'N 35°26'E",
+      "source": "Strabo, Geographica · Cambridge Ancient History"
+    },
+    {
+      "latlng": [40.9, 125.5],
+      "name": "高句麗",
+      "nameLocal": "高句麗（Goguryeo）",
+      "type": "possible",
+      "tag": "🏯 朝鮮半島北部・滿洲新興王國",
+      "tagClass": "tag-possible",
+      "desc": "高句麗（Goguryeo）約於公元前37年建國，公元100年前後以今遼寧省南部為核心，正逐步從漢帝國的樂浪郡勢力範圍中獨立壯大。高句麗後來消滅扶餘（494年），統一朝鮮半島北部，成為東亞強權之一，直至668年被唐滅亡。",
+      "coords": "40°54'N 125°31'E",
+      "source": "三國志 · 後漢書・東夷傳"
+    },
+    {
+      "latlng": [14.1, 38.7],
+      "name": "阿克蘇姆王國",
+      "nameLocal": "阿克蘇姆王國（Aksumite Empire）",
+      "type": "possible",
+      "tag": "🌍 衣索比亞高原・東非強權",
+      "tagClass": "tag-possible",
+      "desc": "阿克蘇姆王國（Aksumite Empire）興起於今衣索比亞北部及厄利垂亞，公元1世紀已是印度洋貿易網絡的重要參與者，通過阿杜利斯港（Adulis）進出口紅海貿易商品。約公元350年征服了南方的麥羅埃王國，成為非洲最強大的基督教王國之一。《厄立特里亞海航行記》記載其作為重要貿易夥伴。",
+      "coords": "14°07'N 38°43'E",
+      "source": "《厄立特里亞海航行記》· Cambridge Ancient History"
+    },
+    {
+      "latlng": [37.3, 49.5],
+      "name": "帕提亞帝國・米底亞行省",
+      "nameLocal": "米底亞（Media / 帕提亞重要行省）",
+      "type": "possible",
+      "tag": "⚜ 帕提亞帝國核心行省",
+      "tagClass": "tag-reference",
+      "desc": "米底亞（Media）是帕提亞帝國最重要的行省之一，即今伊朗西北部、裏海南岸地區，古代米底王國的核心地域。米底亞行省是帕提亞帝國的軍事重鎮，也是防禦阿蘭人入侵的前線。首都艾克巴塔那（Ecbatana，今哈馬丹）曾為帕提亞王室的夏季行宮。",
+      "coords": "37°18'N 49°30'E",
+      "source": "Encyclopaedia Iranica · Cambridge Ancient History"
     }
   ],
   "legend": [
@@ -391,8 +719,22 @@
     { "symbol": "polygon", "fillColor": "#C47020", "fillOpacity": 0.50, "label": "貴霜帝國（Kushan Empire）" },
     { "symbol": "polygon", "fillColor": "#9B2050", "fillOpacity": 0.45, "label": "東漢王朝（Eastern Han Dynasty）" },
     { "symbol": "polygon", "fillColor": "#B8860B", "fillOpacity": 0.45, "label": "北匈奴（Northern Xiongnu）" },
+    { "symbol": "polygon", "fillColor": "#2D7A1F", "fillOpacity": 0.50, "label": "亞美尼亞王國（緩衝國）" },
+    { "symbol": "polygon", "fillColor": "#4A7FA5", "fillOpacity": 0.40, "label": "薩爾馬特人（Sarmatae）" },
+    { "symbol": "polygon", "fillColor": "#20A090", "fillOpacity": 0.40, "label": "阿蘭人（Alani）" },
+    { "symbol": "polygon", "fillColor": "#8B7355", "fillOpacity": 0.45, "label": "康居（Kangju）" },
+    { "symbol": "polygon", "fillColor": "#6B8E23", "fillOpacity": 0.40, "label": "高車部落・丁零（Dingling）" },
+    { "symbol": "polygon", "fillColor": "#5F8FA0", "fillOpacity": 0.38, "label": "堅昆（Jiankun / 葉尼塞柯爾克孜）" },
+    { "symbol": "polygon", "fillColor": "#C8A000", "fillOpacity": 0.35, "label": "阿拉伯遊牧民族（Saraceni）" },
+    { "symbol": "polygon", "fillColor": "#006400", "fillOpacity": 0.45, "label": "麥羅埃王國（Meroe / 庫施）" },
+    { "symbol": "polygon", "fillColor": "#CD8500", "fillOpacity": 0.45, "label": "加拉曼特人（Garamantes）" },
+    { "symbol": "polygon", "fillColor": "#8B008B", "fillOpacity": 0.40, "label": "百乘王朝（Satavahana）" },
+    { "symbol": "polygon", "fillColor": "#556B2F", "fillOpacity": 0.45, "label": "西薩特拉普（Western Satraps）" },
+    { "symbol": "polygon", "fillColor": "#008080", "fillOpacity": 0.40, "label": "達羅毗荼諸王國（Dravidian Kingdoms）" },
+    { "symbol": "polygon", "fillColor": "#483D8B", "fillOpacity": 0.45, "label": "扶餘（Buyeo）" },
+    { "symbol": "polygon", "fillColor": "#9370DB", "fillOpacity": 0.35, "label": "斯拉夫人（Proto-Slavs）" },
     { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "帝國首都（羅馬・泰西封・洛陽・貴霜）" },
-    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "絲路重要城市・遊牧民族活動區" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "絲路城市・小國・遊牧民族區" },
     { "symbol": "line", "color": "#D4A017", "dash": "8,5",  "weight": 2.5, "label": "陸上絲綢之路主幹線" },
     { "symbol": "line", "color": "#1A6FA5", "dash": "6,5",  "weight": 2, "label": "海上絲綢之路（示意）" }
   ]
