@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "title": "康斯坦丁諾夫卡戰役（2026年6月中旬）",
+    "titleEn": "Battle of Kostyantynivka — Mid-June 2026",
+    "subtitle": "6月11日俄新社：俄軍東部已完全控制・推進東北郊・市內巷戰・西南包圍態勢",
+    "date": "2026-06-11",
+    "status": "ongoing",
+    "theme": "red",
+    "sources": ["RIA Novosti（俄新社）", "TASS", "Rybar", "DeepState", "普希林（DNR首長）"]
+  },
+  "map": {
+    "center": [48.51, 37.70],
+    "zoom": 11,
+    "bounds": [[48.35, 37.42], [48.70, 37.97]]
+  },
+  "infoPanel": {
+    "title": "康斯坦丁諾夫卡戰局（6月11日）",
+    "paragraphs": [
+      "2026年6月11日，俄新社引述俄軍「南方」集團軍聲明：突擊部隊已在康斯坦丁諾夫卡東部完全建立控制，並推進至東北郊區；市內巷戰持續；西南方向正殲滅被包圍的烏軍部隊。俄軍已從東部（托雷茨克方向）與南部（伊利尼夫卡方向）形成夾擊態勢，並持續向西南方試圖切斷通往德魯日基夫卡的補給道路。",
+      "DeepState地圖（烏方OSINT）近期更新顯示：俄軍在伊利尼夫卡以南持續擴大控制區；城市東部與西南部出現多處滲透灰區，與俄方「東部已完全控制」方向吻合。俄方整體進展：3月格拉西莫夫稱俄控超過60%城區；3–4月切斷烏軍補給路徑；5–6月繼續從東、東北、西南多向壓縮。",
+      "⚠️ 控制線為依俄新社、DeepState及OSINT綜合繪製之概略示意，非精確街道邊界；灰色交戰區態勢每日持續變動。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [48.558, 37.755],
+        [48.570, 37.735],
+        [48.556, 37.718],
+        [48.540, 37.710],
+        [48.524, 37.712],
+        [48.508, 37.718],
+        [48.495, 37.750],
+        [48.502, 37.783],
+        [48.525, 37.799],
+        [48.548, 37.786],
+        [48.562, 37.768],
+        [48.558, 37.755]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.30,
+      "borderColor": "#922b21",
+      "borderWeight": 2,
+      "borderOpacity": 0.85,
+      "popup": {
+        "title": "俄軍已確認控制區（東部）",
+        "tag": "🔴 俄軍完全控制",
+        "tagClass": "tag-confirmed",
+        "desc": "依俄新社6月11日報導，俄軍「南方」集群已在康斯坦丁諾夫卡東部完全建立控制，涵蓋東部工業區、倉儲設施及鐵路東側區域。此一判斷亦與DeepState地圖近期更新方向一致。",
+        "source": "RIA Novosti · DeepState"
+      }
+    },
+    {
+      "points": [
+        [48.572, 37.698],
+        [48.570, 37.735],
+        [48.556, 37.718],
+        [48.540, 37.710],
+        [48.524, 37.712],
+        [48.508, 37.718],
+        [48.498, 37.722],
+        [48.491, 37.690],
+        [48.504, 37.660],
+        [48.540, 37.648],
+        [48.566, 37.658],
+        [48.576, 37.682],
+        [48.572, 37.698]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.22,
+      "borderColor": "#d35400",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.7,
+      "popup": {
+        "title": "激烈交戰區（市中心・西南）",
+        "tag": "🟠 持續巷戰・灰區",
+        "tagClass": "tag-possible",
+        "desc": "市中心與西南方向的激烈交戰地帶，包含部分住宅區與工廠建築群。俄新社稱巷戰正在市內進行，DeepState標記為持續變動的灰色地帶。鐵路站周邊為雙方激烈爭奪的關鍵節點。",
+        "source": "RIA Novosti · DeepState · Rybar"
+      }
+    },
+    {
+      "points": [
+        [48.510, 37.720],
+        [48.496, 37.726],
+        [48.487, 37.710],
+        [48.491, 37.690],
+        [48.505, 37.690],
+        [48.514, 37.705],
+        [48.510, 37.720]
+      ],
+      "fillColor": "#922b21",
+      "fillOpacity": 0.35,
+      "borderColor": "#641e16",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "西南孤立烏軍（俄方聲稱）",
+        "tag": "⚠ 俄稱烏軍遭包圍",
+        "tagClass": "tag-confirmed",
+        "desc": "俄新社稱西南部正在殲滅被包圍的烏克蘭軍隊。俄軍從東部與南部形成夾擊，並試圖切斷通往德魯日基夫卡的補給道路，使西南守軍面臨孤立態勢。烏方未證實此說法。",
+        "source": "RIA Novosti · TASS"
+      }
+    },
+    {
+      "points": [
+        [48.578, 37.740],
+        [48.590, 37.755],
+        [48.578, 37.768],
+        [48.563, 37.760],
+        [48.562, 37.745],
+        [48.570, 37.735],
+        [48.578, 37.740]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.22,
+      "borderColor": "#922b21",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.6,
+      "popup": {
+        "title": "東北郊（俄軍正推進）",
+        "tag": "🔴 俄軍推進中",
+        "tagClass": "tag-confirmed",
+        "desc": "俄新社6月11日報導俄軍已推進至康斯坦丁諾夫卡東北郊區，Rybar頻道顯示俄軍在此方向正積極擴大橋頭堡，為下一步向市中心壓縮做準備。",
+        "source": "RIA Novosti · Rybar"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [48.415, 37.848],
+        [48.455, 37.823],
+        [48.490, 37.800],
+        [48.512, 37.782]
+      ],
+      "color": "#c0392b",
+      "weight": 3,
+      "opacity": 0.80,
+      "popup": {
+        "title": "俄軍東部主攻軸（托雷茨克→東部市區）",
+        "tag": "⬅ 主要攻擊方向",
+        "tagClass": "tag-confirmed",
+        "desc": "俄軍自2025年秋奪取托雷茨克後，沿此軸線對康斯坦丁諾夫卡東部展開持續滲透攻勢，採「波克羅夫斯克式」小股步兵+無人機+滑翔炸彈戰術。東部工業區已確認被俄方完全控制。",
+        "source": "RIA Novosti · TASS"
+      }
+    },
+    {
+      "points": [
+        [48.440, 37.655],
+        [48.466, 37.678],
+        [48.488, 37.700]
+      ],
+      "color": "#c0392b",
+      "weight": 3,
+      "opacity": 0.75,
+      "popup": {
+        "title": "俄軍南部攻擊軸（伊利尼夫卡→西南）",
+        "tag": "⬆ 南部夾擊方向",
+        "tagClass": "tag-confirmed",
+        "desc": "俄軍從南部伊利尼夫卡方向對康斯坦丁諾夫卡西南部施壓，與東部攻擊形成夾擊態勢。DeepState顯示伊利尼夫卡以南俄軍持續擴大控制區，為切斷西南烏軍的主要南部壓力方向。",
+        "source": "RIA Novosti · DeepState"
+      }
+    },
+    {
+      "points": [
+        [48.534, 37.665],
+        [48.562, 37.625],
+        [48.600, 37.578],
+        [48.628, 37.530]
+      ],
+      "color": "#2471a3",
+      "weight": 2.5,
+      "opacity": 0.65,
+      "dashArray": "6,5",
+      "popup": {
+        "title": "烏軍補給通道（→德魯日基夫卡）・受威脅",
+        "tag": "⚠ 烏軍補給路線（受威脅）",
+        "tagClass": "tag-possible",
+        "desc": "康斯坦丁諾夫卡通往德魯日基夫卡的主要道路，目前仍為烏軍最重要的補給及人員進出通道。普希林稱俄軍已切斷最後補給路，但DeepState尚未確認此路完全封閉。此路若遭切斷，守城烏軍將陷入完全包圍。",
+        "source": "DeepState · Rybar · DNR首長普希林"
+      }
+    },
+    {
+      "points": [
+        [48.562, 37.758],
+        [48.575, 37.748],
+        [48.584, 37.758]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "4,4",
+      "popup": {
+        "title": "東北郊推進方向",
+        "tag": "↗ 俄軍東北擴張",
+        "tagClass": "tag-confirmed",
+        "desc": "俄軍在確立東部控制後，正向東北郊繼續推進，試圖從北側形成包圍弧線，壓縮烏軍在市區的防禦縱深。",
+        "source": "RIA Novosti · Rybar"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [48.533, 37.705],
+      "name": "康斯坦丁諾夫卡市中心",
+      "nameLocal": "Kostyantynivka · 頓涅茨克州",
+      "type": "confirmed",
+      "tag": "🔥 市內巷戰持續",
+      "tagClass": "tag-confirmed",
+      "desc": "人口約6萬的頓涅茨克州工業城市，為俄軍2026年春夏主要攻勢目標。6月11日俄新社報導東部已完全控制、東北郊正推進、市內巷戰持續。3月俄參謀長格拉西莫夫稱俄控超過60%城區，目前多方向巷戰仍在進行。",
+      "coords": "48°32'N 37°42'E",
+      "source": "RIA Novosti · DeepState"
+    },
+    {
+      "latlng": [48.535, 37.700],
+      "name": "鐵路站（俄軍重點目標）",
+      "nameLocal": "Kostyantynivka Station · 鐵路樞紐",
+      "type": "confirmed",
+      "tag": "🚂 鐵路站・激烈爭奪中",
+      "tagClass": "tag-confirmed",
+      "desc": "康斯坦丁諾夫卡鐵路站是城市的後勤樞紐，也是烏軍補給及增援的重要節點。普希林報導俄軍已在車站附近展開戰鬥，控制車站將進一步切斷烏軍後勤能力。",
+      "coords": "48°32'N 37°42'E",
+      "source": "DNR首長普希林 · TASS"
+    },
+    {
+      "latlng": [48.522, 37.762],
+      "name": "東部工業區（俄方完全控制）",
+      "nameLocal": "Eastern Industrial Zone · 俄控",
+      "type": "confirmed",
+      "tag": "🔴 東部工業區・俄完全控制",
+      "tagClass": "tag-confirmed",
+      "desc": "俄新社6月11日明確稱俄軍已在城市東部完全建立控制，包含東部工業設施及倉儲區。DeepState近期更新亦將此區域標記為俄軍控制。東部工業區的陷落為俄軍進一步向市中心推進打開通道。",
+      "coords": "48°31'N 37°46'E",
+      "source": "RIA Novosti · DeepState"
+    },
+    {
+      "latlng": [48.498, 37.707],
+      "name": "西南孤立區（俄稱烏軍受困）",
+      "nameLocal": "SW Pocket · 俄方聲稱包圍",
+      "type": "possible",
+      "tag": "⚠ 俄方聲稱烏軍遭殲",
+      "tagClass": "tag-possible",
+      "desc": "俄新社6月11日稱正在西南部「殲滅被包圍的烏克蘭軍隊」。俄軍從東部與南部夾擊，並施壓德魯日基夫卡補給道路，使西南守軍面臨孤立。烏方未正式確認包圍狀態，實際態勢仍有爭議。",
+      "coords": "48°30'N 37°42'E",
+      "source": "RIA Novosti · TASS"
+    },
+    {
+      "latlng": [48.575, 37.748],
+      "name": "東北郊（俄軍推進中）",
+      "nameLocal": "NE Suburbs · 俄軍推進",
+      "type": "possible",
+      "tag": "🔴 東北郊・俄正推進",
+      "tagClass": "tag-possible",
+      "desc": "俄新社6月11日特別指出俄軍已推進至東北郊區，Rybar頻道顯示俄軍正在此方向積極鞏固陣地，為下一步向市中心、向北切斷補給路線做準備。",
+      "coords": "48°34'N 37°45'E",
+      "source": "RIA Novosti · Rybar"
+    },
+    {
+      "latlng": [48.410, 37.850],
+      "name": "托雷茨克（俄控）",
+      "nameLocal": "Toretsk · 2025年秋俄方佔領",
+      "type": "capital",
+      "tag": "🔴 俄控城市・東部攻擊基地",
+      "tagClass": "tag-reference",
+      "desc": "2025年秋季俄軍奪取的頓涅茨克州城市，為對康斯坦丁諾夫卡東部展開攻勢的主要出發地。俄軍在控制托雷茨克後即將康斯坦丁諾夫卡列為2026年主要攻勢目標，從此方向發動持續滲透攻擊。",
+      "coords": "48°25'N 37°51'E",
+      "source": "RIA Novosti · TASS"
+    },
+    {
+      "latlng": [48.445, 37.655],
+      "name": "伊利尼夫卡（俄控）",
+      "nameLocal": "Ilyinivka · 南部攻擊方向",
+      "type": "confirmed",
+      "tag": "🔴 俄控・南部施壓方向",
+      "tagClass": "tag-confirmed",
+      "desc": "俄軍南部攻擊軸的重要節點，DeepState顯示俄軍在伊利尼夫卡以南持續擴大控制區，並從此方向對康斯坦丁諾夫卡西南部施加壓力，配合東部主攻形成夾擊態勢。",
+      "coords": "48°27'N 37°39'E",
+      "source": "DeepState · RIA Novosti"
+    },
+    {
+      "latlng": [48.628, 37.527],
+      "name": "德魯日基夫卡（烏控）",
+      "nameLocal": "Druzhkivka · 烏軍補給終點",
+      "type": "possible",
+      "tag": "🇺🇦 烏控・補給通道終點",
+      "tagClass": "tag-possible",
+      "desc": "烏克蘭控制的後方城市，為康斯坦丁諾夫卡烏軍的主要補給與撤退通道終點。俄軍持續向西南方施壓，試圖切斷康斯坦丁諾夫卡通往德魯日基夫卡的道路，一旦成功將使守軍陷入完全包圍。",
+      "coords": "48°38'N 37°32'E",
+      "source": "DeepState · Rybar"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#c0392b", "fillOpacity": 0.5, "label": "俄軍已確認控制區（東部・東北郊）" },
+    { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.4, "label": "激烈交戰中（市中心・西南灰區）" },
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "俄軍控制節點・巷戰地點" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "烏方或爭議節點" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "參考城市（托雷茨克・德魯日基夫卡）" },
+    { "symbol": "line", "color": "#c0392b", "weight": 3,   "label": "俄軍主攻方向（東部・南部）" },
+    { "symbol": "line", "color": "#2471a3", "dash": "6,5",  "weight": 2.5, "label": "烏軍補給通道（受威脅）" }
+  ]
+}
