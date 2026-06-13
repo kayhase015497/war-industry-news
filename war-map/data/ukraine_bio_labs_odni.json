@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "title": "烏克蘭生物實驗室分布",
+    "titleEn": "Ukraine Biological Labs – ODNI Declassified",
+    "subtitle": "2026年6月｜ODNI解密文件｜40座以上美方援建實驗室・BSL生物安全等級分類",
+    "date": "2026-06-13",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["ODNI", "DTRA"]
+  },
+  "map": {
+    "center": [49.0, 31.5],
+    "zoom": 6,
+    "bounds": [[43.5, 20.5], [53.5, 41.5]]
+  },
+  "infoPanel": {
+    "title": "烏克蘭生物實驗室・ODNI解密",
+    "paragraphs": [
+      "根據美國國家情報總監辦公室（ODNI）解密文件，美方透過國防威脅降低局（DTRA）在烏克蘭援建並支持逾40座生物實驗室，分布全國，涵蓋BSL-1至BSL-4生物安全等級，研究類型含人類、動物及人畜共通疾病。",
+      "文件揭示四大要點：（1）儲存前蘇聯時代生物武器病原體；（2）美方訓練烏克蘭科學家從事生物防護；（3）建立「高度危險病原體（EDP）認證」體系；（4）敖德薩設施標注「生物武器儲存」符號。",
+      "涉及病原體包括：炭疽桿菌、土拉熱弗朗西斯菌、結核桿菌、豬瘟病毒、新城疫病毒、MERS、SARS、馬堡病毒、伊波拉病毒、拉薩病毒、鼠疫桿菌、立克次體等。",
+      "⚠️ 地點為ODNI投影片地圖概略位置。盧甘斯克、頓涅茨克、克里米亞目前在俄羅斯控制下，實驗室現況不明。"
+    ]
+  },
+  "polygons": [],
+  "lines": [],
+  "locations": [
+    {
+      "latlng": [49.84, 24.02],
+      "name": "利維夫",
+      "nameLocal": "利維夫（Lviv）",
+      "type": "capital",
+      "tag": "🧪 BSL-3動物 + BSL-2 × 多設施",
+      "tagClass": "tag-strategic",
+      "desc": "ODNI投影片顯示利維夫設有多個生物實驗室，包含BSL-3等級動物研究設施及複數BSL-2實驗室，是烏克蘭西部最主要的生物研究聚集地。",
+      "coords": "49°50'N 24°01'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [48.29, 25.94],
+      "name": "切爾諾夫策",
+      "nameLocal": "切爾諾夫策（Chernivtsi）",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示切爾諾夫策設有BSL-2等級生物實驗室。",
+      "coords": "48°17'N 25°56'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [49.55, 25.59],
+      "name": "捷爾諾波爾",
+      "nameLocal": "捷爾諾波爾（Ternopil）",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示捷爾諾波爾設有BSL-2等級生物實驗室。",
+      "coords": "49°33'N 25°35'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [48.62, 22.29],
+      "name": "外喀爾巴阡州",
+      "nameLocal": "外喀爾巴阡州・烏日霍羅德（Zakarpattia / Uzhhorod）",
+      "type": "capital",
+      "tag": "🧪 BSL-3動物 + BSL-2 設施",
+      "tagClass": "tag-strategic",
+      "desc": "ODNI投影片顯示外喀爾巴阡州設有BSL-3等級動物研究設施及BSL-2實驗室，緊鄰波蘭、斯洛伐克、匈牙利邊境。",
+      "coords": "48°37'N 22°17'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [49.23, 28.47],
+      "name": "文尼察",
+      "nameLocal": "文尼察（Vinnytsia）",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示文尼察設有BSL-2等級生物實驗室。",
+      "coords": "49°14'N 28°28'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [50.45, 30.52],
+      "name": "基輔",
+      "nameLocal": "基輔（Kyiv）・烏克蘭首都",
+      "type": "capital",
+      "tag": "🧪 BSL-3 + BSL-2 × 多設施・首都",
+      "tagClass": "tag-strategic",
+      "desc": "烏克蘭首都，ODNI投影片顯示基輔設有複數BSL-3及BSL-2等級生物實驗室，是烏克蘭最重要的生物研究中心。",
+      "coords": "50°27'N 30°31'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [49.99, 36.23],
+      "name": "哈爾科夫",
+      "nameLocal": "哈爾科夫（Kharkiv）",
+      "type": "capital",
+      "tag": "🧪 BSL-2 設施・烏東第一大城",
+      "tagClass": "tag-strategic",
+      "desc": "烏克蘭第二大城市，ODNI投影片顯示哈爾科夫設有BSL-2等級生物實驗室。2022年以來持續受到俄羅斯飛彈及無人機攻擊。",
+      "coords": "49°59'N 36°14'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [48.46, 35.04],
+      "name": "第聶伯羅",
+      "nameLocal": "第聶伯羅（Dnipro / Dnipropetrovsk）",
+      "type": "capital",
+      "tag": "🧪 BSL-3 + BSL-2 設施",
+      "tagClass": "tag-strategic",
+      "desc": "ODNI投影片顯示第聶伯羅設有BSL-3及BSL-2等級生物實驗室。",
+      "coords": "48°28'N 35°02'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [46.48, 30.72],
+      "name": "敖德薩",
+      "nameLocal": "敖德薩（Odesa）・生物武器儲存標記",
+      "type": "confirmed",
+      "tag": "⚠️ BSL-3人類研究 + 生物武器儲存（BW Storage）",
+      "tagClass": "tag-confirmed",
+      "desc": "ODNI投影片在敖德薩標注多個符號：橙色實心方塊（BSL-3人類研究）、綠色空心方塊（Biological Weapons Storage・生物武器儲存）及BSL-2三角形。敖德薩是地圖上唯一明確標有「生物武器儲存」符號的城市，具最高關注等級。",
+      "coords": "46°29'N 30°43'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [48.57, 39.33],
+      "name": "盧甘斯克",
+      "nameLocal": "盧甘斯克（Luhansk）・俄控區",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施・俄羅斯控制區",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示盧甘斯克設有BSL-2等級生物實驗室。盧甘斯克自2022年起處於俄羅斯完全控制下，實驗室現況不明。",
+      "coords": "48°34'N 39°20'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [48.00, 37.80],
+      "name": "頓涅茨克",
+      "nameLocal": "頓涅茨克（Donetsk）・俄控區",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施・俄羅斯控制區",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示頓涅茨克設有BSL-2等級生物實驗室。頓涅茨克自2014年起部分地區、2022年後大部分地區處於俄羅斯控制下，實驗室現況不明。",
+      "coords": "48°00'N 37°48'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [46.63, 32.62],
+      "name": "赫爾松",
+      "nameLocal": "赫爾松（Kherson）",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示赫爾松設有BSL-2等級生物實驗室。赫爾松市目前由烏克蘭控制，但赫爾松州右岸仍在俄羅斯佔領下。",
+      "coords": "46°38'N 32°37'E",
+      "source": "ODNI Declassified Slide"
+    },
+    {
+      "latlng": [44.95, 34.10],
+      "name": "克里米亞",
+      "nameLocal": "克里米亞・辛菲羅波爾（Crimea / Simferopol）",
+      "type": "possible",
+      "tag": "🧪 BSL-2 設施・俄佔區（2014年至今）",
+      "tagClass": "tag-possible",
+      "desc": "ODNI投影片顯示克里米亞設有BSL-2等級生物實驗室。克里米亞自2014年起被俄羅斯實際控制並宣稱併吞，實驗室現況不明。",
+      "coords": "44°57'N 34°06'E",
+      "source": "ODNI Declassified Slide"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "BSL-3人類研究 + 生物武器儲存（敖德薩）" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "BSL-3 / 多設施城市（基輔・利維夫・第聶伯羅等）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "BSL-2 設施（各州市）" }
+  ]
+}
