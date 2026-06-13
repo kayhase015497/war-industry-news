@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "title": "塔塔電子霍蘇爾工廠廢水污染事件",
+    "titleEn": "Tata Electronics Hosur Factory Wastewater Contamination Incident",
+    "subtitle": "2026年5月25日｜泰米爾納德邦污染管制委員會警告強制停電關閉・蘋果供應鏈環境爭議",
+    "date": "2026-05-25",
+    "status": "ongoing",
+    "theme": "orange",
+    "sources": ["Reuters", "Tamil Nadu Pollution Control Board", "TNPCB"]
+  },
+  "map": {
+    "center": [12.72, 77.83],
+    "zoom": 9,
+    "bounds": [[11.5, 76.5], [14.5, 80.5]]
+  },
+  "infoPanel": {
+    "title": "塔塔電子廢水污染爭議・蘋果供應鏈受壓",
+    "paragraphs": [
+      "塔塔電子（Tata Electronics）位於泰米爾納德邦霍蘇爾（Hosur）的蘋果iPhone零件代工廠，遭泰米爾納德邦污染管制委員會（TNPCB）指控非法排放廢水、污染周邊農地地下水。TNPCB於2026年5月25日發出警告通知，揭示自2025年12月至2026年5月間，管制機構對該廠進行了5次現場稽查，發現塔塔將廢水排放至廠區內的雨水收集池，池水溢出後污染了「鄰近農業用地開放水井的地下水」。",
+      "TNPCB警告，若塔塔電子未能提出滿意說明，將採取強制措施切斷電力並關閉廠房。霍蘇爾工廠是塔塔電子為蘋果代工iPhone零件的重要設施，也是印度積極推動蘋果供應鏈在地化戰略的關鍵投資之一。此事件引發外界對印度製造業快速擴張過程中環境監管執法力度的高度關注。",
+      "⚠️ 污染影響範圍為概略示意，依公開報導繪製，非精確調查邊界。塔塔電子尚未就路透社報導作出公開回應。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [12.760, 77.820],
+        [12.758, 77.858],
+        [12.738, 77.868],
+        [12.718, 77.860],
+        [12.710, 77.838],
+        [12.720, 77.818],
+        [12.740, 77.812],
+        [12.760, 77.820]
+      ],
+      "fillColor": "#f59e0b",
+      "fillOpacity": 0.22,
+      "borderColor": "#b45309",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "borderDashArray": "4,4",
+      "popup": {
+        "title": "廢水污染概略影響範圍（示意）",
+        "tag": "⚠ 鄰近農業用地地下水受污染",
+        "tagClass": "tag-possible",
+        "desc": "據TNPCB稽查報告，塔塔電子工廠廢水排入廠內雨水收集池，池水溢出後流向廠區周邊農業用地，污染農民使用的開放水井地下水。此多邊形為概略示意範圍，依路透社公開報導繪製，並非TNPCB公布的精確污染邊界。",
+        "source": "Reuters · TNPCB"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [12.745, 77.843],
+        [12.728, 77.822]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "廢水溢流路徑（概示）",
+        "tag": "🔴 工廠雨水收集池溢出方向",
+        "tagClass": "tag-confirmed",
+        "desc": "示意廢水從工廠雨水收集池溢出、流向周邊農業用地的概略方向。TNPCB 5次稽查均記錄到廢水排放問題，池水溢出後污染鄰近農民的開放水井。",
+        "source": "Reuters · TNPCB"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [12.745, 77.843],
+      "name": "塔塔電子霍蘇爾工廠",
+      "nameLocal": "塔塔電子（Tata Electronics・霍蘇爾SIPCOT工業區）",
+      "type": "confirmed",
+      "tag": "🏭 廢水排放指控・TNPCB警告強制關閉",
+      "tagClass": "tag-confirmed",
+      "desc": "塔塔電子（Tata Electronics）位於霍蘇爾SIPCOT工業區的蘋果iPhone零件代工廠。TNPCB於2026年5月25日發出警告通知，指該廠自2025年12月起多次將廢水排放至廠內雨水收集池，造成池水溢出並污染周邊農地地下水。5次稽查均記錄到違規情形，委員會警告若未提出滿意說明將強制斷電關廠。",
+      "coords": "12°44'N 77°50'E",
+      "source": "Reuters · TNPCB"
+    },
+    {
+      "latlng": [12.728, 77.822],
+      "name": "受污染農業用地",
+      "nameLocal": "霍蘇爾・受污染農地及開放水井區",
+      "type": "possible",
+      "tag": "🌾 地下水污染・農民水井受影響",
+      "tagClass": "tag-possible",
+      "desc": "塔塔電子工廠周邊農業用地，據TNPCB稽查報告顯示，工廠廢水溢出後流入此區，污染農民使用的開放水井地下水。2025年12月至2026年5月間5次稽查均記錄到廢水排放及地下水污染問題，當地農民賴以灌溉及生活的地下水源受到威脅。",
+      "coords": "12°43'N 77°49'E",
+      "source": "Reuters · TNPCB"
+    },
+    {
+      "latlng": [12.742, 77.827],
+      "name": "霍蘇爾",
+      "nameLocal": "霍蘇爾（Hosur・克里希納吉里縣）",
+      "type": "capital",
+      "tag": "🏙 泰米爾納德邦工業重鎮・距班加羅爾40公里",
+      "tagClass": "tag-reference",
+      "desc": "霍蘇爾（Hosur）是泰米爾納德邦克里希納吉里縣的工業重鎮，位於卡納塔克邦邊境附近，距班加羅爾約40公里。近年因電動車電池、電子製造業的大量投資而快速工業化，塔塔電子、奧拉電動（Ola Electric）等企業均在此設廠。SIPCOT工業區是本地最主要的工業聚集區。",
+      "coords": "12°44'N 77°49'E",
+      "source": "Reuters"
+    },
+    {
+      "latlng": [12.978, 77.576],
+      "name": "班加羅爾",
+      "nameLocal": "班加羅爾（Bengaluru・卡納塔克邦首府）",
+      "type": "capital",
+      "tag": "🏙 印度矽谷・距霍蘇爾約40公里",
+      "tagClass": "tag-reference",
+      "desc": "卡納塔克邦首府，印度最重要的科技中心，距霍蘇爾約40公里。班加羅爾都會圈是蘋果、三星等跨國科技公司印度製造基地的核心樞紐，霍蘇爾事實上已成為班加羅爾的工業衛星城，共同構成印度最重要的電子製造走廊。",
+      "coords": "12°59'N 77°35'E",
+      "source": "Reuters"
+    },
+    {
+      "latlng": [13.083, 80.270],
+      "name": "欽奈",
+      "nameLocal": "欽奈（Chennai・泰米爾納德邦首府）",
+      "type": "capital",
+      "tag": "🏛 泰米爾納德邦首府・TNPCB總部所在地",
+      "tagClass": "tag-reference",
+      "desc": "泰米爾納德邦首府，泰米爾納德邦污染管制委員會（TNPCB）總部所在地。TNPCB負責監管全邦工業設施的環境合規，並對違規工廠發出警告、實施行政處分或強制停工。此次霍蘇爾塔塔電子廢水污染事件的警告通知即由TNPCB發出。",
+      "coords": "13°05'N 80°16'E",
+      "source": "TNPCB"
+    },
+    {
+      "latlng": [12.845, 77.664],
+      "name": "電子城工業走廊",
+      "nameLocal": "電子城（Electronics City・霍蘇爾路工業走廊）",
+      "type": "possible",
+      "tag": "🏭 班加羅爾南郊・印度最大電子製造聚集區",
+      "tagClass": "tag-reference",
+      "desc": "班加羅爾南郊的電子城（Electronics City）是印度最重要的電子製造業聚集地，沿霍蘇爾路（Hosur Road/NH44）向南延伸至霍蘇爾，形成連續的電子製造走廊。英飛凌、德州儀器、惠普等企業均在此設有設施。塔塔電子霍蘇爾廠的廢水污染事件發生在此快速工業化走廊的南端。",
+      "coords": "12°51'N 77°40'E",
+      "source": "Reuters"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#f59e0b", "fillOpacity": 0.4, "label": "廢水污染概略影響範圍（示意）" },
+    { "symbol": "line",    "color": "#e74c3c", "dash": "5,4", "weight": 2, "label": "廢水溢流概略路徑（示意）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "塔塔電子工廠・TNPCB警告強制關閉" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "受污染農地・工業走廊" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "城市（霍蘇爾・班加羅爾・欽奈）" }
+  ]
+}
