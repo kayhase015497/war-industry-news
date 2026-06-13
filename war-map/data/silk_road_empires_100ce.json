@@ -37,9 +37,9 @@
         [32.2, 0.0], [32.8, -4.0], [33.5, -7.5], [35.2, -6.0],
         [36.0, -5.6], [37.0, -9.0], [38.7, -9.4], [43.8, -9.3]
       ],
-      "fillColor": "#0D2B5E",
+      "fillColor": "#8B2200",
       "fillOpacity": 0.32,
-      "borderColor": "#071A3E",
+      "borderColor": "#5C1500",
       "borderWeight": 1.5,
       "borderOpacity": 0.8,
       "popup": {
@@ -58,9 +58,9 @@
         [52.8, -4.7], [52.3, -4.1], [51.7, -5.3], [51.4, -3.3],
         [51.2, -4.2], [50.5, -4.2], [50.1, -5.7]
       ],
-      "fillColor": "#0D2B5E",
+      "fillColor": "#8B2200",
       "fillOpacity": 0.32,
-      "borderColor": "#071A3E",
+      "borderColor": "#5C1500",
       "borderWeight": 1.5,
       "borderOpacity": 0.8,
       "popup": {
@@ -82,9 +82,9 @@
         [30.0, 48.8], [31.0, 46.5], [33.0, 43.8], [34.5, 40.9],
         [35.9, 39.2], [36.8, 38.5], [38.0, 39.0], [39.4, 44.5]
       ],
-      "fillColor": "#1A4F9E",
+      "fillColor": "#4A2888",
       "fillOpacity": 0.35,
-      "borderColor": "#0E3070",
+      "borderColor": "#2E1A5C",
       "borderWeight": 1.5,
       "borderOpacity": 0.8,
       "popup": {
@@ -105,9 +105,9 @@
         [34.8, 61.3], [36.0, 62.0], [37.5, 63.3], [38.3, 64.6],
         [39.4, 65.7], [40.4, 66.8]
       ],
-      "fillColor": "#1A7A9E",
+      "fillColor": "#C47020",
       "fillOpacity": 0.35,
-      "borderColor": "#0E5070",
+      "borderColor": "#8B4C00",
       "borderWeight": 1.5,
       "borderOpacity": 0.8,
       "popup": {
@@ -134,9 +134,9 @@
         [37.5, 97.5], [38.3, 94.0], [37.2, 90.0], [36.7, 85.0],
         [36.9, 81.0], [37.1, 78.5], [39.6, 75.3]
       ],
-      "fillColor": "#2845A0",
+      "fillColor": "#9B2050",
       "fillOpacity": 0.28,
-      "borderColor": "#182870",
+      "borderColor": "#6B0030",
       "borderWeight": 1.5,
       "borderOpacity": 0.8,
       "popup": {
@@ -153,9 +153,9 @@
         [51.5, 95.0], [51.0, 100.5], [49.5, 103.5], [47.0, 103.0],
         [45.0, 98.0], [43.8, 92.5], [43.8, 87.5], [44.0, 80.5]
       ],
-      "fillColor": "#4A6CA8",
+      "fillColor": "#B8860B",
       "fillOpacity": 0.28,
-      "borderColor": "#2E4878",
+      "borderColor": "#8B6508",
       "borderWeight": 1.5,
       "borderOpacity": 0.7,
       "popup": {
@@ -172,9 +172,9 @@
         [39.5, 48.0], [38.0, 47.0], [37.5, 45.0], [37.0, 42.0],
         [37.5, 39.5], [39.0, 38.0], [40.5, 37.5], [41.5, 38.5]
       ],
-      "fillColor": "#1A8A9E",
+      "fillColor": "#2D7A1F",
       "fillOpacity": 0.40,
-      "borderColor": "#0E5E70",
+      "borderColor": "#1A5C00",
       "borderWeight": 1.5,
       "borderOpacity": 0.85,
       "popup": {
@@ -193,9 +193,9 @@
         [45.0, 34.0], [46.5, 30.0], [48.5, 26.5], [51.0, 24.5],
         [54.0, 26.0]
       ],
-      "fillColor": "#5A8AB8",
+      "fillColor": "#4A7FA5",
       "fillOpacity": 0.30,
-      "borderColor": "#3A5E80",
+      "borderColor": "#2E5C7A",
       "borderWeight": 1.5,
       "borderOpacity": 0.70,
       "popup": {
@@ -212,9 +212,9 @@
         [43.5, 54.0], [42.5, 50.0], [42.0, 46.0], [43.0, 42.5],
         [44.0, 40.0], [46.0, 40.0], [48.5, 42.0]
       ],
-      "fillColor": "#3A9AB8",
+      "fillColor": "#20A090",
       "fillOpacity": 0.32,
-      "borderColor": "#226878",
+      "borderColor": "#0E6B62",
       "borderWeight": 1.5,
       "borderOpacity": 0.70,
       "popup": {
@@ -232,9 +232,9 @@
         [47.0, 62.0], [46.0, 58.5], [44.0, 57.0], [42.5, 57.5],
         [41.5, 58.5]
       ],
-      "fillColor": "#6A98BC",
+      "fillColor": "#8B7355",
       "fillOpacity": 0.38,
-      "borderColor": "#446A88",
+      "borderColor": "#5C4A2A",
       "borderWeight": 1.5,
       "borderOpacity": 0.75,
       "popup": {
@@ -252,9 +252,9 @@
         [56.0, 94.0], [54.0, 88.0], [51.5, 83.5], [49.5, 80.5],
         [48.5, 82.0]
       ],
-      "fillColor": "#5A9AB8",
+      "fillColor": "#6B8E23",
       "fillOpacity": 0.30,
-      "borderColor": "#3A6880",
+      "borderColor": "#4A6200",
       "borderWeight": 1.5,
       "borderOpacity": 0.70,
       "popup": {
@@ -271,9 +271,9 @@
         [58.0, 108.0], [56.5, 108.0], [55.5, 103.0], [53.5, 97.0],
         [51.5, 93.5], [51.5, 89.5], [53.0, 87.5]
       ],
-      "fillColor": "#7AAEC8",
+      "fillColor": "#5F8FA0",
       "fillOpacity": 0.28,
-      "borderColor": "#4A7898",
+      "borderColor": "#3A6070",
       "borderWeight": 1.5,
       "borderOpacity": 0.65,
       "popup": {
@@ -291,9 +291,9 @@
         [13.5, 40.0], [15.5, 37.5], [18.5, 37.0], [22.5, 38.0],
         [26.0, 37.5], [29.5, 36.5]
       ],
-      "fillColor": "#9AB8D0",
+      "fillColor": "#C8A000",
       "fillOpacity": 0.26,
-      "borderColor": "#6A8898",
+      "borderColor": "#8B6D00",
       "borderWeight": 1.5,
       "borderOpacity": 0.65,
       "popup": {
@@ -311,9 +311,9 @@
         [15.0, 30.0], [17.5, 29.0], [19.5, 29.5], [21.5, 30.0],
         [22.5, 30.5]
       ],
-      "fillColor": "#1A6890",
+      "fillColor": "#006400",
       "fillOpacity": 0.38,
-      "borderColor": "#0E4060",
+      "borderColor": "#003F00",
       "borderWeight": 1.5,
       "borderOpacity": 0.80,
       "popup": {
@@ -330,9 +330,9 @@
         [25.5, 18.5], [24.0, 16.0], [23.5, 12.0], [24.0, 8.5],
         [26.0, 7.0], [28.5, 7.0], [29.5, 8.5]
       ],
-      "fillColor": "#7AAAC0",
+      "fillColor": "#CD8500",
       "fillOpacity": 0.38,
-      "borderColor": "#4A7888",
+      "borderColor": "#8B5A00",
       "borderWeight": 1.5,
       "borderOpacity": 0.75,
       "popup": {
@@ -349,9 +349,9 @@
         [17.5, 82.5], [15.5, 80.5], [14.5, 77.5], [15.0, 74.5],
         [17.0, 73.0], [19.0, 72.5], [21.0, 72.5], [22.0, 73.0]
       ],
-      "fillColor": "#1A6EA8",
+      "fillColor": "#8B008B",
       "fillOpacity": 0.32,
-      "borderColor": "#0E4A72",
+      "borderColor": "#5C005C",
       "borderWeight": 1.5,
       "borderOpacity": 0.80,
       "popup": {
@@ -368,9 +368,9 @@
         [22.0, 76.5], [20.5, 74.5], [20.0, 71.0], [21.0, 68.5],
         [23.0, 67.0], [25.5, 66.5], [27.5, 67.5]
       ],
-      "fillColor": "#4A88A8",
+      "fillColor": "#556B2F",
       "fillOpacity": 0.35,
-      "borderColor": "#2E5C78",
+      "borderColor": "#2F4000",
       "borderWeight": 1.5,
       "borderOpacity": 0.75,
       "popup": {
@@ -387,9 +387,9 @@
         [8.5, 78.5], [8.0, 77.0], [8.5, 76.0], [10.0, 76.5],
         [12.5, 75.5], [14.0, 76.0], [14.5, 76.5]
       ],
-      "fillColor": "#2A9AB8",
+      "fillColor": "#008080",
       "fillOpacity": 0.32,
-      "borderColor": "#1A6878",
+      "borderColor": "#005555",
       "borderWeight": 1.5,
       "borderOpacity": 0.75,
       "popup": {
@@ -406,9 +406,9 @@
         [43.0, 126.5], [43.5, 122.5], [45.0, 120.5], [47.0, 120.5],
         [47.5, 122.0]
       ],
-      "fillColor": "#3A5A98",
+      "fillColor": "#483D8B",
       "fillOpacity": 0.35,
-      "borderColor": "#223870",
+      "borderColor": "#2A2060",
       "borderWeight": 1.5,
       "borderOpacity": 0.75,
       "popup": {
@@ -426,9 +426,9 @@
         [50.5, 22.0], [52.5, 18.5], [55.0, 18.0], [57.0, 18.5],
         [58.0, 20.0]
       ],
-      "fillColor": "#7A9AC8",
+      "fillColor": "#9370DB",
       "fillOpacity": 0.26,
-      "borderColor": "#4A6498",
+      "borderColor": "#5C3D9E",
       "borderWeight": 1.5,
       "borderOpacity": 0.65,
       "popup": {
@@ -448,7 +448,7 @@
         [40.5, 82.9], [40.1, 94.7], [34.3, 108.9],
         [34.7, 112.5]
       ],
-      "color": "#E8D040",
+      "color": "#D4A017",
       "weight": 2.5,
       "opacity": 0.75,
       "dashArray": "8,5",
@@ -467,7 +467,7 @@
         [11.0, 77.0], [8.5, 77.3],
         [1.3, 104.0]
       ],
-      "color": "#60B8E8",
+      "color": "#1A6FA5",
       "weight": 2,
       "opacity": 0.55,
       "dashArray": "6,5",
@@ -714,28 +714,28 @@
     }
   ],
   "legend": [
-    { "symbol": "polygon", "fillColor": "#0D2B5E", "fillOpacity": 0.45, "label": "羅馬帝國（Imperium Romanum）" },
-    { "symbol": "polygon", "fillColor": "#1A4F9E", "fillOpacity": 0.50, "label": "帕提亞帝國（Arsacid / Imperium Parthicum）" },
-    { "symbol": "polygon", "fillColor": "#1A7A9E", "fillOpacity": 0.50, "label": "貴霜帝國（Kushan Empire）" },
-    { "symbol": "polygon", "fillColor": "#2845A0", "fillOpacity": 0.45, "label": "東漢王朝（Eastern Han Dynasty）" },
-    { "symbol": "polygon", "fillColor": "#4A6CA8", "fillOpacity": 0.45, "label": "北匈奴（Northern Xiongnu）" },
-    { "symbol": "polygon", "fillColor": "#1A8A9E", "fillOpacity": 0.50, "label": "亞美尼亞王國（緩衝國）" },
-    { "symbol": "polygon", "fillColor": "#5A8AB8", "fillOpacity": 0.40, "label": "薩爾馬特人（Sarmatae）" },
-    { "symbol": "polygon", "fillColor": "#3A9AB8", "fillOpacity": 0.40, "label": "阿蘭人（Alani）" },
-    { "symbol": "polygon", "fillColor": "#6A98BC", "fillOpacity": 0.45, "label": "康居（Kangju）" },
-    { "symbol": "polygon", "fillColor": "#5A9AB8", "fillOpacity": 0.40, "label": "高車部落・丁零（Dingling）" },
-    { "symbol": "polygon", "fillColor": "#7AAEC8", "fillOpacity": 0.38, "label": "堅昆（Jiankun / 葉尼塞柯爾克孜）" },
-    { "symbol": "polygon", "fillColor": "#9AB8D0", "fillOpacity": 0.35, "label": "阿拉伯遊牧民族（Saraceni）" },
-    { "symbol": "polygon", "fillColor": "#1A6890", "fillOpacity": 0.45, "label": "麥羅埃王國（Meroe / 庫施）" },
-    { "symbol": "polygon", "fillColor": "#7AAAC0", "fillOpacity": 0.45, "label": "加拉曼特人（Garamantes）" },
-    { "symbol": "polygon", "fillColor": "#1A6EA8", "fillOpacity": 0.40, "label": "百乘王朝（Satavahana）" },
-    { "symbol": "polygon", "fillColor": "#4A88A8", "fillOpacity": 0.45, "label": "西薩特拉普（Western Satraps）" },
-    { "symbol": "polygon", "fillColor": "#2A9AB8", "fillOpacity": 0.40, "label": "達羅毗荼諸王國（Dravidian Kingdoms）" },
-    { "symbol": "polygon", "fillColor": "#3A5A98", "fillOpacity": 0.45, "label": "扶餘（Buyeo）" },
-    { "symbol": "polygon", "fillColor": "#7A9AC8", "fillOpacity": 0.35, "label": "斯拉夫人（Proto-Slavs）" },
+    { "symbol": "polygon", "fillColor": "#8B2200", "fillOpacity": 0.45, "label": "羅馬帝國（Imperium Romanum）" },
+    { "symbol": "polygon", "fillColor": "#4A2888", "fillOpacity": 0.50, "label": "帕提亞帝國（Arsacid / Imperium Parthicum）" },
+    { "symbol": "polygon", "fillColor": "#C47020", "fillOpacity": 0.50, "label": "貴霜帝國（Kushan Empire）" },
+    { "symbol": "polygon", "fillColor": "#9B2050", "fillOpacity": 0.45, "label": "東漢王朝（Eastern Han Dynasty）" },
+    { "symbol": "polygon", "fillColor": "#B8860B", "fillOpacity": 0.45, "label": "北匈奴（Northern Xiongnu）" },
+    { "symbol": "polygon", "fillColor": "#2D7A1F", "fillOpacity": 0.50, "label": "亞美尼亞王國（緩衝國）" },
+    { "symbol": "polygon", "fillColor": "#4A7FA5", "fillOpacity": 0.40, "label": "薩爾馬特人（Sarmatae）" },
+    { "symbol": "polygon", "fillColor": "#20A090", "fillOpacity": 0.40, "label": "阿蘭人（Alani）" },
+    { "symbol": "polygon", "fillColor": "#8B7355", "fillOpacity": 0.45, "label": "康居（Kangju）" },
+    { "symbol": "polygon", "fillColor": "#6B8E23", "fillOpacity": 0.40, "label": "高車部落・丁零（Dingling）" },
+    { "symbol": "polygon", "fillColor": "#5F8FA0", "fillOpacity": 0.38, "label": "堅昆（Jiankun / 葉尼塞柯爾克孜）" },
+    { "symbol": "polygon", "fillColor": "#C8A000", "fillOpacity": 0.35, "label": "阿拉伯遊牧民族（Saraceni）" },
+    { "symbol": "polygon", "fillColor": "#006400", "fillOpacity": 0.45, "label": "麥羅埃王國（Meroe / 庫施）" },
+    { "symbol": "polygon", "fillColor": "#CD8500", "fillOpacity": 0.45, "label": "加拉曼特人（Garamantes）" },
+    { "symbol": "polygon", "fillColor": "#8B008B", "fillOpacity": 0.40, "label": "百乘王朝（Satavahana）" },
+    { "symbol": "polygon", "fillColor": "#556B2F", "fillOpacity": 0.45, "label": "西薩特拉普（Western Satraps）" },
+    { "symbol": "polygon", "fillColor": "#008080", "fillOpacity": 0.40, "label": "達羅毗荼諸王國（Dravidian Kingdoms）" },
+    { "symbol": "polygon", "fillColor": "#483D8B", "fillOpacity": 0.45, "label": "扶餘（Buyeo）" },
+    { "symbol": "polygon", "fillColor": "#9370DB", "fillOpacity": 0.35, "label": "斯拉夫人（Proto-Slavs）" },
     { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "帝國首都（羅馬・泰西封・洛陽・貴霜）" },
     { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "絲路城市・小國・遊牧民族區" },
-    { "symbol": "line", "color": "#E8D040", "dash": "8,5",  "weight": 2.5, "label": "陸上絲綢之路主幹線" },
-    { "symbol": "line", "color": "#60B8E8", "dash": "6,5",  "weight": 2, "label": "海上絲綢之路（示意）" }
+    { "symbol": "line", "color": "#D4A017", "dash": "8,5",  "weight": 2.5, "label": "陸上絲綢之路主幹線" },
+    { "symbol": "line", "color": "#1A6FA5", "dash": "6,5",  "weight": 2, "label": "海上絲綢之路（示意）" }
   ]
 }
