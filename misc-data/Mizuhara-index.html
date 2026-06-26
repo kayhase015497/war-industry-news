@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>千鶴指數實時跳動｜JPY / TWD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;family=Noto+Serif+TC:wght@700&amp;display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', system-ui, sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Noto Serif TC', 'Noto Sans TC', serif;
+            font-weight: 700;
+        }
+
+        .price-big {
+            font-size: 3.5rem;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .live-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .meme-bg {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff1e6 100%);
+        }
+    </style>
+</head>
+<body class="bg-[#fffaf0] meme-bg min-h-screen py-8 px-4">
+    <div class="max-w-md mx-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-center gap-2 mb-4">
+            <div class="flex items-center gap-2 bg-white shadow-sm rounded-full px-4 py-1.5 text-sm">
+                <div class="flex items-center gap-1.5">
+                    <div class="w-2 h-2 bg-red-500 rounded-full live-dot"></div>
+                    <span class="font-medium text-red-500">LIVE</span>
+                </div>
+                <span class="text-gray-400">·</span>
+                <span class="font-semibold">JPY / TWD</span>
+                <span class="text-gray-400">·</span>
+                <span class="font-medium text-rose-600">千鶴指數實時跳動</span>
+            </div>
+        </div>
+
+        <!-- Main Title -->
+        <div class="text-center mb-6">
+            <h1 class="title-font text-4xl text-rose-700 tracking-tight mb-2">
+                水原千鶴是好女孩
+            </h1>
+            <p class="text-gray-600 text-lg">
+                日元匯率一抖，水原千鶴也是當上好女孩了。
+            </p>
+        </div>
+
+        <!-- Real-time Price Card -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 mb-6 border border-rose-100">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-medium rounded-full">正式等級</span>
+                    <span class="ml-2 text-sm text-gray-500">1小時 · 都內</span>
+                </div>
+                <div class="text-xs text-gray-400">實時身價</div>
+            </div>
+
+            <!-- Big Price -->
+            <div class="flex items-baseline gap-2 mb-1">
+                <div id="big-price" class="price-big text-rose-700 tabular-nums">—</div>
+                <div class="text-2xl font-semibold text-rose-600">TWD</div>
+            </div>
+
+            <!-- Change & Rate -->
+            <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center gap-1 text-emerald-600">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span id="change-text">較7天前上漲約 0.6%</span>
+                </div>
+                <div class="text-gray-500">
+                    <span id="rate-text">100 JPY ≈ — TWD</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 border border-rose-100">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 bg-rose-600 text-white rounded-2xl flex items-center justify-center font-bold text-sm">01</div>
+                <h2 class="text-xl font-bold text-gray-800">套餐計算器</h2>
+            </div>
+
+            <div class="text-sm text-gray-600 mb-5 leading-relaxed">
+                租借費 = 時租（6000円）× 小時數 + 指名費（5000円） + 交通費（都內2000円 / 都外10000円）。<br>
+                調整下面選項，實時看千鶴這次約會值多少<strong class="text-rose-600">新台幣</strong>。
+            </div>
+
+            <!-- Controls -->
+            <div class="space-y-5">
+                <!-- Hours -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">小時數</label>
+                    <div class="flex items-center gap-3">
+                        <input type="number" id="hours" value="1" step="0.5" min="0.5" 
+                               class="w-24 px-4 py-3 text-xl font-semibold border border-gray-200 rounded-2xl focus:outline-none focus:border-rose-400 text-center">
+                        <div class="flex-1 text-sm text-gray-500">小時</div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">約會地點</label>
+                    <div class="flex gap-2">
+                        <button onclick="setLocation('in')" id="btn-in"
+                                class="flex-1 py-3 px-4 rounded-2xl border border-rose-500 bg-rose-50 text-rose-700 font-medium active:scale-[0.985] transition-all">
+                            <i class="fa-solid fa-city mr-2"></i>都內
+                        </button>
+                        <button onclick="setLocation('out')" id="btn-out"
+                                class="flex-1 py-3 px-4 rounded-2xl border border-gray-200 hover:border-gray-300 font-medium active:scale-[0.985] transition-all">
+                            <i class="fa-solid fa-globe mr-2"></i>都外
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="pt-3 border-t">
+                    <div class="text-sm text-gray-500 mb-1">這次約會總費用</div>
+                    <div class="flex items-baseline gap-2">
+                        <div id="calc-price" class="text-4xl font-extrabold text-rose-700 tabular-nums">—</div>
+                        <div class="text-xl font-semibold text-rose-600">TWD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-6 text-xs text-gray-400">
+            趣味迷因計算器 · 匯率即時更新<br>
+            資料來源：公開匯率 API（非投資建議）
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#e11d48');
+        }
+
+        let currentRate = 0.197; // fallback
+        let currentLocation = 'in';
+        let currentHours = 1;
+
+        // Base JPY costs (正式等級)
+        const HOURLY_JPY = 6000;
+        const NOMINATION_JPY = 5000;
+
+        async function fetchRate() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/JPY');
+                const data = await res.json();
+                if (data && data.rates && data.rates.TWD) {
+                    currentRate = data.rates.TWD;
+                    updateUI();
+                }
+            } catch (e) {
+                console.log('使用備用匯率');
+                currentRate = 0.197;
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            if (!currentRate) return;
+
+            // 1小時都內 實時身價
+            const baseTotalJPY = HOURLY_JPY + NOMINATION_JPY + 2000; // 都內
+            const baseTWD = (baseTotalJPY * currentRate).toFixed(0);
+            
+            document.getElementById('big-price').innerHTML = 
+                `<span class="font-extrabold">${Number(baseTWD).toLocaleString()}</span>`;
+            
+            // 100 JPY rate
+            const per100 = (100 * currentRate).toFixed(2);
+            document.getElementById('rate-text').innerHTML = `100 JPY ≈ ${per100} TWD`;
+
+            // Update calculator
+            calculateRental();
+        }
+
+        function calculateRental() {
+            const hours = parseFloat(document.getElementById('hours').value) || 1;
+            currentHours = hours;
+
+            let transport = (currentLocation === 'in') ? 2000 : 10000;
+            const totalJPY = (HOURLY_JPY * hours) + NOMINATION_JPY + transport;
+            const totalTWD = (totalJPY * currentRate).toFixed(0);
+
+            document.getElementById('calc-price').innerHTML = 
+                Number(totalTWD).toLocaleString();
+        }
+
+        function setLocation(loc) {
+            currentLocation = loc;
+            
+            // Update button styles
+            const btnIn = document.getElementById('btn-in');
+            const btnOut = document.getElementById('btn-out');
+            
+            if (loc === 'in') {
+                btnIn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                btnIn.classList.remove('border-gray-200');
+                btnOut.classList.remove('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                btnOut.classList.add('border-gray-200');
+            } else {
+                btnOut.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                btnOut.classList.remove('border-gray-200');
+                btnIn.classList.remove('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                btnIn.classList.add('border-gray-200');
+            }
+            
+            calculateRental();
+        }
+
+        function setupListeners() {
+            const hoursInput = document.getElementById('hours');
+            
+            hoursInput.addEventListener('input', () => {
+                calculateRental();
+            });
+
+            // Default location = 都內
+            document.getElementById('btn-in').classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+            
+            // Refresh rate button (click on header)
+            const header = document.querySelector('.flex.items-center.justify-center');
+            if (header) {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', () => {
+                    fetchRate();
+                });
+            }
+        }
+
+        // Initialize everything
+        async function init() {
+            initializeTailwind();
+            setupListeners();
+            
+            // Default values
+            document.getElementById('hours').value = 1;
+            currentLocation = 'in';
+            
+            // Fetch live rate
+            await fetchRate();
+            
+            // Initial calculation
+            setTimeout(() => {
+                calculateRental();
+            }, 300);
+
+            // Auto refresh rate every 60 seconds
+            setInterval(fetchRate, 60000);
+        }
+
+        // Start
+        window.onload = init;
+    </script>
+</body>
+</html>
