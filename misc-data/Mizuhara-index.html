@@ -46,7 +46,7 @@
                 <span class="text-gray-400">·</span>
                 <span class="font-semibold">JPY / TWD</span>
                 <span class="text-gray-400">·</span>
-                <span class="font-medium text-rose-600">千鶴指數實時跳動</span>
+                <span class="font-medium text-rose-600">千鶴指數即時跳動</span>
             </div>
         </div>
 
@@ -67,7 +67,7 @@
                     <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-medium rounded-full">正式等級</span>
                     <span class="ml-2 text-sm text-gray-500">1小時 · 都內</span>
                 </div>
-                <div class="text-xs text-gray-400">實時身價</div>
+                <div class="text-xs text-gray-400">即時身價</div>
             </div>
 
             <!-- Big Price -->
@@ -97,7 +97,7 @@
 
             <div class="text-sm text-gray-600 mb-5 leading-relaxed">
                 租借費 = 時租（6000円）× 小時數 + 指名費（5000円） + 交通費（都內2000円 / 都外10000円）。<br>
-                調整下面選項，實時看千鶴這次約會值多少<strong class="text-rose-600">新台幣</strong>。
+                調整下面選項，即時看千鶴這次約會值多少<strong class="text-rose-600">新台幣</strong>。
             </div>
 
             <!-- Controls -->
@@ -177,7 +177,7 @@
         function updateUI() {
             if (!currentRate) return;
 
-            // 1小時都內 實時身價
+            // 1小時都內 即時身價
             const baseTotalJPY = HOURLY_JPY + NOMINATION_JPY + 2000; // 都內
             const baseTWD = (baseTotalJPY * currentRate).toFixed(0);
             
