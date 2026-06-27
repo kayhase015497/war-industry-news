@@ -129,6 +129,9 @@
   <!-- Lock / Unlock -->
   <button id="lock-btn" class="btn-secondary" onclick="toggleLock()">🔓 可拖拉</button>
 
+  <!-- Fit image -->
+  <button class="btn-success" onclick="fitImage()">⬛ 填滿版面</button>
+
   <!-- Clear image -->
   <button class="btn-warn" onclick="clearImage()">🗑️ 清除圖片</button>
 
@@ -428,6 +431,23 @@ function updateImgLayer() {
   layer.style.transform = `translate(${imgOffsetX}px, ${imgOffsetY}px) scale(${imgScale})`;
 }
 
+function fitImage() {
+  const img = document.getElementById('uploaded-img');
+  if (!img.naturalWidth) return;
+  const total = gridSize * cellSize;
+  // Scale so the larger dimension fills the grid
+  const scaleX = total / img.naturalWidth;
+  const scaleY = total / img.naturalHeight;
+  imgScale = Math.max(scaleX, scaleY); // cover: fill entire grid, crop if non-square
+  // Center the image on the grid
+  imgOffsetX = (total - img.naturalWidth  * imgScale) / 2;
+  imgOffsetY = (total - img.naturalHeight * imgScale) / 2;
+  const pct = Math.round(imgScale * 100);
+  document.getElementById('scale-slider').value = Math.min(400, pct);
+  document.getElementById('scale-val').textContent = pct + '%';
+  updateImgLayer();
+}
+
 function loadImage(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -438,6 +458,7 @@ function loadImage(e) {
     document.getElementById('scale-slider').value = 100;
     document.getElementById('scale-val').textContent = '100%';
     updateImgLayer();
+    fitImage(); // auto-fit on load
   };
   img.src = url;
 }
