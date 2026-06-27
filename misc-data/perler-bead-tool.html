@@ -116,8 +116,8 @@
 
   <!-- Grid size toggle -->
   <div class="toggle-group">
-    <button id="btn-104" class="active" onclick="setGrid(104)">104×104</button>
-    <button id="btn-52"  onclick="setGrid(52)">52×52</button>
+    <button id="btn-110" class="active" onclick="setGrid(110)">110×110</button>
+    <button id="btn-55"  onclick="setGrid(55)">55×55</button>
   </div>
 
   <div class="sep"></div>
@@ -146,6 +146,13 @@
     <span class="range-label">圖片縮放</span>
     <input type="range" id="scale-slider" min="10" max="400" value="100" oninput="setImgScale(this.value)">
     <span class="range-label" id="scale-val">100%</span>
+  </div>
+
+  <!-- Grid line darkness -->
+  <div id="opacity-row">
+    <span class="range-label">格線深淺</span>
+    <input type="range" id="grid-dark-slider" min="5" max="100" value="50" oninput="setGridDark(this.value)">
+    <span class="range-label" id="grid-dark-val">50%</span>
   </div>
 
   <div class="sep"></div>
@@ -185,7 +192,7 @@
 
 <script>
 // ── State ──
-let gridSize   = 104;
+let gridSize   = 110;
 let cellSize   = 7;       // px per cell (auto-computed)
 let imgOffsetX = 0, imgOffsetY = 0;
 let imgScale   = 1;
@@ -199,13 +206,15 @@ const BORDER_COLOR  = '#e94560';
 const BLOCK_COLOR   = 'rgba(255,255,255,0.06)';
 const HOVER_COLOR   = 'rgba(232,69,96,0.35)';
 const CLICKED_COLOR = 'rgba(46,204,113,0.5)';
-const LINE_COLOR    = 'rgba(255,255,255,0.5)';
-const BLOCK_LINE    = 'rgba(255,80,80,0.85)';
+let gridDarkness = 0.5; // controlled by slider
+let LINE_COLOR   = 'rgba(255,255,255,0.5)';
+let BLOCK_LINE   = 'rgba(255,80,80,0.85)';
 
-const BLOCK = 8; // cells per block-group
+const BLOCK = 11; // cells per block-group (11x11 per red square)
 
 // ── Init ──
 window.addEventListener('load', () => {
+  updateGridColors();
   buildGrid(gridSize);
   window.addEventListener('mousemove', onWindowDrag);
   window.addEventListener('mouseup',   onDragEnd);
@@ -213,15 +222,29 @@ window.addEventListener('load', () => {
 
 function setGrid(size) {
   gridSize = size;
-  document.getElementById('btn-104').classList.toggle('active', size === 104);
-  document.getElementById('btn-52').classList.toggle('active',  size === 52);
+  document.getElementById('btn-110').classList.toggle('active', size === 110);
+  document.getElementById('btn-55').classList.toggle('active',  size === 55);
   clickedCells.clear();
   buildGrid(size);
 }
 
+function updateGridColors() {
+  const d = gridDarkness;
+  LINE_COLOR = `rgba(0,0,0,${(d * 0.7).toFixed(2)})`;
+  BLOCK_LINE = `rgba(200,30,30,${Math.min(1, d * 1.2).toFixed(2)})`;
+}
+
+function setGridDark(val) {
+  gridDarkness = val / 100;
+  document.getElementById('grid-dark-val').textContent = val + '%';
+  updateGridColors();
+  const svg = document.getElementById('grid-svg');
+  drawSVGGrid(svg, gridSize, gridSize * cellSize);
+}
+
 function buildGrid(size) {
-  // Cell size: aim for ~730px total for 104, proportional for 52
-  cellSize = Math.floor(728 / size);
+  // Cell size: aim for ~770px total for 110, proportional for 55
+  cellSize = Math.floor(770 / size);
   if (cellSize < 4) cellSize = 4;
 
   const total = size * cellSize;
