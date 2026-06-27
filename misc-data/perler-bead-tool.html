@@ -92,6 +92,27 @@
     cursor: crosshair;
   }
 
+  /* Pixel canvas layer */
+  #pixel-canvas {
+    position: absolute; top: 0; left: 0;
+    pointer-events: none;
+  }
+
+  /* Modal */
+  #pixel-modal {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.75); align-items: center; justify-content: center;
+  }
+  #pixel-modal.open { display: flex; }
+  #pixel-modal-box {
+    background: #16213e; border: 1px solid #0f3460; border-radius: 12px;
+    padding: 20px; max-width: 96vw; max-height: 92vh;
+    display: flex; flex-direction: column; gap: 12px; align-items: center;
+  }
+  #pixel-modal-box h2 { color: #e94560; font-size: 1rem; }
+  #pixel-preview { image-rendering: pixelated; border: 2px solid #0f3460; max-width: 80vw; max-height: 70vh; }
+  .modal-btns { display: flex; gap: 10px; }
+
   /* Info panel */
   #info-panel {
     position: fixed; bottom: 14px; right: 14px;
@@ -137,6 +158,11 @@
 
   <div class="sep"></div>
 
+  <!-- Pixelate -->
+  <button class="btn-secondary" onclick="openPixelModal()" style="background:#8e44ad;color:#fff">🎨 轉點陣圖</button>
+
+  <div class="sep"></div>
+
   <!-- Opacity -->
   <div id="opacity-row">
     <span class="range-label">透明度</span>
@@ -164,10 +190,25 @@
   <div id="coord-display">X: — &nbsp; Y: —</div>
 </div>
 
+<!-- Pixel modal -->
+<div id="pixel-modal">
+  <div id="pixel-modal-box">
+    <h2>🎨 點陣圖預覽</h2>
+    <canvas id="pixel-preview"></canvas>
+    <div class="modal-btns">
+      <button class="btn-success" onclick="applyPixelToGrid()">套用到格線</button>
+      <button class="btn-primary" onclick="downloadPixel()">⬇ 下載圖片</button>
+      <button class="btn-warn"    onclick="closePixelModal()">✕ 關閉</button>
+    </div>
+    <p style="font-size:0.75rem;color:#666">每格 = 1 顆拼豆的顏色</p>
+  </div>
+</div>
+
 <!-- Canvas area -->
 <div id="canvas-wrapper">
   <div id="canvas-container">
     <div id="img-layer"><img id="uploaded-img" src="" alt="" draggable="false"></div>
+    <canvas id="pixel-canvas"></canvas>
     <svg id="grid-svg" xmlns="http://www.w3.org/2000/svg"></svg>
     <canvas id="highlight-canvas"></canvas>
     <div id="interact-layer"
@@ -266,6 +307,12 @@ function buildGrid(size) {
   const hc = document.getElementById('highlight-canvas');
   hc.width  = total;
   hc.height = total;
+
+  // Reset pixel canvas
+  const pc = document.getElementById('pixel-canvas');
+  pc.width  = total;
+  pc.height = total;
+  pixelColors = null;
 
   drawSVGGrid(svg, size, total);
   redrawHighlight();
@@ -469,6 +516,9 @@ function clearImage() {
   imgOffsetX = 0; imgOffsetY = 0;
   updateImgLayer();
   document.getElementById('file-input').value = '';
+  const pc = document.getElementById('pixel-canvas');
+  pc.getContext('2d').clearRect(0, 0, pc.width, pc.height);
+  pixelColors = null;
 }
 
 function setOpacity(val) {
@@ -480,6 +530,115 @@ function setImgScale(val) {
   imgScale = val / 100;
   document.getElementById('scale-val').textContent = val + '%';
   updateImgLayer();
+}
+
+// ── Pixelate ──
+let pixelColors = null; // gridSize×gridSize array of [r,g,b]
+
+function samplePixels() {
+  const img = document.getElementById('uploaded-img');
+  if (!img.naturalWidth) return null;
+
+  // Off-screen canvas: draw the image as positioned on the grid
+  const total = gridSize * cellSize;
+  const off = document.createElement('canvas');
+  off.width  = total;
+  off.height = total;
+  const ctx = off.getContext('2d');
+
+  // Mirror the CSS transform: translate + scale
+  ctx.save();
+  ctx.translate(imgOffsetX, imgOffsetY);
+  ctx.scale(imgScale, imgScale);
+  ctx.drawImage(img, 0, 0);
+  ctx.restore();
+
+  // Sample one colour per cell (average of cell area)
+  const colors = [];
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const px = col * cellSize, py = row * cellSize;
+      const data = ctx.getImageData(px, py, cellSize, cellSize).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const a = data[i + 3] / 255;
+        r += data[i]   * a;
+        g += data[i+1] * a;
+        b += data[i+2] * a;
+        count++;
+      }
+      colors.push([Math.round(r/count), Math.round(g/count), Math.round(b/count)]);
+    }
+  }
+  return colors;
+}
+
+function openPixelModal() {
+  const img = document.getElementById('uploaded-img');
+  if (!img.naturalWidth) { alert('請先上傳圖片'); return; }
+
+  pixelColors = samplePixels();
+
+  // Draw preview canvas (each cell = 1 pixel, scaled up for display)
+  const preview = document.getElementById('pixel-preview');
+  const displaySize = Math.min(660, window.innerWidth * 0.8);
+  preview.width  = gridSize;
+  preview.height = gridSize;
+  preview.style.width  = displaySize + 'px';
+  preview.style.height = displaySize + 'px';
+  const ctx = preview.getContext('2d');
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const [r, g, b] = pixelColors[row * gridSize + col];
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(col, row, 1, 1);
+    }
+  }
+
+  document.getElementById('pixel-modal').classList.add('open');
+}
+
+function closePixelModal() {
+  document.getElementById('pixel-modal').classList.remove('open');
+}
+
+function applyPixelToGrid() {
+  if (!pixelColors) return;
+  const pc = document.getElementById('pixel-canvas');
+  pc.width  = gridSize * cellSize;
+  pc.height = gridSize * cellSize;
+  const ctx = pc.getContext('2d');
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const [r, g, b] = pixelColors[row * gridSize + col];
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+    }
+  }
+  // Hide the source image layer so only the pixelated version shows
+  document.getElementById('uploaded-img').style.opacity = '0';
+  document.getElementById('opacity-slider').value = 0;
+  document.getElementById('opacity-val').textContent = '0%';
+  closePixelModal();
+}
+
+function downloadPixel() {
+  if (!pixelColors) return;
+  const off = document.createElement('canvas');
+  off.width  = gridSize;
+  off.height = gridSize;
+  const ctx = off.getContext('2d');
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const [r, g, b] = pixelColors[row * gridSize + col];
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(col, row, 1, 1);
+    }
+  }
+  const a = document.createElement('a');
+  a.download = `perler-${gridSize}x${gridSize}.png`;
+  a.href = off.toDataURL('image/png');
+  a.click();
 }
 
 function toggleLock() {
