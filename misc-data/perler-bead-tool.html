@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拼豆格線工具</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── Toolbar ── */
+  #toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    padding: 10px 16px; background: #16213e; border-bottom: 1px solid #0f3460;
+    position: sticky; top: 0; z-index: 100;
+  }
+  #toolbar h1 { font-size: 1rem; font-weight: 700; color: #e94560; white-space: nowrap; margin-right: 6px; }
+  .sep { width: 1px; height: 28px; background: #0f3460; }
+
+  button, label.btn {
+    padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 0.82rem; font-weight: 600; transition: background .15s, transform .1s;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  button:active, label.btn:active { transform: scale(.96); }
+
+  .btn-primary   { background: #e94560; color: #fff; }
+  .btn-primary:hover { background: #c73652; }
+  .btn-secondary { background: #0f3460; color: #a8d8ea; }
+  .btn-secondary:hover { background: #1a4a80; }
+  .btn-success   { background: #2ecc71; color: #fff; }
+  .btn-success:hover { background: #27ae60; }
+  .btn-warn      { background: #e67e22; color: #fff; }
+  .btn-warn:hover { background: #ca6f1e; }
+
+  .toggle-group { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid #0f3460; }
+  .toggle-group button {
+    border-radius: 0; padding: 6px 14px; background: #16213e; color: #a8d8ea;
+    border: none; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  }
+  .toggle-group button.active { background: #e94560; color: #fff; }
+
+  #coord-display {
+    font-size: 0.85rem; font-family: monospace; background: #0f3460;
+    padding: 5px 12px; border-radius: 6px; color: #a8d8ea; min-width: 110px; text-align: center;
+  }
+
+  input[type=range] { width: 80px; accent-color: #e94560; }
+  .range-label { font-size: 0.78rem; color: #a8d8ea; white-space: nowrap; }
+
+  #lock-btn.locked { background: #8e44ad; color: #fff; }
+  #lock-btn.locked:hover { background: #7d3c98; }
+
+  /* ── Main canvas area ── */
+  #canvas-wrapper {
+    flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
+    padding: 20px; background: #12122a;
+  }
+
+  #canvas-container {
+    position: relative; cursor: crosshair;
+    /* size set by JS */
+  }
+
+  /* Image layer (draggable) */
+  #img-layer {
+    position: absolute; top: 0; left: 0;
+    pointer-events: none; /* grid captures events; img dragged via JS */
+    user-select: none;
+    transform-origin: top left;
+  }
+  #img-layer img {
+    display: block; opacity: 0.55;
+    transform-origin: top left;
+  }
+
+  /* SVG grid layer */
+  #grid-svg {
+    position: absolute; top: 0; left: 0;
+    pointer-events: none;
+  }
+
+  /* Highlight overlay canvas */
+  #highlight-canvas {
+    position: absolute; top: 0; left: 0;
+    pointer-events: none;
+  }
+
+  /* Interaction layer */
+  #interact-layer {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    cursor: crosshair;
+  }
+
+  /* Info panel */
+  #info-panel {
+    position: fixed; bottom: 14px; right: 14px;
+    background: #16213e; border: 1px solid #0f3460; border-radius: 10px;
+    padding: 12px 16px; font-size: 0.78rem; color: #a8d8ea;
+    min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,.5);
+    z-index: 200;
+  }
+  #info-panel h3 { font-size: 0.85rem; color: #e94560; margin-bottom: 8px; }
+  #info-panel p { margin: 3px 0; }
+  #info-panel span { color: #fff; font-weight: 600; font-family: monospace; }
+
+  #opacity-row { display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<div id="toolbar">
+  <h1>🧩 拼豆格線工具</h1>
+  <div class="sep"></div>
+
+  <!-- Grid size toggle -->
+  <div class="toggle-group">
+    <button id="btn-104" class="active" onclick="setGrid(104)">104×104</button>
+    <button id="btn-52"  onclick="setGrid(52)">52×52</button>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Upload image -->
+  <input type="file" id="file-input" accept="image/*" style="display:none" onchange="loadImage(event)">
+  <label for="file-input" class="btn btn-primary">📂 上傳圖片</label>
+
+  <!-- Lock / Unlock -->
+  <button id="lock-btn" class="btn-secondary" onclick="toggleLock()">🔓 可拖拉</button>
+
+  <!-- Clear image -->
+  <button class="btn-warn" onclick="clearImage()">🗑️ 清除圖片</button>
+
+  <div class="sep"></div>
+
+  <!-- Opacity -->
+  <div id="opacity-row">
+    <span class="range-label">透明度</span>
+    <input type="range" id="opacity-slider" min="10" max="100" value="55" oninput="setOpacity(this.value)">
+    <span class="range-label" id="opacity-val">55%</span>
+  </div>
+
+  <!-- Image scale -->
+  <div id="opacity-row">
+    <span class="range-label">圖片縮放</span>
+    <input type="range" id="scale-slider" min="10" max="400" value="100" oninput="setImgScale(this.value)">
+    <span class="range-label" id="scale-val">100%</span>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Coordinate display -->
+  <div id="coord-display">X: — &nbsp; Y: —</div>
+</div>
+
+<!-- Canvas area -->
+<div id="canvas-wrapper">
+  <div id="canvas-container">
+    <div id="img-layer"><img id="uploaded-img" src="" alt="" draggable="false"></div>
+    <svg id="grid-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <canvas id="highlight-canvas"></canvas>
+    <div id="interact-layer"
+      onmousemove="onMouseMove(event)"
+      onmouseleave="onMouseLeave()"
+      onclick="onCellClick(event)"
+      onmousedown="onDragStart(event)"
+    ></div>
+  </div>
+</div>
+
+<!-- Info panel -->
+<div id="info-panel">
+  <h3>📍 選取格位</h3>
+  <p>X 欄：<span id="info-x">—</span></p>
+  <p>Y 列：<span id="info-y">—</span></p>
+  <p>格位：<span id="info-cell">—</span></p>
+  <hr style="border-color:#0f3460;margin:8px 0">
+  <p style="font-size:0.72rem;color:#666">
+    • 滑動滑鼠顯示座標<br>
+    • 點擊標記格位<br>
+    • 解鎖後可拖拉圖片
+  </p>
+</div>
+
+<script>
+// ── State ──
+let gridSize   = 104;
+let cellSize   = 7;       // px per cell (auto-computed)
+let imgOffsetX = 0, imgOffsetY = 0;
+let imgScale   = 1;
+let imgLocked  = false;
+let dragging   = false;
+let dragStartX = 0, dragStartY = 0, dragImgX = 0, dragImgY = 0;
+let hoveredCell = null;
+let clickedCells = new Set();
+
+const BORDER_COLOR  = '#e94560';
+const BLOCK_COLOR   = 'rgba(255,255,255,0.06)';
+const HOVER_COLOR   = 'rgba(232,69,96,0.35)';
+const CLICKED_COLOR = 'rgba(46,204,113,0.5)';
+const LINE_COLOR    = 'rgba(255,255,255,0.18)';
+const BLOCK_LINE    = 'rgba(255,255,255,0.45)';
+
+const BLOCK = 8; // cells per block-group
+
+// ── Init ──
+window.addEventListener('load', () => {
+  buildGrid(gridSize);
+  window.addEventListener('mousemove', onWindowDrag);
+  window.addEventListener('mouseup',   onDragEnd);
+});
+
+function setGrid(size) {
+  gridSize = size;
+  document.getElementById('btn-104').classList.toggle('active', size === 104);
+  document.getElementById('btn-52').classList.toggle('active',  size === 52);
+  clickedCells.clear();
+  buildGrid(size);
+}
+
+function buildGrid(size) {
+  // Cell size: aim for ~730px total for 104, proportional for 52
+  cellSize = Math.floor(728 / size);
+  if (cellSize < 4) cellSize = 4;
+
+  const total = size * cellSize;
+
+  const container = document.getElementById('canvas-container');
+  container.style.width  = total + 'px';
+  container.style.height = total + 'px';
+
+  // Resize SVG
+  const svg = document.getElementById('grid-svg');
+  svg.setAttribute('width',  total);
+  svg.setAttribute('height', total);
+  svg.setAttribute('viewBox', `0 0 ${total} ${total}`);
+
+  // Resize highlight canvas
+  const hc = document.getElementById('highlight-canvas');
+  hc.width  = total;
+  hc.height = total;
+
+  drawSVGGrid(svg, size, total);
+  redrawHighlight();
+  updateImgLayer();
+}
+
+function drawSVGGrid(svg, size, total) {
+  // Clear
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const ns = 'http://www.w3.org/2000/svg';
+
+  // Background
+  const bg = document.createElementNS(ns, 'rect');
+  bg.setAttribute('width', total); bg.setAttribute('height', total);
+  bg.setAttribute('fill', '#1a1a2e');
+  svg.appendChild(bg);
+
+  // Thin cell lines
+  for (let i = 0; i <= size; i++) {
+    const isBlock = (i % BLOCK === 0);
+    const pos = i * cellSize;
+
+    const vl = document.createElementNS(ns, 'line');
+    vl.setAttribute('x1', pos); vl.setAttribute('y1', 0);
+    vl.setAttribute('x2', pos); vl.setAttribute('y2', total);
+    vl.setAttribute('stroke', isBlock ? BLOCK_LINE : LINE_COLOR);
+    vl.setAttribute('stroke-width', isBlock ? '1.5' : '0.5');
+    svg.appendChild(vl);
+
+    const hl = document.createElementNS(ns, 'line');
+    hl.setAttribute('x1', 0);   hl.setAttribute('y1', pos);
+    hl.setAttribute('x2', total); hl.setAttribute('y2', pos);
+    hl.setAttribute('stroke', isBlock ? BLOCK_LINE : LINE_COLOR);
+    hl.setAttribute('stroke-width', isBlock ? '1.5' : '0.5');
+    svg.appendChild(hl);
+  }
+
+  // Outer border
+  const border = document.createElementNS(ns, 'rect');
+  border.setAttribute('x', 0); border.setAttribute('y', 0);
+  border.setAttribute('width', total); border.setAttribute('height', total);
+  border.setAttribute('fill', 'none');
+  border.setAttribute('stroke', BORDER_COLOR);
+  border.setAttribute('stroke-width', '2');
+  svg.appendChild(border);
+
+  // Axis labels (every BLOCK cells)
+  const labelStyle = 'font-size:' + Math.max(7, cellSize * 0.9) + 'px;fill:#a8d8ea;font-family:monospace';
+  for (let i = 0; i < size; i += BLOCK) {
+    // X labels (top)
+    const tx = document.createElementNS(ns, 'text');
+    tx.setAttribute('x', i * cellSize + cellSize / 2);
+    tx.setAttribute('y', -3);
+    tx.setAttribute('text-anchor', 'middle');
+    tx.setAttribute('style', labelStyle);
+    tx.textContent = i + 1;
+    svg.appendChild(tx);
+
+    // Y labels (left)
+    const ty = document.createElementNS(ns, 'text');
+    ty.setAttribute('x', -3);
+    ty.setAttribute('y', i * cellSize + cellSize / 2 + 3);
+    ty.setAttribute('text-anchor', 'end');
+    ty.setAttribute('style', labelStyle);
+    ty.textContent = i + 1;
+    svg.appendChild(ty);
+  }
+}
+
+// ── Highlight (hover + clicked) ──
+function redrawHighlight() {
+  const hc  = document.getElementById('highlight-canvas');
+  const ctx = hc.getContext('2d');
+  ctx.clearRect(0, 0, hc.width, hc.height);
+
+  // Clicked cells
+  ctx.fillStyle = CLICKED_COLOR;
+  for (const key of clickedCells) {
+    const [cx, cy] = key.split(',').map(Number);
+    ctx.fillRect(cx * cellSize, cy * cellSize, cellSize, cellSize);
+  }
+
+  // Hover
+  if (hoveredCell) {
+    const { col, row } = hoveredCell;
+    // Full row & col highlight
+    ctx.fillStyle = 'rgba(232,69,96,0.08)';
+    ctx.fillRect(col * cellSize, 0, cellSize, hc.height);
+    ctx.fillRect(0, row * cellSize, hc.width, cellSize);
+    // Cell itself
+    ctx.fillStyle = HOVER_COLOR;
+    ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+  }
+}
+
+// ── Interaction ──
+function getCellFromEvent(e) {
+  const rect = document.getElementById('interact-layer').getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const col = Math.floor(x / cellSize);
+  const row = Math.floor(y / cellSize);
+  if (col < 0 || col >= gridSize || row < 0 || row >= gridSize) return null;
+  return { col, row };
+}
+
+function onMouseMove(e) {
+  const cell = getCellFromEvent(e);
+  if (!cell) return;
+  hoveredCell = cell;
+  const xLabel = cell.col + 1;
+  const yLabel = cell.row + 1;
+  document.getElementById('coord-display').innerHTML = `X:${xLabel} &nbsp; Y:${yLabel}`;
+  redrawHighlight();
+}
+
+function onMouseLeave() {
+  hoveredCell = null;
+  document.getElementById('coord-display').innerHTML = 'X: — &nbsp; Y: —';
+  redrawHighlight();
+}
+
+function onCellClick(e) {
+  if (dragging) return;
+  const cell = getCellFromEvent(e);
+  if (!cell) return;
+  const key = `${cell.col},${cell.row}`;
+  if (clickedCells.has(key)) {
+    clickedCells.delete(key);
+  } else {
+    clickedCells.add(key);
+  }
+  document.getElementById('info-x').textContent    = cell.col + 1;
+  document.getElementById('info-y').textContent    = cell.row + 1;
+  document.getElementById('info-cell').textContent = `(${cell.col+1}, ${cell.row+1})`;
+  redrawHighlight();
+}
+
+// ── Image drag ──
+function onDragStart(e) {
+  if (imgLocked) return;
+  const img = document.getElementById('uploaded-img');
+  if (!img.src || img.src === window.location.href) return;
+  dragging  = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  dragImgX   = imgOffsetX;
+  dragImgY   = imgOffsetY;
+  document.getElementById('interact-layer').style.cursor = 'grabbing';
+}
+
+function onWindowDrag(e) {
+  if (!dragging) return;
+  imgOffsetX = dragImgX + (e.clientX - dragStartX);
+  imgOffsetY = dragImgY + (e.clientY - dragStartY);
+  updateImgLayer();
+}
+
+function onDragEnd() {
+  if (!dragging) return;
+  dragging = false;
+  document.getElementById('interact-layer').style.cursor = 'crosshair';
+}
+
+// ── Image layer ──
+function updateImgLayer() {
+  const layer = document.getElementById('img-layer');
+  layer.style.transform = `translate(${imgOffsetX}px, ${imgOffsetY}px) scale(${imgScale})`;
+}
+
+function loadImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const img = document.getElementById('uploaded-img');
+  img.onload = () => {
+    imgOffsetX = 0; imgOffsetY = 0; imgScale = 1;
+    document.getElementById('scale-slider').value = 100;
+    document.getElementById('scale-val').textContent = '100%';
+    updateImgLayer();
+  };
+  img.src = url;
+}
+
+function clearImage() {
+  const img = document.getElementById('uploaded-img');
+  img.src = '';
+  imgOffsetX = 0; imgOffsetY = 0;
+  updateImgLayer();
+  document.getElementById('file-input').value = '';
+}
+
+function setOpacity(val) {
+  document.getElementById('uploaded-img').style.opacity = val / 100;
+  document.getElementById('opacity-val').textContent = val + '%';
+}
+
+function setImgScale(val) {
+  imgScale = val / 100;
+  document.getElementById('scale-val').textContent = val + '%';
+  updateImgLayer();
+}
+
+function toggleLock() {
+  imgLocked = !imgLocked;
+  const btn = document.getElementById('lock-btn');
+  btn.textContent = imgLocked ? '🔒 已鎖定' : '🔓 可拖拉';
+  btn.classList.toggle('locked', imgLocked);
+  document.getElementById('interact-layer').style.cursor = imgLocked ? 'crosshair' : 'grab';
+}
+</script>
+</body>
+</html>
