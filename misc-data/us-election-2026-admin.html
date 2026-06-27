@@ -578,6 +578,24 @@ function updateAuthUI(hasToken) {
 /* ══════════════════════════════════════════════
    DATA LOAD/SAVE
 ═══════════════════════════════════════════════ */
+/* UTF-8 安全的 base64 編碼（支援中文字元） */
+function toBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+
+/* 取得檔案的最新 SHA（推送前必須帶正確 SHA） */
+async function fetchFileSHA(token) {
+  const headers = { 'Accept':'application/vnd.github.v3+json' };
+  if (token) headers['Authorization'] = `token ${token}`;
+  const res = await fetch(API_URL, { headers });
+  if (!res.ok) throw new Error(`取得 SHA 失敗 HTTP ${res.status}`);
+  const meta = await res.json();
+  return meta.sha;
+}
+
 async function loadFromGitHub() {
   const icon = document.getElementById('adm-load-icon');
   icon.textContent = '⟳';
@@ -591,17 +609,21 @@ async function loadFromGitHub() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const meta = await res.json();
     githubSHA = meta.sha;
-    const content = atob(meta.content.replace(/\n/g,''));
+    // GitHub API 回傳的 content 是 UTF-8 → base64，用 TextDecoder 解碼
+    const bytes = Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0));
+    const content = new TextDecoder().decode(bytes);
     data = JSON.parse(content);
     populateForms();
-    toast('已載入最新資料','ok');
+    toast(`已載入最新資料（SHA: ${githubSHA.slice(0,7)}…）`,'ok');
   } catch(e) {
-    // try raw without auth
+    // 沒有 token 或 token 無效，改用 raw URL（無法取得 SHA）
     try {
       const res = await fetch(RAW_URL + '?_=' + Date.now());
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       data = await res.json();
+      githubSHA = null;
       populateForms();
-      toast('已載入（無法取得 SHA，推送時需要 Token）','info');
+      toast('已載入資料（未驗證，推送前將自動取得 SHA）','info');
     } catch(e2) {
       toast('載入失敗：' + e2.message,'err');
     }
@@ -617,14 +639,24 @@ async function pushToGitHub() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner">⟳</span> 推送中…';
   try {
+    // 推送前一定要有最新 SHA，否則 GitHub 會回傳 422
+    if (!githubSHA) {
+      toast('取得最新 SHA 中…','info');
+      githubSHA = await fetchFileSHA(token);
+    }
+
     const payload = buildJSON();
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const jsonStr = JSON.stringify(payload, null, 2);
+    const encoded = toBase64(jsonStr);  // UTF-8 安全編碼
+
+    const now = new Date().toLocaleString('zh-TW',{timeZone:'America/New_York',hour12:false}).replace(',','');
     const body = {
-      message: `chore: 更新選舉開票結果 ${new Date().toISOString().slice(0,16).replace('T',' ')} ET`,
+      message: `chore: 更新選舉開票結果 ${now} ET`,
       content: encoded,
+      sha: githubSHA,   // 必填：告訴 GitHub 要覆蓋哪個版本
       branch: 'main',
     };
-    if (githubSHA) body.sha = githubSHA;
+
     const res = await fetch(API_URL, {
       method: 'PUT',
       headers: {
@@ -634,15 +666,23 @@ async function pushToGitHub() {
       },
       body: JSON.stringify(body),
     });
+
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({}));
       throw new Error(err.message || `HTTP ${res.status}`);
     }
+
     const result = await res.json();
-    githubSHA = result.content.sha;
+    githubSHA = result.content.sha;  // 更新成最新 SHA
     toast('✓ 推送成功！GitHub Pages 約 2 分鐘後更新','ok');
   } catch(e) {
-    toast('推送失敗：' + e.message,'err');
+    // 如果是 SHA 衝突，清掉讓下次自動重拿
+    if (e.message.includes('does not match')) {
+      githubSHA = null;
+      toast('SHA 衝突（可能有人同時更新），請再推送一次','err');
+    } else {
+      toast('推送失敗：' + e.message,'err');
+    }
   }
   btn.disabled = false;
   btn.innerHTML = '↑ 推送更新';
