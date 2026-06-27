@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選舉後台｜2026 美國期中選舉資料管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e1218;--surface:#161c27;--card:#1c2535;--border:#253047;
+  --text:#dde4ee;--muted:#5c6f8a;--accent:#f0b400;
+  --dem:#3b82f6;--rep:#ef4444;--ind:#a855f7;
+  --green:#22c55e;--red:#ef4444;--yellow:#f0b400;
+  --ff:'Noto Sans TC',sans-serif;--mono:'Space Mono',monospace;
+  --r:6px;
+}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+
+/* ── Layout ── */
+.adm-layout{display:flex;min-height:100vh;}
+.adm-sidebar{
+  width:220px;flex-shrink:0;background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.adm-content{flex:1;overflow-y:auto;padding:24px;max-width:900px;}
+
+/* ── Sidebar ── */
+.adm-logo{
+  padding:20px 18px 16px;
+  border-bottom:1px solid var(--border);
+}
+.adm-logo-title{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--accent);letter-spacing:1px;line-height:1.4;
+}
+.adm-logo-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.adm-nav{padding:12px 0;flex:1;}
+.adm-nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 18px;cursor:pointer;
+  font-size:13px;color:var(--muted);
+  transition:all .15s;border-left:2px solid transparent;
+  user-select:none;
+}
+.adm-nav-item:hover{color:var(--text);background:rgba(255,255,255,.03);}
+.adm-nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(240,180,0,.06);}
+.adm-nav-icon{width:16px;text-align:center;font-size:14px;}
+.adm-nav-sep{height:1px;background:var(--border);margin:8px 0;}
+
+.adm-auth-status{
+  padding:14px 18px;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:10px;
+}
+.adm-auth-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  margin-right:6px;
+}
+.adm-auth-dot.ok{background:var(--green);box-shadow:0 0 6px var(--green);}
+.adm-auth-dot.no{background:var(--red);}
+
+/* ── Top Bar ── */
+.adm-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;flex-wrap:wrap;gap:10px;
+}
+.adm-page-title{font-size:18px;font-weight:700;}
+.adm-page-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.adm-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* ── Buttons ── */
+.btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.5px;
+  padding:7px 14px;border-radius:var(--r);border:none;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary{background:var(--accent);color:#000;font-weight:700;}
+.btn-primary:hover{background:#d4a000;}
+.btn-primary:disabled{background:#3a3000;color:#6a5a00;cursor:not-allowed;}
+.btn-outline{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--rep);border:1px solid rgba(239,68,68,.3);}
+.btn-danger:hover{background:rgba(239,68,68,.2);}
+.btn-sm{padding:4px 10px;font-size:10px;}
+
+/* ── Cards ── */
+.adm-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.adm-card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;
+}
+.adm-card-head:hover{background:rgba(255,255,255,.02);}
+.adm-card-title{
+  font-family:var(--mono);font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:8px;
+}
+.adm-card-toggle{color:var(--muted);font-size:12px;transition:transform .2s;}
+.adm-card-toggle.open{transform:rotate(180deg);}
+.adm-card-body{padding:16px;}
+.adm-card-body.collapsed{display:none;}
+
+/* ── Form Elements ── */
+.adm-form-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;
+}
+.adm-form-grid-3{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:10px;
+}
+.adm-field{display:flex;flex-direction:column;gap:5px;}
+.adm-label{
+  font-family:var(--mono);font-size:10px;color:var(--muted);
+  letter-spacing:.5px;
+}
+.adm-label .required{color:var(--rep);margin-left:2px;}
+.adm-input,.adm-select,.adm-textarea{
+  background:#0e1520;border:1px solid var(--border);
+  color:var(--text);border-radius:4px;padding:7px 10px;
+  font-family:var(--ff);font-size:13px;width:100%;
+  transition:border-color .15s;
+}
+.adm-input:focus,.adm-select:focus,.adm-textarea:focus{
+  outline:none;border-color:var(--accent);
+}
+.adm-textarea{resize:vertical;min-height:80px;font-size:12px;}
+.adm-select{cursor:pointer;}
+.adm-input[type=number]{font-family:var(--mono);}
+
+/* ── Section Divider ── */
+.adm-sect-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);
+  padding:12px 0 8px;border-top:1px solid var(--border);margin-top:12px;
+}
+.adm-sect-label:first-child{border-top:none;margin-top:0;padding-top:0;}
+
+/* ── States Table ── */
+.adm-states-search{
+  display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;
+}
+.adm-states-search .adm-input{max-width:200px;}
+.adm-filter-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.adm-chip{
+  font-family:var(--mono);font-size:10px;padding:3px 9px;
+  border-radius:20px;border:1px solid var(--border);
+  color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.adm-chip:hover,.adm-chip.active{border-color:var(--accent);color:var(--accent);background:rgba(240,180,0,.08);}
+.adm-chip.chip-R.active{border-color:var(--rep);color:var(--rep);background:rgba(239,68,68,.08);}
+.adm-chip.chip-D.active{border-color:var(--dem);color:var(--dem);background:rgba(59,130,246,.08);}
+
+.adm-states-table{width:100%;border-collapse:collapse;}
+.adm-states-table th{
+  font-family:var(--mono);font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--muted);
+  padding:8px 10px;border-bottom:1px solid var(--border);
+  text-align:left;position:sticky;top:0;background:var(--card);z-index:1;
+}
+.adm-states-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.04);}
+.adm-states-table tr:hover td{background:rgba(255,255,255,.02);}
+.adm-state-code{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:var(--text);
+}
+.adm-state-name{font-size:11px;color:var(--muted);}
+.adm-winner-sel{
+  font-family:var(--mono);font-size:11px;padding:4px 6px;
+  border-radius:3px;border:1px solid var(--border);
+  background:#0e1520;color:var(--text);cursor:pointer;width:70px;
+}
+.winner-val-R{border-color:rgba(239,68,68,.4);color:var(--rep);}
+.winner-val-D{border-color:rgba(59,130,246,.4);color:var(--dem);}
+.winner-val-I{border-color:rgba(168,85,247,.4);color:var(--ind);}
+.adm-called-toggle{
+  width:36px;height:20px;border-radius:10px;background:var(--border);
+  border:none;cursor:pointer;position:relative;transition:background .2s;
+  flex-shrink:0;
+}
+.adm-called-toggle::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:16px;height:16px;border-radius:50%;background:#fff;
+  transition:transform .2s;
+}
+.adm-called-toggle.on{background:var(--green);}
+.adm-called-toggle.on::after{transform:translateX(16px);}
+.adm-margin-input{
+  width:65px;font-family:var(--mono);font-size:11px;
+  padding:4px 6px;border:1px solid var(--border);
+  border-radius:3px;background:#0e1520;color:var(--text);
+  text-align:right;
+}
+
+/* ── Races ── */
+.adm-race-item{
+  border:1px solid var(--border);border-radius:var(--r);
+  margin-bottom:10px;overflow:hidden;
+}
+.adm-race-head{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;background:rgba(255,255,255,.02);
+  cursor:pointer;
+}
+.adm-race-badge{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:3px;
+  background:rgba(255,255,255,.06);color:var(--text);
+}
+.adm-race-name{flex:1;font-size:13px;}
+.adm-race-called-tag{
+  font-family:var(--mono);font-size:10px;padding:2px 7px;
+  border-radius:3px;
+}
+.tag-R{background:rgba(239,68,68,.12);color:var(--rep);border:1px solid rgba(239,68,68,.3);}
+.tag-D{background:rgba(59,130,246,.12);color:var(--dem);border:1px solid rgba(59,130,246,.3);}
+.tag-unc{background:rgba(100,116,139,.1);color:var(--muted);border:1px solid rgba(100,116,139,.2);}
+.adm-race-body{padding:14px;display:none;}
+.adm-race-body.open{display:block;}
+.adm-race-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+@media(max-width:600px){
+  .adm-race-grid{grid-template-columns:1fr;}
+  .adm-sidebar{display:none;}
+  .adm-content{padding:14px;}
+}
+
+/* ── Auth Modal ── */
+.adm-modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.adm-modal-bg.hidden{display:none;}
+.adm-modal{
+  background:#161c27;border:1px solid var(--border);
+  border-radius:var(--r);max-width:460px;width:100%;
+  padding:24px;
+}
+.adm-modal h2{font-size:16px;margin-bottom:8px;}
+.adm-modal p{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+.adm-modal a{color:var(--accent);text-decoration:none;}
+.adm-modal a:hover{text-decoration:underline;}
+.adm-token-row{display:flex;gap:8px;}
+.adm-token-row .adm-input{font-family:var(--mono);font-size:12px;flex:1;}
+
+/* ── Toast ── */
+.adm-toast-wrap{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  display:flex;flex-direction:column;gap:8px;
+}
+.adm-toast{
+  background:#1c2535;border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 16px;
+  font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.4);
+  display:flex;align-items:center;gap:10px;
+  animation:adm-slidein .2s ease;min-width:240px;max-width:360px;
+}
+@keyframes adm-slidein{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+.adm-toast.ok{border-left:3px solid var(--green);}
+.adm-toast.err{border-left:3px solid var(--red);}
+.adm-toast.info{border-left:3px solid var(--accent);}
+.adm-toast-icon{font-size:16px;}
+
+/* ── Misc ── */
+.adm-diff-badge{
+  font-family:var(--mono);font-size:10px;padding:2px 6px;
+  border-radius:3px;margin-left:6px;
+}
+.adm-diff-badge.changed{background:rgba(240,180,0,.15);color:var(--accent);}
+.adm-preview-box{
+  background:#0a0f18;border:1px solid var(--border);border-radius:4px;
+  padding:12px;font-family:var(--mono);font-size:11px;
+  color:#7dd3fc;overflow-x:auto;max-height:300px;overflow-y:auto;
+  white-space:pre;line-height:1.6;
+}
+.adm-hr{height:1px;background:var(--border);margin:16px 0;}
+.adm-info-row{
+  display:flex;gap:6px;align-items:flex-start;
+  background:rgba(240,180,0,.06);border:1px solid rgba(240,180,0,.2);
+  border-radius:4px;padding:10px 12px;font-size:12px;
+  color:#c9a200;margin-bottom:14px;line-height:1.6;
+}
+.adm-tab-section{display:none;}
+.adm-tab-section.active{display:block;}
+.spinner{display:inline-block;animation:adm-spin .8s linear infinite;}
+@keyframes adm-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- Auth Modal -->
+<div class="adm-modal-bg" id="adm-auth-modal">
+  <div class="adm-modal">
+    <h2>🔐 GitHub 存取金鑰</h2>
+    <p>
+      需要 GitHub Personal Access Token（PAT）才能將更新直接推送到資料庫。<br>
+      Token 只儲存在瀏覽器 sessionStorage，關閉分頁後自動清除。<br><br>
+      建立 Token：<a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a><br>
+      需要的權限：<strong>repo → contents → write</strong>（或 fine-grained: <strong>Contents: Read and write</strong>）
+    </p>
+    <div class="adm-token-row">
+      <input class="adm-input" type="password" id="adm-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      <button class="btn btn-primary" onclick="saveToken()">確認</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="btn btn-outline btn-sm" onclick="skipAuth()">先跳過（僅本地編輯，無法推送）</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="adm-toast-wrap" id="adm-toasts"></div>
+
+<!-- Main Layout -->
+<div class="adm-layout">
+
+  <!-- Sidebar -->
+  <div class="adm-sidebar">
+    <div class="adm-logo">
+      <div class="adm-logo-title">ELECTION ADMIN</div>
+      <div class="adm-logo-sub">2026 美國期中選舉</div>
+    </div>
+    <nav class="adm-nav">
+      <div class="adm-nav-item active" onclick="gotoTab('meta',this)" data-tab="meta">
+        <span class="adm-nav-icon">📋</span> 基本資訊
+      </div>
+      <div class="adm-nav-item" onclick="gotoTab('boards',this)" data-tab="boards">
+        <span class="adm-nav-icon">🏛</span> 席次計分板
+      </div>
+      <div class="adm-nav-item" onclick="gotoTab('states',this)" data-tab="states">
+        <span class="adm-nav-icon">🗺</span> 各州結果
+      </div>
+      <div class="adm-nav-item" onclick="gotoTab('races',this)" data-tab="races">
+        <span class="adm-nav-icon">📊</span> 關鍵選區
+      </div>
+      <div class="adm-nav-sep"></div>
+      <div class="adm-nav-item" onclick="gotoTab('preview',this)" data-tab="preview">
+        <span class="adm-nav-icon">👁</span> 預覽 JSON
+      </div>
+    </nav>
+    <div class="adm-auth-status" id="adm-sidebar-auth">
+      <span class="adm-auth-dot no" id="adm-auth-dot-sidebar"></span>
+      <span id="adm-auth-label-sidebar">未驗證</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="adm-content">
+
+    <!-- Top Bar -->
+    <div class="adm-topbar">
+      <div>
+        <div class="adm-page-title" id="adm-page-title">基本資訊</div>
+        <div class="adm-page-sub">編輯後請點「推送更新」儲存到線上</div>
+      </div>
+      <div class="adm-actions">
+        <button class="btn btn-outline" onclick="loadFromGitHub()">
+          <span id="adm-load-icon">↓</span> 從 GitHub 載入
+        </button>
+        <button class="btn btn-outline" onclick="copyJSON()">複製 JSON</button>
+        <button class="btn btn-primary" onclick="pushToGitHub()" id="adm-push-btn">
+          ↑ 推送更新
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Tab: Meta ── -->
+    <div class="adm-tab-section active" id="tab-meta">
+
+      <div class="adm-info-row">
+        ℹ️ 每次更新選情後，請先修改「最後更新時間」再推送，前台頁面會顯示此時間戳記。
+      </div>
+
+      <div class="adm-card">
+        <div class="adm-card-head" onclick="toggleCard(this)">
+          <span class="adm-card-title">📋 全域資訊</span>
+          <span class="adm-card-toggle open">▾</span>
+        </div>
+        <div class="adm-card-body">
+          <div class="adm-form-grid">
+            <div class="adm-field" style="grid-column:1/-1">
+              <label class="adm-label">最後更新時間 <span class="required">*</span></label>
+              <input class="adm-input" type="datetime-local" id="f-lastUpdated" step="60">
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">格式：ISO 8601，含時區（預設東部時間 -05:00）</div>
+            </div>
+            <div class="adm-field">
+              <label class="adm-label">開票進度標語</label>
+              <input class="adm-input" type="text" id="f-reporting" placeholder="已開出 52% 選區">
+            </div>
+            <div class="adm-field">
+              <label class="adm-label">資料來源說明</label>
+              <input class="adm-input" type="text" id="f-source" placeholder="美聯社、各州選務委員會">
+            </div>
+            <div class="adm-field" style="grid-column:1/-1">
+              <label class="adm-label">補充說明（顯示在頁面底部）</label>
+              <input class="adm-input" type="text" id="f-note" placeholder="* 標記席位仍在計票中">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="adm-card">
+        <div class="adm-card-head" onclick="toggleCard(this)">
+          <span class="adm-card-title">🔗 快速連結</span>
+          <span class="adm-card-toggle open">▾</span>
+        </div>
+        <div class="adm-card-body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:12px;color:var(--muted);width:80px;flex-shrink:0;">前台頁面</span>
+              <code style="font-family:var(--mono);font-size:11px;color:#7dd3fc;flex:1;word-break:break-all;">https://kayhase015497.github.io/war-industry-news/misc-data/us-election-2026.html</code>
+              <button class="btn btn-outline btn-sm" onclick="window.open('https://kayhase015497.github.io/war-industry-news/misc-data/us-election-2026.html','_blank')">開啟</button>
+            </div>
+            <div class="adm-hr" style="margin:4px 0;"></div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:12px;color:var(--muted);width:80px;flex-shrink:0;">嵌入碼</span>
+              <code style="font-family:var(--mono);font-size:11px;color:#7dd3fc;flex:1;word-break:break-all;" id="embed-code-display"></code>
+              <button class="btn btn-outline btn-sm" onclick="copyEmbedCode()">複製</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Tab: Boards ── -->
+    <div class="adm-tab-section" id="tab-boards">
+
+      <div class="adm-info-row">
+        ℹ️ 填入各黨目前確認的總席次（含選前既有席位）。「淨增減」填正數表示增加，負數表示減少。
+      </div>
+
+      <div id="boards-container">
+        <!-- generated by JS -->
+      </div>
+
+    </div>
+
+    <!-- ── Tab: States ── -->
+    <div class="adm-tab-section" id="tab-states">
+
+      <div class="adm-states-search">
+        <input class="adm-input" type="text" placeholder="搜尋州名…" oninput="filterStates(this.value)" style="max-width:180px;">
+        <div class="adm-filter-chips">
+          <span class="adm-chip active" onclick="filterStatesByWinner('all',this)">全部</span>
+          <span class="adm-chip chip-D" onclick="filterStatesByWinner('D',this)">民主黨</span>
+          <span class="adm-chip chip-R" onclick="filterStatesByWinner('R',this)">共和黨</span>
+          <span class="adm-chip" onclick="filterStatesByWinner('null',this)">未確定</span>
+        </div>
+      </div>
+
+      <div class="adm-card" style="overflow:auto;">
+        <table class="adm-states-table" id="adm-states-table">
+          <thead>
+            <tr>
+              <th>州</th>
+              <th>勝選黨</th>
+              <th>已確定</th>
+              <th>領先差距 %</th>
+              <th>選種</th>
+            </tr>
+          </thead>
+          <tbody id="adm-states-tbody">
+            <!-- generated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ── Tab: Races ── -->
+    <div class="adm-tab-section" id="tab-races">
+
+      <div class="adm-info-row">
+        ℹ️ 每場選區的候選人得票率、開票進度、勝負結果。「競爭選區」勾選後，地圖旁的篩選器可快速過濾。
+      </div>
+
+      <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select class="adm-select" id="races-tab-filter" style="max-width:160px;" onchange="renderRacesTab()">
+          <option value="all">全部選區</option>
+          <option value="Senate">參議院</option>
+          <option value="House">眾議院</option>
+          <option value="Governor">州長</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="addNewRace()">＋ 新增選區</button>
+      </div>
+
+      <div id="adm-races-list">
+        <!-- generated by JS -->
+      </div>
+
+    </div>
+
+    <!-- ── Tab: Preview ── -->
+    <div class="adm-tab-section" id="tab-preview">
+
+      <div class="adm-card">
+        <div class="adm-card-head" onclick="refreshPreview()">
+          <span class="adm-card-title">👁 JSON 預覽（點擊更新）</span>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();copyJSON()">複製全部</button>
+        </div>
+        <div class="adm-card-body">
+          <pre class="adm-preview-box" id="adm-json-preview">點擊上方列表產生預覽…</pre>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /adm-content -->
+</div><!-- /adm-layout -->
+
+<script>
+/* ══════════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════════ */
+const REPO = 'kayhase015497/war-industry-news';
+const FILE_PATH = 'misc-data/us-election-2026-data.json';
+const RAW_URL = `https://raw.githubusercontent.com/${REPO}/main/${FILE_PATH}`;
+const API_URL = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+const STATE_NAMES = {
+  AL:'阿拉巴馬',AK:'阿拉斯加',AZ:'亞利桑那',AR:'阿肯色',CA:'加利福尼亞',
+  CO:'科羅拉多',CT:'康乃狄克',DE:'德拉瓦',FL:'佛羅里達',GA:'喬治亞',
+  HI:'夏威夷',ID:'愛達荷',IL:'伊利諾',IN:'印第安納',IA:'愛荷華',
+  KS:'堪薩斯',KY:'肯塔基',LA:'路易斯安那',ME:'緬因',MD:'馬里蘭',
+  MA:'麻薩諸塞',MI:'密西根',MN:'明尼蘇達',MS:'密西西比',MO:'密蘇里',
+  MT:'蒙大拿',NE:'內布拉斯加',NV:'內華達',NH:'新罕布夏',NJ:'紐澤西',
+  NM:'新墨西哥',NY:'紐約',NC:'北卡羅來納',ND:'北達科他',OH:'俄亥俄',
+  OK:'奧克拉荷馬',OR:'奧勒岡',PA:'賓夕法尼亞',RI:'羅德島',SC:'南卡羅來納',
+  SD:'南達科他',TN:'田納西',TX:'德克薩斯',UT:'猶他',VT:'佛蒙特',
+  VA:'維吉尼亞',WA:'華盛頓',WV:'西維吉尼亞',WI:'威斯康辛',WY:'懷俄明'
+};
+const STATE_ABBRS = Object.keys(STATE_NAMES);
+const CHAMBERS = ['senate','house','governor'];
+const CHAMBER_LABELS = {senate:'參議院',house:'眾議院',governor:'州長'};
+
+/* ══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let data = null;
+let githubSHA = null;
+let stateWinnerFilter = 'all';
+let stateSearchQuery = '';
+
+/* ══════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════ */
+function getToken() { return sessionStorage.getItem('gh_token') || ''; }
+function saveToken() {
+  const v = document.getElementById('adm-token-input').value.trim();
+  if (!v) { toast('請輸入 Token','err'); return; }
+  sessionStorage.setItem('gh_token', v);
+  document.getElementById('adm-auth-modal').classList.add('hidden');
+  updateAuthUI(true);
+  toast('Token 已儲存（本 session 有效）','ok');
+  loadFromGitHub();
+}
+function skipAuth() {
+  document.getElementById('adm-auth-modal').classList.add('hidden');
+  updateAuthUI(false);
+  loadFromGitHub(); // try without token (public repo)
+}
+function updateAuthUI(hasToken) {
+  const dot = document.getElementById('adm-auth-dot-sidebar');
+  const lbl = document.getElementById('adm-auth-label-sidebar');
+  dot.className = 'adm-auth-dot ' + (hasToken ? 'ok' : 'no');
+  lbl.textContent = hasToken ? '已驗證' : '未驗證（唯讀）';
+}
+
+/* ══════════════════════════════════════════════
+   DATA LOAD/SAVE
+═══════════════════════════════════════════════ */
+async function loadFromGitHub() {
+  const icon = document.getElementById('adm-load-icon');
+  icon.textContent = '⟳';
+  icon.className = 'spinner';
+  try {
+    const token = getToken();
+    const headers = { 'Accept':'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = `token ${token}`;
+
+    const res = await fetch(API_URL, { headers });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const meta = await res.json();
+    githubSHA = meta.sha;
+    const content = atob(meta.content.replace(/\n/g,''));
+    data = JSON.parse(content);
+    populateForms();
+    toast('已載入最新資料','ok');
+  } catch(e) {
+    // try raw without auth
+    try {
+      const res = await fetch(RAW_URL + '?_=' + Date.now());
+      data = await res.json();
+      populateForms();
+      toast('已載入（無法取得 SHA，推送時需要 Token）','info');
+    } catch(e2) {
+      toast('載入失敗：' + e2.message,'err');
+    }
+  }
+  icon.className = '';
+  icon.textContent = '↓';
+}
+
+async function pushToGitHub() {
+  const token = getToken();
+  if (!token) { toast('請先設定 GitHub Token','err'); showAuthModal(); return; }
+  const btn = document.getElementById('adm-push-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner">⟳</span> 推送中…';
+  try {
+    const payload = buildJSON();
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body = {
+      message: `chore: 更新選舉開票結果 ${new Date().toISOString().slice(0,16).replace('T',' ')} ET`,
+      content: encoded,
+      branch: 'main',
+    };
+    if (githubSHA) body.sha = githubSHA;
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json',
+      },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const result = await res.json();
+    githubSHA = result.content.sha;
+    toast('✓ 推送成功！GitHub Pages 約 2 分鐘後更新','ok');
+  } catch(e) {
+    toast('推送失敗：' + e.message,'err');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '↑ 推送更新';
+}
+
+function showAuthModal() {
+  document.getElementById('adm-auth-modal').classList.remove('hidden');
+}
+
+/* ══════════════════════════════════════════════
+   BUILD JSON FROM FORMS
+═══════════════════════════════════════════════ */
+function buildJSON() {
+  if (!data) return {};
+  const out = JSON.parse(JSON.stringify(data));
+
+  // Meta
+  const rawDt = document.getElementById('f-lastUpdated').value;
+  if (rawDt) out.meta.lastUpdated = rawDt + ':00-05:00';
+  out.meta.reporting = document.getElementById('f-reporting').value || out.meta.reporting;
+  out.meta.source = document.getElementById('f-source').value || out.meta.source;
+  out.meta.note = document.getElementById('f-note').value || out.meta.note;
+
+  // Boards
+  CHAMBERS.forEach(ch => {
+    ['dem','rep','ind'].forEach(party => {
+      const s = document.getElementById(`f-${ch}-${party}-seats`);
+      const n = document.getElementById(`f-${ch}-${party}-net`);
+      if (s && out[ch] && out[ch][party]) {
+        out[ch][party].seats = parseInt(s.value) || 0;
+        out[ch][party].net = parseInt(n.value) || 0;
+      }
+    });
+    const unc = document.getElementById(`f-${ch}-uncalled`);
+    const ctrl = document.getElementById(`f-${ch}-ctrl`);
+    if (unc && out[ch]) out[ch].uncalled = parseInt(unc.value) || 0;
+    if (ctrl && out[ch]) out[ch].currentControl = ctrl.value;
+  });
+
+  // States
+  STATE_ABBRS.forEach(abbr => {
+    const ws = document.getElementById(`st-winner-${abbr}`);
+    const cs = document.getElementById(`st-called-${abbr}`);
+    const ms = document.getElementById(`st-margin-${abbr}`);
+    if (ws && out.states[abbr] !== undefined) {
+      out.states[abbr].winner = ws.value === 'null' ? null : ws.value;
+      out.states[abbr].called = cs ? cs.dataset.on === '1' : false;
+      out.states[abbr].margin = ms && ms.value !== '' ? parseFloat(ms.value) : null;
+    }
+  });
+
+  // Races
+  out.keyRaces = buildRacesJSON();
+
+  return out;
+}
+
+/* ══════════════════════════════════════════════
+   POPULATE FORMS
+═══════════════════════════════════════════════ */
+function populateForms() {
+  if (!data) return;
+
+  // Meta
+  const dt = data.meta.lastUpdated || '';
+  // Convert ISO to datetime-local format
+  const dtLocal = dt.replace(/([+-]\d{2}:\d{2}|Z)$/, '').slice(0,16);
+  document.getElementById('f-lastUpdated').value = dtLocal;
+  document.getElementById('f-reporting').value = data.meta.reporting || '';
+  document.getElementById('f-source').value = data.meta.source || '';
+  document.getElementById('f-note').value = data.meta.note || '';
+
+  // Boards
+  renderBoardsForms();
+
+  // States
+  renderStatesTable();
+
+  // Races
+  renderRacesTab();
+
+  // Embed code
+  document.getElementById('embed-code-display').textContent =
+    '<iframe src="https://kayhase015497.github.io/war-industry-news/misc-data/us-election-2026.html" width="100%" height="900" frameborder="0" style="border:none;max-width:100%"></iframe>';
+}
+
+/* ══════════════════════════════════════════════
+   BOARDS FORMS
+═══════════════════════════════════════════════ */
+function renderBoardsForms() {
+  const wrap = document.getElementById('boards-container');
+  wrap.innerHTML = CHAMBERS.map(ch => {
+    const d = data[ch];
+    if (!d) return '';
+    const parties = [
+      {key:'dem', label:'民主黨', color:'var(--dem)'},
+      {key:'rep', label:'共和黨', color:'var(--rep)'},
+      {key:'ind', label:'獨立/其他', color:'var(--ind)'},
+    ];
+    return `
+    <div class="adm-card">
+      <div class="adm-card-head" onclick="toggleCard(this)">
+        <span class="adm-card-title">${CHAMBER_LABELS[ch]} ${ch === 'senate' ? '(100席)' : ch === 'house' ? '(435席)' : '(50州)'}</span>
+        <span class="adm-card-toggle open">▾</span>
+      </div>
+      <div class="adm-card-body">
+        <div class="adm-sect-label">各黨席次</div>
+        <div class="adm-form-grid">
+          ${parties.map(p => {
+            const pd = d[p.key] || {};
+            return `
+            <div class="adm-field">
+              <label class="adm-label" style="color:${p.color}">${p.label}</label>
+              <div style="display:flex;gap:6px;">
+                <div class="adm-field" style="flex:2">
+                  <label class="adm-label">席次</label>
+                  <input class="adm-input" type="number" id="f-${ch}-${p.key}-seats" value="${pd.seats||0}" min="0" max="535">
+                </div>
+                <div class="adm-field" style="flex:1">
+                  <label class="adm-label">淨增減</label>
+                  <input class="adm-input" type="number" id="f-${ch}-${p.key}-net" value="${pd.net||0}" min="-100" max="100">
+                </div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="adm-sect-label">其他</div>
+        <div class="adm-form-grid-3">
+          <div class="adm-field">
+            <label class="adm-label">尚未確定席次</label>
+            <input class="adm-input" type="number" id="f-${ch}-uncalled" value="${d.uncalled||0}" min="0">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">目前控制黨</label>
+            <select class="adm-select" id="f-${ch}-ctrl">
+              <option value="R" ${d.currentControl==='R'?'selected':''}>共和黨</option>
+              <option value="D" ${d.currentControl==='D'?'selected':''}>民主黨</option>
+              <option value="?" ${!d.currentControl||d.currentControl==='?'?'selected':''}>懸峙/未定</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════
+   STATES TABLE
+═══════════════════════════════════════════════ */
+function renderStatesTable() {
+  const tbody = document.getElementById('adm-states-tbody');
+  tbody.innerHTML = STATE_ABBRS.map(abbr => {
+    const st = (data.states && data.states[abbr]) || { winner:null, called:false, margin:null, office:'Senate' };
+    const name = STATE_NAMES[abbr] || abbr;
+    const w = st.winner || 'null';
+    const isCalled = st.called ? '1' : '0';
+    return `
+    <tr id="state-row-${abbr}" class="state-row" data-winner="${w}" data-search="${abbr} ${name}">
+      <td>
+        <div class="adm-state-code">${abbr}</div>
+        <div class="adm-state-name">${name}</div>
+      </td>
+      <td>
+        <select class="adm-winner-sel winner-val-${w}" id="st-winner-${abbr}"
+          onchange="onWinnerChange('${abbr}',this)">
+          <option value="null" ${w==='null'?'selected':''}>— 未定</option>
+          <option value="D" ${w==='D'?'selected':''}>民主黨 D</option>
+          <option value="R" ${w==='R'?'selected':''}>共和黨 R</option>
+          <option value="I" ${w==='I'?'selected':''}>獨立 I</option>
+        </select>
+      </td>
+      <td>
+        <button class="adm-called-toggle ${isCalled==='1'?'on':''}"
+          id="st-called-${abbr}" data-on="${isCalled}"
+          onclick="toggleCalled('${abbr}',this)"></button>
+      </td>
+      <td>
+        <input class="adm-margin-input" type="number" step="0.1" min="0" max="100"
+          id="st-margin-${abbr}" value="${st.margin !== null && st.margin !== undefined ? st.margin : ''}">
+      </td>
+      <td>
+        <select class="adm-winner-sel" id="st-office-${abbr}" style="width:90px;">
+          <option value="Senate" ${(st.office||'Senate')==='Senate'?'selected':''}>Senate</option>
+          <option value="House" ${st.office==='House'?'selected':''}>House</option>
+          <option value="Governor" ${st.office==='Governor'?'selected':''}>Governor</option>
+        </select>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function onWinnerChange(abbr, sel) {
+  sel.className = `adm-winner-sel winner-val-${sel.value}`;
+  const row = document.getElementById(`state-row-${abbr}`);
+  if (row) row.dataset.winner = sel.value;
+  applyStateFilters();
+}
+
+function toggleCalled(abbr, btn) {
+  const isOn = btn.dataset.on === '1';
+  btn.dataset.on = isOn ? '0' : '1';
+  btn.className = 'adm-called-toggle' + (isOn ? '' : ' on');
+}
+
+function filterStates(q) {
+  stateSearchQuery = q.toLowerCase();
+  applyStateFilters();
+}
+
+function filterStatesByWinner(val, chip) {
+  stateWinnerFilter = val;
+  document.querySelectorAll('.adm-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  applyStateFilters();
+}
+
+function applyStateFilters() {
+  document.querySelectorAll('.state-row').forEach(row => {
+    const w = row.dataset.winner;
+    const s = row.dataset.search.toLowerCase();
+    const matchWinner = stateWinnerFilter === 'all' || w === stateWinnerFilter;
+    const matchSearch = !stateSearchQuery || s.includes(stateSearchQuery);
+    row.style.display = matchWinner && matchSearch ? '' : 'none';
+  });
+}
+
+/* ══════════════════════════════════════════════
+   RACES
+═══════════════════════════════════════════════ */
+let racesData = [];
+
+function renderRacesTab() {
+  if (!data) return;
+  racesData = JSON.parse(JSON.stringify(data.keyRaces || []));
+  renderRacesList();
+}
+
+function renderRacesList() {
+  const filter = document.getElementById('races-tab-filter').value;
+  const list = document.getElementById('adm-races-list');
+  const filtered = racesData.filter(r => filter === 'all' || r.office === filter);
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:13px;text-align:center;">無資料</div>';
+    return;
+  }
+  list.innerHTML = filtered.map((r, globalIdx) => {
+    const realIdx = racesData.indexOf(r);
+    const w = r.winner;
+    const tagClass = w === 'D' ? 'tag-D' : w === 'R' ? 'tag-R' : 'tag-unc';
+    const tagLabel = w === 'D' ? '民主黨勝' : w === 'R' ? '共和黨勝' : '計票中';
+    return `
+    <div class="adm-race-item" id="race-item-${realIdx}">
+      <div class="adm-race-head" onclick="toggleRace(${realIdx})">
+        <span class="adm-race-badge">${r.state}</span>
+        <span class="adm-race-name">${r.stateName} · ${r.office === 'Senate' ? '參議院' : r.office === 'House' ? '眾議院' : '州長'}</span>
+        <span class="adm-race-called-tag ${tagClass}">${tagLabel}</span>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeRace(${realIdx})">刪除</button>
+      </div>
+      <div class="adm-race-body" id="race-body-${realIdx}">
+        <div class="adm-form-grid" style="margin-bottom:12px;">
+          <div class="adm-field">
+            <label class="adm-label">州代碼</label>
+            <input class="adm-input" value="${r.state}" oninput="updateRaceField(${realIdx},'state',this.value)">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">州名（中文）</label>
+            <input class="adm-input" value="${r.stateName}" oninput="updateRaceField(${realIdx},'stateName',this.value)">
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">選種</label>
+            <select class="adm-select" onchange="updateRaceField(${realIdx},'office',this.value)">
+              <option value="Senate" ${r.office==='Senate'?'selected':''}>Senate 參議院</option>
+              <option value="House" ${r.office==='House'?'selected':''}>House 眾議院</option>
+              <option value="Governor" ${r.office==='Governor'?'selected':''}>Governor 州長</option>
+            </select>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">開票進度 %</label>
+            <input class="adm-input" type="number" min="0" max="100" value="${r.reporting||0}"
+              oninput="updateRaceField(${realIdx},'reporting',parseFloat(this.value))">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          ${['dem','rep'].map(party => {
+            const p = r[party] || {};
+            const pLabel = party === 'dem' ? '民主黨' : '共和黨';
+            const pColor = party === 'dem' ? 'var(--dem)' : 'var(--rep)';
+            return `
+            <div style="border:1px solid var(--border);border-radius:4px;padding:12px;">
+              <div style="font-family:var(--mono);font-size:10px;color:${pColor};margin-bottom:10px;letter-spacing:1px;">${pLabel}</div>
+              <div class="adm-field" style="margin-bottom:8px;">
+                <label class="adm-label">候選人姓名</label>
+                <input class="adm-input" value="${p.name||''}"
+                  oninput="updateCandidateField(${realIdx},'${party}','name',this.value)">
+              </div>
+              <div style="display:flex;gap:8px;">
+                <div class="adm-field" style="flex:1;">
+                  <label class="adm-label">得票率 %</label>
+                  <input class="adm-input" type="number" step="0.1" min="0" max="100"
+                    value="${p.pct||''}"
+                    oninput="updateCandidateField(${realIdx},'${party}','pct',parseFloat(this.value))">
+                </div>
+                <div class="adm-field" style="flex:1.2;">
+                  <label class="adm-label">票數（選填）</label>
+                  <input class="adm-input" type="number" value="${p.votes||''}"
+                    oninput="updateCandidateField(${realIdx},'${party}','votes',parseInt(this.value))">
+                </div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+
+        <div class="adm-form-grid-3" style="margin-top:12px;">
+          <div class="adm-field">
+            <label class="adm-label">勝選黨</label>
+            <select class="adm-select" onchange="updateRaceField(${realIdx},'winner',this.value==='null'?null:this.value)">
+              <option value="null" ${!r.winner?'selected':''}>— 未定</option>
+              <option value="D" ${r.winner==='D'?'selected':''}>民主黨 D</option>
+              <option value="R" ${r.winner==='R'?'selected':''}>共和黨 R</option>
+            </select>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">已確定結果</label>
+            <select class="adm-select" onchange="updateRaceField(${realIdx},'called',this.value==='true')">
+              <option value="false" ${!r.called?'selected':''}>計票中</option>
+              <option value="true" ${r.called?'selected':''}>已確定</option>
+            </select>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">競爭選區</label>
+            <select class="adm-select" onchange="updateRaceField(${realIdx},'competitive',this.value==='true')">
+              <option value="true" ${r.competitive?'selected':''}>是</option>
+              <option value="false" ${!r.competitive?'selected':''}>否</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleRace(idx) {
+  const body = document.getElementById(`race-body-${idx}`);
+  body.classList.toggle('open');
+}
+
+function updateRaceField(idx, field, value) {
+  if (racesData[idx]) racesData[idx][field] = value;
+}
+
+function updateCandidateField(idx, party, field, value) {
+  if (racesData[idx]) {
+    if (!racesData[idx][party]) racesData[idx][party] = {};
+    racesData[idx][party][field] = value;
+  }
+}
+
+function removeRace(idx) {
+  if (!confirm('確定要刪除此選區？')) return;
+  racesData.splice(idx, 1);
+  renderRacesList();
+}
+
+function addNewRace() {
+  const abbr = prompt('請輸入州代碼（如 PA、GA）:');
+  if (!abbr) return;
+  const upper = abbr.toUpperCase().trim();
+  racesData.push({
+    id: upper + '-' + Date.now(),
+    state: upper,
+    stateName: STATE_NAMES[upper] || upper + '州',
+    office: 'Senate',
+    dem: { name:'', pct:0, votes:0 },
+    rep: { name:'', pct:0, votes:0 },
+    reporting: 0,
+    called: false,
+    winner: null,
+    competitive: true,
+  });
+  renderRacesList();
+  // open the new one
+  const newIdx = racesData.length - 1;
+  setTimeout(() => {
+    const body = document.getElementById(`race-body-${newIdx}`);
+    if (body) body.classList.add('open');
+  }, 50);
+}
+
+function buildRacesJSON() {
+  // sync from racesData (already kept in sync via updateRaceField)
+  return racesData;
+}
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+function gotoTab(tabId, el) {
+  document.querySelectorAll('.adm-tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.adm-nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  el.classList.add('active');
+  const titles = {meta:'基本資訊',boards:'席次計分板',states:'各州結果',races:'關鍵選區',preview:'JSON 預覽'};
+  document.getElementById('adm-page-title').textContent = titles[tabId] || tabId;
+  if (tabId === 'preview') refreshPreview();
+}
+
+/* ══════════════════════════════════════════════
+   JSON PREVIEW & COPY
+═══════════════════════════════════════════════ */
+function refreshPreview() {
+  if (!data) { toast('請先載入資料','err'); return; }
+  const j = buildJSON();
+  document.getElementById('adm-json-preview').textContent = JSON.stringify(j, null, 2);
+}
+
+async function copyJSON() {
+  if (!data) { toast('請先載入資料','err'); return; }
+  const j = JSON.stringify(buildJSON(), null, 2);
+  await navigator.clipboard.writeText(j);
+  toast('JSON 已複製到剪貼簿','ok');
+}
+
+async function copyEmbedCode() {
+  const code = `<iframe src="https://kayhase015497.github.io/war-industry-news/misc-data/us-election-2026.html" width="100%" height="900" frameborder="0" style="border:none;max-width:100%"></iframe>`;
+  await navigator.clipboard.writeText(code);
+  toast('嵌入碼已複製','ok');
+}
+
+/* ══════════════════════════════════════════════
+   CARD TOGGLE
+═══════════════════════════════════════════════ */
+function toggleCard(head) {
+  const body = head.nextElementSibling;
+  const icon = head.querySelector('.adm-card-toggle');
+  body.classList.toggle('collapsed');
+  if (icon) icon.classList.toggle('open');
+}
+
+/* ══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
+function toast(msg, type='info') {
+  const icons = {ok:'✅',err:'❌',info:'ℹ️'};
+  const wrap = document.getElementById('adm-toasts');
+  const el = document.createElement('div');
+  el.className = `adm-toast ${type}`;
+  el.innerHTML = `<span class="adm-toast-icon">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Set default datetime to now ET
+  const now = new Date();
+  const etOffset = -5 * 60;
+  const etNow = new Date(now.getTime() + (etOffset - now.getTimezoneOffset()) * 60000);
+  document.getElementById('f-lastUpdated').value = etNow.toISOString().slice(0,16);
+
+  if (getToken()) {
+    document.getElementById('adm-auth-modal').classList.add('hidden');
+    updateAuthUI(true);
+    loadFromGitHub();
+  }
+  // else: modal stays open
+});
+
+// Keyboard shortcut: Ctrl+S to push
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    pushToGitHub();
+  }
+});
+</script>
+</body>
+</html>
