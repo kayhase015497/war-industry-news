@@ -300,19 +300,28 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 <div class="adm-modal-bg" id="adm-auth-modal">
   <div class="adm-modal">
     <h2>🔐 GitHub 存取金鑰</h2>
-    <p>
-      需要 GitHub Personal Access Token（PAT）才能將更新直接推送到資料庫。<br>
-      Token 只儲存在瀏覽器 sessionStorage，關閉分頁後自動清除。<br><br>
-      建立 Token：<a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a><br>
-      需要的權限：<strong>repo → contents → write</strong>（或 fine-grained: <strong>Contents: Read and write</strong>）
+    <p style="margin-bottom:12px;">
+      需要 GitHub Personal Access Token（PAT）才能推送更新。Token 只存在瀏覽器記憶體，關閉分頁後自動清除。
     </p>
+
+    <div style="background:#0a0f18;border:1px solid #253047;border-radius:4px;padding:12px;margin-bottom:14px;font-size:12px;line-height:2;">
+      <strong style="color:#f0b400;">Classic Token（推薦）建立步驟：</strong><br>
+      1. 前往 <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens/new</a><br>
+      2. Note 填任意名稱（如 election-admin）<br>
+      3. Expiration 選 No expiration 或 90 days<br>
+      4. 勾選 <code style="background:#1c2535;padding:1px 5px;border-radius:2px;">repo</code>（第一個大項目）<br>
+      5. 點 Generate token，複製 <code style="background:#1c2535;padding:1px 5px;border-radius:2px;">ghp_...</code> 開頭的金鑰
+    </div>
+
     <div class="adm-token-row">
-      <input class="adm-input" type="password" id="adm-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      <input class="adm-input" type="password" id="adm-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-family:var(--mono);">
       <button class="btn btn-primary" onclick="saveToken()">確認</button>
     </div>
-    <div style="margin-top:12px;">
-      <button class="btn btn-outline btn-sm" onclick="skipAuth()">先跳過（僅本地編輯，無法推送）</button>
+    <div style="margin-top:10px;display:flex;gap:8px;">
+      <button class="btn btn-outline btn-sm" id="adm-test-btn" onclick="testConnection()" style="display:none;">🔍 測試連線</button>
+      <button class="btn btn-outline btn-sm" onclick="skipAuth()">先跳過（僅本地編輯）</button>
     </div>
+    <div id="adm-test-result" style="margin-top:10px;font-size:12px;display:none;"></div>
   </div>
 </div>
 
@@ -362,6 +371,8 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
         <div class="adm-page-sub">編輯後請點「推送更新」儲存到線上</div>
       </div>
       <div class="adm-actions">
+        <button class="btn btn-outline" onclick="showAuthModal()" title="重新設定 Token">🔑 Token</button>
+        <button class="btn btn-outline" onclick="runDiagnostic()">🔍 診斷</button>
         <button class="btn btn-outline" onclick="loadFromGitHub()">
           <span id="adm-load-icon">↓</span> 從 GitHub 載入
         </button>
@@ -558,9 +569,11 @@ function saveToken() {
   const v = document.getElementById('adm-token-input').value.trim();
   if (!v) { toast('請輸入 Token','err'); return; }
   sessionStorage.setItem('gh_token', v);
+  // 先顯示測試按鈕，讓使用者可以診斷
+  document.getElementById('adm-test-btn').style.display = 'inline-flex';
   document.getElementById('adm-auth-modal').classList.add('hidden');
   updateAuthUI(true);
-  toast('Token 已儲存（本 session 有效）','ok');
+  toast('Token 已儲存，正在驗證連線…','info');
   loadFromGitHub();
 }
 function skipAuth() {
@@ -591,9 +604,61 @@ async function fetchFileSHA(token) {
   const headers = { 'Accept':'application/vnd.github.v3+json' };
   if (token) headers['Authorization'] = `token ${token}`;
   const res = await fetch(API_URL, { headers });
-  if (!res.ok) throw new Error(`取得 SHA 失敗 HTTP ${res.status}`);
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    const hint = res.status === 404
+      ? '（Token 可能缺少此 repo 的讀取權限，請確認 Token 有 repo scope）'
+      : res.status === 401 ? '（Token 無效或已過期）' : '';
+    throw new Error(`取得檔案資訊失敗 HTTP ${res.status} ${errBody.message || ''} ${hint}`);
+  }
   const meta = await res.json();
   return meta.sha;
+}
+
+/* 測試 Token 連線：分步驟確認讀取 → 寫入權限 */
+async function testConnection() {
+  const token = document.getElementById('adm-token-input').value.trim() || getToken();
+  const resultEl = document.getElementById('adm-test-result');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = '<span style="color:#f0b400">⟳ 測試中…</span>';
+
+  const steps = [];
+  // Step 1: 確認 repo 存在且可讀
+  try {
+    const r1 = await fetch(`https://api.github.com/repos/${REPO}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const j1 = await r1.json().catch(() => ({}));
+    if (r1.ok) steps.push(`✅ Repo 讀取正常（${j1.full_name}）`);
+    else steps.push(`❌ Repo 讀取失敗 HTTP ${r1.status}：${j1.message || ''}<br>&nbsp;&nbsp;→ Token 可能沒有勾選 <strong>repo</strong> scope`);
+  } catch(e) { steps.push(`❌ 網路錯誤：${e.message}`); }
+
+  // Step 2: 確認檔案可讀且拿到 SHA
+  try {
+    const r2 = await fetch(API_URL, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const j2 = await r2.json().catch(() => ({}));
+    if (r2.ok) {
+      githubSHA = j2.sha;
+      steps.push(`✅ 資料檔案可讀（SHA: ${j2.sha.slice(0,7)}…）`);
+    } else steps.push(`❌ 資料檔案讀取失敗 HTTP ${r2.status}：${j2.message || ''}`);
+  } catch(e) { steps.push(`❌ 讀取檔案錯誤：${e.message}`); }
+
+  // Step 3: 確認目前使用者
+  try {
+    const r3 = await fetch('https://api.github.com/user', {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const j3 = await r3.json().catch(() => ({}));
+    if (r3.ok) steps.push(`✅ 已登入為：${j3.login}（${j3.name || ''}）`);
+    else steps.push(`❌ 無法取得使用者資訊：${j3.message || ''}`);
+  } catch(e) { steps.push(`❌ ${e.message}`); }
+
+  resultEl.innerHTML = steps.map(s => `<div style="margin-bottom:4px">${s}</div>`).join('');
+  const allOk = steps.every(s => s.startsWith('✅'));
+  if (allOk) resultEl.innerHTML += `<div style="margin-top:8px;color:#22c55e;font-weight:700">✅ 連線正常，可以推送！</div>`;
+  else resultEl.innerHTML += `<div style="margin-top:8px;color:#ef4444;font-weight:700">⚠️ 有錯誤，請依上方提示修正 Token 設定。</div>`;
 }
 
 async function loadFromGitHub() {
@@ -676,16 +741,34 @@ async function pushToGitHub() {
     githubSHA = result.content.sha;  // 更新成最新 SHA
     toast('✓ 推送成功！GitHub Pages 約 2 分鐘後更新','ok');
   } catch(e) {
-    // 如果是 SHA 衝突，清掉讓下次自動重拿
-    if (e.message.includes('does not match')) {
-      githubSHA = null;
-      toast('SHA 衝突（可能有人同時更新），請再推送一次','err');
+    githubSHA = null; // 清掉 SHA，下次重拿
+    const msg = e.message || '';
+    if (msg.includes('does not match') || msg.includes('conflict')) {
+      toast('版本衝突（可能有人同時更新），請再按一次推送','err');
+    } else if (msg.includes('404') || msg.includes('Not Found')) {
+      toast('推送失敗（404）：Token 缺少 repo 寫入權限，請點「🔑 Token」重設，或點「🔍 診斷」查看原因','err');
+    } else if (msg.includes('401') || msg.includes('Bad credentials')) {
+      toast('推送失敗（401）：Token 無效或已過期，請點「🔑 Token」重新輸入','err');
     } else {
-      toast('推送失敗：' + e.message,'err');
+      toast('推送失敗：' + msg,'err');
     }
+    console.error('[push error]', e);
   }
   btn.disabled = false;
   btn.innerHTML = '↑ 推送更新';
+}
+
+/* 診斷：從頂部按鈕呼叫，在 toast 顯示結果 */
+async function runDiagnostic() {
+  const token = getToken();
+  if (!token) { toast('請先點「🔑 Token」設定 GitHub Token','err'); showAuthModal(); return; }
+  toast('開始連線診斷（請稍候）…','info');
+  document.getElementById('adm-token-input').value = token;
+  document.getElementById('adm-test-btn').style.display = 'inline-flex';
+  // 顯示 auth modal 讓使用者看到診斷結果
+  document.getElementById('adm-test-result').style.display = 'none';
+  document.getElementById('adm-auth-modal').classList.remove('hidden');
+  await testConnection();
 }
 
 function showAuthModal() {
