@@ -54,7 +54,7 @@
   /* ── Main canvas area ── */
   #canvas-wrapper {
     flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
-    padding: 20px; background: #12122a;
+    padding: 20px; background: #2a2a2a;
   }
 
   #canvas-container {
@@ -70,7 +70,7 @@
     transform-origin: top left;
   }
   #img-layer img {
-    display: block; opacity: 0.55;
+    display: block; opacity: 1;
     transform-origin: top left;
   }
 
@@ -137,8 +137,8 @@
   <!-- Opacity -->
   <div id="opacity-row">
     <span class="range-label">透明度</span>
-    <input type="range" id="opacity-slider" min="10" max="100" value="55" oninput="setOpacity(this.value)">
-    <span class="range-label" id="opacity-val">55%</span>
+    <input type="range" id="opacity-slider" min="10" max="100" value="100" oninput="setOpacity(this.value)">
+    <span class="range-label" id="opacity-val">100%</span>
   </div>
 
   <!-- Image scale -->
@@ -199,8 +199,8 @@ const BORDER_COLOR  = '#e94560';
 const BLOCK_COLOR   = 'rgba(255,255,255,0.06)';
 const HOVER_COLOR   = 'rgba(232,69,96,0.35)';
 const CLICKED_COLOR = 'rgba(46,204,113,0.5)';
-const LINE_COLOR    = 'rgba(255,255,255,0.18)';
-const BLOCK_LINE    = 'rgba(255,255,255,0.45)';
+const LINE_COLOR    = 'rgba(255,255,255,0.5)';
+const BLOCK_LINE    = 'rgba(255,80,80,0.85)';
 
 const BLOCK = 8; // cells per block-group
 
@@ -251,12 +251,6 @@ function drawSVGGrid(svg, size, total) {
   while (svg.firstChild) svg.removeChild(svg.firstChild);
 
   const ns = 'http://www.w3.org/2000/svg';
-
-  // Background
-  const bg = document.createElementNS(ns, 'rect');
-  bg.setAttribute('width', total); bg.setAttribute('height', total);
-  bg.setAttribute('fill', '#1a1a2e');
-  svg.appendChild(bg);
 
   // Thin cell lines
   for (let i = 0; i <= size; i++) {
