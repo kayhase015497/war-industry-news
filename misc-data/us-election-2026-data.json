@@ -1,160 +1,615 @@
 {
   "meta": {
     "lastUpdated": "2026-11-03T21:45:00-05:00",
-    "reporting": "已開出 52% 選區",
+    "reporting": "0627 次射 已開出 52% 選區 ",
     "note": "* 標記席位仍在計票中，結果未定",
     "source": "美聯社、各州選務委員會"
   },
   "senate": {
-    "dem": { "seats": 44, "net": -2, "label": "民主黨" },
-    "rep": { "seats": 50, "net": 2, "label": "共和黨" },
-    "ind": { "seats": 2, "net": 0, "label": "獨立/其他" },
+    "dem": {
+      "seats": 44,
+      "net": -2,
+      "label": "民主黨"
+    },
+    "rep": {
+      "seats": 50,
+      "net": 2,
+      "label": "共和黨"
+    },
+    "ind": {
+      "seats": 2,
+      "net": 0,
+      "label": "獨立/其他"
+    },
     "uncalled": 4,
     "total": 100,
     "threshold": 51,
     "currentControl": "R"
   },
   "house": {
-    "dem": { "seats": 195, "net": -8, "label": "民主黨" },
-    "rep": { "seats": 222, "net": 8, "label": "共和黨" },
-    "ind": { "seats": 0, "net": 0, "label": "獨立/其他" },
+    "dem": {
+      "seats": 195,
+      "net": -8,
+      "label": "民主黨"
+    },
+    "rep": {
+      "seats": 222,
+      "net": 8,
+      "label": "共和黨"
+    },
+    "ind": {
+      "seats": 0,
+      "net": 0,
+      "label": "獨立/其他"
+    },
     "uncalled": 18,
     "total": 435,
     "threshold": 218,
     "currentControl": "R"
   },
   "governor": {
-    "dem": { "seats": 19, "net": -1, "label": "民主黨" },
-    "rep": { "seats": 27, "net": 1, "label": "共和黨" },
-    "ind": { "seats": 0, "net": 0, "label": "獨立/其他" },
+    "dem": {
+      "seats": 19,
+      "net": -1,
+      "label": "民主黨"
+    },
+    "rep": {
+      "seats": 27,
+      "net": 1,
+      "label": "共和黨"
+    },
+    "ind": {
+      "seats": 0,
+      "net": 0,
+      "label": "獨立/其他"
+    },
     "uncalled": 4,
     "total": 50,
-    "racing": 36
+    "racing": 36,
+    "currentControl": "?"
   },
   "states": {
-    "AL": { "winner": "R", "called": true, "margin": 28, "office": "Senate" },
-    "AK": { "winner": null, "called": false, "margin": null, "office": "Senate" },
-    "AZ": { "winner": "R", "called": true, "margin": 3, "office": "Senate" },
-    "AR": { "winner": "R", "called": true, "margin": 35, "office": "Senate" },
-    "CA": { "winner": "D", "called": true, "margin": 22, "office": "Senate" },
-    "CO": { "winner": "D", "called": true, "margin": 8, "office": "Senate" },
-    "CT": { "winner": "D", "called": false, "margin": null, "office": "Senate" },
-    "DE": { "winner": "D", "called": true, "margin": 12, "office": "Senate" },
-    "FL": { "winner": "R", "called": true, "margin": 9, "office": "Senate" },
-    "GA": { "winner": "R", "called": false, "margin": 1, "office": "Senate" },
-    "HI": { "winner": "D", "called": true, "margin": 30, "office": "Senate" },
-    "ID": { "winner": "R", "called": true, "margin": 32, "office": "Senate" },
-    "IL": { "winner": "D", "called": true, "margin": 15, "office": "Senate" },
-    "IN": { "winner": "R", "called": true, "margin": 18, "office": "Senate" },
-    "IA": { "winner": "R", "called": true, "margin": 11, "office": "Senate" },
-    "KS": { "winner": "R", "called": true, "margin": 22, "office": "Senate" },
-    "KY": { "winner": "R", "called": true, "margin": 30, "office": "Senate" },
-    "LA": { "winner": "R", "called": true, "margin": 25, "office": "Senate" },
-    "ME": { "winner": "D", "called": false, "margin": 2, "office": "Senate" },
-    "MD": { "winner": "D", "called": true, "margin": 20, "office": "Senate" },
-    "MA": { "winner": "D", "called": true, "margin": 28, "office": "Senate" },
-    "MI": { "winner": null, "called": false, "margin": null, "office": "Senate" },
-    "MN": { "winner": "D", "called": false, "margin": 3, "office": "Senate" },
-    "MS": { "winner": "R", "called": true, "margin": 26, "office": "Senate" },
-    "MO": { "winner": "R", "called": true, "margin": 15, "office": "Senate" },
-    "MT": { "winner": "R", "called": true, "margin": 6, "office": "Senate" },
-    "NE": { "winner": "R", "called": true, "margin": 20, "office": "Senate" },
-    "NV": { "winner": null, "called": false, "margin": null, "office": "Senate" },
-    "NH": { "winner": "D", "called": false, "margin": 2, "office": "Senate" },
-    "NJ": { "winner": "D", "called": false, "margin": 4, "office": "Senate" },
-    "NM": { "winner": "D", "called": true, "margin": 10, "office": "Senate" },
-    "NY": { "winner": "D", "called": true, "margin": 18, "office": "Senate" },
-    "NC": { "winner": "R", "called": false, "margin": 2, "office": "Senate" },
-    "ND": { "winner": "R", "called": true, "margin": 38, "office": "Senate" },
-    "OH": { "winner": "R", "called": true, "margin": 4, "office": "Senate" },
-    "OK": { "winner": "R", "called": true, "margin": 30, "office": "Senate" },
-    "OR": { "winner": "D", "called": true, "margin": 7, "office": "Senate" },
-    "PA": { "winner": "R", "called": false, "margin": 1, "office": "Senate" },
-    "RI": { "winner": "D", "called": true, "margin": 22, "office": "Senate" },
-    "SC": { "winner": "R", "called": true, "margin": 14, "office": "Senate" },
-    "SD": { "winner": "R", "called": true, "margin": 28, "office": "Senate" },
-    "TN": { "winner": "R", "called": true, "margin": 30, "office": "Senate" },
-    "TX": { "winner": "R", "called": true, "margin": 10, "office": "Senate" },
-    "UT": { "winner": "R", "called": true, "margin": 12, "office": "Senate" },
-    "VT": { "winner": "I", "called": true, "margin": 35, "office": "Senate" },
-    "VA": { "winner": "D", "called": true, "margin": 8, "office": "Senate" },
-    "WA": { "winner": "D", "called": true, "margin": 14, "office": "Senate" },
-    "WV": { "winner": "R", "called": true, "margin": 22, "office": "Senate" },
-    "WI": { "winner": null, "called": false, "margin": null, "office": "Senate" },
-    "WY": { "winner": "R", "called": true, "margin": 40, "office": "Senate" }
+    "AL": {
+      "winner": "R",
+      "called": true,
+      "margin": 28,
+      "office": "Senate"
+    },
+    "AK": {
+      "winner": null,
+      "called": false,
+      "margin": null,
+      "office": "Senate"
+    },
+    "AZ": {
+      "winner": "R",
+      "called": true,
+      "margin": 3,
+      "office": "Senate"
+    },
+    "AR": {
+      "winner": "R",
+      "called": true,
+      "margin": 35,
+      "office": "Senate"
+    },
+    "CA": {
+      "winner": "D",
+      "called": true,
+      "margin": 22,
+      "office": "Senate"
+    },
+    "CO": {
+      "winner": "D",
+      "called": true,
+      "margin": 8,
+      "office": "Senate"
+    },
+    "CT": {
+      "winner": "D",
+      "called": false,
+      "margin": null,
+      "office": "Senate"
+    },
+    "DE": {
+      "winner": "D",
+      "called": true,
+      "margin": 12,
+      "office": "Senate"
+    },
+    "FL": {
+      "winner": "R",
+      "called": true,
+      "margin": 9,
+      "office": "Senate"
+    },
+    "GA": {
+      "winner": "R",
+      "called": false,
+      "margin": 1,
+      "office": "Senate"
+    },
+    "HI": {
+      "winner": "D",
+      "called": true,
+      "margin": 30,
+      "office": "Senate"
+    },
+    "ID": {
+      "winner": "R",
+      "called": true,
+      "margin": 32,
+      "office": "Senate"
+    },
+    "IL": {
+      "winner": "D",
+      "called": true,
+      "margin": 15,
+      "office": "Senate"
+    },
+    "IN": {
+      "winner": "R",
+      "called": true,
+      "margin": 18,
+      "office": "Senate"
+    },
+    "IA": {
+      "winner": "R",
+      "called": true,
+      "margin": 11,
+      "office": "Senate"
+    },
+    "KS": {
+      "winner": "R",
+      "called": true,
+      "margin": 22,
+      "office": "Senate"
+    },
+    "KY": {
+      "winner": "R",
+      "called": true,
+      "margin": 30,
+      "office": "Senate"
+    },
+    "LA": {
+      "winner": "R",
+      "called": true,
+      "margin": 25,
+      "office": "Senate"
+    },
+    "ME": {
+      "winner": "D",
+      "called": false,
+      "margin": 2,
+      "office": "Senate"
+    },
+    "MD": {
+      "winner": "D",
+      "called": true,
+      "margin": 20,
+      "office": "Senate"
+    },
+    "MA": {
+      "winner": "D",
+      "called": true,
+      "margin": 28,
+      "office": "Senate"
+    },
+    "MI": {
+      "winner": null,
+      "called": false,
+      "margin": null,
+      "office": "Senate"
+    },
+    "MN": {
+      "winner": "D",
+      "called": false,
+      "margin": 3,
+      "office": "Senate"
+    },
+    "MS": {
+      "winner": "R",
+      "called": true,
+      "margin": 26,
+      "office": "Senate"
+    },
+    "MO": {
+      "winner": "R",
+      "called": true,
+      "margin": 15,
+      "office": "Senate"
+    },
+    "MT": {
+      "winner": "R",
+      "called": true,
+      "margin": 6,
+      "office": "Senate"
+    },
+    "NE": {
+      "winner": "R",
+      "called": true,
+      "margin": 20,
+      "office": "Senate"
+    },
+    "NV": {
+      "winner": null,
+      "called": false,
+      "margin": null,
+      "office": "Senate"
+    },
+    "NH": {
+      "winner": "D",
+      "called": false,
+      "margin": 2,
+      "office": "Senate"
+    },
+    "NJ": {
+      "winner": "D",
+      "called": false,
+      "margin": 4,
+      "office": "Senate"
+    },
+    "NM": {
+      "winner": "D",
+      "called": true,
+      "margin": 10,
+      "office": "Senate"
+    },
+    "NY": {
+      "winner": "D",
+      "called": true,
+      "margin": 18,
+      "office": "Senate"
+    },
+    "NC": {
+      "winner": "R",
+      "called": false,
+      "margin": 2,
+      "office": "Senate"
+    },
+    "ND": {
+      "winner": "R",
+      "called": true,
+      "margin": 38,
+      "office": "Senate"
+    },
+    "OH": {
+      "winner": "R",
+      "called": true,
+      "margin": 4,
+      "office": "Senate"
+    },
+    "OK": {
+      "winner": "R",
+      "called": true,
+      "margin": 30,
+      "office": "Senate"
+    },
+    "OR": {
+      "winner": "D",
+      "called": true,
+      "margin": 7,
+      "office": "Senate"
+    },
+    "PA": {
+      "winner": "R",
+      "called": false,
+      "margin": 1,
+      "office": "Senate"
+    },
+    "RI": {
+      "winner": "D",
+      "called": true,
+      "margin": 22,
+      "office": "Senate"
+    },
+    "SC": {
+      "winner": "R",
+      "called": true,
+      "margin": 14,
+      "office": "Senate"
+    },
+    "SD": {
+      "winner": "R",
+      "called": true,
+      "margin": 28,
+      "office": "Senate"
+    },
+    "TN": {
+      "winner": "R",
+      "called": true,
+      "margin": 30,
+      "office": "Senate"
+    },
+    "TX": {
+      "winner": "R",
+      "called": true,
+      "margin": 10,
+      "office": "Senate"
+    },
+    "UT": {
+      "winner": "R",
+      "called": true,
+      "margin": 12,
+      "office": "Senate"
+    },
+    "VT": {
+      "winner": "I",
+      "called": true,
+      "margin": 35,
+      "office": "Senate"
+    },
+    "VA": {
+      "winner": "D",
+      "called": true,
+      "margin": 8,
+      "office": "Senate"
+    },
+    "WA": {
+      "winner": "D",
+      "called": true,
+      "margin": 14,
+      "office": "Senate"
+    },
+    "WV": {
+      "winner": "R",
+      "called": true,
+      "margin": 22,
+      "office": "Senate"
+    },
+    "WI": {
+      "winner": null,
+      "called": false,
+      "margin": null,
+      "office": "Senate"
+    },
+    "WY": {
+      "winner": "R",
+      "called": true,
+      "margin": 40,
+      "office": "Senate"
+    }
   },
   "keyRaces": [
     {
-      "id": "PA-S", "state": "PA", "stateName": "賓夕法尼亞州", "office": "Senate",
-      "dem": { "name": "鮑勃・凱西", "pct": 49.2, "votes": 2841203 },
-      "rep": { "name": "大衛・麥科米克", "pct": 50.1, "votes": 2893210 },
-      "reporting": 87, "called": false, "winner": null, "competitive": true
+      "id": "PA-S",
+      "state": "PA",
+      "stateName": "賓夕法尼亞州",
+      "office": "Senate",
+      "dem": {
+        "name": "鮑勃・凱西",
+        "pct": 49.2,
+        "votes": 2841203
+      },
+      "rep": {
+        "name": "大衛・麥科米克",
+        "pct": 50.1,
+        "votes": 2893210
+      },
+      "reporting": 87,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "GA-S", "state": "GA", "stateName": "喬治亞州", "office": "Senate",
-      "dem": { "name": "喬恩・奧索夫", "pct": 49.5, "votes": 2310450 },
-      "rep": { "name": "布萊恩・肯普", "pct": 49.9, "votes": 2329000 },
-      "reporting": 72, "called": false, "winner": null, "competitive": true
+      "id": "GA-S",
+      "state": "GA",
+      "stateName": "喬治亞州",
+      "office": "Senate",
+      "dem": {
+        "name": "喬恩・奧索夫",
+        "pct": 49.5,
+        "votes": 2310450
+      },
+      "rep": {
+        "name": "布萊恩・肯普",
+        "pct": 49.9,
+        "votes": 2329000
+      },
+      "reporting": 72,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "NV-S", "state": "NV", "stateName": "內華達州", "office": "Senate",
-      "dem": { "name": "傑奎琳・羅森", "pct": 48.8, "votes": 710230 },
-      "rep": { "name": "山姆・布朗", "pct": 50.2, "votes": 730180 },
-      "reporting": 61, "called": false, "winner": null, "competitive": true
+      "id": "NV-S",
+      "state": "NV",
+      "stateName": "內華達州",
+      "office": "Senate",
+      "dem": {
+        "name": "傑奎琳・羅森",
+        "pct": 48.8,
+        "votes": 710230
+      },
+      "rep": {
+        "name": "山姆・布朗",
+        "pct": 50.2,
+        "votes": 730180
+      },
+      "reporting": 61,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "WI-S", "state": "WI", "stateName": "威斯康辛州", "office": "Senate",
-      "dem": { "name": "塔米・鮑德溫", "pct": 50.1, "votes": 1481920 },
-      "rep": { "name": "艾瑞克・霍蘭德", "pct": 49.3, "votes": 1458300 },
-      "reporting": 78, "called": false, "winner": null, "competitive": true
+      "id": "WI-S",
+      "state": "WI",
+      "stateName": "威斯康辛州",
+      "office": "Senate",
+      "dem": {
+        "name": "塔米・鮑德溫",
+        "pct": 50.1,
+        "votes": 1481920
+      },
+      "rep": {
+        "name": "艾瑞克・霍蘭德",
+        "pct": 49.3,
+        "votes": 1458300
+      },
+      "reporting": 78,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "AZ-S", "state": "AZ", "stateName": "亞利桑那州", "office": "Senate",
-      "dem": { "name": "魯本・加列戈", "pct": 48.1, "votes": 1583200 },
-      "rep": { "name": "卡里・萊克", "pct": 51.1, "votes": 1681900 },
-      "reporting": 95, "called": true, "winner": "R", "competitive": true
+      "id": "AZ-S",
+      "state": "AZ",
+      "stateName": "亞利桑那州",
+      "office": "Senate",
+      "dem": {
+        "name": "魯本・加列戈",
+        "pct": 48.1,
+        "votes": 1583200
+      },
+      "rep": {
+        "name": "卡里・萊克",
+        "pct": 51.1,
+        "votes": 1681900
+      },
+      "reporting": 95,
+      "called": true,
+      "winner": "R",
+      "competitive": true
     },
     {
-      "id": "MT-S", "state": "MT", "stateName": "蒙大拿州", "office": "Senate",
-      "dem": { "name": "喬恩・泰斯特", "pct": 46.8, "votes": 225100 },
-      "rep": { "name": "提姆・沙伊", "pct": 52.5, "votes": 252300 },
-      "reporting": 98, "called": true, "winner": "R", "competitive": true
+      "id": "MT-S",
+      "state": "MT",
+      "stateName": "蒙大拿州",
+      "office": "Senate",
+      "dem": {
+        "name": "喬恩・泰斯特",
+        "pct": 46.8,
+        "votes": 225100
+      },
+      "rep": {
+        "name": "提姆・沙伊",
+        "pct": 52.5,
+        "votes": 252300
+      },
+      "reporting": 98,
+      "called": true,
+      "winner": "R",
+      "competitive": true
     },
     {
-      "id": "OH-S", "state": "OH", "stateName": "俄亥俄州", "office": "Senate",
-      "dem": { "name": "雪利・布朗", "pct": 47.9, "votes": 2411000 },
-      "rep": { "name": "柏尼・莫雷諾", "pct": 51.4, "votes": 2589000 },
-      "reporting": 99, "called": true, "winner": "R", "competitive": true
+      "id": "OH-S",
+      "state": "OH",
+      "stateName": "俄亥俄州",
+      "office": "Senate",
+      "dem": {
+        "name": "雪利・布朗",
+        "pct": 47.9,
+        "votes": 2411000
+      },
+      "rep": {
+        "name": "柏尼・莫雷諾",
+        "pct": 51.4,
+        "votes": 2589000
+      },
+      "reporting": 99,
+      "called": true,
+      "winner": "R",
+      "competitive": true
     },
     {
-      "id": "NC-S", "state": "NC", "stateName": "北卡羅來納州", "office": "Senate",
-      "dem": { "name": "黛博拉・羅斯", "pct": 48.8, "votes": 2341000 },
-      "rep": { "name": "泰德・巴德", "pct": 50.4, "votes": 2419000 },
-      "reporting": 82, "called": false, "winner": null, "competitive": true
+      "id": "NC-S",
+      "state": "NC",
+      "stateName": "北卡羅來納州",
+      "office": "Senate",
+      "dem": {
+        "name": "黛博拉・羅斯",
+        "pct": 48.8,
+        "votes": 2341000
+      },
+      "rep": {
+        "name": "泰德・巴德",
+        "pct": 50.4,
+        "votes": 2419000
+      },
+      "reporting": 82,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "TX-S", "state": "TX", "stateName": "德克薩斯州", "office": "Senate",
-      "dem": { "name": "科林・艾略特", "pct": 44.1, "votes": 3821000 },
-      "rep": { "name": "約翰・科寧", "pct": 54.2, "votes": 4692000 },
-      "reporting": 91, "called": true, "winner": "R", "competitive": false
+      "id": "TX-S",
+      "state": "TX",
+      "stateName": "德克薩斯州",
+      "office": "Senate",
+      "dem": {
+        "name": "科林・艾略特",
+        "pct": 44.1,
+        "votes": 3821000
+      },
+      "rep": {
+        "name": "約翰・科寧",
+        "pct": 54.2,
+        "votes": 4692000
+      },
+      "reporting": 91,
+      "called": true,
+      "winner": "R",
+      "competitive": false
     },
     {
-      "id": "MI-S", "state": "MI", "stateName": "密西根州", "office": "Senate",
-      "dem": { "name": "伊蓮娜・史都華", "pct": 49.8, "votes": 2301000 },
-      "rep": { "name": "麥克・羅傑斯", "pct": 49.5, "votes": 2287000 },
-      "reporting": 55, "called": false, "winner": null, "competitive": true
+      "id": "MI-S",
+      "state": "MI",
+      "stateName": "密西根州",
+      "office": "Senate",
+      "dem": {
+        "name": "伊蓮娜・史都華",
+        "pct": 49.8,
+        "votes": 2301000
+      },
+      "rep": {
+        "name": "麥克・羅傑斯",
+        "pct": 49.5,
+        "votes": 2287000
+      },
+      "reporting": 55,
+      "called": false,
+      "winner": null,
+      "competitive": true
     },
     {
-      "id": "VA-S", "state": "VA", "stateName": "維吉尼亞州", "office": "Senate",
-      "dem": { "name": "提姆・肯恩", "pct": 53.4, "votes": 2189000 },
-      "rep": { "name": "克里斯・齊爾斯", "pct": 45.1, "votes": 1851000 },
-      "reporting": 88, "called": true, "winner": "D", "competitive": false
+      "id": "VA-S",
+      "state": "VA",
+      "stateName": "維吉尼亞州",
+      "office": "Senate",
+      "dem": {
+        "name": "提姆・肯恩",
+        "pct": 53.4,
+        "votes": 2189000
+      },
+      "rep": {
+        "name": "克里斯・齊爾斯",
+        "pct": 45.1,
+        "votes": 1851000
+      },
+      "reporting": 88,
+      "called": true,
+      "winner": "D",
+      "competitive": false
     },
     {
-      "id": "CO-S", "state": "CO", "stateName": "科羅拉多州", "office": "Senate",
-      "dem": { "name": "約翰・希克盧珀", "pct": 52.3, "votes": 1431000 },
-      "rep": { "name": "喬・奧頓", "pct": 46.1, "votes": 1261000 },
-      "reporting": 79, "called": true, "winner": "D", "competitive": false
+      "id": "CO-S",
+      "state": "CO",
+      "stateName": "科羅拉多州",
+      "office": "Senate",
+      "dem": {
+        "name": "約翰・希克盧珀",
+        "pct": 52.3,
+        "votes": 1431000
+      },
+      "rep": {
+        "name": "喬・奧頓",
+        "pct": 46.1,
+        "votes": 1261000
+      },
+      "reporting": 79,
+      "called": true,
+      "winner": "D",
+      "competitive": false
     }
   ]
 }
