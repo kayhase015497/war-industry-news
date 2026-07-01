@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "比亞迪歐洲建廠選址地圖",
+    "titleEn": "BYD Europe Plant Siting 2026",
+    "subtitle": "匈牙利廠Q4投產，西班牙、法國棕地收購決策在即",
+    "date": "2026-07-01",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["Reuters 2026.07.01", "路透汽車歐洲峰會（法蘭克福）"]
+  },
+  "map": {
+    "center": [48.5, 8.0],
+    "zoom": 5,
+    "bounds": [[35.0, -10.0], [57.0, 28.0]]
+  },
+  "infoPanel": {
+    "title": "比亞迪歐洲版圖擴張",
+    "paragraphs": [
+      "全球最大電動車製造商比亞迪（BYD）的歐洲特別顧問阿爾塔維拉（Alfredo Altavilla）於2026年7月1日在法蘭克福路透汽車歐洲峰會上表示，比亞迪正面臨收購歐洲現有汽車廠的決策關鍵時刻，「很快會做出決定」。",
+      "西班牙與法國被列為「棕地投資」的優先候選地，即收購傳統車廠閒置產線而非新建廠房。阿爾塔維拉指出，本週已有兩支考察團隊分赴不同地點評估，決策已非常接近。他對德國的製造競爭力表示疑慮，認為德國廠房同樣面臨產能利用不足的問題。",
+      "比亞迪首座歐洲組裝廠位於匈牙利德布勒森（Debrecen），預計2026年第四季正式投產；若歐洲棕地收購完成，將成為第二座歐洲組裝基地，標誌著中國電動車企業深入歐洲核心市場的戰略躍升。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [47.53, 21.63],
+      "name": "Debrecen, Hungary",
+      "nameLocal": "德布勒森（Debrecen）・匈牙利",
+      "type": "confirmed",
+      "tag": "🏭 確認建廠",
+      "tagClass": "tag-confirmed",
+      "desc": "比亞迪首座歐洲組裝廠，預計2026年第四季投入生產。廠址位於匈牙利東部工業城市德布勒森，已完成基礎設施建設。",
+      "coords": "47°32'N 21°38'E",
+      "source": "Reuters 2026.07.01"
+    },
+    {
+      "latlng": [40.4, -3.7],
+      "name": "Spain (brownfield candidate)",
+      "nameLocal": "西班牙・棕地選址候選 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔍 棕地候選",
+      "tagClass": "tag-possible",
+      "desc": "比亞迪歐洲顧問阿爾塔維拉點名西班牙為「棕地投資」優先候選地，即收購當地傳統車廠現有廠房加以改建，具體廠址尚未公布，本週仍有考察團隊在場評估。",
+      "coords": "40°24'N 003°42'W",
+      "source": "Reuters 2026.07.01"
+    },
+    {
+      "latlng": [46.2, 2.2],
+      "name": "France (brownfield candidate)",
+      "nameLocal": "法國・棕地選址候選 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔍 棕地候選",
+      "tagClass": "tag-possible",
+      "desc": "法國同列為比亞迪棕地投資候選地，收購對象為歐洲傳統車廠面臨產能閒置的現有廠房。具體選址尚未對外公布，決策預計近期宣布。",
+      "coords": "46°12'N 002°12'E",
+      "source": "Reuters 2026.07.01"
+    },
+    {
+      "latlng": [50.11, 8.68],
+      "name": "Frankfurt, Germany",
+      "nameLocal": "法蘭克福（Frankfurt）・峰會聲明地",
+      "type": "capital",
+      "tag": "📢 峰會聲明",
+      "tagClass": "tag-strategic",
+      "desc": "路透汽車歐洲峰會舉辦地。比亞迪歐洲特別顧問阿爾塔維拉於2026年7月1日在此公開表示，比亞迪棕地收購決策「很快」將至，並對德國製造競爭力表示疑慮。",
+      "coords": "50°07'N 008°41'E",
+      "source": "Reuters 2026.07.01"
+    },
+    {
+      "latlng": [51.16, 10.45],
+      "name": "Germany",
+      "nameLocal": "德國・競爭力存疑",
+      "type": "possible",
+      "tag": "⚠️ 競爭力存疑",
+      "tagClass": "tag-possible",
+      "desc": "比亞迪顧問阿爾塔維拉公開質疑德國製造基地的競爭力，指出德國廠房同樣面臨產能利用率不足的問題，暗示德國並非優先選址。",
+      "coords": "51°10'N 010°27'E",
+      "source": "Reuters 2026.07.01"
+    }
+  ],
+  "polygons": [],
+  "lines": [],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "確認建廠（已進入投產準備）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "棕地選址候選／觀察地點" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "峰會聲明地點" }
+  ]
+}
