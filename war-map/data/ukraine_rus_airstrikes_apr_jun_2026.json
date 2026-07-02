@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "俄軍打擊烏克蘭後方戰略目標地圖",
+    "titleEn": "Russian Airstrikes on Ukrainian Strategic Targets Behind the Frontline (April–June 2026)",
+    "subtitle": "防工業設施、鐵路機車、軍用機場、招募中心——俄方聲稱目標彙整",
+    "date": "2026-07-02",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["俄羅斯國防部每日簡報（TASS、RIA Novosti）", "親俄軍事博主", "Reuters 2026.07.01"]
+  },
+  "map": {
+    "center": [49.8, 31.5],
+    "zoom": 6,
+    "bounds": [[44.5, 21.5], [53.5, 40.5]]
+  },
+  "infoPanel": {
+    "title": "俄軍後方打擊行動（2026年4–6月）",
+    "paragraphs": [
+      "⚠️ 以下內容以俄方聲稱為主，源自俄羅斯國防部每日簡報（TASS、RIA Novosti）及親俄軍事博主。打擊效果與實際損毀程度，烏克蘭方面多有異議或低估。",
+      "2026年4至6月間，俄軍對烏克蘭後方（距前線30–50公里以上）發動多波大規模飛彈與無人機聯合打擊。主要目標涵蓋：國防工業設施（無人機工廠、軍工廠）、鐵路機車車輛與調車場、軍用機場及訓練基地、領土招募中心（TCC），以及燃料與能源設施。",
+      "值得關注的趨勢：5至6月間，俄軍明顯將打擊重心從固定鐵路設施轉向移動車輛（機車、車廂），理由是烏克蘭修復軌道相對快速，但機車短缺難以替補。親俄博主聲稱5月16日至6月20日間共擊毀機車逾20輛，主要集中於日托米爾州。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [50.45, 30.52],
+      "name": "Kyiv",
+      "nameLocal": "基輔（Kyiv）",
+      "type": "confirmed",
+      "tag": "🏭 最高頻打擊",
+      "tagClass": "tag-confirmed",
+      "desc": "整個時期打擊最密集的城市。俄方聲稱目標包括：「雷達」廠（Kyiv Radar Plant）、多夫任科電影製片廠無人機生產車間、「無人機技術」公司、「馬亞克廠」（Zavod Mayak）、「布列斯特尼克廠」（Burevestnik）、「烏克蘭裝甲技術」（Ukr Armo Tekh）、基輔總成廠（Kyiv Aggregate Plant）、第410號航空修理廠。6月2日聲稱打擊10座防工設施及3個招募中心（TCC）；6月15日聲稱打擊多座防工目標；7月1–2日再度打擊工業及能源設施。",
+      "coords": "50°27'N 030°31'E",
+      "source": "俄羅斯國防部、TASS、RIA Novosti"
+    },
+    {
+      "latlng": [49.99, 36.23],
+      "name": "Kharkiv",
+      "nameLocal": "哈爾科夫（Kharkiv）",
+      "type": "confirmed",
+      "tag": "🏭 防工設施",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年6月15日俄方聲稱的大規模打擊涵蓋哈爾科夫多座防工設施，為當波攻勢中打擊目標最密集的城市之一，具體廠名俄方未全數公開。",
+      "coords": "49°59'N 036°14'E",
+      "source": "TASS 2026.06.15"
+    },
+    {
+      "latlng": [48.46, 35.04],
+      "name": "Dnipro",
+      "nameLocal": "第聶伯羅（Dnipro）",
+      "type": "confirmed",
+      "tag": "🏭✈️ 廠房與機場",
+      "tagClass": "tag-confirmed",
+      "desc": "俄方聲稱2026年6月15日打擊當地防工設施；7月1–2日大規模攻勢中進一步聲稱打擊第聶伯羅州軍用機場。",
+      "coords": "48°27'N 035°02'E",
+      "source": "TASS 2026.06.15；RIA Novosti 2026.07.01"
+    },
+    {
+      "latlng": [49.59, 34.55],
+      "name": "Poltava",
+      "nameLocal": "波爾塔瓦（Poltava）",
+      "type": "confirmed",
+      "tag": "✈️ 軍用機場",
+      "tagClass": "tag-confirmed",
+      "desc": "俄方聲稱於2026年7月1–2日大規模攻勢中打擊波爾塔瓦州軍用機場，為此波攻勢中點名機場目標之一。",
+      "coords": "49°35'N 034°33'E",
+      "source": "RIA Novosti 2026.07.01–02"
+    },
+    {
+      "latlng": [49.44, 32.06],
+      "name": "Cherkasy",
+      "nameLocal": "切爾卡瑟（Cherkasy）",
+      "type": "confirmed",
+      "tag": "✈️ 軍用機場",
+      "tagClass": "tag-confirmed",
+      "desc": "俄方聲稱於2026年7月1–2日大規模攻勢中打擊切爾卡瑟州軍用機場，為此波攻勢中點名機場目標之一。",
+      "coords": "49°26'N 032°04'E",
+      "source": "RIA Novosti 2026.07.01–02"
+    },
+    {
+      "latlng": [51.49, 31.29],
+      "name": "Chernihiv",
+      "nameLocal": "切爾尼戈夫（Chernihiv）",
+      "type": "confirmed",
+      "tag": "✈️ 軍用機場",
+      "tagClass": "tag-confirmed",
+      "desc": "俄方聲稱於2026年7月1–2日大規模攻勢中打擊切爾尼戈夫州軍用機場，為此波攻勢中點名機場目標之一。",
+      "coords": "51°30'N 031°18'E",
+      "source": "RIA Novosti 2026.07.01–02"
+    },
+    {
+      "latlng": [50.25, 28.66],
+      "name": "Zhytomyr Oblast",
+      "nameLocal": "日托米爾州（Zhytomyr Oblast）",
+      "type": "confirmed",
+      "tag": "🚂 機車重點打擊區",
+      "tagClass": "tag-confirmed",
+      "desc": "5–6月間鐵路打擊行動中受打擊最集中的地區。親俄博主聲稱5月下旬至6月初俄軍在此摧毀逾20輛機車。俄方將此定性為切斷西方武器援烏鐵路補給線的系統性行動。整體時期（5月16日至6月20日）全烏共聲稱21次鐵路車輛打擊。",
+      "coords": "50°15'N 028°40'E",
+      "source": "親俄軍事博主；RIA Novosti"
+    },
+    {
+      "latlng": [50.74, 25.32],
+      "name": "Volyn Oblast (Lutsk)",
+      "nameLocal": "沃倫州・盧茨克（Volyn / Lutsk）⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🚂 鐵路打擊",
+      "tagClass": "tag-possible",
+      "desc": "俄方聲稱對沃倫州鐵路設施（機車、調車場）實施打擊，為整體系統性鐵路後勤打擊行動的一部分，目的是阻斷北約武器從波蘭方向的輸送。",
+      "coords": "50°44'N 025°19'E",
+      "source": "俄羅斯國防部簡報"
+    },
+    {
+      "latlng": [50.62, 26.25],
+      "name": "Rivne Oblast",
+      "nameLocal": "里夫涅州（Rivne Oblast）⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🚂 鐵路打擊",
+      "tagClass": "tag-possible",
+      "desc": "俄方聲稱對里夫涅州鐵路基礎設施實施打擊，屬於針對烏克蘭西部物流樞紐的系統性行動。",
+      "coords": "50°37'N 026°15'E",
+      "source": "俄羅斯國防部簡報"
+    },
+    {
+      "latlng": [50.91, 34.80],
+      "name": "Sumy Oblast",
+      "nameLocal": "蘇梅州（Sumy Oblast）⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🚂 鐵路打擊",
+      "tagClass": "tag-possible",
+      "desc": "俄方聲稱對蘇梅州鐵路機車及設施實施打擊，為鐵路後勤系統性打擊行動的一部分。",
+      "coords": "50°55'N 034°48'E",
+      "source": "俄羅斯國防部簡報"
+    },
+    {
+      "latlng": [47.84, 35.14],
+      "name": "Zaporizhzhia Oblast",
+      "nameLocal": "扎波羅熱州（Zaporizhzhia Oblast）⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🚂 鐵路打擊",
+      "tagClass": "tag-possible",
+      "desc": "俄方聲稱對扎波羅熱州鐵路設施實施打擊。該州地處前線後方，鐵路為烏軍南部補給線之重要節點。",
+      "coords": "47°50'N 035°08'E",
+      "source": "俄羅斯國防部簡報"
+    }
+  ],
+  "polygons": [],
+  "lines": [],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "確認打擊（俄方聲稱，具體目標已公開）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "區域性打擊聲稱（概略位置）" }
+  ]
+}
