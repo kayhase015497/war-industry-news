@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "烏克蘭打擊俄羅斯能源設施地圖",
+    "titleEn": "Ukrainian Strikes on Russian Energy Infrastructure – June 2026",
+    "subtitle": "六月間確認打擊的煉油廠與石化設施",
+    "date": "2026-07-02",
+    "status": "resource",
+    "theme": "orange",
+    "sources": ["Reuters", "Carnegie Endowment", "烏克蘭總參謀部", "俄羅斯地方當局聲明"]
+  },
+  "map": {
+    "center": [52.5, 43.0],
+    "zoom": 5,
+    "bounds": [[43.0, 33.0], [60.0, 56.0]]
+  },
+  "infoPanel": {
+    "title": "烏克蘭無人機深入打擊俄羅斯煉油設施",
+    "paragraphs": [
+      "2026年6月，烏克蘭對俄羅斯境內石油煉製設施發動一系列長程無人機攻擊，打擊對象包括俄羅斯第四大煉油廠、現代化程度最高的煉油廠之一，以及莫斯科市區煉油廠，共造成至少四座設施停產或受損。",
+      "此波攻勢是烏克蘭針對俄羅斯燃料供應鏈的持續戰略打擊，目的在壓縮俄軍燃料儲備、破壞國內油品生產能力，並迫使俄方將防空資源分散至縱深後方。莫斯科卡普特尼亞煉油廠在六月內遭兩度打擊，為俄羅斯首都歷來受攻擊最重的一次。",
+      "資料來源：Reuters、Carnegie Endowment、烏克蘭總參謀部聲稱、俄羅斯地方當局聲明。"
+    ]
+  },
+  "locations": [
+    {
+      "latlng": [55.63, 51.83],
+      "name": "TANECO Refinery (Tatneft), Nizhnekamsk",
+      "nameLocal": "TANECO 煉油廠・尼日涅卡姆斯克（Nizhnekamsk）・韃靼斯坦",
+      "type": "confirmed",
+      "tag": "🔥 6/12 停產",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年6月12日遭無人機打擊，廠區運作被迫中斷。TANECO 為塔特石油（Tatneft）旗艦煉廠，也是俄羅斯現代化程度最高的煉油設施之一，加工能力達每年1,400萬噸。此次打擊造成作業暫停，為烏克蘭長程無人機攻勢深入俄羅斯腹地的標誌性案例。",
+      "coords": "55°38'N 051°50'E",
+      "source": "Reuters；Carnegie Endowment 2026.06.12"
+    },
+    {
+      "latlng": [55.63, 37.83],
+      "name": "Kapotnya Refinery (Gazprom Neft), Moscow",
+      "nameLocal": "卡普特尼亞煉油廠（Kapotnya）・莫斯科",
+      "type": "confirmed",
+      "tag": "🔥 6/16 & 6/18 雙擊",
+      "tagClass": "tag-confirmed",
+      "desc": "莫斯科東南郊卡普特尼亞區，由俄氣石油（Gazprom Neft）運營。6月16日首次遭無人機打擊，爆發大火，主要精煉單元受損，作業暫停。6月18日再度遭襲，多點起火，第二主煉油單元及儲油罐受損——為莫斯科數月來受到最重的一次攻擊。兩次打擊迫使廠區生產全面中斷。",
+      "coords": "55°38'N 037°50'E",
+      "source": "Reuters；烏克蘭總參謀部 2026.06.16–18"
+    },
+    {
+      "latlng": [56.15, 44.18],
+      "name": "NORSI Refinery (Lukoil), Kstovo",
+      "nameLocal": "NORSI 煉油廠（ЛУКОЙЛ）・克斯托沃（Kstovo）・下諾夫哥羅德州",
+      "type": "confirmed",
+      "tag": "🔥 6/24–25 CDU-5損毀",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年6月24–25日遭無人機打擊。NORSI 為盧科伊爾（Lukoil）旗下煉廠，年加工量約1,700萬噸，是俄羅斯第四大煉油廠。此次攻擊導致關鍵原油蒸餾單元 CDU-5 受損，廠區被迫停產。",
+      "coords": "56°09'N 044°11'E",
+      "source": "Reuters；Carnegie Endowment 2026.06.24–25"
+    },
+    {
+      "latlng": [45.26, 38.13],
+      "name": "Slavyansk-na-Kubani Refinery, Krasnodar",
+      "nameLocal": "斯拉維揚斯克煉油廠・斯拉維揚斯克納庫班（Slavyansk-na-Kubani）・克拉斯諾達爾邊疆區",
+      "type": "confirmed",
+      "tag": "🔥 6/28 起火",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年6月28日遭無人機打擊，廠內爆發火災。斯拉維揚斯克煉油廠位於俄羅斯南部克拉斯諾達爾邊疆區，是俄羅斯南翼重要的燃料生產基地，靠近前線後方補給網絡。",
+      "coords": "45°15'N 038°08'E",
+      "source": "俄羅斯地方當局；烏克蘭總參謀部 2026.06.28"
+    }
+  ],
+  "polygons": [],
+  "lines": [],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true, "label": "確認打擊的煉油／石化設施（停產或起火）" }
+  ]
+}
