@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "title": "伊朗報復打擊波灣美軍設施地圖",
+    "titleEn": "Iranian Missile & Drone Strikes on US Military Facilities in the Gulf (Feb 28 – Jul 22, 2026)",
+    "subtitle": "自2026年2月28日美以對伊朗發動行動後，伊朗飛彈與無人機報復打擊波灣美軍基地累積損害彙整",
+    "date": "2026-07-22",
+    "status": "resource",
+    "theme": "red",
+    "sources": ["NYT", "BBC", "ABC News", "Defence Security Asia", "Planet Labs衛星影像", "IRGC官方聲明", "CENTCOM聲明", "USAF"]
+  },
+  "map": {
+    "center": [26.5, 51.0],
+    "zoom": 6,
+    "bounds": [[22.0, 43.0], [32.0, 58.0]]
+  },
+  "infoPanel": {
+    "title": "伊朗報復行動・波灣美軍基地受損（截至2026年7月22日）",
+    "paragraphs": [
+      "2026年2月28日美以對伊朗發動軍事行動後，伊朗革命衛隊（IRGC）隨即展開大規模報復，密集打擊科威特、巴林、卡達、沙烏地阿拉伯及阿聯境內的美軍固定基地與後勤設施。初期波次（2月底至3月初）集中打擊雷達、通訊、THAAD空防組件與基礎建築；後續波次（至7月）持續針對後勤、燃料節點與特定指揮設施。",
+      "公開報導與衛星影像（Planet Labs等）確認約13至17個美軍或美軍使用設施受影響，初期兩週基礎設施損害估計逾8億美元。多個基地遭多輪重複打擊，損害為累積性。CENTCOM已將部分部署模式從固定基地轉向分散混合作業。衝突中至少17名美軍人員在伊拉克、約旦、科威特等地打擊事件中喪生。",
+      "⚠️ 資料來源為衛星影像分析、經查證影片及媒體報導，部分官方細節受保密限制。紅色標記為確認嚴重損害設施；藍色標記為申報受損但細節較少之設施。衝突仍在進行中，數字持續更新。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [26.62, 56.25],
+        [26.42, 56.55],
+        [26.18, 56.82],
+        [25.88, 57.12],
+        [25.55, 57.35]
+      ],
+      "color": "#2980b9",
+      "weight": 2.5,
+      "opacity": 0.60,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "荷莫茲海峽",
+        "tag": "🌊 荷莫茲海峽",
+        "tagClass": "tag-reference",
+        "desc": "全球最重要石油通道，約20%全球石油出口途經此地。衝突期間伊朗多次以封鎖威脅施壓；油價因通道中斷憂慮持續上漲。",
+        "source": "地理參考"
+      }
+    },
+    {
+      "points": [
+        [29.85, 48.40],
+        [28.70, 49.30],
+        [27.50, 50.20],
+        [26.55, 50.62]
+      ],
+      "color": "#c0392b",
+      "weight": 1.8,
+      "opacity": 0.45,
+      "dashArray": "3,5",
+      "popup": {
+        "title": "伊朗主要打擊走廊（概略示意）",
+        "tag": "🚀 主要打擊軸線（概略）",
+        "tagClass": "tag-confirmed",
+        "desc": "⚠️ 概略示意。伊朗革命衛隊（IRGC）飛彈與無人機攻擊的大致走廊方向，科威特與巴林為受打擊最重的地區，地理上距伊朗本土最近。",
+        "source": "媒體分析（概略）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [29.55, 47.52],
+      "name": "Ali Al-Salem Air Base, Kuwait",
+      "nameLocal": "阿里薩利姆空軍基地（Kuwait）・嚴重損壞",
+      "type": "confirmed",
+      "tag": "💥 結構嚴重損壞・衛星確認",
+      "tagClass": "tag-confirmed",
+      "desc": "科威特西北主要美軍空軍基地。初始攻擊（2026年2-3月）導致多棟建築屋頂塌陷、結構嚴重損壞、通訊系統受影響。衛星影像（Planet Labs）確認明顯彈痕與建築毀損。後續攻擊波次造成累積性損害，部分人員被迫遷往替代地點。",
+      "coords": "29°33'N 047°31'E",
+      "source": "Planet Labs衛星影像；NYT；Defence Security Asia"
+    },
+    {
+      "latlng": [29.38, 47.58],
+      "name": "Camp Buehring, Kuwait",
+      "nameLocal": "布靈營區（Camp Buehring）・科威特",
+      "type": "confirmed",
+      "tag": "🔥 無人機滲透・燃料區受損",
+      "tagClass": "tag-confirmed",
+      "desc": "初始攻擊波次中，無人機滲透基地內部並引爆，燃料儲存區與維修區遭受損壞，事件影片在網路上獲證實流傳。為少數有影像記錄可查的基地內部爆炸事件之一。",
+      "coords": "29°22'N 047°35'E",
+      "source": "確認影片；媒體報導"
+    },
+    {
+      "latlng": [29.18, 47.87],
+      "name": "Camp Arifjan, Kuwait",
+      "nameLocal": "阿里凡營區（Camp Arifjan）・科威特",
+      "type": "confirmed",
+      "tag": "💥 戰術作戰中心受損・人員傷亡",
+      "tagClass": "tag-confirmed",
+      "desc": "科威特最大美軍地面部隊基地，亦為重要後勤樞紐。初始攻擊損壞戰術作戰中心（TOC）、衛星通訊設備與雷達設施，有美軍傷亡報告。傷亡人員數字被計入衝突整體傷亡統計。",
+      "coords": "29°11'N 047°52'E",
+      "source": "ABC News；BBC；媒體報導"
+    },
+    {
+      "latlng": [29.35, 47.78],
+      "name": "Ahmad Al-Jaber Air Base, Kuwait",
+      "nameLocal": "阿瑪德賈貝爾空軍基地（Kuwait）・7月最新：雷達遭摧毀",
+      "type": "confirmed",
+      "tag": "🛰️ AN/FPS-117雷達摧毀（7月最新）",
+      "tagClass": "tag-confirmed",
+      "desc": "【最新・2026年7月】伊朗宣稱摧毀該基地 AN/FPS-117 長程雷達（Lockheed Martin 製，偵測距離達470公里），並釋出前後對比衛星影像作為佐證。該雷達為整合美軍與盟友區域空防網絡的關鍵組件，遭摧毀對科威特及波灣空防感知能力造成嚴重缺口。此為截至7月最具體、有衛星影像支持的確認摧毀案例。",
+      "coords": "29°21'N 047°47'E",
+      "source": "IRGC聲明；衛星影像對比；Defence Security Asia 2026.07"
+    },
+    {
+      "latlng": [29.08, 48.17],
+      "name": "Shuaiba Port / Al-Ahmadi Port, Kuwait",
+      "nameLocal": "舒艾巴港・阿赫馬迪港（Kuwait）・海軍燃料後勤終端",
+      "type": "confirmed",
+      "tag": "⚓ 後勤終端・7月再次打擊",
+      "tagClass": "tag-confirmed",
+      "desc": "美軍使用的海軍燃料與後勤補給終端。初始攻擊損壞指揮與儲存設施；【2026年7月】伊朗再度聲稱打擊美軍海軍燃料與後勤終端（供補給艦隊使用），為近期波次攻擊的重點目標之一。",
+      "coords": "29°05'N 048°10'E",
+      "source": "媒體報導；IRGC聲明 2026.07"
+    },
+    {
+      "latlng": [26.21, 50.60],
+      "name": "Naval Support Activity Bahrain (NSA Bahrain / Fifth Fleet HQ)",
+      "nameLocal": "巴林海軍支援基地・美軍第五艦隊總部（Manama）",
+      "type": "confirmed",
+      "tag": "💥 兩座雷達圓頂摧毀・修復費2億美元",
+      "tagClass": "tag-confirmed",
+      "desc": "美軍中東艦隊核心總部，全球戰略意義最高的海軍設施之一。初始攻擊摧毀多棟大型建築、兩個雷達圓頂（radomes）與衛星通訊終端，單此處修復成本估計約2億美元。後續攻擊波次持續造成警報與攔截行動，據報7月22日前後再度響起空襲警報。",
+      "coords": "26°12'N 050°36'E",
+      "source": "NYT；BBC；USAF；媒體調查報導"
+    },
+    {
+      "latlng": [26.02, 50.55],
+      "name": "Sheikh Isa Air Base, Bahrain",
+      "nameLocal": "謝赫伊薩空軍基地（Bahrain）・7月聲稱打擊",
+      "type": "possible",
+      "tag": "🛫 戰鬥航空基地・7月聲稱打擊",
+      "tagClass": "tag-possible",
+      "desc": "巴林南部主要美軍戰鬥航空基地。【2026年7月】伊朗革命衛隊聲稱對該基地發動打擊，具體損害細節尚待獨立核實。",
+      "coords": "26°01'N 050°33'E",
+      "source": "IRGC聲明 2026.07"
+    },
+    {
+      "latlng": [26.20, 50.54],
+      "name": "Batelco Intelligence Processing Center, Bahrain",
+      "nameLocal": "巴林電信情報處理中心（Batelco）・7月目標",
+      "type": "possible",
+      "tag": "📡 情報處理・7月列為目標",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月】伊朗將巴林境內情報資訊處理相關通訊設施列為攻擊目標之一，具體損害有待確認。美軍情報通訊設施已成為本輪衝突中伊朗的系統性打擊優先目標類型。",
+      "coords": "26°12'N 050°32'E",
+      "source": "媒體報導 2026.07"
+    },
+    {
+      "latlng": [25.12, 51.32],
+      "name": "Al Udeid Air Base, Qatar",
+      "nameLocal": "烏代德空軍基地（Al Udeid）・卡達・CENTCOM前進總部",
+      "type": "confirmed",
+      "tag": "💥 跑道受損・早預警雷達受損",
+      "tagClass": "tag-confirmed",
+      "desc": "中東最大美軍空軍基地，亦為CENTCOM（美軍中央司令部）前進指揮總部所在地。初始攻擊損壞跑道與早期預警雷達系統，為全波灣具戰略意義最高的單一設施之一。後續攻擊與CENTCOM已評估將部署模式轉向分散操作。",
+      "coords": "25°07'N 051°19'E",
+      "source": "媒體報導；Defence Security Asia"
+    },
+    {
+      "latlng": [24.07, 47.58],
+      "name": "Prince Sultan Air Base (PSAB), Saudi Arabia",
+      "nameLocal": "蘇丹親王空軍基地（Prince Sultan AB）・沙烏地阿拉伯",
+      "type": "confirmed",
+      "tag": "💥 AWACS受損・THAAD組件受損",
+      "tagClass": "tag-confirmed",
+      "desc": "利雅德東南方的重要美軍航空基地。初始攻擊損壞雷達系統（含THAAD空防系統組件）、通訊設備與飛機相關設施；一架 E-3 Sentry 空中預警與管制機（AWACS）在攻擊中受損，單機價值逾5億美元。基地遭受多次攻擊，損害為累積性。",
+      "coords": "24°04'N 047°35'E",
+      "source": "NYT；USAF；衛星影像"
+    },
+    {
+      "latlng": [24.25, 54.55],
+      "name": "Al Dhafra Air Base, UAE",
+      "nameLocal": "達夫拉空軍基地（Al Dhafra）・阿布達比・阿聯",
+      "type": "confirmed",
+      "tag": "💥 衛星影像確認內部損壞",
+      "tagClass": "tag-confirmed",
+      "desc": "阿布達比郊外的美軍空軍基地，為F-35與其他先進戰機部署地點。初始飛彈攻擊導致設施內部損壞，衛星影像確認明顯毀損痕跡，具體受損設施類型尚未完全公開。",
+      "coords": "24°15'N 054°33'E",
+      "source": "衛星影像（Planet Labs）；媒體報導"
+    },
+    {
+      "latlng": [25.01, 55.07],
+      "name": "Jebel Ali Port, Dubai, UAE",
+      "nameLocal": "傑貝阿里港（Jebel Ali Port）・杜拜・阿聯",
+      "type": "possible",
+      "tag": "🔥 美軍使用後勤區起火",
+      "tagClass": "tag-possible",
+      "desc": "全球最大人工港之一，美軍使用其中部分區域作為海軍休整與後勤補給停靠點。初始攻擊造成美軍使用區域起火，為阿聯境內對美軍使用設施攻擊的確認案例。",
+      "coords": "25°01'N 055°04'E",
+      "source": "媒體報導；BBC"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "確認嚴重損壞設施（衛星影像或多源確認）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "申報受損・7月最新聲稱目標（待完整核實）" },
+    { "symbol": "line", "color": "#c0392b", "dash": "3,5", "weight": 1.8, "label": "伊朗主要打擊走廊（概略示意）" },
+    { "symbol": "line", "color": "#2980b9", "dash": "5,4", "weight": 2.5, "label": "荷莫茲海峽（全球石油通道）" }
+  ]
+}
