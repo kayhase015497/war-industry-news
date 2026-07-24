@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alt-PNT 替代定位、導航與授時技術解析</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --surface-0: #f5f4f0;
+  --surface-1: #f0efe9;
+  --surface-2: #ffffff;
+  --text-primary: #1a1a18;
+  --text-secondary: #5a5a56;
+  --text-muted: #8a8a84;
+  --border: rgba(0,0,0,0.1);
+  --border-strong: rgba(0,0,0,0.18);
+  --radius: 8px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-0: #1c1c1a;
+    --surface-1: #242422;
+    --surface-2: #2e2e2b;
+    --text-primary: #f0efe9;
+    --text-secondary: #a8a8a0;
+    --text-muted: #6a6a64;
+    --border: rgba(255,255,255,0.1);
+    --border-strong: rgba(255,255,255,0.18);
+  }
+}
+
+body {
+  background: var(--surface-0);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 2rem 1rem;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  margin: 2rem 0 .75rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: .5rem;
+  line-height: 1.3;
+}
+
+.page-sub {
+  font-size: clamp(16px, 2.5vw, 18px);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* PNT 三要素 */
+.trio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.trio-card {
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+}
+.trio-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: .75rem;
+}
+.trio-icon i { font-size: 22px; }
+.trio-title { font-size: 19px; font-weight: 500; color: var(--text-primary); margin-bottom: .15rem; }
+.trio-sub { font-size: 13px; color: var(--text-muted); margin-bottom: .45rem; }
+.trio-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.6; }
+
+/* 威脅區塊 */
+.threat-wrap {
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.threat-intro {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.threat-intro strong { color: var(--text-primary); }
+.threat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.threat-card {
+  background: #FCEBEB;
+  border: 0.5px solid #F09595;
+  border-radius: 8px;
+  padding: .9rem 1rem;
+}
+.threat-head { display: flex; align-items: center; gap: 7px; margin-bottom: .4rem; }
+.threat-head i { font-size: 19px; color: #A32D2D; }
+.threat-head span { font-size: 17px; font-weight: 500; color: #A32D2D; }
+.threat-en { font-size: 13px; color: #993C1D; margin-bottom: .3rem; }
+.threat-desc { font-size: 15px; color: #712B13; line-height: 1.55; }
+.threat-note {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  padding-top: .8rem;
+  border-top: 0.5px solid var(--border);
+}
+.threat-note strong { color: var(--text-primary); }
+
+/* Alt-PNT 技術元件 */
+.altpnt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.altpnt-card {
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+}
+.altpnt-head { display: flex; align-items: center; gap: .65rem; margin-bottom: .65rem; }
+.altpnt-icon {
+  width: 38px; height: 38px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.altpnt-icon i { font-size: 21px; }
+.altpnt-name { font-size: 18px; font-weight: 500; color: var(--text-primary); }
+.altpnt-abbr { font-size: 13px; color: var(--text-muted); }
+.altpnt-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: .55rem; }
+.altpnt-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+/* 串聯式架構 */
+.cascade-wrap {
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.cascade-intro {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.1rem;
+}
+.cascade-intro strong { color: var(--text-primary); }
+.c-row {
+  display: flex; align-items: center; gap: .85rem;
+  padding: .7rem 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.c-row:last-of-type { border-bottom: none; }
+.c-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500;
+  flex-shrink: 0;
+}
+.c-icon {
+  width: 38px; height: 38px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.c-icon i { font-size: 20px; }
+.c-info { flex: 1; min-width: 0; }
+.c-name { font-size: 18px; font-weight: 500; color: var(--text-primary); }
+.c-detail { font-size: 15px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
+.c-badge {
+  font-size: 13px; font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.arrow-down {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 16px;
+  padding: 3px 0;
+}
+.graceful {
+  background: #E1F5EE;
+  border: 0.5px solid #5DCAA5;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-top: 1.1rem;
+  display: flex; align-items: flex-start; gap: .75rem;
+}
+.graceful i { font-size: 24px; color: #0F6E56; flex-shrink: 0; margin-top: 2px; }
+.graceful-text { font-size: 17px; color: #085041; line-height: 1.7; }
+.graceful-text strong { color: #04342C; }
+
+/* 深色模式下威脅卡片調整 */
+@media (prefers-color-scheme: dark) {
+  .threat-card { background: #3a1a1a; border-color: #7a3030; }
+  .threat-head i, .threat-head span { color: #F09595; }
+  .threat-en { color: #d07070; }
+  .threat-desc { color: #c09090; }
+  .graceful { background: #0a2a1e; border-color: #1D9E75; }
+  .graceful-text { color: #9FE1CB; }
+  .graceful-text strong { color: #5DCAA5; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 1.25rem .75rem; }
+  .c-badge { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">替代定位、導航與授時（Alt-PNT）</div>
+  <div class="page-sub">PNT 是現代軍事與民生運行的隱形支柱。當衛星訊號遭壓制，各國國防倚賴的精準武器即刻失效。以下深入解析核心挑戰、替代技術與韌性架構。</div>
+
+  <div class="section-label">1 · PNT 三要素</div>
+  <div class="trio">
+    <div class="trio-card">
+      <div class="trio-icon" style="background:#E6F1FB;"><i class="ti ti-map-pin" style="color:#185FA5;" aria-hidden="true"></i></div>
+      <div class="trio-title">定位</div>
+      <div class="trio-sub">Positioning</div>
+      <div class="trio-desc">精確確定物體在三維空間（經度、緯度、高度）的位置。</div>
+    </div>
+    <div class="trio-card">
+      <div class="trio-icon" style="background:#E1F5EE;"><i class="ti ti-route" style="color:#0F6E56;" aria-hidden="true"></i></div>
+      <div class="trio-title">導航</div>
+      <div class="trio-sub">Navigation</div>
+      <div class="trio-desc">結合當前位置與目標，提供航向、速度與姿態指引。</div>
+    </div>
+    <div class="trio-card">
+      <div class="trio-icon" style="background:#FAEEDA;"><i class="ti ti-clock" style="color:#854F0B;" aria-hidden="true"></i></div>
+      <div class="trio-title">授時</div>
+      <div class="trio-sub">Timing</div>
+      <div class="trio-desc">奈秒等級時間同步，支援通訊、金融交易與雷達運作。</div>
+    </div>
+  </div>
+
+  <div class="section-label">2 · GNSS 的脆弱性與戰場現實</div>
+  <div class="threat-wrap">
+    <div class="threat-intro">GPS 等衛星訊號到達地面時極為微弱，在現代戰場上面臨三類威脅。<strong>俄烏戰爭已證實</strong>，大規模電戰干擾使西方提供的精準飛彈效能大幅下降。</div>
+    <div class="threat-row">
+      <div class="threat-card">
+        <div class="threat-head"><i class="ti ti-wifi-off" aria-hidden="true"></i><span>干擾</span></div>
+        <div class="threat-en">Jamming</div>
+        <div class="threat-desc">發射強大雜訊掩蓋衛星訊號，使接收端無法鎖定。</div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-head"><i class="ti ti-ghost" aria-hidden="true"></i><span>欺騙</span></div>
+        <div class="threat-en">Spoofing</div>
+        <div class="threat-desc">發送虛假座標，引導載具偏離預定航道。</div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-head"><i class="ti ti-satellite-off" aria-hidden="true"></i><span>物理攻擊</span></div>
+        <div class="threat-en">ASAT</div>
+        <div class="threat-desc">反衛星武器直接摧毀軌道衛星，從根源切斷訊號。</div>
+      </div>
+    </div>
+    <div class="threat-note">開發<strong>不依賴 GPS 的自主導航系統</strong>已成為各國國防的重中之重。</div>
+  </div>
+
+  <div class="section-label">3 · Alt-PNT 關鍵技術元件</div>
+  <div class="altpnt-grid">
+    <div class="altpnt-card">
+      <div class="altpnt-head">
+        <div class="altpnt-icon" style="background:#E6F1FB;"><i class="ti ti-camera" style="color:#185FA5;" aria-hidden="true"></i></div>
+        <div><div class="altpnt-name">視覺位置辨識</div><div class="altpnt-abbr">VPR</div></div>
+      </div>
+      <div class="altpnt-desc">即時影像與預存地圖比對，精度約 6 公尺。受雲層或光線影響。</div>
+      <span class="altpnt-tag" style="background:#E6F1FB;color:#185FA5;">精度 ~6m</span>
+    </div>
+    <div class="altpnt-card">
+      <div class="altpnt-head">
+        <div class="altpnt-icon" style="background:#E1F5EE;"><i class="ti ti-mountain" style="color:#0F6E56;" aria-hidden="true"></i></div>
+        <div><div class="altpnt-name">地形相對導航</div><div class="altpnt-abbr">TRN</div></div>
+      </div>
+      <div class="altpnt-desc">雷達或光達（LiDAR）測量地面起伏，比對數字高程模型。</div>
+      <span class="altpnt-tag" style="background:#E1F5EE;color:#0F6E56;">起伏地形優異</span>
+    </div>
+    <div class="altpnt-card">
+      <div class="altpnt-head">
+        <div class="altpnt-icon" style="background:#EEEDFE;"><i class="ti ti-magnetic" style="color:#534AB7;" aria-hidden="true"></i></div>
+        <div><div class="altpnt-name">磁異常導航</div><div class="altpnt-abbr">MagNav</div></div>
+      </div>
+      <div class="altpnt-desc">利用地球磁場在各地點的獨特簽名定位，難以被無線干擾。</div>
+      <span class="altpnt-tag" style="background:#EEEDFE;color:#534AB7;">抗干擾</span>
+    </div>
+    <div class="altpnt-card">
+      <div class="altpnt-head">
+        <div class="altpnt-icon" style="background:#F1EFE8;"><i class="ti ti-gyroscope" style="color:#5F5E5A;" aria-hidden="true"></i></div>
+        <div><div class="altpnt-name">慣性導航</div><div class="altpnt-abbr">INS / Inertial</div></div>
+      </div>
+      <div class="altpnt-desc">加速度計與陀螺儀推算路徑，不依賴任何外部訊號，隨時間漂移。</div>
+      <span class="altpnt-tag" style="background:#F1EFE8;color:#5F5E5A;">最終底線</span>
+    </div>
+  </div>
+
+  <div class="section-label">4 · 串聯式架構與優雅降級</div>
+  <div class="cascade-wrap">
+    <div class="cascade-intro"><strong>哈佛大學貝爾弗中心</strong>研究指出，沒有任何單一技術能完美取代 GPS。真正的解決方案是「串聯式架構」：系統對每一層設定信心指標，條件不佳時自動切換到下一層。</div>
+    <div class="c-row">
+      <div class="c-num" style="background:#E6F1FB;color:#185FA5;">1</div>
+      <div class="c-icon" style="background:#E6F1FB;"><i class="ti ti-camera" style="color:#185FA5;" aria-hidden="true"></i></div>
+      <div class="c-info">
+        <div class="c-name">視覺位置辨識（VPR）</div>
+        <div class="c-detail">雲層或光線不足時失效，自動切換</div>
+      </div>
+      <div class="c-badge" style="background:#E6F1FB;color:#185FA5;">主用</div>
+    </div>
+    <div class="arrow-down"><i class="ti ti-arrow-down" aria-hidden="true"></i></div>
+    <div class="c-row">
+      <div class="c-num" style="background:#E1F5EE;color:#0F6E56;">2</div>
+      <div class="c-icon" style="background:#E1F5EE;"><i class="ti ti-mountain" style="color:#0F6E56;" aria-hidden="true"></i></div>
+      <div class="c-info">
+        <div class="c-name">地形相對導航（TRN）</div>
+        <div class="c-detail">地形過於平坦時效果下降，自動切換</div>
+      </div>
+      <div class="c-badge" style="background:#E1F5EE;color:#0F6E56;">備援一</div>
+    </div>
+    <div class="arrow-down"><i class="ti ti-arrow-down" aria-hidden="true"></i></div>
+    <div class="c-row">
+      <div class="c-num" style="background:#EEEDFE;color:#534AB7;">3</div>
+      <div class="c-icon" style="background:#EEEDFE;"><i class="ti ti-magnetic" style="color:#534AB7;" aria-hidden="true"></i></div>
+      <div class="c-info">
+        <div class="c-name">磁異常導航（MagNav）</div>
+        <div class="c-detail">磁場特徵不明顯時效果有限，自動切換</div>
+      </div>
+      <div class="c-badge" style="background:#EEEDFE;color:#534AB7;">備援二</div>
+    </div>
+    <div class="arrow-down"><i class="ti ti-arrow-down" aria-hidden="true"></i></div>
+    <div class="c-row">
+      <div class="c-num" style="background:#F1EFE8;color:#5F5E5A;">4</div>
+      <div class="c-icon" style="background:#F1EFE8;"><i class="ti ti-gyroscope" style="color:#888780;" aria-hidden="true"></i></div>
+      <div class="c-info">
+        <div class="c-name">慣性導航（INS）</div>
+        <div class="c-detail">不依賴任何外部訊號，隨時間漂移但不會完全失效</div>
+      </div>
+      <div class="c-badge" style="background:#F1EFE8;color:#5F5E5A;">最終底線</div>
+    </div>
+    <div class="graceful">
+      <i class="ti ti-shield-check" aria-hidden="true"></i>
+      <div class="graceful-text"><strong>優雅降級（Graceful Degradation）：</strong>系統在最壞條件下仍能維持極高的定位成功率，而非直接失效。每一層的「信心門檻」決定切換時機，確保載具始終保有基本導航能力。</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
