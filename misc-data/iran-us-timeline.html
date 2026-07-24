@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>時間軸｜美伊衝突最新進展</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --tl-bg: #0b0f1a;
+      --tl-surface: rgba(255,255,255,0.04);
+      --tl-surface-hover: rgba(255,255,255,0.07);
+      --tl-border: rgba(255,255,255,0.08);
+      --tl-line: rgba(255,255,255,0.12);
+      --tl-text: #e2e8f0;
+      --tl-muted: #64748b;
+      --tl-secondary: #94a3b8;
+      --c-attack:     #ef4444;
+      --c-diplomatic: #3b82f6;
+      --c-casualties: #f97316;
+      --c-economic:   #22c55e;
+      --c-statement:  #a855f7;
+    }
+
+    body {
+      background: var(--tl-bg);
+      color: var(--tl-text);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .tl-root {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 28px 20px 52px;
+    }
+
+    /* ── Header ───────────────────────────────────── */
+    .tl-header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--tl-border);
+    }
+
+    .tl-category {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--tl-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tl-h1 {
+      font-size: clamp(17px, 3.5vw, 22px);
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+
+    .tl-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--tl-muted);
+    }
+
+    .tl-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    .tl-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      flex-shrink: 0;
+      animation: tl-blink 1.6s ease-in-out infinite;
+    }
+
+    @keyframes tl-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .tl-context {
+      color: var(--tl-secondary);
+    }
+
+    .tl-count strong {
+      color: #f1f5f9;
+    }
+
+    /* ── Feed ─────────────────────────────────────── */
+    .tl-feed {
+      position: relative;
+      padding-left: 80px;
+    }
+
+    /* vertical line — positioned so its horizontal center aligns with dots */
+    .tl-feed::before {
+      content: '';
+      position: absolute;
+      left: 52px;   /* 80 - 28 = 52 → dot center */
+      top: 8px;
+      bottom: 24px;
+      width: 1px;
+      background: var(--tl-line);
+    }
+
+    /* ── Entry ────────────────────────────────────── */
+    .tl-entry {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .tl-time {
+      position: absolute;
+      left: -80px;
+      top: 13px;
+      width: 52px;
+      text-align: right;
+      padding-right: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--tl-muted);
+      line-height: 1;
+    }
+
+    /* dot — left: -28px so center lands at 80-28=52px, matching the line */
+    .tl-dot {
+      position: absolute;
+      left: -28px;
+      top: 15px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--tl-muted);
+      border: 2px solid var(--tl-bg);
+      transform: translateX(-50%);
+    }
+
+    .tl-entry:first-child .tl-dot {
+      width: 13px;
+      height: 13px;
+      top: 13px;
+    }
+
+    /* dot color by event type */
+    .tl-entry[data-type="attack"]     .tl-dot { background: var(--c-attack); }
+    .tl-entry[data-type="diplomatic"] .tl-dot { background: var(--c-diplomatic); }
+    .tl-entry[data-type="casualties"] .tl-dot { background: var(--c-casualties); }
+    .tl-entry[data-type="economic"]   .tl-dot { background: var(--c-economic); }
+    .tl-entry[data-type="statement"]  .tl-dot { background: var(--c-statement); }
+
+    /* ── Card ─────────────────────────────────────── */
+    .tl-card {
+      background: var(--tl-surface);
+      border: 1px solid var(--tl-border);
+      border-radius: 8px;
+      padding: 13px 15px 12px;
+      transition: background 0.15s;
+    }
+
+    .tl-card:hover { background: var(--tl-surface-hover); }
+
+    .tl-card-top {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    .tl-latest {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #ef4444;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .tl-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .tl-entry[data-type="attack"]     .tl-tag { background: rgba(239,68,68,.15);  color: #fca5a5; }
+    .tl-entry[data-type="diplomatic"] .tl-tag { background: rgba(59,130,246,.15); color: #93c5fd; }
+    .tl-entry[data-type="casualties"] .tl-tag { background: rgba(249,115,22,.15); color: #fdba74; }
+    .tl-entry[data-type="economic"]   .tl-tag { background: rgba(34,197,94,.15);  color: #86efac; }
+    .tl-entry[data-type="statement"]  .tl-tag { background: rgba(168,85,247,.15); color: #d8b4fe; }
+
+    .tl-headline {
+      font-size: clamp(13px, 2.2vw, 15px);
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.45;
+      margin-bottom: 5px;
+    }
+
+    .tl-summary {
+      font-size: 13px;
+      color: var(--tl-secondary);
+      line-height: 1.75;
+    }
+
+    .tl-source {
+      margin-top: 7px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--tl-muted);
+    }
+
+    /* ── Expand button + full text ────────────────── */
+    .tl-expand {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 9px;
+      padding: 3px 10px;
+      background: none;
+      border: 1px solid var(--tl-border);
+      border-radius: 4px;
+      color: var(--tl-muted);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tl-expand:hover {
+      background: var(--tl-surface-hover);
+      color: var(--tl-text);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .tl-full {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--tl-border);
+      font-size: 13px;
+      color: var(--tl-secondary);
+      line-height: 1.8;
+    }
+
+    .tl-full.open { display: block; }
+
+    .tl-full p + p { margin-top: 10px; }
+
+    /* ── Footer ───────────────────────────────────── */
+    .tl-footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--tl-border);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--tl-muted);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    /* ── Mobile ───────────────────────────────────── */
+    @media (max-width: 520px) {
+      .tl-feed {
+        padding-left: 0;
+      }
+      .tl-feed::before { display: none; }
+      .tl-time {
+        position: static;
+        width: auto;
+        text-align: left;
+        padding-right: 0;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .tl-dot { display: none; }
+      .tl-entry { margin-bottom: 14px; }
+    }
+  </style>
+</head>
+<body>
+<div class="tl-root" id="tl-root"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+//  ▼▼▼  編輯區：新增或修改事件請編輯此處，最新事件放在最上方  ▼▼▼
+// ════════════════════════════════════════════════════════════════════
+const TL_CONFIG = {
+  category:  "美伊衝突",
+  title:     "美伊衝突連日升溫：最新進展",
+  date:      "台灣時間 2026年7月24日",
+  isLive:    true,
+  context:   "美軍連續第13夜空襲伊朗",
+
+  // 標籤文字對照表（type → 中文標籤）
+  typeLabels: {
+    "attack":     "軍事打擊",
+    "diplomatic": "外交動態",
+    "casualties": "傷亡損失",
+    "economic":   "經濟衝擊",
+    "statement":  "聲明表態"
+  },
+
+  // ── 事件列表，最新在最上方 ───────────────────────
+  events: [
+    {
+      time: "18:40",
+      type: "casualties",  // attack | diplomatic | casualties | economic | statement
+      headline: "伊朗空襲美軍基地　10架MQ-9死神無人機遭摧毀，損失估達320億台幣",
+      summary: "伊朗飛彈攻擊約旦費薩爾國王空軍基地，8架尚未完成組裝的MQ-9「死神」無人機遭摧毀，另有2架現役MQ-9在攻擊伊朗途中被擊落，擴大美軍死神機隊短缺危機。另損失UH-60「黑鷹」直升機與F-15E「打擊鷹」戰機，依公開採購價估損約320億新台幣。",
+      full: "伊朗飛彈攻擊約旦費薩爾國王空軍基地（King Faisal Air Base）期間，8架尚未完成組裝的美國空軍MQ-9「死神」（Reaper）無人機遭到摧毀，另有2架現役MQ-9在攻擊伊朗途中遭擊毀，擴大了美軍「死神」無人機機隊短缺問題。另損失了UH-60「黑鷹」直升機，以及F-15E「打擊鷹」（Strike Eagle）戰機等，依公開採購價推估，損失高達320億新台幣左右。\n\n伊朗聲明稱，多架MQ-9及一處無人機維修設施遭摧毀，一座F-15戰機準備機庫被擊中，另有兩架重型運輸直升機在機庫遭攻擊後受損，美軍士兵宿舍設施被擊中，造成不明人數傷亡。衛星圖像顯示，費薩爾國王空軍基地的機庫結構遭到嚴重破壞，現場升起大量黑煙，顯示至少一架F-15E「打擊鷹」在內被摧毀。",
+      source: "美國空軍、衛星圖像"
+    },
+    {
+      time: "18:20",
+      type: "statement",
+      headline: "IRGC再稱空襲亞馬遜巴林資料中心",
+      summary: "伊朗伊斯蘭革命衛隊（IRGC）宣稱再度空襲亞馬遜位於巴林的資料中心大樓，稱亞馬遜「為美軍提供情報支援」。IRGC前一天（23日）已宣稱執行同一目標攻擊，亞馬遜與巴林當局均尚未回應。",
+      source: "伊朗國營電視台"
+    },
+    {
+      time: "16:00",
+      type: "attack",
+      headline: "伊朗媒體：美軍飛彈擊中IRGC海軍總部",
+      summary: "伊通社（IRNA）與法斯通訊社報導，美軍一枚飛彈擊中IRGC海軍總部，部分設施毀壞。總部位於北部吉蘭省濱裏海村莊齊巴凱納（Zibakenar），初步尚未接獲人員傷亡通報，消息仍待核實。",
+      source: "IRNA、法斯通訊社"
+    },
+    {
+      time: "14:00",
+      type: "attack",
+      headline: "伊朗宣稱以無人機攻擊巴林、約旦境內美軍基地",
+      summary: "伊朗軍方稱當地時間24日上午，向巴林謝赫伊薩空軍基地、約旦阿茲拉克空軍基地發動無人機攻擊，並釋出發射影片。巴林內政部已拉響空襲警報，敦促居民尋找安全地點避險，影片拍攝時間地點有待核實。",
+      source: "伊朗伊斯蘭共和國廣播電視台（IRIB）"
+    },
+    {
+      time: "13:00",
+      type: "casualties",
+      headline: "伊朗國營媒體：多地遇襲，至少4人死亡",
+      summary: "伊朗多個地區週五凌晨遭攻擊，至少造成4人死亡，死者均來自胡齊斯坦省阿瓦士市。安迪梅什克、奧米迪耶、霍拉馬巴德及阿巴斯港等地也傳出遭飛彈攻擊，阿巴斯港有2人受傷，CNN表示尚無法獨立核實。",
+      source: "伊朗國營媒體 / CNN"
+    },
+    {
+      time: "09:00",
+      type: "diplomatic",
+      headline: "伊拉克攜停火提案赴德黑蘭斡旋，遭伊朗拒絕",
+      summary: "伊拉克總理扎伊迪（Ali al-Zaidi）攜川普停火方案親赴德黑蘭，但伊朗拒絕接受。扎伊迪此行在白宮與川普會晤後成行，川普同時威脅進一步升高戰事，將伊朗關鍵基礎設施列為潛在攻擊目標。",
+      source: "《紐約時報》"
+    },
+    {
+      time: "08:00",
+      type: "economic",
+      headline: "紅海攻擊推升油價破每桶100美元，川普警告由伊朗資產賠付",
+      summary: "葉門「青年運動」叛軍攻擊沙烏地油輪後，國際油價自今年5月以來首度飆破每桶100美元。川普表示尚未準備與伊朗談停火，並稱船隻損害將由美方掌控的伊朗資產支付。聯合國秘書長古特瑞斯警告中東正被推向「難以想像的邊緣」。",
+      full: "葉門「青年運動」叛軍在紅海攻擊沙烏地阿拉伯油輪，威脅到荷莫茲海峽以外的另一條石油出口航線，升高了中東戰爭擴大的風險，導致全球油價每桶飆破100美元。美國總統川普說，目前尚未準備與伊朗談新停火協議，並強調「他們需要更多同等待遇」。\n\n川普在自創平台「真相社群」發文指出，任何船隻或貨物遭受的損害「將由美國所持有並控制的伊朗資金支付」，並強調「這些損害可能十分龐大，但這是公平合理的做法」。美軍中央司令部表示，已在美東時間晚上6點45分對伊朗發動新一波攻擊，這已是連續第13晚的空襲。聯合國秘書長古特瑞斯告訴安理會，中東正被推向「難以想像的邊緣」。",
+      source: "美聯社、路透社"
+    }
+  ]
+};
+// ════════════════════════════════════════════════════════════════════
+//  ▲▲▲  編輯區結束  ▲▲▲
+// ════════════════════════════════════════════════════════════════════
+
+
+// ── Renderer（不需修改） ────────────────────────────────────────────
+function h(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function paragraphs(text) {
+  return '<p>' + h(text).replace(/\n\n/g, '</p><p>') + '</p>';
+}
+
+function typeColor(type) {
+  const map = {
+    attack: 'var(--c-attack)', diplomatic: 'var(--c-diplomatic)',
+    casualties: 'var(--c-casualties)', economic: 'var(--c-economic)',
+    statement: 'var(--c-statement)'
+  };
+  return map[type] || 'var(--tl-muted)';
+}
+
+function render() {
+  const cfg = TL_CONFIG;
+
+  const header = `
+    <header class="tl-header">
+      <div class="tl-category">■ ${h(cfg.category)}</div>
+      <h1 class="tl-h1">${h(cfg.title)}</h1>
+      <div class="tl-meta">
+        <span class="tl-live"><span class="tl-live-dot"></span>${cfg.isLive ? '持續更新中' : '更新已結束'}</span>
+        <span>${h(cfg.date)}</span>
+        ${cfg.context ? `<span class="tl-context">${h(cfg.context)}</span>` : ''}
+        <span class="tl-count"><strong>${cfg.events.length}</strong> 則更新</span>
+      </div>
+    </header>`;
+
+  const entries = cfg.events.map((ev, i) => {
+    const label = cfg.typeLabels[ev.type] || ev.type;
+    const isFirst = i === 0;
+    const accentColor = typeColor(ev.type);
+    const borderStyle = isFirst ? `style="border-left:3px solid ${accentColor}"` : '';
+
+    const expandHtml = ev.full ? `
+      <button class="tl-expand" onclick="tlToggle(this)"><span>展開全文</span> ▾</button>
+      <div class="tl-full">${paragraphs(ev.full)}</div>` : '';
+
+    return `
+      <div class="tl-entry" data-type="${h(ev.type)}">
+        <div class="tl-time">${h(ev.time)}</div>
+        <div class="tl-dot"></div>
+        <div class="tl-card" ${borderStyle}>
+          <div class="tl-card-top">
+            ${isFirst ? '<span class="tl-latest">● 最新</span>' : ''}
+            <span class="tl-tag">${h(label)}</span>
+          </div>
+          <div class="tl-headline">${h(ev.headline)}</div>
+          <div class="tl-summary">${h(ev.summary)}</div>
+          ${ev.source ? `<div class="tl-source">來源：${h(ev.source)}</div>` : ''}
+          ${expandHtml}
+        </div>
+      </div>`;
+  }).join('');
+
+  const footer = `
+    <footer class="tl-footer">
+      此頁面為${h(cfg.date)}事件彙整，資料來自公開媒體報導<br>
+      戰爭即工業力｜交錯地帶 © 2026
+    </footer>`;
+
+  document.getElementById('tl-root').innerHTML =
+    header + `<div class="tl-feed">${entries}</div>` + footer;
+}
+
+function tlToggle(btn) {
+  const full = btn.nextElementSibling;
+  const open = full.classList.toggle('open');
+  btn.innerHTML = open ? '<span>收起全文</span> ▴' : '<span>展開全文</span> ▾';
+}
+
+render();
+</script>
+</body>
+</html>
