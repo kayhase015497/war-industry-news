@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "title": "伊朗飛彈打擊約旦美軍基地・MQ-9 無人機損失地圖",
+    "titleEn": "Iranian Missile Strikes on US Bases in Jordan – MQ-9 Reaper Losses 2026",
+    "subtitle": "IRGC第25波報復行動：費薩爾國王空軍基地8架MQ-9遭摧毀，產線斷鏈危機浮現",
+    "date": "2026-07-22",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["IRGC官方聲明", "Military Watch", "《紐約時報》", "衛星影像", "美軍CENTCOM"]
+  },
+  "map": {
+    "center": [31.5, 36.8],
+    "zoom": 8,
+    "bounds": [[28.5, 33.5], [34.5, 40.0]]
+  },
+  "infoPanel": {
+    "title": "IRGC 第25波報復：約旦三大美軍基地遭飛彈攻擊",
+    "paragraphs": [
+      "伊朗革命衛隊（IRGC）宣稱此為針對美軍中東行動的第25波報復打擊，攻擊目標為約旦境內三座美軍使用的空軍基地。其中費薩爾國王空軍基地（King Faisal Air Base）損失最為慘重：8架尚未完成組裝的新型 MQ-9 Reaper 無人機遭飛彈擊毀，另有2架 MQ-9 在執行飛往伊朗方向任務途中被擊落，共計10架損失。",
+      "此次損失對美軍無人機作戰能力造成嚴重打擊。MQ-9A 生產線目前已暫停，General Atomics 公告今年6月初時全球客戶訂單庫存「新型 MQ-9A 總數不足10架」。自2023年起與葉門胡塞、安薩爾拉聯盟（Ansar Allah）的對抗中，美軍已累計損失逾53架 MQ-9A，加上本次約旦損失，替補缺口已無法透過快速採購解決，被分析人士視為美軍快速建置戰鬥能力嚴重退化的縮影。",
+      "額外損失報告（衛星影像及經核實影片）顯示：費薩爾國王空軍基地等地的行動中亦有 UH-60 黑鷹直升機受損；F-15 戰機至今累計損失約5架（部分情況不明）。⚠️ 部分坐標為概略位置。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [33.50, 39.80],
+        [32.80, 38.80],
+        [32.16, 37.15]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.50,
+      "dashArray": "5,5",
+      "popup": {
+        "title": "伊朗飛彈概略來襲方向（東→西）",
+        "tag": "🚀 來襲方向（概略）",
+        "tagClass": "tag-confirmed",
+        "desc": "⚠️ 概略示意。伊朗彈道飛彈由東方穿越伊拉克、敘利亞或沙烏地阿拉伯領空後進入約旦，為此波攻擊的大致彈道方向。",
+        "source": "媒體分析（概略）"
+      }
+    },
+    {
+      "points": [
+        [33.50, 39.80],
+        [32.50, 38.20],
+        [31.83, 36.78]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.45,
+      "dashArray": "5,5",
+      "popup": {
+        "title": "伊朗飛彈概略來襲方向（→穆瓦法克薩提）",
+        "tag": "🚀 來襲方向（概略）",
+        "tagClass": "tag-confirmed",
+        "desc": "⚠️ 概略示意。針對穆瓦法克薩提空軍基地的飛彈大致來襲方向。",
+        "source": "媒體分析（概略）"
+      }
+    },
+    {
+      "points": [
+        [33.50, 39.80],
+        [32.10, 37.80],
+        [30.35, 36.18]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.45,
+      "dashArray": "5,5",
+      "popup": {
+        "title": "伊朗飛彈概略來襲方向（→費薩爾國王）",
+        "tag": "🚀 來襲方向（概略）",
+        "tagClass": "tag-confirmed",
+        "desc": "⚠️ 概略示意。針對費薩爾國王空軍基地的飛彈大致來襲方向，距離最遠，為此波攻擊中彈道最長的打擊。",
+        "source": "媒體分析（概略）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [30.35, 36.18],
+      "name": "King Faisal Air Base, Jordan",
+      "nameLocal": "費薩爾國王空軍基地（King Faisal Air Base）・約旦 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "💥 8架MQ-9摧毀・最重損失",
+      "tagClass": "tag-confirmed",
+      "desc": "【IRGC第25波・最重損失地點】伊朗飛彈攻擊期間，8架尚未完成組裝的全新 MQ-9 Reaper 無人機在基地內遭飛彈直接摧毀。衛星影像顯示機庫結構毀損嚴重、現場大量黑煙；至少一架 F-15E「打擊鷹」（Strike Eagle）戰鬥機亦在攻擊中受損。 此次損失極可能耗盡 General Atomics 當前客戶可用庫存的絕大部分——該公司今年6月初已公告全球新 MQ-9A 庫存不足10架。",
+      "coords": "30°21'N 036°11'E",
+      "source": "IRGC聲明；Military Watch；衛星影像"
+    },
+    {
+      "latlng": [32.16, 37.15],
+      "name": "Prince Hassan Air Base (H5), Jordan",
+      "nameLocal": "哈桑親王空軍基地（Prince Hassan AB / H5）・約旦",
+      "type": "confirmed",
+      "tag": "💥 IRGC第25波目標",
+      "tagClass": "tag-confirmed",
+      "desc": "位於約旦東北部薩法維（Safawi）一帶，亦稱H5基地，為美軍在約旦東北部的重要空中行動節點，歷史上曾作為特種作戰及偵察無人機前進基地。IRGC宣稱此為第25波報復行動攻擊目標之一，具體損害細節待衛星影像進一步核實。",
+      "coords": "32°10'N 037°09'E",
+      "source": "IRGC聲明；媒體報導"
+    },
+    {
+      "latlng": [31.83, 36.78],
+      "name": "Muwaffaq Salti Air Base (Azraq AB), Jordan",
+      "nameLocal": "穆瓦法克薩提空軍基地（Muwaffaq Salti AB）・約旦・阿茲拉克",
+      "type": "confirmed",
+      "tag": "💥 IRGC第25波目標",
+      "tagClass": "tag-confirmed",
+      "desc": "位於約旦中部阿茲拉克（Azraq）地區，為約旦空軍主力基地之一，美軍亦長期使用此基地進行中東空中作戰行動。2024年2月「約旦三塔」（Tower 22）事件後美軍有所調整部署，仍維持在此基地的存在。IRGC第25波報復宣稱攻擊此處。",
+      "coords": "31°50'N 036°47'E",
+      "source": "IRGC聲明；媒體報導"
+    },
+    {
+      "latlng": [31.95, 35.93],
+      "name": "Amman, Jordan",
+      "nameLocal": "安曼（Amman）・約旦首都",
+      "type": "capital",
+      "tag": "🏛️ 安曼・約旦首都",
+      "tagClass": "tag-reference",
+      "desc": "約旦首都與最大城市，位於三座受攻擊基地的地理中心附近。約旦王國官方立場維持中立，但其領土上的美軍基地持續成為伊朗及其代理勢力的報復打擊目標。",
+      "coords": "31°57'N 035°56'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [29.52, 35.00],
+      "name": "Aqaba, Jordan",
+      "nameLocal": "亞喀巴（Aqaba）・約旦唯一出海口",
+      "type": "capital",
+      "tag": "⚓ 亞喀巴・地理參考",
+      "tagClass": "tag-reference",
+      "desc": "約旦南部紅海出海口，費薩爾國王空軍基地位於此城市東北方向的內陸地區。",
+      "coords": "29°31'N 035°00'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [33.20, 38.20],
+      "name": "Tower 22 / Rukban area (reference)",
+      "nameLocal": "「三塔基地」（Tower 22）・敘約伊拉克三境交界・參考",
+      "type": "possible",
+      "tag": "📍 三塔基地・歷史攻擊參考",
+      "tagClass": "tag-reference",
+      "desc": "2024年1月發生造成3名美軍死亡攻擊的「三塔基地」（Tower 22）所在地區，位於敘利亞、約旦、伊拉克三國交界。為伊朗代理勢力自2023年以來持續攻擊美軍中東存在的標誌性早期事件。⚠️ 概略位置。",
+      "coords": "33°12'N 038°12'E",
+      "source": "媒體報導（概略）"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "IRGC第25波確認打擊目標（飛彈攻擊・損害確認）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "歷史參考地點" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "地理參考城市" },
+    { "symbol": "line", "color": "#c0392b", "dash": "5,5", "weight": 2, "label": "伊朗飛彈概略來襲方向（示意）" }
+  ]
+}
