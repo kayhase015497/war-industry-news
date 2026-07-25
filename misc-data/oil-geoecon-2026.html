@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>油價百元時代的地緣經濟損益表（2026）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #0b0f1a;
+  --surface:     #131a2a;
+  --surface-2:   #1a2236;
+  --border:      rgba(255,255,255,0.07);
+  --text-1:      #e8e6df;
+  --text-2:      #8a8884;
+  --text-3:      #5a5856;
+  --win:         #1baf7a;
+  --win-bg:      rgba(27,175,122,0.12);
+  --win-bd:      rgba(27,175,122,0.28);
+  --lose:        #e66767;
+  --lose-bg:     rgba(230,103,103,0.12);
+  --lose-bd:     rgba(230,103,103,0.28);
+  --mixed:       #eb6834;
+  --mixed-bg:    rgba(235,104,52,0.12);
+  --mixed-bd:    rgba(235,104,52,0.28);
+  --gold:        #f0b429;
+  --gold-bg:     rgba(240,180,41,0.12);
+  --gold-bd:     rgba(240,180,41,0.3);
+  --mono:        'Space Mono', monospace;
+  --sans:        'Noto Sans TC', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  font-family: var(--sans);
+  color: var(--text-1);
+  line-height: 1.5;
+  padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
+}
+
+.oilg-wrap { max-width: 900px; margin: 0 auto; }
+
+/* Header */
+.oilg-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: .6rem;
+}
+.oilg-title {
+  font-size: clamp(18px, 4vw, 26px);
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.3;
+  margin-bottom: .3rem;
+}
+.oilg-sub {
+  font-size: clamp(13px, 2vw, 14px);
+  color: var(--text-2);
+  margin-bottom: 1.5rem;
+}
+
+/* Price hero */
+.oilg-price-hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem 1.1rem;
+  margin-bottom: 1.75rem;
+}
+.oilg-price-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.oilg-p-block { text-align: center; min-width: 60px; }
+.oilg-p-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .15rem;
+}
+.oilg-p-val {
+  font-family: var(--mono);
+  font-size: clamp(30px, 6vw, 44px);
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1;
+}
+.oilg-p-val.gold { color: var(--gold); }
+.oilg-p-unit {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: .1rem;
+}
+.oilg-arrow-col {
+  flex: 1;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+}
+.oilg-bar-track {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(27,175,122,0.35) 0%, var(--gold) 100%);
+  position: relative;
+}
+.oilg-bar-track::after {
+  content: '';
+  position: absolute;
+  right: -1px; top: 50%;
+  transform: translateY(-50%);
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(240,180,41,0.6);
+}
+.oilg-bar-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+.oilg-badges {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .35rem;
+}
+.oilg-badge {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.oilg-badge.gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bd); }
+.oilg-badge.sm { font-size: 11px; color: var(--text-3); background: none; border: none; padding: 0; }
+.oilg-price-note {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: .85rem;
+}
+.oilg-price-note strong { color: var(--text-1); }
+
+/* Section header */
+.oilg-sec-hd {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-bottom: .85rem;
+}
+.oilg-sec-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.oilg-sec-dot.win  { background: var(--win); }
+.oilg-sec-dot.lose { background: var(--lose); }
+.oilg-sec-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.oilg-sec-name.win  { color: var(--win); }
+.oilg-sec-name.lose { color: var(--lose); }
+
+/* Grid */
+.oilg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+/* Card */
+.oilg-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  position: relative;
+}
+.oilg-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 10px 10px 0 0;
+}
+.oilg-card.win  { border-color: var(--win-bd); }
+.oilg-card.win::before  { background: var(--win); }
+.oilg-card.lose { border-color: var(--lose-bd); }
+.oilg-card.lose::before { background: var(--lose); }
+.oilg-card.mixed { border-color: var(--mixed-bd); }
+.oilg-card.mixed::before { background: var(--mixed); }
+
+.oilg-flag   { font-size: 22px; display: block; margin-bottom: .3rem; }
+.oilg-cname  { font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: .3rem; }
+.oilg-verdict {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: .75rem;
+  letter-spacing: .03em;
+}
+.oilg-verdict.win   { background: var(--win-bg);   color: var(--win);   border: 1px solid var(--win-bd); }
+.oilg-verdict.lose  { background: var(--lose-bg);  color: var(--lose);  border: 1px solid var(--lose-bd); }
+.oilg-verdict.mixed { background: var(--mixed-bg); color: var(--mixed); border: 1px solid var(--mixed-bd); }
+
+.oilg-stats { display: flex; flex-direction: column; gap: .42rem; }
+.oilg-stat  { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
+.oilg-num {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.oilg-num.win   { color: var(--win); }
+.oilg-num.lose  { color: var(--lose); }
+.oilg-num.mixed { color: var(--mixed); }
+.oilg-num.gold  { color: var(--gold); }
+.oilg-num.dim   { color: var(--text-2); }
+.oilg-lbl {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* Summary table */
+.oilg-table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+.oilg-table-hd {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .85rem;
+}
+.oilg-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 520px;
+}
+.oilg-tbl th {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: .4rem .75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+.oilg-tbl td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-2);
+  vertical-align: middle;
+}
+.oilg-tbl tr:last-child td { border-bottom: none; }
+.oilg-tbl td.country { color: var(--text-1); font-weight: 500; white-space: nowrap; }
+.oilg-tbl td.num { font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.oilg-tbl td.num.win   { color: var(--win); }
+.oilg-tbl td.num.lose  { color: var(--lose); }
+.oilg-tbl td.num.mixed { color: var(--mixed); }
+.oilg-tbl-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.oilg-tbl-badge.win   { background: var(--win-bg);   color: var(--win);   border: 1px solid var(--win-bd); }
+.oilg-tbl-badge.lose  { background: var(--lose-bg);  color: var(--lose);  border: 1px solid var(--lose-bd); }
+.oilg-tbl-badge.mixed { background: var(--mixed-bg); color: var(--mixed); border: 1px solid var(--mixed-bd); }
+
+/* Footer */
+.oilg-footer {
+  border-top: 1px solid var(--border);
+  padding-top: .75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+@media (max-width: 480px) {
+  .oilg-grid { grid-template-columns: 1fr 1fr; }
+  .oilg-p-val { font-size: 28px; }
+  .oilg-badges { align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="oilg-wrap">
+
+  <div class="oilg-eyebrow">地緣經濟分析 · 2026年7月23日</div>
+  <h1 class="oilg-title">油價百元時代的地緣經濟損益表</h1>
+  <p class="oilg-sub">布倫特原油突破 $100/桶，全球財富正在重新分配——從進口國流向出口國。</p>
+
+  <!-- Oil price hero -->
+  <div class="oilg-price-hero">
+    <div class="oilg-price-top">
+      <div class="oilg-p-block">
+        <div class="oilg-p-label">衝突前均價</div>
+        <div class="oilg-p-val">$70</div>
+        <div class="oilg-p-unit">USD / 桶</div>
+      </div>
+      <div class="oilg-arrow-col">
+        <div class="oilg-bar-track"></div>
+        <div class="oilg-bar-label">2026年7月 · 連續上漲</div>
+      </div>
+      <div class="oilg-p-block">
+        <div class="oilg-p-label">7月23日突破</div>
+        <div class="oilg-p-val gold">$100</div>
+        <div class="oilg-p-unit">USD / 桶</div>
+      </div>
+      <div class="oilg-badges">
+        <span class="oilg-badge gold">↑ +43%</span>
+        <span class="oilg-badge sm">7月單月漲幅 +40%</span>
+        <span class="oilg-badge sm">日內最高漲幅 +7%</span>
+      </div>
+    </div>
+    <div class="oilg-price-note">
+      胡塞武裝7月22日於紅海以飛彈擊沉沙烏地油輪，在霍爾木茲封鎖之外開闢第二條海上封鎖線，觸發油價跳漲。<strong>雙重海上封鎖</strong>加劇市場恐慌，當日漲幅逾7%。
+    </div>
+  </div>
+
+  <!-- Winners section -->
+  <div class="oilg-sec-hd">
+    <div class="oilg-sec-dot win"></div>
+    <div class="oilg-sec-name win">獲益方</div>
+  </div>
+  <div class="oilg-grid">
+
+    <div class="oilg-card win">
+      <span class="oilg-flag">🇷🇺</span>
+      <div class="oilg-cname">俄羅斯</div>
+      <span class="oilg-verdict win">大賺</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num win">+3.5兆</span>
+          <span class="oilg-lbl">盧布額外預算收入（上看值）</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num win">+70%</span>
+          <span class="oilg-lbl">4月油氣財政收入較3月月增幅</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num gold">$59</span>
+          <span class="oilg-lbl">預算基準油價（vs 實際 $100）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oilg-card win">
+      <span class="oilg-flag">🇮🇷</span>
+      <div class="oilg-cname">伊朗</div>
+      <span class="oilg-verdict win">大賺</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num win">$35億</span>
+          <span class="oilg-lbl">解封兩週出口收入（美元）</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num win">7,000萬桶</span>
+          <span class="oilg-lbl">解封後快速運出，共值約 $60億</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num win">+20%</span>
+          <span class="oilg-lbl">出口均價較戰前溢價（貼水消失）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oilg-card win">
+      <span class="oilg-flag">🇺🇸</span>
+      <div class="oilg-cname">美國</div>
+      <span class="oilg-verdict win">大幅獲益</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num win">+111%</span>
+          <span class="oilg-lbl">4月原油出口年增幅（$171.5億）</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num win">$600億</span>
+          <span class="oilg-lbl">2026年超額利潤潛在規模（美元）</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num dim">$4.4/加侖</span>
+          <span class="oilg-lbl">國內汽油均價上漲（通膨代價）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oilg-card mixed">
+      <span class="oilg-flag">🇨🇳</span>
+      <div class="oilg-cname">中國</div>
+      <span class="oilg-verdict mixed">局部賺・整體虧</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num mixed">$25億</span>
+          <span class="oilg-lbl">5月成品油煉化貿易順差（美元）</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num mixed">$158億</span>
+          <span class="oilg-lbl">近一年累積成品油順差</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num mixed">23倍</span>
+          <span class="oilg-lbl">恒逸石化2026上半年淨利年增幅</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Losers section -->
+  <div class="oilg-sec-hd">
+    <div class="oilg-sec-dot lose"></div>
+    <div class="oilg-sec-name lose">受損方</div>
+  </div>
+  <div class="oilg-grid">
+
+    <div class="oilg-card lose">
+      <span class="oilg-flag">🇪🇺</span>
+      <div class="oilg-cname">歐洲（歐盟）</div>
+      <span class="oilg-verdict lose">重度受損</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num lose">>€500億</span>
+          <span class="oilg-lbl">2月以來額外能源進口支出</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num lose">1.2%→0.9%</span>
+          <span class="oilg-lbl">2026年 GDP 增速下修</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num lose">−0.2%</span>
+          <span class="oilg-lbl">Q1 歐元區 GDP 成長（萎縮）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oilg-card lose">
+      <span class="oilg-flag">🇸🇦</span>
+      <div class="oilg-cname">沙烏地阿拉伯</div>
+      <span class="oilg-verdict lose">重度受損</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num gold">$64–72</span>
+          <span class="oilg-lbl">預算基準油價——有油賣不出去</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num lose">Q1 最大赤字</span>
+          <span class="oilg-lbl">2018年以來最大預算赤字</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num lose">雙重封鎖</span>
+          <span class="oilg-lbl">霍爾木茲＋紅海出口路線同遭切斷</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oilg-card lose">
+      <span class="oilg-flag">🇮🇱</span>
+      <div class="oilg-cname">以色列</div>
+      <span class="oilg-verdict lose">中度受損</span>
+      <div class="oilg-stats">
+        <div class="oilg-stat">
+          <span class="oilg-num lose">4.8%→3.5%</span>
+          <span class="oilg-lbl">IMF 2026年 GDP 成長預測下修</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num lose">降息延後</span>
+          <span class="oilg-lbl">燃料通膨迫使央行暫緩降息</span>
+        </div>
+        <div class="oilg-stat">
+          <span class="oilg-num dim">無出口補償</span>
+          <span class="oilg-lbl">純能源消費國，無任何收益對沖</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Summary table -->
+  <div class="oilg-table-wrap">
+    <div class="oilg-table-hd">綜合損益速查表</div>
+    <table class="oilg-tbl">
+      <thead>
+        <tr>
+          <th>國家</th>
+          <th>損益模式</th>
+          <th>關鍵數字</th>
+          <th>總評</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="country">🇷🇺 俄羅斯</td>
+          <td>原油直接出口</td>
+          <td class="num win">額外收入上看 3.5兆盧布</td>
+          <td><span class="oilg-tbl-badge win">大賺</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇮🇷 伊朗</td>
+          <td>解封後報復性出口</td>
+          <td class="num win">兩週賺 $35億；共 7,000萬桶</td>
+          <td><span class="oilg-tbl-badge win">大賺</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇺🇸 美國</td>
+          <td>原油及石油產品出口</td>
+          <td class="num win">4月出口年增+111%；超額利潤上看 $600億</td>
+          <td><span class="oilg-tbl-badge win">大幅獲益</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇨🇳 中國</td>
+          <td>成品油加工出口套利</td>
+          <td class="num mixed">5月順差 $25億；近一年 $158億</td>
+          <td><span class="oilg-tbl-badge mixed">局部賺・整體虧</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇪🇺 歐洲</td>
+          <td>能源進口成本暴增</td>
+          <td class="num lose">額外支出 >€500億；GDP 下修至 0.9%</td>
+          <td><span class="oilg-tbl-badge lose">重度受損</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇸🇦 沙烏地</td>
+          <td>有油賣不出去</td>
+          <td class="num lose">Q1 最大預算赤字（2018年以來）</td>
+          <td><span class="oilg-tbl-badge lose">重度受損</span></td>
+        </tr>
+        <tr>
+          <td class="country">🇮🇱 以色列</td>
+          <td>純消費國，無補償管道</td>
+          <td class="num lose">GDP 成長 4.8% → 3.5%</td>
+          <td><span class="oilg-tbl-badge lose">中度受損</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="oilg-footer">
+    <span>製表：張威翔</span>
+    <span>資料日期：2026年7月23日</span>
+    <span>來源：EIA、IMF、俄羅斯財政部、OPEC、路透社</span>
+  </div>
+
+</div>
+</body>
+</html>
