@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>油價百元時代的地緣經濟損益表（2026）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -319,6 +321,54 @@ body {
   color: var(--text-3);
 }
 
+/* Card header: flag + icon */
+.oilg-card-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .65rem;
+}
+.oilg-flag-icon.fi {
+  width: 38px !important;
+  line-height: 1 !important;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
+.oilg-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.oilg-card-icon i { font-size: 19px; }
+
+/* Section icon */
+.oilg-sec-icon { font-size: 19px; flex-shrink: 0; }
+.oilg-sec-icon.win  { color: var(--win); }
+.oilg-sec-icon.lose { color: var(--lose); }
+
+/* Price hero icon row */
+.oilg-hero-label {
+  display: flex; align-items: center; gap: .45rem;
+  margin-bottom: .55rem;
+}
+.oilg-hero-label i { font-size: 20px; color: var(--gold); }
+.oilg-hero-label span {
+  font-family: var(--mono); font-size: 13px; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .1em;
+}
+
+/* Table flag */
+.fi.oilg-tbl-flag {
+  width: 22px !important;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  vertical-align: middle;
+  margin-right: 5px;
+  position: relative; top: -1px;
+}
+
 @media (max-width: 480px) {
   .oilg-grid { grid-template-columns: 1fr 1fr; }
   .oilg-p-val { font-size: 28px; }
@@ -335,6 +385,10 @@ body {
 
   <!-- Oil price hero -->
   <div class="oilg-price-hero">
+    <div class="oilg-hero-label">
+      <i class="ti ti-flame" aria-hidden="true"></i>
+      <span>布倫特原油 · Brent Crude</span>
+    </div>
     <div class="oilg-price-top">
       <div class="oilg-p-block">
         <div class="oilg-p-label">衝突前均價</div>
@@ -363,13 +417,18 @@ body {
 
   <!-- Winners section -->
   <div class="oilg-sec-hd">
-    <div class="oilg-sec-dot win"></div>
+    <i class="ti ti-trending-up oilg-sec-icon win" aria-hidden="true"></i>
     <div class="oilg-sec-name win">獲益方</div>
   </div>
   <div class="oilg-grid">
 
     <div class="oilg-card win">
-      <span class="oilg-flag">🇷🇺</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-ru oilg-flag-icon" role="img" aria-label="俄羅斯國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--win-bg);">
+          <i class="ti ti-droplet" style="color:var(--win);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">俄羅斯</div>
       <span class="oilg-verdict win">大賺</span>
       <div class="oilg-stats">
@@ -389,7 +448,12 @@ body {
     </div>
 
     <div class="oilg-card win">
-      <span class="oilg-flag">🇮🇷</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-ir oilg-flag-icon" role="img" aria-label="伊朗國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--win-bg);">
+          <i class="ti ti-ship" style="color:var(--win);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">伊朗</div>
       <span class="oilg-verdict win">大賺</span>
       <div class="oilg-stats">
@@ -409,7 +473,12 @@ body {
     </div>
 
     <div class="oilg-card win">
-      <span class="oilg-flag">🇺🇸</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-us oilg-flag-icon" role="img" aria-label="美國國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--win-bg);">
+          <i class="ti ti-currency-dollar" style="color:var(--win);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">美國</div>
       <span class="oilg-verdict win">大幅獲益</span>
       <div class="oilg-stats">
@@ -429,7 +498,12 @@ body {
     </div>
 
     <div class="oilg-card win">
-      <span class="oilg-flag">🇨🇳</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-cn oilg-flag-icon" role="img" aria-label="中國國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--win-bg);">
+          <i class="ti ti-building-factory-2" style="color:var(--win);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">中國</div>
       <span class="oilg-verdict win">局部賺</span>
       <div class="oilg-stats">
@@ -452,13 +526,18 @@ body {
 
   <!-- Losers section -->
   <div class="oilg-sec-hd">
-    <div class="oilg-sec-dot lose"></div>
+    <i class="ti ti-trending-down oilg-sec-icon lose" aria-hidden="true"></i>
     <div class="oilg-sec-name lose">受損方</div>
   </div>
   <div class="oilg-grid">
 
     <div class="oilg-card lose">
-      <span class="oilg-flag">🇪🇺</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-eu oilg-flag-icon" role="img" aria-label="歐盟旗幟"></span>
+        <div class="oilg-card-icon" style="background:var(--lose-bg);">
+          <i class="ti ti-trending-down" style="color:var(--lose);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">歐洲（歐盟）</div>
       <span class="oilg-verdict lose">重度受損</span>
       <div class="oilg-stats">
@@ -478,7 +557,12 @@ body {
     </div>
 
     <div class="oilg-card lose">
-      <span class="oilg-flag">🇸🇦</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-sa oilg-flag-icon" role="img" aria-label="沙烏地阿拉伯國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--lose-bg);">
+          <i class="ti ti-anchor" style="color:var(--lose);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">沙烏地阿拉伯</div>
       <span class="oilg-verdict lose">重度受損</span>
       <div class="oilg-stats">
@@ -498,7 +582,12 @@ body {
     </div>
 
     <div class="oilg-card lose">
-      <span class="oilg-flag">🇮🇱</span>
+      <div class="oilg-card-hd">
+        <span class="fi fi-il oilg-flag-icon" role="img" aria-label="以色列國旗"></span>
+        <div class="oilg-card-icon" style="background:var(--lose-bg);">
+          <i class="ti ti-alert-triangle" style="color:var(--lose);" aria-hidden="true"></i>
+        </div>
+      </div>
       <div class="oilg-cname">以色列</div>
       <span class="oilg-verdict lose">中度受損</span>
       <div class="oilg-stats">
@@ -533,43 +622,43 @@ body {
       </thead>
       <tbody>
         <tr>
-          <td class="country">🇷🇺 俄羅斯</td>
+          <td class="country"><span class="fi fi-ru oilg-tbl-flag" role="img" aria-label="俄羅斯"></span>俄羅斯</td>
           <td>原油直接出口</td>
           <td class="num win">額外收入上看 3.5兆盧布（約1.26兆台幣）</td>
           <td><span class="oilg-tbl-badge win">大賺</span></td>
         </tr>
         <tr>
-          <td class="country">🇮🇷 伊朗</td>
+          <td class="country"><span class="fi fi-ir oilg-tbl-flag" role="img" aria-label="伊朗"></span>伊朗</td>
           <td>解封後報復性出口</td>
           <td class="num win">兩週賺 $35億（約1,138億台幣）；共 7,000萬桶</td>
           <td><span class="oilg-tbl-badge win">大賺</span></td>
         </tr>
         <tr>
-          <td class="country">🇺🇸 美國</td>
+          <td class="country"><span class="fi fi-us oilg-tbl-flag" role="img" aria-label="美國"></span>美國</td>
           <td>原油及石油產品出口</td>
           <td class="num win">4月出口年增+111%；超額利潤上看 $600億（約1.95兆台幣）</td>
           <td><span class="oilg-tbl-badge win">大幅獲益</span></td>
         </tr>
         <tr>
-          <td class="country">🇨🇳 中國</td>
+          <td class="country"><span class="fi fi-cn oilg-tbl-flag" role="img" aria-label="中國"></span>中國</td>
           <td>成品油加工出口套利</td>
           <td class="num win">5月順差 $25億（約813億台幣）；近一年 $158億（約5,135億台幣）</td>
           <td><span class="oilg-tbl-badge win">局部賺</span></td>
         </tr>
         <tr>
-          <td class="country">🇪🇺 歐洲</td>
+          <td class="country"><span class="fi fi-eu oilg-tbl-flag" role="img" aria-label="歐盟"></span>歐洲</td>
           <td>能源進口成本暴增</td>
           <td class="num lose">額外支出 >€500億（約1.78兆台幣）；GDP 下修至 0.9%</td>
           <td><span class="oilg-tbl-badge lose">重度受損</span></td>
         </tr>
         <tr>
-          <td class="country">🇸🇦 沙烏地</td>
+          <td class="country"><span class="fi fi-sa oilg-tbl-flag" role="img" aria-label="沙烏地阿拉伯"></span>沙烏地</td>
           <td>有油賣不出去</td>
           <td class="num lose">Q1 最大預算赤字（2018年以來）</td>
           <td><span class="oilg-tbl-badge lose">重度受損</span></td>
         </tr>
         <tr>
-          <td class="country">🇮🇱 以色列</td>
+          <td class="country"><span class="fi fi-il oilg-tbl-flag" role="img" aria-label="以色列"></span>以色列</td>
           <td>純消費國，無補償管道</td>
           <td class="num lose">GDP 成長 4.8% → 3.5%</td>
           <td><span class="oilg-tbl-badge lose">中度受損</span></td>
