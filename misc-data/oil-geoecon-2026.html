@@ -45,21 +45,21 @@ body {
 /* Header */
 .oilg-eyebrow {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--text-3);
   margin-bottom: .6rem;
 }
 .oilg-title {
-  font-size: clamp(18px, 4vw, 26px);
+  font-size: clamp(24px, 4vw, 32px);
   font-weight: 700;
   color: var(--text-1);
   line-height: 1.3;
   margin-bottom: .3rem;
 }
 .oilg-sub {
-  font-size: clamp(13px, 2vw, 14px);
+  font-size: clamp(18px, 2.5vw, 20px);
   color: var(--text-2);
   margin-bottom: 1.5rem;
 }
@@ -82,7 +82,7 @@ body {
 .oilg-p-block { text-align: center; min-width: 60px; }
 .oilg-p-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-3);
   text-transform: uppercase;
   letter-spacing: .08em;
@@ -98,7 +98,7 @@ body {
 .oilg-p-val.gold { color: var(--gold); }
 .oilg-p-unit {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-3);
   margin-top: .1rem;
 }
@@ -129,7 +129,7 @@ body {
 }
 .oilg-bar-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-3);
 }
 .oilg-badges {
@@ -141,16 +141,16 @@ body {
 }
 .oilg-badge {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 5px;
   white-space: nowrap;
 }
 .oilg-badge.gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bd); }
-.oilg-badge.sm { font-size: 11px; color: var(--text-3); background: none; border: none; padding: 0; }
+.oilg-badge.sm { font-size: 14px; color: var(--text-3); background: none; border: none; padding: 0; }
 .oilg-price-note {
-  font-size: 13px;
+  font-size: 18px;
   color: var(--text-2);
   line-height: 1.6;
   border-top: 1px solid var(--border);
@@ -174,7 +174,7 @@ body {
 .oilg-sec-dot.lose { background: var(--lose); }
 .oilg-sec-name {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -185,7 +185,7 @@ body {
 /* Grid */
 .oilg-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 10px;
   margin-bottom: 1.5rem;
 }
@@ -212,13 +212,13 @@ body {
 .oilg-card.mixed { border-color: var(--mixed-bd); }
 .oilg-card.mixed::before { background: var(--mixed); }
 
-.oilg-flag   { font-size: 22px; display: block; margin-bottom: .3rem; }
-.oilg-cname  { font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: .3rem; }
+.oilg-flag   { font-size: 26px; display: block; margin-bottom: .3rem; }
+.oilg-cname  { font-size: 20px; font-weight: 700; color: var(--text-1); margin-bottom: .3rem; }
 .oilg-verdict {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 3px 9px;
   border-radius: 4px;
   display: inline-block;
   margin-bottom: .75rem;
@@ -232,7 +232,7 @@ body {
 .oilg-stat  { display: flex; align-items: baseline; gap: .4rem; flex-wrap: wrap; }
 .oilg-num {
   font-family: var(--mono);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
@@ -243,7 +243,7 @@ body {
 .oilg-num.gold  { color: var(--gold); }
 .oilg-num.dim   { color: var(--text-2); }
 .oilg-lbl {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-2);
   line-height: 1.4;
 }
@@ -259,7 +259,7 @@ body {
 }
 .oilg-table-hd {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-3);
   text-transform: uppercase;
   letter-spacing: .08em;
@@ -268,38 +268,38 @@ body {
 .oilg-tbl {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  min-width: 520px;
+  font-size: 16px;
+  min-width: 560px;
 }
 .oilg-tbl th {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
   letter-spacing: .06em;
-  padding: .4rem .75rem;
+  padding: .5rem .75rem;
   border-bottom: 1px solid var(--border);
   text-align: left;
   white-space: nowrap;
 }
 .oilg-tbl td {
-  padding: .5rem .75rem;
+  padding: .6rem .75rem;
   border-bottom: 1px solid rgba(255,255,255,0.04);
   color: var(--text-2);
   vertical-align: middle;
 }
 .oilg-tbl tr:last-child td { border-bottom: none; }
 .oilg-tbl td.country { color: var(--text-1); font-weight: 500; white-space: nowrap; }
-.oilg-tbl td.num { font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.oilg-tbl td.num { font-family: var(--mono); font-size: 15px; white-space: nowrap; }
 .oilg-tbl td.num.win   { color: var(--win); }
 .oilg-tbl td.num.lose  { color: var(--lose); }
 .oilg-tbl td.num.mixed { color: var(--mixed); }
 .oilg-tbl-badge {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 4px;
   white-space: nowrap;
 }
@@ -315,7 +315,7 @@ body {
   flex-wrap: wrap;
   gap: .4rem 1.5rem;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-3);
 }
 
