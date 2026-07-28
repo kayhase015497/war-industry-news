@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "title": "熊本M7.1強震企業衝擊地圖",
+    "titleEn": "Kumamoto M7.1 Earthquake – Corporate Impact Map",
+    "subtitle": "日本製紙煙囪倒塌・TSMC疏散・豐田本田停工・物流全境中斷",
+    "date": "2026-07-28",
+    "status": "breaking",
+    "theme": "orange",
+    "sources": ["日本消防廳", "各企業官方聲明", "NHK", "共同通信"]
+  },
+  "map": {
+    "center": [32.82, 130.78],
+    "zoom": 9,
+    "bounds": [[32.0, 129.8], [33.9, 131.5]]
+  },
+  "infoPanel": {
+    "title": "熊本M7.1強震・企業衝擊概況",
+    "paragraphs": [
+      "熊本縣發生芮氏規模7.1強震後，從半導體、汽車、製紙到零食、物流，衝擊範圍涵蓋多個關鍵產業。受損最重的是八代市日本製紙工廠，煙囪從中央折斷倒塌，消防廳通報廠區內約8人需救助；全球半導體代工龍頭台積電（TSMC）熊本廠員工已疏散戶外，設備檢查持續進行中。",
+      "汽車業方面，豐田汽車九州已暫停福岡縣3家工廠生產、本田熊本製作所停工至29日傍晚；半導體設備大廠東京威力科創（TEL）熊本縣2家工廠將停工進行安全檢查。佐川急便、Yamato宅急便、日本郵便已全面暫停熊本縣境內收件與配送服務。",
+      "⚠️ 部分設施座標為概略位置。傷亡及損害數字仍在確認中，以各企業最新官方聲明為準。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [32.80, 130.40],
+        [32.65, 130.42],
+        [32.42, 130.48],
+        [32.28, 130.60],
+        [32.22, 130.78],
+        [32.28, 130.98],
+        [32.45, 131.10],
+        [32.65, 131.15],
+        [32.85, 131.08],
+        [32.98, 130.92],
+        [33.00, 130.72],
+        [32.92, 130.54],
+        [32.80, 130.40]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.12,
+      "borderColor": "#d35400",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.50,
+      "borderDashArray": "8,4",
+      "popup": {
+        "title": "熊本縣主要影響範圍（概略）",
+        "tag": "⚠️ 震災影響範圍（概略）",
+        "tagClass": "tag-possible",
+        "desc": "M7.1強震主要影響範圍示意，涵蓋熊本縣大部分地區。企業停工、物流中斷、通訊不穩等衝擊集中在此範圍內。⚠️ 為概略示意，非精確震度分布。",
+        "source": "日本消防廳；各企業聲明"
+      }
+    }
+  ],
+  "lines": [],
+  "locations": [
+    {
+      "latlng": [32.50, 130.62],
+      "name": "Earthquake Epicenter (approx.), Kumamoto",
+      "nameLocal": "M7.1地震震央（概略）・熊本縣",
+      "type": "confirmed",
+      "tag": "🌋 M7.1震央（概略）",
+      "tagClass": "tag-confirmed",
+      "desc": "熊本縣M7.1強震震央概略位置，引發廣泛建築損壞、工廠停工及物流中斷。八代市方向受災情況最為嚴峻，多處出現手機通訊不穩。⚠️ 震央為概略位置，待日本氣象廳正式公布確認。",
+      "coords": "32°30'N 130°37'E",
+      "source": "日本氣象廳（概略）"
+    },
+    {
+      "latlng": [32.50, 130.60],
+      "name": "Nippon Paper Industries Yatsushiro Plant",
+      "nameLocal": "日本製紙八代工廠・八代市（煙囪倒塌・8人待救）",
+      "type": "confirmed",
+      "tag": "🏭 煙囪折斷倒塌・8人待救",
+      "tagClass": "tag-confirmed",
+      "desc": "【最嚴重損壞】位於八代市的日本製紙八代工廠，主要生產書籍與雜誌印刷用紙。煙囪從中央附近明顯折斷倒塌，消防廳最新通報廠區內約8人需要救助，詳細傷亡情況仍在確認中。為本次地震中公開報告最嚴重的企業設施損壞案例。",
+      "coords": "32°30'N 130°36'E",
+      "source": "日本消防廳；日本製紙官方聲明"
+    },
+    {
+      "latlng": [32.87, 130.80],
+      "name": "TSMC Kumamoto Factory (JASM), Kikuyo-machi",
+      "nameLocal": "台積電熊本工廠（JASM）・菊陽町",
+      "type": "confirmed",
+      "tag": "⚡ TSMC員工疏散・設備檢查中",
+      "tagClass": "tag-confirmed",
+      "desc": "全球半導體代工龍頭台灣積體電路製造公司（TSMC）位於熊本縣菊陽町的熊本工廠（JASM，Japan Advanced Semiconductor Manufacturing）。地震後員工已疏散至戶外避難，目前持續進行設備狀況檢查。為日本半導體振興計畫核心設施，停工對供應鏈影響受全球關注。",
+      "coords": "32°52'N 130°48'E",
+      "source": "TSMC官方聲明"
+    },
+    {
+      "latlng": [32.88, 130.87],
+      "name": "Honda Kumamoto Factory, Ozu-machi",
+      "nameLocal": "本田熊本製作所・大津町（機車生產停工）",
+      "type": "confirmed",
+      "tag": "🏍️ 本田機車廠停工至29日傍晚",
+      "tagClass": "tag-confirmed",
+      "desc": "本田（Honda）位於熊本縣大津町的熊本製作所，主要生產機車等產品。地震後已宣布停工，預計持續停工至7月29日傍晚，待安全確認後恢復生產。",
+      "coords": "32°53'N 130°52'E",
+      "source": "本田官方聲明"
+    },
+    {
+      "latlng": [32.81, 130.88],
+      "name": "Koikeya Aso Factory, Mashiki-machi",
+      "nameLocal": "湖池屋阿蘇工廠・益城町（零食生產停工）",
+      "type": "possible",
+      "tag": "🍟 湖池屋零食廠停工",
+      "tagClass": "tag-possible",
+      "desc": "零食大廠湖池屋位於熊本縣益城町的九州阿蘇工廠，地震後已宣布停止生產，待安全確認後恢復。益城町於2016年熊本地震時曾嚴重受災，再次成為震災衝擊的焦點地區。",
+      "coords": "32°49'N 130°53'E",
+      "source": "湖池屋官方聲明"
+    },
+    {
+      "latlng": [32.80, 130.71],
+      "name": "AISIN Kyushu / TEL Kumamoto facilities, Kumamoto City",
+      "nameLocal": "愛信九州・東京威力科創熊本廠・熊本市",
+      "type": "possible",
+      "tag": "🔧 愛信九州確認受災・TEL兩廠停工",
+      "tagClass": "tag-possible",
+      "desc": "豐田旗下汽車零組件製造商愛信（AISIN）正著手確認子公司愛信九州（熊本市）的受災情況。同時，半導體製造設備大廠東京威力科創（Tokyo Electron / TEL）宣布熊本縣內2家工廠將於29日停工進行安全檢查。⚠️ 概略位置。",
+      "coords": "32°48'N 130°43'E",
+      "source": "AISIN聲明；東京威力科創聲明"
+    },
+    {
+      "latlng": [33.70, 130.62],
+      "name": "Toyota Kyushu Plants (3 factories), Miyawaka City, Fukuoka",
+      "nameLocal": "豐田汽車九州・宮若市（福岡縣）・3工廠停工",
+      "type": "possible",
+      "tag": "🚗 豐田九州3廠停工・29日上午恢復",
+      "tagClass": "tag-possible",
+      "desc": "豐田汽車九州已停止福岡縣內3家工廠的生產，計劃於7月29日上午恢復作業，目前尚未接獲重大設施受損通報。地震影響波及跨縣範圍，顯示供應鏈連鎖效應。⚠️ 概略位置。",
+      "coords": "33°42'N 130°37'E",
+      "source": "豐田汽車九州官方聲明"
+    },
+    {
+      "latlng": [32.60, 130.68],
+      "name": "Logistics Suspension Zone – Kumamoto Prefecture",
+      "nameLocal": "物流全境暫停・熊本縣（佐川・Yamato・日本郵便）",
+      "type": "possible",
+      "tag": "📦 三大物流業者全境停收",
+      "tagClass": "tag-possible",
+      "desc": "佐川急便、Yamato Transport（宅急便）及日本郵便已在熊本縣全境暫停收件與配送服務，日本郵便亦停止受理包裹業務。此外，八代市等部分地區出現手機通訊不穩狀況，影響災情掌握與企業聯繫。藏壽司暫停熊本縣內6家門市；7-Eleven、全家、羅森亦有部分門市暫停營業。⚠️ 概略代表位置。",
+      "coords": "32°36'N 130°41'E",
+      "source": "佐川急便；Yamato Transport；日本郵便聲明"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認損壞或已疏散設施（人員待救・設備損害）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "宣布停工・受災情況確認中" },
+    { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.20, "borderColor": "#d35400", "label": "震災主要影響範圍（概略示意）" }
+  ]
+}
