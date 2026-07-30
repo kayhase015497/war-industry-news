@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "title": "俄軍推進住民地地圖（2026年6月底至7月30日）",
+    "titleEn": "Russian Advances – Captured Settlements in Ukraine (Late June – July 30, 2026)",
+    "subtitle": "TASS、俄國防部報告交叉核對：蘇梅州、哈爾科夫州、頓涅茨克州、扎波羅熱州最新推進",
+    "date": "2026-07-30",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["TASS（塔斯社）", "俄羅斯國防部（MoD）聲明", "Sputnik", "iz.ru"]
+  },
+  "map": {
+    "center": [49.8, 36.2],
+    "zoom": 7,
+    "bounds": [[47.0, 32.0], [52.5, 39.5]]
+  },
+  "infoPanel": {
+    "title": "俄軍推進住民地（2026年6月底—7月30日）",
+    "paragraphs": [
+      "依TASS與俄國防部公開報告交叉核對，2026年6月底至7月30日間，俄軍在蘇梅州、哈爾科夫州、頓涅茨克州（DNR）及扎波羅熱州等方向宣稱佔領多處住民地。7月30日最新報告涵蓋蘇梅州馬拉亞·斯洛博德卡、莫格里察，哈爾科夫州尤爾琴科沃，以及DNR克拉斯諾亞爾斯科耶。",
+      "蘇梅州方向：俄軍持續從俄羅斯庫爾斯克、布良斯克方向跨境推進，7月11至30日間宣稱控制多個邊境住民地。哈爾科夫州方向：主要推進軸線集中於庫皮揚斯克東側與沃夫昌斯克一帶。DNR（頓涅茨克）：克拉斯尼·庫特（7月28日）宣稱為朝德魯日基夫卡方向的戰術重要節點，150摩步師參與。",
+      "⚠️ 所有住民地坐標均為概略位置，依俄方聲稱，烏克蘭方面未必確認全部控制線變動。態勢每日持續變動。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [52.10, 33.50],
+        [51.85, 33.90],
+        [51.72, 33.82]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.55,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "蘇梅州・俄軍跨境推進軸（概略）",
+        "tag": "⬇ 蘇梅州推進方向",
+        "tagClass": "tag-confirmed",
+        "desc": "俄軍從庫爾斯克/布良斯克方向跨境進入蘇梅州，持續向南推進，目前已宣稱控制多個邊境住民地。⚠️ 概略示意。",
+        "source": "TASS；俄國防部"
+      }
+    },
+    {
+      "points": [
+        [50.35, 36.75],
+        [50.15, 36.17],
+        [49.88, 37.38],
+        [49.78, 37.52]
+      ],
+      "color": "#c0392b",
+      "weight": 2,
+      "opacity": 0.50,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "哈爾科夫州・俄軍推進方向（概略）",
+        "tag": "⬇ 哈爾科夫州推進方向",
+        "tagClass": "tag-confirmed",
+        "desc": "哈爾科夫州方向主要推進軸，包括卡扎奇亞·洛潘方向（持續推進約1公里）及東部沃夫昌斯克/庫皮揚斯克方向。⚠️ 概略示意。",
+        "source": "TASS；俄國防部"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [51.85, 33.90],
+      "name": "Malaya Slobodka, Sumy Oblast",
+      "nameLocal": "馬拉亞·斯洛博德卡（Malaya Slobodka）・蘇梅州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/30 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月30日】TASS明確報導俄國防部聲明，過去24小時控制。蘇梅州邊境住民地，俄軍從庫爾斯克方向跨境推進的最新節點。",
+      "coords": "51°51'N 033°54'E",
+      "source": "TASS @tassagency_en 2026.07.30"
+    },
+    {
+      "latlng": [51.78, 33.85],
+      "name": "Mogritsa / Mogrica, Sumy Oblast",
+      "nameLocal": "莫格里察（Mogritsa / Mogrica）・蘇梅州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/30 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月30日】TASS報導俄國防部聲明，過去24小時控制。與馬拉亞·斯洛博德卡同批宣稱，為蘇梅州方向7月底推進的一部分。",
+      "coords": "51°47'N 033°51'E",
+      "source": "TASS @tassagency_en 2026.07.30"
+    },
+    {
+      "latlng": [49.95, 37.42],
+      "name": "Yurchenkovo, Kharkiv Oblast",
+      "nameLocal": "尤爾琴科沃（Yurchenkovo）・哈爾科夫州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/30 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月30日】TASS俄國防部聲明過去24小時控制，哈爾科夫州東部方向最新推進節點。",
+      "coords": "49°57'N 037°25'E",
+      "source": "TASS @tassagency_en 2026.07.30"
+    },
+    {
+      "latlng": [48.05, 37.48],
+      "name": "Krasnoyarskoye, DNR",
+      "nameLocal": "克拉斯諾亞爾斯科耶（Krasnoyarskoye）・頓涅茨克州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/30 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月30日】TASS俄國防部聲明過去24小時控制，頓涅茨克州方向。",
+      "coords": "48°03'N 037°29'E",
+      "source": "TASS @tassagency_en 2026.07.30"
+    },
+    {
+      "latlng": [51.80, 33.75],
+      "name": "Novaya Sech, Sumy Oblast",
+      "nameLocal": "諾瓦亞·謝奇（Novaya Sech）・蘇梅州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/29 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月29日】TASS / Sputnik報導俄國防部聲明控制，蘇梅州邊境地帶。",
+      "coords": "51°48'N 033°45'E",
+      "source": "TASS / Sputnik 2026.07.29"
+    },
+    {
+      "latlng": [48.22, 37.58],
+      "name": "Svetloye, DNR",
+      "nameLocal": "斯維特洛耶（Svetloye）・頓涅茨克州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/29 俄稱控制",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月29日】TASS / Sputnik報導俄國防部聲明控制，頓涅茨克州方向。",
+      "coords": "48°13'N 037°35'E",
+      "source": "TASS / Sputnik 2026.07.29"
+    },
+    {
+      "latlng": [48.62, 37.58],
+      "name": "Krasny Kut, DNR",
+      "nameLocal": "克拉斯尼·庫特（Krasny Kut）・頓涅茨克州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/28 朝德魯日基夫卡方向戰術節點",
+      "tagClass": "tag-confirmed",
+      "desc": "【2026年7月28日】TASS明確報導，強調此地朝德魯日基夫卡（Druzhkivka）方向的戰術重要性，150摩步師參與奪取行動。為俄軍壓縮康城（Kostiantynivka）補給線整體攻勢的組成部分。",
+      "coords": "48°37'N 037°35'E",
+      "source": "TASS @tassagency_en 2026.07.28"
+    },
+    {
+      "latlng": [48.72, 37.65],
+      "name": "Torskoye, DNR",
+      "nameLocal": "托爾斯科耶（Torskoye）・頓涅茨克州 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🔴 7/27–28 俄國防部發布影像",
+      "tagClass": "tag-confirmed",
+      "desc": "【約2026年7月27-28日】俄國防部於7月28日發布解放影像，強調戰術意義。頓涅茨克州北部方向節點。",
+      "coords": "48°43'N 037°39'E",
+      "source": "俄羅斯國防部；iz.ru 2026.07.28"
+    },
+    {
+      "latlng": [49.78, 37.52],
+      "name": "Zakharovka, Kharkiv Oblast",
+      "nameLocal": "扎哈羅夫卡（Zakharovka）・哈爾科夫州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🟠 7/24 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月24日】TASS報導「過去24小時」控制，哈爾科夫州東部方向，與伊瓦什基諾同批宣稱。前一週亦宣稱控制沃洛霍夫斯科耶與阿爾捷利諾耶。",
+      "coords": "49°47'N 037°31'E",
+      "source": "TASS @tass_agency 2026.07.24"
+    },
+    {
+      "latlng": [49.76, 37.55],
+      "name": "Ivashkino, Kharkiv Oblast",
+      "nameLocal": "伊瓦什基諾（Ivashkino）・哈爾科夫州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🟠 7/24 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月24日】TASS報導，與扎哈羅夫卡同批宣稱，哈爾科夫州東部方向。",
+      "coords": "49°46'N 037°33'E",
+      "source": "TASS @tass_agency 2026.07.24"
+    },
+    {
+      "latlng": [49.88, 37.38],
+      "name": "Volokhovskoye, Kharkiv Oblast",
+      "nameLocal": "沃洛霍夫斯科耶（Volokhovskoye）・哈爾科夫州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🟠 7/21 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月21日】TASS報導控制，哈爾科夫州東部方向。接續此後宣稱控制阿爾捷利諾耶。",
+      "coords": "49°53'N 037°23'E",
+      "source": "TASS @tassagency_en 2026.07.21"
+    },
+    {
+      "latlng": [49.90, 37.35],
+      "name": "Artelnoe, Kharkiv Oblast",
+      "nameLocal": "阿爾捷利諾耶（Artelnoe）・哈爾科夫州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🟠 約7/22 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【約2026年7月22日】接續沃洛霍夫斯科耶後宣稱控制，哈爾科夫州東部方向。",
+      "coords": "49°54'N 037°21'E",
+      "source": "俄國防部 約2026.07.22"
+    },
+    {
+      "latlng": [50.15, 36.17],
+      "name": "Kazachya Lopan direction, Kharkiv Oblast",
+      "nameLocal": "卡扎奇亞·洛潘（Kazachya Lopan）方向・哈爾科夫州",
+      "type": "possible",
+      "tag": "⚔️ 7月中下旬持續接觸戰",
+      "tagClass": "tag-possible",
+      "desc": "【7月中下旬持續】俄軍宣稱在卡扎奇亞·洛潘方向持續推進約1公里，烏方有擊退滲透消息。非單一「解放」日期，為持續性接觸戰，哈爾科夫市西北方向重要施壓節點。",
+      "coords": "50°09'N 036°10'E",
+      "source": "俄方多則戰報；烏方聲明 7月中下旬"
+    },
+    {
+      "latlng": [50.05, 37.20],
+      "name": "Shiykovka, Novy Mir, Cherneshchina, Druzholyubovka – Kharkiv Oblast",
+      "nameLocal": "希伊科夫卡・新世界・切爾涅申納・德魯若留博夫卡・哈爾科夫州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 7/5 俄稱控制（四地同批）",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月5日】俄國防部同日報告宣稱控制哈爾科夫州四個住民地：希伊科夫卡（Shiykovka）、新世界（Novy Mir）、切爾涅申納（Cherneshchina）、德魯若留博夫卡（Druzholyubovka）。標記為四地概略中心位置。",
+      "coords": "50°03'N 037°12'E",
+      "source": "俄國防部 2026.07.05"
+    },
+    {
+      "latlng": [48.15, 37.42],
+      "name": "Vasilevka, DNR",
+      "nameLocal": "瓦西列夫卡（Vasilevka）・頓涅茨克州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 7/5 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月5日】俄國防部當日報告宣稱控制，頓涅茨克州方向，與哈爾科夫州四地同批宣稱。",
+      "coords": "48°09'N 037°25'E",
+      "source": "俄國防部 2026.07.05"
+    },
+    {
+      "latlng": [51.72, 33.82],
+      "name": "Bachevsk (Bachevske), Sumy Oblast",
+      "nameLocal": "巴切夫斯克（Bachevsk）・蘇梅州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 7/11 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年7月11日】TASS報導俄軍控制，蘇梅州邊境住民地，為7月初蘇梅方向推進波次的一部分。",
+      "coords": "51°43'N 033°49'E",
+      "source": "TASS tass.com 2026.07.11"
+    },
+    {
+      "latlng": [51.68, 33.70],
+      "name": "Ivolzhanskoye, Sumy Oblast",
+      "nameLocal": "伊沃爾贊斯科耶（Ivolzhanskoye）・蘇梅州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 6/24 俄稱控制",
+      "tagClass": "tag-possible",
+      "desc": "【2026年6月24日】TASS報導俄軍控制，蘇梅州方向，為較早期的邊境推進宣稱。",
+      "coords": "51°41'N 033°42'E",
+      "source": "TASS @tass_agency 2026.06.24"
+    },
+    {
+      "latlng": [47.82, 36.75],
+      "name": "Komunarovka / Khristoforovka, Dnipropetrovsk Oblast",
+      "nameLocal": "科穆納羅夫卡・赫里斯托福羅夫卡・第聶伯羅彼得羅夫斯克州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 7月中下旬（待核實）",
+      "tagClass": "tag-possible",
+      "desc": "【7月中下旬】TASS精確日期較分散，第聶伯羅彼得羅夫斯克州方向宣稱控制，具體細節需個別查核。",
+      "coords": "47°49'N 036°45'E",
+      "source": "TASS 7月中下旬（待核實）"
+    },
+    {
+      "latlng": [47.62, 36.20],
+      "name": "Volnoye, Blagodatnoye, Petro-Ivanovka – Zaporizhzhia Oblast",
+      "nameLocal": "沃利諾耶・布拉戈達特諾耶・彼得羅-伊萬諾夫卡・扎波羅熱州 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "🔵 7月中旬（待核實）",
+      "tagClass": "tag-possible",
+      "desc": "【7月中旬前後】扎波羅熱州方向三地俄方宣稱：沃利諾耶（Volnoye）、布拉戈達特諾耶（Blagodatnoye）、彼得羅-伊萬諾夫卡（Petro-Ivanovka）。TASS精確日期較分散，標記為三地概略中心區域，需個別核實。",
+      "coords": "47°37'N 036°12'E",
+      "source": "TASS 7月中旬（待核實）"
+    },
+    {
+      "latlng": [49.99, 36.23],
+      "name": "Kharkiv (reference)",
+      "nameLocal": "哈爾科夫（Kharkiv）・烏克蘭第二大城",
+      "type": "capital",
+      "tag": "🏙️ 哈爾科夫・參考",
+      "tagClass": "tag-reference",
+      "desc": "烏克蘭第二大城，哈爾科夫州首府。目前仍在烏克蘭控制中，但俄軍在其東南、東北多方向持續施壓，卡扎奇亞·洛潘方向距市區邊緣約15-20公里。",
+      "coords": "49°59'N 036°14'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [50.91, 34.80],
+      "name": "Sumy (reference)",
+      "nameLocal": "蘇梅（Sumy）・蘇梅州首府",
+      "type": "capital",
+      "tag": "🏙️ 蘇梅・參考",
+      "tagClass": "tag-reference",
+      "desc": "蘇梅州首府，目前仍在烏克蘭控制中。俄軍從北方（庫爾斯克/布良斯克方向）跨境推進，已在州內北部宣稱控制數個住民地。",
+      "coords": "50°55'N 034°48'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [48.63, 37.53],
+      "name": "Druzhkivka (reference – Krasny Kut direction)",
+      "nameLocal": "德魯日基夫卡（Druzhkivka）・方向參考",
+      "type": "capital",
+      "tag": "🎯 德魯日基夫卡・克拉斯尼庫特攻擊方向目標",
+      "tagClass": "tag-reference",
+      "desc": "烏克蘭控制的後方城市，TASS特別強調克拉斯尼·庫特（7月28日）「朝德魯日基夫卡方向」的戰術重要性，俄軍正逐步壓縮通往此城市的通道。",
+      "coords": "48°38'N 037°32'E",
+      "source": "TASS 2026.07.28（方向參考）"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true,  "label": "7月28–30日宣稱控制（TASS/俄國防部）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "7月5–24日及6月底宣稱控制" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "參考城市（烏克蘭控制）" },
+    { "symbol": "line", "color": "#c0392b", "dash": "5,4", "weight": 2, "label": "俄軍主要推進方向（概略示意）" }
+  ]
+}
