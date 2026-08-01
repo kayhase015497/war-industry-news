@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>以色列戰時財政數據（2026）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0b0f1a;
+  --surf:      #131a2a;
+  --surf-2:    #1a2236;
+  --bd:        rgba(255,255,255,0.07);
+  --bd-s:      rgba(255,255,255,0.12);
+  --t1:        #e8e6df;
+  --t2:        #8a8884;
+  --t3:        #5a5856;
+  --red:       #e66767;
+  --red-bg:    rgba(230,103,103,0.12);
+  --red-bd:    rgba(230,103,103,0.28);
+  --gold:      #f0b429;
+  --gold-bg:   rgba(240,180,41,0.12);
+  --gold-bd:   rgba(240,180,41,0.3);
+  --blue:      #3987e5;
+  --blue-bg:   rgba(57,135,229,0.12);
+  --blue-bd:   rgba(57,135,229,0.28);
+  --green:     #1baf7a;
+  --green-bg:  rgba(27,175,122,0.12);
+  --green-bd:  rgba(27,175,122,0.28);
+  --mono:      'Space Mono', monospace;
+  --sans:      'Noto Sans TC', system-ui, sans-serif;
+  --r:         10px;
+}
+
+body {
+  background: var(--bg);
+  font-family: var(--sans);
+  color: var(--t1);
+  line-height: 1.55;
+  padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
+}
+
+.ilf-wrap { max-width: 940px; margin: 0 auto; }
+
+/* ─── Page header ─── */
+.ilf-pg-hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.ilf-pg-left { display: flex; align-items: center; gap: .85rem; }
+.ilf-pg-flag .fi {
+  width: 48px !important;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  display: block;
+}
+.ilf-pg-title {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 700;
+  color: var(--t1);
+  line-height: 1.25;
+  margin-bottom: .2rem;
+}
+.ilf-pg-date {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+}
+.ilf-pg-src {
+  font-size: 13px;
+  color: var(--t3);
+  text-align: right;
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+/* ─── Section label ─── */
+.ilf-sec {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--t3);
+  margin: 1.75rem 0 .75rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.ilf-sec i { font-size: 16px; }
+.ilf-sec.red  i { color: var(--red); }
+.ilf-sec.gold i { color: var(--gold); }
+.ilf-sec.blue i { color: var(--blue); }
+.ilf-sec.green i { color: var(--green); }
+
+/* ─── Hero row ─── */
+.ilf-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: .25rem;
+}
+.ilf-hero-card {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1.1rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+}
+.ilf-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--r) var(--r) 0 0;
+}
+.ilf-hero-card.red::before  { background: var(--red); }
+.ilf-hero-card.gold::before { background: var(--gold); }
+.ilf-hero-card.blue::before { background: var(--blue); }
+.ilf-hc-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: .4rem;
+}
+.ilf-hc-num {
+  font-family: var(--mono);
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: .2rem;
+}
+.ilf-hc-num.red  { color: var(--red); }
+.ilf-hc-num.gold { color: var(--gold); }
+.ilf-hc-num.blue { color: var(--blue); }
+.ilf-hc-sub {
+  font-size: 15px;
+  color: var(--t2);
+  line-height: 1.5;
+}
+.ilf-hc-twd {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+  margin-top: .3rem;
+}
+
+/* ─── Stat grid (small tiles) ─── */
+.ilf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.ilf-tile {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: .95rem 1.1rem;
+}
+.ilf-tile-label {
+  font-size: 15px;
+  color: var(--t2);
+  margin-bottom: .35rem;
+  line-height: 1.4;
+}
+.ilf-tile-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: .15rem;
+}
+.ilf-tile-num.red   { color: var(--red); }
+.ilf-tile-num.gold  { color: var(--gold); }
+.ilf-tile-num.blue  { color: var(--blue); }
+.ilf-tile-num.green { color: var(--green); }
+.ilf-tile-twd {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+}
+.ilf-tile-note {
+  font-size: 14px;
+  color: var(--t3);
+  margin-top: .3rem;
+}
+
+/* ─── Spending breakdown bar chart ─── */
+.ilf-bars {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1.1rem 1.3rem;
+}
+.ilf-bar-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .7rem;
+}
+.ilf-bar-row:last-child { margin-bottom: 0; }
+.ilf-bar-label {
+  font-size: 16px;
+  color: var(--t2);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.ilf-bar-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.ilf-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  min-width: 2px;
+  transition: width .3s;
+}
+.ilf-bar-fill-val {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: rgba(255,255,255,0.9);
+}
+.ilf-bar-right {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: right;
+}
+
+/* ─── Defense budget comparison ─── */
+.ilf-def-wrap {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1.1rem 1.3rem;
+}
+.ilf-def-row {
+  margin-bottom: .65rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.ilf-def-row:last-child { margin-bottom: 0; }
+.ilf-def-yr {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--t2);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.ilf-def-track {
+  flex: 1;
+  height: 28px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.ilf-def-fill {
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+.ilf-def-fill-txt {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+}
+.ilf-def-meta {
+  font-size: 14px;
+  color: var(--t3);
+  min-width: 120px;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ─── Fiscal row (deficit + debt) ─── */
+.ilf-fiscal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ilf-fiscal-card {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1rem 1.2rem;
+}
+.ilf-fiscal-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .75rem;
+}
+.ilf-fiscal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .3rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.ilf-fiscal-row:last-child { border-bottom: none; }
+.ilf-fiscal-yr { font-size: 15px; color: var(--t2); }
+.ilf-fiscal-val {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+}
+.ilf-fiscal-val.red  { color: var(--red); }
+.ilf-fiscal-val.gold { color: var(--gold); }
+.ilf-fiscal-val.dim  { color: var(--t2); }
+.ilf-fiscal-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.ilf-fiscal-badge.red  { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+.ilf-fiscal-badge.gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bd); }
+
+/* ─── Timeline ─── */
+.ilf-tl {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1.1rem 1.3rem;
+}
+.ilf-tl-item {
+  display: flex;
+  gap: 1rem;
+  padding: .6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: flex-start;
+}
+.ilf-tl-item:last-child { border-bottom: none; }
+.ilf-tl-date {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+  min-width: 120px;
+  flex-shrink: 0;
+  padding-top: .15rem;
+}
+.ilf-tl-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: .45rem;
+}
+.ilf-tl-text {
+  font-size: 16px;
+  color: var(--t2);
+  line-height: 1.55;
+}
+.ilf-tl-text strong { color: var(--t1); }
+
+/* ─── Side-by-side block ─── */
+.ilf-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ilf-block {
+  background: var(--surf);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 1rem 1.2rem;
+}
+.ilf-block-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .7rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.ilf-block-title i { font-size: 15px; color: var(--t3); }
+.ilf-block-stat {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin-bottom: .45rem;
+  flex-wrap: wrap;
+}
+.ilf-block-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ilf-block-num.red  { color: var(--red); }
+.ilf-block-num.gold { color: var(--gold); }
+.ilf-block-lbl { font-size: 15px; color: var(--t2); line-height: 1.4; }
+.ilf-block-twd { font-family: var(--mono); font-size: 13px; color: var(--t3); margin-top: .1rem; }
+
+/* ─── Note / callout ─── */
+.ilf-note {
+  background: rgba(240,180,41,0.07);
+  border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  font-size: 16px;
+  color: var(--t2);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.ilf-note strong { color: var(--t1); }
+.ilf-note i { color: var(--gold); margin-right: .35rem; }
+
+/* ─── Footer ─── */
+.ilf-footer {
+  border-top: 1px solid var(--bd);
+  padding-top: .75rem;
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t3);
+}
+
+@media (max-width: 600px) {
+  .ilf-fiscal-grid { grid-template-columns: 1fr; }
+  .ilf-two { grid-template-columns: 1fr; }
+  .ilf-def-meta { display: none; }
+  .ilf-bar-right { display: none; }
+  .ilf-tl-date { min-width: 90px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="ilf-wrap">
+
+  <!-- Page header -->
+  <div class="ilf-pg-hd">
+    <div class="ilf-pg-left">
+      <div class="ilf-pg-flag">
+        <span class="fi fi-il" role="img" aria-label="以色列國旗"></span>
+      </div>
+      <div>
+        <div class="ilf-pg-title">以色列戰時財政數據集</div>
+        <div class="ilf-pg-date">資料截止：2026年Q1／Q2 · 匯率基準：1 USD ≈ 32.5 TWD · 1 NIS ≈ 8.9 TWD</div>
+      </div>
+    </div>
+    <div class="ilf-pg-src">以色列央行、IMF、SIPRI<br>Zman Yisrael、TRT World、Maariv</div>
+  </div>
+
+  <!-- Hero numbers -->
+  <div class="ilf-hero">
+    <div class="ilf-hero-card red">
+      <div class="ilf-hc-label"><i class="ti ti-flame" aria-hidden="true"></i> 廣義戰爭總成本</div>
+      <div class="ilf-hc-num red">$2,050億</div>
+      <div class="ilf-hc-twd">約6,663億台幣</div>
+      <div class="ilf-hc-sub">政府支出＋美援＋生產損失三項合計（美元）</div>
+    </div>
+    <div class="ilf-hero-card red">
+      <div class="ilf-hc-label"><i class="ti ti-building-store" aria-hidden="true"></i> 企業倒閉（戰爭三年）</div>
+      <div class="ilf-hc-num red">~18萬家</div>
+      <div class="ilf-hc-twd">2026年Q1年化 ~6.4萬家/年</div>
+      <div class="ilf-hc-sub">Maariv 報導，含各類企業與機構</div>
+    </div>
+    <div class="ilf-hero-card gold">
+      <div class="ilf-hc-label"><i class="ti ti-trending-down" aria-hidden="true"></i> GDP 成長下修</div>
+      <div class="ilf-hc-num gold">4.8%→3.5%</div>
+      <div class="ilf-hc-twd">IMF 2026年7月報告</div>
+      <div class="ilf-hc-sub">原2026預測 4.8%，下修至 3.5%</div>
+    </div>
+  </div>
+
+  <!-- 戰爭總成本拆解 -->
+  <div class="ilf-sec gold"><i class="ti ti-coins" aria-hidden="true"></i>一、戰爭總成本拆解</div>
+  <div class="ilf-grid">
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">政府直接支出</div>
+      <div class="ilf-tile-num gold">$1,180億</div>
+      <div class="ilf-tile-twd">約3,835億台幣</div>
+      <div class="ilf-tile-note">₪ 4,306億謝克爾</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">美國軍援（武器彈藥裝備）</div>
+      <div class="ilf-tile-num blue">$260億</div>
+      <div class="ilf-tile-twd">約845億台幣</div>
+      <div class="ilf-tile-note">₪ 949億謝克爾</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">經濟生產損失（至2025年底）</div>
+      <div class="ilf-tile-num red">$519億</div>
+      <div class="ilf-tile-twd">約1,687億台幣</div>
+      <div class="ilf-tile-note">₪ 1,894億謝克爾</div>
+    </div>
+    <div class="ilf-tile" style="border-color:var(--gold-bd);">
+      <div class="ilf-tile-label">廣義總計</div>
+      <div class="ilf-tile-num gold">~$2,050億</div>
+      <div class="ilf-tile-twd">約6,663億台幣</div>
+      <div class="ilf-tile-note">₪ 近7,000億謝克爾</div>
+    </div>
+  </div>
+
+  <!-- 政府支出細項 -->
+  <div class="ilf-sec red"><i class="ti ti-chart-bar" aria-hidden="true"></i>二、政府直接支出細項（美元）</div>
+  <div class="ilf-bars">
+    <!-- max = $712億 = 100% -->
+    <div class="ilf-bar-row">
+      <div class="ilf-bar-label">國防支出</div>
+      <div class="ilf-bar-track">
+        <div class="ilf-bar-fill" style="width:100%;background:var(--red);">
+          <span class="ilf-bar-fill-val">$712億</span>
+        </div>
+      </div>
+      <div class="ilf-bar-right">約2,314億台幣</div>
+    </div>
+    <div class="ilf-bar-row">
+      <div class="ilf-bar-label">各類民政支出</div>
+      <div class="ilf-bar-track">
+        <div class="ilf-bar-fill" style="width:23.5%;background:var(--gold);">
+          <span class="ilf-bar-fill-val">$167億</span>
+        </div>
+      </div>
+      <div class="ilf-bar-right">約543億台幣</div>
+    </div>
+    <div class="ilf-bar-row">
+      <div class="ilf-bar-label">補償金／賠償</div>
+      <div class="ilf-bar-track">
+        <div class="ilf-bar-fill" style="width:13.5%;background:var(--blue);">
+          <span class="ilf-bar-fill-val">$96億</span>
+        </div>
+      </div>
+      <div class="ilf-bar-right">約312億台幣</div>
+    </div>
+    <div class="ilf-bar-row">
+      <div class="ilf-bar-label">公債利息成本</div>
+      <div class="ilf-bar-track">
+        <div class="ilf-bar-fill" style="width:7.7%;background:var(--t3);">
+          <span class="ilf-bar-fill-val">$55億</span>
+        </div>
+      </div>
+      <div class="ilf-bar-right">約179億台幣</div>
+    </div>
+  </div>
+
+  <!-- 國防預算比較 -->
+  <div class="ilf-sec blue"><i class="ti ti-shield" aria-hidden="true"></i>三、國防預算歷年比較</div>
+  <div class="ilf-def-wrap">
+    <!-- max = $610億 = 100% -->
+    <div class="ilf-def-row">
+      <div class="ilf-def-yr">2023（戰前）</div>
+      <div class="ilf-def-track">
+        <div class="ilf-def-fill" style="width:42.6%;background:rgba(57,135,229,0.4);">
+          <span class="ilf-def-fill-txt">$260億 / ₪960億</span>
+        </div>
+      </div>
+      <div class="ilf-def-meta" style="color:var(--t3);">約845億台幣 · 戰前基準</div>
+    </div>
+    <div class="ilf-def-row">
+      <div class="ilf-def-yr">2025</div>
+      <div class="ilf-def-track">
+        <div class="ilf-def-fill" style="width:79.2%;background:rgba(57,135,229,0.6);">
+          <span class="ilf-def-fill-txt">$483億（SIPRI）</span>
+        </div>
+      </div>
+      <div class="ilf-def-meta" style="color:var(--t2);">約1,570億台幣 · 較前年↓4.9%</div>
+    </div>
+    <div class="ilf-def-row">
+      <div class="ilf-def-yr">2026（核准）</div>
+      <div class="ilf-def-track">
+        <div class="ilf-def-fill" style="width:80.3%;background:var(--blue);">
+          <span class="ilf-def-fill-txt">$490億 / ₪1,430億</span>
+        </div>
+      </div>
+      <div class="ilf-def-meta" style="color:var(--gold);">約1,593億台幣 · 史上最高</div>
+    </div>
+    <div class="ilf-def-row">
+      <div class="ilf-def-yr">2026（軍方提案）</div>
+      <div class="ilf-def-track">
+        <div class="ilf-def-fill" style="width:100%;background:var(--red);opacity:.75;">
+          <span class="ilf-def-fill-txt">$610億 / ₪1,830億</span>
+        </div>
+      </div>
+      <div class="ilf-def-meta" style="color:var(--red);">約1,983億台幣 · 未獲核准</div>
+    </div>
+    <div class="ilf-note" style="margin-top:.85rem;">
+      <i class="ti ti-info-circle" aria-hidden="true"></i>
+      2026年核准預算較2023年10月戰前<strong>逾一倍</strong>；較2023年全年增加約 ₪470億謝克爾（約$251億美元，約816億台幣）。
+    </div>
+  </div>
+
+  <!-- 對伊朗戰線 -->
+  <div class="ilf-sec red"><i class="ti ti-target" aria-hidden="true"></i>四、單一戰線成本</div>
+  <div class="ilf-grid">
+    <div class="ilf-tile" style="border-color:var(--red-bd);">
+      <div class="ilf-tile-label">對伊朗作戰（40天）</div>
+      <div class="ilf-tile-num red">₪350億</div>
+      <div class="ilf-tile-twd">約3,115億台幣</div>
+      <div class="ilf-tile-note">2026年2月28日—4月8日</div>
+    </div>
+  </div>
+
+  <!-- 財政赤字 + 公共債務 -->
+  <div class="ilf-sec red"><i class="ti ti-chart-line" aria-hidden="true"></i>五、財政赤字（佔GDP比）／ 六、公共債務（佔GDP比）</div>
+  <div class="ilf-fiscal-grid">
+    <div class="ilf-fiscal-card">
+      <div class="ilf-fiscal-title">財政赤字 / GDP</div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2023（戰前）</span>
+        <span class="ilf-fiscal-val dim">~1.5%</span>
+        <span class="ilf-fiscal-badge" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);">正常</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2025 目標</span>
+        <span class="ilf-fiscal-val dim">4.7%</span>
+        <span class="ilf-fiscal-badge gold">目標</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2025 實際</span>
+        <span class="ilf-fiscal-val red">5.2%</span>
+        <span class="ilf-fiscal-badge red">超標</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2026 預測（IMF）</span>
+        <span class="ilf-fiscal-val red">6.2%</span>
+        <span class="ilf-fiscal-badge red">惡化</span>
+      </div>
+    </div>
+    <div class="ilf-fiscal-card">
+      <div class="ilf-fiscal-title">公共債務 / GDP</div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2026（IMF預測）</span>
+        <span class="ilf-fiscal-val gold">69.8%</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2026（Ynet報導）</span>
+        <span class="ilf-fiscal-val gold">70.1%</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2031（IMF預測）</span>
+        <span class="ilf-fiscal-val red">~74%</span>
+      </div>
+      <div class="ilf-fiscal-row">
+        <span class="ilf-fiscal-yr">2035（央行警告情境）</span>
+        <span class="ilf-fiscal-val red">~83%</span>
+        <span class="ilf-fiscal-badge red">極端情境</span>
+      </div>
+    </div>
+  </div>
+  <div class="ilf-note">
+    <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+    以色列央行警告：若尼坦雅胡 <strong>₪3,500億謝克爾（約3.12兆台幣）</strong>計畫全面落實，2035年公共債務將升至 GDP 的 83%。
+  </div>
+
+  <!-- 企業倒閉 -->
+  <div class="ilf-sec red"><i class="ti ti-building-store" aria-hidden="true"></i>七、企業倒閉</div>
+  <div class="ilf-grid">
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2025年全年（各類）</div>
+      <div class="ilf-tile-num red">~6.1萬家</div>
+      <div class="ilf-tile-note">各類企業與機構</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2026年第一季</div>
+      <div class="ilf-tile-num red">~1.62萬家</div>
+      <div class="ilf-tile-note">較2025年同期 ↑6%</div>
+    </div>
+    <div class="ilf-tile" style="border-color:var(--red-bd);">
+      <div class="ilf-tile-label">戰爭三年累計</div>
+      <div class="ilf-tile-num red">~18萬家</div>
+      <div class="ilf-tile-note">Maariv 報導</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2025年全年（營造承包商）</div>
+      <div class="ilf-tile-num gold">~800家</div>
+      <div class="ilf-tile-note">戰前十年年均約300家</div>
+    </div>
+  </div>
+
+  <!-- 貿易赤字 -->
+  <div class="ilf-sec red"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>八、貿易赤字</div>
+  <div class="ilf-grid">
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2024年全年</div>
+      <div class="ilf-tile-num red">~$350億</div>
+      <div class="ilf-tile-twd">約1,138億台幣</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2025年前11個月</div>
+      <div class="ilf-tile-num red">$335.6億</div>
+      <div class="ilf-tile-twd">約1,091億台幣</div>
+    </div>
+    <div class="ilf-tile">
+      <div class="ilf-tile-label">2025年7月單月</div>
+      <div class="ilf-tile-num red">$40.6億</div>
+      <div class="ilf-tile-twd">約132億台幣</div>
+      <div class="ilf-tile-note">Trading Economics</div>
+    </div>
+    <div class="ilf-tile" style="border-color:var(--red-bd);">
+      <div class="ilf-tile-label">2026年Q1（年化）</div>
+      <div class="ilf-tile-num red">~$467億</div>
+      <div class="ilf-tile-twd">約1,518億台幣</div>
+      <div class="ilf-tile-note">顯著擴大</div>
+    </div>
+  </div>
+
+  <!-- 後備軍人 + 出口損失 -->
+  <div class="ilf-sec gold"><i class="ti ti-user-minus" aria-hidden="true"></i>九、後備軍人衝擊 ／ 十、出口政治損失</div>
+  <div class="ilf-two">
+    <div class="ilf-block">
+      <div class="ilf-block-title"><i class="ti ti-user-shield" aria-hidden="true"></i>後備軍人衝擊（Elevation公司報告）</div>
+      <div class="ilf-block-stat">
+        <div class="ilf-block-num gold">88%</div>
+        <div class="ilf-block-lbl">自營事業者表示生意受損</div>
+      </div>
+      <div class="ilf-block-stat">
+        <div class="ilf-block-num red">64%</div>
+        <div class="ilf-block-lbl">遭遇重大收入損失</div>
+      </div>
+    </div>
+    <div class="ilf-block">
+      <div class="ilf-block-title"><i class="ti ti-package-export" aria-hidden="true"></i>對批判性歐盟成員國出口損失</div>
+      <div class="ilf-block-stat">
+        <div class="ilf-block-num red">−$10億</div>
+        <div class="ilf-block-lbl">2024年（8個成員國）</div>
+      </div>
+      <div class="ilf-block-twd">約325億台幣</div>
+      <div class="ilf-block-stat" style="margin-top:.6rem;">
+        <div class="ilf-block-num red">−$15億</div>
+        <div class="ilf-block-lbl">2025年（持續擴大）</div>
+      </div>
+      <div class="ilf-block-twd">約488億台幣</div>
+    </div>
+  </div>
+
+  <!-- 能源時間軸 -->
+  <div class="ilf-sec gold"><i class="ti ti-bolt" aria-hidden="true"></i>十一、能源事件時間軸</div>
+  <div class="ilf-tl">
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">2023年10月</div>
+      <div class="ilf-tl-dot"></div>
+      <div class="ilf-tl-text">對埃及<strong>天然氣出口中斷</strong>數週</div>
+    </div>
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">2025年6月</div>
+      <div class="ilf-tl-dot"></div>
+      <div class="ilf-tl-text">以伊12天衝突再度擾亂<strong>對埃及能源供應</strong></div>
+    </div>
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">2026年4月（關閉）</div>
+      <div class="ilf-tl-dot" style="background:var(--red);"></div>
+      <div class="ilf-tl-text"><strong>Leviathan 與 Karish 氣田</strong>因軍事升級關閉</div>
+    </div>
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">2026年4月2日</div>
+      <div class="ilf-tl-dot" style="background:var(--green);"></div>
+      <div class="ilf-tl-text">Leviathan 氣田關閉<strong>32天後恢復生產</strong></div>
+    </div>
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">2026年7月20日</div>
+      <div class="ilf-tl-dot" style="background:var(--red);"></div>
+      <div class="ilf-tl-text"><strong>埃拉特港停止所有商業運營</strong>（實質關閉約20個月）</div>
+    </div>
+    <div class="ilf-tl-item">
+      <div class="ilf-tl-date">協議（進行中）</div>
+      <div class="ilf-tl-dot" style="background:var(--blue);"></div>
+      <div class="ilf-tl-text">以埃<strong>15年天然氣出口協議</strong>，總值$350億美元（約1,138億台幣），供應1,300億立方公尺</div>
+    </div>
+  </div>
+
+  <!-- 民生削減 -->
+  <div class="ilf-sec red"><i class="ti ti-scissors" aria-hidden="true"></i>十二、民生支出削減（2026年預算）</div>
+  <div class="ilf-note" style="background:var(--red-bg);border-color:var(--red-bd);">
+    <i class="ti ti-alert-circle" style="color:var(--red);" aria-hidden="true"></i>
+    教育、醫療、社福、基礎建設<strong>全面削減 3%</strong>，以支應史上最高國防預算。
+  </div>
+
+  <!-- Footer -->
+  <div class="ilf-footer">
+    <span>製表：張威翔</span>
+    <span>資料截止：2026年Q1／Q2</span>
+    <span>部分數字為估算值或媒體引述，非官方統計</span>
+    <span>來源：以色列央行・IMF・SIPRI・Maariv・TRT World</span>
+  </div>
+
+</div>
+</body>
+</html>
