@@ -410,8 +410,8 @@ body{
   <div class="ja-tiles">
     <div class="ja-tile">
       <i class="ja-tile-icon ti ti-layout-grid"></i>
-      <div class="ja-tile-val">140–160</div>
-      <div class="ja-tile-lbl">架　戰前機隊<br>Cirium／開源共識估計區間</div>
+      <div class="ja-tile-val">~140</div>
+      <div class="ja-tile-lbl">架<br>2022年前戰前機隊（估計）</div>
     </div>
     <div class="ja-tile t-loss">
       <i class="ja-tile-icon ti ti-alert-triangle"></i>
@@ -420,13 +420,13 @@ body{
     </div>
     <div class="ja-tile t-loss">
       <i class="ja-tile-icon ti ti-trending-down"></i>
-      <div class="ja-tile-val">27–31%</div>
-      <div class="ja-tile-lbl">確認損失占戰前機隊比<br>（依估計區間浮動）</div>
+      <div class="ja-tile-val">~31%</div>
+      <div class="ja-tile-lbl">確認損失<br>占戰前機隊比</div>
     </div>
   </div>
   <div class="ja-src-note">
     <i class="ti ti-info-circle"></i>
-    <span><strong>機隊規模來源差異：</strong>FlightGlobal / Cirium（2026）引用 142–156架；烏克蘭 MainAcademy 等開源共識為 140–160架（最常見區間）；部分俄方或樂觀來源稱逾200架甚至240架，可能含非作戰可用機，普遍被認為高估。損失率計算以共識中位約150架為基準。</span>
+    <span><strong>現行機隊規模來源差異：</strong>FlightGlobal / Cirium（2026）引用 142–156架；烏克蘭 MainAcademy 等開源共識為 140–160架（最常見區間）。以上數字均為<strong>已扣除43架確認損失後的現行淨規模</strong>，意即俄方透過 UAC 持續補充，維持或微幅擴充了機隊規模。部分俄方或樂觀來源稱逾200架甚至240架，可能含非作戰可用機，普遍被認為高估。</span>
   </div>
 </section>
 
@@ -434,40 +434,39 @@ body{
 <section class="ja-sec">
   <div class="ja-sec-lbl">
     <i class="ti ti-timeline"></i>
-    蘇-34 機隊損耗前後對比（以共識中位 ~150 架為滿格基準）
+    蘇-34 機隊規模前後對比（以 160 架為滿格基準）
   </div>
   <div class="ja-flow">
-    <!-- 2022前: ~150/150 = 100% -->
+    <!-- 2022前: 140/160 = 87.5% -->
     <div class="ja-flow-row">
       <div class="ja-flow-lbl">
         <div class="ja-flow-lbl-main">2022年前</div>
         <div class="ja-flow-lbl-sub">戰前機隊</div>
       </div>
       <div class="ja-flow-bar">
-        <div class="ja-flow-seg s-base" style="width:100%">~150架（共識中位估計）</div>
+        <div class="ja-flow-seg s-base" style="width:87.5%">~140架</div>
       </div>
-      <div class="ja-flow-count">~150</div>
+      <div class="ja-flow-count">~140</div>
     </div>
-    <!-- 2026初: 97-117殘存（中位71.3%）+ 43損失(28.7%) -->
+    <!-- 2026現行: 140-160（損失已扣除，補充後淨值）; 中位150/160=93.75% -->
     <div class="ja-flow-row">
       <div class="ja-flow-lbl">
-        <div class="ja-flow-lbl-main">2026年初</div>
+        <div class="ja-flow-lbl-main">2026年</div>
         <div class="ja-flow-lbl-sub">現行推估</div>
       </div>
       <div class="ja-flow-bar">
-        <div class="ja-flow-seg s-base" style="width:71.3%">97–117架</div>
-        <div class="ja-flow-seg s-loss" style="width:28.7%">−43 確認損失</div>
+        <div class="ja-flow-seg s-new" style="width:93.75%">140–160架（損失已補充扣除）</div>
       </div>
-      <div class="ja-flow-count" style="color:var(--text2);font-size:13px">97–117</div>
+      <div class="ja-flow-count" style="color:var(--green);font-size:13px">140–160</div>
     </div>
     <div class="ja-flow-legend">
       <div class="ja-flow-li">
         <div class="ja-flow-dot" style="background:rgba(160,168,192,0.35)"></div>
-        殘存機體推估區間（開源共識 140–160架 各端點減去確認損失）
+        戰前機隊規模（估計）
       </div>
       <div class="ja-flow-li">
-        <div class="ja-flow-dot" style="background:var(--red-bg);border:1px solid rgba(230,103,103,0.3)"></div>
-        Oryx 確認損失（擊落・事故・無人機地面攻擊）
+        <div class="ja-flow-dot" style="background:var(--green-bg);border:1px solid rgba(27,175,122,0.3)"></div>
+        現行推估（UAC補充後淨規模，已扣除43架確認損失）
       </div>
     </div>
   </div>
