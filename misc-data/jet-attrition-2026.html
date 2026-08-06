@@ -242,6 +242,22 @@ body{
 }
 .ja-key-note i{color:var(--gold);flex-shrink:0;margin-top:2px;font-size:19px}
 
+/* ── SOURCE NOTE ── */
+.ja-src-note{
+  background:var(--blue-bg);
+  border:1px solid var(--blue-bd);
+  border-radius:8px;
+  padding:12px 14px;
+  margin-top:14px;
+  font-size:14px;
+  color:var(--text2);
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  line-height:1.6;
+}
+.ja-src-note i{color:var(--blue);flex-shrink:0;margin-top:1px;font-size:16px}
+
 /* ── F-35 AVAILABILITY ── */
 .ja-f35{
   background:var(--surf);
@@ -394,8 +410,8 @@ body{
   <div class="ja-tiles">
     <div class="ja-tile">
       <i class="ja-tile-icon ti ti-layout-grid"></i>
-      <div class="ja-tile-val">~140</div>
-      <div class="ja-tile-lbl">架<br>戰前機隊規模（估計）</div>
+      <div class="ja-tile-val">140–160</div>
+      <div class="ja-tile-lbl">架　戰前機隊<br>Cirium／開源共識估計區間</div>
     </div>
     <div class="ja-tile t-loss">
       <i class="ja-tile-icon ti ti-alert-triangle"></i>
@@ -404,8 +420,8 @@ body{
     </div>
     <div class="ja-tile t-loss">
       <i class="ja-tile-icon ti ti-trending-down"></i>
-      <div class="ja-tile-val">~31%</div>
-      <div class="ja-tile-lbl">確認損失<br>占戰前機隊比</div>
+      <div class="ja-tile-val">27–31%</div>
+      <div class="ja-tile-lbl">確認損失占戰前機隊比<br>（依估計區間浮動）</div>
     </div>
     <div class="ja-tile t-prod">
       <i class="ja-tile-icon ti ti-building-factory-2"></i>
@@ -413,47 +429,51 @@ body{
       <div class="ja-tile-lbl">架<br>2026年預計機隊</div>
     </div>
   </div>
+  <div class="ja-src-note">
+    <i class="ti ti-info-circle"></i>
+    <span><strong>機隊規模來源差異：</strong>FlightGlobal / Cirium（2026）引用 142–156架；烏克蘭 MainAcademy 等開源共識為 140–160架（最常見區間）；部分俄方或樂觀來源稱逾200架甚至240架，可能含非作戰可用機，普遍被認為高估。損失率計算以共識中位約150架為基準。</span>
+  </div>
 </section>
 
 <!-- ── SECTION 2: 機隊演變 ── -->
 <section class="ja-sec">
   <div class="ja-sec-lbl">
     <i class="ti ti-timeline"></i>
-    蘇-34 機隊規模演變（以 350 架為滿格基準）
+    蘇-34 機隊規模演變（以 350 架為滿格基準，採共識中位 ~150 架）
   </div>
   <div class="ja-flow">
-    <!-- 2022前: 140/350 = 40% -->
+    <!-- 2022前: ~150/350 = 42.9% -->
     <div class="ja-flow-row">
       <div class="ja-flow-lbl">
         <div class="ja-flow-lbl-main">2022年前</div>
         <div class="ja-flow-lbl-sub">戰前機隊</div>
       </div>
       <div class="ja-flow-bar">
-        <div class="ja-flow-seg s-base" style="width:40%">140架</div>
+        <div class="ja-flow-seg s-base" style="width:42.9%">~150架（估計中位）</div>
       </div>
-      <div class="ja-flow-count">140</div>
+      <div class="ja-flow-count">~150</div>
     </div>
-    <!-- 2026初: 97殘存(27.7%) + 43損失(12.3%) -->
+    <!-- 2026初: ~107殘存(30.6%) + 43損失(12.3%) -->
     <div class="ja-flow-row">
       <div class="ja-flow-lbl">
         <div class="ja-flow-lbl-main">2026年初</div>
         <div class="ja-flow-lbl-sub">損耗後現況</div>
       </div>
       <div class="ja-flow-bar">
-        <div class="ja-flow-seg s-base" style="width:27.7%">97架</div>
+        <div class="ja-flow-seg s-base" style="width:30.6%">~107架</div>
         <div class="ja-flow-seg s-loss" style="width:12.3%">−43</div>
       </div>
-      <div class="ja-flow-count" style="color:var(--text2)">97</div>
+      <div class="ja-flow-count" style="color:var(--text2)">~107</div>
     </div>
-    <!-- 2026底: 97殘存(27.7%) + ~253新產(72.3%) = 350 -->
+    <!-- 2026底: ~107殘存(30.6%) + ~243新產(69.4%) = 350 -->
     <div class="ja-flow-row">
       <div class="ja-flow-lbl">
         <div class="ja-flow-lbl-main">2026年底</div>
         <div class="ja-flow-lbl-sub">預計機隊</div>
       </div>
       <div class="ja-flow-bar">
-        <div class="ja-flow-seg s-base" style="width:27.7%">97架</div>
-        <div class="ja-flow-seg s-new" style="flex:1">+ 新交付 ~253架</div>
+        <div class="ja-flow-seg s-base" style="width:30.6%">~107架</div>
+        <div class="ja-flow-seg s-new" style="flex:1">+ 新交付 ~243架</div>
       </div>
       <div class="ja-flow-count" style="color:var(--green)">~350</div>
     </div>
