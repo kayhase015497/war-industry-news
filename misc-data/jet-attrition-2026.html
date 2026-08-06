@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>戰機損耗後勤韌性分析（2026）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0b0f1a;
+  --surf:#131a2a;
+  --surf2:#1a2235;
+  --border:rgba(255,255,255,0.07);
+  --red:#e66767;
+  --red-bg:rgba(230,103,103,0.10);
+  --red-bd:rgba(230,103,103,0.30);
+  --blue:#3987e5;
+  --blue-bg:rgba(57,135,229,0.10);
+  --blue-bd:rgba(57,135,229,0.28);
+  --green:#1baf7a;
+  --green-bg:rgba(27,175,122,0.10);
+  --green-bd:rgba(27,175,122,0.28);
+  --gold:#f0b429;
+  --gold-bg:rgba(240,180,41,0.10);
+  --gold-bd:rgba(240,180,41,0.28);
+  --text:#e8eaf0;
+  --text2:#9098b0;
+  --muted:#5a6380;
+  --mono:'Space Mono',monospace;
+  --sans:'Noto Sans TC',system-ui,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:18px;
+  line-height:1.65;
+  padding:0 16px 48px;
+  max-width:860px;
+  margin:0 auto;
+}
+
+/* ── HEADER ── */
+.ja-hdr{
+  padding:32px 0 26px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:32px;
+}
+.ja-kicker{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ja-kicker .fi{width:22px;height:15px;border-radius:2px;flex-shrink:0}
+.ja-hdr h1{
+  font-size:clamp(19px,3.6vw,27px);
+  font-weight:700;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+.ja-hdr-sub{font-size:16px;color:var(--text2)}
+
+/* ── SECTION ── */
+.ja-sec{margin-bottom:36px}
+.ja-sec-lbl{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ja-sec-lbl i{font-size:16px}
+.ja-sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── TILES ── */
+.ja-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+}
+.ja-tile{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px 16px;
+}
+.ja-tile.t-loss{background:var(--red-bg);border-color:var(--red-bd)}
+.ja-tile.t-prod{background:var(--green-bg);border-color:var(--green-bd)}
+.ja-tile-icon{font-size:20px;margin-bottom:10px;display:block;color:var(--text2)}
+.ja-tile.t-loss .ja-tile-icon{color:var(--red)}
+.ja-tile.t-prod .ja-tile-icon{color:var(--green)}
+.ja-tile-val{
+  font-family:var(--mono);
+  font-size:clamp(24px,4vw,34px);
+  font-weight:700;
+  line-height:1;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.ja-tile.t-loss .ja-tile-val{color:var(--red)}
+.ja-tile.t-prod .ja-tile-val{color:var(--green)}
+.ja-tile-lbl{font-size:14px;color:var(--text2);line-height:1.35}
+
+/* ── FLEET FLOW ── */
+.ja-flow{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 20px 16px;
+}
+.ja-flow-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:16px;
+}
+.ja-flow-row:last-of-type{margin-bottom:0}
+.ja-flow-lbl{flex-shrink:0;width:88px}
+.ja-flow-lbl-main{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.ja-flow-lbl-sub{font-size:13px;color:var(--text2)}
+.ja-flow-bar{
+  flex:1;
+  height:36px;
+  display:flex;
+  background:rgba(255,255,255,0.03);
+  border-radius:6px;
+  overflow:hidden;
+  gap:2px;
+}
+.ja-flow-seg{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  padding:0 8px;
+}
+.ja-flow-seg.s-base{background:rgba(160,168,192,0.22);color:var(--text2)}
+.ja-flow-seg.s-loss{
+  background:var(--red-bg);
+  color:var(--red);
+  border:1px solid rgba(230,103,103,0.22);
+  flex-shrink:0;
+}
+.ja-flow-seg.s-new{
+  background:var(--green-bg);
+  color:var(--green);
+  border:1px solid rgba(27,175,122,0.2);
+}
+.ja-flow-count{
+  flex-shrink:0;
+  font-family:var(--mono);
+  font-size:15px;
+  font-weight:700;
+  width:52px;
+  text-align:right;
+  color:var(--text);
+}
+.ja-flow-legend{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--border);
+}
+.ja-flow-li{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)}
+.ja-flow-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* ── ANNUAL RATE CHART ── */
+.ja-chart{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+}
+.ja-chart-hd{font-size:15px;color:var(--text2);margin-bottom:20px}
+.ja-bar-row{margin-bottom:22px}
+.ja-bar-row:last-of-type{margin-bottom:0}
+.ja-bar-top{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  margin-bottom:5px;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.ja-bar-name{
+  font-size:16px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.ja-bar-name .fi{width:22px;height:15px;border-radius:2px;flex-shrink:0}
+.ja-bar-val{font-family:var(--mono);font-size:16px;font-weight:700}
+.ja-bar-val.r{color:var(--red)}
+.ja-bar-val.b{color:var(--blue)}
+.ja-bar-note{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.ja-bar-track{
+  width:100%;
+  height:22px;
+  background:rgba(255,255,255,0.05);
+  border-radius:4px;
+  overflow:hidden;
+}
+.ja-bar-fill{height:100%;border-radius:4px}
+.ja-bar-fill.r{background:rgba(230,103,103,0.75)}
+.ja-bar-fill.b{background:rgba(57,135,229,0.60)}
+
+.ja-key-note{
+  background:var(--gold-bg);
+  border:1px solid var(--gold-bd);
+  border-radius:8px;
+  padding:14px 16px;
+  margin-top:18px;
+  font-size:17px;
+  color:var(--text2);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  line-height:1.6;
+}
+.ja-key-note i{color:var(--gold);flex-shrink:0;margin-top:2px;font-size:19px}
+
+/* ── F-35 AVAILABILITY ── */
+.ja-f35{
+  background:var(--surf);
+  border:1px solid var(--gold-bd);
+  border-radius:10px;
+  padding:22px;
+  display:flex;
+  align-items:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.ja-f35-meter{position:relative;width:110px;height:110px;flex-shrink:0}
+.ja-f35-meter svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ja-f35-inner{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.ja-f35-pct{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.ja-f35-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.ja-f35-text{flex:1;min-width:200px}
+.ja-f35-text h3{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.ja-f35-text h3 i{color:var(--gold)}
+.ja-f35-text p{font-size:17px;color:var(--text2);line-height:1.65}
+
+/* ── INCIDENT CARDS ── */
+.ja-incidents{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.ja-incident{
+  background:var(--surf);
+  border:1px solid var(--red-bd);
+  border-radius:10px;
+  padding:18px;
+}
+.ja-incident-dt{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--red);
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.ja-incident-dt i{font-size:14px}
+.ja-incident-title{font-size:17px;font-weight:700;margin-bottom:6px}
+.ja-incident-body{font-size:16px;color:var(--text2);line-height:1.55}
+
+/* ── TABLE ── */
+.ja-tbl-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+.ja-tbl{
+  width:100%;
+  min-width:540px;
+  border-collapse:collapse;
+  font-size:16px;
+}
+.ja-tbl th{
+  background:var(--surf2);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:11px 14px;
+  text-align:left;
+  white-space:nowrap;
+}
+.ja-tbl td{
+  padding:13px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  color:var(--text2);
+  vertical-align:middle;
+}
+.ja-tbl tr:last-child td{border-bottom:none}
+.ja-tbl td:first-child{font-weight:700;color:var(--text)}
+.ja-flag-cell .fi{width:20px;height:13px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+.ja-badge{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:4px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.ja-badge.bc{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.ja-badge.bp{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.ja-badge.bw{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd)}
+
+/* ── FOOTER ── */
+.ja-footer{
+  margin-top:32px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:space-between;
+}
+
+/* ── RWD ── */
+@media(max-width:600px){
+  .ja-f35{flex-direction:column}
+  .ja-flow-lbl{width:68px}
+  .ja-flow-lbl-sub{display:none}
+  .ja-flow-seg{font-size:11px;padding:0 5px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="ja-hdr">
+  <div class="ja-kicker">
+    <span class="fi fi-ru"></span>
+    <span class="fi fi-us"></span>
+    開源情報 × 軍事後勤韌性
+  </div>
+  <h1>戰機損耗不只是戰場問題<br>蘇-34 vs 西方主力戰機</h1>
+  <p class="ja-hdr-sub">截至2026年初 ｜ Oryx確認損失 · GAO報告 · 西方公開軍事統計</p>
+</header>
+
+<!-- ── SECTION 1: Su-34 概況 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-plane"></i>
+    蘇-34 機隊現況
+  </div>
+  <div class="ja-tiles">
+    <div class="ja-tile">
+      <i class="ja-tile-icon ti ti-layout-grid"></i>
+      <div class="ja-tile-val">~140</div>
+      <div class="ja-tile-lbl">架<br>戰前機隊規模（估計）</div>
+    </div>
+    <div class="ja-tile t-loss">
+      <i class="ja-tile-icon ti ti-alert-triangle"></i>
+      <div class="ja-tile-val">43+</div>
+      <div class="ja-tile-lbl">架<br>Oryx 確認損失</div>
+    </div>
+    <div class="ja-tile t-loss">
+      <i class="ja-tile-icon ti ti-trending-down"></i>
+      <div class="ja-tile-val">~31%</div>
+      <div class="ja-tile-lbl">確認損失<br>占戰前機隊比</div>
+    </div>
+    <div class="ja-tile t-prod">
+      <i class="ja-tile-icon ti ti-building-factory-2"></i>
+      <div class="ja-tile-val">~350</div>
+      <div class="ja-tile-lbl">架<br>2026年預計機隊</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: 機隊演變 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-timeline"></i>
+    蘇-34 機隊規模演變（以 350 架為滿格基準）
+  </div>
+  <div class="ja-flow">
+    <!-- 2022前: 140/350 = 40% -->
+    <div class="ja-flow-row">
+      <div class="ja-flow-lbl">
+        <div class="ja-flow-lbl-main">2022年前</div>
+        <div class="ja-flow-lbl-sub">戰前機隊</div>
+      </div>
+      <div class="ja-flow-bar">
+        <div class="ja-flow-seg s-base" style="width:40%">140架</div>
+      </div>
+      <div class="ja-flow-count">140</div>
+    </div>
+    <!-- 2026初: 97殘存(27.7%) + 43損失(12.3%) -->
+    <div class="ja-flow-row">
+      <div class="ja-flow-lbl">
+        <div class="ja-flow-lbl-main">2026年初</div>
+        <div class="ja-flow-lbl-sub">損耗後現況</div>
+      </div>
+      <div class="ja-flow-bar">
+        <div class="ja-flow-seg s-base" style="width:27.7%">97架</div>
+        <div class="ja-flow-seg s-loss" style="width:12.3%">−43</div>
+      </div>
+      <div class="ja-flow-count" style="color:var(--text2)">97</div>
+    </div>
+    <!-- 2026底: 97殘存(27.7%) + ~253新產(72.3%) = 350 -->
+    <div class="ja-flow-row">
+      <div class="ja-flow-lbl">
+        <div class="ja-flow-lbl-main">2026年底</div>
+        <div class="ja-flow-lbl-sub">預計機隊</div>
+      </div>
+      <div class="ja-flow-bar">
+        <div class="ja-flow-seg s-base" style="width:27.7%">97架</div>
+        <div class="ja-flow-seg s-new" style="flex:1">+ 新交付 ~253架</div>
+      </div>
+      <div class="ja-flow-count" style="color:var(--green)">~350</div>
+    </div>
+    <div class="ja-flow-legend">
+      <div class="ja-flow-li">
+        <div class="ja-flow-dot" style="background:rgba(160,168,192,0.35)"></div>
+        現有／殘存機體
+      </div>
+      <div class="ja-flow-li">
+        <div class="ja-flow-dot" style="background:var(--red-bg);border:1px solid rgba(230,103,103,0.3)"></div>
+        確認損失（擊落・事故・無人機地面攻擊）
+      </div>
+      <div class="ja-flow-li">
+        <div class="ja-flow-dot" style="background:var(--green-bg);border:1px solid rgba(27,175,122,0.3)"></div>
+        UAC新產補充（2025年共7批；產能較和平時期翻倍）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: 年均損耗速率對比 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-chart-bar"></i>
+    年均確認損耗速率對比
+  </div>
+  <div class="ja-chart">
+    <div class="ja-chart-hd">確認損失架數 ÷ 統計年數（架 / 年）</div>
+
+    <!-- Su-34: 43 ÷ 4 = 10.75 → 98.8% of max 10.88 -->
+    <div class="ja-bar-row">
+      <div class="ja-bar-top">
+        <div class="ja-bar-name">
+          <span class="fi fi-ru"></span>
+          蘇-34（戰時）
+        </div>
+        <div class="ja-bar-val r">10.8 架/年</div>
+      </div>
+      <div class="ja-bar-note">43架確認損失 ÷ 4年（2022年2月—2026年初）｜Oryx統計，含擊落、事故、地面無人機攻擊</div>
+      <div class="ja-bar-track">
+        <div class="ja-bar-fill r" style="width:98.8%"></div>
+      </div>
+    </div>
+
+    <!-- F-16: 272 ÷ 25 = 10.88 → 100% -->
+    <div class="ja-bar-row">
+      <div class="ja-bar-top">
+        <div class="ja-bar-name">
+          <span class="fi fi-us"></span>
+          F-16（和平時期）
+        </div>
+        <div class="ja-bar-val b">10.9 架/年</div>
+      </div>
+      <div class="ja-bar-note">272架確認損失 ÷ 25年（1978—2003年）｜全球各操作國合計，含訓練事故與維護損耗</div>
+      <div class="ja-bar-track">
+        <div class="ja-bar-fill b" style="width:100%"></div>
+      </div>
+    </div>
+
+    <!-- F-15: 151 ÷ 54 = 2.80 → 25.7% -->
+    <div class="ja-bar-row">
+      <div class="ja-bar-top">
+        <div class="ja-bar-name">
+          <span class="fi fi-us"></span>
+          F-15（和平時期）
+        </div>
+        <div class="ja-bar-val b">2.8 架/年</div>
+      </div>
+      <div class="ja-bar-note">151架確認損失 ÷ 54年（1972—2026年4月）｜美國空軍統計，含訓練事故</div>
+      <div class="ja-bar-track">
+        <div class="ja-bar-fill b" style="width:25.7%"></div>
+      </div>
+    </div>
+
+    <!-- F-35: 11 ÷ 8 = 1.375 → 12.6% -->
+    <div class="ja-bar-row">
+      <div class="ja-bar-top">
+        <div class="ja-bar-name">
+          <span class="fi fi-us"></span>
+          F-35（和平時期）
+        </div>
+        <div class="ja-bar-val b">1.4 架/年</div>
+      </div>
+      <div class="ja-bar-note">11架確認墜毀 ÷ 8年（2018—2026年）｜不含美以伊衝突戰損</div>
+      <div class="ja-bar-track">
+        <div class="ja-bar-fill b" style="width:12.6%"></div>
+      </div>
+    </div>
+
+    <div class="ja-key-note">
+      <i class="ti ti-bulb"></i>
+      <span>蘇-34 在戰時的年均損耗速率（10.8架/年），與 F-16 在和平時期前25年的歷史損耗速率（10.9架/年）幾乎相當——高性能戰機的維護與操作風險，並非戰場獨有。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 4: F-35 可用率 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-alert-circle"></i>
+    F-35 可用率警示
+  </div>
+  <div class="ja-f35">
+    <div class="ja-f35-meter">
+      <!-- r=46, circumference=2π×46≈289.0 ; 55%=158.95 -->
+      <svg viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="46"
+          stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="46"
+          stroke="#f0b429" stroke-width="10"
+          stroke-dasharray="158.95 289.03"
+          stroke-linecap="round"/>
+      </svg>
+      <div class="ja-f35-inner">
+        <div class="ja-f35-pct">&lt;55%</div>
+        <div class="ja-f35-sub">可用率</div>
+      </div>
+    </div>
+    <div class="ja-f35-text">
+      <h3><i class="ti ti-alert-triangle"></i> F-35 聯合打擊戰機</h3>
+      <p>GAO 報告顯示，F-35 機隊整體可用率低於 55%，軟體問題頻發，後勤複雜度極高。2018年以來已確認墜毀 11 架。這是<strong>和平時期</strong>的數據，尚未納入美以伊衝突期間的實際戰損。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 5: F/A-18 事故聚集 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-exclamation-mark"></i>
+    F/A-18 大黃蜂 · 事故聚集期
+  </div>
+  <div class="ja-incidents">
+    <div class="ja-incident">
+      <div class="ja-incident-dt">
+        <i class="ti ti-calendar"></i>
+        2016年 ／ 6個月內
+      </div>
+      <div class="ja-incident-title">8 架接連墜毀</div>
+      <div class="ja-incident-body">海軍陸戰隊 F/A-18 事故率攀升至 12 年來最高。6 個月內連損 8 架，引發國會與海軍對機隊老化與維護資源的廣泛質疑。</div>
+    </div>
+    <div class="ja-incident">
+      <div class="ja-incident-dt">
+        <i class="ti ti-calendar"></i>
+        近年 ／ 10個月內
+      </div>
+      <div class="ja-incident-title">超級大黃蜂 6 架損失</div>
+      <div class="ja-incident-body">F/A-18E/F 超級大黃蜂在不足 10 個月期間損失 6 架，顯示高強度操作下維護負擔持續累積，即便在非作戰環境中也難以遏制耗損。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 6: 對照總表 ── -->
+<section class="ja-sec">
+  <div class="ja-sec-lbl">
+    <i class="ti ti-table"></i>
+    各機型損耗數據對照
+  </div>
+  <div class="ja-tbl-wrap">
+    <table class="ja-tbl">
+      <thead>
+        <tr>
+          <th>機型</th>
+          <th>確認損失</th>
+          <th>統計期間</th>
+          <th>年均損耗</th>
+          <th>背景</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ja-flag-cell"><span class="fi fi-ru"></span>蘇-34</td>
+          <td style="font-family:var(--mono);color:var(--red);font-weight:700">43+ 架</td>
+          <td>2022—2026（4年）</td>
+          <td style="font-family:var(--mono)">10.8 架/年</td>
+          <td><span class="ja-badge bc">戰時</span></td>
+        </tr>
+        <tr>
+          <td class="ja-flag-cell"><span class="fi fi-us"></span>F-16</td>
+          <td style="font-family:var(--mono)">272架（至2003）<br>~400+ 架（全球估計）</td>
+          <td>1978—2003（25年）</td>
+          <td style="font-family:var(--mono)">10.9 架/年</td>
+          <td><span class="ja-badge bp">和平時期</span></td>
+        </tr>
+        <tr>
+          <td class="ja-flag-cell"><span class="fi fi-us"></span>F-15</td>
+          <td style="font-family:var(--mono)">151架（美軍）<br>~159 架（全球）</td>
+          <td>1972—2026（54年）</td>
+          <td style="font-family:var(--mono)">2.8 架/年</td>
+          <td><span class="ja-badge bp">和平時期</span></td>
+        </tr>
+        <tr>
+          <td class="ja-flag-cell"><span class="fi fi-us"></span>F-35</td>
+          <td style="font-family:var(--mono)">11 架（2018起）</td>
+          <td>2018—2026（8年）</td>
+          <td style="font-family:var(--mono)">1.4 架/年</td>
+          <td><span class="ja-badge bw">可用率&lt;55%</span></td>
+        </tr>
+        <tr>
+          <td class="ja-flag-cell"><span class="fi fi-us"></span>F/A-18</td>
+          <td>聚集性事故多起</td>
+          <td>2016年 / 近年</td>
+          <td>—</td>
+          <td><span class="ja-badge bp">和平時期</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="ja-footer">
+  <span>製表：張威翔</span>
+  <span>資料來源：Oryx 開源情報 / GAO 報告 / 西方公開軍事統計</span>
+  <span>2026.08</span>
+</footer>
+
+</body>
+</html>
