@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>平民傷亡兩份帳本 — 俄烏衝突數據對比（2026）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0b0f1a;
+      --surf:     #131a2a;
+      --surf2:    #1a2235;
+      --blue:     #3987e5;
+      --blue-bg:  rgba(57,135,229,0.10);
+      --blue-bd:  rgba(57,135,229,0.28);
+      --red:      #e66767;
+      --red-bg:   rgba(230,103,103,0.10);
+      --red-bd:   rgba(230,103,103,0.28);
+      --gold:     #f0b429;
+      --gold-bg:  rgba(240,180,41,0.10);
+      --gold-bd:  rgba(240,180,41,0.28);
+      --text:     #e8eaf0;
+      --text-sec: #8a94a8;
+      --mono:     'Space Mono', monospace;
+      --sans:     'Noto Sans TC', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.65;
+      padding: clamp(16px, 4vw, 32px);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .ccc-hd {
+      border-left: 4px solid var(--gold);
+      padding-left: 16px;
+      margin-bottom: 24px;
+    }
+    .ccc-hd-title {
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .ccc-hd-sub { font-size: 16px; color: var(--text-sec); }
+
+    /* ── Source legend ──────────────────────────────────── */
+    .ccc-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 580px) { .ccc-legend { grid-template-columns: 1fr; } }
+    .ccc-legend-card {
+      background: var(--surf);
+      border-radius: 8px;
+      padding: 14px 16px;
+      border-top: 3px solid;
+    }
+    .ccc-legend-card.blue { border-top-color: var(--blue); }
+    .ccc-legend-card.red  { border-top-color: var(--red); }
+    .ccc-leg-tag {
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .ccc-legend-card.blue .ccc-leg-tag { color: var(--blue); }
+    .ccc-legend-card.red  .ccc-leg-tag { color: var(--red); }
+    .ccc-leg-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .ccc-leg-desc { font-size: 14px; color: var(--text-sec); line-height: 1.6; }
+
+    /* ── Hero tiles ─────────────────────────────────────── */
+    .ccc-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 480px) { .ccc-tiles { grid-template-columns: 1fr; } }
+    .ccc-tile {
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid;
+    }
+    .ccc-tile.blue { border-left-color: var(--blue); background: var(--blue-bg); }
+    .ccc-tile.red  { border-left-color: var(--red);  background: var(--red-bg); }
+    .ccc-tile.gold { border-left-color: var(--gold); background: var(--gold-bg); }
+    .ccc-tile-lbl {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .ccc-tile-val {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 700;
+      font-family: var(--mono);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .ccc-tile.blue .ccc-tile-val { color: var(--blue); }
+    .ccc-tile.red  .ccc-tile-val { color: var(--red); }
+    .ccc-tile.gold .ccc-tile-val { color: var(--gold); }
+    .ccc-tile-sub { font-size: 14px; color: var(--text-sec); line-height: 1.5; }
+
+    /* ── Section wrapper ────────────────────────────────── */
+    .ccc-sec { margin-bottom: 32px; }
+    .ccc-sec-hd {
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(138,148,168,0.18);
+    }
+
+    /* ── Horizontal bar rows ────────────────────────────── */
+    .ccc-hbar { margin-bottom: 16px; }
+    .ccc-hbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .ccc-hbar-name { font-size: 16px; font-weight: 600; }
+    .ccc-hbar-val  { font-family: var(--mono); font-size: 16px; font-weight: 700; white-space: nowrap; }
+    .ccc-hbar-track {
+      background: var(--surf2);
+      border-radius: 4px;
+      height: 18px;
+      overflow: hidden;
+    }
+    .ccc-hbar-fill { height: 100%; border-radius: 4px; }
+    .ccc-hbar-fill.blue { background: var(--blue); }
+    .ccc-hbar-fill.red  { background: var(--red); }
+    .ccc-hbar-note { font-size: 14px; color: var(--text-sec); margin-top: 4px; }
+
+    /* ── Info box ───────────────────────────────────────── */
+    .ccc-info {
+      background: var(--surf);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 15px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      border-left: 3px solid rgba(138,148,168,0.3);
+    }
+
+    /* ── Quarterly cards ────────────────────────────────── */
+    .ccc-q-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 550px) { .ccc-q-grid { grid-template-columns: 1fr; } }
+    .ccc-q-card { background: var(--surf); border-radius: 8px; padding: 16px; }
+    .ccc-q-src {
+      font-size: 13px;
+      font-family: var(--mono);
+      margin-bottom: 14px;
+    }
+    .ccc-qr { margin-bottom: 12px; }
+    .ccc-qr-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+    .ccc-qr-lbl { font-size: 15px; }
+    .ccc-qr-val { font-family: var(--mono); font-size: 15px; font-weight: 700; }
+    .ccc-qr-track { background: var(--surf2); border-radius: 3px; height: 8px; }
+    .ccc-qr-fill { height: 100%; border-radius: 3px; }
+    .ccc-qr-fill.blue { background: var(--blue); }
+    .ccc-qr-fill.red  { background: var(--red); }
+    .ccc-q-note { font-size: 14px; color: var(--text-sec); margin-top: 10px; line-height: 1.6; }
+
+    /* ── Weekly bar chart ───────────────────────────────── */
+    .ccc-wbar-val-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .ccc-wbar-val {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+    .ccc-wbar-val.normal { color: var(--red); }
+    .ccc-wbar-val.peak   { color: var(--gold); }
+    .ccc-wchart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 110px;
+      border-bottom: 2px solid rgba(138,148,168,0.2);
+    }
+    .ccc-wbar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: var(--red);
+      min-height: 4px;
+      cursor: default;
+    }
+    .ccc-wbar.peak { background: var(--gold); }
+    .ccc-wbar-lbl-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .ccc-wbar-lbl {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.35;
+    }
+    .ccc-wbar-lbl.peak { color: var(--gold); font-weight: 700; }
+
+    /* ── Timeline ───────────────────────────────────────── */
+    .ccc-timeline { padding-left: 20px; position: relative; }
+    .ccc-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 10px; bottom: 10px;
+      width: 2px;
+      background: var(--surf2);
+    }
+    .ccc-tl-item {
+      position: relative;
+      margin-bottom: 20px;
+      padding-left: 14px;
+    }
+    .ccc-tl-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 9px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--text-sec);
+    }
+    .ccc-tl-date {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      margin-bottom: 2px;
+    }
+    .ccc-tl-text { font-size: 17px; }
+
+    /* ── Source footer ──────────────────────────────────── */
+    .ccc-src {
+      font-size: 13px;
+      color: var(--text-sec);
+      border-top: 1px solid rgba(138,148,168,0.15);
+      padding-top: 16px;
+      margin-top: 8px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="ccc-hd">
+    <div class="ccc-hd-title">平民傷亡兩份帳本</div>
+    <div class="ccc-hd-sub">俄烏衝突數字戰爭：聯合國獨立驗證 vs 俄方官方聲稱（截至2026年8月）</div>
+  </div>
+
+  <!-- Source legend -->
+  <div class="ccc-legend">
+    <div class="ccc-legend-card blue">
+      <div class="ccc-leg-tag">■ 藍色 — 國際獨立來源</div>
+      <div class="ccc-leg-name">聯合國人權監測團 OHCHR</div>
+      <div class="ccc-leg-desc">逐案獨立核實。統計<strong>烏克蘭政府控制區</strong>內，俄軍攻擊造成的平民傷亡。為保守最低值，實際數字更高。</div>
+    </div>
+    <div class="ccc-legend-card red">
+      <div class="ccc-leg-tag">■ 紅色 — 衝突一方來源</div>
+      <div class="ccc-leg-name">俄外交部 / 米羅什尼克特使</div>
+      <div class="ccc-leg-desc">俄方單方面聲稱。統計<strong>俄佔區</strong>內，烏克蘭武裝部隊攻擊造成的平民傷亡。每週向塔斯社、俄新社發布。</div>
+    </div>
+  </div>
+
+  <!-- Hero tiles -->
+  <div class="ccc-tiles">
+    <div class="ccc-tile blue">
+      <div class="ccc-tile-lbl">聯合國核實<br>烏克蘭境內平民死亡</div>
+      <div class="ccc-tile-val">~16,200</div>
+      <div class="ccc-tile-sub">2022年2月24日至2026年中<br>含約800名兒童</div>
+    </div>
+    <div class="ccc-tile red">
+      <div class="ccc-tile-lbl">俄方聲稱<br>俄佔區平民死亡</div>
+      <div class="ccc-tile-val">8,434</div>
+      <div class="ccc-tile-sub">2022年2月至2026年6月30日<br>總受影響30,913人</div>
+    </div>
+    <div class="ccc-tile gold">
+      <div class="ccc-tile-lbl">聯合國：2026年6月單月死亡</div>
+      <div class="ccc-tile-val">293人</div>
+      <div class="ccc-tile-sub">自2022年4月以來最高月份<br>2026年上半年合計1,396人</div>
+    </div>
+    <div class="ccc-tile red">
+      <div class="ccc-tile-lbl">俄方聲稱：Q2受影響人數增幅</div>
+      <div class="ccc-tile-val">+76%</div>
+      <div class="ccc-tile-sub">Q1=1,725人 → Q2=3,040人<br>死亡：Q1=266 → Q2=422（+59%）</div>
+    </div>
+  </div>
+
+  <!-- Cumulative comparison -->
+  <div class="ccc-sec">
+    <div class="ccc-sec-hd">累計平民死亡對比（2022年2月24日 — 2026年中）</div>
+
+    <div class="ccc-hbar">
+      <div class="ccc-hbar-top">
+        <span class="ccc-hbar-name" style="color:var(--blue)">聯合國核實（烏克蘭境內，俄軍攻擊）</span>
+        <span class="ccc-hbar-val" style="color:var(--blue)">~16,200人</span>
+      </div>
+      <div class="ccc-hbar-track">
+        <div class="ccc-hbar-fill blue" style="width:100%"></div>
+      </div>
+      <div class="ccc-hbar-note">受傷至少46,000–48,000人，含約2,900名兒童</div>
+    </div>
+
+    <div class="ccc-hbar">
+      <div class="ccc-hbar-top">
+        <span class="ccc-hbar-name" style="color:var(--red)">俄方聲稱（俄佔區，烏軍攻擊）</span>
+        <span class="ccc-hbar-val" style="color:var(--red)">8,434人</span>
+      </div>
+      <div class="ccc-hbar-track">
+        <div class="ccc-hbar-fill red" style="width:52%"></div>
+      </div>
+      <div class="ccc-hbar-note">約為聯合國核實數字的52%，但兩者統計範圍與方法論不同</div>
+    </div>
+
+    <div class="ccc-info">
+      ⚠ <strong>這兩份數字統計的不是同一件事。</strong>聯合國數據記錄的是烏克蘭境內、由俄軍發動的攻擊；俄方數據記錄的是俄佔區（含頓巴斯等地）、由烏軍發動的攻擊。地理範圍不同、統計方法不同，無法等量比較——但可以同時呈現，揭示衝突的雙重代價。
+    </div>
+  </div>
+
+  <!-- 2026 quarterly -->
+  <div class="ccc-sec">
+    <div class="ccc-sec-hd">2026年上半年趨勢（兩份來源）</div>
+    <div class="ccc-q-grid">
+
+      <div class="ccc-q-card">
+        <div class="ccc-q-src" style="color:var(--red)">▶ 俄方聲稱（俄佔區）</div>
+        <div class="ccc-qr">
+          <div class="ccc-qr-top">
+            <span class="ccc-qr-lbl">Q1（1–3月）死亡</span>
+            <span class="ccc-qr-val" style="color:var(--red)">266人</span>
+          </div>
+          <div class="ccc-qr-track">
+            <div class="ccc-qr-fill red" style="width:63%"></div>
+          </div>
+        </div>
+        <div class="ccc-qr">
+          <div class="ccc-qr-top">
+            <span class="ccc-qr-lbl">Q2（4–6月）死亡</span>
+            <span class="ccc-qr-val" style="color:var(--red)">422人 ↑59%</span>
+          </div>
+          <div class="ccc-qr-track">
+            <div class="ccc-qr-fill red" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="ccc-q-note">Q2總受影響3,040人，較Q1（1,725人）增76%<br>日均：5人死亡、29人受傷</div>
+      </div>
+
+      <div class="ccc-q-card">
+        <div class="ccc-q-src" style="color:var(--blue)">▶ 聯合國核實（烏克蘭境內）</div>
+        <div class="ccc-qr">
+          <div class="ccc-qr-top">
+            <span class="ccc-qr-lbl">5月死亡</span>
+            <span class="ccc-qr-val" style="color:var(--blue)">274人</span>
+          </div>
+          <div class="ccc-qr-track">
+            <div class="ccc-qr-fill blue" style="width:94%"></div>
+          </div>
+        </div>
+        <div class="ccc-qr">
+          <div class="ccc-qr-top">
+            <span class="ccc-qr-lbl">6月死亡 ★ 最高</span>
+            <span class="ccc-qr-val" style="color:var(--blue)">293人</span>
+          </div>
+          <div class="ccc-qr-track">
+            <div class="ccc-qr-fill blue" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="ccc-q-note">2026年上半年合計死亡1,396人<br>較2025年同期增37%，較2024年增114%</div>
+      </div>
+    </div>
+
+    <div class="ccc-info" style="margin-top:12px">
+      2026年6月，導彈＋無人機攻擊造成烏克蘭境內45%平民傷亡（126死、907傷），集中在基輔、第聶伯羅等遠離前線的城市。前線短程無人機單月造成89死、588傷，均刷新紀錄。
+    </div>
+  </div>
+
+  <!-- Weekly chart -->
+  <div class="ccc-sec">
+    <div class="ccc-sec-hd">俄方週報：2026年7月每週死亡人數（米羅什尼克）</div>
+
+    <div class="ccc-wbar-val-row">
+      <div class="ccc-wbar-val normal">42</div>
+      <div class="ccc-wbar-val normal">~39</div>
+      <div class="ccc-wbar-val normal">40</div>
+      <div class="ccc-wbar-val peak">69</div>
+      <div class="ccc-wbar-val normal">57</div>
+      <div class="ccc-wbar-val normal">49</div>
+    </div>
+    <div class="ccc-wchart-bars">
+      <div class="ccc-wbar" style="height:61px" title="6月22–28日：42死、285傷（含2名未成年人）"></div>
+      <div class="ccc-wbar" style="height:57px" title="6月29–7月5日：約39死、約270傷"></div>
+      <div class="ccc-wbar" style="height:58px" title="7月6–12日：40死、272傷（含13名未成年人）"></div>
+      <div class="ccc-wbar peak" style="height:100px" title="7月13–19日：69死（峰值）、364傷（含12名未成年人）"></div>
+      <div class="ccc-wbar" style="height:83px" title="7月20–26日：57死、435傷；烏方發射7,195發彈藥"></div>
+      <div class="ccc-wbar" style="height:71px" title="7月27日起：49死（含4名兒童）"></div>
+    </div>
+    <div class="ccc-wbar-lbl-row">
+      <div class="ccc-wbar-lbl">6月<br>22–28</div>
+      <div class="ccc-wbar-lbl">6/29<br>–7/5</div>
+      <div class="ccc-wbar-lbl">7月<br>6–12</div>
+      <div class="ccc-wbar-lbl peak">7月<br>13–19<br>★峰值</div>
+      <div class="ccc-wbar-lbl">7月<br>20–26</div>
+      <div class="ccc-wbar-lbl">7月<br>27–</div>
+    </div>
+
+    <div class="ccc-info" style="margin-top:12px">
+      7月13–19日單週69人死亡為近期峰值（金色標記）。7月20–26日烏方記錄單週發射至少7,195發彈藥。7月24日至8月4日十天累計：97死、513傷以上（含兒童與救援人員）。
+    </div>
+  </div>
+
+  <!-- Specific incidents -->
+  <div class="ccc-sec">
+    <div class="ccc-sec-hd">俄方聲稱：具體高傷亡事件（2024–2026）</div>
+    <div class="ccc-timeline">
+      <div class="ccc-tl-item">
+        <div class="ccc-tl-date">2026年8月3日 — 蓋連吉克海灘</div>
+        <div class="ccc-tl-text">無人機攻擊：死亡6–7人（含3名兒童），受傷約40人</div>
+      </div>
+      <div class="ccc-tl-item">
+        <div class="ccc-tl-date">2024年至2026年8月 — 庫爾斯克州累計</div>
+        <div class="ccc-tl-text">自烏軍越境入侵以來：死亡633–640人，受傷561人（含25名未成年人）</div>
+      </div>
+      <div class="ccc-tl-item">
+        <div class="ccc-tl-date">2026年7月24日–8月4日 — 俄方週期累計</div>
+        <div class="ccc-tl-text">死亡97人，受傷至少513人（含兒童與救援人員）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Methodology -->
+  <div class="ccc-sec">
+    <div class="ccc-sec-hd">方法論差異</div>
+    <div class="ccc-info" style="margin-top:0">
+      <strong style="color:var(--blue)">聯合國OHCHR</strong>：由人權監測員逐案核實，死亡需確認為平民身份且為武裝衝突直接致死。為<strong>保守最低數字</strong>——未核實者不計入。2026年上半年較2024年同期增114%，主要由遠程武器對都市地區的系統性攻擊驅動。
+      <br><br>
+      <strong style="color:var(--red)">俄外交部 / 米羅什尼克</strong>：由地方當局與調查委員會提供，經俄外交部特使每週彙整至塔斯社、俄新社。俄方稱逾90–97%傷亡由無人機攻擊造成，目標包括民宅、海灘、公車站、醫院、遊樂場、加油站等。
+      <br><br>
+      兩份數據均有其統計限制與政治背景，應置於各自脈絡下解讀，不宜互相比大小。
+    </div>
+  </div>
+
+  <!-- Source -->
+  <div class="ccc-src">
+    資料來源：聯合國人權高專辦（OHCHR）月度報告、塔斯社（TASS）、俄新社（RIA Novosti）轉載米羅什尼克週報、俄羅斯調查委員會地方聲明｜製表：張威翔｜2026年8月8日
+  </div>
+
+</body>
+</html>
