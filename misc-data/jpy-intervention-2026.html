@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美財長記事本被拍到：日元危機與美國的真實算盤（2026）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0b0f1a;
+  --surf:#131a2a;
+  --surf2:#1a2235;
+  --border:rgba(255,255,255,0.07);
+  --red:#e66767;
+  --red-bg:rgba(230,103,103,0.10);
+  --red-bd:rgba(230,103,103,0.28);
+  --blue:#3987e5;
+  --blue-bg:rgba(57,135,229,0.10);
+  --blue-bd:rgba(57,135,229,0.28);
+  --green:#1baf7a;
+  --green-bg:rgba(27,175,122,0.10);
+  --green-bd:rgba(27,175,122,0.28);
+  --gold:#f0b429;
+  --gold-bg:rgba(240,180,41,0.10);
+  --gold-bd:rgba(240,180,41,0.28);
+  --text:#e8eaf0;
+  --text2:#9098b0;
+  --muted:#5a6380;
+  --mono:'Space Mono',monospace;
+  --sans:'Noto Sans TC',system-ui,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:18px;
+  line-height:1.65;
+  padding:0 16px 48px;
+  max-width:860px;
+  margin:0 auto;
+}
+
+/* ── HEADER ── */
+.jpy-hdr{
+  padding:32px 0 26px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:32px;
+}
+.jpy-kicker{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.jpy-kicker .fi{width:22px;height:15px;border-radius:2px;flex-shrink:0}
+.jpy-hdr h1{
+  font-size:clamp(18px,3.4vw,25px);
+  font-weight:700;
+  line-height:1.35;
+  margin-bottom:10px;
+}
+.jpy-hdr-quote{
+  background:var(--surf);
+  border-left:3px solid var(--gold);
+  padding:12px 16px;
+  font-family:var(--mono);
+  font-size:18px;
+  color:var(--gold);
+  margin-bottom:10px;
+  border-radius:0 6px 6px 0;
+}
+.jpy-hdr-sub{font-size:18px;color:var(--text2)}
+
+/* ── SECTION ── */
+.jpy-sec{margin-bottom:36px}
+.jpy-sec-lbl{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.jpy-sec-lbl i{font-size:16px}
+.jpy-sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── HERO TILES ── */
+.jpy-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+.jpy-tile{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px 16px;
+}
+.jpy-tile.t-alert{background:var(--red-bg);border-color:var(--red-bd)}
+.jpy-tile.t-warn{background:var(--gold-bg);border-color:var(--gold-bd)}
+.jpy-tile.t-info{background:var(--blue-bg);border-color:var(--blue-bd)}
+.jpy-tile-icon{font-size:20px;margin-bottom:10px;display:block;color:var(--text2)}
+.jpy-tile.t-alert .jpy-tile-icon{color:var(--red)}
+.jpy-tile.t-warn .jpy-tile-icon{color:var(--gold)}
+.jpy-tile.t-info .jpy-tile-icon{color:var(--blue)}
+.jpy-tile-val{
+  font-family:var(--mono);
+  font-size:clamp(22px,3.5vw,30px);
+  font-weight:700;
+  line-height:1;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.jpy-tile.t-alert .jpy-tile-val{color:var(--red)}
+.jpy-tile.t-warn .jpy-tile-val{color:var(--gold)}
+.jpy-tile.t-info .jpy-tile-val{color:var(--blue)}
+.jpy-tile-lbl{font-size:16px;color:var(--text2);line-height:1.35}
+
+/* ── TIMELINE ── */
+.jpy-timeline{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+}
+.jpy-tl-item{
+  display:flex;
+  gap:16px;
+  padding-bottom:20px;
+  position:relative;
+}
+.jpy-tl-item:last-child{padding-bottom:0}
+.jpy-tl-item::before{
+  content:'';
+  position:absolute;
+  left:7px;
+  top:22px;
+  bottom:0;
+  width:2px;
+  background:var(--border);
+}
+.jpy-tl-item:last-child::before{display:none}
+.jpy-tl-dot{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  flex-shrink:0;
+  margin-top:4px;
+  border:2px solid;
+}
+.jpy-tl-dot.d-fail{background:var(--red-bg);border-color:var(--red)}
+.jpy-tl-dot.d-turn{background:var(--gold-bg);border-color:var(--gold)}
+.jpy-tl-dot.d-us{background:var(--blue-bg);border-color:var(--blue)}
+.jpy-tl-dot.d-low{background:var(--red-bg);border-color:var(--red)}
+.jpy-tl-body{flex:1}
+.jpy-tl-date{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.jpy-tl-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.jpy-tl-desc{font-size:18px;color:var(--text2);line-height:1.6}
+.jpy-tl-tag{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:11px;
+  padding:2px 7px;
+  border-radius:4px;
+  font-weight:700;
+  margin-left:8px;
+  vertical-align:middle;
+}
+.jpy-tl-tag.fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.jpy-tl-tag.wait{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd)}
+
+/* ── CARRY TRADE FLOW ── */
+.jpy-carry{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:2px;
+  margin-bottom:14px;
+}
+.jpy-carry-step{
+  background:var(--surf);
+  border:1px solid var(--border);
+  padding:16px;
+  text-align:center;
+  position:relative;
+}
+.jpy-carry-step:first-child{border-radius:10px 0 0 10px}
+.jpy-carry-step:last-child{border-radius:0 10px 10px 0}
+.jpy-carry-step.cs-profit{border-color:var(--green-bd);background:var(--green-bg)}
+.jpy-carry-step.cs-risk{border-color:var(--red-bd);background:var(--red-bg)}
+.jpy-carry-icon{font-size:22px;margin-bottom:8px;display:block}
+.jpy-carry-step.cs-profit .jpy-carry-icon{color:var(--green)}
+.jpy-carry-step.cs-risk .jpy-carry-icon{color:var(--red)}
+.jpy-carry-step .jpy-carry-icon{color:var(--gold)}
+.jpy-carry-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.jpy-carry-desc{font-size:15px;color:var(--text2);line-height:1.4}
+.jpy-carry-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  color:var(--muted);
+  align-self:center;
+  padding:0 4px;
+}
+.jpy-carry-crisis{
+  background:var(--red-bg);
+  border:1px solid var(--red-bd);
+  border-radius:8px;
+  padding:14px 16px;
+  font-size:18px;
+  color:var(--text2);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  line-height:1.6;
+}
+.jpy-carry-crisis i{color:var(--red);flex-shrink:0;margin-top:2px;font-size:19px}
+
+/* ── SCALE COMPARISON BARS ── */
+.jpy-scale{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+}
+.jpy-scale-hd{font-size:18px;color:var(--text2);margin-bottom:6px}
+.jpy-scale-sub{font-size:15px;color:var(--muted);margin-bottom:20px}
+.jpy-bar-row{margin-bottom:18px}
+.jpy-bar-row:last-child{margin-bottom:0}
+.jpy-bar-top{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  margin-bottom:5px;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.jpy-bar-name{
+  font-size:18px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.jpy-bar-name .fi{width:22px;height:15px;border-radius:2px;flex-shrink:0}
+.jpy-bar-val{font-family:var(--mono);font-size:18px;font-weight:700}
+.jpy-bar-note{font-size:15px;color:var(--muted);margin-bottom:7px}
+.jpy-bar-track{
+  width:100%;
+  height:24px;
+  background:rgba(255,255,255,0.05);
+  border-radius:4px;
+  overflow:hidden;
+}
+.jpy-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap}
+.jpy-bar-fill.jp{background:rgba(230,103,103,0.65);color:var(--text)}
+.jpy-bar-fill.us{background:rgba(57,135,229,0.65);color:var(--text)}
+.jpy-bar-fill.us98{background:rgba(57,135,229,0.35);color:var(--text2)}
+
+.jpy-mkt-note{
+  background:var(--gold-bg);
+  border:1px solid var(--gold-bd);
+  border-radius:8px;
+  padding:14px 16px;
+  margin-top:16px;
+  font-size:18px;
+  color:var(--text2);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  line-height:1.6;
+}
+.jpy-mkt-note i{color:var(--gold);flex-shrink:0;margin-top:2px;font-size:19px}
+
+/* ── FISCAL BAR ── */
+.jpy-fiscal{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+}
+.jpy-fiscal-hd{font-size:18px;color:var(--text2);margin-bottom:20px}
+.jpy-fiscal-row{margin-bottom:18px}
+.jpy-fiscal-row:last-child{margin-bottom:0}
+.jpy-fiscal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:6px;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.jpy-fiscal-lbl{font-size:18px;font-weight:700}
+.jpy-fiscal-num{font-family:var(--mono);font-size:18px;font-weight:700}
+.jpy-fiscal-track{
+  width:100%;
+  height:28px;
+  background:rgba(255,255,255,0.04);
+  border-radius:4px;
+  overflow:hidden;
+  display:flex;
+  gap:2px;
+}
+.jpy-fiscal-seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap;padding:0 8px}
+.jpy-fiscal-seg.fs-rev{background:rgba(57,135,229,0.50);color:var(--text)}
+.jpy-fiscal-seg.fs-gap{background:rgba(230,103,103,0.65);color:var(--text)}
+.jpy-fiscal-seg.fs-full{background:rgba(230,103,103,0.50);color:var(--text)}
+
+/* ── 1998 COMPARE ── */
+.jpy-compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.jpy-cmp-card{
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px;
+}
+.jpy-cmp-card.cmp-fail{border-color:var(--muted)}
+.jpy-cmp-card.cmp-wait{border-color:var(--gold-bd)}
+.jpy-cmp-year{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.jpy-cmp-title{font-size:18px;font-weight:700;margin-bottom:10px}
+.jpy-cmp-body{font-size:18px;color:var(--text2);line-height:1.6}
+.jpy-cmp-result{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  font-family:var(--mono);
+  font-size:14px;
+  font-weight:700;
+}
+.jpy-cmp-result.r-fail{color:var(--red)}
+.jpy-cmp-result.r-wait{color:var(--gold)}
+
+/* ── 1941 vs 2026 ── */
+.jpy-mirror{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+}
+.jpy-mir-col{
+  background:var(--surf);
+  border:1px solid var(--border);
+  padding:18px;
+}
+.jpy-mir-col:first-child{border-radius:10px 0 0 10px}
+.jpy-mir-col:last-child{border-radius:0 10px 10px 0}
+.jpy-mir-col.mc-then{border-color:var(--muted)}
+.jpy-mir-col.mc-now{border-color:var(--blue-bd)}
+.jpy-mir-yr{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.jpy-mir-h{font-size:18px;font-weight:700;margin-bottom:12px}
+.jpy-mir-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+  font-size:18px;
+}
+.jpy-mir-row:last-child{margin-bottom:0}
+.jpy-mir-row i{flex-shrink:0;margin-top:3px;font-size:17px;color:var(--muted)}
+.jpy-mir-row.mc-then i{color:var(--muted)}
+.jpy-mir-row.mc-now i{color:var(--blue)}
+.jpy-mir-txt{color:var(--text2);line-height:1.5}
+
+.jpy-mirror-verdict{
+  background:var(--gold-bg);
+  border:1px solid var(--gold-bd);
+  border-radius:8px;
+  padding:16px;
+  margin-top:12px;
+  font-size:18px;
+  color:var(--text2);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  line-height:1.65;
+}
+.jpy-mirror-verdict i{color:var(--gold);flex-shrink:0;margin-top:2px;font-size:19px}
+
+/* ── FOOTER ── */
+.jpy-footer{
+  margin-top:32px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:space-between;
+}
+
+/* ── RWD ── */
+@media(max-width:640px){
+  .jpy-compare{grid-template-columns:1fr}
+  .jpy-mirror{grid-template-columns:1fr}
+  .jpy-mir-col:first-child{border-radius:10px 10px 0 0}
+  .jpy-mir-col:last-child{border-radius:0 0 10px 10px}
+  .jpy-carry{grid-template-columns:1fr}
+  .jpy-carry-step:first-child,.jpy-carry-step:last-child{border-radius:0}
+  .jpy-carry-step:first-child{border-radius:10px 10px 0 0}
+  .jpy-carry-step:last-child{border-radius:0 0 10px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="jpy-hdr">
+  <div class="jpy-kicker">
+    <span class="fi fi-us"></span>
+    <span class="fi fi-jp"></span>
+    匯率干預 × 地緣金融
+  </div>
+  <h1>美財長記事本被長焦鏡頭拍到<br>日元危機背後藏著1941年就沒變的問題</h1>
+  <div class="jpy-hdr-quote">
+    <i class="ti ti-notebook"></i>&ensp;「買入日元 50 至 100 億美元」——貝森特便條，2026.07.31
+  </div>
+  <p class="jpy-hdr-sub">截至2026年8月 ｜ 美財政部干預日元匯率事件全解析</p>
+</header>
+
+<!-- ── SECTION 1: 三大關鍵數字 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-dashboard"></i>
+    三大關鍵數字
+  </div>
+  <div class="jpy-tiles">
+    <div class="jpy-tile t-alert">
+      <i class="jpy-tile-icon ti ti-trending-down"></i>
+      <div class="jpy-tile-val">163.23</div>
+      <div class="jpy-tile-lbl">日元兌美元（2026.07.22）<br>39年7個月來最低點</div>
+    </div>
+    <div class="jpy-tile t-warn">
+      <i class="jpy-tile-icon ti ti-currency-dollar"></i>
+      <div class="jpy-tile-val">50–100億</div>
+      <div class="jpy-tile-lbl">美元<br>美財政部買入日元規模</div>
+    </div>
+    <div class="jpy-tile t-info">
+      <i class="jpy-tile-icon ti ti-building-bank"></i>
+      <div class="jpy-tile-val">1.2兆</div>
+      <div class="jpy-tile-lbl">美元<br>日本持有美國公債（全球最大）</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: 事件時間軸 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-timeline"></i>
+    2026年危機時間軸
+  </div>
+  <div class="jpy-timeline">
+    <div class="jpy-tl-item">
+      <div class="jpy-tl-dot d-fail"></div>
+      <div class="jpy-tl-body">
+        <div class="jpy-tl-date">2026年4月底—5月底</div>
+        <div class="jpy-tl-title">日本下場護盤 737 億美元<span class="jpy-tl-tag fail">史上最大規模</span></div>
+        <div class="jpy-tl-desc">動用外匯儲備 117.3 兆日元，單月規模創有記錄以來最高。日元跌勢依然未止。</div>
+      </div>
+    </div>
+    <div class="jpy-tl-item">
+      <div class="jpy-tl-dot d-turn"></div>
+      <div class="jpy-tl-body">
+        <div class="jpy-tl-date">2026.06.16</div>
+        <div class="jpy-tl-title">日銀升息至 1%<span class="jpy-tl-tag fail">31年首次</span></div>
+        <div class="jpy-tl-desc">從 0.75% 升至 1%，31年來首度重返1%以上。套息交易吸引力理應下降——但日元繼續跌。</div>
+      </div>
+    </div>
+    <div class="jpy-tl-item">
+      <div class="jpy-tl-dot d-low"></div>
+      <div class="jpy-tl-body">
+        <div class="jpy-tl-date">2026.07.22</div>
+        <div class="jpy-tl-title">日元觸及 163.231<span class="jpy-tl-tag fail">39年最低</span></div>
+        <div class="jpy-tl-desc">升息後日元仍跌至 39 年 7 個月新低，反映日本財政結構問題非利率政策所能修復。</div>
+      </div>
+    </div>
+    <div class="jpy-tl-item">
+      <div class="jpy-tl-dot d-us"></div>
+      <div class="jpy-tl-body">
+        <div class="jpy-tl-date">2026.07.31</div>
+        <div class="jpy-tl-title">美財政部指示紐約聯準會出手</div>
+        <div class="jpy-tl-desc">賣出歐元、買入日元，規模 50—100 億美元。關鍵細節：用的是歐元，不是美元——連自己的「紙」都不想動。財長便條被記者長焦鏡頭拍到。</div>
+      </div>
+    </div>
+    <div class="jpy-tl-item">
+      <div class="jpy-tl-dot d-us"></div>
+      <div class="jpy-tl-body">
+        <div class="jpy-tl-date">2026.08.02</div>
+        <div class="jpy-tl-title">川普空軍一號解釋<span class="jpy-tl-tag wait">前後矛盾</span></div>
+        <div class="jpy-tl-desc">20秒內說了兩件矛盾的事：「我們會從這件事得到財務上的好處」，緊接著「這更多是一個友誼的訊號」。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: 套息交易機制 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-arrows-exchange"></i>
+    套息交易（Carry Trade）機制
+  </div>
+  <div class="jpy-carry">
+    <div class="jpy-carry-step">
+      <i class="jpy-carry-icon ti ti-cash"></i>
+      <div class="jpy-carry-title">① 借日元</div>
+      <div class="jpy-carry-desc">利率接近 0%<br>借錢成本極低</div>
+    </div>
+    <div class="jpy-carry-step">
+      <i class="jpy-carry-icon ti ti-currency-dollar"></i>
+      <div class="jpy-carry-title">② 換美元</div>
+      <div class="jpy-carry-desc">賣日元、買美元<br>日元供給增加→貶值</div>
+    </div>
+    <div class="jpy-carry-step cs-profit">
+      <i class="jpy-carry-icon ti ti-building-bank"></i>
+      <div class="jpy-carry-title">③ 買美債</div>
+      <div class="jpy-carry-desc">收益 5%+<br>賺取利差</div>
+    </div>
+  </div>
+  <div class="jpy-carry-crisis">
+    <i class="ti ti-alert-triangle"></i>
+    <span><strong>危機觸發：</strong>借出去的錢終須歸還。如果所有套息交易者在同一時點被迫平倉——他們必須賣出美債、換回美元、再買日元還給東京。買日元的隊伍瞬間擠爆，日元雪崩式飆升，連帶衝擊全球資產價格。2008年雷曼倒閉時，日元從 110 漲到 90——儘管危機源頭與日本毫無關係。</span>
+  </div>
+</section>
+
+<!-- ── SECTION 4: 干預規模 vs 市場體量 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-chart-bar"></i>
+    干預規模比較（以日本2026年護盤金額為基準 100%）
+  </div>
+  <div class="jpy-scale">
+    <div class="jpy-scale-hd">各次外匯干預規模對照</div>
+    <div class="jpy-scale-sub">* 全球外匯市場日均交易量：9.6兆美元（96,000億美元）</div>
+
+    <!-- Japan 2026: 73.7B → 100% -->
+    <div class="jpy-bar-row">
+      <div class="jpy-bar-top">
+        <div class="jpy-bar-name"><span class="fi fi-jp"></span>日本2026年護盤（單月）</div>
+        <div class="jpy-bar-val" style="color:var(--red)">737億美元</div>
+      </div>
+      <div class="jpy-bar-note">2026年4-5月，史上單月最大規模外匯干預 ／ 佔全球日均量 0.77%</div>
+      <div class="jpy-bar-track">
+        <div class="jpy-bar-fill jp" style="width:100%">100%</div>
+      </div>
+    </div>
+
+    <!-- US 2026: 10B → 13.6% -->
+    <div class="jpy-bar-row">
+      <div class="jpy-bar-top">
+        <div class="jpy-bar-name"><span class="fi fi-us"></span>美國2026年干預</div>
+        <div class="jpy-bar-val" style="color:var(--blue)">50–100億美元</div>
+      </div>
+      <div class="jpy-bar-note">2026年7月31日，賣歐元買日元 ／ 佔全球日均量 0.1%</div>
+      <div class="jpy-bar-track">
+        <div class="jpy-bar-fill us" style="width:13.6%">13.6%</div>
+      </div>
+    </div>
+
+    <!-- US 1998: 0.833B → 1.1% -->
+    <div class="jpy-bar-row">
+      <div class="jpy-bar-top">
+        <div class="jpy-bar-name"><span class="fi fi-us"></span>美國1998年干預</div>
+        <div class="jpy-bar-val" style="color:var(--text2)">8.33億美元</div>
+      </div>
+      <div class="jpy-bar-note">1998年6月，結果：無效 ／ 佔全球日均量不足0.01%</div>
+      <div class="jpy-bar-track">
+        <div class="jpy-bar-fill us98" style="width:1.1%">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="jpy-mkt-note">
+      <i class="ti ti-bulb"></i>
+      <span>「政府買不動一個市場，只能嚇動一個市場。」那100億美元不是燃料，是一根火柴——燃料（套息交易部位）早已堆滿整個房間，等一個點火的時機。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 5: 日本財政困境 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-chart-pie"></i>
+    日本2026財年財政結構（以122兆日元歲出為滿格）
+  </div>
+  <div class="jpy-fiscal">
+    <div class="jpy-fiscal-hd">財政結構性赤字是日元長期承壓的根本原因</div>
+
+    <!-- 歲入 83T: 83/122 = 68% -->
+    <div class="jpy-fiscal-row">
+      <div class="jpy-fiscal-top">
+        <div class="jpy-fiscal-lbl">歲入</div>
+        <div class="jpy-fiscal-num" style="color:var(--blue)">83兆日元</div>
+      </div>
+      <div class="jpy-fiscal-track">
+        <div class="jpy-fiscal-seg fs-rev" style="width:68%">83兆</div>
+      </div>
+    </div>
+
+    <!-- 歲出 122T: 100% = 歲入68% + 缺口32% -->
+    <div class="jpy-fiscal-row">
+      <div class="jpy-fiscal-top">
+        <div class="jpy-fiscal-lbl">歲出</div>
+        <div class="jpy-fiscal-num" style="color:var(--red)">122兆日元</div>
+      </div>
+      <div class="jpy-fiscal-track">
+        <div class="jpy-fiscal-seg fs-rev" style="width:68%">稅收等收入 83兆</div>
+        <div class="jpy-fiscal-seg fs-gap" style="width:32%">缺口 39兆</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:18px;color:var(--text2);line-height:1.65">
+      財政缺口 <strong style="color:var(--red)">39兆日元</strong> 只能靠舉債填補，持續的借貸本身即壓低日元的長期信用。利率調升能抑制套息交易，卻無法修復財政結構——這是日銀升息後日元仍繼續跌的根本原因。
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 6: 1998 vs 2026 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-history"></i>
+    歷史前車：1998年 vs 2026年
+  </div>
+  <div class="jpy-compare">
+    <div class="jpy-cmp-card cmp-fail">
+      <div class="jpy-cmp-year">1998年6月</div>
+      <div class="jpy-cmp-title">美國花8.33億美元救日元</div>
+      <div class="jpy-cmp-body">同樣規模的干預，什麼都沒發生——火柴扔進了水池。外匯市場無動於衷。</div>
+      <div class="jpy-cmp-result r-fail"><i class="ti ti-x" style="margin-right:4px"></i>效果：無效</div>
+    </div>
+    <div class="jpy-cmp-card cmp-fail">
+      <div class="jpy-cmp-year">1998年8月—10月</div>
+      <div class="jpy-cmp-title">俄羅斯債務違約→LTCM爆倉</div>
+      <div class="jpy-cmp-body">外部衝擊觸發套息交易全面平倉。10月6—8日兩天，日元走出1973年以來最劇烈漲幅。燃料還是同一堆，但這次火柴點著了。</div>
+      <div class="jpy-cmp-result" style="color:var(--green)"><i class="ti ti-flame" style="margin-right:4px"></i>日元兩天暴漲：1973年來最大</div>
+    </div>
+  </div>
+  <div style="margin-top:12px;background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:18px;color:var(--text2);line-height:1.65">
+    <strong style="color:var(--gold)">2026年7月</strong>：貝森特的那100億，最終是火柴點著燃料，還是再次扔進水池——市場仍在等待答案。
+  </div>
+</section>
+
+<!-- ── SECTION 7: 1941 vs 2026 ── -->
+<section class="jpy-sec">
+  <div class="jpy-sec-lbl">
+    <i class="ti ti-scale"></i>
+    歷史鏡像：1941 vs 2026
+  </div>
+  <div class="jpy-mirror">
+    <div class="jpy-mir-col mc-then">
+      <div class="jpy-mir-yr">1941年7月26日</div>
+      <div class="jpy-mir-h">美國封鎖日本</div>
+      <div class="jpy-mir-row mc-then">
+        <i class="ti ti-lock"></i>
+        <div class="jpy-mir-txt">凍結日本在美全部資產</div>
+      </div>
+      <div class="jpy-mir-row mc-then">
+        <i class="ti ti-ban"></i>
+        <div class="jpy-mir-txt">切斷日元換美元買油的管道</div>
+      </div>
+      <div class="jpy-mir-row mc-then">
+        <i class="ti ti-oil"></i>
+        <div class="jpy-mir-txt">保護美國的石油秩序</div>
+      </div>
+      <div class="jpy-mir-row mc-then">
+        <i class="ti ti-sword"></i>
+        <div class="jpy-mir-txt">手段：封鎖、切斷</div>
+      </div>
+    </div>
+    <div class="jpy-mir-col mc-now">
+      <div class="jpy-mir-yr">2026年7月31日</div>
+      <div class="jpy-mir-h">美國護盤日元</div>
+      <div class="jpy-mir-row mc-now">
+        <i class="ti ti-currency-dollar"></i>
+        <div class="jpy-mir-txt">掏出100億美元買日元</div>
+      </div>
+      <div class="jpy-mir-row mc-now">
+        <i class="ti ti-arrows-exchange"></i>
+        <div class="jpy-mir-txt">維持日元穩定，防止套息平倉</div>
+      </div>
+      <div class="jpy-mir-row mc-now">
+        <i class="ti ti-file-dollar"></i>
+        <div class="jpy-mir-txt">保護美國的公債市場</div>
+      </div>
+      <div class="jpy-mir-row mc-now">
+        <i class="ti ti-heart-handshake"></i>
+        <div class="jpy-mir-txt">手段：購買、援助</div>
+      </div>
+    </div>
+  </div>
+  <div class="jpy-mirror-verdict">
+    <i class="ti ti-bulb"></i>
+    <span>1941年，美國凍結日本資產，切斷的是<strong>日本的命脈</strong>。2026年，美國掏出100億美元買日元，維繫的是<strong>自己的命脈</strong>——日本若被迫賣出持有的1.2兆美元美國公債，美國的借貸成本將大幅攀升。手段從封鎖變成購買，但美國優先保護自身利益的邏輯，從1941年到2026年從未改變。</span>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="jpy-footer">
+  <span>製表：張威翔</span>
+  <span>資料來源：美國財政部、日本財務省、日本銀行、Bloomberg、影片分析整合</span>
+  <span>2026.08</span>
+</footer>
+
+</body>
+</html>
