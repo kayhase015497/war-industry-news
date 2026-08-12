@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "格陵蘭能源未授權鑽探設備搶運地圖",
+    "titleEn": "Greenland Energy Unauthorized Equipment Deployment – Jameson Land 2026",
+    "subtitle": "德州石油公司搶先運抵詹姆森地・無正式許可・格陵蘭當局發出強烈警告",
+    "date": "2026-08-11",
+    "status": "breaking",
+    "theme": "orange",
+    "sources": ["金融時報（FT）", "歐洲動態（EurAktiv）", "英國衛報（Guardian）"]
+  },
+  "map": {
+    "center": [69.5, -26.0],
+    "zoom": 6,
+    "bounds": [[63.0, -45.0], [76.0, -12.0]]
+  },
+  "infoPanel": {
+    "title": "格陵蘭能源未取得許可搶運鑽探設備・格陵蘭當局發警告",
+    "paragraphs": [
+      "一家與美國總統川普圈子有關聯的德州石油公司「格陵蘭能源」（Greenland Energy），在尚未取得格陵蘭當局正式批准的情況下，搶先將石油鑽探設備運抵東海岸偏遠地區詹姆森地（Jameson Land）。格陵蘭政府接獲民眾通報後發出「強烈警告」，引來試圖製造既成事實的質疑聲浪。",
+      "格陵蘭能源去年在德州成立，已在納斯達克掛牌，計畫與英國80 Mile旗下子公司White Flame Energy合作鑽探。公司高層聲稱詹姆森地區可能蘊藏價值高達約1兆美元的原油，初期計畫投入約6000萬美元開鑿兩口井，後調整為先鑽一口，目標深度約3500公尺。",
+      "2026年7月，當地居民發現拖船在內爾勒里特伊納特（Nerlerit Inaat）附近卸下至少十多個貨櫃及機具，設備原從格陵蘭東部塔西拉克（Tasiilaq）運至此地，相關登岸許可早已過期且未續簽。川普多次公開表達想掌控格陵蘭，此次未授權搶運設備被視為試圖卡位的政治動作。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [70.20, -27.50],
+        [70.20, -20.00],
+        [71.80, -20.00],
+        [71.80, -27.50],
+        [70.20, -27.50]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.10,
+      "borderColor": "#d35400",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.50,
+      "borderDashArray": "8,4",
+      "popup": {
+        "title": "詹姆森地（Jameson Land）・計畫鑽探範圍（概略）",
+        "tag": "🛢️ 計畫鑽探區域（概略示意）",
+        "tagClass": "tag-possible",
+        "desc": "格陵蘭東岸偏遠地區，格陵蘭能源與White Flame Energy計畫合作鑽探原油之目標區域。公司高層聲稱此地可能蘊藏價值高達1兆美元的原油。⚠️ 為概略示意範圍，非精確鑽探許可邊界。",
+        "source": "金融時報；歐洲動態"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [65.61, -37.64],
+        [67.20, -32.00],
+        [68.80, -26.50],
+        [70.74, -22.65]
+      ],
+      "color": "#e67e22",
+      "weight": 2,
+      "opacity": 0.60,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "鑽探設備海運路線（塔西拉克→內爾勒里特伊納特）",
+        "tag": "🚢 設備運輸路線（概略）",
+        "tagClass": "tag-possible",
+        "desc": "格陵蘭能源以拖船將鑽探設備從東部塔西拉克（Tasiilaq）沿海岸北運至內爾勒里特伊納特（Nerlerit Inaat）附近卸岸，相關登岸許可早已過期且未續簽。⚠️ 為概略示意路線。",
+        "source": "金融時報；英國衛報"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [71.00, -24.00],
+      "name": "Jameson Land Drilling Target Area",
+      "nameLocal": "詹姆森地（Jameson Land）・未授權鑽探目標區 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🛢️ 未授權設備搶運・鑽探目標區",
+      "tagClass": "tag-confirmed",
+      "desc": "格陵蘭東岸偏遠無人地帶，為格陵蘭能源與英國White Flame Energy宣稱的原油鑽探目標地點。公司高層宣稱此地蘊藏價值逾1兆美元的原油，計畫初期投入約6000萬美元開鑿一口深達3500公尺的探井。格陵蘭政府尚未批准相關鑽探許可，設備在無正式授權情況下搶先運抵。⚠️ 概略位置。",
+      "coords": "71°00'N 024°00'W",
+      "source": "金融時報；歐洲動態；英國衛報"
+    },
+    {
+      "latlng": [70.74, -22.65],
+      "name": "Nerlerit Inaat (Constable Pynt), East Greenland",
+      "nameLocal": "內爾勒里特伊納特（Nerlerit Inaat／Constable Pynt）・東格陵蘭",
+      "type": "confirmed",
+      "tag": "📦 拖船卸下逾十個貨櫃及機具",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年7月，當地居民發現拖船在此附近水域卸下至少十多個貨櫃及鑽探機具，消息隨即傳至格陵蘭政府。內爾勒里特伊納特為東格陵蘭少數具備簡易機場的據點，距詹姆森地鑽探目標區域較近。相關登岸許可早已過期且未向當局續簽。",
+      "coords": "70°44'N 022°39'W",
+      "source": "金融時報；英國衛報（居民通報）"
+    },
+    {
+      "latlng": [65.61, -37.64],
+      "name": "Tasiilaq, East Greenland",
+      "nameLocal": "塔西拉克（Tasiilaq）・東格陵蘭",
+      "type": "possible",
+      "tag": "📍 設備出發點・東格陵蘭主要聚落",
+      "tagClass": "tag-possible",
+      "desc": "東格陵蘭最大聚落，格陵蘭能源的鑽探設備據報從此地裝船，以拖船北運至內爾勒里特伊納特附近卸岸。⚠️ 概略位置。",
+      "coords": "65°36'N 037°38'W",
+      "source": "金融時報"
+    },
+    {
+      "latlng": [64.18, -51.74],
+      "name": "Nuuk, Greenland (Capital)",
+      "nameLocal": "努克（Nuuk）・格陵蘭首都",
+      "type": "capital",
+      "tag": "🏛️ 努克・格陵蘭首都・發出強烈警告",
+      "tagClass": "tag-reference",
+      "desc": "格陵蘭行政首都，格陵蘭政府接獲民眾通報後，從努克發出「強烈警告」，要求格陵蘭能源立即說明未授權搶運設備的相關情況。格陵蘭當局強調，任何資源開採活動均須事先取得正式許可。",
+      "coords": "64°11'N 051°44'W",
+      "source": "格陵蘭政府聲明"
+    }
+  ],
+  "legend": [
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認事件地點（未授權卸載・當局警告）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "相關地點（設備出發點）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "格陵蘭首都（地理參考）" },
+    { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.15, "borderColor": "#d35400", "label": "詹姆森地計畫鑽探範圍（概略示意）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2, "dash": "7,5", "label": "設備海運路線（概略）" }
+  ]
+}
