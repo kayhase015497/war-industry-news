@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>中國抗戰天空的援軍比較 — 蘇聯志願航空隊 vs 飛虎隊三期</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0b0f1a;
+      --surf:    #131a2a;
+      --surf2:   #1a2235;
+      --surf3:   #202d45;
+      --green:   #1baf7a;
+      --green-bg:rgba(27,175,122,0.10);
+      --green-bd:rgba(27,175,122,0.28);
+      --gold:    #f0b429;
+      --gold-bg: rgba(240,180,41,0.10);
+      --gold-bd: rgba(240,180,41,0.28);
+      --blue:    #3987e5;
+      --blue-bg: rgba(57,135,229,0.10);
+      --blue-bd: rgba(57,135,229,0.28);
+      --violet:  #9085e9;
+      --vio-bg:  rgba(144,133,233,0.10);
+      --vio-bd:  rgba(144,133,233,0.28);
+      --red:     #e66767;
+      --text:    #e8eaf0;
+      --text-sec:#8a94a8;
+      --mono:    'Space Mono', monospace;
+      --sans:    'Noto Sans TC', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.65;
+      padding: clamp(16px, 4vw, 32px);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    .cav-hd {
+      border-left: 4px solid var(--gold);
+      padding-left: 16px;
+      margin-bottom: 8px;
+    }
+    .cav-hd-title {
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .cav-hd-sub { font-size: 16px; color: var(--text-sec); margin-bottom: 20px; }
+
+    /* ── Context note ────────────────────────────────── */
+    .cav-context {
+      background: var(--surf);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 16px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      border-left: 3px solid var(--gold);
+    }
+
+    /* ── Hero tiles ──────────────────────────────────── */
+    .cav-tiles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 700px) { .cav-tiles { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 400px) { .cav-tiles { grid-template-columns: 1fr; } }
+    .cav-tile {
+      border-radius: 8px;
+      padding: 14px;
+      border-left: 4px solid;
+    }
+    .cav-tile.green  { border-left-color: var(--green);  background: var(--green-bg); }
+    .cav-tile.gold   { border-left-color: var(--gold);   background: var(--gold-bg); }
+    .cav-tile.blue   { border-left-color: var(--blue);   background: var(--blue-bg); }
+    .cav-tile.violet { border-left-color: var(--violet); background: var(--vio-bg); }
+    .cav-tile-lbl {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .cav-tile-val {
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      font-family: var(--mono);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .cav-tile.green  .cav-tile-val { color: var(--green); }
+    .cav-tile.gold   .cav-tile-val { color: var(--gold); }
+    .cav-tile.blue   .cav-tile-val { color: var(--blue); }
+    .cav-tile.violet .cav-tile-val { color: var(--violet); }
+    .cav-tile-sub { font-size: 13px; color: var(--text-sec); line-height: 1.4; }
+
+    /* ── Section ─────────────────────────────────────── */
+    .cav-sec { margin-bottom: 32px; }
+    .cav-sec-hd {
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(138,148,168,0.18);
+    }
+
+    /* ── Timeline ────────────────────────────────────── */
+    .cav-tl { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+    .cav-tl-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+    @media (max-width: 560px) {
+      .cav-tl-row { grid-template-columns: 1fr; }
+    }
+    .cav-tl-label {
+      font-size: 13px;
+      font-family: var(--mono);
+      line-height: 1.3;
+      text-align: right;
+      padding-right: 8px;
+    }
+    @media (max-width: 560px) {
+      .cav-tl-label { text-align: left; padding-right: 0; }
+    }
+    .cav-tl-bar-wrap {
+      position: relative;
+      height: 28px;
+    }
+    /* reference axis: 1937=0%, 1946=100% → 9 years = 100% */
+    /* 1937 = 0, 1938 = 11.1%, ... 1941 = 44.4%, 1942 = 55.5%, 1943 = 66.6%, 1945 = 88.8% */
+    .cav-tl-bar {
+      position: absolute;
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-size: 12px;
+      font-family: var(--mono);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .cav-tl-bar.green  { background: var(--green);  color: #fff; }
+    .cav-tl-bar.gold   { background: var(--gold);   color: #1a1200; }
+    .cav-tl-bar.blue   { background: var(--blue);   color: #fff; }
+    .cav-tl-bar.violet { background: var(--violet); color: #fff; }
+    /* Axis labels */
+    .cav-tl-axis {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .cav-tl-axis-labels {
+      position: relative;
+      height: 18px;
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--text-sec);
+    }
+    .cav-tl-axis-tick {
+      position: absolute;
+      transform: translateX(-50%);
+    }
+
+    /* ── Comparison table ────────────────────────────── */
+    .cav-table-wrap { overflow-x: auto; }
+    .cav-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+    .cav-table th {
+      background: var(--surf2);
+      color: var(--text-sec);
+      font-size: 12px;
+      font-family: var(--mono);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid rgba(138,148,168,0.2);
+      white-space: nowrap;
+    }
+    .cav-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(138,148,168,0.1);
+      vertical-align: top;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .cav-table tr:last-child td { border-bottom: none; }
+    .cav-table tr.green-row { border-left: 3px solid var(--green); }
+    .cav-table tr.gold-row  { border-left: 3px solid var(--gold); }
+    .cav-table tr.blue-row  { border-left: 3px solid var(--blue); }
+    .cav-table tr.vio-row   { border-left: 3px solid var(--violet); }
+    .cav-table tr.green-row td:first-child { color: var(--green); font-weight: 700; }
+    .cav-table tr.gold-row  td:first-child { color: var(--gold);  font-weight: 700; }
+    .cav-table tr.blue-row  td:first-child { color: var(--blue);  font-weight: 700; }
+    .cav-table tr.vio-row   td:first-child { color: var(--violet);font-weight: 700; }
+    .cav-num {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .cav-sub { font-size: 13px; color: var(--text-sec); }
+
+    /* ── Scale bars ──────────────────────────────────── */
+    .cav-scale { margin-bottom: 6px; }
+    .cav-scale-row { margin-bottom: 12px; }
+    .cav-scale-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+    .cav-scale-name { font-size: 15px; font-weight: 600; }
+    .cav-scale-val { font-family: var(--mono); font-size: 15px; font-weight: 700; }
+    .cav-scale-track {
+      background: var(--surf2);
+      border-radius: 4px;
+      height: 14px;
+      overflow: hidden;
+    }
+    .cav-scale-fill { height: 100%; border-radius: 4px; }
+    .cav-scale-fill.green  { background: var(--green); }
+    .cav-scale-fill.gold   { background: var(--gold); }
+    .cav-scale-fill.blue   { background: var(--blue); }
+    .cav-scale-fill.violet { background: var(--violet); }
+    .cav-scale-note { font-size: 13px; color: var(--text-sec); margin-top: 3px; }
+
+    /* ── Callout ─────────────────────────────────────── */
+    .cav-callout {
+      background: var(--surf);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--gold);
+    }
+    .cav-callout-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      font-family: var(--mono);
+      margin-bottom: 10px;
+    }
+    .cav-callout-body {
+      font-size: 16px;
+      color: var(--text-sec);
+      line-height: 1.75;
+    }
+
+    /* ── Source ──────────────────────────────────────── */
+    .cav-src {
+      font-size: 13px;
+      color: var(--text-sec);
+      border-top: 1px solid rgba(138,148,168,0.15);
+      padding-top: 16px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="cav-hd">
+    <div class="cav-hd-title">中國抗戰天空的援軍比較</div>
+  </div>
+  <div class="cav-hd-sub">蘇聯志願航空隊（1937–1941）vs 飛虎隊三期（1941–1945）</div>
+
+  <!-- Context note -->
+  <div class="cav-context">
+    一般提及「飛虎隊」時，常混用三個前後承接的不同單位，其累計戰果也因此差距懸殊。而鮮為人知的是：在美國人抵達前四年，蘇聯已派出規模更大的志願航空隊在同一片天空作戰。
+  </div>
+
+  <!-- Hero tiles -->
+  <div class="cav-tiles">
+    <div class="cav-tile green">
+      <div class="cav-tile-lbl">蘇聯志願隊<br>早於 AVG</div>
+      <div class="cav-tile-val">4年</div>
+      <div class="cav-tile-sub">1937年10/11月<br>vs AVG 1941年12月</div>
+    </div>
+    <div class="cav-tile green">
+      <div class="cav-tile-lbl">蘇聯志願隊<br>峰值人員</div>
+      <div class="cav-tile-val">3,665</div>
+      <div class="cav-tile-sub">飛行員、地勤、<br>醫務、通訊全建制</div>
+    </div>
+    <div class="cav-tile green">
+      <div class="cav-tile-lbl">蘇聯交付<br>飛機總數</div>
+      <div class="cav-tile-val">1,200+</div>
+      <div class="cav-tile-sub">戰鬥機575–777架<br>轟炸機322–408架</div>
+    </div>
+    <div class="cav-tile gold">
+      <div class="cav-tile-lbl">「2,600架」<br>真正來源</div>
+      <div class="cav-tile-val">三期合計</div>
+      <div class="cav-tile-sub">AVG約299架<br>餘下由CATF與第14航空隊貢獻</div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="cav-sec">
+    <div class="cav-sec-hd">活躍時間軸（1937–1945）</div>
+    <div class="cav-tl">
+      <!-- Scale: 1937.10=0% → 1945.12=100%, total ~98 months -->
+      <!-- Soviet: Oct 1937 – 1941 end ≈ 0% → ~49% (50 months / ~98) -->
+      <!-- AVG: Aug 1941(forming) Dec 1941(combat) – Jul 1942 ≈ ~43%→51% (combat only ~43%→55%) -->
+      <!-- CATF: Jul 1942 – Mar 1943 ≈ ~55%→63% -->
+      <!-- 14th: Mar 1943 – late 1945 ≈ ~63%→100% -->
+      <div class="cav-tl-row">
+        <div class="cav-tl-label" style="color:var(--green)">蘇聯志願航空隊</div>
+        <div class="cav-tl-bar-wrap">
+          <!-- 1937.10~1941.12: about 0%→51% of 1937-1946 span (9yr=100%) -->
+          <div class="cav-tl-bar green" style="left:0%;width:51%">1937.10 — 1941底</div>
+        </div>
+      </div>
+      <div class="cav-tl-row">
+        <div class="cav-tl-label" style="color:var(--gold)">AVG 志願航空隊</div>
+        <div class="cav-tl-bar-wrap">
+          <!-- 1941.8 forming → 1942.7: ~44%→58% -->
+          <div class="cav-tl-bar gold" style="left:44%;width:14%">1941.8 — 1942.7</div>
+        </div>
+      </div>
+      <div class="cav-tl-row">
+        <div class="cav-tl-label" style="color:var(--blue)">CATF 特遣隊</div>
+        <div class="cav-tl-bar-wrap">
+          <!-- 1942.7→1943.3: ~58%→64% -->
+          <div class="cav-tl-bar blue" style="left:58%;width:7%">1942.7 — 1943.3</div>
+        </div>
+      </div>
+      <div class="cav-tl-row">
+        <div class="cav-tl-label" style="color:var(--violet)">第十四航空隊</div>
+        <div class="cav-tl-bar-wrap">
+          <!-- 1943.3→1945.12: ~64%→100% -->
+          <div class="cav-tl-bar violet" style="left:64%;width:36%">1943.3 — 1945底</div>
+        </div>
+      </div>
+    </div>
+    <!-- Axis -->
+    <div class="cav-tl-axis">
+      <div></div>
+      <div class="cav-tl-axis-labels">
+        <span class="cav-tl-axis-tick" style="left:0%">1937</span>
+        <span class="cav-tl-axis-tick" style="left:22%">1939</span>
+        <span class="cav-tl-axis-tick" style="left:44%">1941</span>
+        <span class="cav-tl-axis-tick" style="left:56%">1942</span>
+        <span class="cav-tl-axis-tick" style="left:66%">1943</span>
+        <span class="cav-tl-axis-tick" style="left:89%">1945</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="cav-sec">
+    <div class="cav-sec-hd">四支援華航空力量完整比較</div>
+    <div class="cav-table-wrap">
+      <table class="cav-table">
+        <thead>
+          <tr>
+            <th>單位</th>
+            <th>時期</th>
+            <th>性質</th>
+            <th>人員規模</th>
+            <th>交付 / 使用飛機</th>
+            <th>擊落戰果</th>
+            <th>陣亡</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="green-row">
+            <td>蘇聯志願<br>航空隊</td>
+            <td>
+              <span class="cav-num">1937.10</span><br>
+              <span class="cav-sub">— 1941年底</span><br>
+              <span class="cav-sub">（約4年）</span>
+            </td>
+            <td>蘇聯政府秘密派遣，以「志願者」身份赴華作戰</td>
+            <td>
+              <span class="cav-num">~3,665人</span>（峰值）<br>
+              <span class="cav-sub">含飛行員1,000–2,000人<br>地勤、醫務、通訊全建制</span>
+            </td>
+            <td>
+              <span class="cav-num">1,200+架</span><br>
+              <span class="cav-sub">戰鬥機：575–777架<br>轟炸機：322–408架</span>
+            </td>
+            <td>
+              <span class="cav-num">~986架</span><br>
+              <span class="cav-sub">（中方統計，一說1,206架）</span>
+            </td>
+            <td>
+              <span class="cav-num">236人</span><br>
+              <span class="cav-sub">有名可考<br>（俄方資料211–236人）</span>
+            </td>
+          </tr>
+          <tr class="gold-row">
+            <td>AVG<br>美國志願<br>航空隊</td>
+            <td>
+              <span class="cav-num">1941.8</span><span class="cav-sub">（成立）</span><br>
+              <span class="cav-num">1941.12</span><span class="cav-sub">（參戰）</span><br>
+              <span class="cav-sub">— 1942.7.4（約7個月實戰）</span>
+            </td>
+            <td>掛中華民國空軍名義的美國志願隊，非美軍正規軍</td>
+            <td>
+              <span class="cav-num">~300名</span>飛行員<br>
+              <span class="cav-sub">含地勤總人數約650–700人</span>
+            </td>
+            <td>
+              <span class="cav-sub">P-40 Tomahawk / Kittyhawk</span>
+            </td>
+            <td>
+              <span class="cav-num">~299架</span><br>
+              <span class="cav-sub">（官方常見數字；CAMCO獎金統計296架）</span>
+            </td>
+            <td>
+              <span class="cav-sub">含戰鬥、事故等原因<br>共約20名飛行員</span>
+            </td>
+          </tr>
+          <tr class="blue-row">
+            <td>CATF<br>中國空軍<br>特遣隊</td>
+            <td>
+              <span class="cav-num">1942.7.4</span><br>
+              <span class="cav-sub">— 1943.3.19（約8個月）</span>
+            </td>
+            <td>美軍正規單位，隸屬駐印第十航空隊，陳納德指揮；繼承AVG剩餘飛機與部分人員</td>
+            <td><span class="cav-sub">過渡規模，小於前後兩單位</span></td>
+            <td><span class="cav-sub">承繼 AVG 剩餘機型</span></td>
+            <td>
+              <span class="cav-num">149架</span>確認<br>
+              <span class="cav-sub">+ 85架可能</span>
+            </td>
+            <td>—</td>
+          </tr>
+          <tr class="vio-row">
+            <td>第十四<br>航空隊</td>
+            <td>
+              <span class="cav-num">1943.3.10</span><br>
+              <span class="cav-sub">— 1945年底（約2.5年）</span>
+            </td>
+            <td>獨立編號航空隊，陳納德任司令至1945年8月；規模遠大於前兩者</td>
+            <td>
+              <span class="cav-sub">峰值近千架飛機<br>戰鬥人員數千名</span>
+            </td>
+            <td>
+              <span class="cav-sub">高峰近1,000架<br>（戰鬥機、轟炸機、運輸機）</span>
+            </td>
+            <td>
+              <span class="cav-sub">「2,600架」合計數字的<br><strong>絕大部分</strong>來自本隊</span>
+            </td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scale comparison: personnel -->
+  <div class="cav-sec">
+    <div class="cav-sec-hd">規模比較：交付飛機與峰值人員</div>
+
+    <div style="margin-bottom:20px">
+      <div style="font-size:15px;font-weight:700;color:var(--text-sec);margin-bottom:10px;font-family:var(--mono)">交付 / 使用飛機</div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--green)">蘇聯志願航空隊</span>
+          <span class="cav-scale-val" style="color:var(--green)">1,200+ 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill green" style="width:100%"></div></div>
+        <div class="cav-scale-note">戰鬥機 575–777架 + 轟炸機 322–408架（不含其他機型）</div>
+      </div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--violet)">第十四航空隊（峰值）</span>
+          <span class="cav-scale-val" style="color:var(--violet)">~1,000 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill violet" style="width:83%"></div></div>
+        <div class="cav-scale-note">含戰鬥機、轟炸機、運輸機，為飛虎三期中最大</div>
+      </div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--gold)">AVG（志願航空隊）</span>
+          <span class="cav-scale-val" style="color:var(--gold)">~100 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill gold" style="width:8%"></div></div>
+        <div class="cav-scale-note">以 P-40 為主，實際可用機通常不足100架</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-sec);margin-bottom:10px;font-family:var(--mono)">確認擊落戰果（以峰值比較）</div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--green)">蘇聯志願航空隊</span>
+          <span class="cav-scale-val" style="color:var(--green)">~986 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill green" style="width:38%"></div></div>
+        <div class="cav-scale-note">中方統計；一說1,206架</div>
+      </div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--violet)">飛虎三期合計</span>
+          <span class="cav-scale-val" style="color:var(--violet)">~2,600 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill violet" style="width:100%"></div></div>
+        <div class="cav-scale-note">AVG（~299）+ CATF（~234）+ 第十四航空隊（主體）三期加總</div>
+      </div>
+      <div class="cav-scale-row">
+        <div class="cav-scale-top">
+          <span class="cav-scale-name" style="color:var(--gold)">AVG 單獨計算</span>
+          <span class="cav-scale-val" style="color:var(--gold)">~299 架</span>
+        </div>
+        <div class="cav-scale-track"><div class="cav-scale-fill gold" style="width:11.5%"></div></div>
+        <div class="cav-scale-note">狹義「飛虎隊」（AVG）實際戰果，約為三期合計的11.5%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Callout: the 2600 truth -->
+  <div class="cav-callout">
+    <div class="cav-callout-title">「2,600架」的真相</div>
+    <div class="cav-callout-body">
+      這個廣為流傳的數字，是將 AVG、CATF、第十四航空隊<strong>三個前後承接單位的戰績加總</strong>而成。狹義 AVG 本身只有約 299 架，真正把數字拉高到 2,600 的是後來的正規美軍部隊——尤其是 1943 年後持續作戰兩年以上的第十四航空隊。這不是捏造，而是「飛虎隊」這個稱號被後人廣義延伸使用的結果。常見表述來源包括陳納德本人回憶錄及戰後美軍統計，將整條「飛虎」傳承線的戰果合併計算。
+    </div>
+  </div>
+
+  <!-- Source -->
+  <div class="cav-src">
+    資料來源：Кривошеев等著《蘇聯武裝力量傷亡》官方統計研究（俄方）、陳納德《駕機征戰記》、美國陸軍航空軍戰史、中華民國空軍史料、開源史學研究（CAMCO合約文件）｜製表：張威翔｜2026年8月
+  </div>
+
+</body>
+</html>
