@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>蘇聯援華飛機數據 — 1937–1941機型全解析</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0b0f1a;
+      --surf:    #131a2a;
+      --surf2:   #1a2235;
+      --blue:    #3987e5;
+      --blue-bg: rgba(57,135,229,0.10);
+      --red:     #e66767;
+      --red-bg:  rgba(230,103,103,0.10);
+      --gold:    #f0b429;
+      --gold-bg: rgba(240,180,41,0.10);
+      --green:   #1baf7a;
+      --green-bg:rgba(27,175,122,0.10);
+      --text:    #e8eaf0;
+      --text-sec:#8a94a8;
+      --mono:    'Space Mono', monospace;
+      --sans:    'Noto Sans TC', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.65;
+      padding: clamp(16px, 4vw, 32px);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    .sca-hd {
+      border-left: 4px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 8px;
+    }
+    .sca-hd-title {
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .sca-hd-sub { font-size: 18px; color: var(--text-sec); margin-bottom: 20px; }
+
+    /* ── Context ─────────────────────────────────────── */
+    .sca-ctx {
+      background: var(--surf);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 18px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      border-left: 3px solid var(--blue);
+    }
+
+    /* ── Section ─────────────────────────────────────── */
+    .sca-sec { margin-bottom: 32px; }
+    .sca-sec-hd {
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--text-sec);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(138,148,168,0.18);
+    }
+
+    /* ── Source comparison table ─────────────────────── */
+    .sca-src-table-wrap { overflow-x: auto; margin-bottom: 12px; }
+    .sca-src-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 18px;
+    }
+    .sca-src-table th {
+      background: var(--surf2);
+      color: var(--text-sec);
+      font-size: 14px;
+      font-family: var(--mono);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid rgba(138,148,168,0.2);
+      white-space: nowrap;
+    }
+    .sca-src-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(138,148,168,0.1);
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    .sca-src-table tr:last-child td { border-bottom: none; }
+    .sca-src-table .src-name { font-weight: 600; font-size: 16px; }
+    .sca-src-table .src-note { font-size: 14px; color: var(--text-sec); display: block; }
+    .num { font-family: var(--mono); font-weight: 700; }
+    .num.blue   { color: var(--blue); }
+    .num.red    { color: var(--red); }
+    .num.gold   { color: var(--gold); }
+    .num.green  { color: var(--green); }
+    .num.muted  { color: var(--text-sec); }
+
+    /* ── Stacked bar ─────────────────────────────────── */
+    .sca-stack-row { margin-bottom: 16px; }
+    .sca-stack-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .sca-stack-name { font-size: 16px; font-weight: 600; }
+    .sca-stack-total { font-family: var(--mono); font-size: 16px; font-weight: 700; }
+    .sca-stack-bar {
+      display: flex;
+      height: 22px;
+      border-radius: 4px;
+      overflow: hidden;
+      gap: 2px;
+    }
+    .sca-seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      min-width: 0;
+      overflow: hidden;
+    }
+    .sca-seg.blue   { background: var(--blue); }
+    .sca-seg.red    { background: var(--red); }
+    .sca-seg.gold   { background: var(--gold); color: #1a1200; }
+    .sca-seg.surf2  { background: var(--surf2); color: var(--text-sec); }
+    .sca-stack-sub { font-size: 15px; color: var(--text-sec); margin-top: 4px; }
+
+    /* ── Legend chips ────────────────────────────────── */
+    .sca-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .sca-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+    }
+    .sca-chip-dot {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── Aircraft type cards ─────────────────────────── */
+    .sca-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 600px) { .sca-type-grid { grid-template-columns: 1fr; } }
+    .sca-type-col { }
+    .sca-type-col-hd {
+      font-size: 15px;
+      font-family: var(--mono);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+    .sca-type-col-hd.blue { color: var(--blue); background: var(--blue-bg); }
+    .sca-type-col-hd.red  { color: var(--red);  background: var(--red-bg); }
+    .sca-type-col-hd.gold { color: var(--gold); background: var(--gold-bg); }
+
+    .sca-ac-row { margin-bottom: 14px; }
+    .sca-ac-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+    .sca-ac-name {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--mono);
+    }
+    .sca-ac-name.blue { color: var(--blue); }
+    .sca-ac-name.red  { color: var(--red); }
+    .sca-ac-name.gold { color: var(--gold); }
+    .sca-ac-val {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .sca-ac-track {
+      background: var(--surf2);
+      border-radius: 3px;
+      height: 10px;
+      margin-bottom: 4px;
+    }
+    .sca-ac-fill { height: 100%; border-radius: 3px; }
+    .sca-ac-fill.blue   { background: var(--blue); }
+    .sca-ac-fill.red    { background: var(--red); }
+    .sca-ac-fill.gold   { background: var(--gold); }
+    .sca-ac-desc { font-size: 15px; color: var(--text-sec); line-height: 1.55; }
+
+    /* ── First batch table ───────────────────────────── */
+    .sca-batch {
+      background: var(--surf);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .sca-batch-hd {
+      background: var(--surf2);
+      padding: 10px 16px;
+      font-size: 14px;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: var(--text-sec);
+      letter-spacing: 0.04em;
+    }
+    .sca-batch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(138,148,168,0.1);
+      font-size: 18px;
+    }
+    .sca-batch-row:last-child { border-bottom: none; }
+    .sca-batch-row.total {
+      background: rgba(138,148,168,0.06);
+      font-weight: 700;
+    }
+    .sca-batch-type { font-weight: 600; }
+    .sca-batch-note { font-size: 15px; color: var(--text-sec); }
+    .sca-batch-qty { font-family: var(--mono); font-weight: 700; font-size: 18px; }
+
+    /* ── Info / callout ──────────────────────────────── */
+    .sca-info {
+      background: var(--surf);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 18px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-top: 12px;
+      border-left: 3px solid rgba(138,148,168,0.3);
+    }
+
+    /* ── Source footer ───────────────────────────────── */
+    .sca-src-note {
+      font-size: 14px;
+      color: var(--text-sec);
+      border-top: 1px solid rgba(138,148,168,0.15);
+      padding-top: 16px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="sca-hd">
+    <div class="sca-hd-title">蘇聯援華飛機數據全解析</div>
+  </div>
+  <div class="sca-hd-sub">1937–1941年間各型飛機交付數量（依俄文官方與學術史料彙整）</div>
+
+  <!-- Context -->
+  <div class="sca-ctx">
+    蘇聯援華飛機因統計口徑不同（交付中方的飛機、志願隊自用、備用零件與後期組裝）而存在數字差異，但整體輪廓一致：1937–1941年間共交付約 <strong style="color:var(--blue)">1,200–1,285架</strong> 各型飛機，其中戰鬥機為主力，轟炸機以 SB-2「卡秋莎」為核心。
+  </div>
+
+  <!-- Source comparison -->
+  <div class="sca-sec">
+    <div class="sca-sec-hd">各來源數字對比</div>
+    <div class="sca-src-table-wrap">
+      <table class="sca-src-table">
+        <thead>
+          <tr>
+            <th>資料來源</th>
+            <th>總架數</th>
+            <th style="color:var(--blue)">戰鬥機</th>
+            <th style="color:var(--red)">轟炸機</th>
+            <th style="color:var(--gold)">教練機/其他</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="src-name">俄羅斯維基百科</span>
+              <span class="src-note">Советские добровольцы в Китае</span>
+            </td>
+            <td><span class="num green">1,200+</span></td>
+            <td><span class="num blue">575</span></td>
+            <td><span class="num red">322</span></td>
+            <td><span class="num muted">—</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span class="src-name">學術統計</span>
+              <span class="src-note">Кривошеев等俄文專著</span>
+            </td>
+            <td><span class="num green">1,235–1,285</span></td>
+            <td><span class="num blue">777</span></td>
+            <td><span class="num red">408</span></td>
+            <td><span class="num gold">~100</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span class="src-name">其他常見引用</span>
+              <span class="src-note">含部分俄文二手資料</span>
+            </td>
+            <td><span class="num green">1,250</span></td>
+            <td><span class="num blue">727</span></td>
+            <td><span class="num red">508</span></td>
+            <td><span class="num muted">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sca-info">
+      數字差異的主因：①「交付中方空軍」vs「含志願隊自用機」；②新疆烏魯木齊組裝廠的後期組裝機是否計入；③同型號不同批次的重複計算問題。學術統計（777/408）通常最完整，俄維基數字（575/322）偏向保守口徑。
+    </div>
+  </div>
+
+  <!-- Stacked bars -->
+  <div class="sca-sec">
+    <div class="sca-sec-hd">類別結構比較（三份來源）</div>
+    <div class="sca-legend">
+      <div class="sca-chip"><div class="sca-chip-dot" style="background:var(--blue)"></div>戰鬥機</div>
+      <div class="sca-chip"><div class="sca-chip-dot" style="background:var(--red)"></div>轟炸機</div>
+      <div class="sca-chip"><div class="sca-chip-dot" style="background:var(--gold)"></div>教練機/其他</div>
+      <div class="sca-chip"><div class="sca-chip-dot" style="background:var(--surf2)"></div>未分類</div>
+    </div>
+
+    <!-- Russian wiki: 575+322=897, rest ~303 undocumented; total bar = 1200 -->
+    <div class="sca-stack-row">
+      <div class="sca-stack-label">
+        <span class="sca-stack-name">俄羅斯維基百科</span>
+        <span class="sca-stack-total" style="color:var(--green)">1,200+架</span>
+      </div>
+      <div class="sca-stack-bar">
+        <div class="sca-seg blue"  style="flex:575" title="戰鬥機 575架">575</div>
+        <div class="sca-seg red"   style="flex:322" title="轟炸機 322架">322</div>
+        <div class="sca-seg surf2" style="flex:303" title="未明細分類"></div>
+      </div>
+      <div class="sca-stack-sub">戰鬥機 575 + 轟炸機 322 = 897架有明細，其餘未細分</div>
+    </div>
+
+    <!-- Academic: 777+408+100=1285 -->
+    <div class="sca-stack-row">
+      <div class="sca-stack-label">
+        <span class="sca-stack-name">學術統計（Кривошеев）</span>
+        <span class="sca-stack-total" style="color:var(--green)">1,235–1,285架</span>
+      </div>
+      <div class="sca-stack-bar">
+        <div class="sca-seg blue" style="flex:777" title="戰鬥機 777架">777</div>
+        <div class="sca-seg red"  style="flex:408" title="轟炸機 408架">408</div>
+        <div class="sca-seg gold" style="flex:100" title="教練/其他 ~100架">100</div>
+      </div>
+      <div class="sca-stack-sub">戰鬥機 777 + 轟炸機 408 + 教練/其他 ~100</div>
+    </div>
+
+    <!-- Other: 727+508=1235, total 1250 -->
+    <div class="sca-stack-row">
+      <div class="sca-stack-label">
+        <span class="sca-stack-name">其他常見引用</span>
+        <span class="sca-stack-total" style="color:var(--green)">1,250架</span>
+      </div>
+      <div class="sca-stack-bar">
+        <div class="sca-seg blue"  style="flex:727" title="戰鬥機 727架">727</div>
+        <div class="sca-seg red"   style="flex:508" title="轟炸機 508架">508</div>
+        <div class="sca-seg surf2" style="flex:15"  title="其餘未明細"></div>
+      </div>
+      <div class="sca-stack-sub">戰鬥機 727 + 轟炸機 508（轟炸機比例明顯偏高）</div>
+    </div>
+  </div>
+
+  <!-- Aircraft type breakdown -->
+  <div class="sca-sec">
+    <div class="sca-sec-hd">主要機型細分（綜合俄文資料）</div>
+    <div class="sca-type-grid">
+
+      <!-- Fighters -->
+      <div class="sca-type-col">
+        <div class="sca-type-col-hd blue">戰鬥機　FIGHTERS</div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name blue">I-15 / I-15bis</span>
+            <span class="sca-ac-val" style="color:var(--blue)">250–350架</span>
+          </div>
+          <div class="sca-ac-track">
+            <!-- max fighter=400, I-15=300/400=75% -->
+            <div class="sca-ac-fill blue" style="width:75%"></div>
+          </div>
+          <div class="sca-ac-desc">雙翼戰鬥機。首批62架 I-15，後續大量補充 I-15bis（改良型）</div>
+        </div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name blue">I-16</span>
+            <span class="sca-ac-val" style="color:var(--blue)">300–400+架</span>
+          </div>
+          <div class="sca-ac-track">
+            <!-- 400/400=100% -->
+            <div class="sca-ac-fill blue" style="width:100%"></div>
+          </div>
+          <div class="sca-ac-desc">主力戰鬥機，含 Type 5、Type 10、Type 17 等各型。首批93架，新疆有後期組裝</div>
+        </div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name blue">I-153 "Chaika"</span>
+            <span class="sca-ac-val" style="color:var(--blue)">75–93架</span>
+          </div>
+          <div class="sca-ac-track">
+            <!-- 93/400=23% -->
+            <div class="sca-ac-fill blue" style="width:23%"></div>
+          </div>
+          <div class="sca-ac-desc">後期（1940–1941年）投入，「海鷗」折疊翼設計，機動性佳</div>
+        </div>
+
+        <div class="sca-info" style="margin-top:0">
+          <strong style="color:var(--blue)">戰鬥機合計：</strong>
+          俄維基口徑 575架，學術完整統計達 777架
+        </div>
+      </div>
+
+      <!-- Bombers + Trainers -->
+      <div class="sca-type-col">
+        <div class="sca-type-col-hd red">轟炸機　BOMBERS</div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name red">SB-2 "Katyusha"</span>
+            <span class="sca-ac-val" style="color:var(--red)">292–328架</span>
+          </div>
+          <div class="sca-ac-track">
+            <div class="sca-ac-fill red" style="width:100%"></div>
+          </div>
+          <div class="sca-ac-desc">最主力轟炸機，中國稱「卡秋莎」（SB = 高速轟炸機）。佔轟炸機總數90%以上</div>
+        </div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name red">DB-3</span>
+            <span class="sca-ac-val" style="color:var(--red)">24–30架</span>
+          </div>
+          <div class="sca-ac-track">
+            <!-- 30/328=9% -->
+            <div class="sca-ac-fill red" style="width:9%"></div>
+          </div>
+          <div class="sca-ac-desc">遠程轟炸機，可對日本本土實施超長距離任務</div>
+        </div>
+
+        <div class="sca-ac-row">
+          <div class="sca-ac-top">
+            <span class="sca-ac-name red">TB-3</span>
+            <span class="sca-ac-val" style="color:var(--red)">6架</span>
+          </div>
+          <div class="sca-ac-track">
+            <!-- 6/328=2% -->
+            <div class="sca-ac-fill red" style="width:2%"></div>
+          </div>
+          <div class="sca-ac-desc">重型四發轟炸機，首批即列入，數量極少</div>
+        </div>
+
+        <div class="sca-info" style="margin-top:0">
+          <strong style="color:var(--red)">轟炸機合計：</strong>
+          俄維基 322架（292+24+6），學術統計達 408架
+        </div>
+
+        <div style="margin-top:16px">
+          <div class="sca-type-col-hd gold" style="margin-bottom:10px">教練機/其他　TRAINERS</div>
+          <div class="sca-ac-row">
+            <div class="sca-ac-top">
+              <span class="sca-ac-name gold">UTI-4</span>
+              <span class="sca-ac-val" style="color:var(--gold)">8架+</span>
+            </div>
+            <div class="sca-ac-track">
+              <div class="sca-ac-fill gold" style="width:40%"></div>
+            </div>
+            <div class="sca-ac-desc">I-16 的雙座教練改型，首批8架，後續補充。學術統計合計教練機/其他約 100架</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- First batch -->
+  <div class="sca-sec">
+    <div class="sca-sec-hd">首批決定（1937年9–10月）與抵華時間</div>
+    <div class="sca-batch">
+      <div class="sca-batch-hd">首批承諾機型（1937年秋，經阿拉木圖→蘭州空中橋樑，10–12月陸續到位）</div>
+      <div class="sca-batch-row">
+        <div>
+          <span class="sca-batch-type" style="color:var(--red)">SB-2</span>
+          <span class="sca-batch-note">高速轟炸機「卡秋莎」</span>
+        </div>
+        <span class="sca-batch-qty" style="color:var(--red)">62架</span>
+      </div>
+      <div class="sca-batch-row">
+        <div>
+          <span class="sca-batch-type" style="color:var(--blue)">I-15</span>
+          <span class="sca-batch-note">雙翼戰鬥機</span>
+        </div>
+        <span class="sca-batch-qty" style="color:var(--blue)">62架</span>
+      </div>
+      <div class="sca-batch-row">
+        <div>
+          <span class="sca-batch-type" style="color:var(--blue)">I-16</span>
+          <span class="sca-batch-note">主力戰鬥機（含各型）</span>
+        </div>
+        <span class="sca-batch-qty" style="color:var(--blue)">93架</span>
+      </div>
+      <div class="sca-batch-row">
+        <div>
+          <span class="sca-batch-type" style="color:var(--gold)">UTI-4</span>
+          <span class="sca-batch-note">I-16 雙座教練型</span>
+        </div>
+        <span class="sca-batch-qty" style="color:var(--gold)">8架</span>
+      </div>
+      <div class="sca-batch-row">
+        <div>
+          <span class="sca-batch-type" style="color:var(--red)">TB-3</span>
+          <span class="sca-batch-note">重型轟炸機（後追加）</span>
+        </div>
+        <span class="sca-batch-qty" style="color:var(--red)">6架</span>
+      </div>
+      <div class="sca-batch-row total">
+        <span class="sca-batch-type">首批合計</span>
+        <span class="sca-batch-qty" style="color:var(--green)">~231架</span>
+      </div>
+    </div>
+    <div class="sca-info">
+      後續批次持續至1941年，並在新疆烏魯木齊設立組裝廠，I-16 等機型在當地完成最終組裝後移交中方。整條補給線橫跨蘇聯中亞，是二戰前規模最大的國際軍援空運行動之一。
+    </div>
+  </div>
+
+  <!-- Source -->
+  <div class="sca-src-note">
+    資料來源：俄羅斯維基百科「Советские добровольцы в Китае」、Кривошеев主編官方傷亡統計研究、Дубинский・Волкова等俄文專著、蘇聯軍事顧問報告（部分已解密）｜製表：張威翔｜2026年8月
+  </div>
+
+</body>
+</html>
