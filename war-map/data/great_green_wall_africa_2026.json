@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "title": "非洲綠色長城倡議地圖",
+    "titleEn": "Great Green Wall of Africa Initiative Map",
+    "subtitle": "8000公里薩赫爾生態走廊・11國・2030年願景：恢復1億公頃退化土地",
+    "date": "2026-08-11",
+    "status": "resource",
+    "theme": "green",
+    "sources": ["非洲聯盟", "泛非大綠色長城機構（AGGWI）", "聯合國防治荒漠化公約（UNCCD）", "中非合作論壇"]
+  },
+  "map": {
+    "center": [14.5, 13.0],
+    "zoom": 4,
+    "bounds": [[5.0, -20.0], [25.0, 48.0]]
+  },
+  "infoPanel": {
+    "title": "非洲綠色長城・薩赫爾生態走廊（2007年發起）",
+    "paragraphs": [
+      "非洲綠色長城倡議由非洲聯盟於2007年發起，目標是在薩赫爾（Sahel）地區打造一條約8000公里長的綠色走廊，從塞內加爾（Senegal）延伸至吉布地（Djibouti），涵蓋11個核心國家。2030年願景極為宏大：恢復1億公頃退化土地、創造1000萬個綠色就業、固存2億5000噸二氧化碳當量。",
+      "薩赫爾地區的困境是全球土地退化問題的縮影。這片介於撒哈拉沙漠與蘇丹熱帶草原之間的半乾旱地帶，每年以肉眼可見的速度向南退縮，乾旱、饑荒與衝突相互疊加，數以百萬計的農牧民失去賴以為生的土地。綠色長城的構想，正是要在這條脆弱的生態前線築起屏障。",
+      "2017年，中國科學院新疆生態與地理研究所與泛非大綠色長城機構簽署合作備忘錄，此後納入中非合作論壇優先項目。草方格固沙、太陽能滴灌、退化草地修復與輪牧管理等「三北」經驗，因地制宜引入毛里塔尼亞、奈及利亞與衣索比亞等地。",
+      "📊 最新進展（截至2025年底）：根據最新追蹤數據，綠色長城迄今已恢復土地約166萬公頃、創造就業約460萬個、固存二氧化碳約2400萬噸，直接受益人口達4600萬人。距離2030年恢復1億公頃的目標，目前完成比例約1.7%，推進速度仍遠低於規劃進程，資金落實與跨國協調為主要瓶頸。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [18.0, -17.5],
+        [18.0, 43.5],
+        [11.5, 43.5],
+        [11.5, -17.5],
+        [18.0, -17.5]
+      ],
+      "fillColor": "#27ae60",
+      "fillOpacity": 0.07,
+      "borderColor": "#1e8449",
+      "borderWeight": 1.2,
+      "borderOpacity": 0.35,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "薩赫爾半乾旱地帶・綠色走廊概略範圍",
+        "tag": "🌿 薩赫爾走廊範圍（概略示意）",
+        "tagClass": "tag-possible",
+        "desc": "薩赫爾（Sahel）為阿拉伯語「海岸」之意，指撒哈拉沙漠南緣至蘇丹熱帶草原之間的半乾旱過渡地帶，寬約300至500公里，橫跨非洲大陸東西。年雨量100至400毫米，土地退化嚴峻。綠色長城核心走廊大致沿北緯11至18度分布。⚠️ 為概略示意範圍。",
+        "source": "UNCCD；非洲聯盟"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [14.70, -17.44],
+        [16.50, -14.80],
+        [17.50, -10.00],
+        [16.00, -5.00],
+        [15.00,  1.50],
+        [14.20,  7.80],
+        [13.80, 14.00],
+        [15.00, 20.00],
+        [15.50, 26.00],
+        [15.50, 32.50],
+        [15.30, 38.80],
+        [11.60, 43.15]
+      ],
+      "color": "#2ecc71",
+      "weight": 3,
+      "opacity": 0.80,
+      "dashArray": "0",
+      "popup": {
+        "title": "非洲綠色長城・約8000公里走廊（概略路線）",
+        "tag": "🌿 綠色走廊・約8000公里",
+        "tagClass": "tag-confirmed",
+        "desc": "非洲綠色長城核心走廊，從西端塞內加爾（Senegal）延伸至東端吉布地（Djibouti），全長約8000公里，橫跨非洲大陸薩赫爾地帶。2030年目標：恢復1億公頃退化土地、創造1000萬個綠色就業、固存2.5億噸二氧化碳當量。⚠️ 為概略示意路線，非精確邊界。",
+        "source": "非洲聯盟；泛非大綠色長城機構（AGGWI）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [14.70, -17.44],
+      "name": "Dakar, Senegal – Western Terminus",
+      "nameLocal": "達卡（Dakar）・塞內加爾・西端起點",
+      "type": "confirmed",
+      "tag": "🌿 西端起點・塞內加爾",
+      "tagClass": "tag-confirmed",
+      "desc": "非洲綠色長城的西端起點，塞內加爾為倡議的創始核心國之一。塞內加爾北部薩赫爾地帶土地退化嚴峻，是率先推動生態恢復植樹計畫的國家，其實踐經驗成為整個倡議的重要示範。",
+      "coords": "14°42'N 017°26'W",
+      "source": "非洲聯盟；AGGWI"
+    },
+    {
+      "latlng": [18.08, -15.97],
+      "name": "Nouakchott, Mauritania",
+      "nameLocal": "努瓦克肖特（Nouakchott）・毛里塔尼亞",
+      "type": "confirmed",
+      "tag": "🌿 毛里塔尼亞・沙漠化最嚴峻國之一",
+      "tagClass": "tag-confirmed",
+      "desc": "毛里塔尼亞約三分之二國土為沙漠，是薩赫爾地帶沙漠化最嚴峻的國家之一。中國「三北」草方格固沙技術已引入毛里塔尼亞，協助穩定沙丘前緣，為綠色長城中中非技術合作的代表性案例。",
+      "coords": "18°05'N 015°58'W",
+      "source": "中非合作論壇；AGGWI"
+    },
+    {
+      "latlng": [12.65, -8.00],
+      "name": "Bamako, Mali",
+      "nameLocal": "巴馬科（Bamako）・馬利",
+      "type": "confirmed",
+      "tag": "🌿 馬利・衝突與荒漠化雙重危機",
+      "tagClass": "tag-confirmed",
+      "desc": "馬利北部深陷薩赫爾荒漠化困境，同時面臨武裝衝突與糧食危機。土地退化、乾旱與失業相互疊加，造成大批農牧民南遷，是綠色長城亟待復育的關鍵地段之一。",
+      "coords": "12°39'N 008°00'W",
+      "source": "UNCCD；非洲聯盟"
+    },
+    {
+      "latlng": [12.37, -1.53],
+      "name": "Ouagadougou, Burkina Faso",
+      "nameLocal": "瓦加杜古（Ouagadougou）・布吉納法索",
+      "type": "confirmed",
+      "tag": "🌿 布吉納法索・薩赫爾核心地帶",
+      "tagClass": "tag-confirmed",
+      "desc": "布吉納法索位於薩赫爾核心地帶，糧食安全嚴峻，土地退化加劇武裝衝突問題。農民主導的Zaï坑植樹法與石牆集水技術（半月形堤）被綠色長城倡議採納推廣，為傳統在地知識融入現代生態修復的代表案例。",
+      "coords": "12°22'N 001°32'W",
+      "source": "UNCCD；AGGWI"
+    },
+    {
+      "latlng": [13.51, 2.11],
+      "name": "Niamey, Niger",
+      "nameLocal": "尼阿美（Niamey）・尼日",
+      "type": "confirmed",
+      "tag": "🌿 尼日・農民自主造林成果顯著",
+      "tagClass": "tag-confirmed",
+      "desc": "尼日是綠色長城進展最受矚目的國家之一。農民自主造林（FMNR，農地自然更新管理）已成功恢復數百萬公頃農地的樹木覆蓋，被聯合國視為薩赫爾生態修復最成功的在地實踐之一。",
+      "coords": "13°31'N 002°07'E",
+      "source": "UNCCD；世界農糧組織（FAO）"
+    },
+    {
+      "latlng": [11.80, 8.50],
+      "name": "Kano region, Nigeria (Sahel zone)",
+      "nameLocal": "卡諾地區（Kano）・奈及利亞・薩赫爾地帶 ⚠️ 概略位置",
+      "type": "confirmed",
+      "tag": "🌿 奈及利亞・中國技術引入示範區",
+      "tagClass": "tag-confirmed",
+      "desc": "奈及利亞北部薩赫爾地帶，中國太陽能滴灌技術與退化草地修復方案已在此引入示範，為中非合作論壇框架下綠色長城技術轉移的實施地點之一。⚠️ 概略位置。",
+      "coords": "11°48'N 008°31'E",
+      "source": "中非合作論壇；AGGWI"
+    },
+    {
+      "latlng": [12.10, 15.04],
+      "name": "N'Djamena, Chad",
+      "nameLocal": "恩賈梅納（N'Djamena）・查德",
+      "type": "confirmed",
+      "tag": "🌿 查德・查德湖萎縮・生態危機核心",
+      "tagClass": "tag-confirmed",
+      "desc": "查德湖（Lake Chad）過去50年面積已萎縮逾90%，是薩赫爾生態危機最具象徵性的縮影。查德為綠色長城的核心走廊國之一，湖盆周邊的生態修復與農牧業共存是當地推進的重點課題。",
+      "coords": "12°06'N 015°02'E",
+      "source": "UNCCD；非洲聯盟"
+    },
+    {
+      "latlng": [15.55, 32.53],
+      "name": "Khartoum, Sudan",
+      "nameLocal": "喀土穆（Khartoum）・蘇丹",
+      "type": "confirmed",
+      "tag": "🌿 蘇丹・走廊東段關鍵節點",
+      "tagClass": "tag-confirmed",
+      "desc": "蘇丹為綠色長城東段的關鍵走廊國，薩赫爾地帶橫貫蘇丹中部。長期政治動盪與武裝衝突嚴重阻礙生態修復計畫推進，是整個倡議進展最受地緣政治制約的地段之一。",
+      "coords": "15°33'N 032°32'E",
+      "source": "UNCCD；非洲聯盟"
+    },
+    {
+      "latlng": [9.03, 38.74],
+      "name": "Addis Ababa, Ethiopia",
+      "nameLocal": "阿迪斯阿貝巴（Addis Ababa）・衣索比亞",
+      "type": "confirmed",
+      "tag": "🌿 衣索比亞・中國輪牧管理技術引入",
+      "tagClass": "tag-confirmed",
+      "desc": "衣索比亞是綠色長城東段的重要推進國，中國退化草地修復與輪牧管理技術已在此引入。衣索比亞2019年發起「綠色遺產行動」，單日種植逾3.5億棵樹創世界紀錄，展現東非生態修復的強烈政治意志。",
+      "coords": "09°02'N 038°44'E",
+      "source": "中非合作論壇；AGGWI"
+    },
+    {
+      "latlng": [15.34, 38.93],
+      "name": "Asmara, Eritrea",
+      "nameLocal": "阿斯馬拉（Asmara）・厄利垂亞",
+      "type": "possible",
+      "tag": "🌿 厄利垂亞・東北端走廊國",
+      "tagClass": "tag-possible",
+      "desc": "厄利垂亞為綠色長城11個核心走廊國之一，位於走廊東北端，東臨紅海。因長期政治孤立，國際合作相對受限，但其沿岸與高地的生態系統保護仍為倡議關注重點。",
+      "coords": "15°20'N 038°56'E",
+      "source": "非洲聯盟；AGGWI"
+    },
+    {
+      "latlng": [11.59, 43.15],
+      "name": "Djibouti – Eastern Terminus",
+      "nameLocal": "吉布地（Djibouti）・東端終點",
+      "type": "confirmed",
+      "tag": "🌿 東端終點・吉布地",
+      "tagClass": "tag-confirmed",
+      "desc": "非洲綠色長城的東端終點，吉布地瀕臨紅海與亞丁灣。作為走廊最東端的節點國，吉布地的乾燥沿岸生態系統保護是倡議在非洲之角推進的最後一站，象徵整條8000公里走廊的完整閉合。",
+      "coords": "11°35'N 043°09'E",
+      "source": "非洲聯盟；AGGWI"
+    },
+    {
+      "latlng": [17.00, 8.00],
+      "name": "Agadez region, Niger – Sahara frontier",
+      "nameLocal": "阿加德茲地區（Agadez）・尼日・撒哈拉前緣 ⚠️ 概略位置",
+      "type": "possible",
+      "tag": "⚠️ 撒哈拉南緣・退化最嚴峻前線",
+      "tagClass": "tag-possible",
+      "desc": "撒哈拉沙漠南緣最前線地帶，土地退化速度最快的區域之一。每年沙漠邊界持續南侵，農牧地加速喪失，是綠色長城最迫切需要干預的生態脆弱帶。⚠️ 概略位置。",
+      "coords": "17°00'N 008°00'E",
+      "source": "UNCCD"
+    }
+  ],
+  "legend": [
+    { "symbol": "line",    "color": "#2ecc71", "weight": 3, "dash": "0",   "label": "非洲綠色長城走廊（約8000公里，概略路線）" },
+    { "symbol": "polygon", "fillColor": "#27ae60", "fillOpacity": 0.10, "borderColor": "#1e8449", "label": "薩赫爾半乾旱地帶（概略示意）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "核心走廊國（確認參與・生態修復推進中）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "走廊相關地點（推測位置・待確認進展）" }
+  ]
+}
