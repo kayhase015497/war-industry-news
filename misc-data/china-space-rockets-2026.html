@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>中國民營可回收火箭競賽（2026）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.csr-root {
+  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e8e6df;
+  padding: clamp(16px, 4vw, 40px);
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* ─── Header ─── */
+.csr-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e2640;
+}
+.csr-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #6b7599;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.csr-title {
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 700;
+  color: #f0eee6;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.csr-subtitle {
+  font-size: 18px;
+  color: #9ba3c2;
+}
+
+/* ─── Breaking news ─── */
+.csr-breaking {
+  background: linear-gradient(135deg, #0e1e15 0%, #0b1510 100%);
+  border: 1px solid #1baf7a;
+  border-left: 4px solid #1baf7a;
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+}
+.csr-breaking-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #1baf7a;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.csr-breaking-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0eee6;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.csr-breaking-body {
+  font-size: 18px;
+  color: #b8d4c8;
+  line-height: 1.7;
+}
+.csr-breaking-hl { color: #1baf7a; font-weight: 700; }
+
+/* ─── Summary tiles ─── */
+.csr-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.csr-tile {
+  background: #111827;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+  padding: 16px 18px;
+  text-align: center;
+}
+.csr-tile-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.csr-tile-lbl { font-size: 15px; color: #9ba3c2; }
+.csr-tile--green .csr-tile-val { color: #1baf7a; }
+.csr-tile--blue .csr-tile-val { color: #3987e5; }
+.csr-tile--gold .csr-tile-val { color: #eda100; }
+
+/* ─── Section header ─── */
+.csr-sec-hd {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: #6b7599;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e2640;
+}
+
+/* ─── Company cards ─── */
+.csr-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.csr-card {
+  background: #111827;
+  border: 1px solid #1e2640;
+  border-radius: 10px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.csr-card--highlight {
+  border-color: #1baf7a;
+  background: linear-gradient(160deg, #0f2219 0%, #111827 60%);
+}
+
+.csr-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.csr-card-names { flex: 1; min-width: 0; }
+.csr-card-en {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #6b7599;
+  line-height: 1.3;
+}
+.csr-card-zh {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0eee6;
+  margin-top: 2px;
+}
+
+/* Status badge */
+.csr-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+.csr-badge--green { background: #0c2318; color: #1baf7a; border: 1px solid #1baf7a; }
+.csr-badge--blue  { background: #0c1a30; color: #3987e5; border: 1px solid #3987e5; }
+.csr-badge--violet { background: #14112e; color: #9085e9; border: 1px solid #9085e9; }
+.csr-badge--gray  { background: #171c2e; color: #6b7599; border: 1px solid #2e3550; }
+
+.csr-card-div { height: 1px; background: #1e2640; }
+
+/* Rocket name */
+.csr-rocket {
+  font-size: 19px;
+  color: #e0ddd6;
+  font-weight: 500;
+}
+.csr-rocket-en {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #6b7599;
+  margin-top: 2px;
+}
+
+/* Spec pills */
+.csr-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.csr-spec {
+  font-size: 13px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: #1a1e2e;
+  color: #9ba3c2;
+}
+.csr-spec--blue   { background: #0c1a30; color: #6eb0f0; }
+.csr-spec--orange { background: #281508; color: #eb9a6a; }
+.csr-spec--teal   { background: #0b2428; color: #5eccd6; }
+.csr-spec--green  { background: #0c2318; color: #5ec89a; }
+
+/* Milestones */
+.csr-milestones { display: flex; flex-direction: column; gap: 8px; }
+.csr-ms {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 17px;
+  color: #a0aac2;
+  line-height: 1.5;
+}
+.csr-ms-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+.csr-ms-icon--done    { background: #1baf7a; color: #fff; }
+.csr-ms-icon--partial { background: #eda100; color: #fff; }
+.csr-ms-icon--today   { background: #eda100; color: #fff; box-shadow: 0 0 8px rgba(237,161,0,0.5); }
+.csr-ms-icon--pending { background: transparent; border: 2px solid #2e3550; }
+.csr-ms-body { flex: 1; }
+.csr-ms-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #4a5270;
+  display: block;
+  margin-bottom: 1px;
+}
+.csr-ms--today .csr-ms-body { color: #e8e4d8; font-weight: 500; }
+.csr-ms--today .csr-ms-date { color: #eda100; }
+
+/* Card note */
+.csr-card-note {
+  font-size: 15px;
+  color: #5a6280;
+  font-style: italic;
+  border-top: 1px solid #1a2038;
+  padding-top: 10px;
+}
+
+/* ─── Comparison table ─── */
+.csr-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 32px;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+}
+.csr-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+.csr-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #6b7599;
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid #1e2640;
+  white-space: nowrap;
+  background: #0e1422;
+}
+.csr-table td {
+  padding: 14px 14px;
+  border-bottom: 1px solid #131a2e;
+  color: #c8cde8;
+  font-size: 18px;
+  vertical-align: middle;
+}
+.csr-table tr:last-child td { border-bottom: none; }
+.csr-table tbody tr:hover td { background: #131a28; }
+.csr-table .csr-co-en {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #4a5270;
+  display: block;
+  margin-top: 2px;
+}
+.csr-table .csr-tag {
+  font-size: 13px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.csr-tag--done   { background: #0c2318; color: #1baf7a; }
+.csr-tag--soon   { background: #0c1a30; color: #3987e5; }
+.csr-tag--test   { background: #14112e; color: #9085e9; }
+
+/* ─── Legend ─── */
+.csr-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  background: #0e1422;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+}
+.csr-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 15px;
+  color: #9ba3c2;
+}
+.csr-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* ─── Footer ─── */
+.csr-footer {
+  font-size: 14px;
+  color: #4a5270;
+  line-height: 1.7;
+  border-top: 1px solid #1e2640;
+  padding-top: 16px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .csr-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .csr-tiles { grid-template-columns: 1fr 1fr; }
+  .csr-card-zh { font-size: 18px; }
+}
+@media (max-width: 420px) {
+  .csr-tiles { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="csr-root">
+
+<!-- Header -->
+<header class="csr-header">
+  <div class="csr-date">2026.08.19 · 中國商業航天專題</div>
+  <h1 class="csr-title">中國民營可回收火箭競賽</h1>
+  <p class="csr-subtitle">七家企業現狀與進展（截至2026年8月）</p>
+</header>
+
+<!-- Breaking news -->
+<div class="csr-breaking">
+  <div class="csr-breaking-tag">▶ 今日突破 · 2026.08.19</div>
+  <div class="csr-breaking-title">藍箭航天 朱雀三號 遙二：全球首款不鏽鋼火箭完成軌道入軌後垂直回收</div>
+  <div class="csr-breaking-body">
+    2026年8月19日，藍箭航天朱雀三號遙二任務成功入軌，並完成<span class="csr-breaking-hl">一子級陸地軟著陸</span>。這是全球首次以不鏽鋼箭體火箭在軌道任務後實現垂直回收，SpaceX星艦路線以外第二條不鏽鋼可重複使用技術完成首次驗證。設計重複使用目標≥20次。
+  </div>
+</div>
+
+<!-- Tiles -->
+<div class="csr-tiles">
+  <div class="csr-tile csr-tile--green">
+    <div class="csr-tile-val">7</div>
+    <div class="csr-tile-lbl">競逐企業</div>
+  </div>
+  <div class="csr-tile csr-tile--green">
+    <div class="csr-tile-val">1</div>
+    <div class="csr-tile-lbl">已完成軌道回收</div>
+  </div>
+  <div class="csr-tile csr-tile--blue">
+    <div class="csr-tile-val">6</div>
+    <div class="csr-tile-lbl">計畫2026年首飛</div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="csr-legend">
+  <div class="csr-legend-item"><div class="csr-legend-dot" style="background:#1baf7a"></div>已完成</div>
+  <div class="csr-legend-item"><div class="csr-legend-dot" style="background:#eda100"></div>部分成功 / 今日突破</div>
+  <div class="csr-legend-item"><div class="csr-legend-dot" style="background:#2e3550;border:2px solid #3a4560"></div>計畫中</div>
+</div>
+
+<!-- Cards -->
+<div class="csr-sec-hd">七家企業現況</div>
+<div class="csr-cards">
+
+  <!-- 1. LandSpace -->
+  <div class="csr-card csr-card--highlight">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">LandSpace</div>
+        <div class="csr-card-zh">藍箭航天</div>
+      </div>
+      <div class="csr-badge csr-badge--green">軌道回收已驗證 ★</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">朱雀三號</div>
+      <div class="csr-rocket-en">Zhuque-3</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--blue">LOX / 甲烷</span>
+      <span class="csr-spec">不鏽鋼箭體</span>
+      <span class="csr-spec csr-spec--green">陸地軟著陸</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--partial">!</div>
+        <div class="csr-ms-body">
+          <span class="csr-ms-date">2025-12</span>
+          遙一成功入軌，一子級回收失敗（著陸燃燒異常）
+        </div>
+      </div>
+      <div class="csr-ms csr-ms--today">
+        <div class="csr-ms-icon csr-ms-icon--today">★</div>
+        <div class="csr-ms-body">
+          <span class="csr-ms-date">2026-08-19 · 今日達成</span>
+          遙二成功入軌並完成一子級陸地軟著陸，全球首款不鏽鋼軌道級火箭回收
+        </div>
+      </div>
+    </div>
+    <div class="csr-card-note">設計目標重複使用≥20次</div>
+  </div>
+
+  <!-- 2. i-Space -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">i-Space</div>
+        <div class="csr-card-zh">星際榮耀</div>
+      </div>
+      <div class="csr-badge csr-badge--blue">海上回收測試中</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">雙曲線三號</div>
+      <div class="csr-rocket-en">Hyperbola-3</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--blue">LOX / 甲烷</span>
+      <span class="csr-spec csr-spec--teal">海上回收</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">雙曲線二號驗證箭完成垂直起降試驗</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">完成多項地面驗證與海上回收相關測試</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">計畫2026年底首飛並嘗試海上回收</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Space Pioneer -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">Space Pioneer</div>
+        <div class="csr-card-zh">天兵科技</div>
+      </div>
+      <div class="csr-badge csr-badge--blue">動力驗證完成</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">天龍三號</div>
+      <div class="csr-rocket-en">Tianlong-3</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--orange">LOX / 煤油</span>
+      <span class="csr-spec csr-spec--green">陸地回收</span>
+      <span class="csr-spec">LEO 17–22 t</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">動力系統與振動試驗完成</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--partial">!</div>
+        <div class="csr-ms-body">靜態點火意外導致進度延誤，積極恢復推進</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">目標2026年首飛（對標獵鷹9號級運力）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Deep Blue Aerospace -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">Deep Blue Aerospace</div>
+        <div class="csr-card-zh">深藍航天</div>
+      </div>
+      <div class="csr-badge csr-badge--blue">低空垂降已驗證</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">星雲一號</div>
+      <div class="csr-rocket-en">Nebula-1</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--orange">LOX / 煤油</span>
+      <span class="csr-spec csr-spec--green">陸地垂降</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">完成10公里級垂直起降試驗（落點精度高）</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">國內較早完成液氧煤油低空回收驗證的民企之一</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">計畫2026年首飛（中小型可回收火箭）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Space Epoch -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">Space Epoch</div>
+        <div class="csr-card-zh">箭元科技</div>
+      </div>
+      <div class="csr-badge csr-badge--blue">海上回收試驗完成</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">元行者一號（錢塘號）</div>
+      <div class="csr-rocket-en">Yuanxingzhe-1</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--blue">LOX / 甲烷</span>
+      <span class="csr-spec">不鏽鋼箭體</span>
+      <span class="csr-spec csr-spec--teal">海上回收</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">
+          <span class="csr-ms-date">2025</span>
+          完成2.5公里海上濺落回收試驗（全尺寸驗證箭）
+        </div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">杭州海上可回收火箭基地建設中</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">計畫2026年底首飛並實現海上回收</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Galactic Energy -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">Galactic Energy</div>
+        <div class="csr-card-zh">星河動力</div>
+      </div>
+      <div class="csr-badge csr-badge--violet">深度變推驗證完成</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">智神星一號</div>
+      <div class="csr-rocket-en">Pallas-1</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec csr-spec--orange">LOX / 煤油</span>
+      <span class="csr-spec csr-spec--blue">LOX / 甲烷</span>
+      <span class="csr-spec csr-spec--green">陸地回收</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">一、二子級動力系統試車完成</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">深度變推能力驗證完成（著陸關鍵技術）</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">計畫2026年首飛；固體型「谷神星」系列發射次數居民企前列</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Orienspace -->
+  <div class="csr-card">
+    <div class="csr-card-head">
+      <div class="csr-card-names">
+        <div class="csr-card-en">Orienspace</div>
+        <div class="csr-card-zh">東方空間</div>
+      </div>
+      <div class="csr-badge csr-badge--gray">最終地面測試中</div>
+    </div>
+    <div class="csr-card-div"></div>
+    <div>
+      <div class="csr-rocket">引力二號</div>
+      <div class="csr-rocket-en">Gravity-2</div>
+    </div>
+    <div class="csr-specs">
+      <span class="csr-spec">大型液體燃料</span>
+      <span class="csr-spec csr-spec--green">可回收一子級</span>
+      <span class="csr-spec">LEO 21.5 t</span>
+    </div>
+    <div class="csr-milestones">
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--done">✓</div>
+        <div class="csr-ms-body">最終地面測試進行中</div>
+      </div>
+      <div class="csr-ms">
+        <div class="csr-ms-icon csr-ms-icon--pending"></div>
+        <div class="csr-ms-body">計畫2026年第四季首飛（近地軌道運力約21.5噸）</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Comparison table -->
+<div class="csr-sec-hd">技術規格比較</div>
+<div class="csr-table-wrap">
+  <table class="csr-table">
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>火箭型號</th>
+        <th>推進劑</th>
+        <th>箭體</th>
+        <th>回收方式</th>
+        <th>LEO運力</th>
+        <th>現況</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>藍箭航天</strong><span class="csr-co-en">LandSpace</span></td>
+        <td>朱雀三號</td>
+        <td>LOX / 甲烷</td>
+        <td>不鏽鋼</td>
+        <td>陸地垂降</td>
+        <td>—</td>
+        <td><span class="csr-tag csr-tag--done">軌道回收已驗證 ★</span></td>
+      </tr>
+      <tr>
+        <td><strong>東方空間</strong><span class="csr-co-en">Orienspace</span></td>
+        <td>引力二號</td>
+        <td>液體燃料</td>
+        <td>—</td>
+        <td>陸地垂降</td>
+        <td>21.5 t</td>
+        <td><span class="csr-tag csr-tag--soon">2026 Q4 首飛</span></td>
+      </tr>
+      <tr>
+        <td><strong>天兵科技</strong><span class="csr-co-en">Space Pioneer</span></td>
+        <td>天龍三號</td>
+        <td>LOX / 煤油</td>
+        <td>—</td>
+        <td>陸地垂降</td>
+        <td>17–22 t</td>
+        <td><span class="csr-tag csr-tag--soon">2026年首飛</span></td>
+      </tr>
+      <tr>
+        <td><strong>星際榮耀</strong><span class="csr-co-en">i-Space</span></td>
+        <td>雙曲線三號</td>
+        <td>LOX / 甲烷</td>
+        <td>—</td>
+        <td>海上回收</td>
+        <td>—</td>
+        <td><span class="csr-tag csr-tag--soon">2026年底首飛</span></td>
+      </tr>
+      <tr>
+        <td><strong>箭元科技</strong><span class="csr-co-en">Space Epoch</span></td>
+        <td>元行者一號</td>
+        <td>LOX / 甲烷</td>
+        <td>不鏽鋼</td>
+        <td>海上回收</td>
+        <td>—</td>
+        <td><span class="csr-tag csr-tag--soon">2026年底首飛</span></td>
+      </tr>
+      <tr>
+        <td><strong>星河動力</strong><span class="csr-co-en">Galactic Energy</span></td>
+        <td>智神星一號</td>
+        <td>LOX / 煤油 · 甲烷</td>
+        <td>—</td>
+        <td>陸地垂降</td>
+        <td>—</td>
+        <td><span class="csr-tag csr-tag--test">動力驗證中</span></td>
+      </tr>
+      <tr>
+        <td><strong>深藍航天</strong><span class="csr-co-en">Deep Blue Aerospace</span></td>
+        <td>星雲一號</td>
+        <td>LOX / 煤油</td>
+        <td>—</td>
+        <td>陸地垂降</td>
+        <td>—</td>
+        <td><span class="csr-tag csr-tag--test">低空垂降已驗</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="csr-footer">
+  資料來源：企業官方聲明、公開新聞報導、產業分析報告（2025–2026年）。部分企業技術規格、LEO運力與首飛時程仍可能快速變化，以最新官方公告為準。「—」表示資料未公開或尚未確認。
+</div>
+
+</div>
+</body>
+</html>
