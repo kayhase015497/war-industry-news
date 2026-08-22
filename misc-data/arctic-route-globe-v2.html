@@ -95,7 +95,9 @@ body{
   display:block;
   width:100%;
   height:100%;
+  cursor:grab;
 }
+#arg-svg:active{cursor:grabbing;}
 
 /* ── Atmosphere glow ── */
 .atmo-glow{
@@ -294,19 +296,19 @@ body{
   <div class="arg-overlay">
 
     <div class="arg-card card-dep">
-      <div class="dep-label">Departure <span class="dep-arrow">·</span> Destination</div>
-      <div class="dep-route">PORT OF BUSAN<br><span style="color:var(--text-dim)">↓ 目的地</span><br>PORT OF ROTTERDAM</div>
+      <div class="dep-label">出發地 <span class="dep-arrow">·</span> 目的地</div>
+      <div class="dep-route">釜山港<br><span style="color:var(--text-dim)">↓</span><br>鹿特丹港</div>
     </div>
 
     <div class="arg-card card-nsr">
-      <div class="c-tag">Arctic Sea Route (NSR)</div>
+      <div class="c-tag">北方海路（NSR）</div>
       <div class="c-stat">13,000 KM · 20–24 天</div>
       <div class="c-cost">成本：約 US$3M / 航次</div>
       <div class="c-bar-wrap"><div class="c-bar bar-nsr" id="bar-nsr" style="width:63%"></div></div>
     </div>
 
     <div class="arg-card card-suez">
-      <div class="c-tag">Suez Canal Route</div>
+      <div class="c-tag">蘇伊士運河航線</div>
       <div class="c-stat">20,400 KM · 30–35 天</div>
       <div class="c-cost">成本：約 US$4M / 航次</div>
       <div class="c-bar-wrap"><div class="c-bar bar-suez" id="bar-suez" style="width:100%"></div></div>
@@ -317,12 +319,13 @@ body{
         <span class="hi">~7,400 KM</span> 更短<br>
         <span class="hi">~10 天</span> 更快
       </div>
-      <div class="cmp-src">資料來源：Korea Maritime Institute</div>
+      <div class="cmp-src">資料來源：韓國海洋水產開發院</div>
     </div>
 
   </div>
 </div>
 
+<div style="text-align:center;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:#3a4a5e;text-transform:uppercase;padding:.3rem 0 .1rem">動畫結束後可拖曳旋轉 · Drag to rotate after animation</div>
 <div class="arg-replay-wrap">
   <button class="arg-replay" id="replayBtn">
     <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
@@ -428,13 +431,28 @@ const SUEZ = [
 ];
 
 const PORTS = [
-  { name:'釜山', en:'Busan',      lon:129.0, lat:35.1,  both:true },
-  { name:'鹿特丹', en:'Rotterdam', lon:4.5,   lat:51.9,  both:true },
-  { name:'摩爾曼斯克', en:'Murmansk', lon:33.1, lat:68.97, nsr:true },
-  { name:'薩別塔', en:'Sabetta',  lon:72.7,  lat:71.3,  nsr:true },
-  { name:'佩韋克', en:'Pevek',    lon:170.3, lat:69.7,  nsr:true },
-  { name:'蘇伊士', en:'Port Said', lon:32.3,  lat:31.3,  suez:true },
-  { name:'新加坡', en:'Singapore', lon:103.8, lat:1.35,  suez:true },
+  { name:'釜山',    lon:129.0, lat:35.1,  both:true },
+  { name:'鹿特丹',  lon:4.5,   lat:51.9,  both:true },
+  { name:'摩爾曼斯克', lon:33.1, lat:68.97, nsr:true },
+  { name:'薩別塔',  lon:72.7,  lat:71.3,  nsr:true },
+  { name:'佩韋克',  lon:170.3, lat:69.7,  nsr:true },
+  { name:'塞德港',  lon:32.3,  lat:31.3,  suez:true },
+  { name:'新加坡',  lon:103.8, lat:1.35,  suez:true },
+];
+
+const CITIES = [
+  { name:'北京',     lon:116.4,  lat:39.9   },
+  { name:'東京',     lon:139.7,  lat:35.7   },
+  { name:'首爾',     lon:126.97, lat:37.57  },
+  { name:'莫斯科',   lon:37.6,   lat:55.75  },
+  { name:'聖彼得堡', lon:30.3,   lat:59.95  },
+  { name:'倫敦',     lon:-0.13,  lat:51.5   },
+  { name:'柏林',     lon:13.4,   lat:52.5   },
+  { name:'巴黎',     lon:2.35,   lat:48.85  },
+  { name:'孟買',     lon:72.88,  lat:19.07  },
+  { name:'德里',     lon:77.2,   lat:28.6   },
+  { name:'杜拜',     lon:55.3,   lat:25.2   },
+  { name:'伊斯坦堡', lon:28.97,  lat:41.01  },
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -479,9 +497,12 @@ const lLand    = svg.append('g').attr('clip-path','url(#gc)');
 const lArctic  = svg.append('g').attr('clip-path','url(#gc)');
 const lRoutes  = svg.append('g').attr('clip-path','url(#gc)');
 const lPorts   = svg.append('g').attr('clip-path','url(#gc)');
+const lCities  = svg.append('g').attr('clip-path','url(#gc)');
 const lAtmo    = svg.append('g');
 
-// Ocean sphere removed — Three.js texture provides the base
+let portGs = null, cityGs = null;
+let autoRotate = false, rotateEnabled = false;
+let rotateTimer = null, dragStart = null, rotateStart = null;
 
 // Graticule
 const grat = d3.geoGraticule().step([15,15]);
@@ -539,16 +560,47 @@ const nsrEl = lRoutes.append('path')
 /* ═══════════════════════════════════════════════════════════
    Render
 ═══════════════════════════════════════════════════════════ */
-function renderStatic() {
+function render() {
   renderGlobeCanvas();
   lGrat.select('path').attr('d', gp(grat()));
   lArctic.select('path').attr('d', gp(arcticPoly));
   nsrEl.attr('d', gp(geoFeature(NSR)));
   suezEl.attr('d', gp(geoFeature(SUEZ)));
+
+  if (portGs) {
+    portGs.each(function(d) {
+      const vis = isVisible(d.lon, d.lat);
+      const xy = proj([d.lon, d.lat]);
+      d3.select(this)
+        .attr('transform', xy ? `translate(${xy[0]},${xy[1]})` : null)
+        .style('display', (vis && xy) ? null : 'none');
+      if (vis && xy) {
+        const tx = xy[0] > CX ? 9 : -9;
+        const anc = xy[0] > CX ? 'start' : 'end';
+        d3.select(this).select('text').attr('x', tx).attr('text-anchor', anc);
+      }
+    });
+  }
+
+  if (cityGs) {
+    cityGs.each(function(d) {
+      const vis = isVisible(d.lon, d.lat);
+      const xy = proj([d.lon, d.lat]);
+      d3.select(this)
+        .attr('transform', xy ? `translate(${xy[0]},${xy[1]})` : null)
+        .style('display', (vis && xy) ? null : 'none');
+      if (vis && xy) {
+        const tx = xy[0] > CX ? 5 : -5;
+        const anc = xy[0] > CX ? 'start' : 'end';
+        d3.select(this).select('text').attr('x', tx).attr('text-anchor', anc);
+      }
+    });
+  }
 }
 
 function isVisible(lon, lat) {
-  return d3.geoDistance([lon,lat], [-FIXED_ROTATE[0],-FIXED_ROTATE[1]]) < Math.PI/2;
+  const r = proj.rotate();
+  return d3.geoDistance([lon,lat], [-r[0], -r[1]]) < Math.PI/2;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -596,12 +648,14 @@ function runAnimation() {
     animating = false;
     btn.disabled = false;
     btn.style.opacity = '1';
-    drawPorts();
+    if (portGs) portGs.transition().duration(500).style('opacity', 1);
+    if (cityGs) cityGs.transition().duration(500).style('opacity', 1);
+    if (!rotateEnabled) enableRotation();
   });
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Ports
+   Ports & Cities
 ═══════════════════════════════════════════════════════════ */
 function portColor(p) {
   if (p.both) return '#a78bff';
@@ -609,47 +663,75 @@ function portColor(p) {
   return '#4a9eff';
 }
 
-let portsDrawn = false;
-function drawPorts() {
-  if (portsDrawn) return;
-  portsDrawn = true;
+function initMarkersAndCities() {
+  portGs = lPorts.selectAll('g.pt').data(PORTS).enter().append('g').attr('class','pt').style('opacity',0);
+  portGs.append('circle').attr('r',5).attr('fill','none')
+    .attr('stroke',d=>portColor(d)).attr('stroke-width',1.3).attr('opacity',.5);
+  portGs.append('circle').attr('r',3)
+    .attr('fill',d=>portColor(d)).attr('opacity',.95);
+  portGs.append('text')
+    .attr('y', 1)
+    .attr('font-family','Noto Sans TC, sans-serif')
+    .attr('font-size','9.5px')
+    .attr('fill','rgba(210,220,240,0.9)')
+    .attr('paint-order','stroke')
+    .attr('stroke','rgba(4,8,15,0.9)')
+    .attr('stroke-width',2.5)
+    .attr('stroke-linejoin','round')
+    .text(d => d.name);
 
-  const pg = lPorts.selectAll('g.pt').data(PORTS).enter().append('g').attr('class','pt');
+  cityGs = lCities.selectAll('g.city').data(CITIES).enter().append('g').attr('class','city').style('opacity',0);
+  cityGs.append('circle').attr('r',2).attr('fill','rgba(255,255,200,0.75)');
+  cityGs.append('text')
+    .attr('y', 3)
+    .attr('font-family','Noto Sans TC, sans-serif')
+    .attr('font-size','8.5px')
+    .attr('fill','rgba(215,228,242,0.88)')
+    .attr('paint-order','stroke')
+    .attr('stroke','rgba(4,8,20,0.88)')
+    .attr('stroke-width',2.5)
+    .attr('stroke-linejoin','round')
+    .text(d => d.name);
+}
 
-  PORTS.forEach((p, i) => {
-    const vis = isVisible(p.lon, p.lat);
-    const xy = proj([p.lon, p.lat]);
-    if (!xy || !vis) return;
-
-    const g = lPorts.select(`g.pt:nth-child(${i+1})`);
-    if (!g.node()) return;
-
-    g.attr('transform', `translate(${xy[0]},${xy[1]})`);
-    g.append('circle').attr('r',5).attr('fill','none')
-      .attr('stroke',portColor(p)).attr('stroke-width',1.3).attr('opacity',.5);
-    g.append('circle').attr('r',3)
-      .attr('fill',portColor(p)).attr('opacity',.95);
-
-    // Label
-    const labelX = xy[0] > CX ? 9 : -9;
-    const anchor  = xy[0] > CX ? 'start' : 'end';
-    g.append('text')
-      .attr('x', labelX).attr('y', 1)
-      .attr('text-anchor', anchor)
-      .attr('font-family','Space Mono, monospace')
-      .attr('font-size', '9px')
-      .attr('fill','rgba(210,220,240,0.85)')
-      .attr('paint-order','stroke')
-      .attr('stroke','rgba(4,8,15,0.9)')
-      .attr('stroke-width', 3)
-      .attr('stroke-linejoin','round')
-      .text(p.en);
-
-    g.style('opacity',0)
-      .transition().delay(i*80).duration(300)
-      .style('opacity',1);
+/* ═══════════════════════════════════════════════════════════
+   Rotation & Drag (enabled after animation)
+═══════════════════════════════════════════════════════════ */
+function enableRotation() {
+  rotateEnabled = true;
+  autoRotate = true;
+  rotateTimer = d3.timer(() => {
+    if (!autoRotate) return;
+    const r = proj.rotate();
+    proj.rotate([r[0] + 0.08, r[1], r[2]]);
+    render();
   });
 }
+
+d3.select('#arg-svg').call(d3.drag()
+  .on('start', event => {
+    if (!rotateEnabled) return;
+    autoRotate = false;
+    dragStart = [event.x, event.y];
+    rotateStart = proj.rotate();
+  })
+  .on('drag', event => {
+    if (!rotateEnabled || !dragStart) return;
+    const dx = event.x - dragStart[0];
+    const dy = event.y - dragStart[1];
+    proj.rotate([
+      rotateStart[0] + dx * 0.25,
+      Math.max(-85, Math.min(85, rotateStart[1] - dy * 0.25)),
+      rotateStart[2]
+    ]);
+    render();
+  })
+  .on('end', () => {
+    if (!rotateEnabled) return;
+    clearTimeout(window._resumeV2);
+    window._resumeV2 = setTimeout(() => { autoRotate = true; }, 4000);
+  })
+);
 
 /* ═══════════════════════════════════════════════════════════
    Load world and start
@@ -658,16 +740,13 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   _cvLand    = topojson.feature(world, world.objects.countries);
   _cvBorders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
 
-  // SVG overlay: faint outline on top of canvas for crispness
   lLand.append('path').datum(_cvLand)
     .attr('fill','none')
     .attr('stroke','rgba(255,255,255,0.08)')
     .attr('stroke-width',.4);
 
-  // Render paths at fixed view
-  renderStatic();
-
-  // Auto-start animation
+  initMarkersAndCities();
+  render();
   setTimeout(runAnimation, 400);
 });
 
@@ -675,8 +754,11 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
    Replay button
 ═══════════════════════════════════════════════════════════ */
 document.getElementById('replayBtn').addEventListener('click', () => {
-  portsDrawn = false;
-  lPorts.selectAll('*').remove();
+  autoRotate = false;
+  proj.rotate(FIXED_ROTATE);
+  if (portGs) portGs.style('opacity', 0);
+  if (cityGs) cityGs.style('opacity', 0);
+  render();
   runAnimation();
 });
 </script>
