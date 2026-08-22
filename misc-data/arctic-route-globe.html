@@ -514,8 +514,25 @@ const SUEZ_COORDS = [
   [100,4],[103.8,1.35],[110,5],[115,15],[118,22],[121.5,31.2],[125,32],[129,35.1]
 ];
 
+/* ─── City labels ──────────────────────────────────────────── */
+const CITIES = [
+  { name:'北京',     lon:116.4,  lat:39.9   },
+  { name:'東京',     lon:139.7,  lat:35.7   },
+  { name:'首爾',     lon:126.97, lat:37.57  },
+  { name:'莫斯科',   lon:37.6,   lat:55.75  },
+  { name:'聖彼得堡', lon:30.3,   lat:59.95  },
+  { name:'倫敦',     lon:-0.13,  lat:51.5   },
+  { name:'柏林',     lon:13.4,   lat:52.5   },
+  { name:'巴黎',     lon:2.35,   lat:48.85  },
+  { name:'孟買',     lon:72.88,  lat:19.07  },
+  { name:'德里',     lon:77.2,   lat:28.6   },
+  { name:'杜拜',     lon:55.3,   lat:25.2   },
+  { name:'伊斯坦堡', lon:28.97,  lat:41.01  },
+];
+
 /* ─── D3 Canvas globe renderer ─────────────────────────────── */
 let _cvLand = null, _cvBorders = null;
+let cityGs = null;
 
 (function initCanvas() {
   const c = document.getElementById('arg-three');
@@ -604,6 +621,7 @@ const gLand    = svg.append('g').attr('class','g-land').attr('clip-path','url(#g
 const gArctic  = svg.append('g').attr('class','g-arctic').attr('clip-path','url(#globe-clip)');
 const gRoutes  = svg.append('g').attr('class','g-routes').attr('clip-path','url(#globe-clip)');
 const gPorts   = svg.append('g').attr('class','g-ports').attr('clip-path','url(#globe-clip)');
+const gCities  = svg.append('g').attr('class','g-cities').attr('clip-path','url(#globe-clip)');
 const gOverlay = svg.append('g').attr('class','g-overlay');
 
 // Vignette shadow + rim on top of texture
@@ -733,6 +751,19 @@ function render() {
       .attr('transform', proj ? `translate(${proj[0]},${proj[1]})` : null)
       .style('display', vis ? null : 'none');
   });
+
+  if (cityGs) {
+    cityGs.each(function(d) {
+      const xy = projection([d.lon, d.lat]);
+      const vis = xy && isVisible(d.lon, d.lat);
+      const tx = xy && xy[0] > CX ? 5 : -5;
+      const anchor = xy && xy[0] > CX ? 'start' : 'end';
+      d3.select(this)
+        .attr('transform', xy ? `translate(${xy[0]},${xy[1]})` : null)
+        .style('display', vis ? null : 'none');
+      d3.select(this).select('text').attr('x', tx).attr('text-anchor', anchor);
+    });
+  }
 }
 
 function isVisible(lon, lat) {
@@ -748,11 +779,24 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   _cvBorders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
 
   // SVG layer: no fill (canvas handles all globe coloring)
-  // Keep a faint white outline for geographic reference on top of canvas
   gLand.append('path').datum(_cvLand)
     .attr('fill','none')
     .attr('stroke','rgba(255,255,255,0.08)')
     .attr('stroke-width',0.4);
+
+  // City label elements
+  cityGs = gCities.selectAll('g.city').data(CITIES).enter().append('g').attr('class','city');
+  cityGs.append('circle').attr('r',2).attr('fill','rgba(255,255,200,0.75)');
+  cityGs.append('text')
+    .attr('y', 3)
+    .attr('font-family','Noto Sans TC, sans-serif')
+    .attr('font-size','8.5px')
+    .attr('fill','rgba(215,228,242,0.88)')
+    .attr('paint-order','stroke')
+    .attr('stroke','rgba(4,8,20,0.88)')
+    .attr('stroke-width', 2.5)
+    .attr('stroke-linejoin','round')
+    .text(d => d.name);
 
   render();
   startAutoRotate();
