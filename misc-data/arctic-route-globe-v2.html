@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北極航道｜交錯地帶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#04080f;
+  --ocean-deep:#030c18;
+  --ocean-mid:#051628;
+  --land:#1e3320;
+  --land-hi:#253d28;
+  --border-dim:rgba(255,255,255,0.07);
+  --text:#d0d8e8;
+  --text-dim:#5a6a7e;
+  --text-bright:#f2f6ff;
+  --nsr:#e84545;
+  --nsr-glow:rgba(232,69,69,0.4);
+  --suez:#4a9eff;
+  --suez-glow:rgba(74,158,255,0.35);
+  --arctic:rgba(160,220,255,0.12);
+  --arctic-line:rgba(160,220,255,0.3);
+  --mono:'Space Mono',monospace;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Header ── */
+.arg-hdr{
+  padding:.9rem 1.4rem;
+  border-bottom:1px solid var(--border-dim);
+  display:flex;
+  align-items:baseline;
+  gap:.8rem;
+  flex-wrap:wrap;
+}
+.arg-eyebrow{
+  font-family:var(--mono);
+  font-size:.6rem;
+  letter-spacing:.15em;
+  color:var(--nsr);
+  text-transform:uppercase;
+}
+.arg-h1{
+  font-size:clamp(1rem,2.2vw,1.35rem);
+  font-weight:700;
+  color:var(--text-bright);
+  letter-spacing:-.01em;
+}
+.arg-sub{
+  font-size:.75rem;
+  color:var(--text-dim);
+  font-weight:300;
+  margin-left:.2rem;
+}
+
+/* ── Main stage ── */
+.arg-stage{
+  position:relative;
+  width:100%;
+  max-width:960px;
+  margin:0 auto;
+  padding:1.2rem 1rem 0;
+}
+
+#arg-svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* ── Atmosphere glow ── */
+.atmo-glow{
+  pointer-events:none;
+}
+
+/* ── Overlay panel ── */
+.arg-overlay{
+  position:absolute;
+  top:1.8rem;
+  left:1.6rem;
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+  max-width:240px;
+  z-index:10;
+  pointer-events:none;
+}
+
+@media(max-width:600px){
+  .arg-overlay{
+    position:static;
+    max-width:100%;
+    padding:0 1rem .5rem;
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:.4rem;
+  }
+  .arg-stage{padding-bottom:.5rem}
+}
+
+.arg-card{
+  background:rgba(4,10,22,.82);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:6px;
+  padding:.6rem .8rem;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+/* departure card */
+.card-dep{
+  border-color:rgba(255,255,255,.13);
+}
+.dep-label{
+  font-family:var(--mono);
+  font-size:.55rem;
+  letter-spacing:.12em;
+  color:var(--text-dim);
+  text-transform:uppercase;
+  margin-bottom:.3rem;
+}
+.dep-route{
+  font-family:var(--mono);
+  font-size:.62rem;
+  color:var(--text-bright);
+  line-height:1.5;
+}
+.dep-arrow{
+  color:var(--text-dim);
+  display:inline-block;
+  margin:0 .15rem;
+}
+
+/* NSR card */
+.card-nsr{ border-color:var(--nsr); border-width:1px; }
+.card-nsr .c-tag{ color:var(--nsr); }
+
+/* Suez card */
+.card-suez{ border-color:rgba(74,158,255,.5); }
+.card-suez .c-tag{ color:var(--suez); }
+
+.c-tag{
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:.25rem;
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+}
+.c-tag::before{
+  content:'';
+  display:inline-block;
+  width:16px;
+  height:2px;
+  border-radius:1px;
+  flex-shrink:0;
+}
+.card-nsr .c-tag::before{ background:var(--nsr); box-shadow:0 0 6px var(--nsr-glow); }
+.card-suez .c-tag::before{ background:var(--suez); box-shadow:0 0 6px var(--suez-glow); }
+
+.c-stat{
+  font-family:var(--mono);
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--text-bright);
+  line-height:1.2;
+}
+.c-cost{
+  font-size:.62rem;
+  color:var(--text-dim);
+  margin-top:.2rem;
+}
+
+/* Compare card */
+.card-cmp{
+  border-color:rgba(255,255,255,.08);
+}
+.cmp-val{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--text-bright);
+  line-height:1.6;
+}
+.cmp-val span.hi{ color:var(--nsr); }
+.cmp-src{
+  font-size:.58rem;
+  color:var(--text-dim);
+  margin-top:.25rem;
+}
+
+/* ── REPLAY button ── */
+.arg-replay-wrap{
+  display:flex;
+  justify-content:center;
+  padding:.8rem 0 .6rem;
+}
+.arg-replay{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--text);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:4px;
+  padding:.5rem 1.4rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  transition:all .2s;
+}
+.arg-replay:hover{
+  background:rgba(255,255,255,.1);
+  border-color:rgba(255,255,255,.3);
+  color:var(--text-bright);
+}
+.arg-replay svg{ flex-shrink:0; }
+
+/* ── Source ── */
+.arg-source{
+  padding:.5rem 1.4rem .8rem;
+  font-family:var(--mono);
+  font-size:.58rem;
+  color:var(--text-dim);
+  letter-spacing:.05em;
+  text-align:center;
+}
+
+/* ── Progress bars (inside cards) ── */
+.c-bar-wrap{
+  margin-top:.4rem;
+  height:3px;
+  background:rgba(255,255,255,.06);
+  border-radius:2px;
+  overflow:hidden;
+}
+.c-bar{
+  height:100%;
+  border-radius:2px;
+  width:0%;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.bar-nsr{ background:var(--nsr); box-shadow:0 0 6px var(--nsr-glow); }
+.bar-suez{ background:var(--suez); box-shadow:0 0 6px var(--suez-glow); }
+</style>
+</head>
+<body>
+
+<header class="arg-hdr">
+  <div class="arg-eyebrow">Arctic Route · 北極航道</div>
+  <h1 class="arg-h1">北極航道與地緣外交試驗場</h1>
+  <span class="arg-sub">韓國首航北方海路——美俄關係的新壓力線</span>
+</header>
+
+<div class="arg-stage">
+  <svg id="arg-svg" viewBox="0 0 840 560"></svg>
+
+  <!-- Overlay panel -->
+  <div class="arg-overlay">
+
+    <div class="arg-card card-dep">
+      <div class="dep-label">Departure <span class="dep-arrow">·</span> Destination</div>
+      <div class="dep-route">PORT OF BUSAN<br><span style="color:var(--text-dim)">↓ 目的地</span><br>PORT OF ROTTERDAM</div>
+    </div>
+
+    <div class="arg-card card-nsr">
+      <div class="c-tag">Arctic Sea Route (NSR)</div>
+      <div class="c-stat">13,000 KM · 20–24 天</div>
+      <div class="c-cost">成本：約 US$3M / 航次</div>
+      <div class="c-bar-wrap"><div class="c-bar bar-nsr" id="bar-nsr" style="width:63%"></div></div>
+    </div>
+
+    <div class="arg-card card-suez">
+      <div class="c-tag">Suez Canal Route</div>
+      <div class="c-stat">20,400 KM · 30–35 天</div>
+      <div class="c-cost">成本：約 US$4M / 航次</div>
+      <div class="c-bar-wrap"><div class="c-bar bar-suez" id="bar-suez" style="width:100%"></div></div>
+    </div>
+
+    <div class="arg-card card-cmp">
+      <div class="cmp-val">
+        <span class="hi">~7,400 KM</span> 更短<br>
+        <span class="hi">~10 天</span> 更快
+      </div>
+      <div class="cmp-src">資料來源：Korea Maritime Institute</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="arg-replay-wrap">
+  <button class="arg-replay" id="replayBtn">
+    <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+      <path d="M1.5 1.5C3.2 0.5 7 0.5 8.7 3C10.4 5.5 9.5 9 7 10.5C4.5 12 1.5 10.5 0.5 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0.5 8L0.5 11.5L3.5 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    REPLAY
+  </button>
+</div>
+
+<div class="arg-source">
+  © Korea Maritime Institute · IMO · Rosmorport · Arctic Council &nbsp;|&nbsp; 圖表：戰爭即工業力｜交錯地帶 2026-08
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   Config
+═══════════════════════════════════════════════════════════ */
+const W = 840, H = 560, CX = W * 0.54, CY = H * 0.5, R = 260;
+
+// Fixed Eurasian viewpoint — centered on Arctic/Russia
+// rotate([-λ, -φ]) centers the globe at (λ, φ)
+const FIXED_ROTATE = [-58, -52, 10];
+
+/* Routes: Busan → Rotterdam */
+const NSR = [
+  [129.0,35.1],[132,38],[138,43],[145,48],[150,52],
+  [160,56],[170,58],[178,62],[180,64],[-175,66],
+  [-168,65.5],[-163,64],[-170,66],
+  [170.3,69.7],[160,70],[150,71],[140,72],[128.9,71.7],
+  [120,73],[110,73],[100,73],[90,74],[80,74],
+  [72.7,71.3],[60,72],[52,70],[44,71],[33.1,68.97],
+  [30,70],[20,70],[12,66],[5,62],[1.3,51.1],[4.5,51.9]
+];
+
+const SUEZ = [
+  [129.0,35.1],[125,32],[121.5,31.2],[118,22],[115,15],
+  [110,5],[103.8,1.35],[100,4],[90,5],[80,7],
+  [72,8],[65,10],[55,11],[50,12],[42,15],
+  [38,20],[32.5,30.0],[32.3,31.3],[22,36],[15,38],
+  [5,38],[-5.4,36.1],[1.3,51.1],[4.5,51.9]
+];
+
+const PORTS = [
+  { name:'釜山', en:'Busan',      lon:129.0, lat:35.1,  both:true },
+  { name:'鹿特丹', en:'Rotterdam', lon:4.5,   lat:51.9,  both:true },
+  { name:'摩爾曼斯克', en:'Murmansk', lon:33.1, lat:68.97, nsr:true },
+  { name:'薩別塔', en:'Sabetta',  lon:72.7,  lat:71.3,  nsr:true },
+  { name:'佩韋克', en:'Pevek',    lon:170.3, lat:69.7,  nsr:true },
+  { name:'蘇伊士', en:'Port Said', lon:32.3,  lat:31.3,  suez:true },
+  { name:'新加坡', en:'Singapore', lon:103.8, lat:1.35,  suez:true },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   SVG setup
+═══════════════════════════════════════════════════════════ */
+const svg = d3.select('#arg-svg');
+const defs = svg.append('defs');
+
+// Ocean gradient
+const og = defs.append('radialGradient').attr('id','og').attr('cx','42%').attr('cy','38%');
+og.append('stop').attr('offset','0%').attr('stop-color','#0a2040');
+og.append('stop').attr('offset','55%').attr('stop-color','#041528');
+og.append('stop').attr('offset','100%').attr('stop-color','#020a14');
+
+// Atmosphere gradient
+const ag = defs.append('radialGradient').attr('id','ag').attr('cx','50%').attr('cy','50%');
+ag.append('stop').attr('offset','85%').attr('stop-color','transparent');
+ag.append('stop').attr('offset','95%').attr('stop-color','rgba(80,160,255,0.15)');
+ag.append('stop').attr('offset','100%').attr('stop-color','rgba(80,160,255,0.3)');
+
+// Specular highlight
+const sh = defs.append('radialGradient').attr('id','sh').attr('cx','38%').attr('cy','32%');
+sh.append('stop').attr('offset','0%').attr('stop-color','rgba(255,255,255,0.1)');
+sh.append('stop').attr('offset','60%').attr('stop-color','transparent');
+
+// Clip
+defs.append('clipPath').attr('id','gc')
+  .append('circle').attr('cx',CX).attr('cy',CY).attr('r',R);
+
+// Projection
+const proj = d3.geoOrthographic()
+  .scale(R).translate([CX,CY])
+  .clipAngle(90)
+  .rotate(FIXED_ROTATE);
+
+const gp = d3.geoPath().projection(proj);
+
+/* ── Layers (order matters) ── */
+const lOcean   = svg.append('g');
+const lGrat    = svg.append('g').attr('clip-path','url(#gc)');
+const lLand    = svg.append('g').attr('clip-path','url(#gc)');
+const lArctic  = svg.append('g').attr('clip-path','url(#gc)');
+const lRoutes  = svg.append('g').attr('clip-path','url(#gc)');
+const lPorts   = svg.append('g').attr('clip-path','url(#gc)');
+const lAtmo    = svg.append('g');
+
+// Ocean sphere
+lOcean.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#og)');
+
+// Graticule
+const grat = d3.geoGraticule().step([15,15]);
+lGrat.append('path').datum(grat())
+  .attr('fill','none').attr('stroke','rgba(255,255,255,0.04)').attr('stroke-width',.5);
+
+// Arctic circle polygon (~66.5°N)
+const arcticPoly = {type:'Feature',geometry:{type:'Polygon',coordinates:[
+  d3.range(-180,181,2).map(l=>[l,66.5])
+    .concat([[180,90],[180,90],[-180,90],[-180,66.5]])
+]}};
+lArctic.append('path').datum(arcticPoly)
+  .attr('fill','rgba(160,220,255,0.07)')
+  .attr('stroke','rgba(160,220,255,0.22)')
+  .attr('stroke-width',.8)
+  .attr('stroke-dasharray','4 3');
+
+// Atmosphere glow ring
+lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ag)');
+// Specular
+lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#sh)');
+// Rim
+lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
+  .attr('fill','none').attr('stroke','rgba(100,180,255,0.18)').attr('stroke-width',1.5);
+
+/* ═══════════════════════════════════════════════════════════
+   Route paths (hidden initially)
+═══════════════════════════════════════════════════════════ */
+function geoFeature(coords) {
+  return {type:'Feature',geometry:{type:'LineString',coordinates:coords}};
+}
+
+// Suez (draw first, behind NSR)
+const suezEl = lRoutes.append('path')
+  .datum(geoFeature(SUEZ))
+  .attr('fill','none')
+  .attr('stroke','#4a9eff')
+  .attr('stroke-width',2)
+  .attr('stroke-linecap','round')
+  .attr('stroke-linejoin','round')
+  .attr('filter','drop-shadow(0 0 4px rgba(74,158,255,0.7))')
+  .attr('opacity',0);
+
+// NSR
+const nsrEl = lRoutes.append('path')
+  .datum(geoFeature(NSR))
+  .attr('fill','none')
+  .attr('stroke','#e84545')
+  .attr('stroke-width',2.4)
+  .attr('stroke-linecap','round')
+  .attr('stroke-linejoin','round')
+  .attr('filter','drop-shadow(0 0 5px rgba(232,69,69,0.8))')
+  .attr('opacity',0);
+
+/* ═══════════════════════════════════════════════════════════
+   Render
+═══════════════════════════════════════════════════════════ */
+function renderStatic() {
+  lGrat.select('path').attr('d', gp(grat()));
+  lArctic.select('path').attr('d', gp(arcticPoly));
+  nsrEl.attr('d', gp(geoFeature(NSR)));
+  suezEl.attr('d', gp(geoFeature(SUEZ)));
+}
+
+function isVisible(lon, lat) {
+  return d3.geoDistance([lon,lat], [-FIXED_ROTATE[0],-FIXED_ROTATE[1]]) < Math.PI/2;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation
+═══════════════════════════════════════════════════════════ */
+let animating = false;
+
+function getLen(el) {
+  try { return el.node().getTotalLength(); }
+  catch(e) { return 2000; }
+}
+
+function animatePath(el, delay, duration, cb) {
+  const len = getLen(el);
+  el.attr('stroke-dasharray', len)
+    .attr('stroke-dashoffset', len)
+    .attr('opacity', 1);
+
+  setTimeout(() => {
+    el.transition()
+      .duration(duration)
+      .ease(d3.easeLinear)
+      .attr('stroke-dashoffset', 0)
+      .on('end', () => cb && cb());
+  }, delay);
+}
+
+function runAnimation() {
+  if (animating) return;
+  animating = true;
+  const btn = document.getElementById('replayBtn');
+  btn.disabled = true;
+  btn.style.opacity = '.5';
+
+  // Reset
+  [nsrEl, suezEl].forEach(el => {
+    el.interrupt();
+    el.attr('stroke-dasharray', null).attr('stroke-dashoffset', null).attr('opacity', 0);
+  });
+
+  // Draw Suez first (300ms delay, 2.5s)
+  animatePath(suezEl, 300, 2500, null);
+  // Draw NSR after short overlap (600ms delay, 3s)
+  animatePath(nsrEl, 600, 3000, () => {
+    animating = false;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    drawPorts();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Ports
+═══════════════════════════════════════════════════════════ */
+function portColor(p) {
+  if (p.both) return '#a78bff';
+  if (p.nsr)  return '#e84545';
+  return '#4a9eff';
+}
+
+let portsDrawn = false;
+function drawPorts() {
+  if (portsDrawn) return;
+  portsDrawn = true;
+
+  const pg = lPorts.selectAll('g.pt').data(PORTS).enter().append('g').attr('class','pt');
+
+  PORTS.forEach((p, i) => {
+    const vis = isVisible(p.lon, p.lat);
+    const xy = proj([p.lon, p.lat]);
+    if (!xy || !vis) return;
+
+    const g = lPorts.select(`g.pt:nth-child(${i+1})`);
+    if (!g.node()) return;
+
+    g.attr('transform', `translate(${xy[0]},${xy[1]})`);
+    g.append('circle').attr('r',5).attr('fill','none')
+      .attr('stroke',portColor(p)).attr('stroke-width',1.3).attr('opacity',.5);
+    g.append('circle').attr('r',3)
+      .attr('fill',portColor(p)).attr('opacity',.95);
+
+    // Label
+    const labelX = xy[0] > CX ? 9 : -9;
+    const anchor  = xy[0] > CX ? 'start' : 'end';
+    g.append('text')
+      .attr('x', labelX).attr('y', 1)
+      .attr('text-anchor', anchor)
+      .attr('font-family','Space Mono, monospace')
+      .attr('font-size', '9px')
+      .attr('fill','rgba(210,220,240,0.85)')
+      .attr('paint-order','stroke')
+      .attr('stroke','rgba(4,8,15,0.9)')
+      .attr('stroke-width', 3)
+      .attr('stroke-linejoin','round')
+      .text(p.en);
+
+    g.style('opacity',0)
+      .transition().delay(i*80).duration(300)
+      .style('opacity',1);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Load world and start
+═══════════════════════════════════════════════════════════ */
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+  const land    = topojson.feature(world, world.objects.countries);
+  const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+
+  lLand.append('path').datum(land)
+    .attr('fill','#1e3320')
+    .attr('stroke','#253d28')
+    .attr('stroke-width',.5);
+
+  lLand.append('path').datum(borders)
+    .attr('fill','none')
+    .attr('stroke','rgba(255,255,255,0.05)')
+    .attr('stroke-width',.3);
+
+  // Render paths at fixed view
+  renderStatic();
+
+  // Auto-start animation
+  setTimeout(runAnimation, 400);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Replay button
+═══════════════════════════════════════════════════════════ */
+document.getElementById('replayBtn').addEventListener('click', () => {
+  portsDrawn = false;
+  lPorts.selectAll('*').remove();
+  runAnimation();
+});
+</script>
+</body>
+</html>
