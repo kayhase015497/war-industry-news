@@ -83,6 +83,12 @@ body{
   aspect-ratio:840/560;
 }
 
+/* Globe inner: fills container on desktop, natural size on mobile */
+.arg-globe-inner{
+  position:absolute;
+  inset:0;
+}
+
 #arg-three-v2{
   position:absolute;
   inset:0;
@@ -127,13 +133,32 @@ body{
 .arg-overlay .arg-card:first-of-type{border-radius:0;}
 .arg-overlay .arg-card:last-child{border-radius:0 0 6px 6px;}
 
+/* ── Mobile: vertical stack layout ── */
 @media(max-width:600px){
-  .arg-overlay{
-    top:.8rem;
-    left:.8rem;
-    max-width:calc(100% - 1.6rem);
-    max-height:50%;
+  .arg-globe-container{
+    display:flex;
+    flex-direction:column;
+    aspect-ratio:unset;
   }
+  .arg-globe-inner{
+    position:relative;
+    width:100%;
+    aspect-ratio:840/560;
+    inset:unset;
+    flex-shrink:0;
+  }
+  .arg-overlay{
+    position:relative;
+    top:unset;
+    left:unset;
+    max-width:100%;
+    max-height:none;
+    overflow-y:visible;
+    border-radius:6px;
+    margin-top:.5rem;
+    pointer-events:auto;
+  }
+  .arg-overlay .arg-card{pointer-events:auto;}
   .arg-stage{padding-bottom:.5rem}
 }
 
@@ -358,10 +383,18 @@ body{
 
 <div class="arg-stage">
   <div class="arg-globe-container">
-    <canvas id="arg-three-v2"></canvas>
-    <svg id="arg-svg" viewBox="0 0 840 560"></svg>
+    <!-- Globe rendering area -->
+    <div class="arg-globe-inner">
+      <canvas id="arg-three-v2"></canvas>
+      <svg id="arg-svg" viewBox="0 0 840 560"></svg>
+      <!-- Zoom controls -->
+      <div class="arg-zoom-btns">
+        <button class="arg-zoom-btn" id="zoomIn" title="放大">＋</button>
+        <button class="arg-zoom-btn" id="zoomOut" title="縮小">－</button>
+      </div>
+    </div>
 
-    <!-- Overlay panel (inside container so it can't overflow stage) -->
+    <!-- Overlay panel: absolute on desktop, below globe on mobile -->
     <div class="arg-overlay">
       <button class="arg-panel-toggle" id="panelToggle">
         <span>點擊展開／縮小表格</span><span id="toggleIcon">▾</span>
@@ -392,12 +425,6 @@ body{
           <span class="hi">~10 天</span> 更快
         </div>
       </div>
-    </div>
-
-    <!-- Zoom controls -->
-    <div class="arg-zoom-btns">
-      <button class="arg-zoom-btn" id="zoomIn" title="放大">＋</button>
-      <button class="arg-zoom-btn" id="zoomOut" title="縮小">－</button>
     </div>
   </div>
 </div>
@@ -480,6 +507,13 @@ function renderGlobeCanvas() {
 ═══════════════════════════════════════════════════════════ */
 const W = 840, H = 560, CX = W * 0.54, CY = H * 0.5, R = 260;
 let zR = R;
+
+// Mobile: collapse overlay by default, slightly larger globe
+if (window.innerWidth <= 600) {
+  zR = 310;
+  document.querySelector('.arg-overlay').classList.add('collapsed');
+  document.getElementById('toggleIcon').textContent = '▸';
+}
 
 // Fixed Eurasian viewpoint — centered on Arctic/Russia
 // rotate([-λ, -φ]) centers the globe at (λ, φ)
