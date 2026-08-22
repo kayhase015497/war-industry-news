@@ -10,13 +10,15 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { font-size: 18px; }
+
 :root {
   --bg: #0b0f1a;
   --bg-card: #111827;
   --bg-card2: #0f1e2e;
   --border: #1e2d3d;
   --text: #d8dde8;
-  --text-dim: #6b7a8d;
+  --text-dim: #b0c8e0;
   --text-bright: #f0f4ff;
   --accent-nsr: #f5a623;
   --accent-suez: #4f9eff;
@@ -48,19 +50,19 @@ body {
 }
 .arg-eyebrow {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 1rem;
   letter-spacing: 0.15em;
   color: var(--accent-nsr);
   text-transform: uppercase;
 }
 .arg-title {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   font-weight: 700;
   color: var(--text-bright);
   letter-spacing: -0.01em;
 }
 .arg-subtitle {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--text-dim);
   font-weight: 300;
 }
@@ -68,7 +70,7 @@ body {
 /* ── Layout ── */
 .arg-layout {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 380px;
   min-height: calc(100vh - 70px);
 }
 
@@ -114,7 +116,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -147,7 +149,7 @@ body {
 }
 .arg-toggle-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.12em;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -162,9 +164,9 @@ body {
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
-  color: var(--text-dim);
+  color: var(--text);
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: 0.82rem;
+  font-size: 1rem;
   transition: all 0.2s;
   text-align: left;
   width: 100%;
@@ -190,7 +192,7 @@ body {
 .arg-route-name { font-weight: 500; flex: 1; }
 .arg-route-km {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: inherit;
   opacity: 0.7;
 }
@@ -211,7 +213,7 @@ body {
 }
 .arg-stat-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -226,7 +228,7 @@ body {
 }
 .arg-stat-val.blue { color: var(--accent-suez); }
 .arg-stat-sub {
-  font-size: 0.68rem;
+  font-size: 1rem;
   color: var(--text-dim);
   margin-top: 0.2rem;
 }
@@ -238,7 +240,7 @@ body {
 }
 .arg-compare-title {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -251,9 +253,9 @@ body {
   margin-bottom: 0.5rem;
 }
 .arg-bar-name {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  width: 56px;
+  font-size: 1rem;
+  color: var(--text);
+  width: 68px;
   flex-shrink: 0;
 }
 .arg-bar-outer {
@@ -272,9 +274,9 @@ body {
 .bar-suez { background: var(--accent-suez); box-shadow: 0 0 8px var(--glow-suez); }
 .arg-bar-km {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  width: 52px;
+  font-size: 1rem;
+  color: var(--text);
+  width: 64px;
   text-align: right;
   flex-shrink: 0;
 }
@@ -287,7 +289,7 @@ body {
 }
 .arg-ports-title {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -315,12 +317,12 @@ body {
 .dot-suez { background: var(--accent-suez); }
 .dot-both { background: #9b8fff; }
 .arg-port-name {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--text);
   font-weight: 500;
 }
 .arg-port-desc {
-  font-size: 0.68rem;
+  font-size: 1rem;
   color: var(--text-dim);
   margin-top: 0.1rem;
 }
@@ -333,15 +335,15 @@ body {
 }
 .arg-geo-title {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   color: var(--accent-arctic);
   text-transform: uppercase;
   margin-bottom: 0.6rem;
 }
 .arg-geo-text {
-  font-size: 0.76rem;
-  color: var(--text-dim);
+  font-size: 1rem;
+  color: var(--text);
   line-height: 1.65;
 }
 .arg-geo-text strong { color: var(--text); font-weight: 500; }
@@ -353,22 +355,22 @@ body {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--text);
   pointer-events: none;
   z-index: 1000;
   display: none;
-  max-width: 180px;
+  max-width: 220px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 .arg-tooltip-name { font-weight: 600; color: var(--text-bright); }
-.arg-tooltip-sub { color: var(--text-dim); font-size: 0.7rem; margin-top: 0.2rem; }
+.arg-tooltip-sub { color: var(--text); font-size: 1rem; margin-top: 0.2rem; }
 
 /* ── Source ── */
 .arg-source {
   padding: 0.6rem 1.5rem;
   border-top: 1px solid var(--border);
-  font-size: 0.65rem;
+  font-size: 1rem;
   color: var(--text-dim);
   font-family: 'Space Mono', monospace;
 }
@@ -790,8 +792,8 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   cityGs.append('text')
     .attr('y', 3)
     .attr('font-family','Noto Sans TC, sans-serif')
-    .attr('font-size','8.5px')
-    .attr('fill','rgba(215,228,242,0.88)')
+    .attr('font-size','15px')
+    .attr('fill','rgba(235,245,255,1)')
     .attr('paint-order','stroke')
     .attr('stroke','rgba(4,8,20,0.88)')
     .attr('stroke-width', 2.5)
