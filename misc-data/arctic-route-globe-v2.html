@@ -109,24 +109,30 @@ body{
 /* ── Overlay panel ── */
 .arg-overlay{
   position:absolute;
-  top:1.8rem;
-  left:1.6rem;
+  top:1.4rem;
+  left:1.4rem;
   display:flex;
   flex-direction:column;
-  gap:.5rem;
+  gap:0;
   max-width:280px;
+  max-height:calc(100% - 2.8rem);
+  overflow-y:auto;
+  scrollbar-width:none;
   z-index:10;
   pointer-events:none;
+  border-radius:6px;
 }
+.arg-overlay::-webkit-scrollbar{display:none;}
+.arg-overlay .arg-card{pointer-events:none;border-radius:0;margin-top:0;}
+.arg-overlay .arg-card:first-of-type{border-radius:0;}
+.arg-overlay .arg-card:last-child{border-radius:0 0 6px 6px;}
 
 @media(max-width:600px){
   .arg-overlay{
-    position:static;
-    max-width:100%;
-    padding:0 1rem .5rem;
-    flex-direction:row;
-    flex-wrap:wrap;
-    gap:.4rem;
+    top:.8rem;
+    left:.8rem;
+    max-width:calc(100% - 1.6rem);
+    max-height:50%;
   }
   .arg-stage{padding-bottom:.5rem}
 }
@@ -278,6 +284,68 @@ body{
 }
 .bar-nsr{ background:var(--nsr); box-shadow:0 0 6px var(--nsr-glow); }
 .bar-suez{ background:var(--suez); box-shadow:0 0 6px var(--suez-glow); }
+
+/* ── Panel collapse toggle ── */
+.arg-panel-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  background:rgba(4,10,22,.9);
+  border:none;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  border-radius:6px 6px 0 0;
+  color:var(--text-dim);
+  font-family:var(--mono);
+  font-size:.85rem;
+  letter-spacing:.1em;
+  cursor:pointer;
+  padding:.35rem .8rem;
+  pointer-events:auto;
+  text-transform:uppercase;
+  user-select:none;
+}
+.arg-panel-toggle:hover{color:var(--text-bright);}
+.arg-panel-toggle + .arg-card{border-radius:0;}
+.arg-panel-toggle + .arg-card:last-child{border-radius:0 0 6px 6px;}
+
+.arg-overlay.collapsed .dep-route,
+.arg-overlay.collapsed .c-stat,
+.arg-overlay.collapsed .c-cost,
+.arg-overlay.collapsed .c-bar-wrap,
+.arg-overlay.collapsed .cmp-val,
+.arg-overlay.collapsed .cmp-src{ display:none; }
+.arg-overlay.collapsed .arg-card{ padding:.28rem .8rem; }
+
+/* ── Zoom buttons ── */
+.arg-zoom-btns{
+  position:absolute;
+  bottom:1rem;
+  right:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.3rem;
+  z-index:10;
+}
+.arg-zoom-btn{
+  width:2.2rem;
+  height:2.2rem;
+  background:rgba(4,10,22,.85);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:5px;
+  color:var(--text-bright);
+  font-size:1.3rem;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .15s;
+  font-family:var(--mono);
+  backdrop-filter:blur(6px);
+}
+.arg-zoom-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.45);}
+.arg-zoom-btn:active{transform:scale(.92);}
 </style>
 </head>
 <body>
@@ -292,38 +360,46 @@ body{
   <div class="arg-globe-container">
     <canvas id="arg-three-v2"></canvas>
     <svg id="arg-svg" viewBox="0 0 840 560"></svg>
-  </div>
 
-  <!-- Overlay panel -->
-  <div class="arg-overlay">
+    <!-- Overlay panel (inside container so it can't overflow stage) -->
+    <div class="arg-overlay">
+      <button class="arg-panel-toggle" id="panelToggle">
+        <span>資訊面板</span><span id="toggleIcon">▾</span>
+      </button>
 
-    <div class="arg-card card-dep">
-      <div class="dep-label">出發地 <span class="dep-arrow">·</span> 目的地</div>
-      <div class="dep-route">釜山港<br><span style="color:var(--text-dim)">↓</span><br>鹿特丹港</div>
-    </div>
-
-    <div class="arg-card card-nsr">
-      <div class="c-tag">北方海路（NSR）</div>
-      <div class="c-stat">13,000 KM · 20–24 天</div>
-      <div class="c-cost">成本：約 US$3M / 航次</div>
-      <div class="c-bar-wrap"><div class="c-bar bar-nsr" id="bar-nsr" style="width:63%"></div></div>
-    </div>
-
-    <div class="arg-card card-suez">
-      <div class="c-tag">蘇伊士運河航線</div>
-      <div class="c-stat">20,400 KM · 30–35 天</div>
-      <div class="c-cost">成本：約 US$4M / 航次</div>
-      <div class="c-bar-wrap"><div class="c-bar bar-suez" id="bar-suez" style="width:100%"></div></div>
-    </div>
-
-    <div class="arg-card card-cmp">
-      <div class="cmp-val">
-        <span class="hi">~7,400 KM</span> 更短<br>
-        <span class="hi">~10 天</span> 更快
+      <div class="arg-card card-dep">
+        <div class="dep-label">出發地 <span class="dep-arrow">·</span> 目的地</div>
+        <div class="dep-route">釜山港<br><span style="color:var(--text-dim)">↓</span><br>鹿特丹港</div>
       </div>
-      <div class="cmp-src">資料來源：韓國海洋水產開發院</div>
+
+      <div class="arg-card card-nsr">
+        <div class="c-tag">北方海路（NSR）</div>
+        <div class="c-stat">13,000 KM · 20–24 天</div>
+        <div class="c-cost">成本：約 US$3M / 航次</div>
+        <div class="c-bar-wrap"><div class="c-bar bar-nsr" id="bar-nsr" style="width:63%"></div></div>
+      </div>
+
+      <div class="arg-card card-suez">
+        <div class="c-tag">蘇伊士運河航線</div>
+        <div class="c-stat">20,400 KM · 30–35 天</div>
+        <div class="c-cost">成本：約 US$4M / 航次</div>
+        <div class="c-bar-wrap"><div class="c-bar bar-suez" id="bar-suez" style="width:100%"></div></div>
+      </div>
+
+      <div class="arg-card card-cmp">
+        <div class="cmp-val">
+          <span class="hi">~7,400 KM</span> 更短<br>
+          <span class="hi">~10 天</span> 更快
+        </div>
+        <div class="cmp-src">資料來源：韓國海洋水產開發院</div>
+      </div>
     </div>
 
+    <!-- Zoom controls -->
+    <div class="arg-zoom-btns">
+      <button class="arg-zoom-btn" id="zoomIn" title="放大">＋</button>
+      <button class="arg-zoom-btn" id="zoomOut" title="縮小">－</button>
+    </div>
   </div>
 </div>
 
@@ -360,20 +436,19 @@ function renderGlobeCanvas() {
   const ctx = c.getContext('2d');
   const cp = d3.geoPath().projection(proj).context(ctx);
   const PI2 = Math.PI * 2;
+  const r = zR;
 
   ctx.clearRect(0, 0, 840, 560);
 
   ctx.save();
-  ctx.beginPath(); ctx.arc(CX, CY, R, 0, PI2); ctx.clip();
+  ctx.beginPath(); ctx.arc(CX, CY, r, 0, PI2); ctx.clip();
 
-  // Ocean gradient
-  const og2 = ctx.createRadialGradient(CX - R*.28, CY - R*.32, R*.05, CX, CY, R);
+  const og2 = ctx.createRadialGradient(CX - r*.28, CY - r*.32, r*.05, CX, CY, r);
   og2.addColorStop(0,   '#0f304d');
   og2.addColorStop(.55, '#061b32');
   og2.addColorStop(1,   '#020d1c');
-  ctx.fillStyle = og2; ctx.fillRect(CX-R, CY-R, R*2, R*2);
+  ctx.fillStyle = og2; ctx.fillRect(CX-r, CY-r, r*2, r*2);
 
-  // Land
   if (_cvLand) {
     ctx.beginPath(); cp(_cvLand);
     ctx.fillStyle = '#1d3c22'; ctx.fill();
@@ -381,26 +456,23 @@ function renderGlobeCanvas() {
     ctx.strokeStyle = 'rgba(60,140,60,.22)'; ctx.lineWidth = .7; ctx.stroke();
   }
 
-  // Country borders
   if (_cvBorders) {
     ctx.beginPath(); cp(_cvBorders);
     ctx.strokeStyle = 'rgba(0,0,0,.32)'; ctx.lineWidth = .4; ctx.stroke();
   }
 
-  // Specular highlight
-  const sp = ctx.createRadialGradient(CX - R*.38, CY - R*.42, 0, CX - R*.1, CY - R*.12, R*.9);
+  const sp = ctx.createRadialGradient(CX - r*.38, CY - r*.42, 0, CX - r*.1, CY - r*.12, r*.9);
   sp.addColorStop(0,   'rgba(255,255,255,.2)');
   sp.addColorStop(.32, 'rgba(255,255,255,.05)');
   sp.addColorStop(1,   'transparent');
-  ctx.fillStyle = sp; ctx.fillRect(CX-R, CY-R, R*2, R*2);
+  ctx.fillStyle = sp; ctx.fillRect(CX-r, CY-r, r*2, r*2);
 
   ctx.restore();
 
-  // Atmosphere glow ring
-  const ag2 = ctx.createRadialGradient(CX, CY, R*.9, CX, CY, R*1.12);
+  const ag2 = ctx.createRadialGradient(CX, CY, r*.9, CX, CY, r*1.12);
   ag2.addColorStop(0, 'rgba(60,140,255,.32)');
   ag2.addColorStop(1, 'transparent');
-  ctx.beginPath(); ctx.arc(CX, CY, R*1.13, 0, PI2);
+  ctx.beginPath(); ctx.arc(CX, CY, r*1.13, 0, PI2);
   ctx.fillStyle = ag2; ctx.fill();
 }
 
@@ -408,6 +480,7 @@ function renderGlobeCanvas() {
    Config
 ═══════════════════════════════════════════════════════════ */
 const W = 840, H = 560, CX = W * 0.54, CY = H * 0.5, R = 260;
+let zR = R;
 
 // Fixed Eurasian viewpoint — centered on Arctic/Russia
 // rotate([-λ, -φ]) centers the globe at (λ, φ)
@@ -481,7 +554,7 @@ sh.append('stop').attr('offset','0%').attr('stop-color','rgba(255,255,255,0.1)')
 sh.append('stop').attr('offset','60%').attr('stop-color','transparent');
 
 // Clip
-defs.append('clipPath').attr('id','gc')
+const gcCircle = defs.append('clipPath').attr('id','gc')
   .append('circle').attr('cx',CX).attr('cy',CY).attr('r',R);
 
 // Projection
@@ -523,11 +596,11 @@ lArctic.append('path').datum(arcticPoly)
   .attr('stroke-dasharray','4 3');
 
 // Atmosphere glow ring
-lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ag)');
+const atmoC1 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ag)');
 // Specular
-lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#sh)');
+const atmoC2 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#sh)');
 // Rim
-lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
+const atmoC3 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
   .attr('fill','none').attr('stroke','rgba(100,180,255,0.18)').attr('stroke-width',1.5);
 
 /* ═══════════════════════════════════════════════════════════
@@ -734,6 +807,46 @@ d3.select('#arg-svg').call(d3.drag()
     window._resumeV2 = setTimeout(() => { autoRotate = true; }, 4000);
   })
 );
+
+/* ═══════════════════════════════════════════════════════════
+   Zoom
+═══════════════════════════════════════════════════════════ */
+function setZoom(newR) {
+  zR = Math.max(100, Math.min(560, newR));
+  proj.scale(zR);
+  gcCircle.attr('r', zR);
+  atmoC1.attr('r', zR); atmoC2.attr('r', zR); atmoC3.attr('r', zR);
+  render();
+}
+
+document.getElementById('zoomIn').addEventListener('click', () => setZoom(zR * 1.25));
+document.getElementById('zoomOut').addEventListener('click', () => setZoom(zR / 1.25));
+
+// Pinch-to-zoom
+let _pd = null, _pzR = null;
+const _svgEl = document.getElementById('arg-svg');
+_svgEl.addEventListener('touchstart', e => {
+  if (e.touches.length === 2) {
+    _pd = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+    _pzR = zR;
+  }
+}, {passive:true});
+_svgEl.addEventListener('touchmove', e => {
+  if (e.touches.length === 2 && _pd) {
+    e.preventDefault();
+    const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+    setZoom(_pzR * d / _pd);
+  }
+}, {passive:false});
+_svgEl.addEventListener('touchend', () => { _pd = null; });
+
+// Panel toggle
+document.getElementById('panelToggle').addEventListener('click', () => {
+  const ov = document.querySelector('.arg-overlay');
+  const ic = document.getElementById('toggleIcon');
+  ov.classList.toggle('collapsed');
+  ic.textContent = ov.classList.contains('collapsed') ? '▸' : '▾';
+});
 
 /* ═══════════════════════════════════════════════════════════
    Load world and start
