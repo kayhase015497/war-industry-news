@@ -75,10 +75,26 @@ body{
   padding:1.2rem 1rem 0;
 }
 
+.arg-globe-container{
+  position:relative;
+  width:100%;
+  aspect-ratio:840/560;
+}
+
+#arg-three-v2{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
 #arg-svg{
+  position:absolute;
+  inset:0;
   display:block;
   width:100%;
-  height:auto;
+  height:100%;
 }
 
 /* ── Atmosphere glow ── */
@@ -269,7 +285,10 @@ body{
 </header>
 
 <div class="arg-stage">
-  <svg id="arg-svg" viewBox="0 0 840 560"></svg>
+  <div class="arg-globe-container">
+    <canvas id="arg-three-v2"></canvas>
+    <svg id="arg-svg" viewBox="0 0 840 560"></svg>
+  </div>
 
   <!-- Overlay panel -->
   <div class="arg-overlay">
@@ -318,9 +337,59 @@ body{
   © Korea Maritime Institute · IMO · Rosmorport · Arctic Council &nbsp;|&nbsp; 圖表：戰爭即工業力｜交錯地帶 2026-08
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
+/* ═══════════════════════════════════════════════════════════
+   Three.js textured sphere (behind SVG overlay)
+═══════════════════════════════════════════════════════════ */
+(function initThreeV2() {
+  const canvas = document.getElementById('arg-three-v2');
+  const W3 = 840, H3 = 560, R3 = 260, CX3 = W3 * 0.54;
+  renderer3 = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer3.setSize(W3, H3);
+  renderer3.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  scene3 = new THREE.Scene();
+
+  // Orthographic camera: sphere radius=1 → appears as R3=260px centred at CX3
+  // half-view in world units = half-canvas / R_px
+  const halfV = H3 / 2 / R3;
+  const halfH = W3 / 2 / R3;
+  camera3 = new THREE.OrthographicCamera(-halfH, halfH, halfV, -halfV, 0.1, 10);
+  // Shift camera sideways to match CX3 offset from canvas centre
+  camera3.position.set((CX3 - W3/2) / R3, 0, 3);
+  camera3.lookAt((CX3 - W3/2) / R3, 0, 0);
+
+  const geo3 = new THREE.SphereGeometry(1, 64, 64);
+  const loader3 = new THREE.TextureLoader();
+  const tex3 = loader3.load('https://cdn.jsdelivr.net/npm/three-globe@2/example/img/earth-dark.jpg');
+  const mat3 = new THREE.MeshPhongMaterial({ map: tex3, specular: new THREE.Color(0x222233), shininess: 8 });
+  sphere3 = new THREE.Mesh(geo3, mat3);
+
+  // Fixed rotation matching FIXED_ROTATE = [-58, -52, 10]
+  sphere3.rotation.y = -58 * Math.PI / 180;
+  sphere3.rotation.x = -52 * Math.PI / 180;
+  sphere3.rotation.z = -10 * Math.PI / 180;
+  scene3.add(sphere3);
+
+  // Atmosphere
+  const atmo3 = new THREE.Mesh(
+    new THREE.SphereGeometry(1.03, 32, 32),
+    new THREE.MeshBasicMaterial({ color: 0x3377cc, side: THREE.BackSide, transparent: true, opacity: 0.15 })
+  );
+  atmo3.position.copy(sphere3.position);
+  scene3.add(atmo3);
+
+  scene3.add(new THREE.AmbientLight(0xffffff, 0.25));
+  const dl3 = new THREE.DirectionalLight(0xffffff, 0.9);
+  dl3.position.set(2, 1, 3);
+  scene3.add(dl3);
+
+  (function loop3() { requestAnimationFrame(loop3); renderer3.render(scene3, camera3); })();
+})();
+
 /* ═══════════════════════════════════════════════════════════
    Config
 ═══════════════════════════════════════════════════════════ */
@@ -403,8 +472,7 @@ const lRoutes  = svg.append('g').attr('clip-path','url(#gc)');
 const lPorts   = svg.append('g').attr('clip-path','url(#gc)');
 const lAtmo    = svg.append('g');
 
-// Ocean sphere
-lOcean.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#og)');
+// Ocean sphere removed — Three.js texture provides the base
 
 // Graticule
 const grat = d3.geoGraticule().step([15,15]);
@@ -580,14 +648,15 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   const land    = topojson.feature(world, world.objects.countries);
   const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
 
+  // No fill — texture from Three.js shows through; borders only
   lLand.append('path').datum(land)
-    .attr('fill','#1e3320')
-    .attr('stroke','#253d28')
+    .attr('fill','none')
+    .attr('stroke','rgba(255,255,255,0.13)')
     .attr('stroke-width',.5);
 
   lLand.append('path').datum(borders)
     .attr('fill','none')
-    .attr('stroke','rgba(255,255,255,0.05)')
+    .attr('stroke','rgba(255,255,255,0.06)')
     .attr('stroke-width',.3);
 
   // Render paths at fixed view

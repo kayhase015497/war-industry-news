@@ -83,14 +83,28 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: radial-gradient(ellipse at 40% 45%, #0d1f35 0%, var(--bg) 70%);
+  background: radial-gradient(ellipse at 40% 45%, #020d1c 0%, var(--bg) 70%);
+}
+.arg-globe-container {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1;
+}
+#arg-three {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 50%;
 }
 #arg-globe-svg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 580px;
-  height: auto;
+  height: 100%;
   cursor: grab;
-  filter: drop-shadow(0 0 40px rgba(79,158,255,0.08));
 }
 #arg-globe-svg:active { cursor: grabbing; }
 
@@ -373,7 +387,10 @@ body {
 <div class="arg-layout">
   <!-- Globe -->
   <div class="arg-globe-wrap">
-    <svg id="arg-globe-svg" viewBox="0 0 560 560"></svg>
+    <div class="arg-globe-container">
+      <canvas id="arg-three"></canvas>
+      <svg id="arg-globe-svg" viewBox="0 0 560 560"></svg>
+    </div>
     <div class="arg-globe-hint">拖曳旋轉 · Drag to rotate</div>
   </div>
 
@@ -464,6 +481,7 @@ body {
   <div class="arg-tooltip-sub" id="tt-sub"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
@@ -497,6 +515,62 @@ const SUEZ_COORDS = [
   [100,4],[103.8,1.35],[110,5],[115,15],[118,22],[121.5,31.2],[125,32],[129,35.1]
 ];
 
+/* ─── Three.js textured sphere ───────────────────────────── */
+(function initThree() {
+  const canvas = document.getElementById('arg-three');
+  const SIZE = 560;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(SIZE, SIZE);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+
+  // Orthographic camera: sphere radius=1 → appears as R=240px in 560px canvas
+  const half = SIZE / 2 / 240; // = 280/240
+  const camera = new THREE.OrthographicCamera(-half, half, half, -half, 0.1, 10);
+  camera.position.z = 3;
+
+  // Earth sphere
+  const geo = new THREE.SphereGeometry(1, 64, 64);
+  const loader = new THREE.TextureLoader();
+  const earthTex = loader.load('https://cdn.jsdelivr.net/npm/three-globe@2/example/img/earth-dark.jpg');
+  const mat = new THREE.MeshPhongMaterial({ map: earthTex, specular: new THREE.Color(0x222233), shininess: 8 });
+  const sphere = new THREE.Mesh(geo, mat);
+  scene.add(sphere);
+
+  // Atmosphere glow (back-side sphere slightly larger)
+  const atmoMat = new THREE.MeshBasicMaterial({
+    color: 0x3377cc, side: THREE.BackSide, transparent: true, opacity: 0.18
+  });
+  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.03, 32, 32), atmoMat));
+
+  // Ambient + directional light
+  scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  dirLight.position.set(1.5, 1, 2);
+  scene.add(dirLight);
+
+  // Initial orientation matching D3 rotate([-20,-30,0])
+  sphere.rotation.y = -20 * Math.PI / 180;
+  sphere.rotation.x = -30 * Math.PI / 180;
+
+  window._threeScene = { renderer, scene, camera, sphere };
+
+  (function loop() {
+    requestAnimationFrame(loop);
+    renderer.render(scene, camera);
+  })();
+})();
+
+/* ─── Sync Three.js sphere to D3 projection rotation ──── */
+function syncThree(rot) {
+  if (!window._threeScene) return;
+  const s = window._threeScene.sphere;
+  s.rotation.y =  rot[0] * Math.PI / 180;
+  s.rotation.x =  rot[1] * Math.PI / 180;
+  if (rot[2]) s.rotation.z = -rot[2] * Math.PI / 180;
+}
+
 /* ─── Globe setup ─────────────────────────────────────────── */
 const W = 560, H = 560, CX = W/2, CY = H/2, R = 240;
 
@@ -505,17 +579,11 @@ const svg = d3.select('#arg-globe-svg');
 // Defs
 const defs = svg.append('defs');
 
-// Ocean gradient
-const og = defs.append('radialGradient').attr('id','ocean-grad')
-  .attr('cx','40%').attr('cy','38%');
-og.append('stop').attr('offset','0%').attr('stop-color','#0d2035');
-og.append('stop').attr('offset','100%').attr('stop-color','#050d18');
-
-// Globe shadow
+// Shadow vignette overlay
 const sg = defs.append('radialGradient').attr('id','shadow-grad')
   .attr('cx','50%').attr('cy','50%');
-sg.append('stop').attr('offset','80%').attr('stop-color','transparent');
-sg.append('stop').attr('offset','100%').attr('stop-color','rgba(0,0,0,0.4)');
+sg.append('stop').attr('offset','75%').attr('stop-color','transparent');
+sg.append('stop').attr('offset','100%').attr('stop-color','rgba(0,0,0,0.5)');
 
 // Clip
 defs.append('clipPath').attr('id','globe-clip')
@@ -529,8 +597,7 @@ const projection = d3.geoOrthographic()
 
 const path = d3.geoPath().projection(projection);
 
-// Layer order
-const gOcean   = svg.append('g').attr('class','g-ocean');
+// Layer order (SVG is transparent — texture shows through canvas below)
 const gGrat    = svg.append('g').attr('class','g-grat').attr('clip-path','url(#globe-clip)');
 const gLand    = svg.append('g').attr('class','g-land').attr('clip-path','url(#globe-clip)');
 const gArctic  = svg.append('g').attr('class','g-arctic').attr('clip-path','url(#globe-clip)');
@@ -538,13 +605,10 @@ const gRoutes  = svg.append('g').attr('class','g-routes').attr('clip-path','url(
 const gPorts   = svg.append('g').attr('class','g-ports').attr('clip-path','url(#globe-clip)');
 const gOverlay = svg.append('g').attr('class','g-overlay');
 
-// Ocean sphere
-gOcean.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ocean-grad)');
-// Rim
-gOverlay.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
-  .attr('fill','none').attr('stroke','rgba(79,158,255,0.12)').attr('stroke-width',1.5);
-// Shadow overlay
+// Vignette shadow + rim on top of texture
 gOverlay.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#shadow-grad)');
+gOverlay.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
+  .attr('fill','none').attr('stroke','rgba(79,158,255,0.18)').attr('stroke-width',1.5);
 
 // Graticule
 const graticule = d3.geoGraticule().step([15,15]);
@@ -649,7 +713,7 @@ function flyTo(lon, lat) {
   d3.transition().duration(900).ease(d3.easeCubicInOut)
     .tween('rotate', () => {
       const r = d3.interpolate(cur, target);
-      return t => { projection.rotate(r(t)); render(); };
+      return t => { const v=r(t); projection.rotate(v); syncThree(v); render(); };
     });
 }
 
@@ -681,10 +745,12 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   const land = topojson.feature(world, world.objects.countries);
   const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
 
+  // No land fill — texture from Three.js canvas shows through
+  // Country borders as subtle white lines for geographic reference
   gLand.append('path').datum(land)
-    .attr('fill','var(--land)')
-    .attr('stroke','var(--land-stroke)')
-    .attr('stroke-width',0.4);
+    .attr('fill','none')
+    .attr('stroke','rgba(255,255,255,0.12)')
+    .attr('stroke-width',0.5);
 
   gLand.append('path').datum(borders)
     .attr('fill','none')
@@ -703,7 +769,9 @@ function startAutoRotate() {
   rotateTimer = d3.timer(elapsed => {
     if (!autoRotate) return;
     const r = projection.rotate();
-    projection.rotate([r[0] + 0.12, r[1], r[2]]);
+    const newR = [r[0] + 0.12, r[1], r[2]];
+    projection.rotate(newR);
+    syncThree(newR);
     render();
   });
 }
@@ -723,11 +791,13 @@ svg.call(d3.drag()
     const dx = event.x - dragStart[0];
     const dy = event.y - dragStart[1];
     const k = 0.3;
-    projection.rotate([
+    const newR = [
       rotateStart[0] + dx * k,
       Math.max(-85, Math.min(85, rotateStart[1] - dy * k)),
       rotateStart[2]
-    ]);
+    ];
+    projection.rotate(newR);
+    syncThree(newR);
     render();
   })
   .on('end', () => {
