@@ -481,7 +481,6 @@ body {
   <div class="arg-tooltip-sub" id="tt-sub"></div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
@@ -515,60 +514,62 @@ const SUEZ_COORDS = [
   [100,4],[103.8,1.35],[110,5],[115,15],[118,22],[121.5,31.2],[125,32],[129,35.1]
 ];
 
-/* ─── Three.js textured sphere ───────────────────────────── */
-(function initThree() {
-  const canvas = document.getElementById('arg-three');
-  const SIZE = 560;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(SIZE, SIZE);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+/* ─── D3 Canvas globe renderer ─────────────────────────────── */
+let _cvLand = null, _cvBorders = null;
 
-  const scene = new THREE.Scene();
-
-  // Orthographic camera: sphere radius=1 → appears as R=240px in 560px canvas
-  const half = SIZE / 2 / 240; // = 280/240
-  const camera = new THREE.OrthographicCamera(-half, half, half, -half, 0.1, 10);
-  camera.position.z = 3;
-
-  // Earth sphere
-  const geo = new THREE.SphereGeometry(1, 64, 64);
-  const loader = new THREE.TextureLoader();
-  const earthTex = loader.load('https://cdn.jsdelivr.net/npm/three-globe@2/example/img/earth-dark.jpg');
-  const mat = new THREE.MeshPhongMaterial({ map: earthTex, specular: new THREE.Color(0x222233), shininess: 8 });
-  const sphere = new THREE.Mesh(geo, mat);
-  scene.add(sphere);
-
-  // Atmosphere glow (back-side sphere slightly larger)
-  const atmoMat = new THREE.MeshBasicMaterial({
-    color: 0x3377cc, side: THREE.BackSide, transparent: true, opacity: 0.18
-  });
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.03, 32, 32), atmoMat));
-
-  // Ambient + directional light
-  scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-  dirLight.position.set(1.5, 1, 2);
-  scene.add(dirLight);
-
-  // Initial orientation matching D3 rotate([-20,-30,0])
-  sphere.rotation.y = -20 * Math.PI / 180;
-  sphere.rotation.x = -30 * Math.PI / 180;
-
-  window._threeScene = { renderer, scene, camera, sphere };
-
-  (function loop() {
-    requestAnimationFrame(loop);
-    renderer.render(scene, camera);
-  })();
+(function initCanvas() {
+  const c = document.getElementById('arg-three');
+  c.width = 560; c.height = 560;
 })();
 
-/* ─── Sync Three.js sphere to D3 projection rotation ──── */
-function syncThree(rot) {
-  if (!window._threeScene) return;
-  const s = window._threeScene.sphere;
-  s.rotation.y =  rot[0] * Math.PI / 180;
-  s.rotation.x =  rot[1] * Math.PI / 180;
-  if (rot[2]) s.rotation.z = -rot[2] * Math.PI / 180;
+function renderGlobeCanvas() {
+  const c = document.getElementById('arg-three');
+  const ctx = c.getContext('2d');
+  const cp = d3.geoPath().projection(projection).context(ctx);
+  const PI2 = Math.PI * 2;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Clip everything to sphere circle
+  ctx.save();
+  ctx.beginPath(); ctx.arc(CX, CY, R, 0, PI2); ctx.clip();
+
+  // Ocean gradient
+  const og = ctx.createRadialGradient(CX - R*.28, CY - R*.32, R*.05, CX, CY, R);
+  og.addColorStop(0,   '#0f304d');
+  og.addColorStop(.55, '#061b32');
+  og.addColorStop(1,   '#020d1c');
+  ctx.fillStyle = og; ctx.fillRect(CX-R, CY-R, R*2, R*2);
+
+  // Land fill
+  if (_cvLand) {
+    ctx.beginPath(); cp(_cvLand);
+    ctx.fillStyle = '#1d3c22'; ctx.fill();
+    ctx.beginPath(); cp(_cvLand);
+    ctx.strokeStyle = 'rgba(60,140,60,.22)'; ctx.lineWidth = .7; ctx.stroke();
+  }
+
+  // Country borders
+  if (_cvBorders) {
+    ctx.beginPath(); cp(_cvBorders);
+    ctx.strokeStyle = 'rgba(0,0,0,.32)'; ctx.lineWidth = .4; ctx.stroke();
+  }
+
+  // Specular highlight (upper-left sheen, fake 3D)
+  const sp = ctx.createRadialGradient(CX - R*.38, CY - R*.42, 0, CX - R*.1, CY - R*.12, R*.9);
+  sp.addColorStop(0,   'rgba(255,255,255,.2)');
+  sp.addColorStop(.32, 'rgba(255,255,255,.05)');
+  sp.addColorStop(1,   'transparent');
+  ctx.fillStyle = sp; ctx.fillRect(CX-R, CY-R, R*2, R*2);
+
+  ctx.restore();
+
+  // Atmosphere glow ring (outside sphere)
+  const ag = ctx.createRadialGradient(CX, CY, R*.9, CX, CY, R*1.12);
+  ag.addColorStop(0, 'rgba(60,140,255,.32)');
+  ag.addColorStop(1, 'transparent');
+  ctx.beginPath(); ctx.arc(CX, CY, R*1.13, 0, PI2);
+  ctx.fillStyle = ag; ctx.fill();
 }
 
 /* ─── Globe setup ─────────────────────────────────────────── */
@@ -713,12 +714,13 @@ function flyTo(lon, lat) {
   d3.transition().duration(900).ease(d3.easeCubicInOut)
     .tween('rotate', () => {
       const r = d3.interpolate(cur, target);
-      return t => { const v=r(t); projection.rotate(v); syncThree(v); render(); };
+      return t => { const v=r(t); projection.rotate(v); render(); };
     });
 }
 
 /* ─── Update positions ─────────────────────────────────── */
 function render() {
+  renderGlobeCanvas();
   nsrPath.attr('d', path);
   suezPath.attr('d', path);
   gGrat.select('path').attr('d', path(graticule()));
@@ -742,20 +744,15 @@ function isVisible(lon, lat) {
 
 /* ─── Load world topology ─────────────────────────────── */
 d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
-  const land = topojson.feature(world, world.objects.countries);
-  const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+  _cvLand    = topojson.feature(world, world.objects.countries);
+  _cvBorders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
 
-  // No land fill — texture from Three.js canvas shows through
-  // Country borders as subtle white lines for geographic reference
-  gLand.append('path').datum(land)
+  // SVG layer: no fill (canvas handles all globe coloring)
+  // Keep a faint white outline for geographic reference on top of canvas
+  gLand.append('path').datum(_cvLand)
     .attr('fill','none')
-    .attr('stroke','rgba(255,255,255,0.12)')
-    .attr('stroke-width',0.5);
-
-  gLand.append('path').datum(borders)
-    .attr('fill','none')
-    .attr('stroke','rgba(255,255,255,0.06)')
-    .attr('stroke-width',0.3);
+    .attr('stroke','rgba(255,255,255,0.08)')
+    .attr('stroke-width',0.4);
 
   render();
   startAutoRotate();
@@ -771,7 +768,6 @@ function startAutoRotate() {
     const r = projection.rotate();
     const newR = [r[0] + 0.12, r[1], r[2]];
     projection.rotate(newR);
-    syncThree(newR);
     render();
   });
 }
@@ -797,7 +793,6 @@ svg.call(d3.drag()
       rotateStart[2]
     ];
     projection.rotate(newR);
-    syncThree(newR);
     render();
   })
   .on('end', () => {
