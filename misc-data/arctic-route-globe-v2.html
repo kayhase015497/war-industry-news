@@ -10,6 +10,8 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
+html{font-size:18px;}
+
 :root{
   --bg:#04080f;
   --ocean-deep:#030c18;
@@ -18,7 +20,7 @@
   --land-hi:#253d28;
   --border-dim:rgba(255,255,255,0.07);
   --text:#d0d8e8;
-  --text-dim:#5a6a7e;
+  --text-dim:#b0c8e0;
   --text-bright:#f2f6ff;
   --nsr:#e84545;
   --nsr-glow:rgba(232,69,69,0.4);
@@ -48,20 +50,20 @@ body{
 }
 .arg-eyebrow{
   font-family:var(--mono);
-  font-size:.6rem;
+  font-size:1rem;
   letter-spacing:.15em;
   color:var(--nsr);
   text-transform:uppercase;
 }
 .arg-h1{
-  font-size:clamp(1rem,2.2vw,1.35rem);
+  font-size:clamp(1.2rem,2.2vw,1.5rem);
   font-weight:700;
   color:var(--text-bright);
   letter-spacing:-.01em;
 }
 .arg-sub{
-  font-size:.75rem;
-  color:var(--text-dim);
+  font-size:1rem;
+  color:var(--text);
   font-weight:300;
   margin-left:.2rem;
 }
@@ -112,7 +114,7 @@ body{
   display:flex;
   flex-direction:column;
   gap:.5rem;
-  max-width:240px;
+  max-width:280px;
   z-index:10;
   pointer-events:none;
 }
@@ -144,7 +146,7 @@ body{
 }
 .dep-label{
   font-family:var(--mono);
-  font-size:.55rem;
+  font-size:1rem;
   letter-spacing:.12em;
   color:var(--text-dim);
   text-transform:uppercase;
@@ -152,7 +154,7 @@ body{
 }
 .dep-route{
   font-family:var(--mono);
-  font-size:.62rem;
+  font-size:1rem;
   color:var(--text-bright);
   line-height:1.5;
 }
@@ -172,7 +174,7 @@ body{
 
 .c-tag{
   font-family:var(--mono);
-  font-size:.58rem;
+  font-size:1rem;
   letter-spacing:.1em;
   text-transform:uppercase;
   margin-bottom:.25rem;
@@ -193,13 +195,13 @@ body{
 
 .c-stat{
   font-family:var(--mono);
-  font-size:.92rem;
+  font-size:1.1rem;
   font-weight:700;
   color:var(--text-bright);
   line-height:1.2;
 }
 .c-cost{
-  font-size:.62rem;
+  font-size:1rem;
   color:var(--text-dim);
   margin-top:.2rem;
 }
@@ -210,13 +212,13 @@ body{
 }
 .cmp-val{
   font-family:var(--mono);
-  font-size:.78rem;
+  font-size:1rem;
   color:var(--text-bright);
   line-height:1.6;
 }
 .cmp-val span.hi{ color:var(--nsr); }
 .cmp-src{
-  font-size:.58rem;
+  font-size:1rem;
   color:var(--text-dim);
   margin-top:.25rem;
 }
@@ -229,7 +231,7 @@ body{
 }
 .arg-replay{
   font-family:var(--mono);
-  font-size:.7rem;
+  font-size:1rem;
   letter-spacing:.18em;
   text-transform:uppercase;
   color:var(--text);
@@ -254,7 +256,7 @@ body{
 .arg-source{
   padding:.5rem 1.4rem .8rem;
   font-family:var(--mono);
-  font-size:.58rem;
+  font-size:1rem;
   color:var(--text-dim);
   letter-spacing:.05em;
   text-align:center;
@@ -325,7 +327,7 @@ body{
   </div>
 </div>
 
-<div style="text-align:center;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:#3a4a5e;text-transform:uppercase;padding:.3rem 0 .1rem">動畫結束後可拖曳旋轉 · Drag to rotate after animation</div>
+<div style="text-align:center;font-family:'Space Mono',monospace;font-size:1rem;letter-spacing:.1em;color:#8ab4d0;text-transform:uppercase;padding:.3rem 0 .1rem">動畫結束後可拖曳旋轉 · Drag to rotate after animation</div>
 <div class="arg-replay-wrap">
   <button class="arg-replay" id="replayBtn">
     <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
@@ -672,8 +674,8 @@ function initMarkersAndCities() {
   portGs.append('text')
     .attr('y', 1)
     .attr('font-family','Noto Sans TC, sans-serif')
-    .attr('font-size','9.5px')
-    .attr('fill','rgba(210,220,240,0.9)')
+    .attr('font-size','15px')
+    .attr('fill','rgba(235,245,255,1)')
     .attr('paint-order','stroke')
     .attr('stroke','rgba(4,8,15,0.9)')
     .attr('stroke-width',2.5)
@@ -685,8 +687,8 @@ function initMarkersAndCities() {
   cityGs.append('text')
     .attr('y', 3)
     .attr('font-family','Noto Sans TC, sans-serif')
-    .attr('font-size','8.5px')
-    .attr('fill','rgba(215,228,242,0.88)')
+    .attr('font-size','15px')
+    .attr('fill','rgba(235,245,255,1)')
     .attr('paint-order','stroke')
     .attr('stroke','rgba(4,8,20,0.88)')
     .attr('stroke-width',2.5)
