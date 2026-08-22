@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北極航道｜交錯地帶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0b0f1a;
+  --bg-card: #111827;
+  --bg-card2: #0f1e2e;
+  --border: #1e2d3d;
+  --text: #d8dde8;
+  --text-dim: #6b7a8d;
+  --text-bright: #f0f4ff;
+  --accent-nsr: #f5a623;
+  --accent-suez: #4f9eff;
+  --accent-arctic: #7ecfff;
+  --glow-nsr: rgba(245,166,35,0.3);
+  --glow-suez: rgba(79,158,255,0.25);
+  --ocean: #0a1520;
+  --land: #1a2d1e;
+  --land-stroke: #253d29;
+  --graticule: rgba(255,255,255,0.04);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Header ── */
+.arg-header {
+  padding: 1.2rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.arg-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-nsr);
+  text-transform: uppercase;
+}
+.arg-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.01em;
+}
+.arg-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+/* ── Layout ── */
+.arg-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: calc(100vh - 70px);
+}
+
+@media (max-width: 900px) {
+  .arg-layout { grid-template-columns: 1fr; }
+}
+
+/* ── Globe area ── */
+.arg-globe-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: radial-gradient(ellipse at 40% 45%, #0d1f35 0%, var(--bg) 70%);
+}
+#arg-globe-svg {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  cursor: grab;
+  filter: drop-shadow(0 0 40px rgba(79,158,255,0.08));
+}
+#arg-globe-svg:active { cursor: grabbing; }
+
+.arg-globe-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ── Sidebar ── */
+.arg-sidebar {
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .arg-sidebar {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* ── Route toggle ── */
+.arg-route-toggle {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.arg-toggle-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+.arg-route-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+}
+.arg-route-btn.active-nsr {
+  border-color: var(--accent-nsr);
+  background: rgba(245,166,35,0.07);
+  color: var(--accent-nsr);
+}
+.arg-route-btn.active-suez {
+  border-color: var(--accent-suez);
+  background: rgba(79,158,255,0.07);
+  color: var(--accent-suez);
+}
+.arg-route-swatch {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.swatch-nsr { background: var(--accent-nsr); box-shadow: 0 0 6px var(--glow-nsr); }
+.swatch-suez { background: var(--accent-suez); box-shadow: 0 0 6px var(--glow-suez); }
+.arg-route-name { font-weight: 500; flex: 1; }
+.arg-route-km {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* ── Stats ── */
+.arg-stats {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.arg-stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem;
+}
+.arg-stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.arg-stat-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-nsr);
+  line-height: 1;
+}
+.arg-stat-val.blue { color: var(--accent-suez); }
+.arg-stat-sub {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+/* ── Compare bar ── */
+.arg-compare {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.arg-compare-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.arg-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+.arg-bar-name {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  width: 56px;
+  flex-shrink: 0;
+}
+.arg-bar-outer {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.arg-bar-inner {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.bar-nsr { background: var(--accent-nsr); box-shadow: 0 0 8px var(--glow-nsr); }
+.bar-suez { background: var(--accent-suez); box-shadow: 0 0 8px var(--glow-suez); }
+.arg-bar-km {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  width: 52px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Ports list ── */
+.arg-ports {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  flex: 1;
+}
+.arg-ports-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.arg-port-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.arg-port-item:last-child { border-bottom: none; }
+.arg-port-item:hover { transform: translateX(3px); }
+.arg-port-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.dot-nsr { background: var(--accent-nsr); box-shadow: 0 0 5px var(--glow-nsr); }
+.dot-suez { background: var(--accent-suez); }
+.dot-both { background: #9b8fff; }
+.arg-port-name {
+  font-size: 0.8rem;
+  color: var(--text);
+  font-weight: 500;
+}
+.arg-port-desc {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 0.1rem;
+}
+
+/* ── Geopolitics note ── */
+.arg-geo {
+  padding: 1rem 1.2rem;
+  background: var(--bg-card2);
+  border-top: 1px solid var(--border);
+}
+.arg-geo-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-arctic);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.arg-geo-text {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+.arg-geo-text strong { color: var(--text); font-weight: 500; }
+
+/* ── Tooltip ── */
+.arg-tooltip {
+  position: fixed;
+  background: #1a2535;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text);
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+  max-width: 180px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.arg-tooltip-name { font-weight: 600; color: var(--text-bright); }
+.arg-tooltip-sub { color: var(--text-dim); font-size: 0.7rem; margin-top: 0.2rem; }
+
+/* ── Source ── */
+.arg-source {
+  padding: 0.6rem 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  font-family: 'Space Mono', monospace;
+}
+</style>
+</head>
+<body>
+
+<header class="arg-header">
+  <div>
+    <div class="arg-eyebrow">Arctic Route · 北極航道</div>
+    <h1 class="arg-title">北極航道與地緣外交試驗場</h1>
+    <p class="arg-subtitle">韓國首航北方海路——美俄關係的新壓力線</p>
+  </div>
+</header>
+
+<div class="arg-layout">
+  <!-- Globe -->
+  <div class="arg-globe-wrap">
+    <svg id="arg-globe-svg" viewBox="0 0 560 560"></svg>
+    <div class="arg-globe-hint">拖曳旋轉 · Drag to rotate</div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="arg-sidebar">
+
+    <!-- Route toggle -->
+    <div class="arg-route-toggle">
+      <div class="arg-toggle-label">航線顯示</div>
+      <button class="arg-route-btn active-nsr" id="btn-nsr" onclick="toggleRoute('nsr')">
+        <span class="arg-route-swatch swatch-nsr"></span>
+        <span class="arg-route-name">北方海路 NSR</span>
+        <span class="arg-route-km">12,800 km</span>
+      </button>
+      <button class="arg-route-btn active-suez" id="btn-suez" onclick="toggleRoute('suez')">
+        <span class="arg-route-swatch swatch-suez"></span>
+        <span class="arg-route-name">蘇伊士運河傳統航線</span>
+        <span class="arg-route-km">20,900 km</span>
+      </button>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="arg-stats">
+      <div class="arg-stat-box">
+        <div class="arg-stat-label">NSR 節省距離</div>
+        <div class="arg-stat-val">38<span style="font-size:0.7rem">%</span></div>
+        <div class="arg-stat-sub">縮短 ~8,100 km</div>
+      </div>
+      <div class="arg-stat-box">
+        <div class="arg-stat-label">燃油節省估算</div>
+        <div class="arg-stat-val">~30<span style="font-size:0.7rem">%</span></div>
+        <div class="arg-stat-sub">視船型而異</div>
+      </div>
+      <div class="arg-stat-box">
+        <div class="arg-stat-label">NSR 航行天數</div>
+        <div class="arg-stat-val">15<span style="font-size:0.7rem">天</span></div>
+        <div class="arg-stat-sub">荷特漢堡→釜山</div>
+      </div>
+      <div class="arg-stat-box">
+        <div class="arg-stat-label">蘇伊士航行天數</div>
+        <div class="arg-stat-val blue">25<span style="font-size:0.7rem">天</span></div>
+        <div class="arg-stat-sub">傳統航線</div>
+      </div>
+    </div>
+
+    <!-- Compare bar -->
+    <div class="arg-compare">
+      <div class="arg-compare-title">航線距離比較（鹿特丹 → 釜山）</div>
+      <div class="arg-bar-row">
+        <div class="arg-bar-name">北方海路</div>
+        <div class="arg-bar-outer">
+          <div class="arg-bar-inner bar-nsr" style="width:61%"></div>
+        </div>
+        <div class="arg-bar-km">12,800 km</div>
+      </div>
+      <div class="arg-bar-row">
+        <div class="arg-bar-name">蘇伊士</div>
+        <div class="arg-bar-outer">
+          <div class="arg-bar-inner bar-suez" style="width:100%"></div>
+        </div>
+        <div class="arg-bar-km">20,900 km</div>
+      </div>
+    </div>
+
+    <!-- Ports -->
+    <div class="arg-ports">
+      <div class="arg-ports-title">關鍵港口與節點</div>
+      <div id="arg-port-list"></div>
+    </div>
+
+    <!-- Geo note -->
+    <div class="arg-geo">
+      <div class="arg-geo-title">地緣政治背景</div>
+      <p class="arg-geo-text">
+        北方海路穿越<strong>俄羅斯北極專屬經濟區</strong>，商船須申請許可並搭乘俄籍引水人。韓國本次首航正值<strong>美俄制裁緊張</strong>之際，首爾面臨來自華盛頓的外交壓力，同時試圖降低對蘇伊士—荷姆茲走廊的依賴。氣候暖化使航道每年可通行窗口從<strong>4 週延長至 4–5 個月</strong>，2030 年代或可全年通航。
+      </p>
+    </div>
+
+  </aside>
+</div>
+
+<div class="arg-source">
+  資料來源：Korea JoongAng Daily · IMO · Rosmorport · Arctic Council &nbsp;|&nbsp; 2026-08
+</div>
+
+<div class="arg-tooltip" id="arg-tooltip">
+  <div class="arg-tooltip-name" id="tt-name"></div>
+  <div class="arg-tooltip-sub" id="tt-sub"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+/* ─── Data ─────────────────────────────────────────────────── */
+const PORTS = [
+  { id:'rotterdam', name:'鹿特丹', en:'Rotterdam', lon:4.5, lat:51.9, route:['nsr','suez'], desc:'歐洲最大港，東亞航線起點' },
+  { id:'murmansk',  name:'摩爾曼斯克', en:'Murmansk', lon:33.1, lat:68.97, route:['nsr'], desc:'俄北極艦隊母港·NSR 西端入口' },
+  { id:'sabetta',   name:'薩別塔', en:'Sabetta', lon:72.7, lat:71.3, route:['nsr'], desc:'亞馬爾 LNG 出口港' },
+  { id:'pevek',     name:'佩韋克', en:'Pevek', lon:170.3, lat:69.7, route:['nsr'], desc:'俄最東端深水北極港' },
+  { id:'busan',     name:'釜山', en:'Busan', lon:129.0, lat:35.1, route:['nsr','suez'], desc:'韓國最大港·東北亞樞紐' },
+  { id:'shanghai',  name:'上海', en:'Shanghai', lon:121.5, lat:31.2, route:['nsr','suez'], desc:'全球最大貨運港' },
+  { id:'suez_n',    name:'蘇伊士運河（北）', en:'Port Said', lon:32.3, lat:31.3, route:['suez'], desc:'地中海—紅海瓶頸' },
+  { id:'singapore', name:'新加坡', en:'Singapore', lon:103.8, lat:1.35, route:['suez'], desc:'蘇伊士航線馬六甲節點' },
+];
+
+// NSR waypoints (lon, lat)
+const NSR_COORDS = [
+  [4.5,51.9],[1.3,51.1],[-2,53],[-3,58],[5,62],[12,65],
+  [20,70],[30,70],[33.1,68.97],[40,70],[52,70],[60,72],
+  [72.7,71.3],[80,74],[90,74],[100,73],[110,73],[120,73],
+  [128.9,71.7],[140,72],[150,71],[160,70],[170.3,69.7],
+  [180,66],[-175,63],[-168,65.5],[-164,63],
+  [170,56],[160,48],[150,42],[141,38],[132,35],[129,35.1]
+];
+
+// Suez waypoints (lon, lat)
+const SUEZ_COORDS = [
+  [4.5,51.9],[1.3,51.1],[-5.4,36.1],[5,38],[15,38],
+  [22,36],[32.3,31.3],[32.5,30.0],[38,20],[42,15],
+  [50,12],[55,11],[65,10],[72,8],[80,7],[90,5],
+  [100,4],[103.8,1.35],[110,5],[115,15],[118,22],[121.5,31.2],[125,32],[129,35.1]
+];
+
+/* ─── Globe setup ─────────────────────────────────────────── */
+const W = 560, H = 560, CX = W/2, CY = H/2, R = 240;
+
+const svg = d3.select('#arg-globe-svg');
+
+// Defs
+const defs = svg.append('defs');
+
+// Ocean gradient
+const og = defs.append('radialGradient').attr('id','ocean-grad')
+  .attr('cx','40%').attr('cy','38%');
+og.append('stop').attr('offset','0%').attr('stop-color','#0d2035');
+og.append('stop').attr('offset','100%').attr('stop-color','#050d18');
+
+// Globe shadow
+const sg = defs.append('radialGradient').attr('id','shadow-grad')
+  .attr('cx','50%').attr('cy','50%');
+sg.append('stop').attr('offset','80%').attr('stop-color','transparent');
+sg.append('stop').attr('offset','100%').attr('stop-color','rgba(0,0,0,0.4)');
+
+// Clip
+defs.append('clipPath').attr('id','globe-clip')
+  .append('circle').attr('cx',CX).attr('cy',CY).attr('r',R);
+
+const projection = d3.geoOrthographic()
+  .scale(R)
+  .translate([CX, CY])
+  .clipAngle(90)
+  .rotate([-20, -30, 0]);
+
+const path = d3.geoPath().projection(projection);
+
+// Layer order
+const gOcean   = svg.append('g').attr('class','g-ocean');
+const gGrat    = svg.append('g').attr('class','g-grat').attr('clip-path','url(#globe-clip)');
+const gLand    = svg.append('g').attr('class','g-land').attr('clip-path','url(#globe-clip)');
+const gArctic  = svg.append('g').attr('class','g-arctic').attr('clip-path','url(#globe-clip)');
+const gRoutes  = svg.append('g').attr('class','g-routes').attr('clip-path','url(#globe-clip)');
+const gPorts   = svg.append('g').attr('class','g-ports').attr('clip-path','url(#globe-clip)');
+const gOverlay = svg.append('g').attr('class','g-overlay');
+
+// Ocean sphere
+gOcean.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ocean-grad)');
+// Rim
+gOverlay.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
+  .attr('fill','none').attr('stroke','rgba(79,158,255,0.12)').attr('stroke-width',1.5);
+// Shadow overlay
+gOverlay.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#shadow-grad)');
+
+// Graticule
+const graticule = d3.geoGraticule().step([15,15]);
+gGrat.append('path').datum(graticule()).attr('fill','none')
+  .attr('stroke','var(--graticule)').attr('stroke-width',0.5);
+
+/* Arctic Circle fill (~66.5°N) */
+const arcticCircle = {type:'Feature', geometry:{type:'Polygon',coordinates:[
+  Array.from({length:361},(_,i)=>[i-180, 66.5]).concat([[-180,90],[180,90],[-180,90]])
+]}};
+
+gArctic.append('path').datum(arcticCircle)
+  .attr('fill','rgba(126,207,255,0.07)')
+  .attr('stroke','rgba(126,207,255,0.25)')
+  .attr('stroke-width',0.8)
+  .attr('stroke-dasharray','4 3');
+
+// Route state
+const routeVisible = { nsr: true, suez: true };
+
+/* Line drawing helper */
+function geoLine(coords) {
+  return { type:'Feature', geometry:{ type:'LineString', coordinates: coords } };
+}
+
+/* Draw routes */
+const nsrPath = gRoutes.append('path')
+  .datum(geoLine(NSR_COORDS))
+  .attr('fill','none')
+  .attr('stroke','var(--accent-nsr)')
+  .attr('stroke-width',2.2)
+  .attr('stroke-linecap','round')
+  .attr('stroke-linejoin','round')
+  .attr('opacity',0.9)
+  .attr('filter','drop-shadow(0 0 4px rgba(245,166,35,0.6))');
+
+const suezPath = gRoutes.append('path')
+  .datum(geoLine(SUEZ_COORDS))
+  .attr('fill','none')
+  .attr('stroke','var(--accent-suez)')
+  .attr('stroke-width',2)
+  .attr('stroke-linecap','round')
+  .attr('stroke-linejoin','round')
+  .attr('opacity',0.8)
+  .attr('filter','drop-shadow(0 0 4px rgba(79,158,255,0.5))');
+
+/* Port markers */
+const tooltip = document.getElementById('arg-tooltip');
+const ttName  = document.getElementById('tt-name');
+const ttSub   = document.getElementById('tt-sub');
+
+function showTip(event, d) {
+  ttName.textContent = `${d.name}（${d.en}）`;
+  ttSub.textContent = d.desc;
+  tooltip.style.display = 'block';
+  moveTip(event);
+}
+function moveTip(event) {
+  const x = event.clientX + 14, y = event.clientY - 10;
+  tooltip.style.left = x+'px';
+  tooltip.style.top  = y+'px';
+}
+function hideTip() { tooltip.style.display = 'none'; }
+
+function portColor(d) {
+  if(d.route.length > 1) return '#a78bff';
+  if(d.route.includes('nsr')) return 'var(--accent-nsr)';
+  return 'var(--accent-suez)';
+}
+
+const portGs = gPorts.selectAll('g.port')
+  .data(PORTS).enter()
+  .append('g').attr('class','port')
+  .style('cursor','pointer')
+  .on('mouseenter',(e,d)=>showTip(e,d))
+  .on('mousemove', moveTip)
+  .on('mouseleave', hideTip);
+
+portGs.append('circle').attr('r',5).attr('fill','none')
+  .attr('stroke',d=>portColor(d)).attr('stroke-width',1.5).attr('opacity',0.5);
+portGs.append('circle').attr('r',3)
+  .attr('fill',d=>portColor(d)).attr('opacity',0.95);
+
+/* ─── Port list in sidebar ─────────────────────────────── */
+const list = document.getElementById('arg-port-list');
+PORTS.forEach(p => {
+  const dotCls = p.route.length>1 ? 'dot-both' : (p.route.includes('nsr') ? 'dot-nsr' : 'dot-suez');
+  list.innerHTML += `
+    <div class="arg-port-item" onclick="flyTo(${p.lon},${p.lat})">
+      <span class="arg-port-dot ${dotCls}"></span>
+      <div>
+        <div class="arg-port-name">${p.name}<span style="color:var(--text-dim);font-weight:300"> ${p.en}</span></div>
+        <div class="arg-port-desc">${p.desc}</div>
+      </div>
+    </div>`;
+});
+
+/* ─── Fly-to animation ─────────────────────────────────── */
+function flyTo(lon, lat) {
+  const cur = projection.rotate();
+  const target = [-lon, -lat+5, 0];
+  d3.transition().duration(900).ease(d3.easeCubicInOut)
+    .tween('rotate', () => {
+      const r = d3.interpolate(cur, target);
+      return t => { projection.rotate(r(t)); render(); };
+    });
+}
+
+/* ─── Update positions ─────────────────────────────────── */
+function render() {
+  nsrPath.attr('d', path);
+  suezPath.attr('d', path);
+  gGrat.select('path').attr('d', path(graticule()));
+  gArctic.select('path').attr('d', path(arcticCircle));
+
+  portGs.each(function(d) {
+    const proj = projection([d.lon, d.lat]);
+    const vis = proj && projection.clipAngle && isVisible(d.lon, d.lat);
+    d3.select(this)
+      .attr('transform', proj ? `translate(${proj[0]},${proj[1]})` : null)
+      .style('display', vis ? null : 'none');
+  });
+}
+
+function isVisible(lon, lat) {
+  const r = projection.rotate();
+  const geoPoint = [lon + r[0], lat + r[1]];
+  const d = d3.geoDistance([lon, lat], [-r[0], -r[1]]);
+  return d < Math.PI/2;
+}
+
+/* ─── Load world topology ─────────────────────────────── */
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+  const land = topojson.feature(world, world.objects.countries);
+  const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+
+  gLand.append('path').datum(land)
+    .attr('fill','var(--land)')
+    .attr('stroke','var(--land-stroke)')
+    .attr('stroke-width',0.4);
+
+  gLand.append('path').datum(borders)
+    .attr('fill','none')
+    .attr('stroke','rgba(255,255,255,0.06)')
+    .attr('stroke-width',0.3);
+
+  render();
+  startAutoRotate();
+});
+
+/* ─── Auto-rotate ─────────────────────────────────────── */
+let autoRotate = true;
+let rotateTimer;
+
+function startAutoRotate() {
+  rotateTimer = d3.timer(elapsed => {
+    if (!autoRotate) return;
+    const r = projection.rotate();
+    projection.rotate([r[0] + 0.12, r[1], r[2]]);
+    render();
+  });
+}
+
+/* ─── Drag to rotate ─────────────────────────────────── */
+let dragStart = null;
+let rotateStart = null;
+
+svg.call(d3.drag()
+  .on('start', event => {
+    autoRotate = false;
+    dragStart = [event.x, event.y];
+    rotateStart = projection.rotate();
+  })
+  .on('drag', event => {
+    if (!dragStart) return;
+    const dx = event.x - dragStart[0];
+    const dy = event.y - dragStart[1];
+    const k = 0.3;
+    projection.rotate([
+      rotateStart[0] + dx * k,
+      Math.max(-85, Math.min(85, rotateStart[1] - dy * k)),
+      rotateStart[2]
+    ]);
+    render();
+  })
+  .on('end', () => {
+    // Resume auto-rotate after 4s of inactivity
+    clearTimeout(window._resumeTimer);
+    window._resumeTimer = setTimeout(() => { autoRotate = true; }, 4000);
+  })
+);
+
+/* ─── Route toggle ─────────────────────────────────────── */
+function toggleRoute(route) {
+  routeVisible[route] = !routeVisible[route];
+  const btn = document.getElementById('btn-'+route);
+  if (route === 'nsr') {
+    nsrPath.style('display', routeVisible.nsr ? null : 'none');
+    btn.className = routeVisible.nsr ? 'arg-route-btn active-nsr' : 'arg-route-btn';
+  } else {
+    suezPath.style('display', routeVisible.suez ? null : 'none');
+    btn.className = routeVisible.suez ? 'arg-route-btn active-suez' : 'arg-route-btn';
+  }
+}
+</script>
+</body>
+</html>
