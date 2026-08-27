@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>同一口稠油，三種吃法（2026）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.vzo-root {
+  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e8e6df;
+  padding: clamp(16px, 4vw, 40px);
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* ─── Header ─── */
+.vzo-header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e2640;
+}
+.vzo-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #6b7599;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.vzo-title {
+  font-size: clamp(24px, 5.5vw, 38px);
+  font-weight: 700;
+  color: #f0eee6;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.vzo-subtitle {
+  font-size: 18px;
+  color: #9ba3c2;
+  margin-bottom: 10px;
+}
+.vzo-tagline {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: #eda100;
+  background: #1c1608;
+  border: 1px solid #4a3800;
+  border-radius: 4px;
+  padding: 4px 14px;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Stat tiles ─── */
+.vzo-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.vzo-tile {
+  background: #111827;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+  padding: 16px 14px;
+  text-align: center;
+}
+.vzo-tile-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.vzo-tile-unit {
+  font-size: 14px;
+  color: #6b7599;
+  font-family: 'Space Mono', monospace;
+}
+.vzo-tile-lbl {
+  font-size: 15px;
+  color: #9ba3c2;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+.vzo-tile--green .vzo-tile-val { color: #1baf7a; }
+.vzo-tile--blue  .vzo-tile-val { color: #3987e5; }
+.vzo-tile--red   .vzo-tile-val { color: #e66767; }
+.vzo-tile--gold  .vzo-tile-val { color: #eda100; }
+
+/* ─── Section header ─── */
+.vzo-sec-hd {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #6b7599;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e2640;
+}
+
+/* ─── Overview table ─── */
+.vzo-overview {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 36px;
+  font-size: 18px;
+}
+.vzo-overview th {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #6b7599;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid #1e2640;
+  background: #0e1422;
+  white-space: nowrap;
+}
+.vzo-overview td {
+  padding: 14px 14px;
+  border-bottom: 1px solid #131a2e;
+  vertical-align: middle;
+}
+.vzo-overview tr:last-child td { border-bottom: none; }
+.vzo-overview tbody tr:hover td { background: #111828; }
+.vzo-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+.vzo-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.vzo-dot--us  { background: #3987e5; }
+.vzo-dot--cn  { background: #e66767; }
+.vzo-dot--ru  { background: #eda100; }
+.vzo-pos {
+  font-weight: 700;
+  font-size: 18px;
+}
+.vzo-pos--us  { color: #6eb0f0; }
+.vzo-pos--cn  { color: #f09090; }
+.vzo-pos--ru  { color: #f0c060; }
+
+/* ─── Flow chart ─── */
+.vzo-flow {
+  background: #0d1222;
+  border: 1px solid #1e2640;
+  border-radius: 10px;
+  padding: 24px 20px;
+  margin-bottom: 36px;
+}
+.vzo-flow-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #c8cde8;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Diluent input */
+.vzo-diluent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.vzo-diluent-box {
+  background: #0c1a30;
+  border: 1px solid #3987e5;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 17px;
+  color: #6eb0f0;
+  text-align: center;
+}
+.vzo-arrow-down {
+  text-align: center;
+  font-size: 22px;
+  color: #3a4560;
+  margin: 6px 0;
+}
+
+/* Source box */
+.vzo-source-box {
+  background: linear-gradient(135deg, #0e1e15 0%, #111828 100%);
+  border: 2px solid #1baf7a;
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  margin: 0 auto 20px;
+  max-width: 500px;
+}
+.vzo-source-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1baf7a;
+  margin-bottom: 4px;
+}
+.vzo-source-sub {
+  font-size: 17px;
+  color: #7ab89a;
+}
+
+/* Destination bars */
+.vzo-dests-label {
+  font-size: 16px;
+  color: #6b7599;
+  text-align: center;
+  margin-bottom: 12px;
+  font-family: 'Space Mono', monospace;
+}
+.vzo-dests {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vzo-dest {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+.vzo-dest-name {
+  font-size: 18px;
+  color: #c8cde8;
+  text-align: right;
+  white-space: nowrap;
+}
+.vzo-dest-track {
+  background: #1a1e2e;
+  border-radius: 4px;
+  height: 28px;
+  overflow: hidden;
+}
+.vzo-dest-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+  transition: width 0.4s;
+}
+.vzo-dest-note {
+  font-size: 15px;
+  color: #6b7599;
+  white-space: nowrap;
+}
+
+/* ─── Three cards ─── */
+.vzo-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.vzo-card {
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.vzo-card--us  { background: #080e1e; border: 2px solid #3987e5; }
+.vzo-card--cn  { background: #1a0808; border: 2px solid #e66767; }
+.vzo-card--ru  { background: #1a1408; border: 2px solid #eda100; }
+
+.vzo-card-flag {
+  font-size: 28px;
+  line-height: 1;
+}
+.vzo-card-country {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.vzo-card-country--us  { color: #6eb0f0; }
+.vzo-card-country--cn  { color: #f09090; }
+.vzo-card-country--ru  { color: #f0c060; }
+.vzo-card-type {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 2px;
+}
+.vzo-card-type--us  { background: #0c1a30; color: #3987e5; border: 1px solid #1e3a60; }
+.vzo-card-type--cn  { background: #2e0808; color: #e66767; border: 1px solid #5e1818; }
+.vzo-card-type--ru  { background: #2e2008; color: #eda100; border: 1px solid #5e4010; }
+
+.vzo-card-div { height: 1px; }
+.vzo-card--us .vzo-card-div  { background: #1e3060; }
+.vzo-card--cn .vzo-card-div  { background: #4e1818; }
+.vzo-card--ru .vzo-card-div  { background: #4e3010; }
+
+.vzo-card-logic {
+  font-size: 17px;
+  color: #9ba3c2;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.vzo-kv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vzo-kv {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.vzo-kv-k {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.vzo-kv-k--us  { background: #0c1a30; color: #6eb0f0; }
+.vzo-kv-k--cn  { background: #2e0808; color: #f09090; }
+.vzo-kv-k--ru  { background: #2e2008; color: #f0c060; }
+.vzo-kv-v { color: #c8cde8; flex: 1; }
+.vzo-num { font-family: 'Space Mono', monospace; font-weight: 700; }
+
+.vzo-card-pain {
+  background: #0d0f1a;
+  border-left: 3px solid #3a4060;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  font-size: 17px;
+  color: #7a8099;
+  line-height: 1.5;
+}
+.vzo-card-pain-hd {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #5a6280;
+  margin-bottom: 4px;
+}
+
+/* ─── Constraints ─── */
+.vzo-constraints {
+  background: #111218;
+  border: 1px solid #2e2a1e;
+  border-left: 4px solid #eda100;
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+}
+.vzo-constraints-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0c060;
+  margin-bottom: 14px;
+}
+.vzo-constraints-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vzo-cl {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 18px;
+  color: #b8b4a0;
+  line-height: 1.5;
+}
+.vzo-cl-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #eda100;
+  background: #1c1608;
+  border: 1px solid #4a3800;
+  border-radius: 3px;
+  padding: 1px 7px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.vzo-constraint-note {
+  margin-top: 14px;
+  font-size: 17px;
+  color: #6b7599;
+  font-style: italic;
+  border-top: 1px solid #2e2a1e;
+  padding-top: 12px;
+}
+
+/* ─── Buyer row ─── */
+.vzo-buyers {
+  background: #0e1222;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
+.vzo-buyers-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #6eb0f0;
+  margin-bottom: 10px;
+}
+.vzo-buyer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.vzo-buyer-tag {
+  font-size: 16px;
+  background: #0c1a30;
+  color: #8ab8e8;
+  border: 1px solid #1e3a60;
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+.vzo-buyer-tag--trader {
+  background: #1a1828;
+  color: #9085e9;
+  border-color: #3a3060;
+}
+
+/* ─── Footer ─── */
+.vzo-footer {
+  font-size: 15px;
+  color: #4a5270;
+  line-height: 1.7;
+  border-top: 1px solid #1e2640;
+  padding-top: 16px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .vzo-cards { grid-template-columns: 1fr; }
+  .vzo-tiles { grid-template-columns: 1fr 1fr; }
+  .vzo-dest { grid-template-columns: 90px 1fr auto; }
+}
+@media (max-width: 600px) {
+  .vzo-tiles { grid-template-columns: 1fr 1fr; }
+  .vzo-tile-val { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="vzo-root">
+
+<!-- ─── Header ─── -->
+<header class="vzo-header">
+  <div class="vzo-date">2026.08 · 委內瑞拉石油博弈</div>
+  <h1 class="vzo-title">同一口稠油，三種吃法</h1>
+  <p class="vzo-subtitle">美中俄在委內瑞拉的石油模式（2026年8月下旬）</p>
+  <span class="vzo-tagline">嘴上對著幹，井口一起掏</span>
+</header>
+
+<!-- ─── Stats ─── -->
+<div class="vzo-tiles">
+  <div class="vzo-tile vzo-tile--green">
+    <div class="vzo-tile-val">125<span class="vzo-tile-unit">萬</span></div>
+    <div class="vzo-tile-lbl">官方產量<br>桶／日</div>
+  </div>
+  <div class="vzo-tile vzo-tile--green">
+    <div class="vzo-tile-val">116<span class="vzo-tile-unit">萬</span></div>
+    <div class="vzo-tile-lbl">7月出口量<br>桶／日</div>
+  </div>
+  <div class="vzo-tile vzo-tile--blue">
+    <div class="vzo-tile-val">78.6<span class="vzo-tile-unit">萬</span></div>
+    <div class="vzo-tile-lbl">7月對美峰值<br>桶／日</div>
+  </div>
+  <div class="vzo-tile vzo-tile--blue">
+    <div class="vzo-tile-val">28<span class="vzo-tile-unit">萬</span></div>
+    <div class="vzo-tile-lbl">雪佛龍合資<br>桶／日（+15%）</div>
+  </div>
+</div>
+
+<!-- ─── Overview table ─── -->
+<div class="vzo-sec-hd">三國定位一覽</div>
+<table class="vzo-overview">
+  <thead>
+    <tr>
+      <th>國家</th>
+      <th>一句定位</th>
+      <th>現在在幹嘛</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="vzo-flag">
+          <span class="vzo-dot vzo-dot--us"></span>
+          <span>美國</span>
+        </div>
+      </td>
+      <td><span class="vzo-pos vzo-pos--us">收油 ＋ 稀釋回路 ＋ 許可權</span></td>
+      <td>拿走過半可出口桶數，餵灣岸煉廠；石腦油稀釋劑每日 &gt;10萬桶反向輸入委內瑞拉</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="vzo-flag">
+          <span class="vzo-dot vzo-dot--cn"></span>
+          <span>中國</span>
+        </div>
+      </td>
+      <td><span class="vzo-pos vzo-pos--cn">舊股東 ＋ 折價備胎</span></td>
+      <td>直航被擠掉，合資與地煉胃口仍在；換便宜貨源（伊朗、俄羅斯重油）等待回窗口</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="vzo-flag">
+          <span class="vzo-dot vzo-dot--ru"></span>
+          <span>俄羅斯</span>
+        </div>
+      </td>
+      <td><span class="vzo-pos vzo-pos--ru">存量守門員</span></td>
+      <td>產量不大，合同續到2041，人不撤；資產政治價值遠大於帳面桶數</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ─── Flow chart ─── -->
+<div class="vzo-sec-hd">貨流（簡化）</div>
+<div class="vzo-flow">
+  <div class="vzo-flow-title">奧里諾科超重油帶的進出</div>
+
+  <!-- Diluent arrow -->
+  <div class="vzo-diluent">
+    <div class="vzo-diluent-box">🇺🇸 美產石腦油稀釋劑<br>&gt;10萬桶／日 → 委內瑞拉</div>
+  </div>
+  <div class="vzo-arrow-down">↕</div>
+
+  <!-- Source -->
+  <div class="vzo-source-box">
+    <div class="vzo-source-name">奧里諾科超重油帶</div>
+    <div class="vzo-source-sub">生產 ~125萬桶／日　出口 ~116萬桶／日</div>
+  </div>
+
+  <div class="vzo-dests-label">↓ 出口分流（7月）</div>
+
+  <!-- Destination bars -->
+  <div class="vzo-dests">
+    <div class="vzo-dest">
+      <div class="vzo-dest-name">🇺🇸 美國灣岸</div>
+      <div class="vzo-dest-track">
+        <div class="vzo-dest-bar" style="width:68%;background:#1d4a90">峰值78.6萬</div>
+      </div>
+      <div class="vzo-dest-note">官方 &gt;50萬</div>
+    </div>
+    <div class="vzo-dest">
+      <div class="vzo-dest-name">🇮🇳 印度</div>
+      <div class="vzo-dest-track">
+        <div class="vzo-dest-bar" style="width:15%;background:#1a5050">~17.8萬</div>
+      </div>
+      <div class="vzo-dest-note">↓ 腰斬</div>
+    </div>
+    <div class="vzo-dest">
+      <div class="vzo-dest-name">🇪🇺 歐洲</div>
+      <div class="vzo-dest-track">
+        <div class="vzo-dest-bar" style="width:7%;background:#1a4040">~8.2萬</div>
+      </div>
+      <div class="vzo-dest-note">↓ 腰斬</div>
+    </div>
+    <div class="vzo-dest">
+      <div class="vzo-dest-name">🇨🇳 中國直航</div>
+      <div class="vzo-dest-track">
+        <div class="vzo-dest-bar" style="width:2%;background:#4a1010;min-width:24px">≈0</div>
+      </div>
+      <div class="vzo-dest-note">幾乎中斷</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;font-size:16px;color:#4a5270;font-style:italic">
+    ※ 無實體管線通往德州——全程油輪運輸。
+  </div>
+</div>
+
+<!-- ─── Three cards ─── -->
+<div class="vzo-sec-hd">三種模式詳解</div>
+<div class="vzo-cards">
+
+  <!-- US -->
+  <div class="vzo-card vzo-card--us">
+    <div>
+      <div class="vzo-card-flag">🇺🇸</div>
+      <div class="vzo-card-country vzo-card-country--us">美國</div>
+      <span class="vzo-card-type vzo-card-type--us">煉廠回路型</span>
+    </div>
+    <div class="vzo-card-div"></div>
+    <div class="vzo-card-logic">灣岸煉廠本來就是啃委內瑞拉重質高硫油；要殘渣、要焦化進料——貨流跟著煉廠配置走。</div>
+    <div class="vzo-kv-list">
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--us">現地資產</span>
+        <span class="vzo-kv-v">雪佛龍合資（Petropiar、Petroboscán 等），產量約 <span class="vzo-num">28萬桶／日</span>（半年 +15%）</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--us">回流</span>
+        <span class="vzo-kv-v">美產石腦油每日 <span class="vzo-num">&gt;10萬桶</span> 運往加拉加斯稀釋超重油</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--us">管控</span>
+        <span class="vzo-kv-v">銷售許可、貨款帳戶均由美方監督</span>
+      </div>
+    </div>
+    <div class="vzo-card-pain">
+      <div class="vzo-card-pain-hd">// 痛點</div>
+      要油，但暫時不想砸下約 1,000 億美元替換老化井場與碼頭。
+    </div>
+  </div>
+
+  <!-- China -->
+  <div class="vzo-card vzo-card--cn">
+    <div>
+      <div class="vzo-card-flag">🇨🇳</div>
+      <div class="vzo-card-country vzo-card-country--cn">中國</div>
+      <span class="vzo-card-type vzo-card-type--cn">折價＋股權殘留型</span>
+    </div>
+    <div class="vzo-card-div"></div>
+    <div class="vzo-card-logic">裝置不是為委油設計——是為「夠便宜的重油／瀝青料」而生；沒折扣就換貨源。</div>
+    <div class="vzo-kv-list">
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--cn">現地資產</span>
+        <span class="vzo-kv-v">CNPC–PDVSA 合資 Petrosinovensa（Merey 摻混，曾擴至 <span class="vzo-num">16.5萬桶／日</span>）；中石化、中石油仍掛權益儲量</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--cn">地煉端</span>
+        <span class="vzo-kv-v">山東茶壺廠 2025 年進口委油約 <span class="vzo-num">1,995萬噸</span>；廣東石化等複雜廠能吃 Merey</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--cn">民企</span>
+        <span class="vzo-kv-v">康科德 20 年約，目標 2026 年底 <span class="vzo-num">~6萬桶／日</span></span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--cn">2026現狀</span>
+        <span class="vzo-kv-v">直航近乎中斷；地煉改吃伊朗、俄羅斯重油填缺口</span>
+      </div>
+    </div>
+    <div class="vzo-card-pain">
+      <div class="vzo-card-pain-hd">// 痛點</div>
+      裝船權排不到前面；沒折扣就換，但合資不從地圖上擦掉。
+    </div>
+  </div>
+
+  <!-- Russia -->
+  <div class="vzo-card vzo-card--ru">
+    <div>
+      <div class="vzo-card-flag">🇷🇺</div>
+      <div class="vzo-card-country vzo-card-country--ru">俄羅斯</div>
+      <span class="vzo-card-type vzo-card-type--ru">國家馬甲存量型</span>
+    </div>
+    <div class="vzo-card-div"></div>
+    <div class="vzo-card-logic">產量不是重點——資產不能被單方面註銷。合同比桶數重要。</div>
+    <div class="vzo-kv-list">
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--ru">架構</span>
+        <span class="vzo-kv-v">2020 年俄石油持股轉給 <span class="vzo-num">Roszarubezhneft</span>（國家體系）避制裁</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--ru">現地資產</span>
+        <span class="vzo-kv-v">西部 Boquerón、Perijá；奧里諾科 Petromonagas 等多個合資</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--ru">規模</span>
+        <span class="vzo-kv-v">公開估算 <span class="vzo-num">數萬～十萬桶／日</span>量級（遠小於雪佛龍）</span>
+      </div>
+      <div class="vzo-kv">
+        <span class="vzo-kv-k vzo-kv-k--ru">時間</span>
+        <span class="vzo-kv-v">2025年11月國會批准合資延長 <span class="vzo-num">15年，至約2041年</span></span>
+      </div>
+    </div>
+    <div class="vzo-card-pain">
+      <div class="vzo-card-pain-hd">// 痛點</div>
+      量小、受基建與稀釋劑制約；政治上必須留人，撤場才是損失。
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── US buyers ─── -->
+<div class="vzo-buyers">
+  <div class="vzo-buyers-title">美國端主要買家與貿易商</div>
+  <div class="vzo-buyer-list">
+    <span class="vzo-buyer-tag">Chevron 雪佛龍</span>
+    <span class="vzo-buyer-tag">Phillips 66</span>
+    <span class="vzo-buyer-tag">Valero</span>
+    <span class="vzo-buyer-tag">Citgo</span>
+    <span class="vzo-buyer-tag">Marathon</span>
+    <span class="vzo-buyer-tag">PBF Energy</span>
+    <span class="vzo-buyer-tag vzo-buyer-tag--trader">Vitol（貿易商）</span>
+    <span class="vzo-buyer-tag vzo-buyer-tag--trader">Trafigura（貿易商）</span>
+  </div>
+</div>
+
+<!-- ─── Constraints ─── -->
+<div class="vzo-sec-hd">共同瓶頸</div>
+<div class="vzo-constraints">
+  <div class="vzo-constraints-title">裝不上船——不是地底沒油</div>
+  <div class="vzo-constraints-list">
+    <div class="vzo-cl">
+      <span class="vzo-cl-icon">碼頭</span>
+      荷西港（Puerto José）等主要碼頭老化，停電頻繁，泊位長期被舊船占用，油輪等候可達數週
+    </div>
+    <div class="vzo-cl">
+      <span class="vzo-cl-icon">稀釋劑</span>
+      奧里諾科超重油 API 約 8–10°，必須依賴外部石腦油或凝析油混稀才能流動；稀釋劑供應量直接上限出口桶數
+    </div>
+    <div class="vzo-cl">
+      <span class="vzo-cl-icon">基建</span>
+      三家所在區域均面臨電力不穩、管線老化、備件短缺；原油品質因井況退化而波動
+    </div>
+  </div>
+  <div class="vzo-constraint-note">
+    三方同時存在的原因：美國需要立刻能進爐的重油；中國要夠便宜的底料與舊貸敘事；俄羅斯要華盛頓撕不掉的海外油田。三家不是聯盟，是同一口超重油井上的三種吃法。
+  </div>
+</div>
+
+<!-- ─── Footer ─── -->
+<div class="vzo-footer">
+  資料來源：公開新聞報導、產業報告、各方官方聲明（2025–2026年8月）。產量與出口數字為官方與各分析機構估算，部分存在出入；貿易流向以油輪追蹤數據為基礎。所有數字以2026年8月下旬為時間截面。
+</div>
+
+</div>
+</body>
+</html>
