@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "title": "委內瑞拉石油：美中俄三種吃法（2026年8月）",
+    "titleEn": "Venezuela Oil – US, China & Russia Three Models (August 2026)",
+    "subtitle": "官方產量125萬桶／日・出口116萬桶・同一口稠油，三種吃法",
+    "date": "2026-08-20",
+    "status": "resource",
+    "theme": "orange",
+    "sources": ["雪佛龍財報", "PDVSA公開數據", "Kpler航運數據", "彭博社", "路透社", "Grok資料彙整"]
+  },
+  "map": {
+    "center": [8.5, -65.5],
+    "zoom": 6,
+    "bounds": [[4.5, -74.0], [13.0, -59.0]]
+  },
+  "infoPanel": {
+    "title": "委內瑞拉石油・美中俄三種吃法（2026年8月截面）",
+    "paragraphs": [
+      "2026年8月，委內瑞拉官方產量約125萬桶／日，7月出口約116萬桶／日。美、中、俄三國不是聯盟，是同一口超重油井上的三種吃法：美國「煉廠回路型」（拿走>50萬桶可出口桶數，灣岸煉廠直吃，反向輸送石腦油稀釋）、中國「折價＋股權殘留型」（直航近乎被擠出，但合資與地煉胃口未散）、俄羅斯「國家馬甲存量型」（產量小，合同續到2041年，人不撤）。",
+      "7月出口分布：美國灣岸峰值78.6萬桶／日（雪佛龍合資產量28萬桶，半年+15%）；印度約17.8萬（腰斬）；歐洲約8.2萬（腰斬）；中國直航幾乎中斷（2025年曾為最大買家）。美方每日反向輸送超過10萬桶石腦油赴委稀釋超重油。",
+      "共同瓶頸：荷西港等碼頭老化、停電、泊位被舊船占用，油輪可等數週，出口卡在116至125萬桶不是地底沒油，是裝不上船。三家同時存在的真正原因——美國要立刻進爐的重油；中國要便宜底料與舊貸敘事；俄國要華盛頓撕不掉的海外油田。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [9.50, -65.50],
+        [9.20, -63.20],
+        [8.80, -61.80],
+        [7.80, -61.50],
+        [7.20, -62.50],
+        [7.00, -64.00],
+        [7.30, -65.80],
+        [7.80, -67.00],
+        [8.50, -67.20],
+        [9.20, -66.50],
+        [9.50, -65.50]
+      ],
+      "fillColor": "#8B4513",
+      "fillOpacity": 0.22,
+      "borderColor": "#5D2E0C",
+      "borderWeight": 1.8,
+      "borderOpacity": 0.70,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "奧里諾科重油帶（Orinoco Oil Belt）",
+        "tag": "🛢️ 奧里諾科超重油帶・全球最大儲量",
+        "tagClass": "tag-confirmed",
+        "desc": "奧里諾科超重油帶（Faja Petrolífera del Orinoco）是全球最大的重油儲量區，API重度約8至10度，屬超重質高硫原油，須以石腦油等稀釋劑摻混後方可用油輪運輸。四個開採區（Boyacá、Junín、Ayacucho、Carabobo）分布在此帶，美國雪佛龍、中國CNPC/中石化、俄國Roszarubezhneft均在此持有合資股權。⚠️ 為概略範圍示意。",
+        "source": "PDVSA；美國能源資訊局（EIA）"
+      }
+    },
+    {
+      "points": [
+        [11.20, -72.50],
+        [11.50, -71.20],
+        [10.80, -70.50],
+        [10.20, -71.00],
+        [9.80, -72.00],
+        [10.20, -72.80],
+        [11.20, -72.50]
+      ],
+      "fillColor": "#2c3e50",
+      "fillOpacity": 0.15,
+      "borderColor": "#1a252f",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.55,
+      "borderDashArray": "6,3",
+      "popup": {
+        "title": "馬拉開波湖盆地・西部油田（雪佛龍＋俄羅斯資產）",
+        "tag": "🛢️ 西部油田・雪佛龍Petroboscán・俄羅斯Boquerón/Perijá",
+        "tagClass": "tag-possible",
+        "desc": "馬拉開波盆地為委內瑞拉傳統產油核心，雪佛龍持有Petroboscán合資（委國西部最大單一資產之一）；俄羅斯Roszarubezhneft在Boquerón與Perijá區塊持有合資。西部油品相對較輕，與奧里諾科超重油性質不同，但共用荷西港等出口設施。⚠️ 為概略示意。",
+        "source": "雪佛龍財報；路透社"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [10.20, -64.60],
+        [16.00, -65.00],
+        [22.00, -68.00],
+        [27.00, -91.00],
+        [29.50, -94.00]
+      ],
+      "color": "#e67e22",
+      "weight": 4,
+      "opacity": 0.80,
+      "dashArray": "0",
+      "popup": {
+        "title": "原油主幹航線：荷西港→美國灣岸（7月峰值78.6萬桶／日）",
+        "tag": "🚢 原油→美國灣岸・7月峰值78.6萬桶／日",
+        "tagClass": "tag-confirmed",
+        "desc": "委內瑞拉出口原油主要航線，從荷西港（José Terminal）出發，繞加勒比海進入墨西哥灣，抵達德州與路易斯安那灣岸煉廠群。買家包含雪佛龍、Phillips 66、Valero、Citgo、Marathon、PBF及貿易商Vitol、Trafigura。7月單日峰值達78.6萬桶，占委國出口逾半。⚠️ 概略航線示意，全程油輪運輸，無實體管線通往德州。",
+        "source": "Kpler；彭博社；路透社"
+      }
+    },
+    {
+      "points": [
+        [29.50, -94.00],
+        [22.00, -68.00],
+        [16.00, -65.00],
+        [10.50, -64.80]
+      ],
+      "color": "#3498db",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "5,4",
+      "popup": {
+        "title": "石腦油稀釋劑反向航線：美國→委內瑞拉（>10萬桶／日）",
+        "tag": "🔄 石腦油→委內瑞拉・稀釋超重油・>10萬桶／日",
+        "tagClass": "tag-confirmed",
+        "desc": "美國每日反向輸送超過10萬桶石腦油（naphtha）至委內瑞拉，作為奧里諾科超重油的稀釋劑，使其API重度提升至可裝船運輸標準。此回路設計使雪佛龍形成「稀釋劑向南、原油向北」的完整閉環，並使美方對出口貨款帳戶保有監督地位。",
+        "source": "Kpler；雪佛龍財報；路透社"
+      }
+    },
+    {
+      "points": [
+        [10.20, -64.60],
+        [13.00, -55.00],
+        [15.00, -35.00],
+        [20.00, -15.00],
+        [20.37, 72.88]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.55,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "原油→印度（7月約17.8萬桶／日，較2025年腰斬）",
+        "tag": "🚢 →印度・7月17.8萬桶（腰斬）",
+        "tagClass": "tag-possible",
+        "desc": "印度煉廠（Reliance、HPCL等）過去是委內瑞拉重要出口目的地。2026年7月進口量約17.8萬桶／日，較2025年高峰大幅縮減（腰斬），主因美國灣岸需求擠占艙單，加上印度部分煉廠轉向俄羅斯折扣油。⚠️ 概略航線示意。",
+        "source": "Kpler；路透社"
+      }
+    },
+    {
+      "points": [
+        [10.20, -64.60],
+        [13.00, -40.00],
+        [38.00, -9.00],
+        [51.50, 0.10]
+      ],
+      "color": "#9b59b6",
+      "weight": 1.8,
+      "opacity": 0.50,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "原油→歐洲（7月約8.2萬桶／日，較2025年腰斬）",
+        "tag": "🚢 →歐洲・7月8.2萬桶（腰斬）",
+        "tagClass": "tag-possible",
+        "desc": "歐洲煉廠（西班牙Repsol、葡萄牙Galp等）7月進口量約8.2萬桶／日，亦較前期大幅縮減。美國買盤強勢造成委國出口優先流向灣岸，歐洲份額受擠壓。⚠️ 概略航線示意。",
+        "source": "Kpler；路透社"
+      }
+    },
+    {
+      "points": [
+        [10.20, -64.60],
+        [12.00, -45.00],
+        [15.00, -20.00],
+        [22.00, 10.00],
+        [22.00, 90.00],
+        [22.30, 114.16]
+      ],
+      "color": "#c0392b",
+      "weight": 1.5,
+      "opacity": 0.40,
+      "dashArray": "4,6",
+      "popup": {
+        "title": "原油→中國直航（2026年幾乎中斷）",
+        "tag": "⚠️ →中國直航・2026年幾乎中斷",
+        "tagClass": "tag-possible",
+        "desc": "中國曾是委內瑞拉最大原油買家（2025年高峰）。2026年因美國灣岸大量吸貨、艙單被占，中國直航進口幾乎中斷。地煉（山東茶壺廠）已轉向伊朗、俄羅斯重油替代。CNPC/中石化合資股權與井場仍在，但裝船優先權排不到前面。⚠️ 概略航線示意，現狀近乎斷線。",
+        "source": "Kpler；彭博社；路透社"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [10.22, -64.62],
+      "name": "José Terminal, Anzoátegui – Main Export Hub",
+      "nameLocal": "荷西港（José Terminal）・安索阿特吉州・主要出口碼頭",
+      "type": "confirmed",
+      "tag": "⚓ 荷西港・主出口碼頭・老化瓶頸",
+      "tagClass": "tag-confirmed",
+      "desc": "委內瑞拉最重要的原油出口碼頭，位於安索阿特吉州加勒比海岸，為奧里諾科超重油稀釋後裝船外運的核心設施。碼頭老化嚴重、停電頻繁、泊位被舊船長期占用，油輪候港時間可達數週。出口量卡在116至125萬桶不是地底沒油，而是裝不上船。",
+      "coords": "10°13'N 064°37'W",
+      "source": "PDVSA；路透社；彭博社"
+    },
+    {
+      "latlng": [8.80, -63.20],
+      "name": "Petropiar (Chevron–PDVSA JV), Orinoco",
+      "nameLocal": "Petropiar合資區・雪佛龍（美）・奧里諾科",
+      "type": "confirmed",
+      "tag": "🇺🇸 雪佛龍 Petropiar・美國主力資產",
+      "tagClass": "tag-confirmed",
+      "desc": "雪佛龍持股的奧里諾科合資公司之一，2026年雪佛龍在委所有合資（含Petroboscán等）總產量約28萬桶／日，較半年前成長約15%。美方透過銷售許可與貨款帳戶監督機制掌握出口控制權。⚠️ 概略位置。",
+      "coords": "08°48'N 063°12'W",
+      "source": "雪佛龍財報；EIA"
+    },
+    {
+      "latlng": [8.50, -64.00],
+      "name": "Petrosinovensa (CNPC–PDVSA JV), Orinoco",
+      "nameLocal": "Petrosinovensa合資區・中石油（中）・奧里諾科",
+      "type": "possible",
+      "tag": "🇨🇳 中石油 Petrosinovensa・直航中斷但股權留守",
+      "tagClass": "tag-possible",
+      "desc": "中石油（CNPC）與PDVSA合資，負責摻混超重油產出Merey原油，產能曾擴至約16.5萬桶／日。2026年中國直航幾乎中斷，民企康科德20年約目標2026年底約6萬桶／日。中方邏輯：沒折扣就換貨源，但不肯把合資從地圖上擦掉。⚠️ 概略位置。",
+      "coords": "08°30'N 064°00'W",
+      "source": "路透社；彭博社"
+    },
+    {
+      "latlng": [8.70, -62.80],
+      "name": "Petromonagas (Roszarubezhneft–PDVSA JV), Orinoco",
+      "nameLocal": "Petromonagas合資區・Roszarubezhneft（俄）・奧里諾科",
+      "type": "possible",
+      "tag": "🇷🇺 俄羅斯 Petromonagas・合同至2041年・人不撤",
+      "tagClass": "tag-possible",
+      "desc": "俄羅斯國家石油持股透過Roszarubezhneft（2020年制裁前轉手至此體系）維持。委國國會2025年11月批准合資延長15年，至約2041年。公開估算產量約數萬至十萬桶／日量級，遠小於雪佛龍。俄方邏輯：產量不是重點，資產不能被單方面註銷，合同比產量重要。⚠️ 概略位置。",
+      "coords": "08°42'N 062°48'W",
+      "source": "路透社；俄油公告"
+    },
+    {
+      "latlng": [10.63, -71.61],
+      "name": "Maracaibo, Zulia – Western Fields Hub",
+      "nameLocal": "馬拉開波（Maracaibo）・蘇利亞州・西部油田中心",
+      "type": "capital",
+      "tag": "🏛️ 馬拉開波・西部油田中心・雪佛龍Petroboscán",
+      "tagClass": "tag-reference",
+      "desc": "委內瑞拉西部石油工業重鎮，馬拉開波湖盆地為傳統產油核心。雪佛龍在此持有Petroboscán合資（委國西部最大單一資產之一）；俄羅斯Roszarubezhneft在周邊Boquerón、Perijá區塊持有合資。西部油品相對較輕，與奧里諾科超重油不同。",
+      "coords": "10°38'N 071°37'W",
+      "source": "雪佛龍財報；路透社"
+    },
+    {
+      "latlng": [10.48, -66.88],
+      "name": "Caracas, Venezuela",
+      "nameLocal": "卡拉卡斯（Caracas）・委內瑞拉首都",
+      "type": "capital",
+      "tag": "🏛️ 卡拉卡斯・委內瑞拉首都",
+      "tagClass": "tag-reference",
+      "desc": "委內瑞拉首都，PDVSA總部所在地。馬杜羅政府透過許可協議允許雪佛龍擴大生產，換取出口貨款與稀釋劑供應；同時維持與中俄合資合同，以多邊存在制衡美方控制。",
+      "coords": "10°29'N 066°53'W",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#8B4513", "fillOpacity": 0.25, "borderColor": "#5D2E0C", "label": "奧里諾科超重油帶（全球最大重油儲量）" },
+    { "symbol": "polygon", "fillColor": "#2c3e50", "fillOpacity": 0.15, "borderColor": "#1a252f", "label": "馬拉開波西部油田（概略）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 4,   "dash": "0",   "label": "原油→美國灣岸（7月峰值78.6萬桶／日）" },
+    { "symbol": "line",    "color": "#3498db", "weight": 2,   "dash": "5,4", "label": "石腦油稀釋劑→委內瑞拉（>10萬桶／日，美→委）" },
+    { "symbol": "line",    "color": "#e74c3c", "weight": 2,   "dash": "7,4", "label": "原油→印度（7月17.8萬桶，腰斬）" },
+    { "symbol": "line",    "color": "#9b59b6", "weight": 1.8, "dash": "7,4", "label": "原油→歐洲（7月8.2萬桶，腰斬）" },
+    { "symbol": "line",    "color": "#c0392b", "weight": 1.5, "dash": "4,6", "label": "→中國直航（2026年幾乎中斷）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認資產／碼頭（荷西港・合資區）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "合資資產・直航中斷但股權留守（中／俄）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "城市・地理參考" }
+  ]
+}
