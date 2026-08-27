@@ -21,7 +21,55 @@
       "從加德滿都出發的外籍朝聖團，印度官方的里普列克、乃堆拉通道因故不通，陸路幾乎只剩吉隆口岸（尼泊爾側：Rasuwagadhi）。簽證、入藏許可與換車均在此辦理，不過此關即無法抵達阿里地區。馬年旺季期間巴士日日排隊過境，口岸一旦因洪災、山洪等因素中斷，多家朝聖旅行團將同時失聯失聯。"
     ]
   },
-  "polygons": [],
+  "polygons": [
+    {
+      "points": [
+        [28.55, 84.80],
+        [28.55, 85.65],
+        [27.90, 85.65],
+        [27.90, 84.80],
+        [28.55, 84.80]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.15,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.8,
+      "borderOpacity": 0.65,
+      "borderDashArray": "6,3",
+      "popup": {
+        "title": "中尼邊境山洪災害主要影響範圍（概略）",
+        "tag": "🌊 山洪災害影響範圍（概略示意）",
+        "tagClass": "tag-confirmed",
+        "desc": "2026年旺季期間，尼泊爾中北部山區（拉蘇瓦縣、努瓦科特縣一帶）受強季風降雨引發連續山洪與土石流，重創通往Rasuwagadhi口岸的公路幹線。吉隆口岸至加德滿都的唯一陸路數度中斷，滯留朝聖團最長達數日。Trishuli河谷沿線道路為高風險路段，崩塌點集中於28至28.5°N一帶。⚠️ 為概略影響範圍示意，非精確災情邊界。",
+        "source": "尼泊爾政府；媒體報導 2026年8月"
+      }
+    },
+    {
+      "points": [
+        [28.38, 85.10],
+        [28.50, 85.20],
+        [28.48, 85.38],
+        [28.35, 85.42],
+        [28.20, 85.35],
+        [28.15, 85.18],
+        [28.25, 85.08],
+        [28.38, 85.10]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.22,
+      "borderColor": "#922b21",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "Rasuwagadhi口岸周邊・山洪重災核心區（概略）",
+        "tag": "💥 口岸重災核心區・道路多次中斷",
+        "tagClass": "tag-confirmed",
+        "desc": "吉隆口岸（Rasuwagadhi）所在的Trishuli河谷峽谷地帶，為本次中尼山洪災害最嚴重的核心受衝擊區。河谷地形狹窄、坡度陡峻，季風強降雨極易引發崩塌與土石流直接沖斷公路。口岸一旦封閉，所有在途朝聖者即告中斷聯絡，無替代路線可繞行。⚠️ 概略範圍示意。",
+        "source": "尼泊爾政府；媒體報導 2026年8月"
+      }
+    }
+  ],
   "lines": [
     {
       "points": [
@@ -165,6 +213,8 @@
     { "symbol": "line",  "color": "#e74c3c", "weight": 2,   "dash": "0", "label": "外圈轉山路線 Kora（約52–54公里・順時針）" },
     { "symbol": "dot",   "color": "#e74c3c", "pulse": true,  "label": "朝聖關鍵地點（神山・山口・口岸・聖湖）" },
     { "symbol": "dot",   "color": "#64B5F6", "pulse": false, "label": "中繼站・補給點（概略位置）" },
-    { "symbol": "dot",   "color": "#f1c40f", "pulse": false, "label": "城市・地理參考" }
+    { "symbol": "dot",   "color": "#f1c40f", "pulse": false, "label": "城市・地理參考" },
+    { "symbol": "polygon", "fillColor": "#c0392b", "fillOpacity": 0.22, "borderColor": "#922b21", "label": "口岸重災核心區（Rasuwagadhi河谷，概略）" },
+    { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.15, "borderColor": "#c0392b", "label": "山洪主要影響範圍・拉蘇瓦縣一帶（概略）" }
   ]
 }
