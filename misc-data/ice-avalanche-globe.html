@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冰岩崩全球熱點｜交錯地帶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;}
+:root{
+  --bg:#04080f;--text:#d0d8e8;--text-dim:#b0c8e0;--text-bright:#f2f6ff;
+  --border-dim:rgba(255,255,255,0.07);
+  --cat:#ff3030;--cat-glow:rgba(255,48,48,.45);
+  --maj:#ff8c00;--maj-glow:rgba(255,140,0,.4);
+  --mod:#f5c518;--mod-glow:rgba(245,197,24,.35);
+  --mono:'Space Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+.ira-hdr{padding:.9rem 1.4rem;border-bottom:1px solid var(--border-dim);display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;}
+.ira-eyebrow{font-family:var(--mono);font-size:1rem;letter-spacing:.15em;color:var(--cat);text-transform:uppercase;}
+.ira-h1{font-size:clamp(1.2rem,2.2vw,1.5rem);font-weight:700;color:var(--text-bright);}
+.ira-sub{font-size:1rem;color:var(--text);font-weight:300;}
+
+.ira-stats-bar{display:flex;border-bottom:1px solid var(--border-dim);overflow-x:auto;scrollbar-width:none;}
+.ira-stats-bar::-webkit-scrollbar{display:none;}
+.ira-stat{flex:1;min-width:110px;padding:.5rem .8rem;border-right:1px solid var(--border-dim);text-align:center;}
+.ira-stat:last-child{border-right:none;}
+.ira-stat-n{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--text-bright);line-height:1.2;}
+.ira-stat-l{font-size:.82rem;color:var(--text-dim);margin-top:.1rem;}
+
+.ira-stage{position:relative;width:100%;max-width:960px;margin:0 auto;padding:1.2rem 1rem 0;}
+
+.ira-globe-container{position:relative;width:100%;aspect-ratio:840/560;}
+.ira-globe-inner{position:absolute;inset:0;}
+#ira-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+#ira-svg{position:absolute;inset:0;display:block;width:100%;height:100%;cursor:grab;}
+#ira-svg:active{cursor:grabbing;}
+
+.ira-overlay{
+  position:absolute;top:1.4rem;left:1.4rem;
+  display:flex;flex-direction:column;
+  width:248px;max-height:calc(100% - 2.8rem);
+  overflow-y:auto;scrollbar-width:none;
+  z-index:10;pointer-events:none;border-radius:6px;
+}
+.ira-overlay::-webkit-scrollbar{display:none;}
+.ira-ov-inner{
+  background:rgba(4,10,22,.88);border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  overflow:hidden;pointer-events:auto;
+}
+.ira-panel-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;background:rgba(4,10,22,.92);border:none;
+  border-bottom:1px solid rgba(255,255,255,.1);border-radius:6px 6px 0 0;
+  color:var(--text-dim);font-family:var(--mono);font-size:.78rem;
+  letter-spacing:.1em;cursor:pointer;padding:.35rem .7rem;
+  pointer-events:auto;text-transform:uppercase;user-select:none;
+}
+.ira-panel-toggle:hover{color:var(--text-bright);}
+
+.ira-legend{padding:.42rem .7rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.ira-leg-row{display:flex;align-items:center;gap:.42rem;padding:.1rem 0;font-family:var(--mono);font-size:.8rem;color:var(--text-dim);}
+.ira-leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+
+.ira-panel-default{padding:.42rem .7rem .5rem;}
+.ira-panel-hint{font-size:.88rem;color:var(--text-dim);line-height:1.55;text-align:center;padding:.2rem 0 0;}
+
+.ira-panel-detail{padding:.42rem .7rem .5rem;}
+.ira-detail-sev{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.22rem;display:flex;align-items:center;gap:.35rem;}
+.ira-detail-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ira-detail-name{font-size:1.05rem;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:.05rem;}
+.ira-detail-en{font-family:var(--mono);font-size:.8rem;color:var(--text-dim);margin-bottom:.28rem;}
+.ira-kv{display:grid;grid-template-columns:auto 1fr;gap:.18rem .5rem;margin-bottom:.3rem;align-items:baseline;}
+.ira-kv-k{font-family:var(--mono);font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+.ira-kv-v{font-family:var(--mono);font-size:.88rem;color:var(--text-bright);font-weight:700;}
+.ira-kv-v.red{color:var(--cat);}
+.ira-detail-desc{font-size:.85rem;color:var(--text);line-height:1.55;border-top:1px solid rgba(255,255,255,.07);padding-top:.28rem;}
+.ira-back{margin-top:.35rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:none;border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:.22rem .55rem;cursor:pointer;pointer-events:auto;}
+.ira-back:hover{color:var(--text-bright);border-color:rgba(255,255,255,.35);}
+
+.ira-overlay.collapsed .ira-legend,
+.ira-overlay.collapsed .ira-panel-default,
+.ira-overlay.collapsed .ira-panel-detail{display:none;}
+
+.ira-zoom-btns{position:absolute;bottom:1rem;right:1rem;display:flex;flex-direction:column;gap:.3rem;z-index:10;}
+.ira-zoom-btn{
+  width:2.2rem;height:2.2rem;background:rgba(4,10,22,.85);
+  border:1px solid rgba(255,255,255,.22);border-radius:5px;
+  color:var(--text-bright);font-size:1.3rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-family:var(--mono);backdrop-filter:blur(6px);
+}
+.ira-zoom-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.45);}
+.ira-zoom-btn:active{transform:scale(.92);}
+
+@keyframes ira-pulse{0%,100%{opacity:.85;}50%{opacity:.3;}}
+
+.ira-bottom{text-align:center;font-family:var(--mono);font-size:.9rem;letter-spacing:.1em;color:#8ab4d0;text-transform:uppercase;padding:.35rem 0 .1rem;}
+.ira-reset-wrap{display:flex;justify-content:center;padding:.55rem 0 .35rem;}
+.ira-reset{font-family:var(--mono);font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:.45rem 1.2rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .2s;}
+.ira-reset:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:var(--text-bright);}
+.ira-source{padding:.4rem 1.4rem .8rem;font-family:var(--mono);font-size:.9rem;color:var(--text-dim);letter-spacing:.05em;text-align:center;}
+
+@media(max-width:600px){
+  .ira-stat{min-width:88px;}
+  .ira-stat-n{font-size:.92rem;}
+  .ira-stat-l{font-size:.72rem;}
+  .ira-globe-container{display:flex;flex-direction:column;aspect-ratio:unset;}
+  .ira-globe-inner{position:relative;width:100%;aspect-ratio:840/560;inset:unset;flex-shrink:0;}
+  .ira-overlay{position:relative;top:unset;left:unset;width:100%;max-height:none;overflow-y:visible;border-radius:6px;margin-top:.5rem;pointer-events:auto;}
+  .ira-ov-inner{pointer-events:auto;}
+  .ira-stage{padding-bottom:.5rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="ira-hdr">
+  <div class="ira-eyebrow">Ice-Rock Avalanche · 冰岩崩</div>
+  <h1 class="ira-h1">冰岩崩全球災害熱點</h1>
+  <span class="ira-sub">崩塌→碎屑流→堵河潰決 連鎖過程分布圖</span>
+</header>
+
+<div class="ira-stats-bar">
+  <div class="ira-stat">
+    <div class="ira-stat-n">~60 次</div>
+    <div class="ira-stat-l">HMA 大型岩冰崩（文獻）</div>
+  </div>
+  <div class="ira-stat">
+    <div class="ira-stat-n">≥1,366</div>
+    <div class="ira-stat-l">HMA 確認死亡人數</div>
+  </div>
+  <div class="ira-stat">
+    <div class="ira-stat-n">~25,000</div>
+    <div class="ira-stat-l">最大單次（1970 秘魯）</div>
+  </div>
+  <div class="ira-stat">
+    <div class="ira-stat-n">15 個</div>
+    <div class="ira-stat-l">本圖標注熱點</div>
+  </div>
+</div>
+
+<div class="ira-stage">
+  <div class="ira-globe-container">
+    <div class="ira-globe-inner">
+      <canvas id="ira-canvas"></canvas>
+      <svg id="ira-svg" viewBox="0 0 840 560"></svg>
+      <div class="ira-zoom-btns">
+        <button class="ira-zoom-btn" id="zoomIn" title="放大">＋</button>
+        <button class="ira-zoom-btn" id="zoomOut" title="縮小">－</button>
+      </div>
+    </div>
+
+    <div class="ira-overlay" id="iraOverlay">
+      <div class="ira-ov-inner">
+        <button class="ira-panel-toggle" id="panelToggle">
+          <span>圖例與說明</span><span id="toggleIcon">▾</span>
+        </button>
+        <div class="ira-legend">
+          <div class="ira-leg-row"><div class="ira-leg-dot" style="background:var(--cat);box-shadow:0 0 5px var(--cat-glow)"></div>災難級（死亡 &gt;100）</div>
+          <div class="ira-leg-row"><div class="ira-leg-dot" style="background:var(--maj);box-shadow:0 0 5px var(--maj-glow)"></div>重大（顯著損失或連鎖）</div>
+          <div class="ira-leg-row"><div class="ira-leg-dot" style="background:var(--mod);box-shadow:0 0 5px var(--mod-glow)"></div>中型（已記錄案例）</div>
+        </div>
+        <div class="ira-panel-default" id="panelDefault">
+          <div class="ira-panel-hint">點擊地球儀上的<br>彩色標記查看詳情<br><br>拖曳可旋轉視角</div>
+        </div>
+        <div class="ira-panel-detail" id="panelDetail" style="display:none">
+          <div class="ira-detail-sev" id="dSev"></div>
+          <div class="ira-detail-name" id="dName"></div>
+          <div class="ira-detail-en" id="dEn"></div>
+          <div class="ira-kv" id="dKv"></div>
+          <div class="ira-detail-desc" id="dDesc"></div>
+          <button class="ira-back" id="backBtn">← 返回圖例</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ira-bottom">拖曳旋轉 · Drag to Rotate · 點擊標記查看詳情</div>
+<div class="ira-reset-wrap">
+  <button class="ira-reset" id="resetBtn">
+    <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+      <path d="M1.5 1.5C3.2 0.5 7 0.5 8.7 3C10.4 5.5 9.5 9 7 10.5C4.5 12 1.5 10.5 0.5 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0.5 8L0.5 11.5L3.5 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    重置視角
+  </button>
+</div>
+<div class="ira-source">
+  © Kargel et al. 2021 · Shugar et al. 2021 · ICIMOD · ResearchGate · ScienceDirect · AGU &nbsp;|&nbsp; 圖表：戰爭即工業力｜交錯地帶 2026-08
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   Data
+═══════════════════════════════════════════════════════════ */
+const SEV_COLOR = { catastrophic:'#ff3030', major:'#ff8c00', moderate:'#f5c518' };
+const SEV_GLOW  = { catastrophic:'rgba(255,48,48,.5)', major:'rgba(255,140,0,.45)', moderate:'rgba(245,197,24,.35)' };
+const SEV_LABEL = { catastrophic:'災難級', major:'重大', moderate:'中型' };
+const SEV_R     = { catastrophic:9, major:6.5, moderate:5 };
+
+const HOTSPOTS = [
+  { id:'aru',      name:'阿汝冰川',    nameEn:'Aru Glacier',         region:'HMA — 西藏高原',
+    lon:82.2,  lat:35.7,  year:'2016',      severity:'major',
+    vol:'6,800–8,300 萬 m³', deaths:9,
+    desc:'兩次谷冰川整體崩塌，為全球少見的平坦谷冰川大規模失穩案例。與科爾卡並列「谷冰川整體失穩」罕見類型。' },
+
+  { id:'sedongpu', name:'色東普',      nameEn:'Sedongpu',            region:'HMA — 藏東南',
+    lon:94.9,  lat:29.7,  year:'2018+',     severity:'major',
+    vol:'不詳（多次）', deaths:null,
+    desc:'多次冰岩崩入雅魯藏布，堵江形成堰塞湖。「崩塌→堵江→潰決」連鎖典型案例，研究常與吉隆事件並列討論。' },
+
+  { id:'jilong',   name:'吉隆（本次）', nameEn:'Jilong / Gyirong 2025', region:'HMA — 西藏南部',
+    lon:85.3,  lat:28.85, year:'2025',      severity:'major',
+    vol:'不詳', deaths:null,
+    desc:'冰岩崩→高速碎屑流→暫時堵河後潰泄。本次事件的核心區域，機制與2021年查莫利高度相似，無典型預兆大冰湖。' },
+
+  { id:'bukadaban',name:'布喀達坂峰',  nameEn:'Bukadaban Peak',       region:'HMA — 昆侖山',
+    lon:90.0,  lat:35.6,  year:'2022',      severity:'major',
+    vol:'約 4,000 萬 m³', deaths:0,
+    desc:'冰體崩入湖中，激起約13公尺湧浪，形成冰川湖溢流。偏遠地區無直接人員傷亡。' },
+
+  { id:'animaqing',name:'阿尼瑪卿',   nameEn:'Anyemaqen Massif',     region:'HMA — 青藏高原東部',
+    lon:99.2,  lat:34.9,  year:'2004–2019', severity:'moderate',
+    vol:'多次事件', deaths:0,
+    desc:'同一源區15年間反覆發生冰岩崩，屬「反覆型」災害鏈，為罕見的持續性熱點。' },
+
+  { id:'chamoli',  name:'查莫利',     nameEn:'Chamoli / Ronti Peak',  region:'HMA — 印度北阿坎德邦',
+    lon:79.8,  lat:30.45, year:'2021',      severity:'catastrophic',
+    vol:'不詳', deaths:204,
+    desc:'冰岩崩→碎屑流→山洪，摧毀兩座水電站，逾200人死亡或失蹤。高位冰岩崩、無典型預兆，機制與本次吉隆高度相似。' },
+
+  { id:'langtang', name:'朗塘',       nameEn:'Langtang Valley',       region:'HMA — 尼泊爾',
+    lon:85.6,  lat:28.22, year:'2015',      severity:'catastrophic',
+    vol:'不詳', deaths:350,
+    desc:'廓爾喀地震觸發大規模雪／冰崩，摧毀朗塘村，約350人死亡。地震觸發型冰崩最典型案例之一。' },
+
+  { id:'seti',     name:'Seti 河',   nameEn:'Seti River (Annapurna)', region:'HMA — 尼泊爾西部',
+    lon:83.7,  lat:28.35, year:'2012',      severity:'major',
+    vol:'不詳', deaths:72,
+    desc:'冰岩崩落入Seti河上游，觸發碎屑流與洪水，72人死亡。源頭為安納普爾納附近高位冰川。' },
+
+  { id:'hunza',    name:'罕薩地區',   nameEn:'Hunza Valley (Karakoram)', region:'HMA — 喀喇崑崙（巴基斯坦）',
+    lon:74.6,  lat:36.3,  year:'多次',      severity:'major',
+    vol:'多次事件', deaths:null,
+    desc:'冰川躍動＋冰壩湖潰決＋冰岩崩並存的複合熱點。喀喇崑崙公路（KKH）沿線多次受衝擊。' },
+
+  { id:'huascaran',name:'瓦斯卡蘭',   nameEn:'Huascarán (Peru)',       region:'安地斯 — 秘魯科迪勒拉布蘭卡',
+    lon:-77.6, lat:-9.1,  year:'1970',      severity:'catastrophic',
+    vol:'約 5,000 萬 m³', deaths:25000,
+    desc:'史上最致命冰川相關連鎖災害之一。地震觸發冰岩崩，以~270 km/h衝入容加依城，約2.5萬人死亡。安地斯最高風險熱點。' },
+
+  { id:'palcacocha',name:'Palcacocha', nameEn:'Palcacocha / Huaraz',  region:'安地斯 — 秘魯',
+    lon:-77.38,lat:-9.42, year:'1941',      severity:'major',
+    vol:'不詳', deaths:1800,
+    desc:'冰體落入冰川湖觸發GLOF，洪流衝入瓦拉斯城，估計1800人死亡。現湖容量已遠超1941年，仍是活躍高風險。' },
+
+  { id:'kolka',    name:'科爾卡冰川', nameEn:'Kolka-Karmadon',        region:'高加索 — 俄羅斯北奧塞梯',
+    lon:44.38, lat:42.72, year:'2002',      severity:'catastrophic',
+    vol:'超過 1 億 m³', deaths:140,
+    desc:'冰岩崩超過1億立方公尺，運行約19公里轉化為碎屑流，約140人死亡。教科書「谷冰川整體失穩」經典案例，與阿汝冰川同類型。' },
+
+  { id:'marmolada',name:'馬爾莫拉達', nameEn:'Marmolada (Italy)',     region:'阿爾卑斯 — 義大利北部',
+    lon:11.86, lat:46.44, year:'2022',      severity:'major',
+    vol:'約 64 萬 m³', deaths:11,
+    desc:'義大利最高峰冰川崩塌，逢高溫熱浪，11人死亡。被視為歐洲暖化加速冰川不穩定的典型案例。' },
+
+  { id:'blatten',  name:'Blatten',   nameEn:'Blatten (Valais, Swiss)', region:'阿爾卑斯 — 瑞士瓦萊州',
+    lon:7.82,  lat:46.41, year:'2025',      severity:'major',
+    vol:'不詳', deaths:0,
+    desc:'高位冰岩崩滑碎屑流，研究者已將其與西藏色東普並列對比（高位遠程、冰＋岩混合、級聯放大效應）。' },
+
+  { id:'flatcreek',name:'Flat Creek', nameEn:'Flat Creek (Alaska)',   region:'北美 — 美國阿拉斯加',
+    lon:-141.2,lat:60.2,  year:'2015',      severity:'moderate',
+    vol:'約 1,800 萬 m³', deaths:0,
+    desc:'大型岩冰崩，偏遠地區無人員傷亡。阿拉斯加海岸山脈退縮冰川與凍土退化持續提升區域風險。' },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Globe setup
+═══════════════════════════════════════════════════════════ */
+const W = 840, H = 560, CX = W * 0.54, CY = H * 0.5, R = 250;
+let zR = R;
+const INIT_ROT = [-80, -30, 0];
+
+(function(){ const c = document.getElementById('ira-canvas'); c.width = 840; c.height = 560; })();
+
+let _cvLand = null, _cvBorders = null;
+
+function renderCanvas() {
+  const c = document.getElementById('ira-canvas');
+  const ctx = c.getContext('2d');
+  const cp = d3.geoPath().projection(proj).context(ctx);
+  const r = zR, PI2 = Math.PI * 2;
+  ctx.clearRect(0, 0, 840, 560);
+  ctx.save();
+  ctx.beginPath(); ctx.arc(CX, CY, r, 0, PI2); ctx.clip();
+  const og = ctx.createRadialGradient(CX-r*.28, CY-r*.3, r*.05, CX, CY, r);
+  og.addColorStop(0, '#0d2d49'); og.addColorStop(.55, '#051828'); og.addColorStop(1, '#020c1c');
+  ctx.fillStyle = og; ctx.fillRect(CX-r, CY-r, r*2, r*2);
+  if (_cvLand) {
+    ctx.beginPath(); cp(_cvLand); ctx.fillStyle = '#1c3820'; ctx.fill();
+    ctx.beginPath(); cp(_cvLand); ctx.strokeStyle = 'rgba(60,130,60,.2)'; ctx.lineWidth = .6; ctx.stroke();
+  }
+  if (_cvBorders) {
+    ctx.beginPath(); cp(_cvBorders); ctx.strokeStyle = 'rgba(0,0,0,.25)'; ctx.lineWidth = .4; ctx.stroke();
+  }
+  const sp = ctx.createRadialGradient(CX-r*.38, CY-r*.42, 0, CX-r*.1, CY-r*.12, r*.9);
+  sp.addColorStop(0, 'rgba(255,255,255,.16)'); sp.addColorStop(.35, 'rgba(255,255,255,.04)'); sp.addColorStop(1, 'transparent');
+  ctx.fillStyle = sp; ctx.fillRect(CX-r, CY-r, r*2, r*2);
+  ctx.restore();
+  const ag2 = ctx.createRadialGradient(CX, CY, r*.9, CX, CY, r*1.12);
+  ag2.addColorStop(0, 'rgba(50,130,255,.26)'); ag2.addColorStop(1, 'transparent');
+  ctx.beginPath(); ctx.arc(CX, CY, r*1.13, 0, PI2); ctx.fillStyle = ag2; ctx.fill();
+}
+
+/* SVG layers */
+const svg  = d3.select('#ira-svg');
+const defs = svg.append('defs');
+
+const ag = defs.append('radialGradient').attr('id','ira-ag').attr('cx','50%').attr('cy','50%');
+ag.append('stop').attr('offset','85%').attr('stop-color','transparent');
+ag.append('stop').attr('offset','95%').attr('stop-color','rgba(80,150,255,0.15)');
+ag.append('stop').attr('offset','100%').attr('stop-color','rgba(80,150,255,0.28)');
+const sh = defs.append('radialGradient').attr('id','ira-sh').attr('cx','38%').attr('cy','32%');
+sh.append('stop').attr('offset','0%').attr('stop-color','rgba(255,255,255,0.09)');
+sh.append('stop').attr('offset','60%').attr('stop-color','transparent');
+
+const gcCircle = defs.append('clipPath').attr('id','ira-gc')
+  .append('circle').attr('cx',CX).attr('cy',CY).attr('r',R);
+
+const proj = d3.geoOrthographic().scale(R).translate([CX,CY]).clipAngle(90).rotate(INIT_ROT);
+const gp   = d3.geoPath().projection(proj);
+
+const lGrat    = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lLand    = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lMarkers = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lAtmo    = svg.append('g').attr('pointer-events','none');
+
+const atmoC1 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ira-ag)');
+const atmoC2 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ira-sh)');
+const atmoC3 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
+  .attr('fill','none').attr('stroke','rgba(80,160,255,0.14)').attr('stroke-width',1.5);
+
+const grat = d3.geoGraticule().step([15,15]);
+lGrat.append('path').datum(grat())
+  .attr('fill','none').attr('stroke','rgba(255,255,255,0.04)').attr('stroke-width',.5);
+
+/* ═══════════════════════════════════════════════════════════
+   Markers
+═══════════════════════════════════════════════════════════ */
+let hotspotGs = null;
+
+function initMarkers() {
+  hotspotGs = lMarkers.selectAll('g.ira-hs')
+    .data(HOTSPOTS).enter()
+    .append('g').attr('class', d => `ira-hs ira-hs-${d.id}`)
+    .style('cursor','pointer')
+    .on('click', (event, d) => { event.stopPropagation(); selectHotspot(d); });
+
+  hotspotGs.append('circle').attr('class','ira-ring')
+    .attr('r', d => SEV_R[d.severity] + 4)
+    .attr('fill','none')
+    .attr('stroke', d => SEV_COLOR[d.severity])
+    .attr('stroke-width', 1)
+    .attr('opacity', .3);
+
+  hotspotGs.append('circle').attr('class','ira-dot')
+    .attr('r', d => SEV_R[d.severity])
+    .attr('fill', d => SEV_COLOR[d.severity])
+    .attr('opacity', .9);
+
+  hotspotGs.filter(d => d.severity === 'catastrophic')
+    .select('.ira-ring')
+    .style('animation','ira-pulse 1.6s ease-in-out infinite');
+}
+
+function isVisible(lon, lat) {
+  const r = proj.rotate();
+  return d3.geoDistance([lon, lat], [-r[0], -r[1]]) < Math.PI / 2;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Render
+═══════════════════════════════════════════════════════════ */
+function render() {
+  renderCanvas();
+  lGrat.select('path').attr('d', gp(grat()));
+  if (hotspotGs) {
+    hotspotGs.each(function(d) {
+      const vis = isVisible(d.lon, d.lat);
+      const xy  = proj([d.lon, d.lat]);
+      d3.select(this)
+        .attr('transform', xy ? `translate(${xy[0]},${xy[1]})` : null)
+        .style('display', (vis && xy) ? null : 'none');
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Panel
+═══════════════════════════════════════════════════════════ */
+function selectHotspot(d) {
+  document.getElementById('panelDefault').style.display = 'none';
+  document.getElementById('panelDetail').style.display  = '';
+
+  document.getElementById('dSev').innerHTML =
+    `<div class="ira-detail-dot" style="background:${SEV_COLOR[d.severity]};box-shadow:0 0 5px ${SEV_GLOW[d.severity]}"></div>` +
+    `<span style="color:${SEV_COLOR[d.severity]}">${SEV_LABEL[d.severity]}</span>`;
+
+  document.getElementById('dName').textContent = d.name;
+  document.getElementById('dEn').textContent   = d.nameEn + ' · ' + d.region;
+
+  let kv = `<div class="ira-kv-k">年份</div><div class="ira-kv-v">${d.year}</div>`;
+  if (d.vol) kv += `<div class="ira-kv-k">體積</div><div class="ira-kv-v">${d.vol}</div>`;
+  if (d.deaths !== null && d.deaths !== undefined) {
+    const dc = d.deaths === 0 ? '無（偏遠）' : `~${d.deaths.toLocaleString()} 人`;
+    kv += `<div class="ira-kv-k">死亡</div><div class="ira-kv-v${d.deaths >= 100 ? ' red' : ''}">${dc}</div>`;
+  }
+  document.getElementById('dKv').innerHTML   = kv;
+  document.getElementById('dDesc').textContent = d.desc;
+
+  if (hotspotGs) {
+    hotspotGs.select('.ira-dot')
+      .attr('r', d2 => d2.id === d.id ? SEV_R[d2.severity] * 1.6 : SEV_R[d2.severity])
+      .attr('opacity', d2 => d2.id === d.id ? 1 : .55);
+    hotspotGs.select('.ira-ring')
+      .attr('opacity', d2 => d2.id === d.id ? .65 : .3);
+  }
+}
+
+function clearSelection() {
+  document.getElementById('panelDetail').style.display  = 'none';
+  document.getElementById('panelDefault').style.display = '';
+  if (hotspotGs) {
+    hotspotGs.select('.ira-dot').attr('r', d => SEV_R[d.severity]).attr('opacity', .9);
+    hotspotGs.select('.ira-ring').attr('opacity', .3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Auto-rotate & drag
+═══════════════════════════════════════════════════════════ */
+let autoRotate = true;
+let dragStart = null, rotateStart = null;
+
+d3.timer(() => {
+  if (!autoRotate) return;
+  const r = proj.rotate();
+  proj.rotate([r[0] + 0.055, r[1], r[2]]);
+  render();
+});
+
+d3.select('#ira-svg').call(d3.drag()
+  .on('start', event => {
+    autoRotate = false;
+    dragStart  = [event.x, event.y];
+    rotateStart = proj.rotate();
+  })
+  .on('drag', event => {
+    if (!dragStart) return;
+    proj.rotate([
+      rotateStart[0] + (event.x - dragStart[0]) * 0.25,
+      Math.max(-85, Math.min(85, rotateStart[1] - (event.y - dragStart[1]) * 0.25)),
+      rotateStart[2]
+    ]);
+    render();
+  })
+  .on('end', () => {
+    dragStart = null;
+    clearTimeout(window._iraResume);
+    window._iraResume = setTimeout(() => { autoRotate = true; }, 3500);
+  })
+);
+
+/* ═══════════════════════════════════════════════════════════
+   Zoom
+═══════════════════════════════════════════════════════════ */
+function setZoom(newR) {
+  zR = Math.max(100, Math.min(560, newR));
+  proj.scale(zR);
+  gcCircle.attr('r', zR);
+  atmoC1.attr('r', zR); atmoC2.attr('r', zR); atmoC3.attr('r', zR);
+  render();
+}
+document.getElementById('zoomIn').addEventListener('click',  () => setZoom(zR * 1.25));
+document.getElementById('zoomOut').addEventListener('click', () => setZoom(zR / 1.25));
+
+let _pd = null, _pzR = null;
+const _svgEl = document.getElementById('ira-svg');
+_svgEl.addEventListener('touchstart', e => {
+  if (e.touches.length === 2) {
+    _pd  = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+    _pzR = zR;
+  }
+}, {passive:true});
+_svgEl.addEventListener('touchmove', e => {
+  if (e.touches.length === 2 && _pd) {
+    e.preventDefault();
+    const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+    setZoom(_pzR * d / _pd);
+  }
+}, {passive:false});
+_svgEl.addEventListener('touchend', () => { _pd = null; });
+
+/* ═══════════════════════════════════════════════════════════
+   Controls
+═══════════════════════════════════════════════════════════ */
+document.getElementById('panelToggle').addEventListener('click', () => {
+  const ov = document.getElementById('iraOverlay');
+  const ic = document.getElementById('toggleIcon');
+  ov.classList.toggle('collapsed');
+  ic.textContent = ov.classList.contains('collapsed') ? '▸' : '▾';
+});
+
+document.getElementById('backBtn').addEventListener('click', clearSelection);
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  autoRotate = false;
+  proj.rotate(INIT_ROT);
+  render();
+  setTimeout(() => { autoRotate = true; }, 800);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Load & start
+═══════════════════════════════════════════════════════════ */
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+  _cvLand    = topojson.feature(world, world.objects.countries);
+  _cvBorders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+  lLand.append('path').datum(_cvLand).attr('fill','none').attr('stroke','rgba(255,255,255,0.07)').attr('stroke-width',.4);
+  initMarkers();
+  render();
+});
+
+if (window.innerWidth <= 600) {
+  zR = 300;
+  document.getElementById('iraOverlay').classList.add('collapsed');
+  document.getElementById('toggleIcon').textContent = '▸';
+}
+</script>
+</body>
+</html>
