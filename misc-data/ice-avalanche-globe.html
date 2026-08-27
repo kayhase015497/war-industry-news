@@ -44,14 +44,16 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
   position:absolute;top:1.4rem;left:1.4rem;
   display:flex;flex-direction:column;
   width:248px;max-height:calc(100% - 2.8rem);
-  overflow-y:auto;scrollbar-width:none;
+  overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;
   z-index:10;pointer-events:none;border-radius:6px;
 }
-.ira-overlay::-webkit-scrollbar{display:none;}
+.ira-overlay::-webkit-scrollbar{width:4px;}
+.ira-overlay::-webkit-scrollbar-track{background:transparent;}
+.ira-overlay::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px;}
 .ira-ov-inner{
   background:rgba(4,10,22,.88);border:1px solid rgba(255,255,255,.1);
   border-radius:6px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  overflow:hidden;pointer-events:auto;
+  pointer-events:auto;
 }
 .ira-panel-toggle{
   display:flex;align-items:center;justify-content:space-between;
