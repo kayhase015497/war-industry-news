@@ -340,10 +340,11 @@ const gcCircle = defs.append('clipPath').attr('id','ira-gc')
 const proj = d3.geoOrthographic().scale(R).translate([CX,CY]).clipAngle(90).rotate(INIT_ROT);
 const gp   = d3.geoPath().projection(proj);
 
-const lGrat    = svg.append('g').attr('clip-path','url(#ira-gc)');
-const lLand    = svg.append('g').attr('clip-path','url(#ira-gc)');
-const lMarkers = svg.append('g').attr('clip-path','url(#ira-gc)');
-const lAtmo    = svg.append('g').attr('pointer-events','none');
+const lGrat      = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lLand      = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lCountries = svg.append('g').attr('clip-path','url(#ira-gc)').attr('pointer-events','none');
+const lMarkers   = svg.append('g').attr('clip-path','url(#ira-gc)');
+const lAtmo      = svg.append('g').attr('pointer-events','none');
 
 const atmoC1 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ira-ag)');
 const atmoC2 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R).attr('fill','url(#ira-sh)');
@@ -353,6 +354,60 @@ const atmoC3 = lAtmo.append('circle').attr('cx',CX).attr('cy',CY).attr('r',R)
 const grat = d3.geoGraticule().step([15,15]);
 lGrat.append('path').datum(grat())
   .attr('fill','none').attr('stroke','rgba(255,255,255,0.04)').attr('stroke-width',.5);
+
+/* ═══════════════════════════════════════════════════════════
+   Country / region labels
+═══════════════════════════════════════════════════════════ */
+const COUNTRY_LABELS = [
+  { name:'中國',         lon: 104,  lat: 35   },
+  { name:'印度',         lon:  79,  lat: 22   },
+  { name:'俄羅斯',       lon:  92,  lat: 63   },
+  { name:'哈薩克',       lon:  67,  lat: 48   },
+  { name:'蒙古',         lon: 103,  lat: 46   },
+  { name:'巴基斯坦',     lon:  69,  lat: 30   },
+  { name:'阿富汗',       lon:  66,  lat: 33.5 },
+  { name:'伊朗',         lon:  53,  lat: 32   },
+  { name:'土耳其',       lon:  35,  lat: 39   },
+  { name:'沙烏地阿拉伯', lon:  44,  lat: 24   },
+  { name:'緬甸',         lon:  96,  lat: 20   },
+  { name:'泰國',         lon: 101,  lat: 15   },
+  { name:'日本',         lon: 138,  lat: 37   },
+  { name:'韓國',         lon: 127,  lat: 36   },
+  { name:'義大利',       lon:  12,  lat: 43   },
+  { name:'瑞士',         lon:   8,  lat: 47   },
+  { name:'法國',         lon:   2,  lat: 46   },
+  { name:'德國',         lon:  10,  lat: 51   },
+  { name:'烏克蘭',       lon:  32,  lat: 49   },
+  { name:'埃及',         lon:  30,  lat: 26   },
+  { name:'秘魯',         lon: -75,  lat: -10  },
+  { name:'巴西',         lon: -52,  lat: -10  },
+  { name:'阿拉斯加',     lon:-153,  lat: 64   },
+  { name:'加拿大',       lon:-100,  lat: 60   },
+  { name:'美國',         lon:-100,  lat: 40   },
+  { name:'尼泊爾',       lon:  84.5,lat: 27   },
+  { name:'青藏高原',     lon:  88,  lat: 32   },
+  { name:'喜馬拉雅',     lon:  84,  lat: 30   },
+];
+
+let countryGs = null;
+
+function initCountryLabels() {
+  countryGs = lCountries.selectAll('g.ira-cl')
+    .data(COUNTRY_LABELS).enter()
+    .append('g').attr('class','ira-cl');
+
+  countryGs.append('text')
+    .attr('font-family','Noto Sans TC, sans-serif')
+    .attr('font-size','12px')
+    .attr('fill','rgba(190,215,240,0.72)')
+    .attr('paint-order','stroke')
+    .attr('stroke','rgba(3,8,18,0.75)')
+    .attr('stroke-width', 2.5)
+    .attr('stroke-linejoin','round')
+    .attr('text-anchor','middle')
+    .attr('dominant-baseline','central')
+    .text(d => d.name);
+}
 
 /* ═══════════════════════════════════════════════════════════
    Markers
@@ -394,6 +449,17 @@ function isVisible(lon, lat) {
 function render() {
   renderCanvas();
   lGrat.select('path').attr('d', gp(grat()));
+
+  if (countryGs) {
+    countryGs.each(function(d) {
+      const vis = isVisible(d.lon, d.lat);
+      const xy  = proj([d.lon, d.lat]);
+      d3.select(this)
+        .attr('transform', xy ? `translate(${xy[0]},${xy[1]})` : null)
+        .style('display', (vis && xy) ? null : 'none');
+    });
+  }
+
   if (hotspotGs) {
     hotspotGs.each(function(d) {
       const vis = isVisible(d.lon, d.lat);
@@ -537,6 +603,7 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(w
   _cvLand    = topojson.feature(world, world.objects.countries);
   _cvBorders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
   lLand.append('path').datum(_cvLand).attr('fill','none').attr('stroke','rgba(255,255,255,0.07)').attr('stroke-width',.4);
+  initCountryLabels();
   initMarkers();
   render();
 });
