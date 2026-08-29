@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>微博嵌入｜交錯地帶</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b0f1a;color:#e2e8f0;font-family:'Noto Serif TC',serif}
+
+.we-wrap{
+  max-width:640px;
+  margin:0 auto;
+  padding:20px 16px 32px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* 頂部標籤列 */
+.we-topbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.we-label{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:#f59e0b;
+  border:1px solid rgba(245,158,11,.4);
+  padding:3px 8px;
+}
+.we-source{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  color:rgba(255,255,255,.35);
+  letter-spacing:1px;
+}
+
+/* 微博卡片容器 */
+.we-card{
+  background:#111827;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:4px;
+  overflow:hidden;
+}
+.we-card-head{
+  padding:12px 16px 10px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.we-platform-icon{
+  width:20px;
+  height:20px;
+  background:#e6162d;
+  border-radius:3px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:700;
+  color:#fff;
+  font-family:'Space Mono',monospace;
+  flex-shrink:0;
+}
+.we-platform-name{
+  font-family:'Space Mono',monospace;
+  font-size:9.5px;
+  color:rgba(255,255,255,.45);
+  letter-spacing:1px;
+}
+
+/* 微博官方 widget 區域 */
+.we-widget-area{
+  padding:16px;
+  display:flex;
+  justify-content:center;
+}
+.we-widget-area .wb-weibo{
+  width:100% !important;
+  max-width:560px;
+}
+
+/* 備援連結（widget 載入失敗時顯示） */
+.we-fallback{
+  display:none;
+  padding:20px 16px;
+  text-align:center;
+}
+.we-fallback a{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  color:#f59e0b;
+  text-decoration:none;
+  border:1px solid rgba(245,158,11,.4);
+  padding:8px 16px;
+  letter-spacing:1px;
+}
+.we-fallback a:hover{
+  background:rgba(245,158,11,.08);
+}
+
+/* 底部時間戳記 */
+.we-footer{
+  font-family:'Space Mono',monospace;
+  font-size:8.5px;
+  color:rgba(255,255,255,.22);
+  letter-spacing:1px;
+  text-align:right;
+  padding-top:4px;
+}
+</style>
+</head>
+<body>
+<div class="we-wrap">
+
+  <div class="we-topbar">
+    <span class="we-label">社群來源</span>
+    <span class="we-source">WEIBO / 微博</span>
+  </div>
+
+  <div class="we-card">
+    <div class="we-card-head">
+      <div class="we-platform-icon">W</div>
+      <span class="we-platform-name">微博貼文 · WEIBO POST</span>
+    </div>
+
+    <div class="we-widget-area" id="we-widget-area">
+      <blockquote class="weibo-media"
+        data-href="https://weibo.com/2803301701/RfEY9uVUk"
+        data-width="560">
+        <a href="https://weibo.com/2803301701/RfEY9uVUk"
+           target="_blank" rel="noopener">
+          查看微博原文 →
+        </a>
+      </blockquote>
+    </div>
+
+    <div class="we-fallback" id="we-fallback">
+      <a href="https://weibo.com/2803301701/RfEY9uVUk"
+         target="_blank" rel="noopener">
+        前往微博原文 →
+      </a>
+    </div>
+  </div>
+
+  <div class="we-footer" id="we-ts"></div>
+
+</div>
+
+<!-- 微博官方 widget SDK -->
+<script>
+(function(){
+  var s = document.createElement('script');
+  s.async = true;
+  s.charset = 'utf-8';
+  s.src = 'https://tva1.sinaimg.cn/js/wbwidget/wb.js';
+  s.onerror = function(){
+    document.getElementById('we-widget-area').style.display = 'none';
+    document.getElementById('we-fallback').style.display = 'block';
+  };
+  document.body.appendChild(s);
+})();
+
+// 時間戳記
+(function(){
+  var d = new Date();
+  var pad = function(n){return n<10?'0'+n:n};
+  document.getElementById('we-ts').textContent =
+    'LOADED ' + d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+})();
+</script>
+</body>
+</html>
