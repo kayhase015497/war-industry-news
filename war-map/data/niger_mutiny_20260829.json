@@ -1,0 +1,216 @@
+{
+  "meta": {
+    "title": "尼日士兵譁變・尼亞美・2026-08-29",
+    "titleEn": "Niger Soldier Mutiny – Niamey, 29 August 2026",
+    "subtitle": "第101空軍基地挾持・總統府遭攻擊・機場對峙・軍政府稱恢復控制",
+    "date": "2026-08-29",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["路透社", "尼日國家電視台（ORTN）", "尼日國防部", "AFP"]
+  },
+  "map": {
+    "center": [13.60, 1.80],
+    "zoom": 7,
+    "bounds": [[12.30, 0.20], [14.80, 4.20]]
+  },
+  "infoPanel": {
+    "title": "尼日士兵譁變・2026年8月29日凌晨・尼亞美多處交火",
+    "paragraphs": [
+      "2026年8月29日凌晨至上午，尼日首都尼亞美（Niamey）傳出密集槍聲與爆炸聲。軍政府國防部長薩利富·莫迪（Salifu Modi）在國家電視台（ORTN）宣讀聲明，稱一群士兵違反軍紀，在第101空軍基地（位於迪奧里·哈馬尼國際機場內）挾持同僚，並向首都多處敏感目標開火。國家電視台與廣播一度中斷播出。",
+      "路透社引述多名安全消息人士指出，參與行動的士兵來自西南部瓦拉姆（Waram）、泰拉（Téra）與多索（Dosso）等地駐紮部隊。攻擊目標包括第101基地及總統府（Présidence）周邊。總統衛隊據稱擊退試圖強行進入總統府的武裝人員，截至當日上午總統府由效忠部隊守住，機場一帶仍有對峙持續。",
+      "尼日軍政府自2023年7月政變掌權以來，西非國家經濟共同體（ECOWAS）制裁持續壓縮其外交與財政空間。此次內部譁變是否源自派系矛盾、薪酬積欠或外部介入，尚待確認。⚠️ 事件仍在發展中，傷亡人數、涉事規模均未獲官方確認。部分座標為概略位置。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [13.500, 2.155],
+        [13.500, 2.215],
+        [13.465, 2.215],
+        [13.465, 2.155],
+        [13.500, 2.155]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.22,
+      "borderColor": "#7b241c",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "第101空軍基地・迪奧里哈馬尼機場（衝突核心區）",
+        "tag": "💥 第101基地・機場・士兵挾持事件核心",
+        "tagClass": "tag-confirmed",
+        "desc": "尼日第101空軍基地位於迪奧里·哈馬尼國際機場（Diori Hamani International Airport）內，為此次譁變的爆發地點。部分士兵在此挾持同僚，並向首都多處敏感目標發動攻擊。截至事發當日上午，機場一帶仍有武裝對峙。⚠️ 為概略示意範圍。",
+        "source": "尼日國防部聲明；路透社"
+      }
+    },
+    {
+      "points": [
+        [13.520, 2.100],
+        [13.520, 2.135],
+        [13.500, 2.135],
+        [13.500, 2.100],
+        [13.520, 2.100]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.18,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "borderDashArray": "5,3",
+      "popup": {
+        "title": "總統府周邊・遭武裝人員攻擊・效忠部隊守住",
+        "tag": "💥 總統府・遭攻擊・衛隊擊退",
+        "tagClass": "tag-confirmed",
+        "desc": "譁變士兵向總統府（Présidence de la République）周邊發動攻擊，試圖強行進入。總統衛隊（garde présidentielle）據稱成功擊退，截至事發當日上午總統府仍由效忠部隊守住。⚠️ 為概略示意範圍。",
+        "source": "路透社安全消息人士；AFP"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [14.22, 1.50],
+        [13.84, 1.80],
+        [13.52, 2.12]
+      ],
+      "color": "#e74c3c",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "瓦拉姆（Waram）方向部隊行進路線（概略推估）",
+        "tag": "🚗 瓦拉姆方向→尼亞美（推估路線）",
+        "tagClass": "tag-possible",
+        "desc": "路透社引述安全消息人士指出，部分譁變士兵來自西南部瓦拉姆（Waram）一帶駐地，向首都推進參與行動。⚠️ 行進路線為概略推估，非確認動線。",
+        "source": "路透社安全消息人士"
+      }
+    },
+    {
+      "points": [
+        [14.02, 0.75],
+        [13.80, 1.20],
+        [13.52, 2.12]
+      ],
+      "color": "#e67e22",
+      "weight": 2,
+      "opacity": 0.60,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "泰拉（Téra）方向部隊行進路線（概略推估）",
+        "tag": "🚗 泰拉方向→尼亞美（推估路線）",
+        "tagClass": "tag-possible",
+        "desc": "路透社引述安全消息人士指出，部分譁變士兵來自泰拉（Téra）一帶駐地，向首都推進參與行動。泰拉位於尼日西部蒂拉貝里大區，距尼亞美約140公里。⚠️ 行進路線為概略推估。",
+        "source": "路透社安全消息人士"
+      }
+    },
+    {
+      "points": [
+        [13.05, 3.20],
+        [13.20, 2.70],
+        [13.40, 2.30],
+        [13.52, 2.12]
+      ],
+      "color": "#f39c12",
+      "weight": 2,
+      "opacity": 0.60,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "多索（Dosso）方向部隊行進路線（概略推估）",
+        "tag": "🚗 多索方向→尼亞美（推估路線）",
+        "tagClass": "tag-possible",
+        "desc": "路透社引述安全消息人士指出，部分譁變士兵來自多索（Dosso）一帶駐地。多索為尼日南部多索大區首府，距尼亞美約140公里東南，為尼日重要軍事駐紮地之一。⚠️ 行進路線為概略推估。",
+        "source": "路透社安全消息人士"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [13.515, 2.116],
+      "name": "Niamey – Capital of Niger",
+      "nameLocal": "尼亞美（Niamey）・尼日首都・譁變事發地",
+      "type": "capital",
+      "tag": "🏛️ 尼亞美・首都・2026年8月29日譁變",
+      "tagClass": "tag-reference",
+      "desc": "尼日共和國首都，人口約130萬（大尼亞美地區），位於尼日河（Niger River）南岸。2023年7月政變後由軍政府統治，現任最高領導人為國家保衛委員會（CNSP）主席阿布杜拉哈馬內·契亞尼（Abdourahamane Tchiani）準將。2026年8月29日凌晨發生士兵譁變，多處敏感設施遭攻擊。",
+      "coords": "13°31'N 002°07'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [13.481, 2.184],
+      "name": "Diori Hamani International Airport / Base Aérienne 101",
+      "nameLocal": "迪奧里・哈馬尼國際機場・第101空軍基地・事件爆發地",
+      "type": "confirmed",
+      "tag": "💥 第101基地・挾持同僚・向首都多處開火",
+      "tagClass": "tag-confirmed",
+      "desc": "尼日首都唯一國際機場，機場內設有第101空軍基地（Base Aérienne 101），為此次士兵譁變的爆發地點。根據國防部長聲明，一群士兵在此挾持同僚，並向首都多處敏感目標發動攻擊。截至當日上午，機場一帶仍有武裝對峙持續。",
+      "coords": "13°28'N 002°11'E",
+      "source": "尼日國防部聲明；路透社"
+    },
+    {
+      "latlng": [13.512, 2.112],
+      "name": "Presidential Palace – Présidence de la République",
+      "nameLocal": "尼日總統府（Présidence）・效忠部隊守住・衛隊擊退攻擊",
+      "type": "confirmed",
+      "tag": "💥 總統府・遭攻擊・效忠衛隊守住",
+      "tagClass": "tag-confirmed",
+      "desc": "尼日共和國總統府，軍政府最高權力中心。譁變士兵試圖強行進入，總統衛隊（garde présidentielle）據稱成功擊退。截至2026年8月29日上午，總統府由效忠部隊守住。⚠️ 座標為概略位置。",
+      "coords": "13°31'N 002°07'E",
+      "source": "路透社安全消息人士；AFP"
+    },
+    {
+      "latlng": [13.508, 2.118],
+      "name": "ORTN – Office de Radiodiffusion Télévision du Niger",
+      "nameLocal": "尼日國家廣播電視台（ORTN）・一度中斷播出",
+      "type": "possible",
+      "tag": "📡 ORTN・廣播電視中斷・國防部長在此發聲明",
+      "tagClass": "tag-possible",
+      "desc": "尼日國家廣播電視台（ORTN），為軍政府對外傳達訊息的主要媒介。事發後一度中斷播出，後由國防部長薩利富·莫迪（Salifu Modi）在此宣讀官方聲明，確認譁變並稱安全部隊正逐步恢復控制。⚠️ 座標為概略位置。",
+      "coords": "13°30'N 002°07'E",
+      "source": "尼日國家電視台；路透社"
+    },
+    {
+      "latlng": [14.22, 1.48],
+      "name": "Waram – Origin of Mutinying Soldiers",
+      "nameLocal": "瓦拉姆（Waram）・譁變士兵來源地之一",
+      "type": "possible",
+      "tag": "⚠️ 瓦拉姆・部分譁變士兵駐地（概略）",
+      "tagClass": "tag-possible",
+      "desc": "路透社引述多名安全消息人士指出，部分參與譁變的士兵來自西南部瓦拉姆（Waram）一帶駐紮部隊。⚠️ 座標為概略位置，Waram確切位置待核。",
+      "coords": "14°13'N 001°29'E",
+      "source": "路透社安全消息人士"
+    },
+    {
+      "latlng": [14.015, 0.754],
+      "name": "Téra – Origin of Mutinying Soldiers",
+      "nameLocal": "泰拉（Téra）・蒂拉貝里大區・譁變士兵來源地之一",
+      "type": "possible",
+      "tag": "⚠️ 泰拉・蒂拉貝里大區・譁變士兵駐地",
+      "tagClass": "tag-possible",
+      "desc": "泰拉（Téra）為尼日西部蒂拉貝里大區（Région de Tillabéri）重要城鎮，距首都尼亞美約140公里西北。路透社稱部分譁變士兵來自此地駐紮部隊。蒂拉貝里大區鄰近馬利與布吉納法索邊境，為薩赫勒武裝衝突高活躍區，駐紮大量尼日軍隊。",
+      "coords": "14°00'N 000°45'E",
+      "source": "路透社安全消息人士"
+    },
+    {
+      "latlng": [13.049, 3.198],
+      "name": "Dosso – Origin of Mutinying Soldiers",
+      "nameLocal": "多索（Dosso）・多索大區首府・譁變士兵來源地之一",
+      "type": "possible",
+      "tag": "⚠️ 多索・多索大區首府・譁變士兵駐地",
+      "tagClass": "tag-possible",
+      "desc": "多索（Dosso）為尼日多索大區首府，距首都尼亞美約140公里東南，為重要軍事駐紮地。路透社稱部分譁變士兵來自此地駐紮部隊。多索大區鄰近奈及利亞邊境，為尼日南部安全線上的關鍵節點。",
+      "coords": "13°03'N 003°12'E",
+      "source": "路透社安全消息人士"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#c0392b", "fillOpacity": 0.22, "borderColor": "#7b241c", "label": "第101空軍基地（衝突核心，機場內）" },
+    { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.18, "borderColor": "#c0392b", "label": "總統府周邊（遭攻擊，效忠部隊守住）" },
+    { "symbol": "line",    "color": "#e74c3c", "weight": 2, "dash": "7,4", "label": "瓦拉姆方向部隊推進路線（推估）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2, "dash": "7,4", "label": "泰拉方向部隊推進路線（推估）" },
+    { "symbol": "line",    "color": "#f39c12", "weight": 2, "dash": "7,4", "label": "多索方向部隊推進路線（推估）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認衝突地點（第101基地・總統府）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "首都（尼亞美）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "譁變士兵來源地（概略位置）" }
+  ]
+}
