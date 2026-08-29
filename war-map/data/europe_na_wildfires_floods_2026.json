@@ -402,9 +402,108 @@
       "type": "confirmed",
       "tag": "🔥 蒙特內哥羅・赫爾采格諾維・8月14日起多點",
       "tagClass": "tag-confirmed",
-      "desc": "蒙特內哥羅8月14日起赫爾采格諾維（Herceg Novi）、烏爾欽（Ulcinj）、塞提涅（Cetinje）、尼克希奇（Nikšić）多地同時爆發火場。哥白尼緊急管理服務（Copernicus）啟動支援。赫爾采格諾維位於亞得里亞海沿岸，鄰近克羅埃西亞及波士尼亞邊界，為本季巴爾幹最典型的跨境火場群。",
+      "desc": "蒙特內哥羅8月14日起赫爾采格諾維（Herceg Novi）、烏爾欽（Ulcinj）、塞提涅（Cetinje）、尼克希奇（Nikšić）多地同時爆發火場，哥白尼緊急管理服務（Copernicus）啟動支援，全國累計約1.2萬公頃。赫爾采格諾維位於亞得里亞海沿岸，鄰近克羅埃西亞及波士尼亞邊界，為本季巴爾幹最典型的跨境火場群。",
       "coords": "42°27'N 018°32'E",
       "source": "哥白尼CEMS；蒙特內哥羅緊急管理局；媒體報導"
+    },
+    {
+      "latlng": [52.45, -2.15],
+      "name": "Stourbridge – UK Wildfire (19 homes destroyed)",
+      "nameLocal": "英國斯托布里奇（Stourbridge）・野火・19棟全毀",
+      "type": "confirmed",
+      "tag": "🔥 斯托布里奇・19棟全毀・英國紀錄年",
+      "tagClass": "tag-confirmed",
+      "desc": "英格蘭西米德蘭茲斯托布里奇（Stourbridge）野火造成19棟住宅全毀，為英國2026年單一野火中住宅損失最多的事件之一。英國2026年全國累計約2.5萬公頃，為連續兩年創歷史紀錄，顯示英國傳統潮濕氣候在氣候變遷下野火風險快速上升。",
+      "coords": "52°27'N 002°09'W",
+      "source": "英國自然署；媒體報導"
+    },
+    {
+      "latlng": [42.35, -5.00],
+      "name": "Castilla-León – Spain Flash Flood (2 deaths)",
+      "nameLocal": "西班牙卡斯蒂利亞-萊昂・山洪土石流・2名婦女死亡",
+      "type": "possible",
+      "tag": "🌊 卡斯蒂利亞-萊昂・8月山洪・2死",
+      "tagClass": "tag-possible",
+      "desc": "8月中旬西班牙卡斯蒂利亞-萊昂大區山洪土石流，造成2名老年婦女死亡。該區同時承受野火與山洪雙重災害壓力，為2026年西班牙複合型天災的典型案例。⚠️ 座標為概略區域中心。",
+      "coords": "42°21'N 005°00'W",
+      "source": "西班牙氣象局AEMET；媒體報導"
+    },
+    {
+      "latlng": [47.00, 10.90],
+      "name": "Alps Landslides – Austria/Switzerland (Ötztal, Pinzgau, Albula)",
+      "nameLocal": "奧地利／瑞士阿爾卑斯・厄茨塔爾・平茨高・阿爾布拉・土石流鐵路中斷",
+      "type": "possible",
+      "tag": "🌊 阿爾卑斯・土石流・鐵路全線中斷",
+      "tagClass": "tag-possible",
+      "desc": "7月底奧地利厄茨塔爾（Ötztal）爆發土石流，8月平茨高（Pinzgau）與瑞士阿爾布拉（Albula）山谷再發，多條鐵路幹線（含RhB高山鐵路）中斷、橋梁損毀，部分地區撤離。為歐洲阿爾卑斯山區2026年夏季暖化加速冰川退縮、凍土融化引發土石流的典型案例。⚠️ 座標為概略阿爾卑斯山區中心。",
+      "coords": "47°00'N 010°54'E",
+      "source": "奧地利防災局；瑞士聯邦鐵路；媒體報導"
+    },
+    {
+      "latlng": [43.21, 2.35],
+      "name": "Carcassonne – France Hailstorm & Flash Flood (Aug)",
+      "nameLocal": "法國卡爾卡松・冰雹風暴・大量房屋受損",
+      "type": "possible",
+      "tag": "🌊 卡爾卡松・冰雹龍捲・房屋大量受損",
+      "tagClass": "tag-possible",
+      "desc": "8月底強對流風暴帶來冰雹、龍捲與局部山洪，卡爾卡松（Carcassonne）一帶大量房屋受損，損失估計數億歐元。為歐洲2026年「先熱浪乾旱野火、後暴雨山洪」循環中最典型的對流系統事件，同期法國西南多地也有類似損失。",
+      "coords": "43°13'N 002°21'E",
+      "source": "法國氣象局Météo-France；媒體報導"
+    },
+    {
+      "latlng": [29.50, -98.50],
+      "name": "Texas – Guadalupe River Flood (July)",
+      "nameLocal": "美國德州・瓜達盧普河再發洪水・7月",
+      "type": "possible",
+      "tag": "🌊 德州瓜達盧普河・7月洪水",
+      "tagClass": "tag-possible",
+      "desc": "7月德州中南部瓜達盧普河（Guadalupe River）一帶再度爆發洪水，但死亡人數遠低於2025年同地區重大洪災事件。德州聖安東尼奧周邊受影響，部分低窪地區撤離。⚠️ 座標為概略流域中心。",
+      "coords": "29°30'N 098°30'W",
+      "source": "美國國家天氣局NWS；德州應急管理部"
+    },
+    {
+      "latlng": [37.12, -3.60],
+      "name": "Granada – Spain Earthquake Swarm M5.2 (Aug 14+)",
+      "nameLocal": "西班牙格拉納達・地震群序列・M5.2・600次・600人撤離",
+      "type": "seismic",
+      "tag": "🌍 格拉納達・M5.2＋600次地震序列・600人撤離",
+      "tagClass": "tag-confirmed",
+      "desc": "8月14日起西班牙格拉納達省Otura、Alhendín一帶爆發地震群序列，累計逾600次有感地震，主震規模M5.2，另有多次M4.8至4.9餘震（8月18日餘震造成3人受傷）。約600人撤離，教堂外立面受損、建築裂縫多處。為伊比利半島2026年人口密集區最受關注的地震序列，西班牙地質研究院（IGN）持續監測。",
+      "coords": "37°07'N 003°36'W",
+      "source": "西班牙地質研究院IGN；媒體報導"
+    },
+    {
+      "latlng": [40.83, 14.13],
+      "name": "Pozzuoli – Italy Earthquake M4.5 (Jul 31)",
+      "nameLocal": "義大利波佐利（Pozzuoli）・卡塔尼亞地震・M4.5・26傷・房屋倒塌",
+      "type": "seismic",
+      "tag": "🌍 波佐利・M4.5・26傷・房屋倒塌落石",
+      "tagClass": "tag-confirmed",
+      "desc": "7月31日義大利坎帕尼亞大區波佐利（Pozzuoli）發生M4.5地震，造成約26人受傷，部分房屋倒塌、落石阻斷道路。波佐利為坎皮佛萊格里（Campi Flegrei）超級火山地塊的核心區，長期處於地盤上升（bradyseism）狀態，地震與火山活動密切關聯，義大利民防局持續高級監測。",
+      "coords": "40°50'N 014°08'E",
+      "source": "義大利地震局INGV；義大利民防局"
+    },
+    {
+      "latlng": [38.50, 16.10],
+      "name": "Calabria – Italy Earthquake M6.2 (2026 largest in Europe)",
+      "nameLocal": "義大利卡拉布里亞・Torremezzo di Falconara・M6.2・2026年歐洲年度最大",
+      "type": "seismic",
+      "tag": "🌍 卡拉布里亞・M6.2・2026年歐洲最大地震",
+      "tagClass": "tag-confirmed",
+      "desc": "義大利卡拉布里亞大區Torremezzo di Falconara附近發生M6.2地震，為2026年歐洲本土規模最大的地震事件。卡拉布里亞位於非洲板塊與歐亞板塊碰撞帶，歷史上多次毀滅性地震（1908年墨西拿地震即在鄰近地區）。本次地震有感範圍廣，具體傷亡與損失以當地官方報告為準。⚠️ 座標為概略震央位置。",
+      "coords": "38°30'N 016°06'E",
+      "source": "義大利地震局INGV；媒體報導"
+    },
+    {
+      "latlng": [39.15, -123.21],
+      "name": "Ukiah / Redwood Valley – California Earthquake M5.6 (Jun 24)",
+      "nameLocal": "美國加州烏卡亞／紅木谷・M5.6・2022年以來加州最大",
+      "type": "seismic",
+      "tag": "🌍 加州烏卡亞・M5.6・2022年來加州最大",
+      "tagClass": "tag-confirmed",
+      "desc": "6月24日加州門多西諾縣烏卡亞（Ukiah）／紅木谷（Redwood Valley）附近Maacama斷層發生M5.6地震，為2022年底以來加州最大地震。造成部分建築受傷、停電，舊金山灣區廣泛有感。門多西諾縣為加州北海岸多斷層交會區，地震活躍度高。",
+      "coords": "39°09'N 123°13'W",
+      "source": "美國地質調查局USGS；加州應急管理局"
     }
   ],
   "legend": [
@@ -412,6 +511,7 @@
     { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.18, "borderColor": "#ca6f1e", "label": "北美野火主要高影響區（美西北・加拿大BC，概略）" },
     { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.12, "borderColor": "#c0392b", "label": "巴爾幹野火高影響帶（塞爾維亞・波赫・克羅埃西亞・蒙特內哥羅・阿爾巴尼亞，概略）" },
     { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "重大野火火場（確認事件）" },
-    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "重大水災／洪水事件（概略位置）" }
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "重大水災／洪水事件（概略位置）" },
+    { "symbol": "dot",     "color": "#27ae60", "pulse": false, "label": "顯著地震事件（M4.5以上，有傷亡或撤離）" }
   ]
 }
