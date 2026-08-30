@@ -1,0 +1,517 @@
+{
+  "meta": {
+    "title": "2026年歐美重大野火與水災彙整（截至8月底）",
+    "titleEn": "2026 Europe & North America Major Wildfires and Floods – August Summary",
+    "subtitle": "EFFIS累計63.4萬公頃｜美國燒毀323萬公頃（10年均值163%）｜多地山洪並行",
+    "date": "2026-08-29",
+    "status": "breaking",
+    "theme": "blue",
+    "sources": ["張威翔製作", "歐盟EFFIS", "美國NIFC", "加拿大自然資源部", "哥白尼緊急管理服務（CEMS）", "各國民防局與媒體報導"]
+  },
+  "map": {
+    "center": [44, -28],
+    "zoom": 3,
+    "bounds": [[20, -140], [68, 55]]
+  },
+  "infoPanel": {
+    "title": "2026年歐美野火與水災・截至8月29日",
+    "paragraphs": [
+      "【歐洲野火】歐盟EFFIS截至8月27日統計，2026年累計燒毀約63.4萬公頃、1,840場火災，高於20年長期均值但低於2025年（史上最嚴重）。西班牙最重（約29.1萬公頃），法國（約9.6萬）、義大利（約8.4萬，已超2025全年）、葡萄牙（約5.8萬）、希臘（約3.1萬）依次跟進。西班牙阿維拉La Mierla大火（約3.5萬公頃）為史上最大之一；阿爾梅里亞Los Gallardos造成14人死亡，為2026年歐洲最致命。比利時高芬斯國家公園泥炭層悶燒（約3,000公頃），逼近德國邊境。烏克蘭因戰爭影響燒毀約31.8萬公頃（列入統計但性質特殊）。【巴爾幹】8月中下旬多國同步嚴重：克羅埃西亞奧米什（1死40傷、1,200人撤離，損失估計1.1億歐元）；塞爾維亞德利布拉托沙地（約1.39萬公頃，歐盟支援至9月5日）；波士尼亞累計約2.6萬公頃；蒙特內哥羅多點並發；阿爾巴尼亞全國多點反覆燃燒（EFFIS累計約3,800公頃），各地連動、跨境道路一度中斷。",
+      "【北美野火】美國截至8月28日累計51,629場火災，燒毀約799萬英畝（約323萬公頃），為10年均值的163%；97場大型火場仍在燃燒，主要集中於華盛頓、愛達荷、俄勒岡、蒙大拿、內華達等西部州。內華達州雷諾Hawk火場（人為引發、大風助燃）迫使數萬人撤離。加拿大截至8月底約燒毀4.1至4.45萬公頃、4,800至5,100場，可能成為史上第4嚴重年份；卑詩省南奧卡納根撤離超過1萬人，煙霧多次影響美國東北空氣品質。全國準備等級最高（5級）。",
+      "【洪水與水災】歐洲整體以乾旱低水位為主，但熱浪後對流暴雨引發局部山洪：義大利利古里亞（8月20-21日，24小時200mm）、西班牙加泰隆尼亞（3小時88mm）、羅馬尼亞加拉茨縣等地受災。美國以局部山洪為主，印第安納懷特河水位創歷史紀錄（24.6英尺），紐澤西/紐約/賓州、肯塔基也有重大事件。整體呈現「先熱浪乾旱野火、後暴雨山洪」交替模式，氣候科學家指出與氣候變遷加劇直接相關。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [44.5, -9.5],
+        [44.5, -0.5],
+        [40.5,  1.0],
+        [37.5,  0.5],
+        [36.0, -5.5],
+        [36.5, -9.0],
+        [39.5, -9.5],
+        [44.5, -9.5]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.15,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "西班牙與葡萄牙野火高影響區（2026年，概略示意）",
+        "tag": "🔥 伊比利半島・累計約35萬公頃・概略範圍",
+        "tagClass": "tag-confirmed",
+        "desc": "西班牙累計約29.1萬公頃（截至8月中），葡萄牙約5.8萬公頃。主要火場包括阿維拉La Mierla（約3.5萬公頃，史上最大之一）與阿爾梅里亞Los Gallardos（14人死亡，2026年最致命）。7月25日西班牙宣布全國緊急狀態，數十萬人撤離。⚠️ 為全國影響範圍概略示意，非精確燃燒邊界。",
+        "source": "歐盟EFFIS；西班牙民防局"
+      }
+    },
+    {
+      "points": [
+        [46.0, -2.0],
+        [46.0,  1.0],
+        [43.0,  1.0],
+        [43.0, -2.5],
+        [44.5, -2.0],
+        [46.0, -2.0]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.18,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "法國吉倫特／朗德省野火區（2026年，概略示意）",
+        "tag": "🔥 法國西南・約4.56萬公頃・1949年來最大",
+        "tagClass": "tag-confirmed",
+        "desc": "法國累計約9.6萬公頃。吉倫特省大火約4.2萬公頃、朗德省約3,600公頃（1949年以來最大森林火），2名消防員殉職，數十萬人撤離。8月中朗德省Luglon再起火。歐盟民防機制多次啟動，跨國派遣飛機與消防員。⚠️ 概略示意主要受影響縣市範圍。",
+        "source": "歐盟EFFIS；法國民防局"
+      }
+    },
+    {
+      "points": [
+        [46.5, 14.5],
+        [46.5, 22.5],
+        [41.0, 22.5],
+        [39.5, 19.5],
+        [40.5, 15.0],
+        [43.5, 13.5],
+        [46.5, 14.5]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.10,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.2,
+      "borderOpacity": 0.55,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "巴爾幹野火高影響帶（2026年8月，概略示意）",
+        "tag": "🔥 巴爾幹・克羅埃西亞・波赫・塞爾維亞・蒙特內哥羅・阿爾巴尼亞",
+        "tagClass": "tag-confirmed",
+        "desc": "2026年8月中下旬巴爾幹多國同步爆發嚴重野火。克羅埃西亞奧米什（1死40傷，1,200人撤離）、塞爾維亞德利布拉托沙地（約1.39萬公頃，歐盟直升機支援至9月5日）、波士尼亞累計約2.6萬公頃、蒙特內哥羅多點並發、阿爾巴尼亞全國分散反覆燃燒（EFFIS累計約3,800公頃以上）。各地相互連動，部分跨境道路中斷。⚠️ 為整體高影響帶概略示意，非精確燃燒邊界。",
+        "source": "哥白尼CEMS；歐盟EFFIS；各國民防局"
+      }
+    },
+    {
+      "points": [
+        [51.0, -125.0],
+        [51.0, -113.0],
+        [44.0, -113.0],
+        [44.0, -119.0],
+        [46.5, -124.5],
+        [51.0, -125.0]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.18,
+      "borderColor": "#ca6f1e",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.65,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "美國太平洋岸西北部野火群（WA／ID／OR／MT，概略示意）",
+        "tag": "🔥 美國西北・多州活躍火場・概略區域",
+        "tagClass": "tag-confirmed",
+        "desc": "華盛頓、愛達荷、俄勒岡、蒙大拿為2026年美國主要野火集中區。截至8月28日全美51,629場火災，燒毀約799萬英畝（約323萬公頃），為10年均值的163%；97場大型火場仍在燃燒。⚠️ 概略多州影響範圍，非精確燃燒邊界。",
+        "source": "美國NIFC；美國農業部林務局"
+      }
+    },
+    {
+      "points": [
+        [55.5, -121.0],
+        [55.5, -114.5],
+        [49.0, -114.5],
+        [49.0, -121.0],
+        [55.5, -121.0]
+      ],
+      "fillColor": "#e67e22",
+      "fillOpacity": 0.15,
+      "borderColor": "#ca6f1e",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.60,
+      "borderDashArray": "6,3",
+      "popup": {
+        "title": "加拿大卑詩省野火影響區（2026年，概略示意）",
+        "tag": "🔥 加拿大卑詩省・史上第4嚴重年份預估",
+        "tagClass": "tag-confirmed",
+        "desc": "加拿大截至8月底累計約4.1至4.45萬公頃、4,800至5,100場，可能成為史上第4嚴重年份。卑詩省南奧卡納根（Summerland/Peachland一帶）8月初大規模撤離，超過1萬人仍受影響。煙霧多次影響美國東北與中西部空氣品質。全國準備等級最高5級。⚠️ 概略省份活躍火區範圍。",
+        "source": "加拿大自然資源部；卑詩省緊急管理"
+      }
+    }
+  ],
+  "lines": [],
+  "locations": [
+    {
+      "latlng": [40.50, -4.72],
+      "name": "Ávila – La Mierla Wildfire",
+      "nameLocal": "西班牙阿維拉・La Mierla大火・約3.5萬公頃",
+      "type": "confirmed",
+      "tag": "🔥 阿維拉・3.5萬公頃・史上最大之一",
+      "tagClass": "tag-confirmed",
+      "desc": "西班牙2026年最大單一火場之一，燒毀約3.5萬公頃，為西班牙史上最大規模火災之一。數萬人撤離，中央政府啟動緊急援助。⚠️ 座標為概略中心。",
+      "coords": "40°30'N 004°43'W",
+      "source": "西班牙民防局；EFFIS"
+    },
+    {
+      "latlng": [37.18, -1.95],
+      "name": "Almería – Los Gallardos Wildfire",
+      "nameLocal": "西班牙阿爾梅里亞・Los Gallardos大火・14人死亡",
+      "type": "confirmed",
+      "tag": "🔥 阿爾梅里亞・14死・2026年歐洲最致命",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年歐洲最致命野火，造成14人死亡。安達盧西亞省東部山地，火勢蔓延迅速，大批居民緊急撤離。⚠️ 座標為概略中心。",
+      "coords": "37°11'N 001°57'W",
+      "source": "西班牙民防局；媒體報導"
+    },
+    {
+      "latlng": [44.72, -0.82],
+      "name": "Gironde – France Southwest Wildfire",
+      "nameLocal": "法國吉倫特省大火・約4.2萬公頃・1949年以來最大",
+      "type": "confirmed",
+      "tag": "🔥 吉倫特・4.2萬公頃・2消防員殉職",
+      "tagClass": "tag-confirmed",
+      "desc": "1949年以來法國最大森林火災，燒毀約4.2萬公頃，另朗德省（Luglon一帶）約3,600公頃。2名消防員殉職，數十萬人撤離。歐盟民防機制啟動，多國派遣支援力量。",
+      "coords": "44°43'N 000°49'W",
+      "source": "法國民防局；歐盟EFFIS"
+    },
+    {
+      "latlng": [40.83, 16.10],
+      "name": "Puglia – Alta Murgia National Park Wildfire",
+      "nameLocal": "義大利普利亞・阿爾塔穆爾賈國家公園大火",
+      "type": "confirmed",
+      "tag": "🔥 普利亞・阿爾塔穆爾賈・8月底仍活躍",
+      "tagClass": "tag-confirmed",
+      "desc": "義大利2026年累計約8.4萬公頃，已超2025年全年。8月底普利亞大區阿爾塔穆爾賈國家公園火場仍活躍，當地生態與農業損失嚴重。義大利南部乾旱與熱浪為主要推手。",
+      "coords": "40°50'N 016°06'E",
+      "source": "義大利民防局；EFFIS"
+    },
+    {
+      "latlng": [37.95, 23.50],
+      "name": "Salamina Island – Greece Wildfire",
+      "nameLocal": "希臘薩拉米納島大火・死亡撤離",
+      "type": "confirmed",
+      "tag": "🔥 希臘薩拉米納・死亡撤離",
+      "tagClass": "tag-confirmed",
+      "desc": "希臘2026年累計約3.1萬公頃。薩拉米納島大火造成死亡與大規模撤離，克里特、帕羅斯等島嶼也受影響。雅典大都會區南方的薩拉米納島距市區極近，媒體關注度高。",
+      "coords": "37°57'N 023°30'E",
+      "source": "希臘民防局；媒體報導"
+    },
+    {
+      "latlng": [50.49, 6.10],
+      "name": "Hautes Fagnes – Belgium Wildfire",
+      "nameLocal": "比利時高芬斯（Hautes Fagnes）國家公園・泥炭層悶燒・約3,000公頃",
+      "type": "confirmed",
+      "tag": "🔥 比利時高芬斯・泥炭悶燒・逼近德國邊境",
+      "tagClass": "tag-confirmed",
+      "desc": "比利時瓦隆大區Hautes Fagnes（高地沼澤）國家公園發生有紀錄以來最大野火，約3,000公頃，主要為泥炭地悶燒，難以撲滅。火勢逼近德國邊境，跨境消防協作啟動。泥炭燃燒釋放大量封存碳，生態影響深遠。",
+      "coords": "50°29'N 006°06'E",
+      "source": "比利時危機中心；媒體報導"
+    },
+    {
+      "latlng": [49.00, 32.00],
+      "name": "Ukraine – Wildfire-affected territory",
+      "nameLocal": "烏克蘭・野火面積約31.8萬公頃（含戰爭影響區）",
+      "type": "possible",
+      "tag": "⚠️ 烏克蘭・31.8萬公頃・含戰爭影響區域",
+      "tagClass": "tag-possible",
+      "desc": "EFFIS統計顯示烏克蘭2026年野火燒毀面積約31.8萬公頃，但數據包含戰爭衝突影響區（砲擊引燃、撤離區無人管控），與一般野火性質不同，需審慎解讀。⚠️ 座標為國土概略中心，非特定火場。",
+      "coords": "49°00'N 032°00'E",
+      "source": "歐盟EFFIS；注意：數據含戰爭影響區"
+    },
+    {
+      "latlng": [52.50, -3.00],
+      "name": "United Kingdom – Record Wildfire Season",
+      "nameLocal": "英國・連續兩年破紀錄・約2.5萬公頃",
+      "type": "possible",
+      "tag": "🔥 英國・2.5萬公頃・連續兩年創紀錄",
+      "tagClass": "tag-possible",
+      "desc": "英國2026年野火燒毀面積約2.5萬公頃，為連續第二年創歷史紀錄。主要影響英格蘭北部荒原、威爾斯及蘇格蘭高地。英國夏季乾旱與高溫異常，使原本潮濕氣候的野火風險顯著上升。⚠️ 座標為概略中心。",
+      "coords": "52°30'N 003°00'W",
+      "source": "英國自然署；媒體報導"
+    },
+    {
+      "latlng": [39.55, -119.90],
+      "name": "Nevada – Reno Hawk Fire",
+      "nameLocal": "美國內華達州雷諾・Hawk火場・數萬人撤離",
+      "type": "confirmed",
+      "tag": "🔥 雷諾Hawk火場・人為引發・大風助燃",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年美國最受關注單一火場之一。人為因素引發，大風迅速助燃，迫使雷諾都市區數萬人撤離。I-80公路一度封閉，空氣品質指數爆表。內華達州宣布緊急狀態。",
+      "coords": "39°33'N 119°54'W",
+      "source": "美國NIFC；內華達州緊急管理局"
+    },
+    {
+      "latlng": [47.00, -116.50],
+      "name": "US Pacific Northwest – Multi-State Fire Cluster",
+      "nameLocal": "美國太平洋岸西北部・華盛頓／愛達荷／俄勒岡／蒙大拿火場群",
+      "type": "confirmed",
+      "tag": "🔥 美西北・多州活躍火場・97場大型火仍燃燒",
+      "tagClass": "tag-confirmed",
+      "desc": "截至8月28日，美國西北部多州仍有97場大型火場在燃燒，以華盛頓、愛達荷、俄勒岡、蒙大拿最為集中。全美51,629場火災燒毀約323萬公頃（10年均值163%），全國準備等級維持高位。⚠️ 座標為多州火場群概略中心。",
+      "coords": "47°00'N 116°30'W",
+      "source": "美國NIFC；美國農業部林務局"
+    },
+    {
+      "latlng": [49.60, -119.65],
+      "name": "BC – South Okanagan Wildfire (Summerland/Peachland)",
+      "nameLocal": "加拿大卑詩省南奧卡納根・薩摩蘭德／桃園鎮・逾1萬人撤離",
+      "type": "confirmed",
+      "tag": "🔥 卑詩省南奧卡納根・1萬人撤離・史上第4嚴重",
+      "tagClass": "tag-confirmed",
+      "desc": "卑詩省南奧卡納根地區（Summerland、Peachland一帶）8月初爆發大規模野火，超過1萬人仍受撤離令影響。煙霧向東、南擴散，多次影響美國東北與中西部多個城市空氣品質。加拿大全國野火準備等級達最高5級。",
+      "coords": "49°36'N 119°39'W",
+      "source": "加拿大自然資源部；卑詩省緊急管理局"
+    },
+    {
+      "latlng": [44.32, 9.33],
+      "name": "Liguria – Italy Flash Flood (Aug 20–21)",
+      "nameLocal": "義大利利古里亞・基亞瓦里等地山洪・24小時200mm",
+      "type": "possible",
+      "tag": "🌊 利古里亞・24小時200mm・山洪土石流",
+      "tagClass": "tag-possible",
+      "desc": "2026年8月20至21日，利古里亞（基亞瓦里Chiavari、拉瓦尼亞Lavagna等地）24小時降雨達200毫米，引發洪水、土石流與橋梁損毀。倫巴底、托斯卡納也同期受暴雨影響，數百人撤離。為典型熱浪後對流風暴引發的突發山洪。",
+      "coords": "44°19'N 009°20'E",
+      "source": "義大利民防局；媒體報導"
+    },
+    {
+      "latlng": [41.12, 1.25],
+      "name": "Catalonia – Tarragona Flash Flood (Aug 24)",
+      "nameLocal": "西班牙加泰隆尼亞・塔拉戈納暴雨・3小時88mm",
+      "type": "possible",
+      "tag": "🌊 塔拉戈納・3小時88mm・洪水交通中斷",
+      "tagClass": "tag-possible",
+      "desc": "2026年8月24日，加泰隆尼亞塔拉戈納省部分地區3小時降雨達88毫米，造成洪水與道路、鐵路交通全面中斷，多輛車輛被沖走。西北部卡斯蒂利亞-萊昂山洪（8月中）另造成2名老年婦女死亡。",
+      "coords": "41°07'N 001°15'E",
+      "source": "西班牙氣象局AEMET；媒體報導"
+    },
+    {
+      "latlng": [45.44, 28.03],
+      "name": "Galați – Romania Flash Flood",
+      "nameLocal": "羅馬尼亞加拉茨縣・暴雨洪水・數千戶受災",
+      "type": "possible",
+      "tag": "🌊 羅馬尼亞加拉茨・洪水・數千戶受災",
+      "tagClass": "tag-possible",
+      "desc": "羅馬尼亞加拉茨縣（Galați）暴雨引發洪水，為中東歐2026年受災最重地區之一，數千戶受災，有人員傷亡報告。捷克、波蘭等地同期也有類似暴雨洪水事件。⚠️ 座標為縣城位置。",
+      "coords": "45°26'N 028°02'E",
+      "source": "羅馬尼亞應急管理總局；媒體報導"
+    },
+    {
+      "latlng": [39.77, -86.16],
+      "name": "Indiana – White River Record Flood",
+      "nameLocal": "美國印第安納州・懷特河創紀錄水位24.6英尺",
+      "type": "confirmed",
+      "tag": "🌊 印第安納懷特河・歷史紀錄水位・數百人撤離",
+      "tagClass": "tag-confirmed",
+      "desc": "懷特河（White River）水位達創紀錄的24.6英尺，道路與橋梁沖毀，數百人撤離，有人員傷亡報告。為2026年美國最嚴重單一洪水事件之一，顯示中西部暴雨強度在熱浪後顯著升高。",
+      "coords": "39°46'N 086°10'W",
+      "source": "美國國家天氣局NWS；印第安納州應急管理局"
+    },
+    {
+      "latlng": [40.65, -74.20],
+      "name": "NJ/NY/PA – Northeast Flash Flooding (Aug)",
+      "nameLocal": "美國東北部（紐澤西／紐約／賓州）・暴雨積水救援",
+      "type": "possible",
+      "tag": "🌊 美東北・數小時4-6英寸・嚴重積水救援",
+      "tagClass": "tag-possible",
+      "desc": "8月下旬，紐澤西、紐約、賓州等東北部州多處在數小時內降雨4至6英寸（約100至150毫米），伊麗莎白等地嚴重積水，緊急救援行動展開。部分地下室、道路與車輛受困。",
+      "coords": "40°39'N 074°12'W",
+      "source": "美國國家天氣局NWS；媒體報導"
+    },
+    {
+      "latlng": [37.48, -85.00],
+      "name": "Kentucky – Flash Flood (June)",
+      "nameLocal": "美國肯塔基州・山洪・4人死亡",
+      "type": "possible",
+      "tag": "🌊 肯塔基・6月山洪・4人死亡",
+      "tagClass": "tag-possible",
+      "desc": "6月肯塔基州山洪造成4人死亡，為美國2026年夏季最早的重大洪災事件之一。肯塔基東部阿帕拉契山區地形陡峭，歷史上多次遭遇致命山洪（2022年亦有重大洪災）。⚠️ 座標為概略區域中心。",
+      "coords": "37°29'N 085°00'W",
+      "source": "肯塔基州緊急管理局；媒體報導"
+    },
+    {
+      "latlng": [43.44, 16.70],
+      "name": "Omiš / Lokva Rogoznica – Croatia Wildfire (Aug 13–27)",
+      "nameLocal": "克羅埃西亞奧米什・洛克瓦羅戈茲尼察大火・1死40傷・1200人撤離",
+      "type": "confirmed",
+      "tag": "🔥 奧米什・1死40傷・1200撤離・8月最致命",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年8月13日夜至14日在Lokva Rogoznica至奧米什（Omiš）一帶爆發，過火約900至1,000公頃。造成1人死亡（34歲波赫籍女性）、約40人受傷（7至14人傷勢嚴重），約1,000至1,200人撤離（含遊客，部分搭船疏散），58棟住宅受損或燒毀。地方政府初估損失約1.1億歐元，中央先撥2,000萬歐元緊急援助。歷時約兩週，8月27日正式宣布撲滅。佩列沙茨半島（Pelješac）與杜布羅夫尼克附近也有火場，一度造成波士尼亞邊界道路中斷。",
+      "coords": "43°26'N 016°42'E",
+      "source": "克羅埃西亞民防局；媒體報導；哥白尼CEMS"
+    },
+    {
+      "latlng": [41.37, 19.83],
+      "name": "Dajti Mountain – Albania Wildfire (Qafë Priska)",
+      "nameLocal": "阿爾巴尼亞地拉那・達伊提山（Qafë Priska）・反覆復燃",
+      "type": "confirmed",
+      "tag": "🔥 達伊提山・地拉那近郊・8月下旬仍活躍",
+      "tagClass": "tag-confirmed",
+      "desc": "地拉那東郊達伊提山（Dajti，海拔1,612公尺）Qafë Priska一帶反覆復燃，為阿爾巴尼亞能見度最高的火場（毗鄰首都）。軍用直升機與地面消防部隊持續投入，8月下旬仍有活躍火點。阿爾巴尼亞全國採多點同步燃燒模式，EFFIS 8月中累計約3,800公頃以上。",
+      "coords": "41°22'N 019°50'E",
+      "source": "阿爾巴尼亞緊急管理局；EFFIS；媒體報導"
+    },
+    {
+      "latlng": [41.50, 20.21],
+      "name": "Bulqizë – Albania Wildfire (Vajkal / Qafë e Helmës)",
+      "nameLocal": "阿爾巴尼亞布爾奇澤・瓦伊卡爾・赫爾梅斯埡口火場",
+      "type": "confirmed",
+      "tag": "🔥 布爾奇澤・Vajkal・赫爾梅斯埡口",
+      "tagClass": "tag-confirmed",
+      "desc": "布爾奇澤縣Vajkal與Qafë e Helmës一帶火場，為阿爾巴尼亞中東部山區規模較大的火點之一。Librazhd縣Xhyrë、Polis山地區也同期有火場，局部有數戶居民撤離。阿爾巴尼亞全國多點同步模式使整體控制難度較高。",
+      "coords": "41°30'N 020°13'E",
+      "source": "阿爾巴尼亞緊急管理局；媒體報導"
+    },
+    {
+      "latlng": [41.78, 20.23],
+      "name": "Lurë National Park – Albania Wildfire",
+      "nameLocal": "阿爾巴尼亞盧勒國家公園・曾威脅住家",
+      "type": "confirmed",
+      "tag": "🔥 盧勒國家公園・曾逼近住家",
+      "tagClass": "tag-confirmed",
+      "desc": "盧勒（Lurë）國家公園火場曾威脅附近住家，為阿爾巴尼亞受生態影響最敏感的火場之一。盧勒以原始森林與湖群著名，是該國重要自然保護區。南部Mallakastër、Gjirokastër、Tepelena也同期有火場，有約15戶居民帶牲畜撤離。⚠️ 座標為公園概略中心。",
+      "coords": "41°47'N 020°14'E",
+      "source": "阿爾巴尼亞緊急管理局；媒體報導"
+    },
+    {
+      "latlng": [44.90, 21.43],
+      "name": "Deliblato Sands – Serbia Wildfire (Bela Crkva area)",
+      "nameLocal": "塞爾維亞德利布拉托沙地・貝拉茨爾克瓦一帶・約1.39萬公頃",
+      "type": "confirmed",
+      "tag": "🔥 塞爾維亞德利布拉托・1.39萬公頃・歐盟直升機支援",
+      "tagClass": "tag-confirmed",
+      "desc": "德利布拉托沙地（Deliblato Sands）Bela Crkva一帶，哥白尼緊急管理服務（Copernicus）衛星影像顯示過火面積約1.39萬公頃，為巴爾幹最大單一火場之一。歐盟民防機制啟動，派遣直升機支援；羅馬尼亞地面隊協助，支援延至9月5日。德利布拉托沙地為歐洲最大天然沙地之一，生態價值極高。另有Stolovi/Kraljevo一帶火場。",
+      "coords": "44°54'N 021°26'E",
+      "source": "哥白尼CEMS；歐盟民防機制；媒體報導"
+    },
+    {
+      "latlng": [43.90, 17.50],
+      "name": "Bosnia-Herzegovina – Wildfire (multiple points, Aug)",
+      "nameLocal": "波士尼亞與赫塞哥維納・多處火場・8月中累計約2.6萬公頃",
+      "type": "confirmed",
+      "tag": "🔥 波赫・多處火場・8月中約2.6萬公頃",
+      "tagClass": "tag-confirmed",
+      "desc": "波士尼亞與赫塞哥維納8月中累計過火面積約2.6萬公頃，與克羅埃西亞奧米什火場有連動，一度造成邊境道路中斷。赫塞哥維納南部石灰岩地帶乾燥易燃，歷史上多次大型火災。複雜的行政架構（聯邦政府＋塞族共和國）使跨區救援協調困難。⚠️ 座標為國土概略中心。",
+      "coords": "43°54'N 017°30'E",
+      "source": "哥白尼CEMS；媒體報導"
+    },
+    {
+      "latlng": [42.45, 18.53],
+      "name": "Herceg Novi – Montenegro Wildfire (Aug 14+)",
+      "nameLocal": "蒙特內哥羅赫爾采格諾維・塞提涅・尼克希奇・多點並發",
+      "type": "confirmed",
+      "tag": "🔥 蒙特內哥羅・赫爾采格諾維・8月14日起多點",
+      "tagClass": "tag-confirmed",
+      "desc": "蒙特內哥羅8月14日起赫爾采格諾維（Herceg Novi）、烏爾欽（Ulcinj）、塞提涅（Cetinje）、尼克希奇（Nikšić）多地同時爆發火場，哥白尼緊急管理服務（Copernicus）啟動支援，全國累計約1.2萬公頃。赫爾采格諾維位於亞得里亞海沿岸，鄰近克羅埃西亞及波士尼亞邊界，為本季巴爾幹最典型的跨境火場群。",
+      "coords": "42°27'N 018°32'E",
+      "source": "哥白尼CEMS；蒙特內哥羅緊急管理局；媒體報導"
+    },
+    {
+      "latlng": [52.45, -2.15],
+      "name": "Stourbridge – UK Wildfire (19 homes destroyed)",
+      "nameLocal": "英國斯托布里奇（Stourbridge）・野火・19棟全毀",
+      "type": "confirmed",
+      "tag": "🔥 斯托布里奇・19棟全毀・英國紀錄年",
+      "tagClass": "tag-confirmed",
+      "desc": "英格蘭西米德蘭茲斯托布里奇（Stourbridge）野火造成19棟住宅全毀，為英國2026年單一野火中住宅損失最多的事件之一。英國2026年全國累計約2.5萬公頃，為連續兩年創歷史紀錄，顯示英國傳統潮濕氣候在氣候變遷下野火風險快速上升。",
+      "coords": "52°27'N 002°09'W",
+      "source": "英國自然署；媒體報導"
+    },
+    {
+      "latlng": [42.35, -5.00],
+      "name": "Castilla-León – Spain Flash Flood (2 deaths)",
+      "nameLocal": "西班牙卡斯蒂利亞-萊昂・山洪土石流・2名婦女死亡",
+      "type": "possible",
+      "tag": "🌊 卡斯蒂利亞-萊昂・8月山洪・2死",
+      "tagClass": "tag-possible",
+      "desc": "8月中旬西班牙卡斯蒂利亞-萊昂大區山洪土石流，造成2名老年婦女死亡。該區同時承受野火與山洪雙重災害壓力，為2026年西班牙複合型天災的典型案例。⚠️ 座標為概略區域中心。",
+      "coords": "42°21'N 005°00'W",
+      "source": "西班牙氣象局AEMET；媒體報導"
+    },
+    {
+      "latlng": [47.00, 10.90],
+      "name": "Alps Landslides – Austria/Switzerland (Ötztal, Pinzgau, Albula)",
+      "nameLocal": "奧地利／瑞士阿爾卑斯・厄茨塔爾・平茨高・阿爾布拉・土石流鐵路中斷",
+      "type": "possible",
+      "tag": "🌊 阿爾卑斯・土石流・鐵路全線中斷",
+      "tagClass": "tag-possible",
+      "desc": "7月底奧地利厄茨塔爾（Ötztal）爆發土石流，8月平茨高（Pinzgau）與瑞士阿爾布拉（Albula）山谷再發，多條鐵路幹線（含RhB高山鐵路）中斷、橋梁損毀，部分地區撤離。為歐洲阿爾卑斯山區2026年夏季暖化加速冰川退縮、凍土融化引發土石流的典型案例。⚠️ 座標為概略阿爾卑斯山區中心。",
+      "coords": "47°00'N 010°54'E",
+      "source": "奧地利防災局；瑞士聯邦鐵路；媒體報導"
+    },
+    {
+      "latlng": [43.21, 2.35],
+      "name": "Carcassonne – France Hailstorm & Flash Flood (Aug)",
+      "nameLocal": "法國卡爾卡松・冰雹風暴・大量房屋受損",
+      "type": "possible",
+      "tag": "🌊 卡爾卡松・冰雹龍捲・房屋大量受損",
+      "tagClass": "tag-possible",
+      "desc": "8月底強對流風暴帶來冰雹、龍捲與局部山洪，卡爾卡松（Carcassonne）一帶大量房屋受損，損失估計數億歐元。為歐洲2026年「先熱浪乾旱野火、後暴雨山洪」循環中最典型的對流系統事件，同期法國西南多地也有類似損失。",
+      "coords": "43°13'N 002°21'E",
+      "source": "法國氣象局Météo-France；媒體報導"
+    },
+    {
+      "latlng": [29.50, -98.50],
+      "name": "Texas – Guadalupe River Flood (July)",
+      "nameLocal": "美國德州・瓜達盧普河再發洪水・7月",
+      "type": "possible",
+      "tag": "🌊 德州瓜達盧普河・7月洪水",
+      "tagClass": "tag-possible",
+      "desc": "7月德州中南部瓜達盧普河（Guadalupe River）一帶再度爆發洪水，但死亡人數遠低於2025年同地區重大洪災事件。德州聖安東尼奧周邊受影響，部分低窪地區撤離。⚠️ 座標為概略流域中心。",
+      "coords": "29°30'N 098°30'W",
+      "source": "美國國家天氣局NWS；德州應急管理部"
+    },
+    {
+      "latlng": [37.12, -3.60],
+      "name": "Granada – Spain Earthquake Swarm M5.2 (Aug 14+)",
+      "nameLocal": "西班牙格拉納達・地震群序列・M5.2・600次・600人撤離",
+      "type": "seismic",
+      "tag": "🌍 格拉納達・M5.2＋600次地震序列・600人撤離",
+      "tagClass": "tag-confirmed",
+      "desc": "8月14日起西班牙格拉納達省Otura、Alhendín一帶爆發地震群序列，累計逾600次有感地震，主震規模M5.2，另有多次M4.8至4.9餘震（8月18日餘震造成3人受傷）。約600人撤離，教堂外立面受損、建築裂縫多處。為伊比利半島2026年人口密集區最受關注的地震序列，西班牙地質研究院（IGN）持續監測。",
+      "coords": "37°07'N 003°36'W",
+      "source": "西班牙地質研究院IGN；媒體報導"
+    },
+    {
+      "latlng": [40.83, 14.13],
+      "name": "Pozzuoli – Italy Earthquake M4.5 (Jul 31)",
+      "nameLocal": "義大利波佐利（Pozzuoli）・卡塔尼亞地震・M4.5・26傷・房屋倒塌",
+      "type": "seismic",
+      "tag": "🌍 波佐利・M4.5・26傷・房屋倒塌落石",
+      "tagClass": "tag-confirmed",
+      "desc": "7月31日義大利坎帕尼亞大區波佐利（Pozzuoli）發生M4.5地震，造成約26人受傷，部分房屋倒塌、落石阻斷道路。波佐利為坎皮佛萊格里（Campi Flegrei）超級火山地塊的核心區，長期處於地盤上升（bradyseism）狀態，地震與火山活動密切關聯，義大利民防局持續高級監測。",
+      "coords": "40°50'N 014°08'E",
+      "source": "義大利地震局INGV；義大利民防局"
+    },
+    {
+      "latlng": [38.50, 16.10],
+      "name": "Calabria – Italy Earthquake M6.2 (2026 largest in Europe)",
+      "nameLocal": "義大利卡拉布里亞・Torremezzo di Falconara・M6.2・2026年歐洲年度最大",
+      "type": "seismic",
+      "tag": "🌍 卡拉布里亞・M6.2・2026年歐洲最大地震",
+      "tagClass": "tag-confirmed",
+      "desc": "義大利卡拉布里亞大區Torremezzo di Falconara附近發生M6.2地震，為2026年歐洲本土規模最大的地震事件。卡拉布里亞位於非洲板塊與歐亞板塊碰撞帶，歷史上多次毀滅性地震（1908年墨西拿地震即在鄰近地區）。本次地震有感範圍廣，具體傷亡與損失以當地官方報告為準。⚠️ 座標為概略震央位置。",
+      "coords": "38°30'N 016°06'E",
+      "source": "義大利地震局INGV；媒體報導"
+    },
+    {
+      "latlng": [39.15, -123.21],
+      "name": "Ukiah / Redwood Valley – California Earthquake M5.6 (Jun 24)",
+      "nameLocal": "美國加州烏卡亞／紅木谷・M5.6・2022年以來加州最大",
+      "type": "seismic",
+      "tag": "🌍 加州烏卡亞・M5.6・2022年來加州最大",
+      "tagClass": "tag-confirmed",
+      "desc": "6月24日加州門多西諾縣烏卡亞（Ukiah）／紅木谷（Redwood Valley）附近Maacama斷層發生M5.6地震，為2022年底以來加州最大地震。造成部分建築受傷、停電，舊金山灣區廣泛有感。門多西諾縣為加州北海岸多斷層交會區，地震活躍度高。",
+      "coords": "39°09'N 123°13'W",
+      "source": "美國地質調查局USGS；加州應急管理局"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.15, "borderColor": "#c0392b", "label": "歐洲野火主要高影響區（西班牙・法國，概略）" },
+    { "symbol": "polygon", "fillColor": "#e67e22", "fillOpacity": 0.18, "borderColor": "#ca6f1e", "label": "北美野火主要高影響區（美西北・加拿大BC，概略）" },
+    { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.12, "borderColor": "#c0392b", "label": "巴爾幹野火高影響帶（塞爾維亞・波赫・克羅埃西亞・蒙特內哥羅・阿爾巴尼亞，概略）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "重大野火火場（確認事件）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "重大水災／洪水事件（概略位置）" },
+    { "symbol": "dot",     "color": "#27ae60", "pulse": false, "label": "顯著地震事件（M4.5以上，有傷亡或撤離）" }
+  ]
+}
