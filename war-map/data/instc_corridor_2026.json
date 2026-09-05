@@ -1,0 +1,496 @@
+{
+  "meta": {
+    "title": "INSTC 國際南北運輸走廊・中伊貿易網絡（2026年）",
+    "titleEn": "INSTC – International North–South Transport Corridor & China–Iran Trade Network, 2026",
+    "subtitle": "孟買→德黑蘭→巴庫→莫斯科・7,200公里多式聯運・裏海跨海線・拉什特─阿斯塔拉缺口段・疊加中伊鐵路走廊",
+    "date": "2026-09-05",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["張威翔製作", "INSTC Secretariat", "Reuters", "CPEC Authority", "Railway Gazette International", "Trend News Agency", "中國國家發改委", "伊朗鐵路公司（RAI）", "俄羅斯鐵路（RZD）", "亞塞拜然鐵路（ADY）"]
+  },
+  "map": {
+    "center": [40, 62],
+    "zoom": 4,
+    "bounds": [[8, 28], [62, 125]]
+  },
+  "infoPanel": {
+    "title": "INSTC 國際南北運輸走廊・連接印度、伊朗、亞塞拜然、俄羅斯與中亞",
+    "paragraphs": [
+      "國際南北運輸走廊（INSTC，International North–South Transport Corridor）是一條全長約 7,200 公里的多式聯運網絡，由印度、伊朗、俄羅斯於 2000 年在聖彼得堡簽署協議創立，目前成員國已擴展至 13 個，涵蓋中亞與南亞多國。走廊結合船舶、鐵路與公路三種運輸方式，旨在連接印度次大陸、波斯灣、裏海地區、高加索與俄羅斯，最終延伸至北歐。與傳統蘇伊士運河海運路線相比，INSTC 可將印度─俄羅斯之間的運輸時間從約 40 天縮短至 20 天，成本估計降低 30%。",
+      "INSTC 目前有三條主要路線：①西線（主幹）從印度孟買港出發，經阿拉伯海抵伊朗班達爾阿巴斯，轉鐵路北上德黑蘭、卡茲溫、拉什特，過伊朗─亞塞拜然邊境阿斯塔拉，經巴庫沿裏海西岸北上，越達爾班特抵俄羅斯阿斯特拉罕，再延伸至莫斯科；②裏海跨海線從伊朗班達爾安扎利港橫越裏海，抵哈薩克阿克陶或俄羅斯阿斯特拉罕；③東線則經土庫曼、烏茲別克、哈薩克進入俄羅斯。2026 年最關鍵的工程節點為伊朗境內的拉什特─阿斯塔拉鐵路（約 167 公里），目前仍為主幹缺口段，俄羅斯與亞塞拜然已向伊朗施壓加速建設。",
+      "此圖同時疊加中伊多式聯運走廊（北方跨亞鐵路、CPEC走廊、中吉烏新鐵路）。INSTC 與中伊走廊在德黑蘭、班達爾阿巴斯、阿斯特拉罕等節點形成交叉，使中國可借道 INSTC 延伸觸及俄羅斯與北歐市場，俄羅斯亦可透過 INSTC 迴避西方制裁下的海運封鎖，印度則借此減少對中國主導走廊的依賴，在地緣博弈中建立獨立的印─俄─伊直連通道。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [18.93, 72.84],
+        [19.5, 68.5],
+        [21.0, 64.0],
+        [22.5, 61.0],
+        [24.0, 58.5],
+        [25.4, 57.4],
+        [27.2, 56.3]
+      ],
+      "color": "#00BCD4",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "10,5",
+      "popup": {
+        "title": "INSTC 西線・海運段（孟買→班達爾阿巴斯）",
+        "tag": "🚢 INSTC 西線海運段・阿拉伯海",
+        "tagClass": "tag-confirmed",
+        "desc": "INSTC 西線（主幹）海運段，從印度孟買／納瓦謝瓦港（Nhava Sheva）出發，穿越阿拉伯海，抵達伊朗南部最大港口班達爾阿巴斯（Bandar Abbas）。現有定期貨輪航線，為 INSTC 目前最成熟的運營段，印度─伊朗貨運量 2025─2026 年明顯增長。全程約 2,000 海里，約需 7─8 天。",
+        "source": "INSTC Secretariat · India Ministry of Ports"
+      }
+    },
+    {
+      "points": [
+        [27.2, 56.3],
+        [29.5, 54.0],
+        [32.7, 51.7],
+        [35.7, 51.4]
+      ],
+      "color": "#1E88E5",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "INSTC 西線・伊朗南北走廊鐵路（班達爾阿巴斯→德黑蘭）",
+        "tag": "🚂 INSTC 西線・伊朗南北鐵路・已運營",
+        "tagClass": "tag-confirmed",
+        "desc": "伊朗縱貫南北鐵路，班達爾阿巴斯港→德黑蘭，全程約 1,400 公里，現有鐵路已運營。班達爾阿巴斯是伊朗最大貿易港，INSTC 貨物在此由海運轉鐵路北上。2025─2026 年制裁壓力下，印度─伊朗─俄羅斯之間透過此段轉運的貨量持續上升。",
+        "source": "伊朗鐵路公司（RAI）· INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [35.7, 51.4],
+        [36.27, 50.00],
+        [37.28, 49.59]
+      ],
+      "color": "#1E88E5",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "INSTC 西線・德黑蘭─拉什特鐵路（已完工・2019年通車）",
+        "tag": "🚂 德黑蘭─拉什特・已通車",
+        "tagClass": "tag-confirmed",
+        "desc": "德黑蘭→卡茲溫→拉什特鐵路，全程約 375 公里，2019 年正式通車，為 INSTC 西線的重要里程碑。拉什特位於裏海南岸平原，是 INSTC 主幹在伊朗境內向北推進的關鍵節點。此段現有定期貨運班列運行。",
+        "source": "伊朗鐵路公司（RAI）"
+      }
+    },
+    {
+      "points": [
+        [37.28, 49.59],
+        [37.80, 49.30],
+        [38.20, 49.00],
+        [38.43, 48.87]
+      ],
+      "color": "#FF6D00",
+      "weight": 3,
+      "opacity": 0.90,
+      "dashArray": "10,5",
+      "popup": {
+        "title": "INSTC 西線・拉什特─阿斯塔拉缺口鐵路（約167公里・關鍵缺口段）",
+        "tag": "🚧 拉什特─阿斯塔拉・INSTC 最關鍵缺口・在建",
+        "tagClass": "tag-possible",
+        "desc": "拉什特─阿斯塔拉鐵路是 INSTC 西線目前最關鍵的缺口段，全長約 167 公里，從伊朗拉什特沿裏海海岸延伸至伊亞邊境阿斯塔拉（Astara）。此段為 INSTC 西線連通的最後一塊拼圖，缺口存在多年，俄羅斯與亞塞拜然持續向伊朗施壓加速建設。2024─2026 年工程取得推進，但伊朗融資困難仍是主要障礙。建成後，孟買→莫斯科可全程鐵路聯運。⚠️ 路線為概略示意。",
+        "source": "Reuters · Railway Gazette International · INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [38.46, 48.88],
+        [39.3, 49.2],
+        [40.41, 49.87]
+      ],
+      "color": "#1E88E5",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "INSTC 西線・阿斯塔拉─巴庫鐵路（亞塞拜然段・已運營）",
+        "tag": "🚂 阿斯塔拉（AZ）─巴庫・已運營",
+        "tagClass": "tag-confirmed",
+        "desc": "從亞塞拜然─伊朗邊境阿斯塔拉（亞塞拜然側）北上至巴庫，現有鐵路已運營，由亞塞拜然鐵路公司（ADY）管理。此段全程約 200 公里，為 INSTC 西線亞塞拜然境內段，連接伊朗邊境與亞塞拜然首都及裏海主要港口巴庫。",
+        "source": "亞塞拜然鐵路（ADY）· INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [40.41, 49.87],
+        [41.2, 49.0],
+        [42.07, 48.29],
+        [42.98, 47.50],
+        [44.0, 47.5],
+        [46.35, 48.03]
+      ],
+      "color": "#1565C0",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "INSTC 西線・巴庫─達爾班特─阿斯特拉罕（裏海西岸鐵路）",
+        "tag": "🚂 巴庫→達爾班特→阿斯特拉罕・俄羅斯段",
+        "tagClass": "tag-confirmed",
+        "desc": "從亞塞拜然首都巴庫沿裏海西岸北上，經達爾班特（俄羅斯達格斯坦）、馬哈奇卡拉進入俄羅斯，抵達阿斯特拉罕港。此為 INSTC 西線的俄羅斯境內接入段，現有鐵路運行，2022 年後俄羅斯開始加大此走廊貨運量，以迴避西方制裁後的海路封鎖。",
+        "source": "俄羅斯鐵路（RZD）· INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [46.35, 48.03],
+        [51.5, 46.0],
+        [53.0, 44.0],
+        [55.75, 37.62]
+      ],
+      "color": "#1565C0",
+      "weight": 3,
+      "opacity": 0.85,
+      "popup": {
+        "title": "INSTC 西線・阿斯特拉罕─莫斯科（俄羅斯縱貫鐵路）",
+        "tag": "🚂 阿斯特拉罕→莫斯科・INSTC 北端終點",
+        "tagClass": "tag-confirmed",
+        "desc": "俄羅斯阿斯特拉罕至莫斯科鐵路段，全長約 1,400 公里，現有成熟鐵路網運行。阿斯特拉罕是伏爾加河與裏海的交匯點，是 INSTC 西線進入俄羅斯腹地後的第一個大型轉運中心。莫斯科為 INSTC 北端終點，貨物可在此再轉往芬蘭、波羅的海等歐洲方向。",
+        "source": "俄羅斯鐵路（RZD）"
+      }
+    },
+    {
+      "points": [
+        [35.7, 51.4],
+        [36.5, 50.5],
+        [37.47, 49.47]
+      ],
+      "color": "#00ACC1",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "popup": {
+        "title": "INSTC 裏海跨海線・德黑蘭─班達爾安扎利（伊朗裏海港）",
+        "tag": "🚢 德黑蘭→班達爾安扎利・裏海線伊朗段",
+        "tagClass": "tag-confirmed",
+        "desc": "德黑蘭至伊朗裏海主要港口班達爾安扎利（Bandar Anzali），以公路為主，約 330 公里。安扎利港是 INSTC 裏海跨海線的伊朗出發港，貨物從此橫渡裏海至哈薩克阿克陶或俄羅斯阿斯特拉罕。⚠️ 路線為概略示意。",
+        "source": "伊朗港口海事局 · INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [37.47, 49.47],
+        [38.5, 50.0],
+        [40.5, 51.0],
+        [43.65, 51.18]
+      ],
+      "color": "#00ACC1",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "INSTC 裏海跨海線・班達爾安扎利─阿克陶（裏海渡輪）",
+        "tag": "🚢 裏海跨海渡輪・安扎利→阿克陶（哈薩克）",
+        "tagClass": "tag-possible",
+        "desc": "INSTC 裏海跨海線，從伊朗班達爾安扎利橫渡裏海，抵達哈薩克阿克陶港（Aktau），再轉陸路鐵路連接哈薩克內陸及俄羅斯。此線為 INSTC 的替代路由，繞過亞塞拜然，可在伊─亞政治關係緊張或拉什特─阿斯塔拉缺口未打通時作為替代通道。⚠️ 路線為概略示意。",
+        "source": "INSTC Secretariat · Kazakhstan Railways"
+      }
+    },
+    {
+      "points": [
+        [43.65, 51.18],
+        [44.5, 50.0],
+        [46.35, 48.03]
+      ],
+      "color": "#00ACC1",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "INSTC 裏海跨海線・阿克陶─阿斯特拉罕（哈薩克→俄羅斯）",
+        "tag": "🚢 阿克陶→阿斯特拉罕・裏海線北段",
+        "tagClass": "tag-possible",
+        "desc": "哈薩克阿克陶港至俄羅斯阿斯特拉罕，部分路程以裏海渡輪連接，再轉俄羅斯鐵路網。此段為 INSTC 裏海跨海線的北半段，連接哈薩克與俄羅斯伏爾加河流域，亦可銜接哈薩克內陸鐵路網至中亞各國。⚠️ 路線為概略示意。",
+        "source": "INSTC Secretariat"
+      }
+    },
+    {
+      "points": [
+        [34.34, 108.93], [36.06, 103.83], [42.83, 93.52],
+        [43.8, 87.6], [44.2, 80.2], [43.3, 76.9],
+        [42.3, 69.6], [41.3, 69.3], [39.8, 64.4],
+        [37.6, 61.8], [36.5, 61.2], [36.3, 59.6],
+        [35.7, 51.4]
+      ],
+      "color": "#4FC3F7",
+      "weight": 2.5,
+      "opacity": 0.70,
+      "popup": {
+        "title": "中伊北方走廊・跨亞鐵路北線（西安→德黑蘭）",
+        "tag": "🚂 中伊北方走廊・已建成運營・每月穩定班列",
+        "tagClass": "tag-confirmed",
+        "desc": "中伊之間最成熟的鐵路走廊，全程約10,000公里。從西安出發，沿隴海鐵路至蘭州，轉蘭新鐵路穿越河西走廊至烏魯木齊，過霍爾果斯口岸入哈薩克（阿拉木圖），經烏茲別克（塔什干）、土庫曼（馬雷），越薩拉赫斯進入伊朗馬什哈德，最終連接德黑蘭。此走廊與 INSTC 在德黑蘭交會，使中國貨物可接入 INSTC 北上俄羅斯。",
+        "source": "Railway Gazette International · 中國國家鐵路集團"
+      }
+    },
+    {
+      "points": [
+        [39.5, 76.0], [40.5, 73.8], [40.9, 72.8], [41.3, 69.3]
+      ],
+      "color": "#81D4FA",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "10,5",
+      "popup": {
+        "title": "中吉烏鐵路（CKU・2023年開工・2026年關鍵路段突破）",
+        "tag": "🚧 中吉烏鐵路・2027年預計通車",
+        "tagClass": "tag-possible",
+        "desc": "中吉烏鐵路（CKU）從中國喀什出發，穿越吉爾吉斯山區，經奧什進入烏茲別克費爾干納盆地，連接塔什干，全長約523公里。2023年三國正式開工，2026年關鍵隧道工程取得重大突破，預計2027年通車。全線通車後，可使中國至伊朗北方走廊縮短約900公里，並與 INSTC 在塔什干形成間接銜接。",
+        "source": "Trend News Agency · Railway Gazette International"
+      }
+    },
+    {
+      "points": [
+        [34.1, 73.2], [33.6, 73.1], [31.5, 74.3],
+        [29.4, 71.7], [27.7, 68.7], [24.9, 67.0]
+      ],
+      "color": "#90CAF9",
+      "weight": 2.5,
+      "opacity": 0.70,
+      "popup": {
+        "title": "CPEC ML-1主幹鐵路（巴基斯坦・喀拉蚩→海維利亞）",
+        "tag": "🚂 CPEC ML-1・升級在建・設計時速160km",
+        "tagClass": "tag-possible",
+        "desc": "巴基斯坦主幹鐵路ML-1升級工程（CPEC核心項目），從喀拉蚩北上經海德拉巴、穆爾坦、拉合爾至海維利亞乾港，設計時速160km。海維利亞通過喀喇崑崙公路（KKH）連接中國喀什，為CPEC南北走廊巴基斯坦主幹。",
+        "source": "CPEC Authority · Pakistan Railways"
+      }
+    },
+    {
+      "points": [
+        [24.9, 67.0], [25.1, 62.3], [25.15, 61.48], [25.3, 60.6]
+      ],
+      "color": "#B0BEC5",
+      "weight": 2,
+      "opacity": 0.65,
+      "popup": {
+        "title": "喀拉蚩／瓜達爾─恰巴哈爾公路通道",
+        "tag": "🛣️ 喀拉蚩/瓜達爾→恰巴哈爾・公路已運行",
+        "tagClass": "tag-possible",
+        "desc": "從喀拉蚩港與瓜達爾港沿海岸西行，過加布德口岸進入伊朗，抵恰巴哈爾港。目前以公路運作，無鐵路連接。恰巴哈爾港與 INSTC 系統具潛在整合可能，未來可透過扎黑丹─馬什哈德鐵路銜接 INSTC 東線。",
+        "source": "CPEC Authority · Reuters"
+      }
+    },
+    {
+      "points": [
+        [36.3, 59.6], [33.5, 58.8], [31.8, 57.5],
+        [30.2, 57.8], [29.5, 60.9]
+      ],
+      "color": "#80DEEA",
+      "weight": 2,
+      "opacity": 0.70,
+      "popup": {
+        "title": "伊朗東線鐵路（馬什哈德─扎黑丹・現有）",
+        "tag": "🚂 伊朗東線・馬什哈德→扎黑丹・現有鐵路",
+        "tagClass": "tag-confirmed",
+        "desc": "伊朗東部鐵路主線，從馬什哈德南下，經塔巴斯、克爾曼至扎黑丹，全長約1,700公里。2026年制裁加劇後貨運量顯著增加，為中亞→伊朗→INSTC 跨網絡轉運的東部接入線。",
+        "source": "伊朗鐵路公司（RAI）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [18.93, 72.84],
+      "name": "Mumbai / Nhava Sheva Port",
+      "nameLocal": "孟買・納瓦謝瓦港（Nhava Sheva）・INSTC 印度起點",
+      "type": "capital",
+      "tag": "⚓ 孟買・INSTC 印度起點・阿拉伯海最大港",
+      "tagClass": "tag-confirmed",
+      "desc": "印度最大港口城市，納瓦謝瓦港（Jawaharlal Nehru Port，JNPT）是 INSTC 的印度主要起點港，也是印度規模最大的貨櫃港口。貨物從此出發，穿越阿拉伯海，抵達伊朗班達爾阿巴斯，進入 INSTC 陸路網絡。印度是 INSTC 三個創始成員國之一（2000年聖彼得堡協議）。",
+      "coords": "18°56'N 072°50'E",
+      "source": "INSTC Secretariat · India Ministry of Ports"
+    },
+    {
+      "latlng": [37.47, 49.47],
+      "name": "Bandar Anzali – Iran Caspian Port",
+      "nameLocal": "班達爾安扎利（Bandar Anzali）・伊朗裏海主要港口",
+      "type": "confirmed",
+      "tag": "⚓ 班達爾安扎利・伊朗裏海港・INSTC 裏海線起點",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗在裏海最重要的商業港口，也是 INSTC 裏海跨海線的伊朗出發港。貨物從班達爾安扎利搭乘渡輪橫越裏海，抵達哈薩克阿克陶或俄羅斯阿斯特拉罕。安扎利港的處理能力正持續擴大，2025─2026 年伊─俄貿易量增加後，此港利用率明顯上升。⚠️ 座標為概略位置。",
+      "coords": "37°28'N 049°28'E",
+      "source": "伊朗港口海事局 · INSTC Secretariat"
+    },
+    {
+      "latlng": [37.28, 49.59],
+      "name": "Rasht – Northern Iran Railway Hub",
+      "nameLocal": "拉什特（Rasht）・吉蘭省首府・INSTC 西線北端",
+      "type": "confirmed",
+      "tag": "🚂 拉什特・德黑蘭─拉什特鐵路終點・INSTC 缺口南端",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗吉蘭省首府，位於裏海南岸平原。2019 年德黑蘭─卡茲溫─拉什特鐵路通車後，拉什特成為 INSTC 西線在伊朗境內最北的鐵路終點。拉什特往北約 167 公里即為伊亞邊境阿斯塔拉，此段即為 INSTC 的關鍵缺口段（拉什特─阿斯塔拉鐵路）。缺口打通後，孟買─莫斯科可實現全程鐵路聯運。",
+      "coords": "37°16'N 049°35'E",
+      "source": "伊朗鐵路公司（RAI）"
+    },
+    {
+      "latlng": [38.43, 48.87],
+      "name": "Astara (Iran) – Iran–Azerbaijan Border",
+      "nameLocal": "阿斯塔拉（Astara・伊朗側）・伊亞邊境・INSTC 缺口北端",
+      "type": "dam",
+      "tag": "🚧 阿斯塔拉（伊朗）・INSTC 缺口北端・換軌口岸",
+      "tagClass": "tag-possible",
+      "desc": "伊朗與亞塞拜然邊境城市，阿斯塔拉（伊朗側）是拉什特─阿斯塔拉缺口鐵路的北端預定口岸。一旦此段建成，伊朗鐵路可直連亞塞拜然鐵路網，INSTC 西線即可全線貫通。此處需進行軌距換乘（伊朗標準軌 1,435mm → 前蘇聯寬軌 1,520mm）。⚠️ 座標為概略位置。",
+      "coords": "38°26'N 048°52'E",
+      "source": "INSTC Secretariat · Reuters"
+    },
+    {
+      "latlng": [40.41, 49.87],
+      "name": "Baku – Azerbaijan Capital & INSTC Hub",
+      "nameLocal": "巴庫（Baku）・亞塞拜然首都・INSTC 西線核心樞紐",
+      "type": "capital",
+      "tag": "🏛 巴庫・亞塞拜然首都・INSTC 裏海樞紐",
+      "tagClass": "tag-confirmed",
+      "desc": "亞塞拜然共和國首都，INSTC 西線最重要的中間樞紐城市。巴庫擁有裏海最大的現代化港口設施（Alat Port），同時是亞塞拜然─格魯吉亞─土耳其（BTC 輸油管線、BTK 鐵路）的交匯點。2022 年俄羅斯制裁升級後，亞塞拜然從 INSTC 過境貿易中獲益顯著，巴庫港貨吞吐量大幅增加。",
+      "coords": "40°24'N 049°52'E",
+      "source": "亞塞拜然鐵路（ADY）· INSTC Secretariat"
+    },
+    {
+      "latlng": [43.65, 51.18],
+      "name": "Aktau – Kazakhstan Caspian Port",
+      "nameLocal": "阿克陶（Aktau）・哈薩克裏海港・INSTC 跨海線節點",
+      "type": "possible",
+      "tag": "⚓ 阿克陶・哈薩克裏海港・INSTC 裏海跨海線",
+      "tagClass": "tag-possible",
+      "desc": "哈薩克在裏海的主要港口，INSTC 裏海跨海線的哈薩克接泊點。貨物從伊朗班達爾安扎利渡輪抵達阿克陶後，可轉哈薩克鐵路網（阿克陶→阿克托比→阿斯塔納方向），或繼續以渡輪前往俄羅斯阿斯特拉罕。哈薩克透過 INSTC 同時連接中國一帶一路走廊與俄羅斯市場。",
+      "coords": "43°39'N 051°11'E",
+      "source": "INSTC Secretariat · Kazakhstan Railways"
+    },
+    {
+      "latlng": [46.35, 48.03],
+      "name": "Astrakhan – Russia Caspian Gateway",
+      "nameLocal": "阿斯特拉罕（Astrakhan）・俄羅斯裏海港・INSTC 北接點",
+      "type": "capital",
+      "tag": "⚓ 阿斯特拉罕・俄羅斯裏海門戶・INSTC 俄羅斯進入點",
+      "tagClass": "tag-confirmed",
+      "desc": "俄羅斯阿斯特拉罕州首府，位於伏爾加河三角洲與裏海北端交匯處，是 INSTC 進入俄羅斯的最重要裏海港口城市。無論走西線（巴庫→達爾班特→阿斯特拉罕）還是裏海跨海線（安扎利/阿克陶→阿斯特拉罕），貨物最終都在此匯集後北上莫斯科。2022 年後俄羅斯大力投資擴建阿斯特拉罕港口設施。",
+      "coords": "46°21'N 048°02'E",
+      "source": "俄羅斯鐵路（RZD）· INSTC Secretariat"
+    },
+    {
+      "latlng": [55.75, 37.62],
+      "name": "Moscow – INSTC Northern Terminus",
+      "nameLocal": "莫斯科（Moscow）・俄羅斯首都・INSTC 北端終點",
+      "type": "capital",
+      "tag": "🏛 莫斯科・INSTC 北端終點・俄羅斯物流中樞",
+      "tagClass": "tag-confirmed",
+      "desc": "俄羅斯聯邦首都，INSTC 的北端終點城市。貨物抵達莫斯科後，可透過俄羅斯鐵路網繼續分配至波羅的海出海口（芬蘭、愛沙尼亞等）或進入歐洲腹地。2022─2026 年西方制裁下，俄羅斯大幅增加對 INSTC 的政策支持與基礎設施投資，以確保替代歐洲海運路線的南向通道暢通。",
+      "coords": "55°45'N 037°37'E",
+      "source": "俄羅斯鐵路（RZD）"
+    },
+    {
+      "latlng": [35.7, 51.4],
+      "name": "Tehran – INSTC & China–Iran Corridor Hub",
+      "nameLocal": "德黑蘭（Tehran）・伊朗首都・INSTC 與中伊走廊交匯點",
+      "type": "capital",
+      "tag": "🏛 德黑蘭・伊朗首都・INSTC 與中伊走廊核心交匯",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗首都，INSTC 西線與中伊北方走廊（跨亞鐵路）在此交匯，是整個走廊網絡最關鍵的戰略節點。來自中國的中歐班列（北方走廊）、來自印度的 INSTC 海運轉鐵路、伊朗東線（馬什哈德→扎黑丹）、伊朗南線（班達爾阿巴斯）均在德黑蘭鐵路樞紐交會。德黑蘭的地緣政治中樞地位在 2022─2026 年多重制裁與封鎖壓力下持續上升。",
+      "coords": "35°41'N 051°25'E",
+      "source": "INSTC Secretariat · 伊朗鐵路公司（RAI）"
+    },
+    {
+      "latlng": [27.2, 56.3],
+      "name": "Bandar Abbas – Iran Main Trade Port",
+      "nameLocal": "班達爾阿巴斯（Bandar Abbas）・伊朗最大貿易港・INSTC 海運接泊點",
+      "type": "capital",
+      "tag": "⚓ 班達爾阿巴斯・伊朗最大港・INSTC 海運終點",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗最大貿易港，位於霍爾木茲海峽北岸。INSTC 西線海運段的伊朗接泊點，印度孟買的貨輪抵達此港後，轉伊朗南北鐵路北上德黑蘭。班達爾阿巴斯同時也是 INSTC 與中伊 25 年合作協議中港口升級的重點之一，2026 年吞吐量持續創新高。",
+      "coords": "27°11'N 056°17'E",
+      "source": "伊朗港口海事局 · INSTC Secretariat"
+    },
+    {
+      "latlng": [36.3, 59.6],
+      "name": "Mashhad – Iran Eastern Railway Hub",
+      "nameLocal": "馬什哈德（Mashhad）・伊朗第二大城・北方走廊門戶",
+      "type": "capital",
+      "tag": "🚂 馬什哈德・伊朗東部門戶・中伊北方走廊終點",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗第二大城市，北方走廊（跨亞鐵路）進入伊朗的第一個主要城市，也是伊朗東部鐵路網的核心樞紐。薩拉赫斯─馬什哈德段鐵路是中亞─伊朗鐵路直連的關鍵，馬什哈德同時連接德黑蘭方向（往 INSTC 西線）與東南扎黑丹方向（往恰巴哈爾）。",
+      "coords": "36°18'N 059°36'E",
+      "source": "伊朗鐵路公司（RAI）"
+    },
+    {
+      "latlng": [36.5, 61.2],
+      "name": "Sarakhs – Turkmenistan–Iran Railway Border",
+      "nameLocal": "薩拉赫斯（Sarakhs）・土伊鐵路口岸・北方走廊換軌點",
+      "type": "dam",
+      "tag": "🚉 薩拉赫斯・土─伊換軌口岸・北方走廊進伊朗關鍵點",
+      "tagClass": "tag-confirmed",
+      "desc": "土庫曼─伊朗邊境鐵路口岸，中伊北方走廊進入伊朗的唯一正式鐵路過境點，在此換乘軌距（蘇聯寬軌 1,520mm → 伊朗標準軌 1,435mm）。薩拉赫斯─馬什哈德段是連接中亞與 INSTC 在伊朗節點（德黑蘭）的重要橋段。",
+      "coords": "36°32'N 061°13'E",
+      "source": "伊朗鐵路公司（RAI）"
+    },
+    {
+      "latlng": [41.3, 69.3],
+      "name": "Tashkent – Central Asia Railway Hub",
+      "nameLocal": "塔什干（Tashkent）・烏茲別克首都・中亞最大鐵路樞紐",
+      "type": "capital",
+      "tag": "🚉 塔什干・中亞最大城市・北方走廊+CKU 雙線交會",
+      "tagClass": "tag-confirmed",
+      "desc": "烏茲別克斯坦首都，中亞人口最多的城市。塔什干是中伊北方走廊（霍爾果斯線）與未來中吉烏鐵路（CKU）的交會點，也是中亞最重要的鐵路樞紐。透過北方走廊，塔什干的貨物可一路抵達德黑蘭，再接入 INSTC 向北至俄羅斯，形成中亞─伊朗─俄羅斯的多邊走廊。",
+      "coords": "41°18'N 069°16'E",
+      "source": "Railway Gazette International"
+    },
+    {
+      "latlng": [43.8, 87.6],
+      "name": "Ürümqi – Xinjiang Railway Hub",
+      "nameLocal": "烏魯木齊（Ürümqi）・新疆首府・中歐班列西向主樞紐",
+      "type": "capital",
+      "tag": "🚂 烏魯木齊・中歐班列西向核心樞紐",
+      "tagClass": "tag-reference",
+      "desc": "新疆維吾爾自治區首府，中國通往中亞與歐洲鐵路的核心樞紐。烏魯木齊至霍爾果斯的鐵路是所有中歐班列的西向主幹，也是北方走廊最重要的中方始發站。透過北方走廊→德黑蘭→INSTC 的接力，烏魯木齊的貨物理論上可抵達孟買或莫斯科。",
+      "coords": "43°48'N 087°36'E",
+      "source": "中國國家鐵路集團"
+    },
+    {
+      "latlng": [25.3, 60.6],
+      "name": "Chabahar – Iran Strategic Free Port",
+      "nameLocal": "恰巴哈爾（Chabahar）・伊朗深水自由港・南線戰略節點",
+      "type": "confirmed",
+      "tag": "⚓ 恰巴哈爾・伊朗阿拉伯海深水港・INSTC 潛在擴展節點",
+      "tagClass": "tag-possible",
+      "desc": "伊朗位於阿拉伯海（霍爾木茲海峽以外）的唯一深水港，為 INSTC 潛在的南線延伸節點。印度長期投資恰巴哈爾港發展，旨在建立印度─伊朗─中亞的替代通道，繞過巴基斯坦。2026 年伊朗─中國港口合作協議擴展後，恰巴哈爾亦具備接入中伊走廊的戰略意義。若恰巴哈爾─扎黑丹─馬什哈德─德黑蘭全線貫通，可形成 INSTC 的印度洋接入替代線。",
+      "coords": "25°17'N 060°37'E",
+      "source": "India Ministry of Ports · INSTC Secretariat"
+    },
+    {
+      "latlng": [25.1, 62.3],
+      "name": "Gwadar – CPEC Deep Sea Port",
+      "nameLocal": "瓜達爾港（Gwadar）・CPEC 核心深水港・南方走廊起點",
+      "type": "capital",
+      "tag": "⚓ 瓜達爾・CPEC 核心港・距恰巴哈爾 89 公里",
+      "tagClass": "tag-reference",
+      "desc": "巴基斯坦西南端深水港，中巴經濟走廊（CPEC）最核心的基礎設施，由中國企業承建並持有管理權。距伊朗加布德口岸僅 89 公里。瓜達爾雖非 INSTC 成員，但其與恰巴哈爾的地理接近使其在未來可能的走廊整合中具有高度戰略意義。",
+      "coords": "25°07'N 062°19'E",
+      "source": "CPEC Authority"
+    },
+    {
+      "latlng": [34.34, 108.93],
+      "name": "Xi'an – China Europe Train Hub",
+      "nameLocal": "西安（Xi'an）・絲路古都・長安號中歐班列重要始發站",
+      "type": "capital",
+      "tag": "🚂 西安・長安號中歐班列重要始發站",
+      "tagClass": "tag-reference",
+      "desc": "陝西省省會，古絲路起點「長安」。現代「長安號」中歐班列自西安國際港務區直達德黑蘭、漢堡等地。透過北方走廊（跨亞鐵路）→德黑蘭→INSTC 的接力，西安與俄羅斯及印度之間的多向聯運通道正逐步成形。",
+      "coords": "34°21'N 108°56'E",
+      "source": "中國國家鐵路集團 · 西安國際港務區"
+    }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#00BCD4", "weight": 3,   "dash": "10,5", "label": "INSTC 西線・海運段（孟買→班達爾阿巴斯）" },
+    { "symbol": "line", "color": "#1E88E5", "weight": 3,   "dash": null,   "label": "INSTC 西線・伊朗鐵路 + 亞塞拜然段（已建成）" },
+    { "symbol": "line", "color": "#FF6D00", "weight": 3,   "dash": "10,5", "label": "INSTC 西線・拉什特─阿斯塔拉缺口（在建・關鍵缺口）" },
+    { "symbol": "line", "color": "#1565C0", "weight": 3,   "dash": null,   "label": "INSTC 西線・俄羅斯段（巴庫→阿斯特拉罕→莫斯科）" },
+    { "symbol": "line", "color": "#00ACC1", "weight": 2.5, "dash": "8,5",  "label": "INSTC 裏海跨海線（安扎利→阿克陶→阿斯特拉罕）" },
+    { "symbol": "line", "color": "#4FC3F7", "weight": 2.5, "dash": null,   "label": "中伊北方走廊（跨亞鐵路・西安→德黑蘭・已運營）" },
+    { "symbol": "line", "color": "#81D4FA", "weight": 2,   "dash": "10,5", "label": "中吉烏鐵路 CKU（2026年關鍵路段突破）" },
+    { "symbol": "line", "color": "#90CAF9", "weight": 2.5, "dash": null,   "label": "CPEC ML-1 主幹鐵路（巴基斯坦升級在建）" },
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "重要口岸・港口（班達爾阿巴斯・巴庫・阿斯特拉罕等）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "首都・樞紐城市（莫斯科・德黑蘭・孟買等）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "中繼節點（拉什特・阿克陶・薩拉赫斯等）" }
+  ]
+}
