@@ -1,0 +1,233 @@
+{
+  "meta": {
+    "title": "葉門青年運動攻擊沙烏地南部阿美設施・2026年9月8日",
+    "titleEn": "Houthi Large-Scale Strike on Saudi Aramco Facilities – 8 September 2026",
+    "subtitle": "無人機與彈道飛彈攻擊・阿卜哈・海米斯穆謝特・吉贊・奈季蘭・至少73人受傷・部分設施起火",
+    "date": "2026-09-08",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "沙烏地能源部", "葉門聯軍（Arab Coalition）", "青年運動軍事發言人薩里爾（Yahya Saree）聲明", "路透社", "AFP"]
+  },
+  "map": {
+    "center": [17.5, 43.2],
+    "zoom": 7,
+    "bounds": [[13.5, 39.5], [22.5, 48.0]]
+  },
+  "infoPanel": {
+    "title": "葉門青年運動大規模攻擊沙烏地南部・2026年9月8日",
+    "paragraphs": [
+      "2026年9月8日，葉門青年運動（Houthi）軍事發言人葉海亞·薩里爾（Yahya Saree）宣布，對沙烏地阿拉伯南部發動「大規模行動」，以無人機與彈道飛彈攻擊阿美石油公司（Saudi Aramco）多處能源設施。攻擊波及阿卜哈（Abha）、海米斯穆謝特（Khamis Mushait）、吉贊（Jizan）與奈季蘭（Najran）等南部城市，沙烏地能源部確認多處設施遭襲後發生火災，部分作業暫時中斷。",
+      "青年運動聲稱攻擊目標包括阿卜哈國際機場（Abha International Airport）、哈立德國王空軍基地（King Khalid Air Base，位於海米斯穆謝特），以及阿卜哈與吉贊的阿美設施。葉門聯軍發言人圖爾基·馬爾基（Turki al-Maliki）證實至少 73 人受傷（包括婦女與兒童），稱此為「嚴重升級」，揚言將採取必要行動因應。消防與應急隊伍已趕赴現場救援。",
+      "此次攻擊是今夏以來青年運動多次宣稱打擊阿美南部設施的最新一波。7月底至8月，吉贊煉油廠（日處理約40萬桶原油）曾多次傳出火災或遭襲消息。青年運動持續主張「以封鎖對封鎖、以升級對升級」，宣稱此次行動是對沙烏地近期在葉門空域活動的報復。⚠️ 部分目標座標為概略位置，傷亡人數、具體受損程度尚待確認。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [18.35, 42.55],
+        [18.35, 42.85],
+        [18.18, 42.85],
+        [18.18, 42.55],
+        [18.35, 42.55]
+      ],
+      "fillColor": "#c0392b",
+      "fillOpacity": 0.20,
+      "borderColor": "#7b241c",
+      "borderWeight": 1.8,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "阿卜哈・海米斯穆謝特・攻擊核心區",
+        "tag": "💥 阿卜哈／海米斯穆謝特・機場・空軍基地・能源設施遭擊",
+        "tagClass": "tag-confirmed",
+        "desc": "阿卜哈（Abha）與海米斯穆謝特（Khamis Mushait）為此次攻擊的核心區域，青年運動宣稱打擊目標包括阿卜哈國際機場與哈立德國王空軍基地，以及周邊阿美石油設施。沙烏地能源部確認此區域發生火災，部分作業中斷。⚠️ 為概略示意範圍。",
+        "source": "沙烏地能源部；葉門聯軍聲明；路透社"
+      }
+    },
+    {
+      "points": [
+        [17.00, 42.38],
+        [17.00, 42.72],
+        [16.78, 42.72],
+        [16.78, 42.38],
+        [17.00, 42.38]
+      ],
+      "fillColor": "#e74c3c",
+      "fillOpacity": 0.18,
+      "borderColor": "#c0392b",
+      "borderWeight": 1.5,
+      "borderOpacity": 0.70,
+      "borderDashArray": "5,3",
+      "popup": {
+        "title": "吉贊・港口與煉油廠區・多次遭襲",
+        "tag": "💥 吉贊・阿美煉油廠・今夏多次起火",
+        "tagClass": "tag-confirmed",
+        "desc": "吉贊（Jizan）是沙烏地西南部重要的工業與港口城市，阿美石油吉贊煉油廠（日處理約40萬桶）位於此區。今年7月底至8月已多次傳出火災或遭襲，此次9月8日攻擊再度波及吉贊。⚠️ 為概略示意範圍。",
+        "source": "沙烏地能源部；路透社；AFP"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [15.37, 44.19],
+        [15.80, 43.80],
+        [16.40, 43.30],
+        [16.89, 42.88],
+        [17.50, 42.70],
+        [18.24, 42.66]
+      ],
+      "color": "#e74c3c",
+      "weight": 2.5,
+      "opacity": 0.80,
+      "dashArray": "8,4",
+      "popup": {
+        "title": "攻擊路線推估・薩那方向→阿卜哈／海米斯穆謝特",
+        "tag": "🚀 青年運動→阿卜哈・飛彈／無人機推估路徑",
+        "tagClass": "tag-possible",
+        "desc": "青年運動向沙烏地南部阿卜哈、海米斯穆謝特方向發射彈道飛彈與無人機的推估路徑，起點為葉門首都薩那（Sanaa，青年運動實際控制）或北部省份發射陣地。⚠️ 路線為概略推估，非確認飛行軌跡。",
+        "source": "青年運動聲明；葉門聯軍聲明"
+      }
+    },
+    {
+      "points": [
+        [15.37, 44.19],
+        [15.70, 43.50],
+        [16.10, 43.00],
+        [16.50, 42.70],
+        [16.89, 42.55]
+      ],
+      "color": "#e67e22",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "8,4",
+      "popup": {
+        "title": "攻擊路線推估・薩那方向→吉贊",
+        "tag": "🚀 青年運動→吉贊・飛彈／無人機推估路徑",
+        "tagClass": "tag-possible",
+        "desc": "青年運動向吉贊方向發射武器的推估路徑。吉贊位於沙烏地─葉門邊境附近，地理上距葉門較近，為青年運動長期攻擊目標之一。⚠️ 路線為概略推估。",
+        "source": "青年運動聲明；路透社"
+      }
+    },
+    {
+      "points": [
+        [15.37, 44.19],
+        [15.80, 44.10],
+        [16.30, 44.00],
+        [16.80, 44.05],
+        [17.57, 44.23]
+      ],
+      "color": "#f39c12",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "8,4",
+      "popup": {
+        "title": "攻擊路線推估・薩那方向→奈季蘭",
+        "tag": "🚀 青年運動→奈季蘭・推估路徑",
+        "tagClass": "tag-possible",
+        "desc": "青年運動向奈季蘭方向攻擊的推估路徑。奈季蘭緊鄰葉門─沙烏地邊境，為長期交火地帶，也是此次宣稱攻擊波及的城市之一。⚠️ 路線為概略推估。",
+        "source": "葉門聯軍聲明"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [15.37, 44.19],
+      "name": "Sanaa – Houthi-Controlled Capital",
+      "nameLocal": "薩那（Sanaa）・葉門首都・青年運動實際控制",
+      "type": "capital",
+      "tag": "🏴 薩那・青年運動實際控制・攻擊發起地",
+      "tagClass": "tag-confirmed",
+      "desc": "葉門首都，自2014年起由胡塞武裝（青年運動）實際控制。薩那是青年運動指揮中樞，大規模跨境攻擊行動通常由薩那周邊及葉門北部省份（薩達、哈賈等）的飛彈與無人機陣地發起。2026年9月8日宣稱對沙烏地南部發動「大規模行動」的聲明即由薩那軍事發言人薩里爾發布。",
+      "coords": "15°22'N 044°11'E",
+      "source": "葉門聯軍；路透社"
+    },
+    {
+      "latlng": [18.22, 42.51],
+      "name": "Abha – Asir Region Capital",
+      "nameLocal": "阿卜哈（Abha）・阿西爾大區首府・遭攻擊城市",
+      "type": "confirmed",
+      "tag": "💥 阿卜哈・阿西爾大區首府・能源設施遭擊起火",
+      "tagClass": "tag-confirmed",
+      "desc": "沙烏地阿拉伯阿西爾大區（Asir Region）首府，人口約100萬，海拔約2,200公尺，位於阿拉伯半島西南部高原。此次9月8日攻擊波及阿卜哈市區與周邊能源設施，消防隊趕赴現場滅火。阿卜哈國際機場（Abha International Airport）亦為青年運動宣稱的打擊目標之一。⚠️ 座標為概略位置。",
+      "coords": "18°13'N 042°31'E",
+      "source": "沙烏地能源部；葉門聯軍"
+    },
+    {
+      "latlng": [18.24, 42.66],
+      "name": "Abha International Airport",
+      "nameLocal": "阿卜哈國際機場（Abha International Airport）・青年運動宣稱打擊目標",
+      "type": "confirmed",
+      "tag": "✈️ 阿卜哈國際機場・青年運動宣稱目標",
+      "tagClass": "tag-confirmed",
+      "desc": "阿卜哈國際機場是阿西爾大區主要民用與軍用機場，為青年運動在此次攻擊中明確宣稱的打擊目標之一。軍事發言人薩里爾在聲明中點名此機場。⚠️ 座標為概略位置。",
+      "coords": "18°14'N 042°39'E",
+      "source": "青年運動軍事發言人薩里爾聲明"
+    },
+    {
+      "latlng": [18.30, 42.80],
+      "name": "King Khalid Air Base – Khamis Mushait",
+      "nameLocal": "哈立德國王空軍基地（King Khalid Air Base）・海米斯穆謝特・青年運動宣稱目標",
+      "type": "confirmed",
+      "tag": "💥 哈立德國王空軍基地・青年運動宣稱打擊",
+      "tagClass": "tag-confirmed",
+      "desc": "哈立德國王空軍基地（King Khalid Air Base）位於海米斯穆謝特（Khamis Mushait），是沙烏地南部最重要的空軍基地之一，也是葉門聯軍對葉門空襲行動的主要出發基地。青年運動軍事發言人薩里爾明確點名此基地為攻擊目標。⚠️ 座標為概略位置。",
+      "coords": "18°18'N 042°48'E",
+      "source": "青年運動軍事發言人薩里爾聲明；AFP"
+    },
+    {
+      "latlng": [18.31, 42.73],
+      "name": "Khamis Mushait – Military & Aramco Hub",
+      "nameLocal": "海米斯穆謝特（Khamis Mushait）・軍事重鎮・阿美設施遭攻擊",
+      "type": "confirmed",
+      "tag": "💥 海米斯穆謝特・軍事重鎮・阿美設施遭攻擊",
+      "tagClass": "tag-confirmed",
+      "desc": "海米斯穆謝特是沙烏地南部阿西爾大區的重要軍事城市，與阿卜哈緊鄰。哈立德國王空軍基地即位於此市。此次攻擊造成當地阿美石油設施起火，葉門聯軍確認受損情況。⚠️ 座標為概略位置。",
+      "coords": "18°18'N 042°44'E",
+      "source": "沙烏地能源部；葉門聯軍"
+    },
+    {
+      "latlng": [16.89, 42.55],
+      "name": "Jizan – Red Sea Port & Aramco Refinery",
+      "nameLocal": "吉贊（Jizan）・紅海港・阿美煉油廠・多次遭襲",
+      "type": "confirmed",
+      "tag": "💥 吉贊・阿美煉油廠（日處理40萬桶）・今夏多次起火",
+      "tagClass": "tag-confirmed",
+      "desc": "吉贊位於沙烏地西南部紅海岸，緊鄰葉門邊境，是沙烏地重要的工業與港口城市。阿美石油吉贊煉油廠（Saudi Aramco Jizan Refinery，日處理約40萬桶原油，配套延伸石化設施）為本區最重要能源目標。今年7月底至8月已多次傳出火災或遭攻擊，此次9月8日攻擊再度波及。消防隊趕赴現場救援。",
+      "coords": "16°53'N 042°33'E",
+      "source": "沙烏地能源部；路透社；AFP"
+    },
+    {
+      "latlng": [17.57, 44.23],
+      "name": "Najran – Southern Border City",
+      "nameLocal": "奈季蘭（Najran）・南部邊境城市・攻擊波及",
+      "type": "confirmed",
+      "tag": "💥 奈季蘭・南部邊境城市・攻擊波及",
+      "tagClass": "tag-confirmed",
+      "desc": "奈季蘭為沙烏地南部奈季蘭省首府，緊鄰葉門─沙烏地邊境，長期處於青年運動飛彈與無人機威脅下，是此次9月8日攻擊波及的城市之一。葉門聯軍確認奈季蘭受到攻擊。⚠️ 座標為概略位置。",
+      "coords": "17°34'N 044°14'E",
+      "source": "葉門聯軍聲明"
+    },
+    {
+      "latlng": [24.69, 46.72],
+      "name": "Riyadh – Saudi Capital",
+      "nameLocal": "利雅德（Riyadh）・沙烏地首都・參考點",
+      "type": "capital",
+      "tag": "🏛 利雅德・沙烏地首都",
+      "tagClass": "tag-reference",
+      "desc": "沙烏地阿拉伯首都，阿美石油公司總部所在地。此次攻擊目標集中於沙烏地南部，利雅德作為地理參考點標示。沙烏地能源部在利雅德發布能源設施受損聲明。",
+      "coords": "24°41'N 046°43'E",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#c0392b", "fillOpacity": 0.20, "borderColor": "#7b241c", "label": "阿卜哈／海米斯穆謝特攻擊核心區" },
+    { "symbol": "polygon", "fillColor": "#e74c3c", "fillOpacity": 0.18, "borderColor": "#c0392b", "label": "吉贊港口與煉油廠區（多次遭襲）" },
+    { "symbol": "line",    "color": "#e74c3c", "weight": 2.5, "dash": "8,4", "label": "→ 阿卜哈／海米斯穆謝特方向攻擊路線（推估）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2.5, "dash": "8,4", "label": "→ 吉贊方向攻擊路線（推估）" },
+    { "symbol": "line",    "color": "#f39c12", "weight": 2,   "dash": "8,4", "label": "→ 奈季蘭方向攻擊路線（推估）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認受攻擊目標（機場・空軍基地・煉油廠等）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "首都・城市（利雅德・阿卜哈等）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "青年運動控制地（薩那）" }
+  ]
+}
