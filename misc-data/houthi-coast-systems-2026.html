@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>胡塞岸防系統諸元（2026）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.hcs-root {
+  font-family: 'Noto Sans TC', system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e8e6df;
+  padding: clamp(16px, 4vw, 40px);
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* ─── Header ─── */
+.hcs-header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e2640;
+}
+.hcs-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #6b7599;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.hcs-title {
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 700;
+  color: #f0eee6;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.hcs-subtitle {
+  font-size: 18px;
+  color: #9ba3c2;
+  margin-bottom: 10px;
+}
+.hcs-context-note {
+  display: inline-block;
+  font-size: 16px;
+  color: #8a9060;
+  background: #141810;
+  border: 1px solid #2e3818;
+  border-radius: 4px;
+  padding: 6px 14px;
+  line-height: 1.5;
+  text-align: left;
+  max-width: 680px;
+}
+
+/* ─── Section header ─── */
+.hcs-sec-hd {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #6b7599;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e2640;
+}
+
+/* ─── System cards ─── */
+.hcs-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.hcs-card {
+  background: #111827;
+  border-radius: 10px;
+  border: 1px solid #1e2640;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hcs-card--fr  { border-left: 4px solid #3987e5; }
+.hcs-card--de  { border-left: 4px solid #1baf7a; }
+.hcs-card--il  { border-left: 4px solid #eda100; }
+.hcs-card--uuv { border-left: 4px solid #9085e9; background: #0e0e1e; }
+
+/* Card head */
+.hcs-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.hcs-card-info { flex: 1; }
+.hcs-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0eee6;
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.hcs-card-maker {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: #6b7599;
+}
+.hcs-origin-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.hcs-origin-badge--fr  { background: #0c1a30; color: #3987e5; border: 1px solid #1e3a60; }
+.hcs-origin-badge--de  { background: #0c2318; color: #1baf7a; border: 1px solid #1e4030; }
+.hcs-origin-badge--il  { background: #1e1808; color: #eda100; border: 1px solid #3e3010; }
+.hcs-origin-badge--uuv { background: #14112e; color: #9085e9; border: 1px solid #2e2060; }
+
+.hcs-tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.hcs-tech {
+  font-size: 13px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: #1a1e2e;
+  color: #9ba3c2;
+}
+.hcs-tech--band { background: #0c1a30; color: #6eb0f0; }
+.hcs-tech--solid { background: #0c2318; color: #5ec89a; }
+.hcs-tech--aesa  { background: #200c30; color: #b090f0; }
+.hcs-tech--lpi   { background: #1e1808; color: #d0a040; }
+
+.hcs-card-div { height: 1px; background: #1e2640; }
+
+/* Spec key-value */
+.hcs-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hcs-spec {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.hcs-spec-k {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #6b7599;
+  background: #1a1e2e;
+  border: 1px solid #2a2e40;
+}
+.hcs-spec-v {
+  color: #c8cde8;
+  flex: 1;
+}
+.hcs-num {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  color: #e8e4d8;
+}
+.hcs-card-note {
+  font-size: 16px;
+  color: #6b7599;
+  font-style: italic;
+  border-top: 1px solid #1e2640;
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
+/* ─── Range comparison ─── */
+.hcs-range-wrap {
+  background: #0d1222;
+  border: 1px solid #1e2640;
+  border-radius: 10px;
+  padding: 22px;
+  margin-bottom: 36px;
+}
+.hcs-range-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #c8cde8;
+  margin-bottom: 6px;
+}
+.hcs-range-sub {
+  font-size: 16px;
+  color: #6b7599;
+  margin-bottom: 20px;
+}
+
+.hcs-range-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.hcs-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: #9ba3c2;
+}
+.hcs-leg-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Range table */
+.hcs-range-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hcs-range-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 60px;
+  gap: 10px;
+  align-items: center;
+}
+.hcs-range-label {
+  font-size: 18px;
+  color: #c0cce8;
+  text-align: right;
+  line-height: 1.4;
+}
+.hcs-range-track {
+  background: #1a1e2e;
+  border-radius: 4px;
+  height: 30px;
+  overflow: hidden;
+}
+.hcs-range-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+  min-width: 30px;
+}
+.hcs-range-km {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: #9ba3c2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.hcs-range-divider {
+  height: 1px;
+  background: #1e2640;
+  margin: 6px 0;
+}
+
+/* ─── BlueWhale section ─── */
+.hcs-bw {
+  background: #0e0e1e;
+  border: 1px solid #2e2060;
+  border-left: 4px solid #9085e9;
+  border-radius: 10px;
+  padding: 22px;
+  margin-bottom: 32px;
+}
+.hcs-bw-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.hcs-bw-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #c0b0f8;
+}
+.hcs-bw-sub {
+  font-size: 17px;
+  color: #8070c0;
+  margin-top: 3px;
+}
+.hcs-bw-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  background: #14112e;
+  color: #9085e9;
+  border: 1px solid #3e2890;
+  border-radius: 4px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.hcs-bw-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-bottom: 14px;
+}
+.hcs-bw-spec {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.hcs-bw-k {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #8070c0;
+  background: #14112e;
+  border: 1px solid #2e2060;
+}
+.hcs-bw-v { color: #c8cde8; flex: 1; }
+.hcs-bw-alert {
+  background: #1a1020;
+  border: 1px solid #4e3070;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 17px;
+  color: #9080a8;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.hcs-bw-alert-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #9085e9;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* ─── Footer ─── */
+.hcs-footer {
+  font-size: 15px;
+  color: #4a5270;
+  line-height: 1.7;
+  border-top: 1px solid #1e2640;
+  padding-top: 16px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .hcs-cards { grid-template-columns: 1fr; }
+  .hcs-bw-specs { grid-template-columns: 1fr; }
+  .hcs-range-row { grid-template-columns: 120px 1fr 55px; }
+}
+@media (max-width: 600px) {
+  .hcs-range-row { grid-template-columns: 90px 1fr auto; }
+  .hcs-range-label { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="hcs-root">
+
+<!-- ─── Header ─── -->
+<header class="hcs-header">
+  <div class="hcs-date">2026.09 · 葉門青年運動岸防裝備分析</div>
+  <h1 class="hcs-title">胡塞武裝宣稱使用的岸防系統諸元</h1>
+  <p class="hcs-subtitle">含雷達、水下載具技術規格簡介</p>
+  <div class="hcs-context-note">
+    以下系統為相關機構公開資料整理，部分（尤其 BlueWhale）目前僅見胡塞單方宣稱，尚無獨立證實。技術諸元以製造商公開規格為準。
+  </div>
+</header>
+
+<!-- ─── Radar systems ─── -->
+<div class="hcs-sec-hd">海岸監視雷達（三型）</div>
+<div class="hcs-cards">
+
+  <!-- Thales CoastWatcher 100 -->
+  <div class="hcs-card hcs-card--fr">
+    <div class="hcs-card-head">
+      <div class="hcs-card-info">
+        <div class="hcs-card-name">CoastWatcher 100</div>
+        <div class="hcs-card-maker">Thales Group</div>
+      </div>
+      <div class="hcs-origin-badge hcs-origin-badge--fr">🇫🇷 法國</div>
+    </div>
+    <div class="hcs-tech-badges">
+      <span class="hcs-tech hcs-tech--band">X波段</span>
+      <span class="hcs-tech hcs-tech--solid">固態</span>
+      <span class="hcs-tech">都卜勒</span>
+      <span class="hcs-tech">全天候</span>
+    </div>
+    <div class="hcs-card-div"></div>
+    <div class="hcs-specs">
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">儀表距離</span>
+        <span class="hcs-spec-v"><span class="hcs-num">~185 km</span>（約100海里）</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">距離解析</span>
+        <span class="hcs-spec-v">可達 <span class="hcs-num">4 公尺</span></span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">小目標偵測</span>
+        <span class="hcs-spec-v">架設高度85m時，<span class="hcs-num">1m² RCS</span>目標（如橡皮艇）可於 <span class="hcs-num">~28 km（15海里）</span>發現</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">目標追蹤</span>
+        <span class="hcs-spec-v">同時追蹤 <span class="hcs-num">數百個</span>水面與低空目標</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">能力特色</span>
+        <span class="hcs-spec-v">都卜勒處理、環境適應；水面與低空雙用途監視</span>
+      </div>
+    </div>
+    <div class="hcs-card-note">非超視距系統，有效覆蓋受地形與架設高度限制。</div>
+  </div>
+
+  <!-- Hensoldt Spexer 2000 + SharpEye -->
+  <div class="hcs-card hcs-card--de">
+    <div class="hcs-card-head">
+      <div class="hcs-card-info">
+        <div class="hcs-card-name">Spexer 2000 ／ SharpEye</div>
+        <div class="hcs-card-maker">Hensoldt（德）／ Kelvin Hughes（英）</div>
+      </div>
+      <div class="hcs-origin-badge hcs-origin-badge--de">🇩🇪🇬🇧 德／英</div>
+    </div>
+    <div class="hcs-tech-badges">
+      <span class="hcs-tech hcs-tech--band">X波段</span>
+      <span class="hcs-tech hcs-tech--aesa">AESA</span>
+      <span class="hcs-tech hcs-tech--solid">固態脈壓</span>
+      <span class="hcs-tech">都卜勒</span>
+    </div>
+    <div class="hcs-card-div"></div>
+    <div class="hcs-specs">
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">Spexer 儀表距離</span>
+        <span class="hcs-spec-v"><span class="hcs-num">40 km</span>（可選80 km）</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">Spexer 小目標</span>
+        <span class="hcs-spec-v">游泳者 <span class="hcs-num">~1 km</span>；橡皮艇 <span class="hcs-num">~20 km</span>；百噸級船隻 <span class="hcs-num">~40 km</span></span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">SharpEye 特色</span>
+        <span class="hcs-spec-v">惡劣天候、高海況（海況5級以上）雜波抑制；可發現 <span class="hcs-num">0.5 m² RCS</span> 小目標</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">典型應用</span>
+        <span class="hcs-spec-v">海岸監視 + 船舶交通服務（VTS）</span>
+      </div>
+    </div>
+    <div class="hcs-card-note">Spexer AESA設計可在複雜海況中有效偵測低RCS小目標；SharpEye以抗雜波聞名，常用VTS場景。</div>
+  </div>
+
+  <!-- ELM-2226 ACSR -->
+  <div class="hcs-card hcs-card--il">
+    <div class="hcs-card-head">
+      <div class="hcs-card-info">
+        <div class="hcs-card-name">ELM-2226 ACSR</div>
+        <div class="hcs-card-maker">IAI Elta Systems</div>
+      </div>
+      <div class="hcs-origin-badge hcs-origin-badge--il">🇮🇱 以色列</div>
+    </div>
+    <div class="hcs-tech-badges">
+      <span class="hcs-tech hcs-tech--band">X波段</span>
+      <span class="hcs-tech hcs-tech--solid">固態LFMCW</span>
+      <span class="hcs-tech hcs-tech--lpi">LPI低截獲</span>
+      <span class="hcs-tech">車載／固定</span>
+    </div>
+    <div class="hcs-card-div"></div>
+    <div class="hcs-specs">
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">發射功率</span>
+        <span class="hcs-spec-v">僅 <span class="hcs-num">5W 或 50W</span>（線性調頻連續波，難被截獲）</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">橡皮艇</span>
+        <span class="hcs-spec-v">海況3級：<span class="hcs-num">&gt;20 km</span></span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">巡邏艇</span>
+        <span class="hcs-spec-v">海況3級：<span class="hcs-num">&gt;60 km</span></span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">大型船隻</span>
+        <span class="hcs-spec-v">至<span class="hcs-num">雷達地平線</span>（受架設高度決定）</span>
+      </div>
+      <div class="hcs-spec">
+        <span class="hcs-spec-k">目標追蹤</span>
+        <span class="hcs-spec-v">自動追蹤 <span class="hcs-num">500+ 個</span>目標；全天候</span>
+      </div>
+    </div>
+    <div class="hcs-card-note">LPI特性使其自身較難被電子戰系統定位；機動性佳，車載部署迅速。</div>
+  </div>
+
+</div>
+
+<!-- ─── Range comparison ─── -->
+<div class="hcs-sec-hd">探測距離比較（依目標類型）</div>
+<div class="hcs-range-wrap">
+  <div class="hcs-range-title">各型雷達偵測範圍概覽</div>
+  <div class="hcs-range-sub">基準：儀表最大距離185 km = 100%；海況3級；以製造商公開資料為準</div>
+
+  <div class="hcs-range-legend">
+    <div class="hcs-leg-item"><div class="hcs-leg-dot" style="background:#3987e5"></div>CoastWatcher 100（法）</div>
+    <div class="hcs-leg-item"><div class="hcs-leg-dot" style="background:#1baf7a"></div>Spexer 2000（德）</div>
+    <div class="hcs-leg-item"><div class="hcs-leg-dot" style="background:#eda100"></div>ELM-2226（以）</div>
+  </div>
+
+  <div class="hcs-range-table">
+    <!-- Group: rubber boat -->
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#6b7599;margin-bottom:4px">小型目標（橡皮艇 ≈ 1m² RCS）</div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">CoastWatcher 100</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:15%;background:#1d4a90">~28 km</div>
+      </div>
+      <div class="hcs-range-km">~28 km</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">Spexer 2000</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:11%;background:#0e5030">~20 km</div>
+      </div>
+      <div class="hcs-range-km">~20 km</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">ELM-2226</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:11%;background:#3a2e00">&gt;20 km</div>
+      </div>
+      <div class="hcs-range-km">&gt;20 km</div>
+    </div>
+
+    <div class="hcs-range-divider"></div>
+
+    <!-- Group: patrol boat -->
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#6b7599;margin-bottom:4px">中型目標（巡邏艇）</div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">ELM-2226</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:33%;background:#3a2e00">&gt;60 km</div>
+      </div>
+      <div class="hcs-range-km">&gt;60 km</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label" style="color:#4a5270">Spexer 2000（百噸級）</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:22%;background:#0e5030">~40 km</div>
+      </div>
+      <div class="hcs-range-km" style="color:#5a6480">~40 km</div>
+    </div>
+
+    <div class="hcs-range-divider"></div>
+
+    <!-- Group: large vessel / instrument -->
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#6b7599;margin-bottom:4px">大型船隻 ／ 儀表最大距離</div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">CoastWatcher 100（儀表）</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:100%;background:#1d4a90">185 km</div>
+      </div>
+      <div class="hcs-range-km">185 km</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">Spexer 2000（選配）</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:43%;background:#0e5030">80 km</div>
+      </div>
+      <div class="hcs-range-km">80 km</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">ELM-2226（大型船）</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:72%;background:#3a2e00">至地平線</div>
+      </div>
+      <div class="hcs-range-km">地平線</div>
+    </div>
+    <div class="hcs-range-row">
+      <div class="hcs-range-label">Spexer 2000（標準）</div>
+      <div class="hcs-range-track">
+        <div class="hcs-range-bar" style="width:22%;background:#0e5030">40 km</div>
+      </div>
+      <div class="hcs-range-km">40 km</div>
+    </div>
+
+    <div style="margin-top:12px;font-size:15px;color:#4a5270;font-style:italic">
+      ※ SharpEye 主要設計用於抗雜波場景（VTS、海況5+），製造商未公開典型距離諸元，不列入比較。
+    </div>
+  </div>
+</div>
+
+<!-- ─── BlueWhale ─── -->
+<div class="hcs-sec-hd">特殊案例：大型無人水下載具</div>
+<div class="hcs-bw">
+  <div class="hcs-bw-head">
+    <div>
+      <div class="hcs-bw-title">BlueWhale（ELI-3325）</div>
+      <div class="hcs-bw-sub">IAI Elta × Atlas Elektronik｜大型無人水下載具（UUV）</div>
+    </div>
+    <div class="hcs-bw-badge">🇮🇱🇩🇪 以色列 × 德國</div>
+  </div>
+
+  <div class="hcs-bw-specs">
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">全長</span>
+      <span class="hcs-bw-v"><span class="hcs-num">10.9 公尺</span></span>
+    </div>
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">重量</span>
+      <span class="hcs-bw-v"><span class="hcs-num">5.5 噸</span></span>
+    </div>
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">最大潛深</span>
+      <span class="hcs-bw-v"><span class="hcs-num">300 公尺</span></span>
+    </div>
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">續航</span>
+      <span class="hcs-bw-v"><span class="hcs-num">10 至 30 天</span></span>
+    </div>
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">感測器</span>
+      <span class="hcs-bw-v">聲納陣列、可伸縮桅杆載雷達、晝夜光電／紅外線攝影機</span>
+    </div>
+    <div class="hcs-bw-spec">
+      <span class="hcs-bw-k">製造商定位</span>
+      <span class="hcs-bw-v">水下情報蒐集、反潛輔助、水面目標識別；非固定式感測器</span>
+    </div>
+  </div>
+
+  <div class="hcs-bw-alert">
+    <div class="hcs-bw-alert-icon">⚠ 注意</div>
+    胡塞武裝宣稱繳獲的「藍鯨水下感測器」實為上述大型UUV，並非小型固定式水下感測器。目前<strong>僅胡塞單方面宣稱</strong>，尚無第三方獨立核實。長程紅外線攝影機亦為標準配置，用於夜間水面目標識別，配合岸基雷達使用。
+  </div>
+</div>
+
+<!-- ─── Footer ─── -->
+<div class="hcs-footer">
+  資料來源：各製造商公開規格文件（Thales、Hensoldt、Kelvin Hughes、IAI Elta）；部分數據援引自公開學術與產業分析報告。BlueWhale部分依胡塞公開聲明整理，尚未經獨立機構證實。所有探測距離受架設高度、海況、目標RCS等因素影響，製造商數據為典型條件下之估算值。
+</div>
+
+</div>
+</body>
+</html>
