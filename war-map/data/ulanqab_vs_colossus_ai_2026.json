@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "烏蘭察布AI算力叢集 vs. xAI Colossus（2026年）",
+    "titleEn": "Ulanqab AI Compute Hub vs. xAI Colossus Cluster — 2026 Global Comparison",
+    "subtitle": "遠景星河基地2GW≈整個Colossus目標・烏蘭察布總規劃12.5GW≈Colossus目標6倍・東數西算節點・孟菲斯田納西",
+    "date": "2026-09-16",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["張威翔製作", "烏蘭察布市政府公開資料", "新華網", "人民網", "遠景科技（ENVISION）", "xAI官方聲明", "路透社", "The Information"]
+  },
+  "map": {
+    "center": [40, 5],
+    "zoom": 2,
+    "bounds": [[-5, -125], [65, 145]]
+  },
+  "infoPanel": {
+    "title": "烏蘭察布 vs. Colossus・全球AI算力規模對比（2026年9月）",
+    "paragraphs": [
+      "內蒙古烏蘭察布（Ulanqab）是中國「東數西算」戰略的核心節點之一。憑藉充足且廉價的綠電（全域綠電占比約67%）、低溫氣候帶來的自然冷卻優勢，以及距北京僅約280公里的低網路延遲，華為、阿里巴巴、蘋果、字節跳動、快手、萬國數據等企業相繼進駐。截至2026年上半年，已簽約89至109個數據中心與智算項目，簽約標準機架超500萬架，全市規劃電力約12.5吉瓦（GW），智算比例超90%。",
+      "2026年8月6日，遠景科技（ENVISION）在烏蘭察布啟用「星河基地（Galaxy Campus）」，單棟建築約12萬平方公尺（約等於20個足球場），園區規劃2吉瓦、可支援百萬張GPU並行，被大陸媒體稱為全球最大單一AI算力設施。這個數字恰好與馬斯克旗下xAI在田納西州孟菲斯部署的Colossus集群整體目標（1.5至2吉瓦）相當——也就是說，遠景星河基地一個園區，規模就大致對得上整個Colossus集群的目標上限。",
+      "若以整個烏蘭察布規劃電力12.5吉瓦計算，約為Colossus目標的6倍。在基建條件上，烏蘭察布的平均氣溫與電力充裕程度也明顯優於田納西州——後者面臨夏季高溫、電網容量緊張，xAI Colossus在擴建過程中持續面臨「邊建邊找電源」的挑戰。⚠️ 部分數據為簽約或規劃值，實際建成量依各項目進度而定。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [40.50, 112.30],
+        [40.50, 114.20],
+        [41.80, 114.20],
+        [41.80, 112.30],
+        [40.50, 112.30]
+      ],
+      "fillColor": "#1565C0",
+      "fillOpacity": 0.20,
+      "borderColor": "#0D47A1",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "烏蘭察布AI算力叢集・規劃12.5GW・簽約500萬架機架",
+        "tag": "🖥️ 烏蘭察布・東數西算節點・全球最大AI算力聚集區之一",
+        "tagClass": "tag-confirmed",
+        "desc": "烏蘭察布全市AI數據中心叢集概略範圍。已簽約89至109個數據中心與智算項目，簽約標準機架超500萬架（部分後期報導稱超700萬架），全市規劃電力約12.5吉瓦（GW），智算比例超過90%。已建成約65萬架、投運約43萬架。萬國數據規劃五年投資300億元人民幣。⚠️ 為概略示意範圍。",
+        "source": "烏蘭察布市政府；新華網；人民網"
+      }
+    },
+    {
+      "points": [
+        [35.00, -90.12],
+        [35.00, -89.90],
+        [35.15, -89.90],
+        [35.15, -90.12],
+        [35.00, -90.12]
+      ],
+      "fillColor": "#e65100",
+      "fillOpacity": 0.22,
+      "borderColor": "#bf360c",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "xAI Colossus 集群・孟菲斯・田納西州・目標1.5─2GW",
+        "tag": "🖥️ xAI Colossus・孟菲斯・馬斯克旗下xAI",
+        "tagClass": "tag-confirmed",
+        "desc": "馬斯克（Elon Musk）旗下xAI在田納西州孟菲斯部署的Colossus超級算力集群，包含Colossus 1與Colossus 2兩個場址，目前IT電力約1吉瓦等級，其中Colossus 2單一場址約0.95吉瓦，整體目標規模約1.5至2吉瓦。在擴建過程中持續面臨電網容量緊張與夏季高溫散熱挑戰，「邊建邊找電源」的困境被多家媒體廣泛報導。⚠️ 為概略示意範圍。",
+        "source": "xAI官方聲明；路透社；The Information"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [39.90, 116.40],
+        [41.03, 113.13]
+      ],
+      "color": "#42A5F5",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "北京→烏蘭察布・距離約280公里・低網路延遲優勢",
+        "tag": "📡 北京─烏蘭察布・約280公里・低延遲",
+        "tagClass": "tag-confirmed",
+        "desc": "烏蘭察布距北京約280公里，是其吸引數據中心進駐的核心優勢之一。相比貴州等更偏遠的「東數西算」節點，烏蘭察布對北京的網路延遲更低，適合對延遲敏感的AI推理工作負載。高速鐵路亦可在約1.5小時內連接兩地。",
+        "source": "烏蘭察布市政府；中國移動"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [41.03, 113.13],
+      "name": "Ulanqab – China's Premier AI Compute Hub",
+      "nameLocal": "烏蘭察布（Ulanqab）・內蒙古・東數西算核心節點・AI算力叢集",
+      "type": "capital",
+      "tag": "🖥️ 烏蘭察布・12.5GW規劃・500萬架機架・東數西算節點",
+      "tagClass": "tag-confirmed",
+      "desc": "內蒙古自治區烏蘭察布市，中國「東數西算」國家戰略的重要節點。優勢包括：①充足且廉價的綠電（綠電占比約67%，電價全國最低之列）；②年均氣溫約3.6°C，自然冷卻優勢顯著，PUE（電能使用效率）可達1.1至1.2；③距北京約280公里，網路延遲低。截至2026年上半年，已簽約89至109個數據中心及智算項目，簽約標準機架超500萬架，全市規劃電力約12.5GW，智算比例超90%。",
+      "coords": "41°02'N 113°08'E",
+      "source": "烏蘭察布市政府；新華網"
+    },
+    {
+      "latlng": [41.10, 113.05],
+      "name": "ENVISION Galaxy Campus – World's Largest Single AI Campus",
+      "nameLocal": "遠景星河基地（Galaxy Campus）・2GW規劃・2026年8月6日啟用",
+      "type": "confirmed",
+      "tag": "🌟 遠景星河基地・2GW・單棟12萬㎡・百萬GPU・2026-08-06啟用",
+      "tagClass": "tag-confirmed",
+      "desc": "遠景科技（ENVISION Energy）在烏蘭察布建設的「星河基地（Galaxy Campus）」，2026年8月6日正式宣布啟用。單棟建築面積約12萬平方公尺，約等於20個足球場，是目前公開資料中全球最大的單一AI算力設施建築。園區規劃電力2吉瓦（GW），可支援百萬張GPU並行計算，算力規模達百萬P（PFLOPS）。全部採用烏蘭察布廉價綠電，充分利用當地低溫自然冷卻。2GW的規劃規模，大致等於整個xAI Colossus集群的目標上限。⚠️ 座標為概略位置。",
+      "coords": "41°06'N 113°03'E",
+      "source": "遠景科技（ENVISION）；新華網；人民網"
+    },
+    {
+      "latlng": [39.90, 116.40],
+      "name": "Beijing – AI Data Hub & Demand Center",
+      "nameLocal": "北京（Beijing）・AI需求核心・距烏蘭察布約280公里",
+      "type": "capital",
+      "tag": "🏛 北京・AI需求中心・距烏蘭察布約280公里",
+      "tagClass": "tag-reference",
+      "desc": "中國首都，字節跳動、百度、快手等AI大廠總部所在地，也是烏蘭察布數據中心叢集最主要的業務來源地。兩地距離約280公里，高鐵約1.5小時，網路延遲低於10毫秒，是烏蘭察布相較其他「東數西算」節點（如貴州、寧夏）的關鍵競爭優勢。",
+      "coords": "39°54'N 116°24'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [35.06, -90.00],
+      "name": "xAI Colossus 1 – Memphis, Tennessee",
+      "nameLocal": "xAI Colossus 1・田納西州孟菲斯・馬斯克旗下xAI",
+      "type": "confirmed",
+      "tag": "🖥️ xAI Colossus 1・孟菲斯・田納西州・~0.5GW",
+      "tagClass": "tag-confirmed",
+      "desc": "馬斯克（Elon Musk）旗下xAI在田納西州孟菲斯建設的第一座Colossus超算集群，前身為廢棄工業廠房（據報為原Electrolux工廠址附近），以極快速度改建完成。Colossus 1是xAI推進Grok大型語言模型訓練的核心算力基礎。孟菲斯地區夏季高溫與電網容量限制是持續面臨的挑戰。⚠️ 座標為概略位置。",
+      "coords": "35°04'N 090°00'W",
+      "source": "xAI官方聲明；路透社；The Information"
+    },
+    {
+      "latlng": [35.10, -90.05],
+      "name": "xAI Colossus 2 – Memphis, Tennessee (~0.95GW)",
+      "nameLocal": "xAI Colossus 2・田納西州孟菲斯・約0.95GW・整體目標1.5─2GW",
+      "type": "confirmed",
+      "tag": "🖥️ xAI Colossus 2・孟菲斯・約0.95GW・擴建中",
+      "tagClass": "tag-confirmed",
+      "desc": "xAI在孟菲斯建設的第二座Colossus超算設施，單一場址IT電力規模約0.95吉瓦，為目前最大單一場址。Colossus 1加Colossus 2合計IT電力目前約1吉瓦等級，整體目標規模約1.5至2吉瓦。擴建過程中持續面臨「邊建邊找電源」的困境，田納西電力公司（TVA）的電網容量與環境許可均是限制因素。這個整體目標，和中國遠景星河基地一個園區的規劃規模（2GW）大致相當。⚠️ 座標為概略位置。",
+      "coords": "35°06'N 090°03'W",
+      "source": "xAI官方聲明；路透社；The Information"
+    },
+    {
+      "latlng": [35.15, -90.05],
+      "name": "Memphis, Tennessee – xAI Colossus Host City",
+      "nameLocal": "孟菲斯（Memphis）・田納西州・xAI Colossus 所在城市",
+      "type": "capital",
+      "tag": "🏙 孟菲斯・田納西州・xAI Colossus 所在城市",
+      "tagClass": "tag-reference",
+      "desc": "美國田納西州最大城市，密西西比河畔，人口約65萬。xAI選擇孟菲斯建設Colossus集群的主要考量包括：廉價工業用地（廢棄工廠改建）、既有工業電力基礎設施，以及相對寬鬆的監管環境。然而孟菲斯夏季平均氣溫較高（7月均溫約30°C），加上電網擴容需時，使算力叢集的冷卻成本與電力供應均面臨壓力，這在與烏蘭察布（年均氣溫約3.6°C，電價更低）的比較中明顯處於劣勢。",
+      "coords": "35°09'N 090°03'W",
+      "source": "地理參考；路透社"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#1565C0", "fillOpacity": 0.20, "borderColor": "#0D47A1", "label": "烏蘭察布AI算力叢集規劃範圍（12.5GW・500萬架）" },
+    { "symbol": "polygon", "fillColor": "#e65100", "fillOpacity": 0.22, "borderColor": "#bf360c", "label": "xAI Colossus 集群・孟菲斯（目標1.5─2GW）" },
+    { "symbol": "line",    "color": "#42A5F5", "weight": 2, "dash": "6,4", "label": "北京─烏蘭察布・約280公里・低延遲" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "遠景星河基地（2GW・2026-08-06啟用）・xAI Colossus 1/2" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "城市參考點（烏蘭察布・北京・孟菲斯）" }
+  ]
+}
