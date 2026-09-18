@@ -381,40 +381,16 @@
 .ue-refresh-btn.loading{animation:ue-spin 1s linear infinite;}
 @keyframes ue-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* ── Embed notice (hidden in iframe) ── */
-.ue-embed-bar{
-  background:#0d1520;border-bottom:1px solid var(--c-border);
-  padding:8px 18px;display:flex;align-items:center;gap:10px;
-}
-.ue-embed-url{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
-  flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.ue-embed-copy{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);padding:4px 10px;
-  border:1px solid var(--c-border);background:transparent;
-  color:var(--c-muted);cursor:pointer;border-radius:3px;
-  white-space:nowrap;transition:all .2s;
-}
-.ue-embed-copy:hover{border-color:var(--c-accent);color:var(--c-accent);}
 
 @media(max-width:480px){
   .ue-head{padding:16px 16px 14px;}
   .ue-boards{padding:12px 12px 0;gap:10px;}
   .ue-main{padding:10px 12px 14px;gap:10px;}
-  .ue-embed-bar{display:none;}
 }
 </style>
 </head>
 <body>
 <div class="ue-wrap" id="ue-root">
-
-  <!-- Embed code bar (shown outside iframe) -->
-  <div class="ue-embed-bar" id="ue-embed-bar">
-    <span style="font-family:var(--ff-mono);font-size:13px;color:#f0b400;letter-spacing:1px;">EMBED</span>
-    <span class="ue-embed-url" id="ue-embed-url"></span>
-    <button class="ue-embed-copy" onclick="copyEmbed()">複製嵌入碼</button>
-  </div>
 
   <!-- Header -->
   <div class="ue-head">
@@ -914,27 +890,6 @@ function closeModalDirect() {
   document.getElementById('ue-modal-bg').classList.remove('open');
 }
 
-/* ══════════════════════════════════════════════
-   EMBED COPY
-═══════════════════════════════════════════════ */
-function setupEmbedBar() {
-  const url = window.location.href.split('?')[0];
-  const iframe = `<iframe src="${url}" width="100%" height="800" frameborder="0" scrolling="auto" style="border:none;max-width:100%;"></iframe>`;
-  document.getElementById('ue-embed-url').textContent = iframe;
-  if (window.self !== window.top) {
-    document.getElementById('ue-embed-bar').style.display = 'none';
-  }
-}
-
-function copyEmbed() {
-  const url = window.location.href.split('?')[0];
-  const iframe = `<iframe src="${url}" width="100%" height="800" frameborder="0" scrolling="auto" style="border:none;max-width:100%;"></iframe>`;
-  navigator.clipboard.writeText(iframe).then(() => {
-    const btn = document.querySelector('.ue-embed-copy');
-    btn.textContent = '✓ 已複製';
-    setTimeout(() => btn.textContent = '複製嵌入碼', 2000);
-  });
-}
 
 /* ══════════════════════════════════════════════
    FALLBACK DATA
@@ -953,7 +908,6 @@ function getFallbackData() {
    INIT
 ═══════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  setupEmbedBar();
   loadData();
 });
 
