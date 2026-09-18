@@ -1057,11 +1057,6 @@ function renderRacesList() {
             return `
             <div style="border:1px solid var(--border);border-radius:4px;padding:12px;">
               <div style="font-family:var(--mono);font-size:10px;color:${pColor};margin-bottom:10px;letter-spacing:1px;">${pLabel}</div>
-              <div class="adm-field" style="margin-bottom:8px;">
-                <label class="adm-label">候選人姓名</label>
-                <input class="adm-input" value="${p.name||''}"
-                  oninput="updateCandidateField(${realIdx},'${party}','name',this.value)">
-              </div>
               <div style="display:flex;gap:8px;">
                 <div class="adm-field" style="flex:1;">
                   <label class="adm-label">得票率 %</label>
