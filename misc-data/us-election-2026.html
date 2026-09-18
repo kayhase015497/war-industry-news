@@ -18,11 +18,17 @@
   --c-text:#e2e8f0;--c-muted:#64748b;--c-accent:#f0b400;
   --ff-body:'Noto Sans TC',sans-serif;--ff-mono:'Space Mono',monospace;
   --r:6px;
+  /* 字型比例：所有尺寸以此為基準 */
+  --fs-xs:13px;   /* 輔助標籤、角標 */
+  --fs-sm:14px;   /* 次要標籤、badge */
+  --fs-base:18px; /* 正文、候選人名 */
+  --fs-md:16px;   /* 次要正文 */
+  --fs-mono:13px; /* Space Mono 標籤 */
 }
 
 /* ── Wrapper ── */
 .ue-wrap{
-  font-family:var(--ff-body);
+  font-family:var(--ff-body);font-size:var(--fs-base);
   background:var(--c-bg);color:var(--c-text);
   min-height:100vh;padding:0;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -31,7 +37,7 @@
 /* ── Header ── */
 .ue-head{
   background:linear-gradient(135deg,#080d18 0%,#0f1d3a 60%,#1a0a0a 100%);
-  padding:20px 20px 16px;
+  padding:24px 24px 20px;
   border-bottom:3px solid var(--c-accent);
   position:relative;overflow:hidden;
 }
@@ -48,39 +54,39 @@
   pointer-events:none;
 }
 .ue-kicker{
-  font-family:var(--ff-mono);font-size:10px;letter-spacing:3px;
-  color:var(--c-accent);text-transform:uppercase;margin-bottom:8px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:3px;
+  color:var(--c-accent);text-transform:uppercase;margin-bottom:10px;
 }
 .ue-title{
-  font-size:clamp(18px,3vw,28px);font-weight:900;line-height:1.2;
-  color:#fff;margin-bottom:6px;
+  font-size:clamp(22px,3.5vw,34px);font-weight:900;line-height:1.2;
+  color:#fff;margin-bottom:8px;
 }
 .ue-head-meta{
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:8px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:10px;
 }
 .ue-live-dot{
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--ff-mono);font-size:10px;color:#4ade80;
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:#4ade80;
 }
 .ue-live-dot::before{
-  content:'';width:7px;height:7px;border-radius:50%;
+  content:'';width:8px;height:8px;border-radius:50%;
   background:#4ade80;box-shadow:0 0 8px #4ade80;
   animation:ue-pulse 2s infinite;
 }
 @keyframes ue-pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .ue-updated{
-  font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
 }
 .ue-reporting-tag{
-  font-family:var(--ff-mono);font-size:10px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);
   background:rgba(240,180,0,.12);border:1px solid rgba(240,180,0,.3);
-  color:var(--c-accent);padding:2px 8px;
+  color:var(--c-accent);padding:3px 10px;
 }
 
 /* ── Scoreboards ── */
 .ue-boards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:12px;padding:16px 16px 0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:14px;padding:18px 18px 0;
 }
 .ue-board{
   background:var(--c-card);border:1px solid var(--c-border);
@@ -88,15 +94,15 @@
 }
 .ue-board-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px 14px 8px;border-bottom:1px solid var(--c-border);
+  padding:12px 16px 10px;border-bottom:1px solid var(--c-border);
 }
 .ue-board-title{
-  font-family:var(--ff-mono);font-size:10px;letter-spacing:2px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:2px;
   text-transform:uppercase;color:var(--c-muted);
 }
 .ue-board-ctrl{
-  font-family:var(--ff-mono);font-size:10px;
-  padding:2px 8px;border-radius:3px;font-weight:700;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);
+  padding:3px 10px;border-radius:3px;font-weight:700;
 }
 .ctrl-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
 .ctrl-D{background:var(--c-dem-glow);color:var(--c-dem);border:1px solid rgba(59,130,246,.3);}
@@ -104,46 +110,46 @@
 
 .ue-counts{
   display:flex;align-items:stretch;justify-content:space-between;
-  padding:12px 14px 8px;gap:8px;
+  padding:14px 16px 10px;gap:8px;
 }
 .ue-count{text-align:center;flex:1;}
 .ue-count-n{
-  font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1;
+  font-size:clamp(32px,5vw,52px);font-weight:900;line-height:1;
   font-variant-numeric:tabular-nums;
 }
 .ue-count-n.dem{color:var(--c-dem);}
 .ue-count-n.rep{color:var(--c-rep);}
-.ue-count-n.unc{color:var(--c-muted);font-size:clamp(20px,3vw,30px);}
+.ue-count-n.unc{color:var(--c-muted);font-size:clamp(22px,3.5vw,36px);}
 .ue-count-lbl{
-  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
-  margin-top:4px;letter-spacing:1px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  margin-top:5px;letter-spacing:1px;
 }
 .ue-count-net{
-  font-family:var(--ff-mono);font-size:9px;margin-top:2px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);margin-top:3px;
 }
 .net-pos{color:#4ade80;} .net-neg{color:#f87171;} .net-zero{color:var(--c-muted);}
 .ue-count-sep{width:1px;background:var(--c-border);align-self:stretch;margin:0 4px;}
 
-.ue-bar-wrap{padding:8px 14px 14px;}
+.ue-bar-wrap{padding:10px 16px 16px;}
 .ue-bar-labels{
   display:flex;justify-content:space-between;
-  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
-  margin-bottom:4px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  margin-bottom:5px;
 }
 .ue-bar{
-  height:14px;display:flex;border-radius:3px;overflow:hidden;
+  height:18px;display:flex;border-radius:4px;overflow:hidden;
   background:var(--c-unc);position:relative;
 }
 .ue-bar-d{background:var(--c-dem);transition:width .6s ease;}
 .ue-bar-r{background:var(--c-rep);transition:width .6s ease;}
 .ue-bar-i{background:var(--c-ind);transition:width .6s ease;}
 .ue-threshold{
-  position:absolute;top:-3px;bottom:-3px;width:2px;
+  position:absolute;top:-4px;bottom:-4px;width:2px;
   background:var(--c-accent);z-index:2;
 }
 .ue-threshold-lbl{
-  position:absolute;top:-18px;
-  font-family:var(--ff-mono);font-size:8px;color:var(--c-accent);
+  position:absolute;top:-20px;
+  font-family:var(--ff-mono);font-size:12px;color:var(--c-accent);
   white-space:nowrap;transform:translateX(-50%);
 }
 
@@ -151,13 +157,13 @@
 .ue-main{
   display:grid;
   grid-template-columns:1fr;
-  gap:12px;padding:12px 16px 16px;
+  gap:14px;padding:14px 18px 18px;
 }
 @media(min-width:900px){
-  .ue-main{grid-template-columns:1fr 380px;}
+  .ue-main{grid-template-columns:1fr 440px;}
 }
 @media(min-width:1200px){
-  .ue-main{grid-template-columns:1fr 420px;}
+  .ue-main{grid-template-columns:1fr 480px;}
 }
 
 /* ── Map Panel ── */
@@ -167,24 +173,24 @@
 }
 .ue-panel-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px 14px;border-bottom:1px solid var(--c-border);
+  padding:12px 16px;border-bottom:1px solid var(--c-border);
   flex-wrap:wrap;gap:8px;
 }
 .ue-panel-title{
-  font-family:var(--ff-mono);font-size:10px;letter-spacing:2px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:2px;
   text-transform:uppercase;color:var(--c-muted);
 }
 .ue-map-legend{
-  display:flex;gap:12px;flex-wrap:wrap;
+  display:flex;gap:14px;flex-wrap:wrap;
 }
 .ue-leg-item{
-  display:flex;align-items:center;gap:5px;
-  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
 }
-.ue-leg-swatch{width:10px;height:10px;border-radius:2px;}
+.ue-leg-swatch{width:12px;height:12px;border-radius:2px;}
 #ue-map-svg{width:100%;height:auto;display:block;cursor:pointer;}
 .ue-map-note{
-  padding:8px 14px;font-family:var(--ff-mono);font-size:9px;
+  padding:10px 16px;font-family:var(--ff-mono);font-size:var(--fs-mono);
   color:var(--c-muted);border-top:1px solid var(--c-border);
   text-align:center;
 }
@@ -202,23 +208,23 @@
 /* ── Tooltip ── */
 .ue-tooltip{
   position:fixed;background:#1e293b;border:1px solid var(--c-border);
-  border-radius:var(--r);padding:10px 14px;
-  font-family:var(--ff-body);font-size:12px;
+  border-radius:var(--r);padding:12px 16px;
+  font-family:var(--ff-body);font-size:var(--fs-md);
   box-shadow:0 8px 24px rgba(0,0,0,.5);
   pointer-events:none;z-index:1000;
-  opacity:0;transition:opacity .15s;max-width:220px;
+  opacity:0;transition:opacity .15s;max-width:240px;
   transform:translate(-50%,-110%);
 }
 .ue-tooltip.visible{opacity:1;}
 .ue-tt-state{
-  font-family:var(--ff-mono);font-size:10px;letter-spacing:1px;
-  color:var(--c-accent);margin-bottom:6px;text-transform:uppercase;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  color:var(--c-accent);margin-bottom:7px;text-transform:uppercase;
 }
-.ue-tt-winner{font-weight:700;font-size:13px;margin-bottom:4px;}
+.ue-tt-winner{font-weight:700;font-size:var(--fs-base);margin-bottom:5px;}
 .ue-tt-winner.R{color:var(--c-rep);}
 .ue-tt-winner.D{color:var(--c-dem);}
 .ue-tt-winner.unc{color:var(--c-muted);}
-.ue-tt-pct{font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);}
+.ue-tt-pct{font-family:var(--ff-mono);font-size:var(--fs-sm);color:var(--c-muted);}
 
 /* ── Race Panel ── */
 .ue-race-panel{
@@ -230,8 +236,8 @@
   display:flex;border-bottom:1px solid var(--c-border);
 }
 .ue-tab{
-  flex:1;padding:10px 8px;text-align:center;cursor:pointer;
-  font-family:var(--ff-mono);font-size:10px;letter-spacing:1px;
+  flex:1;padding:13px 8px;text-align:center;cursor:pointer;
+  font-family:var(--ff-mono);font-size:var(--fs-sm);letter-spacing:1px;
   text-transform:uppercase;color:var(--c-muted);
   border-bottom:2px solid transparent;transition:all .2s;
   user-select:none;
@@ -240,12 +246,12 @@
 .ue-tab.active{color:var(--c-accent);border-bottom-color:var(--c-accent);}
 
 .ue-filter-row{
-  display:flex;gap:6px;padding:10px 12px;
+  display:flex;gap:8px;padding:12px 14px;
   border-bottom:1px solid var(--c-border);flex-wrap:wrap;
 }
 .ue-filter-btn{
-  font-family:var(--ff-mono);font-size:9px;letter-spacing:1px;
-  text-transform:uppercase;padding:3px 8px;border-radius:3px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  text-transform:uppercase;padding:5px 12px;border-radius:3px;
   border:1px solid var(--c-border);background:transparent;
   color:var(--c-muted);cursor:pointer;transition:all .15s;
 }
@@ -263,7 +269,7 @@
 .ue-race-list::-webkit-scrollbar-thumb{background:var(--c-border);}
 
 .ue-race-item{
-  padding:11px 14px;border-bottom:1px solid var(--c-border);
+  padding:15px 18px;border-bottom:1px solid var(--c-border);
   cursor:pointer;transition:background .15s;
 }
 .ue-race-item:hover{background:rgba(255,255,255,.03);}
@@ -271,60 +277,61 @@
 
 .ue-race-top{
   display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:8px;
+  margin-bottom:10px;gap:8px;
 }
 .ue-race-label{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:10px;flex:1;min-width:0;
 }
 .ue-state-badge{
-  font-family:var(--ff-mono);font-size:11px;font-weight:700;
+  font-family:var(--ff-mono);font-size:var(--fs-sm);font-weight:700;
   color:#fff;background:rgba(255,255,255,.08);
-  padding:2px 6px;border-radius:3px;letter-spacing:.5px;
+  padding:4px 8px;border-radius:3px;letter-spacing:.5px;flex-shrink:0;
 }
 .ue-race-office{
-  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
   letter-spacing:1px;text-transform:uppercase;
 }
 .ue-race-status{
-  display:flex;align-items:center;gap:6px;
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
 }
 .ue-called-badge{
-  font-family:var(--ff-mono);font-size:9px;padding:2px 6px;
-  border-radius:3px;letter-spacing:.5px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);padding:4px 9px;
+  border-radius:3px;letter-spacing:.5px;white-space:nowrap;
 }
 .called-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
 .called-D{background:var(--c-dem-glow);color:var(--c-dem);border:1px solid rgba(59,130,246,.3);}
 .called-null{background:rgba(100,116,139,.1);color:var(--c-muted);border:1px solid rgba(100,116,139,.2);}
 .ue-pct-reporting{
-  font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  margin-top:8px;
 }
 
-.ue-candidates{display:flex;flex-direction:column;gap:5px;}
-.ue-candidate{display:flex;align-items:center;gap:8px;}
+.ue-candidates{display:flex;flex-direction:column;gap:7px;}
+.ue-candidate{display:flex;align-items:center;gap:10px;}
 .ue-cand-party{
-  width:12px;height:12px;border-radius:2px;flex-shrink:0;
+  width:15px;height:15px;border-radius:3px;flex-shrink:0;
 }
 .party-D{background:var(--c-dem);}
 .party-R{background:var(--c-rep);}
 .ue-cand-name{
-  font-size:12px;flex:1;white-space:nowrap;
+  font-size:var(--fs-base);flex:1;white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis;
 }
 .ue-cand-name.winner{font-weight:700;}
 .ue-winner-mark{
-  font-size:10px;color:var(--c-accent);margin-left:2px;
+  font-size:var(--fs-sm);color:var(--c-accent);margin-left:3px;
 }
 .ue-cand-pct{
-  font-family:var(--ff-mono);font-size:11px;font-weight:700;
-  min-width:38px;text-align:right;
+  font-family:var(--ff-mono);font-size:var(--fs-md);font-weight:700;
+  min-width:46px;text-align:right;
 }
 .pct-D{color:var(--c-dem);}
 .pct-R{color:var(--c-rep);}
 .ue-cand-bar-wrap{
-  width:100%;margin-top:2px;
+  width:100%;margin-top:3px;
 }
 .ue-cand-bar{
-  height:3px;border-radius:2px;background:var(--c-border);
+  height:5px;border-radius:3px;background:var(--c-border);
   overflow:hidden;
 }
 .ue-cand-bar-fill{height:100%;transition:width .5s ease;}
@@ -340,32 +347,32 @@
 .ue-modal-bg.open{display:flex;}
 .ue-modal{
   background:#141e30;border:1px solid var(--c-border);
-  border-radius:var(--r);max-width:480px;width:100%;
-  max-height:85vh;overflow-y:auto;
+  border-radius:var(--r);max-width:520px;width:100%;
+  max-height:88vh;overflow-y:auto;
   box-shadow:0 20px 60px rgba(0,0,0,.7);
 }
 .ue-modal-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:14px 16px;border-bottom:1px solid var(--c-border);
+  padding:16px 20px;border-bottom:1px solid var(--c-border);
   position:sticky;top:0;background:#141e30;z-index:1;
 }
 .ue-modal-close{
   background:none;border:none;color:var(--c-muted);
-  font-size:20px;cursor:pointer;padding:4px;line-height:1;
+  font-size:24px;cursor:pointer;padding:4px;line-height:1;
 }
 .ue-modal-close:hover{color:var(--c-text);}
-.ue-modal-body{padding:16px;}
+.ue-modal-body{padding:20px;font-size:var(--fs-base);}
 
 /* ── Footer ── */
 .ue-foot{
-  padding:12px 16px;border-top:1px solid var(--c-border);
+  padding:14px 18px;border-top:1px solid var(--c-border);
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:8px;
 }
-.ue-foot-note{font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);}
+.ue-foot-note{font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);}
 .ue-refresh-btn{
-  font-family:var(--ff-mono);font-size:9px;letter-spacing:1px;
-  text-transform:uppercase;padding:4px 10px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  text-transform:uppercase;padding:6px 14px;
   border:1px solid var(--c-border);border-radius:3px;
   background:transparent;color:var(--c-muted);cursor:pointer;
   transition:all .2s;
@@ -377,14 +384,14 @@
 /* ── Embed notice (hidden in iframe) ── */
 .ue-embed-bar{
   background:#0d1520;border-bottom:1px solid var(--c-border);
-  padding:8px 16px;display:flex;align-items:center;gap:10px;
+  padding:8px 18px;display:flex;align-items:center;gap:10px;
 }
 .ue-embed-url{
-  font-family:var(--ff-mono);font-size:10px;color:var(--c-muted);
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
   flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .ue-embed-copy{
-  font-family:var(--ff-mono);font-size:9px;padding:3px 8px;
+  font-family:var(--ff-mono);font-size:var(--fs-mono);padding:4px 10px;
   border:1px solid var(--c-border);background:transparent;
   color:var(--c-muted);cursor:pointer;border-radius:3px;
   white-space:nowrap;transition:all .2s;
@@ -392,9 +399,9 @@
 .ue-embed-copy:hover{border-color:var(--c-accent);color:var(--c-accent);}
 
 @media(max-width:480px){
-  .ue-head{padding:14px 14px 12px;}
-  .ue-boards{padding:10px 10px 0;gap:8px;}
-  .ue-main{padding:8px 10px 12px;gap:8px;}
+  .ue-head{padding:16px 16px 14px;}
+  .ue-boards{padding:12px 12px 0;gap:10px;}
+  .ue-main{padding:10px 12px 14px;gap:10px;}
   .ue-embed-bar{display:none;}
 }
 </style>
@@ -404,7 +411,7 @@
 
   <!-- Embed code bar (shown outside iframe) -->
   <div class="ue-embed-bar" id="ue-embed-bar">
-    <span style="font-family:var(--ff-mono);font-size:9px;color:#f0b400;letter-spacing:1px;">EMBED</span>
+    <span style="font-family:var(--ff-mono);font-size:13px;color:#f0b400;letter-spacing:1px;">EMBED</span>
     <span class="ue-embed-url" id="ue-embed-url"></span>
     <button class="ue-embed-copy" onclick="copyEmbed()">複製嵌入碼</button>
   </div>
@@ -447,7 +454,6 @@
       <div class="ue-tabs">
         <div class="ue-tab active" data-tab="senate" onclick="switchTab('senate')">參議院</div>
         <div class="ue-tab" data-tab="house" onclick="switchTab('house')">眾議院</div>
-        <div class="ue-tab" data-tab="governor" onclick="switchTab('governor')">州長</div>
       </div>
       <div class="ue-filter-row">
         <button class="ue-filter-btn active" data-filter="all" onclick="setFilter('all',this)">全部</button>
@@ -477,7 +483,7 @@
 <div class="ue-modal-bg" id="ue-modal-bg" onclick="closeModal(event)">
   <div class="ue-modal">
     <div class="ue-modal-head">
-      <span id="ue-modal-title" style="font-weight:700;font-size:15px;"></span>
+      <span id="ue-modal-title" style="font-weight:700;font-size:20px;"></span>
       <button class="ue-modal-close" onclick="closeModalDirect()">×</button>
     </div>
     <div class="ue-modal-body" id="ue-modal-body"></div>
@@ -590,7 +596,6 @@ function renderBoards() {
   wrap.innerHTML = [
     boardHTML('參議院 Senate', d.senate, 'senate'),
     boardHTML('眾議院 House', d.house, 'house'),
-    boardHTML('州長 Governor', d.governor, 'governor'),
   ].join('');
 }
 
@@ -627,9 +632,9 @@ function boardHTML(title, data, type) {
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);">門檻</div>
-        <div style="font-family:var(--ff-mono);font-size:18px;font-weight:700;color:var(--c-accent);">${threshold}</div>
-        ${unc > 0 ? `<div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);">+${unc} 未確定</div>` : ''}
+        <div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);">門檻</div>
+        <div style="font-family:var(--ff-mono);font-size:22px;font-weight:700;color:var(--c-accent);">${threshold}</div>
+        ${unc > 0 ? `<div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);">+${unc} 未確定</div>` : ''}
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count">
@@ -761,7 +766,7 @@ function showTooltip(event, abbr, st) {
     <div class="ue-tt-state">${abbr} · ${name}</div>
     <div class="ue-tt-winner ${winnerClass}">${winnerText}</div>
     ${marginText ? `<div class="ue-tt-pct">${marginText}</div>` : ''}
-    <div class="ue-tt-pct" style="margin-top:4px;font-size:8px">點擊查看詳細</div>
+    <div class="ue-tt-pct" style="margin-top:4px;">點擊查看詳細</div>
   `;
   tooltip.style.left = event.clientX + 'px';
   tooltip.style.top = event.clientY + 'px';
@@ -793,7 +798,7 @@ function renderRaceList() {
   let races = electionData.keyRaces || [];
 
   // Filter by tab
-  const officeMap = { senate:'Senate', house:'House', governor:'Governor' };
+  const officeMap = { senate:'Senate', house:'House' };
   const office = officeMap[currentTab];
   races = races.filter(r => r.office === office);
 
@@ -803,7 +808,7 @@ function renderRaceList() {
   if (currentFilter === 'uncalled') races = races.filter(r => !r.called);
 
   if (races.length === 0) {
-    list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-mono);font-size:11px;color:var(--c-muted);">此分類目前無資料</div>`;
+    list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-mono);font-size:14px;color:var(--c-muted);">此分類目前無資料</div>`;
     return;
   }
 
@@ -814,11 +819,8 @@ function raceItemHTML(r) {
   const dPct = r.dem ? r.dem.pct : 0;
   const rPct = r.rep ? r.rep.pct : 0;
   const total = dPct + rPct;
-  const dBar = total > 0 ? ((dPct/total)*100).toFixed(1) : 50;
-  const rBar = total > 0 ? ((rPct/total)*100).toFixed(1) : 50;
-
-  const dWinner = r.called && r.winner === 'D';
-  const repWinner = r.called && r.winner === 'R';
+  const dBar = total > 0 ? ((dPct / total) * 100).toFixed(1) : 50;
+  const rBar = total > 0 ? ((rPct / total) * 100).toFixed(1) : 50;
 
   let statusBadge;
   if (r.called) {
@@ -829,43 +831,33 @@ function raceItemHTML(r) {
     statusBadge = `<span class="ue-called-badge called-null">計票中</span>`;
   }
 
+  const dLabel = dPct > 0 ? `民主 ${dPct.toFixed(1)}%` : '民主';
+  const rLabel = rPct > 0 ? `共和 ${rPct.toFixed(1)}%` : '共和';
+
   return `
-  <div class="ue-race-item" onclick="showRaceModal('${r.id}')">
+  <div class="ue-race-item" onclick="showStateModal('${r.state}')">
     <div class="ue-race-top">
       <div class="ue-race-label">
         <span class="ue-state-badge">${r.state}</span>
         <div>
-          <div style="font-size:12px;font-weight:600;">${r.stateName}</div>
-          <div class="ue-race-office">${r.office === 'Senate' ? '參議院' : r.office === 'House' ? '眾議院' : '州長'}</div>
+          <div style="font-size:18px;font-weight:600;line-height:1.2;">${r.stateName}</div>
         </div>
       </div>
       <div class="ue-race-status">
         ${statusBadge}
       </div>
     </div>
-    <div class="ue-candidates">
-      <div class="ue-candidate">
-        <div class="ue-cand-party party-D"></div>
-        <span class="ue-cand-name ${dWinner ? 'winner' : ''}">${r.dem ? r.dem.name : '民主黨候選人'}${dWinner ? '<span class="ue-winner-mark">✓</span>' : ''}</span>
-        <span class="ue-cand-pct pct-D">${r.dem ? r.dem.pct.toFixed(1) + '%' : '—'}</span>
+    <div style="margin-top:6px;">
+      <div style="display:flex;justify-content:space-between;font-family:var(--ff-mono);font-size:13px;margin-bottom:5px;">
+        <span style="color:var(--c-dem)">${dLabel}</span>
+        <span style="color:var(--c-rep)">${rLabel}</span>
       </div>
-      <div class="ue-cand-bar-wrap">
-        <div class="ue-cand-bar">
-          <div class="ue-cand-bar-fill fill-D" style="width:${dBar}%"></div>
-        </div>
-      </div>
-      <div class="ue-candidate">
-        <div class="ue-cand-party party-R"></div>
-        <span class="ue-cand-name ${repWinner ? 'winner' : ''}">${r.rep ? r.rep.name : '共和黨候選人'}${repWinner ? '<span class="ue-winner-mark">✓</span>' : ''}</span>
-        <span class="ue-cand-pct pct-R">${r.rep ? r.rep.pct.toFixed(1) + '%' : '—'}</span>
-      </div>
-      <div class="ue-cand-bar-wrap">
-        <div class="ue-cand-bar">
-          <div class="ue-cand-bar-fill fill-R" style="width:${rBar}%"></div>
-        </div>
+      <div class="ue-bar" style="height:10px;">
+        <div class="ue-bar-d" style="width:${dBar}%"></div>
+        <div class="ue-bar-r" style="width:${rBar}%;margin-left:auto"></div>
       </div>
     </div>
-    ${r.reporting ? `<div class="ue-pct-reporting" style="margin-top:6px;">${r.reporting}% 選區已開出</div>` : ''}
+    ${r.reporting ? `<div class="ue-pct-reporting">${r.reporting}% 選區已開出</div>` : ''}
   </div>`;
 }
 
@@ -887,22 +879,22 @@ function showStateModal(abbr) {
     bodyHTML += `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
         <div>
-          <div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);margin-bottom:4px;">選舉結果</div>
-          <div style="font-size:16px;font-weight:700;color:${wColor}">${wText}</div>
+          <div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);margin-bottom:6px;">選舉結果</div>
+          <div style="font-size:20px;font-weight:700;color:${wColor}">${wText}</div>
         </div>
-        ${st.margin ? `<div style="text-align:right;"><div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);margin-bottom:4px;">領先差距</div><div style="font-family:var(--ff-mono);font-size:20px;font-weight:700;color:${wColor}">${st.margin.toFixed(1)}%</div></div>` : ''}
+        ${st.margin ? `<div style="text-align:right;"><div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);margin-bottom:6px;">領先差距</div><div style="font-family:var(--ff-mono);font-size:24px;font-weight:700;color:${wColor}">${st.margin.toFixed(1)}%</div></div>` : ''}
       </div>`;
   }
 
   if (races.length > 0) {
-    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:9px;color:var(--c-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">競選資訊</div>`;
+    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">競選資訊</div>`;
     bodyHTML += races.map(r => `
       <div style="background:rgba(255,255,255,.03);border:1px solid var(--c-border);border-radius:4px;padding:12px;margin-bottom:8px;">
         ${raceItemHTML(r)}
       </div>`
     ).join('');
   } else {
-    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:11px;color:var(--c-muted);text-align:center;padding:20px 0;">此州詳細選情資料尚未收錄</div>`;
+    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:14px;color:var(--c-muted);text-align:center;padding:20px 0;">此州詳細選情資料尚未收錄</div>`;
   }
 
   document.getElementById('ue-modal-body').innerHTML = bodyHTML;

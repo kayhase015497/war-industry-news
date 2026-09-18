@@ -15,7 +15,7 @@
   --ff:'Noto Sans TC',sans-serif;--mono:'Space Mono',monospace;
   --r:6px;
 }
-body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;}
 
 /* ── Layout ── */
 .adm-layout{display:flex;min-height:100vh;}
@@ -39,8 +39,8 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 .adm-nav{padding:12px 0;flex:1;}
 .adm-nav-item{
   display:flex;align-items:center;gap:10px;
-  padding:9px 18px;cursor:pointer;
-  font-size:13px;color:var(--muted);
+  padding:10px 18px;cursor:pointer;
+  font-size:15px;color:var(--muted);
   transition:all .15s;border-left:2px solid transparent;
   user-select:none;
 }
@@ -65,8 +65,8 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:20px;flex-wrap:wrap;gap:10px;
 }
-.adm-page-title{font-size:18px;font-weight:700;}
-.adm-page-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.adm-page-title{font-size:20px;font-weight:700;}
+.adm-page-sub{font-size:14px;color:var(--muted);margin-top:2px;}
 .adm-actions{display:flex;gap:8px;flex-wrap:wrap;}
 
 /* ── Buttons ── */
@@ -117,14 +117,14 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 }
 .adm-field{display:flex;flex-direction:column;gap:5px;}
 .adm-label{
-  font-family:var(--mono);font-size:10px;color:var(--muted);
+  font-family:var(--mono);font-size:13px;color:var(--muted);
   letter-spacing:.5px;
 }
 .adm-label .required{color:var(--rep);margin-left:2px;}
 .adm-input,.adm-select,.adm-textarea{
   background:#0e1520;border:1px solid var(--border);
-  color:var(--text);border-radius:4px;padding:7px 10px;
-  font-family:var(--ff);font-size:13px;width:100%;
+  color:var(--text);border-radius:4px;padding:8px 12px;
+  font-family:var(--ff);font-size:16px;width:100%;
   transition:border-color .15s;
 }
 .adm-input:focus,.adm-select:focus,.adm-textarea:focus{
@@ -167,10 +167,10 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
 .adm-states-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.04);}
 .adm-states-table tr:hover td{background:rgba(255,255,255,.02);}
 .adm-state-code{
-  font-family:var(--mono);font-size:12px;font-weight:700;
+  font-family:var(--mono);font-size:15px;font-weight:700;
   color:var(--text);
 }
-.adm-state-name{font-size:11px;color:var(--muted);}
+.adm-state-name{font-size:13px;color:var(--muted);}
 .adm-winner-sel{
   font-family:var(--mono);font-size:11px;padding:4px 6px;
   border-radius:3px;border:1px solid var(--border);
@@ -213,7 +213,7 @@ body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100
   padding:3px 8px;border-radius:3px;
   background:rgba(255,255,255,.06);color:var(--text);
 }
-.adm-race-name{flex:1;font-size:13px;}
+.adm-race-name{flex:1;font-size:16px;}
 .adm-race-called-tag{
   font-family:var(--mono);font-size:10px;padding:2px 7px;
   border-radius:3px;
