@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morris–Thorne 可穿越蟲洞形狀說明書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+:root {
+  --bg: #0b0f1a;
+  --bg2: #111827;
+  --bg3: #1a2235;
+  --border: #2a3448;
+  --text: #e8eaf0;
+  --mute: #8892a4;
+  --blue: #3987e5;
+  --gold: #eda100;
+  --green: #1baf7a;
+  --red: #e66767;
+  --violet: #9085e9;
+  --white: #ffffff;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body.mtwh-body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  padding: clamp(16px, 4vw, 40px);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.mtwh-header {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+.mtwh-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--mute);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.mtwh-title {
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+.mtwh-subtitle {
+  font-size: 18px;
+  color: var(--mute);
+  max-width: 660px;
+}
+
+/* ── Section heading ── */
+.mtwh-sec {
+  margin: 36px 0 20px;
+}
+.mtwh-sec-hd {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mtwh-sec-hd::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.mtwh-sec-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+/* ── Full formula box ── */
+.mtwh-formula-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+.mtwh-formula-box .mtwh-formula-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--mute);
+  margin-bottom: 16px;
+  letter-spacing: .1em;
+}
+.mtwh-katex-main {
+  font-size: 1.5em;
+  color: var(--white);
+}
+
+/* ── Wormhole SVG diagram ── */
+.mtwh-diagram-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 16px;
+  margin: 24px 0;
+  text-align: center;
+}
+.mtwh-diagram-wrap svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.mtwh-diagram-caption {
+  font-size: 16px;
+  color: var(--mute);
+  margin-top: 12px;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── Term cards ── */
+.mtwh-terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.mtwh-term-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 18px;
+  border-top: 4px solid;
+}
+.mtwh-term-card.blue  { border-top-color: var(--blue); }
+.mtwh-term-card.gold  { border-top-color: var(--gold); }
+.mtwh-term-card.green { border-top-color: var(--green); }
+
+.mtwh-term-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.mtwh-term-card.blue  .mtwh-term-num { color: var(--blue); }
+.mtwh-term-card.gold  .mtwh-term-num { color: var(--gold); }
+.mtwh-term-card.green .mtwh-term-num { color: var(--green); }
+
+.mtwh-term-expr {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+.mtwh-term-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.mtwh-term-desc {
+  font-size: 18px;
+  color: var(--mute);
+  line-height: 1.55;
+}
+.mtwh-term-fn {
+  display: inline-block;
+  background: rgba(255,255,255,.07);
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  margin-top: 8px;
+  color: var(--text);
+}
+.mtwh-term-card.blue  .mtwh-term-fn { background: rgba(57,135,229,.15); color: var(--blue); }
+.mtwh-term-card.gold  .mtwh-term-fn { background: rgba(237,161,0,.15); color: var(--gold); }
+.mtwh-term-card.green .mtwh-term-fn { background: rgba(27,175,122,.15); color: var(--green); }
+
+/* ── Condition highlight ── */
+.mtwh-cond-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.mtwh-cond-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 16px;
+}
+.mtwh-cond-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 10px;
+}
+.mtwh-cond-card.throat .mtwh-cond-tag  { color: var(--red); }
+.mtwh-cond-card.flare  .mtwh-cond-tag  { color: var(--gold); }
+.mtwh-cond-card.horizon .mtwh-cond-tag { color: var(--blue); }
+.mtwh-cond-expr {
+  font-size: 1.05em;
+  margin-bottom: 10px;
+}
+.mtwh-cond-desc {
+  font-size: 18px;
+  color: var(--mute);
+  line-height: 1.5;
+}
+
+/* ── Exotic matter callout ── */
+.mtwh-exotic {
+  background: rgba(144,133,233,.12);
+  border: 1px solid rgba(144,133,233,.35);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin: 24px 0;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.mtwh-exotic-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.mtwh-exotic-body {}
+.mtwh-exotic-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--violet);
+  margin-bottom: 6px;
+}
+.mtwh-exotic-text {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.mtwh-exotic-text em {
+  color: var(--violet);
+  font-style: normal;
+}
+
+/* ── Davis steps ── */
+.mtwh-steps {
+  margin: 20px 0;
+}
+.mtwh-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+.mtwh-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.mtwh-step-body {}
+.mtwh-step-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+.mtwh-step-text {
+  font-size: 18px;
+  color: var(--mute);
+  line-height: 1.6;
+}
+.mtwh-step-math {
+  margin-top: 8px;
+  font-size: .95em;
+}
+
+/* ── Notation table ── */
+.mtwh-table-wrap {
+  overflow-x: auto;
+  margin: 16px 0 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.mtwh-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+.mtwh-table th {
+  background: var(--bg3);
+  padding: 10px 14px;
+  text-align: left;
+  color: var(--mute);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  border-bottom: 1px solid var(--border);
+}
+.mtwh-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.mtwh-table tr:last-child td { border-bottom: none; }
+.mtwh-table tr:nth-child(even) td { background: rgba(255,255,255,.025); }
+.mtwh-sym { font-family: 'Space Mono', monospace; }
+.mtwh-tag-blue   { background: rgba(57,135,229,.2);   color: var(--blue);   border-radius: 4px; padding: 2px 7px; font-size: 13px; font-family: 'Space Mono', monospace; }
+.mtwh-tag-gold   { background: rgba(237,161,0,.2);   color: var(--gold);   border-radius: 4px; padding: 2px 7px; font-size: 13px; font-family: 'Space Mono', monospace; }
+.mtwh-tag-green  { background: rgba(27,175,122,.2);  color: var(--green);  border-radius: 4px; padding: 2px 7px; font-size: 13px; font-family: 'Space Mono', monospace; }
+.mtwh-tag-violet { background: rgba(144,133,233,.2); color: var(--violet); border-radius: 4px; padding: 2px 7px; font-size: 13px; font-family: 'Space Mono', monospace; }
+.mtwh-tag-red    { background: rgba(230,103,103,.2); color: var(--red);    border-radius: 4px; padding: 2px 7px; font-size: 13px; font-family: 'Space Mono', monospace; }
+
+/* ── Footer ── */
+.mtwh-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 16px;
+  color: var(--mute);
+  font-family: 'Space Mono', monospace;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .mtwh-terms { grid-template-columns: 1fr; }
+  .mtwh-cond-grid { grid-template-columns: 1fr; }
+  .mtwh-exotic { flex-direction: column; gap: 10px; }
+}
+</style>
+</head>
+<body class="mtwh-body">
+
+<!-- Header -->
+<header class="mtwh-header">
+  <div class="mtwh-kicker">廣義相對論 · 時空度規</div>
+  <h1 class="mtwh-title">Morris–Thorne 可穿越蟲洞<br>形狀說明書</h1>
+  <p class="mtwh-subtitle">它不告訴你怎麼施工，只規定：若時空要長成一條人走得過的喉道，線元必須長這樣。</p>
+</header>
+
+<!-- Full metric -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">線元完整式</div>
+  <div class="mtwh-formula-box">
+    <div class="mtwh-formula-label">Morris–Thorne Metric (1988)</div>
+    <div class="mtwh-katex-main">
+      \[ds^{2}=-e^{2\phi(r)}\,c^{2}\,dt^{2}+\bigl[1-b(r)/r\bigr]^{-1}\,dr^{2}+r^{2}\,d\Theta^{2}\]
+    </div>
+  </div>
+  <p style="font-size:18px; color:var(--mute)">這是愛因斯坦場方程的一個靜態球對稱解。三個項分別負責「時間流速」、「徑向距離」、「橫截面大小」——合在一起描述一個連結兩個宇宙區域的隧道。</p>
+</section>
+
+<!-- Embedding diagram -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">嵌入示意圖</div>
+  <div class="mtwh-diagram-wrap">
+    <svg viewBox="0 0 700 320" width="700" height="320" xmlns="http://www.w3.org/2000/svg" aria-label="蟲洞嵌入示意圖">
+      <defs>
+        <linearGradient id="mtwh-grad-l" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1a2235"/>
+          <stop offset="100%" stop-color="#111827"/>
+        </linearGradient>
+        <linearGradient id="mtwh-grad-r" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#111827"/>
+          <stop offset="100%" stop-color="#1a2235"/>
+        </linearGradient>
+        <marker id="mtwh-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#8892a4"/>
+        </marker>
+      </defs>
+
+      <!-- Background panels -->
+      <rect x="0" y="0" width="340" height="320" rx="0" fill="url(#mtwh-grad-l)" opacity=".7"/>
+      <rect x="360" y="0" width="340" height="320" rx="0" fill="url(#mtwh-grad-r)" opacity=".7"/>
+
+      <!-- Universe labels -->
+      <text x="85" y="30" fill="#8892a4" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" text-anchor="middle">宇宙 A</text>
+      <text x="615" y="30" fill="#8892a4" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" text-anchor="middle">宇宙 B</text>
+
+      <!-- Upper funnel curves (left) -->
+      <path d="M 10,50 Q 80,52 140,100 Q 180,130 210,158" fill="none" stroke="#3987e5" stroke-width="2.5"/>
+      <!-- Lower funnel curves (left) -->
+      <path d="M 10,270 Q 80,268 140,220 Q 180,190 210,162" fill="none" stroke="#3987e5" stroke-width="2.5"/>
+
+      <!-- Upper funnel curves (right) -->
+      <path d="M 690,50 Q 620,52 560,100 Q 520,130 490,158" fill="none" stroke="#3987e5" stroke-width="2.5"/>
+      <!-- Lower funnel curves (right) -->
+      <path d="M 690,270 Q 620,268 560,220 Q 520,190 490,162" fill="none" stroke="#3987e5" stroke-width="2.5"/>
+
+      <!-- Throat ellipse -->
+      <ellipse cx="350" cy="160" rx="42" ry="18" fill="none" stroke="#e66767" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <!-- Throat vertical lines -->
+      <line x1="308" y1="160" x2="210" y2="160" stroke="#eda100" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="392" y1="160" x2="490" y2="160" stroke="#eda100" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Throat connection surface -->
+      <path d="M 210,158 Q 280,155 308,160 Q 280,165 210,162" fill="rgba(57,135,229,.08)" stroke="none"/>
+      <path d="M 490,158 Q 420,155 392,160 Q 420,165 490,162" fill="rgba(57,135,229,.08)" stroke="none"/>
+
+      <!-- Throat label -->
+      <text x="350" y="148" fill="#e66767" font-family="Space Mono,monospace" font-size="13" text-anchor="middle">喉道 r₀</text>
+
+      <!-- r axis arrows -->
+      <line x1="210" y1="200" x2="80" y2="200" stroke="#8892a4" stroke-width="1" marker-end="url(#mtwh-arrow)"/>
+      <text x="140" y="215" fill="#8892a4" font-family="Space Mono,monospace" font-size="12" text-anchor="middle">r → ∞</text>
+      <line x1="490" y1="200" x2="620" y2="200" stroke="#8892a4" stroke-width="1" marker-end="url(#mtwh-arrow)"/>
+      <text x="555" y="215" fill="#8892a4" font-family="Space Mono,monospace" font-size="12" text-anchor="middle">r → ∞</text>
+
+      <!-- Flat region texture -->
+      <line x1="10" y1="50" x2="10" y2="270" stroke="#2a3448" stroke-width="1"/>
+      <line x1="690" y1="50" x2="690" y2="270" stroke="#2a3448" stroke-width="1"/>
+
+      <!-- r₀ marker -->
+      <line x1="350" y1="140" x2="350" y2="178" stroke="#e66767" stroke-width="1.5"/>
+      <circle cx="350" cy="160" r="3" fill="#e66767"/>
+
+      <!-- Φ(r) label -->
+      <text x="85" y="165" fill="#3987e5" font-family="Space Mono,monospace" font-size="13" text-anchor="middle">φ(r) → 有限</text>
+      <text x="615" y="165" fill="#3987e5" font-family="Space Mono,monospace" font-size="13" text-anchor="middle">φ(r) → 有限</text>
+    </svg>
+    <div class="mtwh-diagram-caption">喉道半徑 r₀ 為最窄處 · 兩側漸漸攤平為近平坦時空</div>
+  </div>
+</section>
+
+<!-- Three terms -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">三項拆解</div>
+  <div class="mtwh-terms">
+
+    <!-- Term 1 -->
+    <div class="mtwh-term-card blue">
+      <div class="mtwh-term-num">Term 1 · 時間項</div>
+      <div class="mtwh-term-expr">\(-e^{2\phi(r)}\,c^{2}\,dt^{2}\)</div>
+      <div class="mtwh-term-name">紅移函數 φ(r)</div>
+      <div class="mtwh-term-desc">決定喉道各位置的<strong>時鐘走速</strong>。如果 φ 不發散，就不會有事件視界——旅行者不會被困住，可以折返。</div>
+      <div class="mtwh-term-fn">可穿越條件：φ(r) 全域有限</div>
+    </div>
+
+    <!-- Term 2 -->
+    <div class="mtwh-term-card gold">
+      <div class="mtwh-term-num">Term 2 · 徑向項</div>
+      <div class="mtwh-term-expr">\(\bigl[1-b(r)/r\bigr]^{-1}dr^{2}\)</div>
+      <div class="mtwh-term-name">形狀函數 b(r)</div>
+      <div class="mtwh-term-desc">決定蟲洞的<strong>幾何形狀</strong>。當 b(r)→r，徑向度規趨於無窮大，即是喉道。b(r)/r &lt; 1 則保證遠處回歸平坦。</div>
+      <div class="mtwh-term-fn">幾何約束：b(r) ≤ r（r ≥ r₀）</div>
+    </div>
+
+    <!-- Term 3 -->
+    <div class="mtwh-term-card green">
+      <div class="mtwh-term-num">Term 3 · 角度項</div>
+      <div class="mtwh-term-expr">\(r^{2}\,d\Theta^{2}\)</div>
+      <div class="mtwh-term-name">橫截面 / 球面元</div>
+      <div class="mtwh-term-desc">蟲洞每一個 r 位置的<strong>橫截圓面積</strong>為 4πr²。這說明 r 是「面積半徑」而非普通直線距離。</div>
+      <div class="mtwh-term-fn">dΘ² = dθ² + sin²θ dφ²</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Conditions -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">三大幾何條件</div>
+  <div class="mtwh-cond-grid">
+
+    <div class="mtwh-cond-card throat">
+      <div class="mtwh-cond-tag">① 喉道定義</div>
+      <div class="mtwh-cond-expr">\(b(r_{0}) = r_{0}\)</div>
+      <div class="mtwh-cond-desc">在最窄點 r₀，形狀函數恰好等於半徑本身——這就是喉道的幾何定義。</div>
+    </div>
+
+    <div class="mtwh-cond-card flare">
+      <div class="mtwh-cond-tag">② 外張條件（Flare-out）</div>
+      <div class="mtwh-cond-expr">\(b'(r_{0}) < 1\)</div>
+      <div class="mtwh-cond-desc">喉道必須向外「張開」，截面積隨 r 增大，否則通道會反縮成奇點。</div>
+    </div>
+
+    <div class="mtwh-cond-card horizon">
+      <div class="mtwh-cond-tag">③ 無視界條件</div>
+      <div class="mtwh-cond-expr">\(\phi(r) \text{ 全域有限}\)</div>
+      <div class="mtwh-cond-desc">紅移函數不能爆到負無窮——那會製造事件視界，讓訊號困在內部，穿越就失敗。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Exotic matter -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">能量代價</div>
+  <div class="mtwh-exotic">
+    <div class="mtwh-exotic-icon">⚡</div>
+    <div class="mtwh-exotic-body">
+      <div class="mtwh-exotic-title">需要奇異物質（Exotic Matter）</div>
+      <div class="mtwh-exotic-text">
+        外張條件 b'(r₀)&lt;1 加上愛因斯坦方程，強迫喉道附近的能量密度滿足
+        <em>ρ ≤ 0</em>——即「<em>負能量密度</em>」。這在量子場論中雖有微弱跡象（Casimir 效應），但宏觀可操控的奇異物質是否存在，仍是物理學開放問題。沒有它，度規就撐不住，喉道立刻塌縮。
+      </div>
+    </div>
+  </div>
+
+  <div class="mtwh-formula-box" style="margin:16px 0">
+    <div class="mtwh-formula-label">喉道能量條件（違反 NEC）</div>
+    <div class="mtwh-katex-main">
+      \[\rho + p_{r} < 0 \quad \Longleftrightarrow \quad T_{\mu\nu}k^{\mu}k^{\nu} < 0\]
+    </div>
+  </div>
+  <p style="font-size:18px; color:var(--mute)">其中 ρ 是能量密度，p<sub>r</sub> 是徑向壓強，k<sup>μ</sup> 是類光向量。這個不等式違反了「零能量條件（NEC）」——標準物質都滿足 NEC，奇異物質不。</p>
+</section>
+
+<!-- Davis procedure -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">Davis 反向工程三步法</div>
+  <p style="font-size:18px; color:var(--mute); margin-bottom:20px">不直接解愛因斯坦方程，而是「先指定幾何、再計算需要什麼物質」：</p>
+  <div class="mtwh-steps">
+
+    <div class="mtwh-step">
+      <div class="mtwh-step-num">1</div>
+      <div class="mtwh-step-body">
+        <div class="mtwh-step-title">自由選定形狀函數 b(r)</div>
+        <div class="mtwh-step-text">只需滿足 b(r₀)=r₀ 與 b'(r₀)&lt;1，可任意構造。例如最簡單：</div>
+        <div class="mtwh-step-math">\(b(r) = r_{0}^{2}/r\)（Ellis 蟲洞）</div>
+      </div>
+    </div>
+
+    <div class="mtwh-step">
+      <div class="mtwh-step-num">2</div>
+      <div class="mtwh-step-body">
+        <div class="mtwh-step-title">自由選定紅移函數 φ(r)</div>
+        <div class="mtwh-step-text">最省力的選擇是令 φ(r)≡0（零紅移蟲洞），代入後不產生視界。</div>
+        <div class="mtwh-step-math">\(\phi(r) \equiv 0 \;\Rightarrow\; e^{2\phi} = 1\)，時鐘不慢</div>
+      </div>
+    </div>
+
+    <div class="mtwh-step">
+      <div class="mtwh-step-num">3</div>
+      <div class="mtwh-step-body">
+        <div class="mtwh-step-title">代入場方程，讀出應力—能量張量</div>
+        <div class="mtwh-step-text">由 G<sub>μν</sub> = 8πG/c⁴ · T<sub>μν</sub>，直接得到需要的物質分佈。答案必然含負能量密度——這就是奇異物質的需求量。</div>
+        <div class="mtwh-step-math">\(\rho(r) = \frac{c^{2}}{8\pi G}\frac{b'}{r^{2}}\)</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Notation table -->
+<section class="mtwh-sec">
+  <div class="mtwh-sec-hd">符號對照表</div>
+  <div class="mtwh-table-wrap">
+    <table class="mtwh-table">
+      <thead>
+        <tr>
+          <th>符號</th>
+          <th>名稱</th>
+          <th>角色</th>
+          <th>所屬項</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="mtwh-sym">ds²</span></td>
+          <td>線元（時空間隔）</td>
+          <td>描述任意兩事件間的「距離」</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">φ(r)</span></td>
+          <td>紅移函數</td>
+          <td>控制重力紅移與時鐘走速</td>
+          <td><span class="mtwh-tag-blue">Term 1</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">b(r)</span></td>
+          <td>形狀函數</td>
+          <td>決定喉道幾何、截面積大小</td>
+          <td><span class="mtwh-tag-gold">Term 2</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">r₀</span></td>
+          <td>喉道半徑</td>
+          <td>最窄截面，b(r₀)=r₀</td>
+          <td><span class="mtwh-tag-red">條件</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">r</span></td>
+          <td>面積半徑</td>
+          <td>非普通直線距離，以橫截圓面積定義</td>
+          <td><span class="mtwh-tag-green">Term 3</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">dΘ²</span></td>
+          <td>球面元</td>
+          <td>dθ² + sin²θ dφ²，描述角向方向</td>
+          <td><span class="mtwh-tag-green">Term 3</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">ρ</span></td>
+          <td>能量密度</td>
+          <td>喉道處必須 ≤ 0（奇異物質）</td>
+          <td><span class="mtwh-tag-violet">能量</span></td>
+        </tr>
+        <tr>
+          <td><span class="mtwh-sym">T_μν</span></td>
+          <td>應力–能量張量</td>
+          <td>物質/能量分佈，是場方程的源項</td>
+          <td><span class="mtwh-tag-violet">能量</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="mtwh-footer">
+  <span>參考：Morris & Thorne, Am. J. Phys. 56 (1988) 395；Davis, AIAA 2004-1144</span>
+  <span>戰爭即工業力｜交錯地帶 · 2026</span>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false
+  });
+});
+</script>
+</body>
+</html>
