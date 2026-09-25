@@ -154,11 +154,12 @@ const map = L.map('map', {
   preferCanvas: true
 });
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap contributors © CARTO',
-  subdomains: 'abcd',
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   maxZoom: 19
 }).addTo(map);
+// Dark mode via CSS filter — no API key required
+map.getPane('tilePane').style.filter = 'invert(100%) hue-rotate(180deg) brightness(0.82) saturate(0.55)';
 
 // Operator colours
 const OP_COLOR = {
