@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "title": "利比亞NOC扎維亞煉油廠停機危機（2026年9月26日）",
+    "titleEn": "Libya NOC Zawiya Refinery Crisis — Sharara Pipeline Valve Shutdown, Sept 2026",
+    "subtitle": "石油設施警衛隊關閉沙拉拉7號閥門・72萬桶累計減產・7500萬美元損失・扎維亞煉油廠機組停機",
+    "date": "2026-09-26",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "利比亞國家石油公司（NOC）聲明", "路透社", "布里加石油行銷公司"]
+  },
+  "map": {
+    "center": [30.5, 13.0],
+    "zoom": 6,
+    "bounds": [[24.5, 8.0], [34.5, 18.0]]
+  },
+  "infoPanel": {
+    "title": "利比亞NOC扎維亞危機・沙拉拉管線7號閥門遭強制關閉（2026年9月26日）",
+    "paragraphs": [
+      "2026年9月26日，利比亞國家石油公司（NOC）宣布，扎維亞（Zawiya）煉油廠已關閉其中一個煉油機組——直接起因是石油設施警衛隊（PFG）武裝人員強制關閉沙拉拉（Sharara）至扎維亞港的7號管線閥門，導致原油供應中斷，煉油廠儲罐庫存接近耗盡。",
+      "事件時序：9月中旬PFG先關閉哈馬達（Hamada）至扎維亞管線閥門；9月21日前後關閉沙拉拉7號閥門，沙拉拉油田產量大幅下降；9月22日PFG人員封鎖扎維亞煉油廠及布里加石油行銷公司大門，阻礙員工換班。至9月24日，沙拉拉累計減產約72萬桶，NOC估計直接財務損失超過7500萬美元。",
+      "沙拉拉是利比亞最大油田之一，產能約每日30萬桶。扎維亞煉油廠是利比亞目前仍在運作的最大煉油設施，產能每日約12萬桶（分兩個各6萬桶單元），負責生產柴油、汽油、液化石油氣與航油，對國內燃料供應至關重要。管線中斷同時打擊原油出口收入與國內煉油能力，NOC警告若更多單元停機，國內燃料供應將嚴重惡化。PFG訴求包括薪資調整、軍事認證與地方利益分配。⚠️ 部分位置為概略推估。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [27.50, 11.60],
+        [27.50, 12.40],
+        [28.10, 12.40],
+        [28.10, 11.60],
+        [27.50, 11.60]
+      ],
+      "fillColor": "#b71c1c",
+      "fillOpacity": 0.20,
+      "borderColor": "#e53935",
+      "borderWeight": 2,
+      "borderOpacity": 0.85,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "沙拉拉油田（Sharara）・利比亞最大油田之一・產能約30萬桶/日",
+        "tag": "🛢️ 沙拉拉・30萬桶/日・9月21日起大幅減產",
+        "tagClass": "tag-confirmed",
+        "desc": "沙拉拉（Sharara）是利比亞最大油田之一，位於西南部費贊地區，正常產能約每日30萬桶。油田原油經管線向北輸送至西部沿海扎維亞港與煉油廠。2026年9月21日前後，石油設施警衛隊（PFG）強制關閉7號管線閥門，導致沙拉拉產量大幅下降，至9月24日累計減產約72萬桶。⚠️ 為概略示意範圍。",
+        "source": "NOC；路透社"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [27.80, 12.00],
+        [29.15, 13.30],
+        [30.80, 12.90],
+        [32.05, 12.72],
+        [32.75, 12.72]
+      ],
+      "color": "#e53935",
+      "weight": 3,
+      "opacity": 0.90,
+      "dashArray": "0",
+      "popup": {
+        "title": "沙拉拉→扎維亞主輸油管線（含7號閥門）・已中斷",
+        "tag": "🚫 沙拉拉→扎維亞管線・7號閥門關閉・原油供應中斷",
+        "tagClass": "tag-confirmed",
+        "desc": "連接沙拉拉油田與扎維亞港口及煉油廠的主要輸油管線，全長約680公里，是利比亞西部最重要的石油基礎設施之一。2026年9月21日前後，PFG武裝人員強制關閉管線7號閥門，導致原油無法輸送至扎維亞，煉油廠儲罐庫存接近耗盡，被迫停機一個煉油單元。⚠️ 路線為概略示意。",
+        "source": "NOC聲明；路透社"
+      }
+    },
+    {
+      "points": [
+        [29.15, 13.30],
+        [30.50, 13.10],
+        [32.00, 12.90],
+        [32.75, 12.72]
+      ],
+      "color": "#e67e22",
+      "weight": 2.5,
+      "opacity": 0.80,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "哈馬達（Hamada）→扎維亞管線・9月中旬亦遭關閉",
+        "tag": "⚠️ 哈馬達→扎維亞管線・9月中旬遭PFG關閉",
+        "tagClass": "tag-confirmed",
+        "desc": "哈馬達（Hamada）至扎維亞的輸油管線，9月中旬PFG相關人員率先關閉此管線閥門，導致若干較小油田停產，NOC當時已警告可能宣布不可抗力（Force Majeure）。此次行動早於7號閥門關閉，是本輪危機的前奏。⚠️ 路線為概略示意。",
+        "source": "NOC聲明；路透社"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [27.80, 12.00],
+      "name": "Sharara Oil Field – Libya's Largest, ~300k bbl/day",
+      "nameLocal": "沙拉拉油田（Sharara）・產能約30萬桶/日・累計減產72萬桶",
+      "type": "confirmed",
+      "tag": "🛢️ 沙拉拉油田・30萬桶/日・減產中",
+      "tagClass": "tag-confirmed",
+      "desc": "利比亞西南部費贊地區最大油田之一，正常產能約每日30萬桶。2026年9月21日PFG關閉7號管線閥門後，產量大幅下降。至9月24日，累計減產約72萬桶，NOC估計直接財務損失超過7500萬美元。油田原油需依賴管線向北輸往扎維亞港。⚠️ 座標為概略位置。",
+      "coords": "27°48'N 012°00'E",
+      "source": "NOC；路透社"
+    },
+    {
+      "latlng": [29.15, 13.30],
+      "name": "Hamada – Pipeline Junction, First Valve Shutdown (Mid-Sept)",
+      "nameLocal": "哈馬達（Hamada）・管線節點・9月中旬率先遭PFG關閉",
+      "type": "confirmed",
+      "tag": "⚠️ 哈馬達・管線閥門節點・最先遭關閉",
+      "tagClass": "tag-confirmed",
+      "desc": "哈馬達是利比亞西南部管線網絡的重要節點，連接沙拉拉周邊油田與扎維亞方向的管線在此交匯。2026年9月中旬，PFG人員率先關閉哈馬達至扎維亞管線閥門，導致若干較小油田停產，NOC當時即發出不可抗力警告。⚠️ 座標為概略位置。",
+      "coords": "29°09'N 013°18'E",
+      "source": "NOC聲明；路透社"
+    },
+    {
+      "latlng": [30.80, 12.85],
+      "name": "Pipeline Valve No. 7 – Forced Shutdown ~Sept 21",
+      "nameLocal": "7號管線閥門・9月21日前後遭PFG強制關閉・原油斷流",
+      "type": "confirmed",
+      "tag": "🔴 7號閥門・PFG強制關閉・9月21日・NOC人員無法進入",
+      "tagClass": "tag-confirmed",
+      "desc": "沙拉拉至扎維亞港主輸油管線上的第7號閥門，2026年9月21日前後遭石油設施警衛隊（PFG）武裝人員強制關閉。NOC技術人員無法進入閥門附近區域，導致原油完全無法向北輸送，是造成扎維亞煉油廠停機的直接原因。NOC多次呼籲立即重開，截至9月26日閥門尚未重啟。⚠️ 座標為概略推估位置。",
+      "coords": "30°48'N 012°51'E",
+      "source": "NOC聲明"
+    },
+    {
+      "latlng": [32.05, 12.72],
+      "name": "Pipeline Valve No. 6 – Area Inaccessible to NOC Technicians",
+      "nameLocal": "6號管線閥門・NOC技術人員無法進入附近區域",
+      "type": "possible",
+      "tag": "⚠️ 6號閥門附近・技術人員被阻止進入",
+      "tagClass": "tag-possible",
+      "desc": "靠近扎維亞的管線6號閥門附近區域，NOC聲明指出技術人員無法進入6號與7號閥門附近，妨礙維修與評估作業。⚠️ 座標為概略推估位置。",
+      "coords": "32°03'N 012°43'E",
+      "source": "NOC聲明"
+    },
+    {
+      "latlng": [32.75, 12.72],
+      "name": "Zawiya Refinery – Libya's Largest Operating Refinery, 120k bbl/day",
+      "nameLocal": "扎維亞煉油廠（Zawiya Refinery）・12萬桶/日・9月26日一號機組停機",
+      "type": "confirmed",
+      "tag": "🏭 扎維亞煉油廠・12萬桶/日・機組停機・9月26日",
+      "tagClass": "tag-confirmed",
+      "desc": "扎維亞煉油廠（Zawiya Refinery）是目前利比亞仍在運作的最大煉油設施，正常產能約每日12萬桶，分兩個各6萬桶/日的煉油單元，生產柴油、汽油、液化石油氣（LPG）與航空燃油，對利比亞國內燃料供應至關重要。2026年9月26日，因原油管線中斷、儲罐庫存耗盡，NOC宣布關閉其中一個煉油機組（6萬桶/日產能停止）。若第二單元亦停機，利比亞國內燃料將完全依賴進口，影響電廠等關鍵設施。⚠️ 座標為概略位置。",
+      "coords": "32°45'N 012°43'E",
+      "source": "NOC；路透社"
+    },
+    {
+      "latlng": [32.77, 12.69],
+      "name": "Zawiya Port – Sharara Crude Export Terminal",
+      "nameLocal": "扎維亞港（Zawiya Port）・沙拉拉原油出口終端・裝油設施受阻",
+      "type": "confirmed",
+      "tag": "⚓ 扎維亞港・原油出口碼頭・裝油作業受阻",
+      "tagClass": "tag-confirmed",
+      "desc": "扎維亞港是沙拉拉油田原油的主要出口碼頭，管線中斷直接衝擊原油出口能力，同時打擊利比亞外匯與財政收入。PFG人員亦封鎖了港口附近布里加石油行銷公司大門，阻礙人員正常換班與作業。⚠️ 座標為概略位置。",
+      "coords": "32°46'N 012°41'E",
+      "source": "NOC；路透社"
+    },
+    {
+      "latlng": [32.73, 12.74],
+      "name": "Zawiya – Brega Oil Marketing Company HQ (Blocked Sept 22)",
+      "nameLocal": "布里加石油行銷公司扎維亞辦公室・9月22日遭PFG封鎖大門",
+      "type": "confirmed",
+      "tag": "🔴 布里加石油行銷公司・9月22日遭PFG封鎖",
+      "tagClass": "tag-confirmed",
+      "desc": "布里加石油行銷公司（Brega Oil Marketing Company）扎維亞辦公室，2026年9月22日前後遭PFG人員封鎖大門，阻礙員工正常換班，影響煉油廠及港口作業的人員調度與管理。⚠️ 座標為概略位置。",
+      "coords": "32°44'N 012°44'E",
+      "source": "NOC聲明"
+    },
+    {
+      "latlng": [32.90, 13.18],
+      "name": "Tripoli – Libya's Capital, NOC Headquarters",
+      "nameLocal": "的黎波里（Tripoli）・利比亞首都・NOC總部",
+      "type": "capital",
+      "tag": "🏛 的黎波里・NOC總部・政府協商中心",
+      "tagClass": "tag-reference",
+      "desc": "利比亞首都，利比亞國家石油公司（NOC）總部所在地。NOC多次透過官方聲明呼籲PFG立即重開管線閥門，並向政府報告損失狀況，要求介入協調。",
+      "coords": "32°54'N 013°11'E",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#b71c1c", "fillOpacity": 0.20, "borderColor": "#e53935", "label": "沙拉拉油田範圍（概略・正常產能30萬桶/日）" },
+    { "symbol": "line",    "color": "#e53935", "weight": 3, "dash": "0",   "label": "沙拉拉→扎維亞主管線（7號閥門已關閉・已中斷）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2, "dash": "8,5", "label": "哈馬達→扎維亞管線（9月中旬亦遭關閉）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認事件點：扎維亞煉油廠・港口・7號閥門・布里加辦公室" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "6號閥門附近（推估・NOC無法進入）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "城市參考點（的黎波里）" }
+  ]
+}
