@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "title": "埃特納火山噴發・卡塔尼亞機場關閉（2026年9月29日）",
+    "titleEn": "Mt. Etna Eruption — Catania Fontanarossa Airport Closure, Sept 29 2026",
+    "subtitle": "東北火山口噴出約4公里高灰雲・航空警戒升至最高「紅色」・卡塔尼亞機場全面停航",
+    "date": "2026-09-29",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "義大利國家地球物理與火山學研究所（INGV）", "義大利民航局（ENAC）", "路透社", "義大利媒體"]
+  },
+  "map": {
+    "center": [37.60, 15.05],
+    "zoom": 10,
+    "bounds": [[37.10, 14.30], [38.10, 15.80]]
+  },
+  "infoPanel": {
+    "title": "埃特納火山噴發・卡塔尼亞機場關閉・航空警戒紅色（2026年9月29日）",
+    "paragraphs": [
+      "2026年9月29日，義大利西西里島卡塔尼亞馮塔納羅薩機場（Catania Fontanarossa，IATA: CTA）因應埃特納（Etna）火山活動與當前氣象條件，再度關閉。距前一次關閉不過約一晚，期間航班作業曾短暫恢復，但當局表示近距目結束為期三天的停航還不過幾個小時，再次中斷。營運單位表示航班作業暫停至台灣時間晚間9時，建議旅客出發前先向航空公司確認班機狀態。",
+      "綜合路透社及義大利媒體報導，埃特納東北火山口26日噴出約4公里高的灰雲，義大利國家地球物理與火山學研究所（INGV）隨即將航空警戒提升至最高等級「紅色」，關閉相關空域、機場全面停航。埃特納是歐洲最活躍的活火山，海拔約3,357公尺，位於西西里島東岸，距卡塔尼亞市中心僅約28公里。火山灰對航空引擎危害極大，是關閉機場的主要原因。",
+      "卡塔尼亞馮塔納羅薩機場是西西里島最繁忙的機場，旅客吞吐量居義大利第五，關閉期間旅客可考慮改由巴勒摩或墨西拿等替代機場出發。本次噴發為近期埃特納活躍期的一部分，INGV持續監測火山活動強度與灰雲擴散方向。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [37.68, 14.88],
+        [37.68, 15.12],
+        [37.80, 15.12],
+        [37.80, 14.88],
+        [37.68, 14.88]
+      ],
+      "fillColor": "#b71c1c",
+      "fillOpacity": 0.18,
+      "borderColor": "#e53935",
+      "borderWeight": 2,
+      "borderOpacity": 0.80,
+      "borderDashArray": "0",
+      "popup": {
+        "title": "埃特納火山頂部・東北火山口・海拔約3,357公尺",
+        "tag": "🌋 埃特納・東北火山口・噴出4公里高灰雲",
+        "tagClass": "tag-confirmed",
+        "desc": "埃特納火山（Mt. Etna）頂部區域，包含東北火山口（NE Crater）等多個噴發口，海拔約3,357公尺，是歐洲最活躍的活火山。2026年9月26日東北火山口噴出約4公里高灰雲，導致INGV將航空警戒升至紅色。⚠️ 為頂部區域概略示意範圍。",
+        "source": "INGV；路透社"
+      }
+    },
+    {
+      "points": [
+        [37.42, 14.60],
+        [37.42, 15.55],
+        [37.82, 15.55],
+        [37.82, 14.60],
+        [37.42, 14.60]
+      ],
+      "fillColor": "#616161",
+      "fillOpacity": 0.12,
+      "borderColor": "#9e9e9e",
+      "borderWeight": 1,
+      "borderOpacity": 0.40,
+      "borderDashArray": "8,5",
+      "popup": {
+        "title": "火山灰潛在影響範圍（概略）・航空警戒紅色",
+        "tag": "⚠️ 火山灰影響空域・INGV航空警戒紅色",
+        "tagClass": "tag-possible",
+        "desc": "INGV發布航空警戒最高等級「紅色」後，關閉卡塔尼亞周邊相關空域。火山灰對航空引擎危害極大，可能導致引擎熄火，是機場停航的主要安全依據。實際火山灰擴散方向與範圍受高空風向影響，本多邊形僅為概略示意。⚠️ 非實際灰雲精確範圍。",
+        "source": "INGV"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [37.75, 15.00],
+        [37.62, 14.80],
+        [37.50, 14.55]
+      ],
+      "color": "#9e9e9e",
+      "weight": 3,
+      "opacity": 0.65,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "火山灰雲擴散方向（概略推估・受高空風向影響）",
+        "tag": "🌫️ 灰雲擴散方向（推估）・影響卡塔尼亞空域",
+        "tagClass": "tag-possible",
+        "desc": "東北火山口噴出的火山灰雲在高空風作用下向西南方向擴散（概略推估），影響卡塔尼亞機場附近空域，是關閉機場的核心原因。實際擴散路徑由INGV與義大利空管持續追蹤。⚠️ 為概略方向示意，非精確灰雲軌跡。",
+        "source": "INGV；義大利媒體"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [37.75, 15.00],
+      "name": "Mt. Etna – NE Crater, Eruption Sept 26 2026",
+      "nameLocal": "埃特納火山・東北火山口（NE Crater）・2026年9月26日噴發・灰雲高約4公里",
+      "type": "confirmed",
+      "tag": "🌋 埃特納東北火山口・9/26噴發・灰雲4公里高・航空紅色警戒",
+      "tagClass": "tag-confirmed",
+      "desc": "埃特納火山（Mt. Etna）東北火山口，海拔約3,357公尺，是歐洲最活躍的活火山，位於西西里島東岸。2026年9月26日噴出約4公里高火山灰柱，義大利國家地球物理與火山學研究所（INGV）隨即啟動最高等級航空警戒「紅色（Red）」，觸發卡塔尼亞機場關閉及周邊空域管制。⚠️ 座標為火山口概略位置。",
+      "coords": "37°45'N 015°00'E",
+      "source": "INGV；路透社"
+    },
+    {
+      "latlng": [37.47, 15.07],
+      "name": "Catania Fontanarossa Airport (CTA) – CLOSED",
+      "nameLocal": "卡塔尼亞馮塔納羅薩機場（CTA）・已關閉・西西里島最繁忙機場",
+      "type": "confirmed",
+      "tag": "✈️ 卡塔尼亞機場（CTA）・全面停航・9月29日",
+      "tagClass": "tag-confirmed",
+      "desc": "卡塔尼亞馮塔納羅薩機場（Catania Fontanarossa Airport，IATA: CTA / ICAO: LICC），西西里島最繁忙的機場，旅客吞吐量居義大利全國第五，距埃特納火山頂約28公里。2026年9月29日因火山灰影響再度關閉，航班作業暫停，建議旅客出發前向航空公司確認班機狀態或改簽至巴勒摩（PMO）出發。⚠️ 座標為概略位置。",
+      "coords": "37°28'N 015°04'E",
+      "source": "ENAC；INGV；路透社"
+    },
+    {
+      "latlng": [37.50, 15.09],
+      "name": "Catania – Sicily's Second City, ~28km from Etna",
+      "nameLocal": "卡塔尼亞（Catania）・西西里第二大城・距埃特納約28公里",
+      "type": "capital",
+      "tag": "🏙 卡塔尼亞・西西里第二大城・距埃特納約28公里",
+      "tagClass": "tag-reference",
+      "desc": "卡塔尼亞是西西里島第二大城，人口約30萬，距埃特納火山頂約28公里，長期生活在埃特納活動的影響範圍內。火山灰降落時需清除街道與車輛，亦對農業（尤其是著名的埃特納火山DOC葡萄酒產區）造成影響。",
+      "coords": "37°30'N 015°05'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [38.19, 15.55],
+      "name": "Messina – Alternative Reference City",
+      "nameLocal": "墨西拿（Messina）・西西里東北端・墨西拿海峽",
+      "type": "capital",
+      "tag": "🏙 墨西拿・西西里東北端・墨西拿海峽",
+      "tagClass": "tag-reference",
+      "desc": "墨西拿位於西西里島東北端，隔墨西拿海峽與義大利本土相望，距卡塔尼亞約90公里，可作為旅客陸路轉乘至義大利本土的替代路線參考點。",
+      "coords": "38°11'N 015°33'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [38.18, 13.09],
+      "name": "Palermo – Sicily's Capital, Alternative Airport (PMO)",
+      "nameLocal": "巴勒摩（Palermo）・西西里首府・巴勒摩機場（PMO）替代選擇",
+      "type": "capital",
+      "tag": "✈️ 巴勒摩機場（PMO）・卡塔尼亞關閉期間替代機場",
+      "tagClass": "tag-reference",
+      "desc": "巴勒摩是西西里島首府，設有法爾科內-博爾塞利諾機場（Palermo PMO），是卡塔尼亞機場關閉期間旅客可考慮的替代出發點，距卡塔尼亞約210公里車程。",
+      "coords": "38°11'N 013°06'E",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#b71c1c", "fillOpacity": 0.18, "borderColor": "#e53935", "label": "埃特納火山頂部・東北火山口噴發區（概略）" },
+    { "symbol": "polygon", "fillColor": "#616161", "fillOpacity": 0.12, "borderColor": "#9e9e9e", "label": "火山灰潛在影響空域（概略・虛線）" },
+    { "symbol": "line",    "color": "#9e9e9e", "weight": 3, "dash": "6,4", "label": "火山灰雲擴散方向（概略推估）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "確認事件：東北火山口・卡塔尼亞機場（已關閉）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "參考城市：卡塔尼亞・墨西拿・巴勒摩（PMO替代機場）" }
+  ]
+}
