@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>貝恩：AI 2031回本需要多少？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --border:#dde3ef;
+  --text:#14192b;
+  --mute:#6b7590;
+  --blue:#1a5fc8;
+  --red:#d42b2b;
+  --amber:#b86c00;
+  --green:#147a52;
+  --violet:#5a42c4;
+  --blue-lt:#ddeafc;
+  --amber-lt:#fdf0d8;
+  --red-lt:#fde8e8;
+  --green-lt:#d8f0e8;
+  --violet-lt:#ece9fa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body.bai-body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:18px;
+  line-height:1.6;
+  padding:clamp(16px,4vw,40px);
+  max-width:860px;
+  margin:0 auto;
+}
+
+/* Header */
+.bai-header{
+  margin-bottom:28px;
+}
+.bai-kicker{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-bottom:8px;
+}
+.bai-title{
+  font-size:clamp(20px,4.5vw,28px);
+  font-weight:900;
+  color:var(--text);
+  line-height:1.25;
+  margin-bottom:8px;
+}
+.bai-sub{
+  font-size:17px;
+  color:var(--mute);
+}
+
+/* Divider */
+.bai-divider{
+  height:1px;
+  background:var(--border);
+  margin:24px 0;
+}
+
+/* Section label */
+.bai-sec-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  margin-bottom:14px;
+}
+
+/* Big stat row */
+.bai-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin-bottom:28px;
+}
+.bai-stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px 16px;
+  border-top:4px solid;
+}
+.bai-stat.blue  { border-top-color:var(--blue); }
+.bai-stat.red   { border-top-color:var(--red); }
+.bai-stat.amber { border-top-color:var(--amber); }
+.bai-stat.green { border-top-color:var(--green); }
+.bai-stat-lbl{
+  font-size:13px;
+  color:var(--mute);
+  margin-bottom:6px;
+  line-height:1.4;
+}
+.bai-stat-num{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(22px,4vw,28px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1;
+}
+.bai-stat.blue  .bai-stat-num { color:var(--blue); }
+.bai-stat.red   .bai-stat-num { color:var(--red); }
+.bai-stat.amber .bai-stat-num { color:var(--amber); }
+.bai-stat.green .bai-stat-num { color:var(--green); }
+.bai-stat-unit{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:var(--mute);
+  margin-top:4px;
+}
+
+/* Gap bar */
+.bai-gap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:22px 20px;
+  margin-bottom:28px;
+}
+.bai-gap-total-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:12px;
+}
+.bai-gap-total-lbl{
+  font-size:18px;
+  font-weight:700;
+}
+.bai-gap-total-val{
+  font-family:'Space Mono',monospace;
+  font-size:22px;
+  font-weight:700;
+  color:var(--red);
+}
+.bai-bar-wrap{
+  height:38px;
+  border-radius:6px;
+  overflow:hidden;
+  display:flex;
+  margin-bottom:12px;
+}
+.bai-bar-seg{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.bai-bar-seg.exist { background:var(--blue); color:#fff; flex:30; }
+.bai-bar-seg.gap   { background:var(--red);  color:#fff; flex:70; }
+
+.bai-bar-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.bai-leg-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:16px;
+  color:var(--mute);
+}
+.bai-leg-dot{
+  width:12px; height:12px;
+  border-radius:3px;
+  flex-shrink:0;
+}
+
+/* Scale chart */
+.bai-scale-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:22px 20px;
+  margin-bottom:28px;
+}
+.bai-scale-note{
+  font-size:16px;
+  color:var(--mute);
+  margin-bottom:18px;
+}
+.bai-row{
+  margin-bottom:13px;
+}
+.bai-row-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:5px;
+}
+.bai-row-lbl{
+  font-size:17px;
+  color:var(--text);
+}
+.bai-row-val{
+  font-family:'Space Mono',monospace;
+  font-size:15px;
+  color:var(--mute);
+  flex-shrink:0;
+}
+.bai-bar-bg{
+  height:22px;
+  background:var(--bg);
+  border-radius:4px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.bai-bar-fill{
+  height:100%;
+  border-radius:4px;
+  transition:width .4s ease;
+}
+.bai-row-divider{
+  height:1px;
+  background:var(--border);
+  margin:16px 0;
+}
+.bai-row-cat{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--mute);
+  margin-bottom:10px;
+}
+
+/* Formula box */
+.bai-formula{
+  background:var(--amber-lt);
+  border:1px solid #f0d090;
+  border-radius:10px;
+  padding:18px 20px;
+  margin-bottom:28px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.bai-formula-eq{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(16px,3vw,20px);
+  font-weight:700;
+  color:var(--amber);
+  white-space:nowrap;
+  line-height:1.5;
+}
+.bai-formula-desc{
+  font-size:17px;
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* Target jump */
+.bai-jump{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:22px 20px;
+  margin-bottom:28px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:12px;
+  align-items:center;
+}
+.bai-jump-box{
+  background:var(--bg);
+  border-radius:8px;
+  padding:16px;
+  text-align:center;
+}
+.bai-jump-year{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  color:var(--mute);
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.bai-jump-val{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(24px,4vw,32px);
+  font-weight:700;
+  line-height:1;
+}
+.bai-jump-val.old { color:var(--blue); }
+.bai-jump-val.new { color:var(--red); }
+.bai-jump-sub{
+  font-size:14px;
+  color:var(--mute);
+  margin-top:5px;
+}
+.bai-jump-arrow{
+  text-align:center;
+  font-size:28px;
+  color:var(--mute);
+}
+.bai-jump-badge{
+  background:var(--red-lt);
+  color:var(--red);
+  border-radius:20px;
+  padding:4px 12px;
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+  display:inline-block;
+  margin-top:8px;
+}
+
+/* Compute scale */
+.bai-compute{
+  background:var(--green-lt);
+  border:1px solid #a0dcc0;
+  border-radius:10px;
+  padding:18px 20px;
+  margin-bottom:28px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.bai-compute-num{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(22px,4vw,30px);
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+.bai-compute-desc{
+  font-size:17px;
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* Caveat */
+.bai-caveat{
+  background:var(--violet-lt);
+  border:1px solid #c5bbf0;
+  border-radius:10px;
+  padding:18px 20px;
+  margin-bottom:28px;
+  font-size:17px;
+  color:var(--text);
+  line-height:1.65;
+}
+.bai-caveat strong{ color:var(--violet); font-weight:700; }
+
+/* Footer */
+.bai-footer{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:var(--mute);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:6px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+}
+
+@media(max-width:580px){
+  .bai-jump{ grid-template-columns:1fr; }
+  .bai-jump-arrow{ transform:rotate(90deg); }
+  .bai-stats{ grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body class="bai-body">
+
+<!-- Header -->
+<header class="bai-header">
+  <div class="bai-kicker">貝恩 Bain & Company · 第七屆全球科技報告</div>
+  <h1 class="bai-title">AI 產業 2031 年每年須創造多少收入，才能讓建設規劃站得住腳？</h1>
+  <p class="bai-sub">資本支出 ÷ 25%＝門檻收入。門檻隨著資本支出預測走高，不是需求增加。</p>
+</header>
+
+<!-- Key stats -->
+<div class="bai-sec-lbl">核心數字</div>
+<div class="bai-stats">
+  <div class="bai-stat red">
+    <div class="bai-stat-lbl">2031年所需年收入</div>
+    <div class="bai-stat-num">$6兆</div>
+    <div class="bai-stat-unit">美元／年</div>
+  </div>
+  <div class="bai-stat amber">
+    <div class="bai-stat-lbl">2031年預估年資本支出</div>
+    <div class="bai-stat-num">$1.5兆</div>
+    <div class="bai-stat-unit">美元／年</div>
+  </div>
+  <div class="bai-stat blue">
+    <div class="bai-stat-lbl">2030年累計建設投資</div>
+    <div class="bai-stat-num">$5–6.5兆</div>
+    <div class="bai-stat-unit">美元（累計）</div>
+  </div>
+  <div class="bai-stat green">
+    <div class="bai-stat-lbl">6兆佔2026年全球GDP</div>
+    <div class="bai-stat-num">4%</div>
+    <div class="bai-stat-unit">全球名目GDP≈$124兆</div>
+  </div>
+</div>
+
+<!-- Revenue gap breakdown -->
+<div class="bai-sec-lbl">2031年收入需求拆解</div>
+<div class="bai-gap-card">
+  <div class="bai-gap-total-row">
+    <span class="bai-gap-total-lbl">2031年目標：$6兆美元</span>
+    <span class="bai-gap-total-val">差距 $4.2兆</span>
+  </div>
+  <div class="bai-bar-wrap">
+    <div class="bai-bar-seg exist">$1.8兆 既有類別</div>
+    <div class="bai-bar-seg gap">$4.2兆 需靠新類別填補</div>
+  </div>
+  <div class="bai-bar-legend">
+    <div class="bai-leg-item">
+      <div class="bai-leg-dot" style="background:var(--blue)"></div>
+      既有類別（訂閱、廣告、軟體）$1.2–1.8兆
+    </div>
+    <div class="bai-leg-item">
+      <div class="bai-leg-dot" style="background:var(--red)"></div>
+      尚未成熟新類別（自駕、機器人、藥研等）$4.2兆
+    </div>
+  </div>
+</div>
+
+<!-- Scale comparison chart -->
+<div class="bai-sec-lbl">規模對照——現況 vs 門檻（以 $6兆 = 100%）</div>
+<div class="bai-scale-card">
+  <div class="bai-scale-note">條長代表收入規模。$6兆為回本門檻基準。</div>
+
+  <div class="bai-row-cat">▌ 貝恩設定門檻</div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl" style="color:var(--red);font-weight:700">貝恩2031回本門檻</span>
+      <span class="bai-row-val" style="color:var(--red)">$6兆</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:100%;background:var(--red)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">既有類別預估上限</span>
+      <span class="bai-row-val">$1.8兆</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:30%;background:var(--blue)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row-divider"></div>
+  <div class="bai-row-cat">▌ 高盛估算門檻</div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">高盛：滿意回報需求</span>
+      <span class="bai-row-val">～$1兆</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:16.7%;background:var(--amber)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">高盛：硬體損益平衡</span>
+      <span class="bai-row-val">～$3千億</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:5%;background:var(--amber)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row-divider"></div>
+  <div class="bai-row-cat">▌ 主要前沿 AI 公司現況年化收入</div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">Anthropic</span>
+      <span class="bai-row-val">～$470–650億</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:0.92%;background:var(--green)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">OpenAI</span>
+      <span class="bai-row-val">～$400億</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:0.67%;background:var(--green)"></div>
+    </div>
+  </div>
+
+  <div class="bai-row">
+    <div class="bai-row-head">
+      <span class="bai-row-lbl">微軟 AI</span>
+      <span class="bai-row-val">～$370億</span>
+    </div>
+    <div class="bai-bar-bg">
+      <div class="bai-bar-fill" style="width:0.62%;background:var(--green)"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Formula -->
+<div class="bai-sec-lbl">$6兆的由來</div>
+<div class="bai-formula">
+  <div class="bai-formula-eq">資本支出 ÷ 0.25 = 所需收入<br>$1.5兆 ÷ 0.25 = $6兆</div>
+  <div class="bai-formula-desc">雲端業者歷史慣例：資本支出約佔收入 <strong>25%</strong>。$6兆源自這個恆等式——如果算力效率提升或資本支出踩煞車，「所需」規模就會跟著縮水。</div>
+</div>
+
+<!-- Target jump -->
+<div class="bai-sec-lbl">貝恩目標門檻年跳升</div>
+<div class="bai-jump">
+  <div class="bai-jump-box">
+    <div class="bai-jump-year">2025年報告 → 目標年份 2030</div>
+    <div class="bai-jump-val old">$2兆</div>
+    <div class="bai-jump-sub">約新台幣 68兆</div>
+  </div>
+  <div class="bai-jump-arrow">→</div>
+  <div class="bai-jump-box">
+    <div class="bai-jump-year">2026年報告 → 目標年份 2031</div>
+    <div class="bai-jump-val new">$6兆</div>
+    <div class="bai-jump-sub">約新台幣 191兆<br><span class="bai-jump-badge">↑ 3倍 · 一年內</span></div>
+  </div>
+</div>
+
+<!-- Compute scale -->
+<div class="bai-sec-lbl">算力建設規模</div>
+<div class="bai-compute">
+  <div class="bai-compute-num">150 GW</div>
+  <div class="bai-compute-desc">2030年前新增資料中心算力容量，相當於<strong>台灣全國發電裝置容量逾2倍</strong>，近乎在5年內使全球算力容量<strong>增加兩倍</strong>。</div>
+</div>
+
+<!-- Caveat -->
+<div class="bai-caveat">
+  <strong>注意</strong>：麥肯錫估計AI為全球經濟帶來的額外活動可達2030年 $13兆，但<strong>這些利潤大多流向醫院、工廠與消費者</strong>，而非付錢買 H100 的公司。貝恩需要的是能用來<strong>償還資料中心資本支出的「收入」</strong>，限制更為嚴苛。
+</div>
+
+<!-- Footer -->
+<footer class="bai-footer">
+  <span>資料來源：Bain Global Technology Report 2026 · Goldman Sachs · McKinsey Global Institute</span>
+  <span>製圖：張威翔</span>
+</footer>
+
+</body>
+</html>
