@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>美對台積軍火交付 突破9,361億</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --bg3:#eef1f8;
+  --border:#dde3ef;
+  --text:#14192b;
+  --mute:#6b7590;
+  --blue:#1a5fc8;
+  --red:#c82020;
+  --amber:#a85f00;
+  --green:#0e7045;
+  --blue-lt:#ddeafc;
+  --amber-lt:#fdf0d8;
+  --green-lt:#d4f0e4;
+  --red-lt:#fde8e8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body.taws-body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:18px;
+  line-height:1.6;
+  padding:clamp(16px,4vw,36px);
+  max-width:980px;
+  margin:0 auto;
+}
+
+/* Header */
+.taws-header{margin-bottom:24px}
+.taws-kicker{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-bottom:8px;
+}
+.taws-title{
+  font-size:clamp(20px,4vw,26px);
+  font-weight:900;
+  color:var(--text);
+  line-height:1.25;
+  margin-bottom:6px;
+}
+.taws-meta{
+  font-size:15px;
+  color:var(--mute);
+  font-family:'Space Mono',monospace;
+}
+
+/* Category summary */
+.taws-cats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin:20px 0 24px;
+}
+.taws-cat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:14px 16px;
+  border-top:4px solid;
+}
+.taws-cat-card.blue  {border-top-color:var(--blue)}
+.taws-cat-card.green {border-top-color:var(--green)}
+.taws-cat-card.amber {border-top-color:var(--amber)}
+.taws-cat-lbl{font-size:14px;color:var(--mute);margin-bottom:4px}
+.taws-cat-val{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(18px,3vw,22px);
+  font-weight:700;
+}
+.taws-cat-card.blue  .taws-cat-val{color:var(--blue)}
+.taws-cat-card.green .taws-cat-val{color:var(--green)}
+.taws-cat-card.amber .taws-cat-val{color:var(--amber)}
+.taws-cat-cnt{font-size:13px;color:var(--mute);margin-top:2px;font-family:'Space Mono',monospace}
+
+/* Total badge */
+.taws-total-badge{
+  display:inline-flex;
+  align-items:baseline;
+  gap:8px;
+  background:var(--red-lt);
+  border:1px solid #f0b0b0;
+  border-radius:8px;
+  padding:10px 16px;
+  margin-bottom:24px;
+}
+.taws-total-lbl{font-size:15px;color:var(--red)}
+.taws-total-val{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(20px,3.5vw,26px);
+  font-weight:700;
+  color:var(--red);
+}
+.taws-total-unit{font-size:14px;color:var(--mute)}
+
+/* Filter buttons */
+.taws-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+}
+.taws-btn{
+  padding:6px 14px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--card);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:15px;
+  color:var(--mute);
+  cursor:pointer;
+  transition:all .15s;
+}
+.taws-btn:hover{border-color:#aab0c4;color:var(--text)}
+.taws-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+
+/* Table wrapper */
+.taws-table-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+.taws-scroll{overflow-x:auto}
+
+table.taws-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:17px;
+}
+table.taws-table th{
+  background:var(--bg3);
+  padding:10px 14px;
+  text-align:left;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--mute);
+  border-bottom:2px solid var(--border);
+  white-space:nowrap;
+}
+table.taws-table th.num{text-align:right}
+
+/* Category header row */
+tr.taws-cat-row td{
+  padding:8px 14px 8px 16px;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.05em;
+  border-bottom:1px solid var(--border);
+  border-top:2px solid var(--border);
+  font-family:'Space Mono',monospace;
+}
+tr.taws-cat-row.blue td {background:var(--blue-lt);color:var(--blue)}
+tr.taws-cat-row.green td{background:var(--green-lt);color:var(--green)}
+tr.taws-cat-row.amber td{background:var(--amber-lt);color:var(--amber)}
+tr.taws-cat-row td.right{text-align:right}
+
+/* Item rows */
+tr.taws-item-row td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+tr.taws-item-row:last-of-type td{border-bottom:none}
+tr.taws-item-row:hover td{background:#f9fafc}
+
+.taws-item-name{
+  font-weight:700;
+  color:var(--text);
+  line-height:1.35;
+  font-size:17px;
+}
+.taws-item-en{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:var(--mute);
+  margin-top:2px;
+}
+
+.taws-price{
+  font-family:'Space Mono',monospace;
+  font-size:17px;
+  font-weight:700;
+  text-align:right;
+  white-space:nowrap;
+  color:var(--text);
+}
+.taws-price-bar{
+  height:4px;
+  border-radius:2px;
+  margin-top:5px;
+  opacity:.5;
+}
+
+/* Status cell */
+.taws-status{min-width:200px;max-width:380px}
+.taws-date-badge{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:12px;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:5px;
+  white-space:nowrap;
+}
+.taws-date-badge.fresh {background:#ddeafc;color:var(--blue)}
+.taws-date-badge.old   {background:var(--bg3);color:var(--mute)}
+.taws-date-badge.none  {background:#f5f5f5;color:#aaa}
+.taws-status-text{
+  font-size:15px;
+  color:var(--mute);
+  line-height:1.5;
+}
+
+/* Divider */
+.taws-divider{height:1px;background:var(--border);margin:20px 0}
+
+/* Footer */
+.taws-footer{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:var(--mute);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:6px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+  margin-top:20px;
+}
+
+@media(max-width:600px){
+  .taws-cats{grid-template-columns:1fr 1fr}
+  .taws-status{max-width:220px}
+}
+</style>
+</head>
+<body class="taws-body">
+
+<header class="taws-header">
+  <div class="taws-kicker">美台軍售 · 截至 2026年8月</div>
+  <h1 class="taws-title">美對台積軍火交付 突破9,361億</h1>
+  <div class="taws-meta">單位：新台幣 億元 · 匯率 31.5</div>
+</header>
+
+<div class="taws-total-badge">
+  <span class="taws-total-lbl">合計</span>
+  <span class="taws-total-val">9,361億</span>
+  <span class="taws-total-unit">新台幣</span>
+</div>
+
+<div class="taws-cats">
+  <div class="taws-cat-card blue">
+    <div class="taws-cat-lbl">傳統武器</div>
+    <div class="taws-cat-val">4,072億</div>
+    <div class="taws-cat-cnt">5項</div>
+  </div>
+  <div class="taws-cat-card green">
+    <div class="taws-cat-lbl">不對稱武器</div>
+    <div class="taws-cat-val">4,556億</div>
+    <div class="taws-cat-cnt">18項</div>
+  </div>
+  <div class="taws-cat-card amber">
+    <div class="taws-cat-lbl">彈藥</div>
+    <div class="taws-cat-val">733.6億</div>
+    <div class="taws-cat-cnt">5項</div>
+  </div>
+</div>
+
+<!-- Filter -->
+<div class="taws-filters">
+  <button class="taws-btn active" data-cat="all" onclick="filterCat(this,'all')">全部 28項</button>
+  <button class="taws-btn" data-cat="traditional" onclick="filterCat(this,'traditional')">傳統武器</button>
+  <button class="taws-btn" data-cat="asymmetric" onclick="filterCat(this,'asymmetric')">不對稱武器</button>
+  <button class="taws-btn" data-cat="ammo" onclick="filterCat(this,'ammo')">彈藥</button>
+</div>
+
+<div class="taws-table-wrap">
+  <div class="taws-scroll">
+  <table class="taws-table">
+    <thead>
+      <tr>
+        <th style="min-width:160px">武器系統</th>
+        <th class="num" style="min-width:110px">新台幣（億）</th>
+        <th style="min-width:220px">截至2026年8月概況</th>
+      </tr>
+    </thead>
+    <tbody id="taws-tbody">
+
+      <!-- 傳統武器 -->
+      <tr class="taws-cat-row blue" data-cat="traditional">
+        <td colspan="2">▌ 傳統武器</td>
+        <td class="right">合計 4,072億</td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="traditional">
+        <td>
+          <div class="taws-item-name">F-16C/D Block 70</div>
+          <div class="taws-item-en">Fighter Aircraft</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--blue)">2,520</div>
+          <div class="taws-price-bar" style="background:var(--blue);width:100%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">首批2架（6727、6728）8月17日離廠，21日抵夏威夷、25日抵關島；8月底前尚未抵台東。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="traditional">
+        <td>
+          <div class="taws-item-name">帕拉丁自走砲</div>
+          <div class="taws-item-en">M109A6 Paladin SPH</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--blue)">1,269</div>
+          <div class="taws-price-bar" style="background:var(--blue);width:50.4%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年5月</span>
+          <div class="taws-status-text">因美方生產延遲，預計2030年開始交付。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="traditional">
+        <td>
+          <div class="taws-item-name">F-16 紅外線搜索追蹤莢艙</div>
+          <div class="taws-item-en">IRST Pod</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--blue)">157.5</div>
+          <div class="taws-price-bar" style="background:var(--blue);width:6.3%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2025年12月</span>
+          <div class="taws-status-text">洛馬獲未確定價格合約，含台灣55具IRST莢艙，預計2031年6月完工。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="traditional">
+        <td>
+          <div class="taws-item-name">MS-110偵察莢艙</div>
+          <div class="taws-item-en">Recce Pod</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--blue)">115.6</div>
+          <div class="taws-price-bar" style="background:var(--blue);width:4.6%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">花蓮佳山基地周邊目擊F-16V掛載，為抵台後首度測試。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="traditional">
+        <td>
+          <div class="taws-item-name">Mk.75 76公厘快砲砲座</div>
+          <div class="taws-item-en">Mk.75 Naval Gun</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--blue)">9.5</div>
+          <div class="taws-price-bar" style="background:var(--blue);width:0.4%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge none">無新資訊</span>
+          <div class="taws-status-text">自通知國會後無新資訊。</div>
+        </td>
+      </tr>
+
+      <!-- 不對稱武器 -->
+      <tr class="taws-cat-row green" data-cat="asymmetric">
+        <td colspan="2">▌ 不對稱武器</td>
+        <td class="right">合計 4,556億</td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">M142 海馬斯</div>
+          <div class="taws-item-en">HIMARS（2025年12月通知）</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">1,276</div>
+          <div class="taws-price-bar" style="background:var(--green);width:50.6%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年4月</span>
+          <div class="taws-status-text">國防部發布「長程精準打擊系統」採購合約（研判為海馬斯），約1,235億元，預計2032年12月完成。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">岸置魚叉飛彈系統</div>
+          <div class="taws-item-en">HCSB Harpoon</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">746.6</div>
+          <div class="taws-price-bar" style="background:var(--green);width:29.6%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">國防部完成美台裝備運輸決標，2.5億元，履約期2026年8月至2028年7月。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">NASAMS防空飛彈系統</div>
+          <div class="taws-item-en">NASAMS SAM System</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">365.4</div>
+          <div class="taws-price-bar" style="background:var(--green);width:14.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年2月</span>
+          <div class="taws-status-text">媒體引述國防部消息，台灣計畫再採購9套NASAMS及相關飛彈，此案受立法院特別預算僵局影響。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">ALTIUS 遊蕩彈藥</div>
+          <div class="taws-item-en">Loitering Munition（2025年12月通知）</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">346.5</div>
+          <div class="taws-price-bar" style="background:var(--green);width:13.7%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">國防部簽署LOA，採購1,554架700M遊蕩彈藥與478架600M偵察無人機。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">戰術任務網路</div>
+          <div class="taws-item-en">Tactical Mission Network</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">318.2</div>
+          <div class="taws-price-bar" style="background:var(--green);width:12.6%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年1月</span>
+          <div class="taws-status-text">立法院將民眾黨提出的特別預算案交付委員會審查；該案不含戰術任務網路。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">愛國者3 MSE飛彈</div>
+          <div class="taws-item-en">PAC-3 MSE</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">277.8</div>
+          <div class="taws-price-bar" style="background:var(--green);width:11%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年3月</span>
+          <div class="taws-status-text">國防部官員表示，102枚MSE飛彈持續交付，不受中東衝突影響。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">AN/TPS-77 / TPS-78 雷達</div>
+          <div class="taws-item-en">Air Surveillance Radar</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">260.8</div>
+          <div class="taws-price-bar" style="background:var(--green);width:10.3%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2025年9月</span>
+          <div class="taws-status-text">所有雷達2028年底前交付；TPS-77自2026年起，TPS-78自2027年起。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">MQ-9B無人機</div>
+          <div class="taws-item-en">MQ-9B SeaGuardian UAV</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">189</div>
+          <div class="taws-price-bar" style="background:var(--green);width:7.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年6月</span>
+          <div class="taws-status-text">數量不明的無人機已在台灣境內，進行組裝及交機前飛行測試；整批預計2026年7至9月運抵。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">M142 海馬斯</div>
+          <div class="taws-item-en">HIMARS（2022年12月通知）</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">163.8</div>
+          <div class="taws-price-bar" style="background:var(--green);width:6.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年6月</span>
+          <div class="taws-status-text">18具發射器納入兵力結構規劃，「近期」到貨。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">標槍飛彈</div>
+          <div class="taws-item-en">FGM-148 Javelin</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">118.1</div>
+          <div class="taws-price-bar" style="background:var(--green);width:4.7%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年4月</span>
+          <div class="taws-status-text">「反裝甲飛彈」採購合約（含標槍或拖式）約51.3億元，預計2030年9月完成。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">空射魚叉飛彈</div>
+          <div class="taws-item-en">AGM-84L Air-Launched Harpoon</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">111.8</div>
+          <div class="taws-price-bar" style="background:var(--green);width:4.4%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge none">2023年1月</span>
+          <div class="taws-status-text">媒體報導飛彈將於2030年前交付，此後無新資訊。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">拖式飛彈（TOW）</div>
+          <div class="taws-item-en">BGM-71 TOW-2B</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">111.2</div>
+          <div class="taws-price-bar" style="background:var(--green);width:4.4%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年4月</span>
+          <div class="taws-status-text">同標槍飛彈，「反裝甲飛彈」採購合約約51.3億元，預計2030年9月完成。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">野戰資訊通信系統</div>
+          <div class="taws-item-en">FICS Field Info Comms</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">88.2</div>
+          <div class="taws-price-bar" style="background:var(--green);width:3.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年6月</span>
+          <div class="taws-status-text">配備該系統的車輛已在即時戰備操演中與作戰部隊並肩演練；陸軍部隊自2026年2月起開始接裝。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">C4指管現代化</div>
+          <div class="taws-item-en">C4 Command &amp; Control</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">83.5</div>
+          <div class="taws-price-bar" style="background:var(--green);width:3.3%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge none">無新資訊</span>
+          <div class="taws-status-text">自通知國會後無新資訊。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">火山佈雷系統</div>
+          <div class="taws-item-en">Volcano Scatterable Mine</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">56.7</div>
+          <div class="taws-price-bar" style="background:var(--green);width:2.2%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年6月</span>
+          <div class="taws-status-text">14套全數「近期」出貨，納入兵力結構規劃，運抵後編成「機動阻絕小組」。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">先進戰術資訊鏈路系統</div>
+          <div class="taws-item-en">Link-16 ATDLS</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">23.6</div>
+          <div class="taws-price-bar" style="background:var(--green);width:0.9%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2024年8月</span>
+          <div class="taws-status-text">政府電子採購網公告Link-16系統決標，完成期限2026年。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="asymmetric">
+        <td>
+          <div class="taws-item-name">彈簧刀300無人機</div>
+          <div class="taws-item-en">Switchblade 300 Loitering Munition</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--green)">18.9</div>
+          <div class="taws-price-bar" style="background:var(--green);width:0.7%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2025年9月</span>
+          <div class="taws-status-text">66架已交憲兵指揮部；150架預計2025年底前交陸軍，2026年底前累計469架。</div>
+        </td>
+      </tr>
+
+      <!-- 彈藥 -->
+      <tr class="taws-cat-row amber" data-cat="ammo">
+        <td colspan="2">▌ 彈藥</td>
+        <td class="right">合計 733.6億</td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">AGM-84H SLAM-ER</div>
+          <div class="taws-item-en">Standoff Land Attack Missile</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">317.5</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:100%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2025年12月</span>
+          <div class="taws-status-text">立法院預算中心出版品指出飛彈成本與交付時程多年未定案；此案尚無敲定的LOA。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">F-16各類彈藥</div>
+          <div class="taws-item-en">HARM · AMRAAM · others</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">195</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:61.4%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">100枚AGM-88 HARM已「部署」，AMRAAM亦「分批」交付。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">Mk48重型魚雷</div>
+          <div class="taws-item-en">Mk 48 ADCAP（2017年訂單）</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">78.8</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:24.8%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年7月</span>
+          <div class="taws-status-text">因持續延宕，國防部評估向美軍「借用現役魚雷」。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">AGM-154C JSOW</div>
+          <div class="taws-item-en">Joint Standoff Weapon</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">58.6</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:18.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">交付持續延後至「2027至2028年間」。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">Mk48重型魚雷</div>
+          <div class="taws-item-en">Mk 48 ADCAP（2020年訂單）</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">56.7</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:17.9%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge old">2026年7月</span>
+          <div class="taws-status-text">同2017年訂單，國防部評估向美軍「借用現役魚雷」。</div>
+        </td>
+      </tr>
+
+      <tr class="taws-item-row" data-cat="ammo">
+        <td>
+          <div class="taws-item-name">AIM-9X Block II</div>
+          <div class="taws-item-en">Sidewinder AAM</div>
+        </td>
+        <td>
+          <div class="taws-price" style="color:var(--amber)">27.1</div>
+          <div class="taws-price-bar" style="background:var(--amber);width:8.5%"></div>
+        </td>
+        <td class="taws-status">
+          <span class="taws-date-badge fresh">2026年8月</span>
+          <div class="taws-status-text">「首批」已交付，總數140枚，較最初通知國會時增加40枚。</div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<footer class="taws-footer">
+  <span>資料來源：Taiwan Security Monitor</span>
+  <span>製圖：張威翔</span>
+</footer>
+
+<script>
+function filterCat(btn, cat) {
+  document.querySelectorAll('.taws-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('tr[data-cat]').forEach(row => {
+    if (cat === 'all' || row.dataset.cat === cat) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
