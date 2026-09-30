@@ -307,6 +307,109 @@ tr.taws-item-row:hover td{background:#f9fafc}
 .taws-del-pill.pending{background:rgba(26,95,40,.15);color:#1a5f28}
 .taws-del-pill.inprog {background:rgba(224,112,0,.15);color:#a05000}
 
+/* Already delivered section */
+.taws-delivered-wrap{
+  background:#eaf7f0;
+  border:1px solid #9ed8bc;
+  border-radius:10px;
+  padding:18px 18px 14px;
+  margin-bottom:14px;
+}
+.taws-delivered-hd{
+  font-size:15px;
+  font-weight:700;
+  color:#0d6640;
+  margin-bottom:4px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.taws-delivered-note{
+  font-size:15px;
+  color:#3a7a5e;
+  margin-bottom:12px;
+  line-height:1.55;
+}
+.taws-delivered-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:8px;
+}
+.taws-del-card{
+  background:#ffffff;
+  border:1px solid #b8e4ce;
+  border-radius:7px;
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.taws-del-check{
+  width:22px;height:22px;
+  background:#0d6640;
+  border-radius:50%;
+  color:#fff;
+  font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.taws-del-name{font-size:15px;font-weight:700;color:#14192b;line-height:1.3}
+.taws-del-val{font-family:'Space Mono',monospace;font-size:13px;color:#3a7a5e;margin-top:2px}
+.taws-del-total{
+  margin-top:10px;
+  text-align:right;
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:#0d6640;
+  font-weight:700;
+}
+/* Partial delivery section */
+.taws-partial-wrap{
+  background:#eef4fd;
+  border:1px solid #b0cbf0;
+  border-radius:10px;
+  padding:18px 18px 14px;
+  margin-bottom:14px;
+}
+.taws-partial-hd{
+  font-size:15px;
+  font-weight:700;
+  color:#1a5fc8;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.taws-partial-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:8px;
+}
+.taws-partial-item{
+  background:#ffffff;
+  border:1px solid #c8ddf8;
+  border-radius:7px;
+  padding:9px 12px;
+  font-size:15px;
+  color:var(--text);
+  line-height:1.45;
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+}
+.taws-partial-tag{
+  background:#ddeafc;
+  color:var(--blue);
+  border-radius:5px;
+  padding:2px 7px;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  flex-shrink:0;
+  margin-top:1px;
+}
+
 @media(max-width:600px){
   .taws-cats{grid-template-columns:1fr 1fr}
   .taws-status{max-width:220px}
@@ -406,6 +509,67 @@ tr.taws-item-row:hover td{background:#f9fafc}
         <div class="taws-dleg-dot" style="background:#e07000"></div>
         <div><div class="taws-dleg-name">傳統武器</div><div class="taws-dleg-val">$367M</div></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Already delivered -->
+<div class="taws-delivered-wrap">
+  <div class="taws-delivered-hd">
+    <span style="font-size:18px">✓</span> 已從積欠清單移除（研判已交付完畢）
+  </div>
+  <div class="taws-delivered-note">與2025年12月追蹤報導相比，以下4案已從清單中去除，合計約863億元（約$27.4億美元）。</div>
+  <div class="taws-delivered-grid">
+    <div class="taws-del-card">
+      <div class="taws-del-check">✓</div>
+      <div>
+        <div class="taws-del-name">M1A2T 艾布蘭戰車</div>
+        <div class="taws-del-val">$20億美元 ≈ 630億元</div>
+      </div>
+    </div>
+    <div class="taws-del-card">
+      <div class="taws-del-check">✓</div>
+      <div>
+        <div class="taws-del-name">刺針飛彈（2015＋2019兩批）</div>
+        <div class="taws-del-val">$4.4億美元 ≈ 138.6億元</div>
+      </div>
+    </div>
+    <div class="taws-del-card">
+      <div class="taws-del-check">✓</div>
+      <div>
+        <div class="taws-del-name">ALTIUS 600M-V 無人機（舊合約）</div>
+        <div class="taws-del-val">$3億美元 ≈ 94.5億元</div>
+      </div>
+    </div>
+  </div>
+  <div class="taws-del-total">4案合計 ▸ 約 863 億元（$27.4億美元）</div>
+</div>
+
+<!-- Partial deliveries -->
+<div class="taws-partial-wrap">
+  <div class="taws-partial-hd">
+    <span style="font-size:16px">⚡</span> 積欠清單內、已部分交付
+  </div>
+  <div class="taws-partial-grid">
+    <div class="taws-partial-item">
+      <span class="taws-partial-tag">全數部署</span>
+      AGM-88 HARM 反輻射飛彈 100枚（F-16彈藥）
+    </div>
+    <div class="taws-partial-item">
+      <span class="taws-partial-tag">首批抵台</span>
+      AMRAAM 空對空飛彈（F-16彈藥）
+    </div>
+    <div class="taws-partial-item">
+      <span class="taws-partial-tag">首批抵台</span>
+      AIM-9X Block II 響尾蛇飛彈（共140枚）
+    </div>
+    <div class="taws-partial-item">
+      <span class="taws-partial-tag">102枚交付</span>
+      愛國者3 MSE 攔截彈
+    </div>
+    <div class="taws-partial-item">
+      <span class="taws-partial-tag">66架交付</span>
+      彈簧刀300無人機（至憲兵指揮部）
     </div>
   </div>
 </div>
