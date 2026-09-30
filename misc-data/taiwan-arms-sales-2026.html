@@ -247,9 +247,70 @@ tr.taws-item-row:hover td{background:#f9fafc}
   margin-top:20px;
 }
 
+/* Donut chart section */
+.taws-donut-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px 16px 16px;
+  margin-bottom:20px;
+}
+.taws-donut-sec-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  margin-bottom:14px;
+}
+.taws-donut-inner{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.taws-donut-legend{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 16px;
+  min-width:240px;
+}
+.taws-dleg-grp-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--mute);
+  grid-column:1/-1;
+  margin-top:6px;
+  border-top:1px solid var(--border);
+  padding-top:6px;
+}
+.taws-dleg-grp-lbl:first-child{margin-top:0;border-top:none;padding-top:0}
+.taws-dleg-item{display:flex;align-items:flex-start;gap:7px}
+.taws-dleg-dot{width:11px;height:11px;border-radius:2px;flex-shrink:0;margin-top:3px}
+.taws-dleg-name{font-size:14px;color:var(--text);line-height:1.3;font-weight:600}
+.taws-dleg-val{font-family:'Space Mono',monospace;font-size:13px;color:var(--mute)}
+/* Delivery pills in cat header */
+.taws-cat-status{
+  display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;
+}
+.taws-del-pill{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  padding:2px 7px;
+  border-radius:10px;
+  white-space:nowrap;
+  font-weight:400;
+}
+.taws-del-pill.pending{background:rgba(26,95,40,.15);color:#1a5f28}
+.taws-del-pill.inprog {background:rgba(224,112,0,.15);color:#a05000}
+
 @media(max-width:600px){
   .taws-cats{grid-template-columns:1fr 1fr}
   .taws-status{max-width:220px}
+  .taws-donut-legend{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -285,6 +346,70 @@ tr.taws-item-row:hover td{background:#f9fafc}
   </div>
 </div>
 
+<!-- Backlog donut chart -->
+<div class="taws-donut-wrap">
+  <div class="taws-donut-sec-lbl">積欠庫存現況（美元）· 截至2026年8月 · 來源：Taiwan Security Monitor Fig.1</div>
+  <div class="taws-donut-inner">
+    <!-- SVG donut: r=80, C=502.655, segments clockwise from 12-o'clock -->
+    <!-- 1.Traditional 12.56B→212.44  2.Trad.Delivery 0.367B→6.21  3.Munition 1.62B→27.40 -->
+    <!-- 4.Munition.Del 0.705B→11.93  5.Asym.Del 4.19B→70.87  6.Asymmetric 10.27B→173.69 -->
+    <svg viewBox="0 0 300 300" width="190" height="190" style="flex-shrink:0" aria-label="積欠庫存圓餅圖">
+      <circle cx="150" cy="150" r="80" fill="#f4f6fb"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#1a5f28" stroke-width="34"
+        stroke-dasharray="212.44 290.21" stroke-dashoffset="0"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#e07000" stroke-width="34"
+        stroke-dasharray="6.21 496.44" stroke-dashoffset="-212.44"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#2d8a40" stroke-width="34"
+        stroke-dasharray="27.40 475.25" stroke-dashoffset="-218.65"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#e07000" stroke-width="34"
+        stroke-dasharray="11.93 490.72" stroke-dashoffset="-246.05"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#e07000" stroke-width="34"
+        stroke-dasharray="70.87 431.78" stroke-dashoffset="-257.98"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#1a5f28" stroke-width="34"
+        stroke-dasharray="173.69 328.96" stroke-dashoffset="-328.85"
+        transform="rotate(-90 150 150)"/>
+      <circle cx="150" cy="150" r="63" fill="white"/>
+      <text x="150" y="143" text-anchor="middle" font-size="11" fill="#6b7590"
+        font-family="Space Mono,monospace">Total Backlog</text>
+      <text x="150" y="162" text-anchor="middle" font-size="17" font-weight="700" fill="#14192b"
+        font-family="Space Mono,monospace">$29.72B</text>
+    </svg>
+    <div class="taws-donut-legend">
+      <div class="taws-dleg-grp-lbl">待交付 Backlog</div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#1a5f28"></div>
+        <div><div class="taws-dleg-name">傳統武器</div><div class="taws-dleg-val">$12.56B</div></div>
+      </div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#1a5f28"></div>
+        <div><div class="taws-dleg-name">不對稱武器</div><div class="taws-dleg-val">$10.27B</div></div>
+      </div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#2d8a40"></div>
+        <div><div class="taws-dleg-name">彈藥</div><div class="taws-dleg-val">$1.62B</div></div>
+      </div>
+      <div class="taws-dleg-grp-lbl">交付中 Delivery in Progress</div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#e07000"></div>
+        <div><div class="taws-dleg-name">不對稱武器</div><div class="taws-dleg-val">$4.19B</div></div>
+      </div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#e07000"></div>
+        <div><div class="taws-dleg-name">彈藥</div><div class="taws-dleg-val">$705M</div></div>
+      </div>
+      <div class="taws-dleg-item">
+        <div class="taws-dleg-dot" style="background:#e07000"></div>
+        <div><div class="taws-dleg-name">傳統武器</div><div class="taws-dleg-val">$367M</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Filter -->
 <div class="taws-filters">
   <button class="taws-btn active" data-cat="all" onclick="filterCat(this,'all')">全部 28項</button>
@@ -307,7 +432,13 @@ tr.taws-item-row:hover td{background:#f9fafc}
 
       <!-- 傳統武器 -->
       <tr class="taws-cat-row blue" data-cat="traditional">
-        <td colspan="2">▌ 傳統武器</td>
+        <td colspan="2">
+          ▌ 傳統武器
+          <div class="taws-cat-status">
+            <span class="taws-del-pill pending">待交付 $12.56B</span>
+            <span class="taws-del-pill inprog">交付中 $367M</span>
+          </div>
+        </td>
         <td class="right">合計 4,072億</td>
       </tr>
 
@@ -388,7 +519,13 @@ tr.taws-item-row:hover td{background:#f9fafc}
 
       <!-- 不對稱武器 -->
       <tr class="taws-cat-row green" data-cat="asymmetric">
-        <td colspan="2">▌ 不對稱武器</td>
+        <td colspan="2">
+          ▌ 不對稱武器
+          <div class="taws-cat-status">
+            <span class="taws-del-pill pending">待交付 $10.27B</span>
+            <span class="taws-del-pill inprog">交付中 $4.19B</span>
+          </div>
+        </td>
         <td class="right">合計 4,556億</td>
       </tr>
 
@@ -649,7 +786,13 @@ tr.taws-item-row:hover td{background:#f9fafc}
 
       <!-- 彈藥 -->
       <tr class="taws-cat-row amber" data-cat="ammo">
-        <td colspan="2">▌ 彈藥</td>
+        <td colspan="2">
+          ▌ 彈藥
+          <div class="taws-cat-status">
+            <span class="taws-del-pill pending">待交付 $1.62B</span>
+            <span class="taws-del-pill inprog">交付中 $705M</span>
+          </div>
+        </td>
         <td class="right">合計 733.6億</td>
       </tr>
 
