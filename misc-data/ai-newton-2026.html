@@ -267,6 +267,41 @@ body.ain-body{
 .ain-translate .lbl{font-size:18px;color:var(--gold);font-weight:700;margin-bottom:4px}
 .ain-translate .sub{font-size:18px;color:var(--mute);margin-top:4px}
 
+
+/* Pair: AI vs human */
+.ain-pair{display:grid;gap:0}
+.ain-pair-box{
+  background:var(--bg2);
+  border:2px solid;
+  border-radius:12px;
+  padding:16px 18px;
+}
+.ain-pair-box.ai{border-color:var(--violet)}
+.ain-pair-box.hu{border-color:var(--gold)}
+.ain-pair-tag{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.ain-pair-box.ai .ain-pair-tag{color:var(--violet)}
+.ain-pair-box.hu .ain-pair-tag{color:var(--gold)}
+.ain-pair-eq{
+  background:var(--bg);
+  border-radius:8px;
+  padding:12px 10px;
+  text-align:center;
+  overflow-x:auto;
+  margin-bottom:12px;
+}
+.ain-pair-link{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:10px 0;
+  color:var(--mute);
+  font-size:18px;
+}
+.ain-pair-link .arrow{font-size:28px;color:var(--gold);line-height:1}
+
 /* Footer */
 .ain-footer{
   margin-top:32px;
@@ -316,17 +351,67 @@ body.ain-body{
   <div class="ain-flow-box human"><b>人類對照</b><span>事後貼上名稱</span></div>
 </div>
 
-<!-- Three results -->
-<div class="ain-sec">最醒目的三項成果</div>
-<div class="ain-laws">
+<!-- Second law: AI vs human -->
+<div class="ain-sec">牛頓第二定律：AI 的寫法 vs 人類的寫法</div>
+<div class="ain-pair">
 
-  <div class="ain-law blue">
-    <div class="ain-law-name">牛頓第二定律</div>
-    <div class="ain-law-en">Newton's 2nd law</div>
-    <div class="ain-law-eq">\[ ma = F \]</div>
-    <div class="ain-law-note">質量乘加速度，等於諸力之和。</div>
+  <div class="ain-pair-box ai">
+    <div class="ain-pair-tag">上 · AI 實際存下來的式子</div>
+    <div class="ain-pair-eq">
+      \[ \forall i:\text{Ball},\quad m_i\,a_{i,x} + (\nabla_i V_g)_x + (\nabla_i V_k)_x = 0 \]
+    </div>
+    <div class="ain-sym-list">
+      <div class="ain-sym">
+        <div class="ain-sym-k">\( m_i \)</div>
+        <div class="ain-sym-v">質量 <em>— 來自某次彈簧伸長的測量程序</em></div>
+      </div>
+      <div class="ain-sym">
+        <div class="ain-sym-k">\( a_{i,x} \)</div>
+        <div class="ain-sym-v">加速度 <em>— 位置對時間的導數</em></div>
+      </div>
+      <div class="ain-sym">
+        <div class="ain-sym-k">\( V_g,\ V_k \)</div>
+        <div class="ain-sym-v">位能 <em>— 從守恆量裡抽出，再推廣</em></div>
+      </div>
+    </div>
   </div>
 
+  <div class="ain-pair-link">
+    <span class="arrow">↓</span>
+    <span>作者事後對照：兩者等價</span>
+  </div>
+
+  <div class="ain-pair-box hu">
+    <div class="ain-pair-tag">下 · 人類熟悉的牛頓第二定律</div>
+    <div class="ain-pair-eq">\[ ma = F \]</div>
+    <div class="ain-pair-eq" style="margin-bottom:0">\[ m\,a = -\nabla V_g - \nabla V_k = \textstyle\sum F \]</div>
+  </div>
+
+</div>
+
+<!-- Naming -->
+<div class="ain-sec">它沒有給定律取名字</div>
+<div class="ain-name-grid">
+  <div class="ain-name-card ai">
+    <h3>AI 的知識庫</h3>
+    <div class="ain-chips">
+      <span class="ain-chip">C1</span><span class="ain-chip">C2</span><span class="ain-chip">C3</span>
+      <span class="ain-chip">R04</span><span class="ain-chip">R116</span>
+    </div>
+    <p>只用編號。下標每次跑還會變，沒有固定的「第二定律」這個詞。</p>
+  </div>
+  <div class="ain-name-card hu">
+    <h3>人類論文的稱呼</h3>
+    <div class="ain-chips">
+      <span class="ain-chip">Newton's 2nd law</span>
+    </div>
+    <p>作者事後對照出來的稱呼，不是系統自己命名的。</p>
+  </div>
+</div>
+
+<!-- Energy -->
+<div class="ain-sec">它也重新得到能量守恆</div>
+<div class="ain-laws">
   <div class="ain-law green">
     <div class="ain-law-name">能量守恆</div>
     <div class="ain-law-en">Energy conservation</div>
@@ -334,14 +419,6 @@ body.ain-body{
     <div class="ain-law-note"><b>動能</b>＋<b>彈性位能</b>＋<b>近地重力位能</b>；另外還有形式為下式的<b>萬有重力位能</b>：</div>
     <div class="ain-law-eq" style="margin-top:8px;margin-bottom:0">\[ V_G = -\dfrac{GMm}{r} \]</div>
   </div>
-
-  <div class="ain-law gold">
-    <div class="ain-law-name">萬有引力定律</div>
-    <div class="ain-law-en">Universal gravitation</div>
-    <div class="ain-law-eq">\[ F = \dfrac{GMm}{r^{2}} \]</div>
-    <div class="ain-law-note">由上面的重力位能 \(V_G\) 對距離微分即得。</div>
-  </div>
-
 </div>
 
 <!-- Weak equivalence -->
@@ -366,53 +443,6 @@ body.ain-body{
     </div>
   </div>
   <div class="ain-eq-result">資料核對結果：\( m_g = m_i \)　<b>弱等效原理的操作版本，並非人類事先寫入</b></div>
-</div>
-
-<!-- Naming -->
-<div class="ain-sec">它沒有給定律取名字</div>
-<div class="ain-name-grid">
-  <div class="ain-name-card ai">
-    <h3>AI 的知識庫</h3>
-    <div class="ain-chips">
-      <span class="ain-chip">C1</span><span class="ain-chip">C2</span><span class="ain-chip">C3</span>
-      <span class="ain-chip">R04</span><span class="ain-chip">R116</span>
-    </div>
-    <p>只用編號。下標每次跑還會變，沒有固定的「第二定律」這個詞。</p>
-  </div>
-  <div class="ain-name-card hu">
-    <h3>人類論文的稱呼</h3>
-    <div class="ain-chips">
-      <span class="ain-chip">Newton's 2nd law</span>
-    </div>
-    <p>作者事後對照出來的稱呼，不是系統自己命名的。</p>
-  </div>
-</div>
-
-<!-- Decode -->
-<div class="ain-sec">它實際存下來的那條式子</div>
-<div class="ain-decode">
-  <div class="ain-decode-eq">
-    \[ \forall i:\text{Ball},\quad m_i\,a_{i,x} + (\nabla_i V_g)_x + (\nabla_i V_k)_x = 0 \]
-  </div>
-  <div class="ain-sym-list">
-    <div class="ain-sym">
-      <div class="ain-sym-k">\( m_i \)</div>
-      <div class="ain-sym-v">質量 <em>— 來自某次彈簧伸長的測量程序</em></div>
-    </div>
-    <div class="ain-sym">
-      <div class="ain-sym-k">\( a_{i,x} \)</div>
-      <div class="ain-sym-v">加速度 <em>— 位置對時間的導數</em></div>
-    </div>
-    <div class="ain-sym">
-      <div class="ain-sym-k">\( V_g,\ V_k \)</div>
-      <div class="ain-sym-v">位能 <em>— 從守恆量裡抽出，再推廣</em></div>
-    </div>
-  </div>
-  <div class="ain-translate">
-    <div class="lbl">作者看出它等價於</div>
-    \[ m\,a = -\nabla V_g - \nabla V_k = \textstyle\sum F \]
-    <div class="sub">才在正文標成 Newton's second law</div>
-  </div>
 </div>
 
 <footer class="ain-footer">
