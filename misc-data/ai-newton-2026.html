@@ -150,52 +150,6 @@ body.ain-body{
 .ain-law-note{font-size:18px;color:var(--mute)}
 .ain-law-note b{color:var(--text)}
 
-/* Equivalence */
-.ain-eq-wrap{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:18px;
-}
-.ain-eq-grid{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:stretch;
-}
-.ain-eq-box{
-  border-radius:10px;
-  padding:14px;
-  border:1px solid;
-  text-align:center;
-}
-.ain-eq-box.blue{border-color:var(--blue);background:rgba(57,135,229,.1)}
-.ain-eq-box.red{border-color:var(--red);background:rgba(230,103,103,.1)}
-.ain-eq-box .tag{
-  font-family:'Space Mono',monospace;
-  font-size:18px;
-  display:block;
-  margin-bottom:4px;
-}
-.ain-eq-box.blue .tag{color:var(--blue)}
-.ain-eq-box.red .tag{color:var(--red)}
-.ain-eq-box .how{font-size:18px;color:var(--text);margin-bottom:6px}
-.ain-eq-mid{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:var(--green);font-size:18px;font-weight:700;gap:2px;
-}
-.ain-eq-mid .big{font-size:36px;line-height:1;font-family:'Space Mono',monospace}
-.ain-eq-result{
-  margin-top:14px;
-  background:rgba(27,175,122,.12);
-  border:1px solid var(--green);
-  border-radius:10px;
-  padding:12px 14px;
-  text-align:center;
-  font-size:18px;
-}
-.ain-eq-result b{color:var(--green)}
-
 /* Naming */
 .ain-name-grid{
   display:grid;
@@ -316,7 +270,6 @@ body.ain-body{
 @media(max-width:700px){
   .ain-flow{grid-template-columns:1fr}
   .ain-flow-arrow{transform:rotate(90deg);height:24px}
-  .ain-eq-grid{grid-template-columns:1fr}
   .ain-name-grid{grid-template-columns:1fr}
   .ain-sym{grid-template-columns:1fr;gap:4px}
   .ain-sym-k{text-align:left}
@@ -419,30 +372,6 @@ body.ain-body{
     <div class="ain-law-note"><b>動能</b>＋<b>彈性位能</b>＋<b>近地重力位能</b>；另外還有形式為下式的<b>萬有重力位能</b>：</div>
     <div class="ain-law-eq" style="margin-top:8px;margin-bottom:0">\[ V_G = -\dfrac{GMm}{r} \]</div>
   </div>
-</div>
-
-<!-- Weak equivalence -->
-<div class="ain-sec">弱等效原理：兩種質量，自己核對</div>
-<div class="ain-eq-wrap">
-  <div class="ain-eq-grid">
-    <div class="ain-eq-box blue">
-      <span class="tag">彈簧伸長</span>
-      <div class="how">掛物體量伸長量</div>
-      \( m_g \)
-      <div class="how" style="margin-top:6px">重力質量</div>
-    </div>
-    <div class="ain-eq-mid">
-      <div class="big">=?</div>
-      <div>AI 自己核對</div>
-    </div>
-    <div class="ain-eq-box red">
-      <span class="tag">彈簧振盪</span>
-      <div class="how">量振盪的快慢</div>
-      \( m_i \)
-      <div class="how" style="margin-top:6px">慣性質量</div>
-    </div>
-  </div>
-  <div class="ain-eq-result">資料核對結果：\( m_g = m_i \)　<b>弱等效原理的操作版本，並非人類事先寫入</b></div>
 </div>
 
 <footer class="ain-footer">
