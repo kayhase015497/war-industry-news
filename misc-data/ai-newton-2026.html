@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-Newton 自己重建牛頓力學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#0b0f1a;
+  --bg2:#121a2b;
+  --bg3:#1a2438;
+  --border:#2a3550;
+  --text:#e8ecf5;
+  --mute:#9aa5bd;
+  --blue:#3987e5;
+  --gold:#eda100;
+  --green:#1baf7a;
+  --red:#e66767;
+  --violet:#9085e9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body.ain-body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:18px;
+  line-height:1.6;
+  padding:clamp(16px,4vw,36px);
+  max-width:900px;
+  margin:0 auto;
+}
+.katex{font-size:1.15em}
+
+/* Header */
+.ain-header{margin-bottom:28px}
+.ain-kicker{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  letter-spacing:.08em;
+  color:var(--mute);
+  margin-bottom:8px;
+}
+.ain-title{
+  font-size:clamp(26px,5vw,36px);
+  font-weight:900;
+  line-height:1.25;
+  color:#fff;
+  margin-bottom:10px;
+}
+.ain-sub{font-size:18px;color:var(--mute)}
+
+/* Section label */
+.ain-sec{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  letter-spacing:.06em;
+  color:var(--mute);
+  margin:36px 0 14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.ain-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Stats */
+.ain-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+.ain-stat{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-top:4px solid;
+  border-radius:10px;
+  padding:14px 16px;
+}
+.ain-stat.blue{border-top-color:var(--blue)}
+.ain-stat.gold{border-top-color:var(--gold)}
+.ain-stat.green{border-top-color:var(--green)}
+.ain-stat.violet{border-top-color:var(--violet)}
+.ain-stat-num{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(28px,5vw,36px);
+  font-weight:700;
+  line-height:1.1;
+}
+.ain-stat.blue .ain-stat-num{color:var(--blue)}
+.ain-stat.gold .ain-stat-num{color:var(--gold)}
+.ain-stat.green .ain-stat-num{color:var(--green)}
+.ain-stat.violet .ain-stat-num{color:var(--violet)}
+.ain-stat-lbl{font-size:18px;color:var(--mute);margin-top:4px}
+
+/* Flow */
+.ain-flow{
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+  gap:8px;
+  align-items:stretch;
+}
+.ain-flow-box{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 12px;
+  text-align:center;
+}
+.ain-flow-box b{display:block;font-size:18px;color:#fff;margin-bottom:2px}
+.ain-flow-box span{font-size:18px;color:var(--mute);line-height:1.4;display:block}
+.ain-flow-box.human{border-color:var(--gold);background:rgba(237,161,0,.08)}
+.ain-flow-box.human b{color:var(--gold)}
+.ain-flow-arrow{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--mute);font-size:24px;
+}
+
+/* Law cards */
+.ain-laws{display:grid;gap:14px}
+.ain-law{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-left:5px solid;
+  border-radius:10px;
+  padding:16px 18px;
+}
+.ain-law.blue{border-left-color:var(--blue)}
+.ain-law.green{border-left-color:var(--green)}
+.ain-law.gold{border-left-color:var(--gold)}
+.ain-law-name{font-size:20px;font-weight:700;color:#fff;margin-bottom:2px}
+.ain-law-en{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  color:var(--mute);
+  margin-bottom:8px;
+}
+.ain-law-eq{
+  background:var(--bg);
+  border-radius:8px;
+  padding:10px 12px;
+  text-align:center;
+  overflow-x:auto;
+  margin-bottom:8px;
+}
+.ain-law-note{font-size:18px;color:var(--mute)}
+.ain-law-note b{color:var(--text)}
+
+/* Equivalence */
+.ain-eq-wrap{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+}
+.ain-eq-grid{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:12px;
+  align-items:stretch;
+}
+.ain-eq-box{
+  border-radius:10px;
+  padding:14px;
+  border:1px solid;
+  text-align:center;
+}
+.ain-eq-box.blue{border-color:var(--blue);background:rgba(57,135,229,.1)}
+.ain-eq-box.red{border-color:var(--red);background:rgba(230,103,103,.1)}
+.ain-eq-box .tag{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  display:block;
+  margin-bottom:4px;
+}
+.ain-eq-box.blue .tag{color:var(--blue)}
+.ain-eq-box.red .tag{color:var(--red)}
+.ain-eq-box .how{font-size:18px;color:var(--text);margin-bottom:6px}
+.ain-eq-mid{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--green);font-size:18px;font-weight:700;gap:2px;
+}
+.ain-eq-mid .big{font-size:36px;line-height:1;font-family:'Space Mono',monospace}
+.ain-eq-result{
+  margin-top:14px;
+  background:rgba(27,175,122,.12);
+  border:1px solid var(--green);
+  border-radius:10px;
+  padding:12px 14px;
+  text-align:center;
+  font-size:18px;
+}
+.ain-eq-result b{color:var(--green)}
+
+/* Naming */
+.ain-name-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.ain-name-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 18px;
+}
+.ain-name-card h3{
+  font-size:18px;
+  font-family:'Space Mono',monospace;
+  margin-bottom:10px;
+}
+.ain-name-card.ai h3{color:var(--violet)}
+.ain-name-card.hu h3{color:var(--gold)}
+.ain-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.ain-chip{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  padding:3px 10px;
+  border-radius:6px;
+  background:rgba(144,133,233,.15);
+  color:var(--violet);
+}
+.ain-name-card p{font-size:18px;color:var(--mute)}
+.ain-name-card.hu .ain-chip{background:rgba(237,161,0,.15);color:var(--gold)}
+
+/* AI law decode */
+.ain-decode{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+}
+.ain-decode-eq{
+  background:var(--bg);
+  border:1px solid var(--violet);
+  border-radius:10px;
+  padding:14px 10px;
+  text-align:center;
+  overflow-x:auto;
+  margin-bottom:14px;
+}
+.ain-sym-list{display:grid;gap:10px}
+.ain-sym{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:12px;
+  align-items:center;
+  border-top:1px solid var(--border);
+  padding-top:10px;
+}
+.ain-sym:first-child{border-top:none;padding-top:0}
+.ain-sym-k{text-align:center}
+.ain-sym-v{font-size:18px;color:var(--text)}
+.ain-sym-v em{font-style:normal;color:var(--mute)}
+.ain-translate{
+  margin-top:14px;
+  background:rgba(237,161,0,.1);
+  border:1px solid var(--gold);
+  border-radius:10px;
+  padding:12px 14px;
+  text-align:center;
+}
+.ain-translate .lbl{font-size:18px;color:var(--gold);font-weight:700;margin-bottom:4px}
+.ain-translate .sub{font-size:18px;color:var(--mute);margin-top:4px}
+
+/* Footer */
+.ain-footer{
+  margin-top:32px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  color:var(--mute);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;
+}
+
+@media(max-width:700px){
+  .ain-flow{grid-template-columns:1fr}
+  .ain-flow-arrow{transform:rotate(90deg);height:24px}
+  .ain-eq-grid{grid-template-columns:1fr}
+  .ain-name-grid{grid-template-columns:1fr}
+  .ain-sym{grid-template-columns:1fr;gap:4px}
+  .ain-sym-k{text-align:left}
+}
+</style>
+</head>
+<body class="ain-body">
+
+<header class="ain-header">
+  <div class="ain-kicker">AI-Newton · 北京大學高能物理組</div>
+  <h1 class="ain-title">沒讀過教科書，AI 自己推出牛頓力學</h1>
+  <p class="ain-sub">起點只有「位置」和「時間」。它自創概念、自己編號，最後得到人類花了幾個世紀才整理出的定律。</p>
+</header>
+
+<!-- Stats -->
+<div class="ain-stats">
+  <div class="ain-stat blue"><div class="ain-stat-num">46</div><div class="ain-stat-lbl">組古典力學實驗</div></div>
+  <div class="ain-stat gold"><div class="ain-stat-num">~90</div><div class="ain-stat-lbl">個物理概念</div></div>
+  <div class="ain-stat green"><div class="ain-stat-num">~50</div><div class="ain-stat-lbl">條較一般的定律</div></div>
+  <div class="ain-stat violet"><div class="ain-stat-num">1000+</div><div class="ain-stat-lbl">次嘗試，約數十小時</div></div>
+</div>
+
+<!-- Flow -->
+<div class="ain-sec">它怎麼走完這條路</div>
+<div class="ain-flow">
+  <div class="ain-flow-box"><b>位置、時間</b><span>含高斯雜訊的模擬資料</span></div>
+  <div class="ain-flow-arrow">→</div>
+  <div class="ain-flow-box"><b>概念庫</b><span>C1、C2、C3…</span></div>
+  <div class="ain-flow-arrow">→</div>
+  <div class="ain-flow-box"><b>定律庫</b><span>R04、R116…</span></div>
+  <div class="ain-flow-arrow">→</div>
+  <div class="ain-flow-box human"><b>人類對照</b><span>事後貼上名稱</span></div>
+</div>
+
+<!-- Three results -->
+<div class="ain-sec">最醒目的三項成果</div>
+<div class="ain-laws">
+
+  <div class="ain-law blue">
+    <div class="ain-law-name">牛頓第二定律</div>
+    <div class="ain-law-en">Newton's 2nd law</div>
+    <div class="ain-law-eq">\[ ma = F \]</div>
+    <div class="ain-law-note">質量乘加速度，等於諸力之和。</div>
+  </div>
+
+  <div class="ain-law green">
+    <div class="ain-law-name">能量守恆</div>
+    <div class="ain-law-en">Energy conservation</div>
+    <div class="ain-law-eq">\[ E = T + V_k + V_g = \text{常數} \]</div>
+    <div class="ain-law-note"><b>動能</b>＋<b>彈性位能</b>＋<b>近地重力位能</b>；另外還有形式為下式的<b>萬有重力位能</b>：</div>
+    <div class="ain-law-eq" style="margin-top:8px;margin-bottom:0">\[ V_G = -\dfrac{GMm}{r} \]</div>
+  </div>
+
+  <div class="ain-law gold">
+    <div class="ain-law-name">萬有引力定律</div>
+    <div class="ain-law-en">Universal gravitation</div>
+    <div class="ain-law-eq">\[ F = \dfrac{GMm}{r^{2}} \]</div>
+    <div class="ain-law-note">由上面的重力位能 \(V_G\) 對距離微分即得。</div>
+  </div>
+
+</div>
+
+<!-- Weak equivalence -->
+<div class="ain-sec">弱等效原理：兩種質量，自己核對</div>
+<div class="ain-eq-wrap">
+  <div class="ain-eq-grid">
+    <div class="ain-eq-box blue">
+      <span class="tag">彈簧伸長</span>
+      <div class="how">掛物體量伸長量</div>
+      \( m_g \)
+      <div class="how" style="margin-top:6px">重力質量</div>
+    </div>
+    <div class="ain-eq-mid">
+      <div class="big">=?</div>
+      <div>AI 自己核對</div>
+    </div>
+    <div class="ain-eq-box red">
+      <span class="tag">彈簧振盪</span>
+      <div class="how">量振盪的快慢</div>
+      \( m_i \)
+      <div class="how" style="margin-top:6px">慣性質量</div>
+    </div>
+  </div>
+  <div class="ain-eq-result">資料核對結果：\( m_g = m_i \)　<b>弱等效原理的操作版本，並非人類事先寫入</b></div>
+</div>
+
+<!-- Naming -->
+<div class="ain-sec">它沒有給定律取名字</div>
+<div class="ain-name-grid">
+  <div class="ain-name-card ai">
+    <h3>AI 的知識庫</h3>
+    <div class="ain-chips">
+      <span class="ain-chip">C1</span><span class="ain-chip">C2</span><span class="ain-chip">C3</span>
+      <span class="ain-chip">R04</span><span class="ain-chip">R116</span>
+    </div>
+    <p>只用編號。下標每次跑還會變，沒有固定的「第二定律」這個詞。</p>
+  </div>
+  <div class="ain-name-card hu">
+    <h3>人類論文的稱呼</h3>
+    <div class="ain-chips">
+      <span class="ain-chip">Newton's 2nd law</span>
+    </div>
+    <p>作者事後對照出來的稱呼，不是系統自己命名的。</p>
+  </div>
+</div>
+
+<!-- Decode -->
+<div class="ain-sec">它實際存下來的那條式子</div>
+<div class="ain-decode">
+  <div class="ain-decode-eq">
+    \[ \forall i:\text{Ball},\quad m_i\,a_{i,x} + (\nabla_i V_g)_x + (\nabla_i V_k)_x = 0 \]
+  </div>
+  <div class="ain-sym-list">
+    <div class="ain-sym">
+      <div class="ain-sym-k">\( m_i \)</div>
+      <div class="ain-sym-v">質量 <em>— 來自某次彈簧伸長的測量程序</em></div>
+    </div>
+    <div class="ain-sym">
+      <div class="ain-sym-k">\( a_{i,x} \)</div>
+      <div class="ain-sym-v">加速度 <em>— 位置對時間的導數</em></div>
+    </div>
+    <div class="ain-sym">
+      <div class="ain-sym-k">\( V_g,\ V_k \)</div>
+      <div class="ain-sym-v">位能 <em>— 從守恆量裡抽出，再推廣</em></div>
+    </div>
+  </div>
+  <div class="ain-translate">
+    <div class="lbl">作者看出它等價於</div>
+    \[ m\,a = -\nabla V_g - \nabla V_k = \textstyle\sum F \]
+    <div class="sub">才在正文標成 Newton's second law</div>
+  </div>
+</div>
+
+<footer class="ain-footer">
+  <span>資料來源：北京大學高能物理組 AI-Newton 研究</span>
+  <span>製圖：張威翔</span>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+</body>
+</html>
