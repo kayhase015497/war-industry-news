@@ -587,7 +587,6 @@ function boardHTML(title, data, type) {
   const dSeats = data.dem.seats;
   const rSeats = data.rep.seats;
   const iSeats = (data.ind || {}).seats || 0;
-  const unc = data.uncalled || (total - dSeats - rSeats - iSeats);
   const ctrl = data.currentControl;
   const ctrlLabel = ctrl === 'R' ? '共和黨控制' : ctrl === 'D' ? '民主黨控制' : '懸峙議會';
   const ctrlClass = ctrl ? `ctrl-${ctrl}` : 'ctrl-?';
@@ -612,7 +611,6 @@ function boardHTML(title, data, type) {
       <div class="ue-count" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);">門檻</div>
         <div style="font-family:var(--ff-mono);font-size:22px;font-weight:700;color:var(--c-accent);">${threshold}</div>
-        ${unc > 0 ? `<div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);">+${unc} 未確定</div>` : ''}
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count">
