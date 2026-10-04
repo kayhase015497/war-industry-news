@@ -226,6 +226,24 @@
 .ue-tt-winner.unc{color:var(--c-muted);}
 .ue-tt-pct{font-family:var(--ff-mono);font-size:var(--fs-sm);color:var(--c-muted);}
 
+/* ── Stories (圖文說明區塊) ── */
+.ue-stories{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px;}
+.ue-story{
+  background:var(--c-card);border:1px solid var(--c-border);
+  border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);
+}
+.ue-story-media{background:#05080f;display:flex;align-items:center;justify-content:center;min-width:0;}
+.ue-story-media img,.ue-story-media video{display:block;width:100%;height:auto;}
+.ue-story-embed{position:relative;width:100%;aspect-ratio:16/9;}
+.ue-story-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
+.ue-story-title{font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
+.ue-story-text{font-size:var(--fs-base);line-height:1.8;color:var(--c-text);white-space:pre-line;}
+@media(min-width:900px){
+  .ue-story.has-media.has-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
+  .ue-story.flip .ue-story-media{order:2;}
+}
+
 /* ── Race Panel ── */
 .ue-race-panel{
   background:var(--c-card);border:1px solid var(--c-border);
@@ -450,6 +468,9 @@
 
   </div>
 
+  <!-- Stories (hidden when empty) -->
+  <div class="ue-stories" id="ue-stories" hidden></div>
+
   <!-- Footer -->
   <div class="ue-foot">
     <span class="ue-foot-note" id="ue-foot-note">來源：美聯社、各州選務委員會 · 數據每60秒自動更新</span>
@@ -551,6 +572,58 @@ async function manualRefresh() {
 }
 
 /* ══════════════════════════════════════════════
+   STORIES (圖文說明區塊)
+═══════════════════════════════════════════════ */
+let storiesSig = '';
+function embedURL(src) {
+  let m = src.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([\w-]{11})/);
+  if (m) return 'https://www.youtube-nocookie.com/embed/' + m[1];
+  m = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (m) return 'https://player.vimeo.com/video/' + m[1];
+  return null;
+}
+function mediaKind(src) {
+  if (embedURL(src)) return 'embed';
+  if (/\.(mp4|webm|mov)(\?|#|$)/i.test(src)) return 'video';
+  return 'image';
+}
+function resolveMedia(src) {
+  return /^https?:\/\//i.test(src) ? src : '../' + src.replace(/^\.?\/+/, '');
+}
+function storyHTML(st, i) {
+  const src = (st.src || '').trim();
+  const title = (st.title || '').trim();
+  const text = (st.text || '').trim();
+  let media = '';
+  if (src) {
+    const kind = mediaKind(src);
+    if (kind === 'embed') {
+      media = `<div class="ue-story-embed"><iframe src="${esc(embedURL(src))}" loading="lazy" allowfullscreen></iframe></div>`;
+    } else if (kind === 'video') {
+      media = `<video src="${esc(resolveMedia(src))}" autoplay muted loop playsinline controls preload="metadata"></video>`;
+    } else {
+      media = `<img src="${esc(resolveMedia(src))}" alt="${esc(title)}" loading="lazy">`;
+    }
+  }
+  const body = (title || text)
+    ? `<div class="ue-story-body">${title ? `<div class="ue-story-title">${esc(title)}</div>` : ''}${text ? `<div class="ue-story-text">${esc(text)}</div>` : ''}</div>`
+    : '';
+  return `<div class="ue-story${media ? ' has-media' : ''}${body ? ' has-body' : ''}${i % 2 ? ' flip' : ''}">${media ? `<div class="ue-story-media">${media}</div>` : ''}${body}</div>`;
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function renderStories() {
+  const wrap = document.getElementById('ue-stories');
+  const list = (electionData.stories || []).filter(s => s && (s.title || s.text || s.src));
+  const sig = JSON.stringify(list);
+  if (sig === storiesSig) return;
+  storiesSig = sig;
+  wrap.hidden = list.length === 0;
+  wrap.innerHTML = list.map(storyHTML).join('');
+}
+
+/* ══════════════════════════════════════════════
    RENDER
 ═══════════════════════════════════════════════ */
 function renderAll() {
@@ -559,6 +632,7 @@ function renderAll() {
   renderBoards();
   renderMap();
   renderRaceList();
+  renderStories();
 }
 
 function renderHeader() {

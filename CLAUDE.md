@@ -51,6 +51,7 @@ war-industry-news/
 │   ├── src/
 │   ├── dist/                   # 建置產出（CI 自動產生）
 │   └── package.json
+├── medias/                     # 前台圖文區塊的 GIF／圖片／MP4（後台可直接上傳）
 ├── images/
 ├── music/
 └── .github/workflows/static.yml
@@ -70,6 +71,7 @@ war-industry-news/
   "senate": { "dem": { "seats": 0, "net": 0 }, "rep": {...}, "ind": {...}, "uncalled": 0, "total": 100, "threshold": 51, "currentControl": "R" },
   "house":  { ... "total": 435, "threshold": 218 },
   "governor": { ... "total": 50 },
+  "stories": [ { "id": "s-1", "title": "標題", "text": "文字", "src": "medias/xxx.mp4 或 https://… 或 YouTube/Vimeo 連結" } ],
   "states": {
     "TX": { "winner": "R", "called": true, "margin": 10.0, "office": "Senate" }
   },
@@ -89,6 +91,7 @@ war-industry-news/
 - 功能：從 GitHub 載入 → 表單編輯 → 直接透過 API 推送 JSON → 前台 2 分鐘後更新
 - **Ctrl+S** 快速推送
 - 手機優先、遊戲風 UI：手機底部分頁列／桌機左側選單（總覽、參議院、眾議院、地圖、戰區）；各州用方塊地圖點選設定
+- 「內容」分頁：管理地圖下方圖文區塊（可多則、可排序；清空則前台不顯示）；檔案上傳至 `medias/`，src 副檔名自動判斷 圖片/GIF、MP4（靜音循環自動播放）、YouTube/Vimeo 嵌入
 - 防呆：未確定席次、過半控制黨、最後更新時間皆由系統自動計算，不需手填；席次加總超過總數時禁止存檔
 
 ### 嵌入碼

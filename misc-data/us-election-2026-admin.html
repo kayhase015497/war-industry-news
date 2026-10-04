@@ -330,6 +330,20 @@ details.panel pre{
 .spin{display:inline-block;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── Stories editor ── */
+.tarea{height:auto;min-height:130px;padding:12px 14px;line-height:1.7;resize:vertical;display:block;font-family:inherit}
+.story-h{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.story-h b{flex:1;min-width:0;font-size:17px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.story-h .gbtn{flex:none}
+.mprev{border:3px solid var(--ink);border-radius:14px;overflow:hidden;background:#05080f;margin-bottom:12px;min-height:60px}
+.mprev img,.mprev video{display:block;width:100%;max-height:260px;object-fit:contain}
+.mframe{position:relative;aspect-ratio:16/9}
+.mframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mempty{padding:22px 14px;text-align:center;color:#9aa6c4;font-size:14px;font-weight:700;line-height:1.6}
+.mbtns{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.mbtns label.gbtn{flex:1;min-width:150px}
+.mbtns input[type=file]{display:none}
+
 /* ── Desktop ── */
 @media(min-width:900px){
   .hud{padding-left:20px;padding-right:20px}
@@ -369,6 +383,7 @@ details.panel pre{
   <section class="view" id="v-house"></section>
   <section class="view" id="v-states"></section>
   <section class="view" id="v-races"></section>
+  <section class="view" id="v-stories"></section>
 </main>
 
 <div class="ov" id="sheet-ov" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
@@ -440,7 +455,8 @@ const TABS=[
   {id:'senate',ico:'🏛',label:'參議院'},
   {id:'house',ico:'🏠',label:'眾議院'},
   {id:'states',ico:'🗺',label:'地圖'},
-  {id:'races',ico:'⚔️',label:'戰區'}
+  {id:'races',ico:'⚔️',label:'戰區'},
+  {id:'stories',ico:'📰',label:'內容'}
 ];
 
 /* ═══════════ STATE ═══════════ */
@@ -528,6 +544,8 @@ function normalize(){
   STATE_ABBRS.forEach(a=>{
     if(!data.states[a])data.states[a]={winner:null,called:false,margin:null,office:'Senate'};
   });
+  data.stories=Array.isArray(data.stories)?data.stories:[];
+  data.stories.forEach(st=>{st.title=st.title||'';st.text=st.text||'';st.src=st.src||'';st.id=st.id||('s-'+Math.random().toString(36).slice(2,8))});
   data.keyRaces=data.keyRaces||[];
   data.keyRaces.forEach(r=>{
     r.dem=r.dem||{name:'',pct:0,votes:0};r.rep=r.rep||{name:'',pct:0,votes:0};
@@ -589,6 +607,7 @@ function buildJSON(forPush){
     d.uncalled=Math.max(0,d.total-seatSum(d));
     d.currentControl=ctrlOf(ch);
   });
+  out.stories=(out.stories||[]).filter(x=>x.title.trim()||x.text.trim()||x.src.trim());
   if(forPush)out.meta.lastUpdated=etISO();
   return out;
 }
@@ -1027,9 +1046,123 @@ function addRace(a){
   toast('已新增，請填入得票率','ok');
 }
 
+/* ═══════════ STORIES (圖文內容) ═══════════ */
+const localPreview={};
+const MEDIA_EXT=['gif','png','jpg','jpeg','webp','mp4','webm'];
+function embedURL(src){
+  let m=src.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([\w-]{11})/);
+  if(m)return 'https://www.youtube-nocookie.com/embed/'+m[1];
+  m=src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if(m)return 'https://player.vimeo.com/video/'+m[1];
+  return null;
+}
+function mediaKind(src){
+  if(embedURL(src))return 'embed';
+  if(/\.(mp4|webm|mov)(\?|#|$)/i.test(src))return 'video';
+  return 'image';
+}
+function resolveMedia(src){return /^https?:\/\//i.test(src)?src:'../'+src.replace(/^\.?\/+/,'')}
+function mediaPreview(src){
+  src=(src||'').trim();
+  if(!src)return '<div class="mempty">尚未選擇圖片或影片</div>';
+  const k=mediaKind(src);
+  if(k==='embed')return `<div class="mframe"><iframe src="${esc(embedURL(src))}" allowfullscreen loading="lazy"></iframe></div>`;
+  const url=localPreview[src]||resolveMedia(src);
+  const fail=`onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'mempty',textContent:'預覽暫時看不到（剛上傳的檔案約 2～5 分鐘後才會出現在網站上）'}))"`;
+  if(k==='video')return `<video src="${esc(url)}" muted loop playsinline controls preload="metadata" ${fail}></video>`;
+  return `<img src="${esc(url)}" alt="" ${fail}>`;
+}
+function renderStories(){
+  const list=data.stories;
+  $('v-stories').innerHTML=`
+  <div class="vhead"><h2>📰 圖文內容</h2><p>顯示在地圖下方，由上到下排列；全部清空就不會顯示</p></div>
+  <button class="gbtn gold block" style="margin-bottom:18px" onclick="addStory()">＋ 新增一則</button>
+  ${list.length?list.map((st,i)=>`
+  <div class="panel" id="story-${i}">
+    <div class="story-h">
+      <span class="badge">#${i+1}</span>
+      <b id="st-name-${i}">${esc(st.title)||'（未命名）'}</b>
+      <button class="gbtn sm sq" ${i===0?'disabled style="opacity:.35"':''} onclick="moveStory(${i},-1)" aria-label="上移">▲</button>
+      <button class="gbtn sm sq" ${i===list.length-1?'disabled style="opacity:.35"':''} onclick="moveStory(${i},1)" aria-label="下移">▼</button>
+    </div>
+    <div class="lab">標題（選填）</div>
+    <input class="tin" value="${esc(st.title)}" placeholder="例如：為什麼這場選舉很重要" oninput="setStory(${i},'title',this.value)">
+    <div class="lab">文字說明（選填）</div>
+    <textarea class="tin tarea" placeholder="直接輸入，按 Enter 可換行" oninput="setStory(${i},'text',this.value)">${esc(st.text)}</textarea>
+    <div class="lab">圖片／GIF／影片（選填）</div>
+    <div class="mprev" id="mp-${i}">${mediaPreview(st.src)}</div>
+    <div class="mbtns">
+      <label class="gbtn gold">📤 上傳檔案<input type="file" accept=".gif,.png,.jpg,.jpeg,.webp,.mp4,.webm,image/*,video/mp4,video/webm" onchange="uploadMedia(${i},this)"></label>
+      ${st.src?`<button class="gbtn red" onclick="clearMedia(${i})">移除媒體</button>`:''}
+    </div>
+    <input class="tin" id="st-src-${i}" value="${esc(st.src)}" placeholder="或貼上網址：medias/檔名.mp4、https://…、YouTube／Vimeo 連結"
+      oninput="setStory(${i},'src',this.value)" onchange="$('mp-${i}').innerHTML=mediaPreview(data.stories[${i}].src)">
+    <p class="hint">GIF 檔案太大讀者會很慢，建議轉成 MP4（會自動靜音循環播放，效果跟 GIF 一樣）。</p>
+    <button class="gbtn red block" style="margin-top:16px" onclick="removeStory(${i})">🗑 刪除這一則</button>
+  </div>`).join(''):'<div class="empty"><b>📰</b>還沒有內容<br>按上方「＋ 新增一則」</div>'}`;
+}
+function setStory(i,k,v){
+  data.stories[i][k]=v;markDirty();
+  if(k==='title'){const e=$('st-name-'+i);if(e)e.textContent=v||'（未命名）'}
+}
+function addStory(){
+  data.stories.push({id:'s-'+Date.now().toString(36),title:'',text:'',src:''});
+  markDirty();renderStories();
+  setTimeout(()=>{const e=$('story-'+(data.stories.length-1));e&&e.scrollIntoView({behavior:'smooth',block:'start'})},60);
+}
+function moveStory(i,d){
+  const j=i+d,l=data.stories;if(j<0||j>=l.length)return;
+  [l[i],l[j]]=[l[j],l[i]];markDirty();vib();renderStories();
+}
+function removeStory(i){
+  if(!confirm(`確定刪除第 ${i+1} 則？`))return;
+  data.stories.splice(i,1);markDirty();renderStories();
+}
+function clearMedia(i){data.stories[i].src='';markDirty();renderStories()}
+function readB64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result).split(',')[1]);
+    r.onerror=()=>rej(new Error('讀取檔案失敗'));
+    r.readAsDataURL(file);
+  });
+}
+async function uploadMedia(i,input){
+  const f=input.files[0];input.value='';if(!f)return;
+  const token=getToken();
+  if(!token){toast('請先登入 GitHub 才能上傳','err');showAuth();return}
+  const ext=(f.name.split('.').pop()||'').toLowerCase();
+  if(!MEDIA_EXT.includes(ext)){toast('只支援 gif、png、jpg、webp、mp4、webm','err');return}
+  const mb=f.size/1048576;
+  if(mb>25){toast(`檔案 ${mb.toFixed(1)}MB 太大（上限 25MB），請先壓縮`,'err');return}
+  if(ext==='gif'&&mb>5&&!confirm(`這個 GIF 有 ${mb.toFixed(1)}MB，讀者載入會很慢。\n建議轉成 MP4（小 10 倍以上）。仍要上傳嗎？`))return;
+  if(ext!=='gif'&&mb>15&&!confirm(`這個檔案有 ${mb.toFixed(1)}MB，偏大。仍要上傳嗎？`))return;
+  const slug=f.name.replace(/\.[^.]+$/,'').normalize('NFKD').replace(/[^\w-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,30)||'media';
+  const name=`${slug}-${Date.now().toString(36)}.${ext}`;
+  const path=`medias/${name}`;
+  toast(`上傳中…（${mb.toFixed(1)}MB）`,'info');
+  try{
+    const content=await readB64(f);
+    const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{
+      method:'PUT',
+      headers:{Authorization:`token ${token}`,'Content-Type':'application/json',Accept:'application/vnd.github.v3+json'},
+      body:JSON.stringify({message:`media: 上傳 ${name}`,content,branch:'main'})
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(`${res.status} ${e.message||''}`)}
+    data.stories[i].src=path;
+    localPreview[path]=URL.createObjectURL(f);
+    markDirty();renderStories();vib();
+    toast('✓ 上傳完成！記得按右上角「存檔上線」','ok');
+  }catch(e){
+    const m=e.message||'';
+    toast(/^(404|401)/.test(m)?'上傳失敗：Token 權限不足，請到 ⚙ 做連線診斷':'上傳失敗：'+m,'err');
+    console.error('[upload]',e);
+  }
+}
+
 /* ═══════════ RENDER ALL / INIT ═══════════ */
 function renderAll(){
-  renderHome();renderChamber('senate');renderChamber('house');renderStates();renderRaces();
+  renderHome();renderChamber('senate');renderChamber('house');renderStates();renderRaces();renderStories();
 }
 renderNav();
 document.addEventListener('DOMContentLoaded',()=>{
