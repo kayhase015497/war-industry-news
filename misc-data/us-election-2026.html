@@ -264,9 +264,14 @@
   overflow-y:auto;flex:1;
   scrollbar-width:thin;scrollbar-color:var(--c-border) transparent;
 }
-.ue-race-list::-webkit-scrollbar{width:4px;}
-.ue-race-list::-webkit-scrollbar-track{background:transparent;}
-.ue-race-list::-webkit-scrollbar-thumb{background:var(--c-border);}
+.ue-race-list{scrollbar-width:auto;scrollbar-color:#4a5a78 #131b2b;flex:none;}
+.ue-race-list::-webkit-scrollbar{width:10px;}
+.ue-race-list::-webkit-scrollbar-track{background:#131b2b;}
+.ue-race-list::-webkit-scrollbar-thumb{background:#4a5a78;border-radius:5px;border:2px solid #131b2b;}
+.ue-race-more{
+  padding:8px 14px;text-align:center;border-top:1px solid var(--c-border);
+  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+}
 
 .ue-race-item{
   padding:15px 18px;border-bottom:1px solid var(--c-border);
@@ -440,6 +445,7 @@
       <div class="ue-race-list" id="ue-race-list">
         <!-- Rendered by JS -->
       </div>
+      <div class="ue-race-more" id="ue-race-more" hidden></div>
     </div>
 
   </div>
@@ -780,11 +786,35 @@ function renderRaceList() {
 
   if (races.length === 0) {
     list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-mono);font-size:14px;color:var(--c-muted);">此分類目前無資料</div>`;
+    list.style.maxHeight = '';
+    document.getElementById('ue-race-more').hidden = true;
     return;
   }
 
   list.innerHTML = races.map(r => raceItemHTML(r)).join('');
+  fitRaceList(races.length);
 }
+
+const RACE_VISIBLE = 4;
+function fitRaceList(total) {
+  const list = document.getElementById('ue-race-list');
+  const more = document.getElementById('ue-race-more');
+  const items = list.querySelectorAll('.ue-race-item');
+  if (total <= RACE_VISIBLE) {
+    list.style.maxHeight = '';
+    more.hidden = true;
+    return;
+  }
+  let h = 0;
+  for (let i = 0; i < RACE_VISIBLE; i++) h += items[i].offsetHeight;
+  list.style.maxHeight = h + 'px';
+  list.scrollTop = 0;
+  more.textContent = `共 ${total} 場，往下滑動查看更多 ↓`;
+  more.hidden = false;
+}
+window.addEventListener('resize', () => {
+  if (electionData) renderRaceList();
+});
 
 function raceItemHTML(r) {
   const dPct = r.dem ? r.dem.pct : 0;
