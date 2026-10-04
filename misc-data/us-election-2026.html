@@ -156,14 +156,18 @@
 /* ── Main Layout ── */
 .ue-main{
   display:grid;
-  grid-template-columns:1fr;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"map" "stories" "race";
   gap:14px;padding:14px 18px 18px;
 }
+.ue-map-panel{grid-area:map;}
+.ue-race-panel{grid-area:race;}
+.ue-stories{grid-area:stories;}
 @media(min-width:900px){
-  .ue-main{grid-template-columns:1fr 440px;}
+  .ue-main{grid-template-columns:minmax(0,1fr) 440px;grid-template-areas:"map race" "stories stories";}
 }
 @media(min-width:1200px){
-  .ue-main{grid-template-columns:1fr 480px;}
+  .ue-main{grid-template-columns:minmax(0,1fr) 480px;}
 }
 
 /* ── Map Panel ── */
@@ -227,7 +231,8 @@
 .ue-tt-pct{font-family:var(--ff-mono);font-size:var(--fs-sm);color:var(--c-muted);}
 
 /* ── Stories (圖文說明區塊) ── */
-.ue-stories{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px;}
+.ue-stories{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.ue-stories[hidden]{display:none;}
 .ue-story{
   background:var(--c-card);border:1px solid var(--c-border);
   border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);
@@ -466,10 +471,10 @@
       <div class="ue-race-more" id="ue-race-more" hidden></div>
     </div>
 
-  </div>
+    <!-- Stories (hidden when empty) -->
+    <div class="ue-stories" id="ue-stories" hidden></div>
 
-  <!-- Stories (hidden when empty) -->
-  <div class="ue-stories" id="ue-stories" hidden></div>
+  </div>
 
   <!-- Footer -->
   <div class="ue-foot">
