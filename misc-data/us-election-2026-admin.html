@@ -795,10 +795,7 @@ function renderChamber(ch){
     <div class="panel pcard ${cls}">
       <div class="phead"><i></i>${label}</div>
       <div class="lab">確認席次</div>
-      ${stepper({id:`seat-${ch}-${k}`,value:data[ch][k].seats,fn:`d=>stepSeat('${ch}','${k}','seats',d)`,oninput:`setSeat('${ch}','${k}','seats',this.value)`})}
-      <div class="lab">較選前增減</div>
-      ${stepper({small:1,id:`net-${ch}-${k}`,value:data[ch][k].net,fn:`d=>stepSeat('${ch}','${k}','net',d)`,oninput:`setSeat('${ch}','${k}','net',this.value)`})}
-    </div>`).join('')}
+      ${stepper({id:`seat-${ch}-${k}`,value:data[ch][k].seats,fn:`d=>stepSeat('${ch}','${k}','seats',d)`,oninput:`setSeat('${ch}','${k}','seats',this.value)`})}    </div>`).join('')}
   </div>
   <p class="hint" style="text-align:center;margin-top:14px">未確定席次與「誰過半」由系統自動計算，不用填。</p>`;
   paintChamber(ch);

@@ -586,9 +586,6 @@ function boardHTML(title, data, type) {
   const ctrlLabel = ctrl === 'R' ? '共和黨控制' : ctrl === 'D' ? '民主黨控制' : '懸峙議會';
   const ctrlClass = ctrl ? `ctrl-${ctrl}` : 'ctrl-?';
 
-  const dNet = data.dem.net || 0;
-  const rNet = data.rep.net || 0;
-
   const dW = (dSeats / total * 100).toFixed(1);
   const rW = (rSeats / total * 100).toFixed(1);
   const iW = (iSeats / total * 100).toFixed(1);
@@ -604,7 +601,6 @@ function boardHTML(title, data, type) {
       <div class="ue-count">
         <div class="ue-count-n dem">${dSeats}</div>
         <div class="ue-count-lbl">民主黨</div>
-        <div class="ue-count-net ${netClass(dNet)}">${netStr(dNet)}</div>
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
@@ -616,7 +612,6 @@ function boardHTML(title, data, type) {
       <div class="ue-count">
         <div class="ue-count-n rep">${rSeats}</div>
         <div class="ue-count-lbl">共和黨</div>
-        <div class="ue-count-net ${netClass(rNet)}">${netStr(rNet)}</div>
       </div>
     </div>
     <div class="ue-bar-wrap">
