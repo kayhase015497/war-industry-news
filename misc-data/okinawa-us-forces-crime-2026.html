@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>琉球美軍刑案：最新案件與歷年數字</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f1a;
+  --bg2:#121a2b;
+  --bg3:#1a2438;
+  --border:#2a3550;
+  --text:#e8ecf5;
+  --mute:#9aa5bd;
+  --blue:#3987e5;
+  --gold:#eda100;
+  --green:#1baf7a;
+  --red:#e66767;
+  --violet:#9085e9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body.okn-body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:18px;
+  line-height:1.6;
+  padding:clamp(16px,4vw,36px);
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* Header */
+.okn-header{margin-bottom:24px}
+.okn-kicker{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.06em;color:var(--mute);margin-bottom:8px}
+.okn-title{font-size:clamp(26px,5vw,36px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:10px}
+.okn-sub{font-size:18px;color:var(--mute)}
+
+/* Section label */
+.okn-sec{
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  letter-spacing:.04em;
+  color:var(--mute);
+  margin:38px 0 14px;
+  display:flex;align-items:center;gap:12px;
+}
+.okn-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Latest case */
+.okn-latest{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-left:5px solid var(--red);
+  border-radius:12px;
+  padding:18px 20px;
+}
+.okn-latest-tag{
+  display:inline-block;
+  background:rgba(230,103,103,.18);
+  color:var(--red);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:18px;
+  padding:2px 10px;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+.okn-people{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.okn-person{background:var(--bg);border-radius:10px;padding:12px 14px}
+.okn-person .role{font-size:18px;color:var(--mute)}
+.okn-person .name{font-size:20px;font-weight:700;color:#fff;line-height:1.35}
+.okn-person .meta{font-size:18px;color:var(--mute)}
+.okn-latest p{font-size:18px;color:var(--text);margin-bottom:14px}
+.okn-resp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.okn-resp-box{
+  border:1px solid var(--gold);
+  background:rgba(237,161,0,.08);
+  border-radius:10px;
+  padding:10px 14px;
+}
+.okn-resp-box .big{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--gold);line-height:1.2}
+.okn-resp-box .lbl{font-size:18px;color:var(--text)}
+
+/* Stats */
+.okn-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.okn-stat{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-top:4px solid;
+  border-radius:10px;
+  padding:14px 16px;
+}
+.okn-stat.red{border-top-color:var(--red)}
+.okn-stat.gold{border-top-color:var(--gold)}
+.okn-stat.blue{border-top-color:var(--blue)}
+.okn-stat.violet{border-top-color:var(--violet)}
+.okn-stat .num{font-family:'Space Mono',monospace;font-size:clamp(28px,5vw,36px);font-weight:700;line-height:1.1}
+.okn-stat.red .num{color:var(--red)}
+.okn-stat.gold .num{color:var(--gold)}
+.okn-stat.blue .num{color:var(--blue)}
+.okn-stat.violet .num{color:var(--violet)}
+.okn-stat .lbl{font-size:18px;color:var(--text);margin-top:4px}
+.okn-stat .src{font-size:18px;color:var(--mute);margin-top:2px}
+
+/* Bars */
+.okn-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.okn-card-hd{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.okn-card-hd b{font-size:20px;color:#fff}
+.okn-card-hd span{font-family:'Space Mono',monospace;font-size:18px;color:var(--red);font-weight:700}
+.okn-row{margin-bottom:12px}
+.okn-row-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+.okn-row-lbl{font-size:18px;color:var(--text)}
+.okn-row-val{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
+.okn-bar{height:20px;background:var(--bg);border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.okn-bar i{display:block;height:100%;border-radius:4px}
+.okn-note{
+  margin-top:12px;
+  font-size:18px;
+  color:var(--mute);
+  border-top:1px solid var(--border);
+  padding-top:10px;
+}
+.okn-note b{color:var(--text)}
+
+/* Caution */
+.okn-caution{
+  margin-top:14px;
+  background:rgba(237,161,0,.1);
+  border:1px solid rgba(237,161,0,.45);
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:18px;
+  color:var(--text);
+}
+.okn-caution b{color:var(--gold)}
+
+/* Dots */
+.okn-dots{display:grid;gap:8px;margin-bottom:6px}
+.okn-dotrow{
+  display:grid;
+  grid-template-columns:130px 1fr 70px;
+  gap:12px;
+  align-items:center;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 14px;
+}
+.okn-dotrow .per{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute)}
+.okn-dotrow .d{display:flex;gap:8px;flex-wrap:wrap}
+.okn-dotrow .d i{width:20px;height:20px;border-radius:50%;background:var(--red);display:block}
+.okn-dotrow .d em{font-style:normal;font-size:18px;color:var(--mute)}
+.okn-dotrow .cnt{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--red);text-align:right}
+.okn-dotrow.gap{border-style:dashed;background:transparent}
+.okn-dotrow.gap .cnt{color:var(--mute)}
+
+/* Case list */
+.okn-list{margin-top:16px;display:grid;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.okn-case{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:6px 14px;
+  padding:10px 16px;
+  border-top:1px solid var(--border);
+}
+.okn-case:first-child{border-top:none}
+.okn-case .dt{font-family:'Space Mono',monospace;font-size:18px;color:var(--gold)}
+.okn-case .tx{font-size:18px;color:var(--text)}
+.okn-case .tx small{display:block;font-size:18px;color:var(--mute)}
+.okn-case.hl{background:rgba(144,133,233,.1)}
+.okn-case.hl .dt{color:var(--violet)}
+.okn-tag{
+  display:inline-block;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  padding:0 8px;
+  border-radius:6px;
+  background:rgba(144,133,233,.2);
+  color:var(--violet);
+  margin-left:6px;
+}
+
+/* Brief cards */
+.okn-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.okn-brief{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-top:4px solid;
+  border-radius:12px;
+  padding:16px 18px;
+}
+.okn-brief.violet{border-top-color:var(--violet)}
+.okn-brief.blue{border-top-color:var(--blue)}
+.okn-brief.green{border-top-color:var(--green)}
+.okn-brief.gold{border-top-color:var(--gold)}
+.okn-brief .yr{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;margin-bottom:2px}
+.okn-brief.violet .yr{color:var(--violet)}
+.okn-brief.blue .yr{color:var(--blue)}
+.okn-brief.green .yr{color:var(--green)}
+.okn-brief.gold .yr{color:var(--gold)}
+.okn-brief h3{font-size:20px;color:#fff;margin-bottom:8px;line-height:1.35}
+.okn-brief ul{list-style:none;display:grid;gap:6px}
+.okn-brief li{font-size:18px;color:var(--text);padding-left:16px;position:relative}
+.okn-brief li::before{content:'▸';position:absolute;left:0;color:var(--mute)}
+.okn-brief li b{color:#fff}
+.okn-brief .out{
+  margin-top:10px;
+  font-size:18px;
+  border-top:1px solid var(--border);
+  padding-top:8px;
+  color:var(--mute);
+}
+.okn-brief .out b{color:var(--text)}
+.okn-quote{
+  margin-top:10px;
+  font-size:18px;
+  color:var(--text);
+  border-left:3px solid var(--blue);
+  padding-left:12px;
+}
+
+/* Footer */
+.okn-sources{
+  margin-top:34px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  font-size:18px;
+  color:var(--mute);
+  line-height:1.6;
+}
+.okn-sources b{color:var(--text)}
+.okn-footer{
+  margin-top:12px;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  color:var(--mute);
+  text-align:right;
+}
+
+@media(max-width:700px){
+  .okn-people,.okn-resp,.okn-two{grid-template-columns:1fr}
+  .okn-dotrow{grid-template-columns:1fr auto}
+  .okn-dotrow .d{grid-column:1/-1;order:3}
+  .okn-case{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="okn-body">
+
+<header class="okn-header">
+  <div class="okn-kicker">駐琉球美軍 · 2026年10月</div>
+  <h1 class="okn-title">琉球美軍刑案：最新案件與歷年數字</h1>
+  <p class="okn-sub">一名海軍陸戰隊員涉嫌殺害並搶劫當地女子，日媒隨即回頭盤點歷年紀錄。</p>
+</header>
+
+<!-- Latest -->
+<div class="okn-latest">
+  <span class="okn-latest-tag">最新案件</span>
+  <div class="okn-people">
+    <div class="okn-person">
+      <div class="role">涉案</div>
+      <div class="name">巴拉德 Devin Jacob Ballard</div>
+      <div class="meta">20歲・海軍陸戰隊下士</div>
+    </div>
+    <div class="okn-person">
+      <div class="role">被害人</div>
+      <div class="name">八木安娜 Anna Yagi</div>
+      <div class="meta">39歲・當地女子</div>
+    </div>
+  </div>
+  <p>涉嫌殺害被害人，並拿走她的皮夾與背包。美軍隨即對駐紮官兵祭出下列措施：</p>
+  <div class="okn-resp">
+    <div class="okn-resp-box"><div class="big">1個月</div><div class="lbl">宵禁與禁酒（駐紮官兵）</div></div>
+    <div class="okn-resp-box"><div class="big">48小時</div><div class="lbl">暫停琉球所有軍事行動（紀律訓練期間）</div></div>
+  </div>
+</div>
+
+<!-- Numbers -->
+<div class="okn-sec">整體數字</div>
+
+<div class="okn-card">
+  <div class="okn-card-hd">
+    <b>1972–2015 美軍涉兇惡犯罪（軍人・軍屬・家屬）</b>
+    <span>574件・741人</span>
+  </div>
+
+  <div class="okn-row">
+    <div class="okn-row-top"><span class="okn-row-lbl">強盜</span><span class="okn-row-val">394件・548人</span></div>
+    <div class="okn-bar"><i style="width:100%;background:var(--red)"></i></div>
+  </div>
+  <div class="okn-row">
+    <div class="okn-row-top"><span class="okn-row-lbl">強姦</span><span class="okn-row-val">129件・147人</span></div>
+    <div class="okn-bar"><i style="width:32.7%;background:var(--violet)"></i></div>
+  </div>
+  <div class="okn-row">
+    <div class="okn-row-top"><span class="okn-row-lbl">殺人</span><span class="okn-row-val">26件・34人</span></div>
+    <div class="okn-bar"><i style="width:6.6%;background:var(--gold)"></i></div>
+  </div>
+  <div class="okn-row">
+    <div class="okn-row-top"><span class="okn-row-lbl">縱火</span><span class="okn-row-val">25件・12人</span></div>
+    <div class="okn-bar"><i style="width:6.3%;background:var(--blue)"></i></div>
+  </div>
+
+  <div class="okn-note"><b>1977年最多，達69件</b>；2013年是少數沒有兇惡犯罪的年份。（縣警統計，《琉球新報》2016年引述）</div>
+</div>
+
+<div class="okn-stats" style="margin-top:14px">
+  <div class="okn-stat red">
+    <div class="num">584件</div>
+    <div class="lbl">復歸50年來兇惡犯摘發</div>
+    <div class="src">縣警資料・琉球放送2024</div>
+  </div>
+  <div class="okn-stat gold">
+    <div class="num">101件・80人</div>
+    <div class="lbl">2025年美軍相關刑法犯檢舉</div>
+    <div class="src">2003年以來新高（當年112件）・時事通信社</div>
+  </div>
+  <div class="okn-stat blue">
+    <div class="num">約6,409件</div>
+    <div class="lbl">1972至2025年底累計檢舉</div>
+    <div class="src">時事通信社</div>
+  </div>
+</div>
+
+<div class="okn-caution">
+  <b>讀數字前：</b>574件與584件來源、期間不同，不宜直接比較。
+</div>
+
+<div class="okn-stats" style="margin-top:14px">
+  <div class="okn-stat violet">
+    <div class="num">1,101人</div>
+    <div class="lbl">1952–2023年度，駐日美軍造成日本人死傷累計</div>
+    <div class="src">含事故，非純犯罪</div>
+  </div>
+  <div class="okn-stat violet">
+    <div class="num">210人</div>
+    <div class="lbl">1972年度以後的全國數字</div>
+    <div class="src">不含美軍統治期的琉球・防衛省2025年3月答詢</div>
+  </div>
+</div>
+
+<!-- Prefecture chronicle -->
+<div class="okn-sec">縣府年表：復歸後殺害民間人 14件</div>
+
+<div class="okn-dots">
+  <div class="okn-dotrow"><span class="per">1972–1974</span><span class="d"><i></i><i></i><i></i><i></i></span><span class="cnt">4件</span></div>
+  <div class="okn-dotrow"><span class="per">1982–1985</span><span class="d"><i></i><i></i><i></i><i></i></span><span class="cnt">4件</span></div>
+  <div class="okn-dotrow"><span class="per">1991–1995</span><span class="d"><i></i><i></i><i></i><i></i></span><span class="cnt">4件</span></div>
+  <div class="okn-dotrow gap"><span class="per">1996–2015</span><span class="d"><em>年表上無列冊案件</em></span><span class="cnt">0件</span></div>
+  <div class="okn-dotrow"><span class="per">2016–2019</span><span class="d"><i></i><i></i></span><span class="cnt">2件</span></div>
+</div>
+
+<div class="okn-list">
+  <div class="okn-case">
+    <div class="dt">1972–1974</div>
+    <div class="tx">共4件：宜野灣陸軍士兵殺害女性、漢森營內步槍射殺基地員工、陸戰隊員殺害女性、邊野古陸戰隊員搶劫並殺害女店主</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1982.03.08</div>
+    <div class="tx">金武町墓地：陸戰隊員以水泥塊毆打男性致死</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1982.07.31</div>
+    <div class="tx">名護市：施瓦布營陸戰隊員對女性施暴後殺害</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1983.02.23</div>
+    <div class="tx">漢森營內：陸戰隊員殺害計程車司機</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1985.01.16</div>
+    <div class="tx">金武町住家：漢森營陸戰隊員刺殺男性</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1991.06.14</div>
+    <div class="tx">沖繩市嘉間良公園：瑞慶覽營（今福斯特營）陸戰隊員2人殺害男性</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1991.06.20</div>
+    <div class="tx">沖繩市：普天間陸戰隊員殺害印度籍男性</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1993.04.12</div>
+    <div class="tx">金武町鬧區：漢森營陸戰隊員殺害男性</div>
+  </div>
+  <div class="okn-case">
+    <div class="dt">1995.05.10</div>
+    <div class="tx">宜野灣市：陸戰隊員殺害女性</div>
+  </div>
+  <div class="okn-case hl">
+    <div class="dt">2016.04.28</div>
+    <div class="tx">宇流麻市：前陸戰隊員、基地軍屬施暴後殺害並棄屍<span class="okn-tag">詳見下方</span></div>
+  </div>
+  <div class="okn-case hl">
+    <div class="dt">2019.04.13</div>
+    <div class="tx">北谷町：施瓦布營海軍三等兵曹殺害女性後自殺<span class="okn-tag">詳見下方</span></div>
+  </div>
+</div>
+
+<div class="okn-note" style="border-top:none;margin-top:10px">1982至1995年列冊的8件，<b>涉案者皆為陸戰隊員</b>。</div>
+
+<div class="okn-caution">
+  <b>統計口徑不同：</b>《沖繩時報》10月5日依民間團體年表及縣府、該報報導，指復歸後美軍軍人、軍屬殺人<b>至少7件</b>，小於縣府年表的14件，兩者不宜直接對減。
+</div>
+
+<!-- Two cases brief -->
+<div class="okn-sec">年表中的兩案簡述</div>
+<div class="okn-two">
+
+  <div class="okn-brief violet">
+    <div class="yr">2016.04 宇流麻市</div>
+    <h3>辛札托案：以性侵為目的襲擊夜間散步女子</h3>
+    <ul>
+      <li><b>涉案</b>：Kenneth Franklin Shinzato，32歲，嘉手納基地承包商員工、前陸戰隊員</li>
+      <li><b>被害</b>：島袋里奈，20歲，公司職員</li>
+      <li><b>手法</b>：毆打、勒頸、刺殺後棄屍於恩納村雜木林</li>
+      <li><b>判決</b>：無期徒刑，已確定</li>
+    </ul>
+    <div class="out"><b>影響</b>：被視為1995年以來最大引爆點，數萬人上街抗議，促成2017年日美地位協定補充協定，縮小「軍屬」適用範圍。</div>
+  </div>
+
+  <div class="okn-brief violet">
+    <div class="yr">2019.04 北谷町</div>
+    <h3>奧利維羅案：殺害前交往對象後自殺</h3>
+    <ul>
+      <li><b>涉案</b>：Gabriel Olivero，32歲，施瓦布營、第3陸戰師所屬海軍三等兵曹（衛生兵）</li>
+      <li><b>被害</b>：玉恵（Hindman Tamae），44歲；女兒在場，未受傷</li>
+      <li><b>手法</b>：在公寓內以利刃刺頸，隨後自殺</li>
+      <li><b>結果</b>：地檢署因嫌犯死亡不起訴</li>
+    </ul>
+    <div class="out"><b>爭議</b>：女方同年1月已控告遭性侵，美軍核發軍事保護令、縣警列為人身安全案件，部隊仍准許嫌犯外宿。這是最新案件之前，琉球最近一件被認定的美軍人員殺人案。</div>
+  </div>
+
+</div>
+
+<!-- Mainland -->
+<div class="okn-sec">本土案件與殺人以外的關鍵節點</div>
+<div class="okn-two">
+
+  <div class="okn-brief blue">
+    <div class="yr">2006.01 橫須賀（本土）</div>
+    <h3>小鷹號水兵搶劫致死案</h3>
+    <ul>
+      <li><b>涉案</b>：William Oliver Reese，21歲，小鷹號航空母艦水兵</li>
+      <li><b>被害</b>：佐藤好重，56歲，上班途中被毆打，搶走約1萬5千日圓，臟器破裂出血死亡</li>
+      <li><b>判決</b>：橫濱地方法院2006年6月判無期徒刑</li>
+    </ul>
+    <div class="okn-quote">遺族山崎正則（《每日新聞》2020年）：「妻子不是為了日美同盟而被殺的」</div>
+    <div class="out"><b>2008年3月</b>橫須賀另有計程車司機遭刺殺，涉案驅逐艦一等水兵以強盜殺人嫌疑被捕，日方依1995年後日美聯合委員會協議，要求起訴前移交。</div>
+  </div>
+
+  <div class="okn-brief gold">
+    <div class="yr">1995.09 金武町</div>
+    <h3>少女集體性侵案：地位協定運用改善的契機</h3>
+    <ul>
+      <li><b>涉案</b>：水兵Marcus Gill（22歲）、陸戰隊一等兵Rodrico Harp（21歲）、Kendrick Ledet（20歲）</li>
+      <li><b>被害</b>：12歲女童</li>
+      <li><b>判決</b>：那霸地方法院1996年判6年6個月至7年</li>
+    </ul>
+    <div class="out"><b>後續</b>：約<b>8萬5千人</b>參加縣民大會，成為普天間基地返還共識的起點；殺人、強姦案可在起訴前移交嫌犯。</div>
+  </div>
+
+  <div class="okn-brief green">
+    <div class="yr">2023.12 嘉手納</div>
+    <h3>空軍士兵對未滿16歲少女犯案</h3>
+    <ul>
+      <li>判刑<b>5年</b></li>
+      <li>縣府事後表示<b>未獲即時通報</b></li>
+    </ul>
+  </div>
+
+  <div class="okn-brief green">
+    <div class="yr">2024.05 讀谷村</div>
+    <h3>陸戰隊員勒頸並意圖性侵</h3>
+    <ul>
+      <li><b>涉案</b>：Jamel Clayton</li>
+      <li>那霸地方法院2025年6月判<b>7年</b></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="okn-sources">
+  <b>資料來源</b>：路透社、《星條旗報》；琉球縣政府《基地被害の概要》；《琉球新報》2016年5月20日；《沖繩時報》2026年10月5日；《讀賣新聞》2026年10月5日；《每日新聞》2026年10月6日、2020年5月31日；《神奈川新聞》2019年4月16日。
+</div>
+<div class="okn-footer">製圖：張威翔</div>
+
+</body>
+</html>
