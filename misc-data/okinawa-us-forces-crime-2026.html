@@ -75,15 +75,6 @@ body.okn-body{
 .okn-person .name{font-size:20px;font-weight:700;color:#fff;line-height:1.35}
 .okn-person .meta{font-size:18px;color:var(--mute)}
 .okn-latest p{font-size:18px;color:var(--text);margin-bottom:14px}
-.okn-resp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.okn-resp-box{
-  border:1px solid var(--gold);
-  background:rgba(237,161,0,.08);
-  border-radius:10px;
-  padding:10px 14px;
-}
-.okn-resp-box .big{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--gold);line-height:1.2}
-.okn-resp-box .lbl{font-size:18px;color:var(--text)}
 
 /* Stats */
 .okn-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -246,7 +237,7 @@ body.okn-body{
 }
 
 @media(max-width:700px){
-  .okn-people,.okn-resp,.okn-two{grid-template-columns:1fr}
+  .okn-people,.okn-two{grid-template-columns:1fr}
   .okn-dotrow{grid-template-columns:1fr auto}
   .okn-dotrow .d{grid-column:1/-1;order:3}
   .okn-case{grid-template-columns:1fr}
@@ -276,11 +267,7 @@ body.okn-body{
       <div class="meta">39歲・當地女子</div>
     </div>
   </div>
-  <p>涉嫌殺害被害人，並拿走她的皮夾與背包。美軍隨即對駐紮官兵祭出下列措施：</p>
-  <div class="okn-resp">
-    <div class="okn-resp-box"><div class="big">1個月</div><div class="lbl">宵禁與禁酒（駐紮官兵）</div></div>
-    <div class="okn-resp-box"><div class="big">48小時</div><div class="lbl">暫停琉球所有軍事行動（紀律訓練期間）</div></div>
-  </div>
+  <p style="margin-bottom:0">涉嫌殺害被害人，並拿走她的皮夾與背包。</p>
 </div>
 
 <!-- Numbers -->
