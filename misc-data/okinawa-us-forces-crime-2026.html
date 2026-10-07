@@ -233,6 +233,10 @@ body.okn-body{
   line-height:1.6;
 }
 .okn-sources b{color:var(--text)}
+.okn-sources ul{list-style:none;display:grid;gap:6px;margin-top:8px}
+.okn-sources li{padding-left:16px;position:relative}
+.okn-sources li::before{content:'▸';position:absolute;left:0}
+.okn-sources a{color:var(--blue);text-decoration:underline;word-break:break-word}
 .okn-footer{
   margin-top:12px;
   font-family:'Space Mono',monospace;
@@ -322,7 +326,7 @@ body.okn-body{
   <div class="okn-stat blue">
     <div class="num">約6,409件</div>
     <div class="lbl">1972至2025年底累計檢舉</div>
-    <div class="src">時事通信社</div>
+    <div class="src">沖繩縣統計・BBC日文版</div>
   </div>
 </div>
 
@@ -333,13 +337,13 @@ body.okn-body{
 <div class="okn-stats" style="margin-top:14px">
   <div class="okn-stat violet">
     <div class="num">1,101人</div>
-    <div class="lbl">1952–2023年度，駐日美軍造成日本人死傷累計</div>
-    <div class="src">含事故，非純犯罪</div>
+    <div class="lbl">1952–2023年度，駐日美軍造成日本人死亡累計</div>
+    <div class="src">含事故、不含受傷，非純犯罪・防衛省答詢</div>
   </div>
   <div class="okn-stat violet">
     <div class="num">210人</div>
     <div class="lbl">1972年度以後的全國數字</div>
-    <div class="src">不含美軍統治期的琉球・防衛省2025年3月答詢</div>
+    <div class="src">不含美軍統治期的琉球・防衛省答詢</div>
   </div>
 </div>
 
@@ -428,7 +432,7 @@ body.okn-body{
     <h3>奧利維羅案：殺害前交往對象後自殺</h3>
     <ul>
       <li><b>涉案</b>：Gabriel Olivero，32歲，施瓦布營、第3陸戰師所屬海軍三等兵曹（衛生兵）</li>
-      <li><b>被害</b>：玉恵（Hindman Tamae），44歲；女兒在場，未受傷</li>
+      <li><b>被害</b>：日本女性，44歲；女兒在場，未受傷</li>
       <li><b>手法</b>：在公寓內以利刃刺頸，隨後自殺</li>
       <li><b>結果</b>：地檢署因嫌犯死亡不起訴</li>
     </ul>
@@ -450,7 +454,7 @@ body.okn-body{
       <li><b>判決</b>：橫濱地方法院2006年6月判無期徒刑</li>
     </ul>
     <div class="okn-quote">遺族山崎正則（《每日新聞》2020年）：「妻子不是為了日美同盟而被殺的」</div>
-    <div class="out"><b>2008年3月</b>橫須賀另有計程車司機遭刺殺，涉案驅逐艦一等水兵以強盜殺人嫌疑被捕，日方依1995年後日美聯合委員會協議，要求起訴前移交。</div>
+    <div class="out"><b>2008年3月</b>橫須賀另有計程車司機遭刺殺，涉案驅逐艦乘員以強盜殺人嫌疑被捕，日方依1995年後日美聯合委員會協議，要求起訴前移交。</div>
   </div>
 
   <div class="okn-brief gold">
@@ -485,7 +489,18 @@ body.okn-body{
 </div>
 
 <div class="okn-sources">
-  <b>資料來源</b>：路透社、《星條旗報》；琉球縣政府《基地被害の概要》；《琉球新報》2016年5月20日；《沖繩時報》2026年10月5日；《讀賣新聞》2026年10月5日；《每日新聞》2026年10月6日、2020年5月31日；《神奈川新聞》2019年4月16日。
+  <b>資料來源</b>
+  <ul>
+    <li>兇惡犯罪574件・741人（1972–2015）：<a href="https://ryukyushimpo.jp/news/entry-282660.html" target="_blank" rel="noopener">《琉球新報》2016年5月20日</a></li>
+    <li>復歸50年兇惡犯584件：<a href="https://newsdig.tbs.co.jp/articles/-/1254667" target="_blank" rel="noopener">琉球放送（TBS NEWS DIG）2024</a></li>
+    <li>2025年101件・80人：<a href="https://sp.m.jiji.com/article/show/3882489" target="_blank" rel="noopener">時事通信社</a></li>
+    <li>累計約6,409件：<a href="https://www.bbc.com/japanese/articles/c6wyv555448qo" target="_blank" rel="noopener">BBC日文版</a>（沖繩縣統計）</li>
+    <li>縣府年表14件：<a href="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/031/514/siryo06.pdf" target="_blank" rel="noopener">沖繩縣《基地被害の概要》</a></li>
+    <li>「至少7件」：<a href="https://www.okinawatimes.co.jp/articles/-/1938234" target="_blank" rel="noopener">《沖繩時報》2026年10月5日</a></li>
+    <li>210人・1,101人：<a href="https://mainichi.jp/english/articles/20260911/p2a/00m/0op/019000c" target="_blank" rel="noopener">《每日新聞》英文版2026年9月11日</a>（防衛省答詢）</li>
+    <li>2008年橫須賀案：<a href="https://www.kanaloco.jp/news/social/entry-161552.html" target="_blank" rel="noopener">《神奈川新聞》2019年4月16日</a></li>
+    <li>其他：<a href="https://www.yomiuri.co.jp/national/20261005-GYT1T00089/" target="_blank" rel="noopener">《讀賣新聞》2026年10月5日</a>、<a href="https://www.bbc.com/japanese/articles/c5wyrlpjgvw3o" target="_blank" rel="noopener">BBC日文版</a>、路透社、《星條旗報》、《每日新聞》2026年10月6日與2020年5月31日</li>
+  </ul>
 </div>
 <div class="okn-footer">製圖：張威翔</div>
 
