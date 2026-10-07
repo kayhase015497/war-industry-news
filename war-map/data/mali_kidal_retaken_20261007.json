@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "馬利政府軍收復基達爾・都古科洛科行動（2026年10月7日）",
+    "titleEn": "Mali Government Forces Retake Kidal — Operation Dougoukoloko, Oct 7 2026",
+    "subtitle": "非洲軍支援・120輛車隊自阿涅菲斯北上・FLA宣稱戰略撤退・阿扎瓦德5武裝組織相繼發聲",
+    "date": "2026-10-07",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "馬利政府聲明", "法國國際廣播電台（RFI）", "路透社", "阿扎瓦德解放陣線（FLA）聲明"]
+  },
+  "map": {
+    "center": [17.5, 0.5],
+    "zoom": 7,
+    "bounds": [[11.0, -9.0], [23.0, 4.5]]
+  },
+  "infoPanel": {
+    "title": "馬利政府軍收復基達爾・都古科洛科（Dougoukoloko）行動（2026年10月7日）",
+    "paragraphs": [
+      "2026年10月6日，馬利政府宣布，武裝部隊在俄羅斯非洲軍（Africa Corps，前身為瓦格納集團）支持下，正式進入東北部基達爾（Kidal）。政府發言人伊薩·烏斯曼·庫利巴利（Issa Ousmane Coulibaly）稱，本次行動代號「都古科洛科」（Dougoukoloko），採密集空地作戰，以恢復國家行政與基本服務。圖阿雷格叛軍亦宣告撤出，保存實力。",
+      "路透社引述法新社報導，約120輛車組成的車隊7日上午自阿涅菲斯（Anéfis）出發，載有馬利士兵、非洲軍人員及已整編入政府軍的圖阿雷格武裝人員，於後進入基達爾，「沒有遭遇抵抗」，抵達時間早於預定。入城前數日，政府軍已在阿涅菲斯與阿蓋爾霍克（Aguelhoc）加強部署，並對大對基達爾周邊空域實施管制。",
+      "控制基達爾周邊5個月的阿扎瓦德武裝分組阿扎瓦德解放陣線（FLA）同日稍早發表聲明，稱撤退為「戰略性」，強調並非潰敗，將保存人員與裝備。發言人拉馬丹（Mohamed Elmaouloud Ramadane）否認FLA因此而陷於馬利軍與俄非「非洲軍」之中，稱仍有充足兵力。基達爾是阿扎瓦德分離運動的歷史據點，馬利軍與當時的瓦格納部隊2023年11月奪回後，2024年4月底FLA與支持伊斯蘭與穆斯林組織（JNIM）協同攻下，國防部長卡馬拉（Sadio Camara）亦在同期攻勢中身亡。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [17.95, 0.37],
+        [18.10, 0.65],
+        [18.30, 1.00],
+        [18.44, 1.41]
+      ],
+      "color": "#e53935",
+      "weight": 3,
+      "opacity": 0.90,
+      "dashArray": "0",
+      "popup": {
+        "title": "政府軍車隊推進路線・阿涅菲斯→基達爾・約120輛・10月7日上午",
+        "tag": "🚗 車隊路線・阿涅菲斯→基達爾・120輛・無抵抗",
+        "tagClass": "tag-confirmed",
+        "desc": "約120輛車組成的政府軍車隊，2026年10月7日上午自阿涅菲斯（Anéfis）出發，載有馬利武裝部隊士兵、非洲軍（Africa Corps）人員及已整編入正規軍的圖阿雷格武裝人員，向北推進至基達爾。法新社及RFI均引述報導，車隊進入基達爾時未遭任何武裝抵抗，抵達時間早於預定計畫。⚠️ 路線為概略示意。",
+        "source": "路透社；法新社；RFI"
+      }
+    },
+    {
+      "points": [
+        [18.44, 1.41],
+        [18.90, 1.80],
+        [19.20, 2.20]
+      ],
+      "color": "#e67e22",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "FLA宣稱「戰略撤退」方向（推估）",
+        "tag": "↗ FLA戰略撤退方向（推估）・保存人員與裝備",
+        "tagClass": "tag-possible",
+        "desc": "阿扎瓦德解放陣線（FLA）於政府軍進入前發表聲明，稱撤離基達爾為「戰略性撤退」，強調並非潰敗，將保存人員、裝備並維持後續作戰能力。撤退方向未在聲明中明確說明，本圖為概略推估。FLA發言人拉馬丹（Mohamed Elmaouloud Ramadane）表示，FLA仍與馬利軍與非洲軍持續交戰，且尚未陷於包圍之中。⚠️ 方向為概略推估，非確認撤退路線。",
+        "source": "FLA聲明；路透社"
+      }
+    },
+    {
+      "points": [
+        [12.65, -8.00],
+        [14.50, -4.20],
+        [16.27, 0.05],
+        [17.95, 0.37]
+      ],
+      "color": "#42A5F5",
+      "weight": 1.5,
+      "opacity": 0.50,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "補給幹線參考・巴馬科→加奧→阿涅菲斯",
+        "tag": "🛣️ 巴馬科→加奧→阿涅菲斯・補給幹線參考",
+        "tagClass": "tag-reference",
+        "desc": "馬利政府軍與非洲軍的主要補給幹線概略走向，從首都巴馬科向東北延伸，經莫普提、加奧再北上阿涅菲斯，最終進入基達爾。路線沿途仍有JNIM等武裝組織活動，後勤補給維持高度挑戰。⚠️ 路線為概略示意。",
+        "source": "地理參考"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [18.44, 1.41],
+      "name": "Kidal – Retaken by Mali Govt + Africa Corps, Oct 7 2026",
+      "nameLocal": "基達爾（Kidal）・2026年10月7日政府軍收復・都古科洛科行動",
+      "type": "confirmed",
+      "tag": "🏴 基達爾・10/7政府軍進駐・FLA撤出・無武裝抵抗",
+      "tagClass": "tag-confirmed",
+      "desc": "基達爾是馬利東北部圖阿雷格人的歷史重鎮，也是阿扎瓦德分離主義運動的象徵中心。2026年10月7日，馬利政府軍（含非洲軍支援）正式進駐，FLA及相關武裝組織撤出，全程未遭抵抗。此前，基達爾曾於2023年11月由馬利軍與瓦格納部隊奪回；2024年4月底，FLA與JNIM聯手再度攻占，並造成國防部長卡馬拉（Sadio Camara）陣亡。本次收復是馬利政府收復失土的重要節點。⚠️ 座標為概略位置。",
+      "coords": "18°26'N 001°24'E",
+      "source": "馬利政府聲明；路透社；法新社；RFI"
+    },
+    {
+      "latlng": [17.95, 0.37],
+      "name": "Anéfis – 120-Vehicle Convoy Staging Point, Oct 7",
+      "nameLocal": "阿涅菲斯（Anéfis）・120輛車隊出發地・政府軍前進基地",
+      "type": "confirmed",
+      "tag": "🚗 阿涅菲斯・120輛車隊出發地・10/7上午北上",
+      "tagClass": "tag-confirmed",
+      "desc": "阿涅菲斯（Anéfis）位於基達爾以南，是此次政府軍推進行動的前進集結地。約120輛車組成的車隊於2026年10月7日上午自此出發，向北約110公里推進至基達爾。入城前數日，政府軍已在阿涅菲斯持續加強部署與補給。⚠️ 座標為概略位置。",
+      "coords": "17°57'N 000°22'E",
+      "source": "路透社；法新社；RFI"
+    },
+    {
+      "latlng": [19.47, 0.97],
+      "name": "Aguelhoc – Government Forces Reinforced Before Operation",
+      "nameLocal": "阿蓋爾霍克（Aguelhoc）・行動前政府軍加強部署・北方據點",
+      "type": "possible",
+      "tag": "⚒️ 阿蓋爾霍克・行動前政府軍加強部署",
+      "tagClass": "tag-possible",
+      "desc": "阿蓋爾霍克（Aguelhoc）是基達爾以北的重要節點，政府軍在此次都古科洛科行動發起前數日，已在此加強軍事部署，形成對基達爾的北部封鎖態勢，防止FLA向北突圍。⚠️ 座標為概略位置。",
+      "coords": "19°28'N 000°58'E",
+      "source": "RFI；路透社"
+    },
+    {
+      "latlng": [20.17, 1.08],
+      "name": "Tessalit – Northernmost Reference, Near Algeria Border",
+      "nameLocal": "泰薩利特（Tessalit）・馬利最北端重要城鎮・近阿爾及利亞邊境",
+      "type": "possible",
+      "tag": "📍 泰薩利特・北部據點・近阿爾及利亞邊境",
+      "tagClass": "tag-possible",
+      "desc": "泰薩利特是馬利東北部接近阿爾及利亞邊境的重要城鎮，歷史上曾是法國「藪貓行動」（Opération Serval）的重要空軍基地，目前局勢仍受到北部各武裝組織活動影響。",
+      "coords": "20°10'N 001°05'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [16.27, 0.05],
+      "name": "Gao – Major City, Government-Controlled, Africa Corps Hub",
+      "nameLocal": "加奧（Gao）・政府控制・非洲軍重要據點",
+      "type": "capital",
+      "tag": "🏙 加奧・政府控制・非洲軍主要據點",
+      "tagClass": "tag-reference",
+      "desc": "加奧是馬利東北部最大城市，是政府軍與非洲軍在東部戰區的主要後勤與指揮樞紐，亦是往基達爾方向推進的重要補給節點。",
+      "coords": "16°16'N 000°03'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [14.50, -4.20],
+      "name": "Mopti – Central Mali Conflict Junction",
+      "nameLocal": "莫普提（Mopti）・中部衝突交匯點",
+      "type": "capital",
+      "tag": "🏙 莫普提・中部衝突交匯點",
+      "tagClass": "tag-reference",
+      "desc": "莫普提是馬利中部的重要城市，是北部武裝衝突與中部薩赫勒地區（包括JNIM活躍地帶）的交界地帶，也是連接首都巴馬科與北部戰區的補給中繼點。",
+      "coords": "14°30'N 004°12'W",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [12.65, -8.00],
+      "name": "Bamako – Mali Capital, Government HQ",
+      "nameLocal": "巴馬科（Bamako）・馬利首都・軍政府所在地",
+      "type": "capital",
+      "tag": "🏛 巴馬科・馬利首都・軍政府・政府聲明發出地",
+      "tagClass": "tag-reference",
+      "desc": "馬利首都，現任軍事過渡政府（CNSP）所在地。2026年10月6日，政府發言人伊薩·烏斯曼·庫利巴利（Issa Ousmane Coulibaly）在此宣布都古科洛科行動啟動，以及政府軍進駐基達爾的消息。",
+      "coords": "12°39'N 008°00'W",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "line",    "color": "#e53935", "weight": 3,   "dash": "0",   "label": "政府軍車隊推進路線・阿涅菲斯→基達爾（120輛・10/7）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2,   "dash": "8,5", "label": "FLA戰略撤退方向（推估・虛線）" },
+    { "symbol": "line",    "color": "#42A5F5", "weight": 1.5, "dash": "6,4", "label": "補給幹線參考・巴馬科→加奧→阿涅菲斯（概略）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "基達爾（收復）・阿涅菲斯（車隊出發地）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "阿蓋爾霍克（北方部署）・泰薩利特（北部據點）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "參考城市：加奧・莫普提・巴馬科" }
+  ]
+}
