@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-04T08:55:08-04:00",
+    "lastUpdated": "2026-10-08T06:03:20-04:00",
     "reporting": "0918 測試  已開出 52% 選區 ",
     "note": "測試中",
     "source": "美聯社、各州選務委員會"
@@ -373,9 +373,31 @@
   "stories": [
     {
       "id": "s-muttkbn7",
-      "title": "共和黨鐵票倉鬆動！美選民不爽川普 紐時民調：5大深紅州恐轉藍",
-      "text": "距離美國期中選舉僅剩一個月，《紐約時報》與錫耶納學院，聯合發布的最新民調拋下震撼彈！民調顯示，民主黨人在多個傳統上穩如泰山的共和黨州，表現極為強勢，並在試圖翻轉參議院席次的關鍵戰場取得領先。這項數據不僅改寫原本對共和黨有利的選戰版圖，更讓民主黨重新奪回參議院控制權的可能性大增。",
-      "src": "medias/KcnoxIK131N0rzYj-muttpkpr.mp4"
+      "title": "選舉全解析",
+      "text": "川普期中考全貌｜兩黨目標與對台影響一次看懂",
+      "src": "medias/KcnoxIK131N0rzYj-muttpkpr.mp4",
+      "links": [
+        {
+          "url": "https://www.chinatimes.com/newspapers/20261006000659-260109?chdtv",
+          "title": "美期中選舉 重塑美中台關係"
+        },
+        {
+          "url": "https://www.chinatimes.com/realtimenews/20261005000010-260410?chdtv",
+          "title": "川普上談判桌大玩戰略模糊 美國對台軍售會如何發展？"
+        }
+      ]
+    },
+    {
+      "id": "s-muzd3u3m",
+      "title": "眾議院決戰",
+      "text": "435席全面爭奪｜川普能否守住眾院控制權？",
+      "src": "medias/Slo3RKCaT88saEDN-muzdc1ss.mp4",
+      "links": [
+        {
+          "url": "https://www.chinatimes.com/realtimenews/20261006002592-260410?chdtv",
+          "title": "「鐵票倉」瓦解！川普支持率黏谷底 共和黨恐慘敗"
+        }
+      ]
     }
   ],
   "keyRaces": [
