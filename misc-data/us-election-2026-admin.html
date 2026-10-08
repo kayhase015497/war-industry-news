@@ -340,6 +340,11 @@ details.panel pre{
 .mframe{position:relative;aspect-ratio:16/9}
 .mframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .mempty{padding:22px 14px;text-align:center;color:#9aa6c4;font-size:14px;font-weight:700;line-height:1.6}
+.lkrow{border:3px solid var(--ink);border-radius:14px;padding:12px;margin-bottom:12px;background:#f6f8fd;display:grid;gap:10px}
+.lkbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.lkst:empty{display:none}
+.lkst{flex:1 1 140px;min-width:0;font-size:13px;font-weight:700;color:var(--ink2);line-height:1.4}
+.lkst.ok{color:var(--green-d)}.lkst.err{color:var(--rep-d)}
 .mbtns{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .mbtns label.gbtn{flex:1;min-width:150px}
 .mbtns input[type=file]{display:none}
@@ -545,7 +550,7 @@ function normalize(){
     if(!data.states[a])data.states[a]={winner:null,called:false,margin:null,office:'Senate'};
   });
   data.stories=Array.isArray(data.stories)?data.stories:[];
-  data.stories.forEach(st=>{st.title=st.title||'';st.text=st.text||'';st.src=st.src||'';st.id=st.id||('s-'+Math.random().toString(36).slice(2,8))});
+  data.stories.forEach(st=>{st.title=st.title||'';st.text=st.text||'';st.src=st.src||'';st.links=Array.isArray(st.links)?st.links.map(l=>({url:(l&&l.url)||'',title:(l&&l.title)||'',_lastUrl:(l&&l.url)||''})):[];st.id=st.id||('s-'+Math.random().toString(36).slice(2,8))});
   data.keyRaces=data.keyRaces||[];
   data.keyRaces.forEach(r=>{
     r.dem=r.dem||{name:'',pct:0,votes:0};r.rep=r.rep||{name:'',pct:0,votes:0};
@@ -607,7 +612,10 @@ function buildJSON(forPush){
     d.uncalled=Math.max(0,d.total-seatSum(d));
     d.currentControl=ctrlOf(ch);
   });
-  out.stories=(out.stories||[]).filter(x=>x.title.trim()||x.text.trim()||x.src.trim());
+  out.stories=(out.stories||[]).map(x=>{
+    x.links=(x.links||[]).map(l=>({url:normUrl(l.url),title:(l.title||'').trim()})).filter(l=>/^https?:\/\/[^\s]+\.[^\s]+/i.test(l.url));
+    return x;
+  }).filter(x=>x.title.trim()||x.text.trim()||x.src.trim()||x.links.length);
   if(forPush)out.meta.lastUpdated=etISO();
   return out;
 }
@@ -1089,6 +1097,19 @@ function renderStories(){
     <input class="tin" value="${esc(st.title)}" placeholder="例如：為什麼這場選舉很重要" oninput="setStory(${i},'title',this.value)">
     <div class="lab">文字說明（選填）</div>
     <textarea class="tin tarea" placeholder="直接輸入，按 Enter 可換行" oninput="setStory(${i},'text',this.value)">${esc(st.text)}</textarea>
+    <div class="lab">報導連結（選填，可多則）</div>
+    ${st.links.map((l,j)=>`
+    <div class="lkrow">
+      <input class="tin" id="lk-url-${i}-${j}" value="${esc(l.url)}" inputmode="url" autocapitalize="off" placeholder="貼上報導網址（例如 chinatimes.com 的新聞）"
+        oninput="setLinkUrl(${i},${j},this.value)" onchange="commitLinkUrl(${i},${j})" onpaste="setTimeout(()=>commitLinkUrl(${i},${j}),0)">
+      <input class="tin" id="lk-title-${i}-${j}" value="${esc(l.title)}" placeholder="顯示標題（會自動抓取，可自行修改）" oninput="setLinkTitle(${i},${j},this.value)">
+      <div class="lkbar">
+        <span class="lkst" id="lk-st-${i}-${j}"></span>
+        <button class="gbtn sm" onclick="commitLinkUrl(${i},${j},true)">↻ 重抓標題</button>
+        <button class="gbtn red sm" onclick="removeLink(${i},${j})">🗑</button>
+      </div>
+    </div>`).join('')}
+    <button class="gbtn block" onclick="addLink(${i})">＋ 新增報導連結</button>
     <div class="lab">圖片／GIF／影片（選填）</div>
     <div class="mprev" id="mp-${i}">${mediaPreview(st.src)}</div>
     <div class="mbtns">
@@ -1106,7 +1127,7 @@ function setStory(i,k,v){
   if(k==='title'){const e=$('st-name-'+i);if(e)e.textContent=v||'（未命名）'}
 }
 function addStory(){
-  data.stories.push({id:'s-'+Date.now().toString(36),title:'',text:'',src:''});
+  data.stories.push({id:'s-'+Date.now().toString(36),title:'',text:'',src:'',links:[]});
   markDirty();renderStories();
   setTimeout(()=>{const e=$('story-'+(data.stories.length-1));e&&e.scrollIntoView({behavior:'smooth',block:'start'})},60);
 }
@@ -1117,6 +1138,68 @@ function moveStory(i,d){
 function removeStory(i){
   if(!confirm(`確定刪除第 ${i+1} 則？`))return;
   data.stories.splice(i,1);markDirty();renderStories();
+}
+function normUrl(v){
+  v=(v||'').trim();if(!v)return '';
+  return /^https?:\/\//i.test(v)?v:'https://'+v;
+}
+function cleanTitle(t){
+  return String(t||'').replace(/\s+/g,' ').trim()
+    .replace(/\s*[-–—|｜]\s*[^-–—|｜]*(中時|中國時報|旺報|工商時報)[^-–—|｜]*$/,'').trim();
+}
+async function fetchT(url,ms=8000){
+  const ac=new AbortController(),t=setTimeout(()=>ac.abort(),ms);
+  try{return await fetch(url,{signal:ac.signal})}finally{clearTimeout(t)}
+}
+async function fetchTitle(url){
+  const enc=encodeURIComponent(url);
+  try{
+    const r=await fetchT(`https://api.microlink.io/?url=${enc}`);
+    if(r.ok){const j=await r.json();const t=j&&j.data&&j.data.title;if(t)return cleanTitle(t)}
+  }catch(e){}
+  try{
+    const r=await fetchT(`https://api.allorigins.win/raw?url=${enc}`);
+    if(r.ok){
+      const d=new DOMParser().parseFromString(await r.text(),'text/html');
+      const og=d.querySelector('meta[property="og:title"]');
+      const t=(og&&og.content)||d.title;if(t)return cleanTitle(t)
+    }
+  }catch(e){}
+  return '';
+}
+function linkStatus(st,l,msg,cls){
+  const i=data.stories.indexOf(st),j=i<0?-1:st.links.indexOf(l);
+  const e=j<0?null:$(`lk-st-${i}-${j}`);
+  if(e){e.textContent=msg;e.className='lkst '+(cls||'')}
+}
+function addLink(i){
+  data.stories[i].links.push({url:'',title:'',_lastUrl:''});markDirty();renderStories();
+  setTimeout(()=>{const e=$(`lk-url-${i}-${data.stories[i].links.length-1}`);e&&e.focus()},60);
+}
+function removeLink(i,j){data.stories[i].links.splice(j,1);markDirty();renderStories()}
+function setLinkUrl(i,j,v){data.stories[i].links[j].url=v;markDirty()}
+function setLinkTitle(i,j,v){const l=data.stories[i].links[j];l.title=v;l._manual=true;markDirty()}
+async function commitLinkUrl(i,j,force){
+  const st=data.stories[i],l=st&&st.links[j];if(!l)return;
+  l.url=normUrl(l.url);
+  const inp=$(`lk-url-${i}-${j}`);if(inp)inp.value=l.url;
+  if(!l.url)return;
+  try{new URL(l.url)}catch(e){linkStatus(st,l,'網址格式不正確','err');return}
+  if(!force){
+    if(l.url===l._lastUrl)return;
+    if(l._manual){l._lastUrl=l.url;return}
+  }
+  const url=l.url;l._lastUrl=url;
+  linkStatus(st,l,'⟳ 抓取標題中…');
+  const t=await fetchTitle(url);
+  if(!data.stories.includes(st)||!st.links.includes(l)||l.url!==url)return;
+  if(t){
+    l.title=t;l._manual=false;markDirty();
+    const ti=$(`lk-title-${data.stories.indexOf(st)}-${st.links.indexOf(l)}`);if(ti)ti.value=t;
+    linkStatus(st,l,'✓ 已自動帶入標題（可修改）','ok');
+  }else{
+    linkStatus(st,l,'抓不到標題，請手動輸入（不填的話前台會顯示網站名稱）','err');
+  }
 }
 function clearMedia(i){data.stories[i].src='';markDirty();renderStories()}
 function readB64(file){

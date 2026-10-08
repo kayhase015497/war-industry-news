@@ -73,7 +73,8 @@ war-industry-news/
   "senate": { "dem": { "seats": 0, "net": 0 }, "rep": {...}, "ind": {...}, "uncalled": 0, "total": 100, "threshold": 51, "currentControl": "R" },
   "house":  { ... "total": 435, "threshold": 218 },
   "governor": { ... "total": 50 },
-  "stories": [ { "id": "s-1", "title": "標題", "text": "文字", "src": "medias/xxx.mp4 或 https://… 或 YouTube/Vimeo 連結" } ],
+  "stories": [ { "id": "s-1", "title": "標題", "text": "文字", "src": "medias/xxx.mp4 或 https://… 或 YouTube/Vimeo 連結",
+      "links": [ { "url": "https://www.chinatimes.com/…", "title": "報導標題" } ] } ],
   "states": {
     "TX": { "winner": "R", "called": true, "margin": 10.0, "office": "Senate" }
   },
@@ -94,6 +95,7 @@ war-industry-news/
 - **Ctrl+S** 快速推送
 - 手機優先、遊戲風 UI：手機底部分頁列／桌機左側選單（總覽、參議院、眾議院、地圖、戰區）；各州用方塊地圖點選設定
 - 「內容」分頁：管理地圖下方圖文區塊（可多則、可排序；清空則前台不顯示）；檔案上傳至 `medias/`，src 副檔名自動判斷 圖片/GIF、MP4（靜音循環自動播放）、YouTube/Vimeo 嵌入
+- 圖文「報導連結」：每則可加多個，貼上網址自動抓標題（microlink → allorigins 備援，去掉「- 中時新聞網」後綴；抓不到可手動輸入，不填則前台顯示網站名稱）；前台以文字超連結呈現（僅允許 http/https，新分頁開啟）
 - 防呆：未確定席次、過半控制黨、最後更新時間皆由系統自動計算，不需手填；席次加總超過總數時禁止存檔
 
 ### 嵌入碼

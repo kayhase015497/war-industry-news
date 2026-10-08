@@ -292,6 +292,16 @@ html[data-font="c"]{
 .ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
 .ue-story-title{font-family:var(--ff-display);font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
 .ue-story-text{font-size:var(--fs-base);line-height:1.8;color:var(--c-text);white-space:pre-line;}
+.ue-story-links{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.ue-story-links-lbl{font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;color:var(--c-muted);margin-top:14px;}
+.ue-story-links-lbl + .ue-story-links{margin-top:6px;}
+.ue-story-links a{
+  font-size:var(--fs-md);line-height:1.6;color:var(--c-text);font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--c-accent-line);text-underline-offset:4px;
+  text-decoration-thickness:2px;word-break:break-word;
+}
+.ue-story-links a::before{content:'↗';color:var(--c-accent);text-decoration:none;display:inline-block;margin-right:6px;}
+.ue-story-links a:hover{color:var(--c-accent);}
 @media(min-width:900px){
   .ue-story.has-media.has-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
   .ue-story.flip .ue-story-media{order:2;}
@@ -667,6 +677,13 @@ function mediaKind(src) {
 function resolveMedia(src) {
   return /^https?:\/\//i.test(src) ? src : '../' + src.replace(/^\.?\/+/, '');
 }
+function safeUrl(u) {
+  u = String(u || '').trim();
+  return /^https?:\/\//i.test(u) ? u : '';
+}
+function hostOf(u) {
+  try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; }
+}
 function storyHTML(st, i) {
   const src = (st.src || '').trim();
   const title = (st.title || '').trim();
@@ -682,8 +699,12 @@ function storyHTML(st, i) {
       media = `<img src="${esc(resolveMedia(src))}" alt="${esc(title)}" loading="lazy">`;
     }
   }
-  const body = (title || text)
-    ? `<div class="ue-story-body">${title ? `<div class="ue-story-title">${esc(title)}</div>` : ''}${text ? `<div class="ue-story-text">${esc(text)}</div>` : ''}</div>`
+  const links = (st.links || []).map(l => ({ url: safeUrl(l && l.url), title: ((l && l.title) || '').trim() })).filter(l => l.url);
+  const linkHTML = links.length
+    ? `<div class="ue-story-links-lbl">相關報導</div><ul class="ue-story-links">${links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.title || hostOf(l.url))}</a></li>`).join('')}</ul>`
+    : '';
+  const body = (title || text || linkHTML)
+    ? `<div class="ue-story-body">${title ? `<div class="ue-story-title">${esc(title)}</div>` : ''}${text ? `<div class="ue-story-text">${esc(text)}</div>` : ''}${linkHTML}</div>`
     : '';
   return `<div class="ue-story${media ? ' has-media' : ''}${body ? ' has-body' : ''}${i % 2 ? ' flip' : ''}">${media ? `<div class="ue-story-media">${media}</div>` : ''}${body}</div>`;
 }
@@ -692,7 +713,7 @@ function esc(s) {
 }
 function renderStories() {
   const wrap = document.getElementById('ue-stories');
-  const list = (electionData.stories || []).filter(s => s && (s.title || s.text || s.src));
+  const list = (electionData.stories || []).filter(s => s && (s.title || s.text || s.src || (s.links || []).some(l => l && safeUrl(l.url))));
   const sig = JSON.stringify(list);
   if (sig === storiesSig) return;
   storiesSig = sig;
