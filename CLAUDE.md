@@ -63,6 +63,8 @@ war-industry-news/
 - **網址**：`/misc-data/us-election-2026.html`
 - D3 + TopoJSON SVG 地圖、參眾院席次計分板、關鍵選區列表
 - 每 60 秒自動 fetch `us-election-2026-data.json` 更新資料
+- 預設亮色，右上角可切換暗色（記憶在 localStorage；網址參數 `?theme=dark|light` 優先，方便 CMS 嵌入時指定）
+- 字體：標題/大數字 Noto Serif TC、內文 Noto Sans TC、標籤與數字 Barlow Condensed（CSS 變數 `--ff-display/--ff-body/--ff-label`）；`?font=b|c` 可臨時預覽其他字體組合（LXGW WenKai TC／Chiron GoRound TC），定案後可移除
 
 ### 資料格式（`us-election-2026-data.json`）
 ```json

@@ -4,26 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026 美國期中選舉｜即時開票結果</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+/* 主題／字體：網址參數優先（?theme=dark、?font=b|c），其次記憶的偏好，預設亮色 */
+(function(){
+  var d=document.documentElement,q=new URLSearchParams(location.search),t=q.get('theme'),f=q.get('font');
+  if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('ue-theme')}catch(e){t=null}}
+  d.setAttribute('data-theme',t==='dark'?'dark':'light');
+  var extra={b:'LXGW+WenKai+TC:wght@400;700',c:'Chiron+GoRound+TC:wght@400;500;700;900'};
+  if(f&&extra[f]){
+    d.setAttribute('data-font',f);
+    var l=document.createElement('link');l.rel='stylesheet';
+    l.href='https://fonts.googleapis.com/css2?family='+extra[f]+'&display=swap';
+    document.head.appendChild(l);
+  }
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <style>
 /* ── Reset & Root ── */
 *,.ue-wrap *,.ue-wrap *::before,.ue-wrap *::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --c-bg:#0b0f1a;--c-card:#131929;--c-border:#1e2a3d;
-  --c-rep:#ef4444;--c-rep-dim:#7f1d1d;--c-rep-glow:rgba(239,68,68,.18);
-  --c-dem:#3b82f6;--c-dem-dim:#1e3a8a;--c-dem-glow:rgba(59,130,246,.18);
-  --c-ind:#a855f7;--c-unc:#374151;
-  --c-text:#e2e8f0;--c-muted:#64748b;--c-accent:#f0b400;
-  --ff-body:'Noto Sans TC',sans-serif;--ff-mono:'Space Mono',monospace;
+  /* 亮色（預設） */
+  --c-bg:#f5f2ec;--c-card:#ffffff;--c-border:#ddd6c8;
+  --c-rep:#dc2626;--c-rep-dim:#fca5a5;--c-rep-glow:rgba(220,38,38,.10);
+  --c-dem:#2563eb;--c-dem-dim:#93c5fd;--c-dem-glow:rgba(37,99,235,.10);
+  --c-ind:#7c3aed;--c-unc:#d4d0c6;
+  --c-text:#1f2430;--c-muted:#5f6675;--c-accent:#a16207;--c-accent-line:#e0a800;
+  --c-accent-bg:rgba(224,168,0,.14);--c-accent-bd:rgba(161,98,7,.35);
+  --c-head-bg:linear-gradient(135deg,#ffffff 0%,#f3eee3 100%);--c-head-text:#1f2430;
+  --c-pop:#ffffff;--c-hover:rgba(31,36,48,.04);--c-badge:rgba(31,36,48,.07);
+  --c-stroke:#ffffff;--c-lean-r:#f2a3a3;--c-lean-d:#9dbcf4;--c-live:#16a34a;
+  --c-scroll-track:#ece7dc;--c-scroll-thumb:#b8b0a0;
+  --c-shadow:0 8px 24px rgba(31,36,48,.18);--c-shadow-lg:0 20px 60px rgba(31,36,48,.28);
+  /* 字體：標題／內文／標籤與數字 */
+  --ff-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --ff-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+  --ff-label:'Barlow Condensed','Noto Sans TC','PingFang TC',sans-serif;
   --r:6px;
   /* 字型比例：所有尺寸以此為基準 */
   --fs-xs:13px;   /* 輔助標籤、角標 */
   --fs-sm:14px;   /* 次要標籤、badge */
   --fs-base:18px; /* 正文、候選人名 */
   --fs-md:16px;   /* 次要正文 */
-  --fs-mono:13px; /* Space Mono 標籤 */
+  --fs-mono:14px; /* 標籤、數字（Barlow Condensed） */
+}
+:root[data-theme="dark"]{
+  --c-bg:#0b0f1a;--c-card:#131929;--c-border:#1e2a3d;
+  --c-rep:#ef4444;--c-rep-dim:#7f1d1d;--c-rep-glow:rgba(239,68,68,.18);
+  --c-dem:#3b82f6;--c-dem-dim:#1e3a8a;--c-dem-glow:rgba(59,130,246,.18);
+  --c-ind:#a855f7;--c-unc:#374151;
+  --c-text:#e2e8f0;--c-muted:#7c8aa0;--c-accent:#f0b400;--c-accent-line:#f0b400;
+  --c-accent-bg:rgba(240,180,0,.12);--c-accent-bd:rgba(240,180,0,.3);
+  --c-head-bg:linear-gradient(135deg,#080d18 0%,#0f1d3a 60%,#1a0a0a 100%);--c-head-text:#ffffff;
+  --c-pop:#1e293b;--c-hover:rgba(255,255,255,.03);--c-badge:rgba(255,255,255,.08);
+  --c-stroke:#0b0f1a;--c-lean-r:#9f1515;--c-lean-d:#1a4a9f;--c-live:#4ade80;
+  --c-scroll-track:#131b2b;--c-scroll-thumb:#4a5a78;
+  --c-shadow:0 8px 24px rgba(0,0,0,.5);--c-shadow-lg:0 20px 60px rgba(0,0,0,.7);
+}
+html[data-font="b"]{--ff-display:'LXGW WenKai TC','Noto Sans TC',serif;}
+html[data-font="c"]{
+  --ff-display:'Chiron GoRound TC','Noto Sans TC',sans-serif;
+  --ff-body:'Chiron GoRound TC','Noto Sans TC',sans-serif;
 }
 
 /* ── Wrapper ── */
@@ -36,9 +81,9 @@
 
 /* ── Header ── */
 .ue-head{
-  background:linear-gradient(135deg,#080d18 0%,#0f1d3a 60%,#1a0a0a 100%);
+  background:var(--c-head-bg);
   padding:24px 24px 20px;
-  border-bottom:3px solid var(--c-accent);
+  border-bottom:3px solid var(--c-accent-line);
   position:relative;overflow:hidden;
 }
 .ue-head::before{
@@ -54,32 +99,34 @@
   pointer-events:none;
 }
 .ue-kicker{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:3px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:3px;
   color:var(--c-accent);text-transform:uppercase;margin-bottom:10px;
+  padding-right:104px;
 }
 .ue-title{
   font-size:clamp(22px,3.5vw,34px);font-weight:900;line-height:1.2;
-  color:#fff;margin-bottom:8px;
+  color:var(--c-head-text);margin-bottom:8px;
+  font-family:var(--ff-display);
 }
 .ue-head-meta{
   display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:10px;
 }
 .ue-live-dot{
   display:flex;align-items:center;gap:7px;
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:#4ade80;
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-live);
 }
 .ue-live-dot::before{
   content:'';width:8px;height:8px;border-radius:50%;
-  background:#4ade80;box-shadow:0 0 8px #4ade80;
+  background:var(--c-live);box-shadow:0 0 8px var(--c-live);
   animation:ue-pulse 2s infinite;
 }
 @keyframes ue-pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .ue-updated{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
 }
 .ue-reporting-tag{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);
-  background:rgba(240,180,0,.12);border:1px solid rgba(240,180,0,.3);
+  font-family:var(--ff-label);font-size:var(--fs-mono);
+  background:var(--c-accent-bg);border:1px solid var(--c-accent-bd);
   color:var(--c-accent);padding:3px 10px;
 }
 
@@ -97,11 +144,11 @@
   padding:12px 16px 10px;border-bottom:1px solid var(--c-border);
 }
 .ue-board-title{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:2px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:2px;
   text-transform:uppercase;color:var(--c-muted);
 }
 .ue-board-ctrl{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);
+  font-family:var(--ff-label);font-size:var(--fs-mono);
   padding:3px 10px;border-radius:3px;font-weight:700;
 }
 .ctrl-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
@@ -114,6 +161,7 @@
 }
 .ue-count{text-align:center;flex:1;}
 .ue-count-n{
+  font-family:var(--ff-display);
   font-size:clamp(32px,5vw,52px);font-weight:900;line-height:1;
   font-variant-numeric:tabular-nums;
 }
@@ -121,11 +169,11 @@
 .ue-count-n.rep{color:var(--c-rep);}
 .ue-count-n.unc{color:var(--c-muted);font-size:clamp(22px,3.5vw,36px);}
 .ue-count-lbl{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
   margin-top:5px;letter-spacing:1px;
 }
 .ue-count-net{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);margin-top:3px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);margin-top:3px;
 }
 .net-pos{color:#4ade80;} .net-neg{color:#f87171;} .net-zero{color:var(--c-muted);}
 .ue-count-sep{width:1px;background:var(--c-border);align-self:stretch;margin:0 4px;}
@@ -133,7 +181,7 @@
 .ue-bar-wrap{padding:10px 16px 16px;}
 .ue-bar-labels{
   display:flex;justify-content:space-between;
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
   margin-bottom:5px;
 }
 .ue-bar{
@@ -149,7 +197,7 @@
 }
 .ue-threshold-lbl{
   position:absolute;top:-20px;
-  font-family:var(--ff-mono);font-size:12px;color:var(--c-accent);
+  font-family:var(--ff-label);font-size:12px;color:var(--c-accent);
   white-space:nowrap;transform:translateX(-50%);
 }
 
@@ -181,7 +229,7 @@
   flex-wrap:wrap;gap:8px;
 }
 .ue-panel-title{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:2px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:2px;
   text-transform:uppercase;color:var(--c-muted);
 }
 .ue-map-legend{
@@ -189,46 +237,46 @@
 }
 .ue-leg-item{
   display:flex;align-items:center;gap:6px;
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
 }
 .ue-leg-swatch{width:12px;height:12px;border-radius:2px;}
 #ue-map-svg{width:100%;height:auto;display:block;cursor:pointer;}
 .ue-map-note{
-  padding:10px 16px;font-family:var(--ff-mono);font-size:var(--fs-mono);
+  padding:10px 16px;font-family:var(--ff-label);font-size:var(--fs-mono);
   color:var(--c-muted);border-top:1px solid var(--c-border);
   text-align:center;
 }
 
 /* ── State Hover/Click Styles ── */
-.ue-state{stroke:#0b0f1a;stroke-width:.5;transition:opacity .15s;}
+.ue-state{stroke:var(--c-stroke);stroke-width:.5;transition:opacity .15s;}
 .ue-state:hover{opacity:.75;stroke:var(--c-accent);stroke-width:1.5;}
 .ue-state.winner-R{fill:var(--c-rep);}
 .ue-state.winner-D{fill:var(--c-dem);}
 .ue-state.winner-I{fill:var(--c-ind);}
 .ue-state.winner-null{fill:var(--c-unc);}
-.ue-state.lean-R{fill:#9f1515;opacity:.7;}
-.ue-state.lean-D{fill:#1a4a9f;opacity:.7;}
+.ue-state.lean-R{fill:var(--c-lean-r);opacity:.85;}
+.ue-state.lean-D{fill:var(--c-lean-d);opacity:.85;}
 
 /* ── Tooltip ── */
 .ue-tooltip{
-  position:fixed;background:#1e293b;border:1px solid var(--c-border);
+  position:fixed;background:var(--c-pop);border:1px solid var(--c-border);
   border-radius:var(--r);padding:12px 16px;
   font-family:var(--ff-body);font-size:var(--fs-md);
-  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  box-shadow:var(--c-shadow);
   pointer-events:none;z-index:1000;
   opacity:0;transition:opacity .15s;max-width:240px;
   transform:translate(-50%,-110%);
 }
 .ue-tooltip.visible{opacity:1;}
 .ue-tt-state{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;
   color:var(--c-accent);margin-bottom:7px;text-transform:uppercase;
 }
-.ue-tt-winner{font-weight:700;font-size:var(--fs-base);margin-bottom:5px;}
+.ue-tt-winner{font-family:var(--ff-display);font-weight:700;font-size:var(--fs-base);margin-bottom:5px;}
 .ue-tt-winner.R{color:var(--c-rep);}
 .ue-tt-winner.D{color:var(--c-dem);}
 .ue-tt-winner.unc{color:var(--c-muted);}
-.ue-tt-pct{font-family:var(--ff-mono);font-size:var(--fs-sm);color:var(--c-muted);}
+.ue-tt-pct{font-family:var(--ff-label);font-size:var(--fs-sm);color:var(--c-muted);}
 
 /* ── Stories (圖文說明區塊) ── */
 .ue-stories{display:flex;flex-direction:column;gap:14px;min-width:0;}
@@ -242,7 +290,7 @@
 .ue-story-embed{position:relative;width:100%;aspect-ratio:16/9;}
 .ue-story-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
-.ue-story-title{font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
+.ue-story-title{font-family:var(--ff-display);font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
 .ue-story-text{font-size:var(--fs-base);line-height:1.8;color:var(--c-text);white-space:pre-line;}
 @media(min-width:900px){
   .ue-story.has-media.has-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
@@ -260,7 +308,7 @@
 }
 .ue-tab{
   flex:1;padding:13px 8px;text-align:center;cursor:pointer;
-  font-family:var(--ff-mono);font-size:var(--fs-sm);letter-spacing:1px;
+  font-family:var(--ff-label);font-size:var(--fs-sm);letter-spacing:1px;
   text-transform:uppercase;color:var(--c-muted);
   border-bottom:2px solid transparent;transition:all .2s;
   user-select:none;
@@ -273,34 +321,34 @@
   border-bottom:1px solid var(--c-border);flex-wrap:wrap;
 }
 .ue-filter-btn{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;
   text-transform:uppercase;padding:5px 12px;border-radius:3px;
   border:1px solid var(--c-border);background:transparent;
   color:var(--c-muted);cursor:pointer;transition:all .15s;
 }
 .ue-filter-btn:hover,.ue-filter-btn.active{
   border-color:var(--c-accent);color:var(--c-accent);
-  background:rgba(240,180,0,.08);
+  background:var(--c-accent-bg);
 }
 
 .ue-race-list{
   overflow-y:auto;flex:1;
   scrollbar-width:thin;scrollbar-color:var(--c-border) transparent;
 }
-.ue-race-list{scrollbar-width:auto;scrollbar-color:#4a5a78 #131b2b;flex:none;}
+.ue-race-list{scrollbar-width:auto;scrollbar-color:var(--c-scroll-thumb) var(--c-scroll-track);flex:none;}
 .ue-race-list::-webkit-scrollbar{width:10px;}
-.ue-race-list::-webkit-scrollbar-track{background:#131b2b;}
-.ue-race-list::-webkit-scrollbar-thumb{background:#4a5a78;border-radius:5px;border:2px solid #131b2b;}
+.ue-race-list::-webkit-scrollbar-track{background:var(--c-scroll-track);}
+.ue-race-list::-webkit-scrollbar-thumb{background:var(--c-scroll-thumb);border-radius:5px;border:2px solid var(--c-scroll-track);}
 .ue-race-more{
   padding:8px 14px;text-align:center;border-top:1px solid var(--c-border);
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
 }
 
 .ue-race-item{
   padding:15px 18px;border-bottom:1px solid var(--c-border);
   cursor:pointer;transition:background .15s;
 }
-.ue-race-item:hover{background:rgba(255,255,255,.03);}
+.ue-race-item:hover{background:var(--c-hover);}
 .ue-race-item:last-child{border-bottom:none;}
 
 .ue-race-top{
@@ -311,26 +359,26 @@
   display:flex;align-items:center;gap:10px;flex:1;min-width:0;
 }
 .ue-state-badge{
-  font-family:var(--ff-mono);font-size:var(--fs-sm);font-weight:700;
-  color:#fff;background:rgba(255,255,255,.08);
+  font-family:var(--ff-label);font-size:var(--fs-sm);font-weight:700;
+  color:var(--c-text);background:var(--c-badge);
   padding:4px 8px;border-radius:3px;letter-spacing:.5px;flex-shrink:0;
 }
 .ue-race-office{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
   letter-spacing:1px;text-transform:uppercase;
 }
 .ue-race-status{
   display:flex;align-items:center;gap:6px;flex-shrink:0;
 }
 .ue-called-badge{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);padding:4px 9px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);padding:4px 9px;
   border-radius:3px;letter-spacing:.5px;white-space:nowrap;
 }
 .called-R{background:var(--c-rep-glow);color:var(--c-rep);border:1px solid rgba(239,68,68,.3);}
 .called-D{background:var(--c-dem-glow);color:var(--c-dem);border:1px solid rgba(59,130,246,.3);}
 .called-null{background:rgba(100,116,139,.1);color:var(--c-muted);border:1px solid rgba(100,116,139,.2);}
 .ue-pct-reporting{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);
+  font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);
   margin-top:8px;
 }
 
@@ -350,7 +398,7 @@
   font-size:var(--fs-sm);color:var(--c-accent);margin-left:3px;
 }
 .ue-cand-pct{
-  font-family:var(--ff-mono);font-size:var(--fs-md);font-weight:700;
+  font-family:var(--ff-label);font-size:var(--fs-md);font-weight:700;
   min-width:46px;text-align:right;
 }
 .pct-D{color:var(--c-dem);}
@@ -374,15 +422,15 @@
 }
 .ue-modal-bg.open{display:flex;}
 .ue-modal{
-  background:#141e30;border:1px solid var(--c-border);
+  background:var(--c-pop);border:1px solid var(--c-border);
   border-radius:var(--r);max-width:520px;width:100%;
   max-height:88vh;overflow-y:auto;
-  box-shadow:0 20px 60px rgba(0,0,0,.7);
+  box-shadow:var(--c-shadow-lg);
 }
 .ue-modal-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 20px;border-bottom:1px solid var(--c-border);
-  position:sticky;top:0;background:#141e30;z-index:1;
+  position:sticky;top:0;background:var(--c-pop);z-index:1;
 }
 .ue-modal-close{
   background:none;border:none;color:var(--c-muted);
@@ -397,9 +445,9 @@
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:8px;
 }
-.ue-foot-note{font-family:var(--ff-mono);font-size:var(--fs-mono);color:var(--c-muted);}
+.ue-foot-note{font-family:var(--ff-label);font-size:var(--fs-mono);color:var(--c-muted);}
 .ue-refresh-btn{
-  font-family:var(--ff-mono);font-size:var(--fs-mono);letter-spacing:1px;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;
   text-transform:uppercase;padding:6px 14px;
   border:1px solid var(--c-border);border-radius:3px;
   background:transparent;color:var(--c-muted);cursor:pointer;
@@ -409,6 +457,14 @@
 .ue-refresh-btn.loading{animation:ue-spin 1s linear infinite;}
 @keyframes ue-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
+
+.ue-theme-btn{
+  position:absolute;top:16px;right:16px;z-index:2;
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;
+  padding:6px 12px;border:1px solid var(--c-border);border-radius:999px;
+  background:var(--c-card);color:var(--c-text);cursor:pointer;transition:all .2s;
+}
+.ue-theme-btn:hover{border-color:var(--c-accent-line);color:var(--c-accent);}
 
 @media(max-width:480px){
   .ue-head{padding:16px 16px 14px;}
@@ -422,6 +478,7 @@
 
   <!-- Header -->
   <div class="ue-head">
+    <button class="ue-theme-btn" id="ue-theme-btn" onclick="toggleTheme()" aria-label="切換亮色或暗色"></button>
     <div class="ue-kicker">🇺🇸 Breaking · 2026 Midterms</div>
     <div class="ue-title">2026 美國期中選舉<br>即時開票結果</div>
     <div class="ue-head-meta">
@@ -444,9 +501,9 @@
       <div class="ue-panel-head">
         <span class="ue-panel-title">各州選情地圖</span>
         <div class="ue-map-legend">
-          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#3b82f6"></div>民主黨勝</div>
-          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#ef4444"></div>共和黨勝</div>
-          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:#374151"></div>未決定</div>
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:var(--c-dem)"></div>民主黨勝</div>
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:var(--c-rep)"></div>共和黨勝</div>
+          <div class="ue-leg-item"><div class="ue-leg-swatch" style="background:var(--c-unc)"></div>未決定</div>
         </div>
       </div>
       <svg id="ue-map-svg" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -491,7 +548,7 @@
 <div class="ue-modal-bg" id="ue-modal-bg" onclick="closeModal(event)">
   <div class="ue-modal">
     <div class="ue-modal-head">
-      <span id="ue-modal-title" style="font-weight:700;font-size:20px;"></span>
+      <span id="ue-modal-title" style="font-family:var(--ff-display);font-weight:700;font-size:20px;"></span>
       <button class="ue-modal-close" onclick="closeModalDirect()">×</button>
     </div>
     <div class="ue-modal-body" id="ue-modal-body"></div>
@@ -575,6 +632,21 @@ async function manualRefresh() {
   btn.classList.remove('loading');
   btn.textContent = '↻ 立即更新';
 }
+
+/* ══════════════════════════════════════════════
+   THEME TOGGLE
+═══════════════════════════════════════════════ */
+function paintThemeBtn() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('ue-theme-btn').textContent = dark ? '☀ 亮色' : '☾ 暗色';
+}
+function toggleTheme() {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('ue-theme', next); } catch (e) {}
+  paintThemeBtn();
+}
+paintThemeBtn();
 
 /* ══════════════════════════════════════════════
    STORIES (圖文說明區塊)
@@ -688,8 +760,8 @@ function boardHTML(title, data, type) {
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);">門檻</div>
-        <div style="font-family:var(--ff-mono);font-size:22px;font-weight:700;color:var(--c-accent);">${threshold}</div>
+        <div style="font-family:var(--ff-label);font-size:13px;color:var(--c-muted);">門檻</div>
+        <div style="font-family:var(--ff-label);font-size:22px;font-weight:700;color:var(--c-accent);">${threshold}</div>
       </div>
       <div class="ue-count-sep"></div>
       <div class="ue-count">
@@ -800,7 +872,7 @@ function drawMap() {
   svg.append('path')
     .datum(mesh)
     .attr('fill','none')
-    .attr('stroke','#0b0f1a')
+    .style('stroke','var(--c-stroke)')
     .attr('stroke-width',1)
     .attr('d', path);
 }
@@ -862,7 +934,7 @@ function renderRaceList() {
   if (currentFilter === 'uncalled') races = races.filter(r => !r.called);
 
   if (races.length === 0) {
-    list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-mono);font-size:14px;color:var(--c-muted);">此分類目前無資料</div>`;
+    list.innerHTML = `<div style="padding:32px;text-align:center;font-family:var(--ff-label);font-size:14px;color:var(--c-muted);">此分類目前無資料</div>`;
     list.style.maxHeight = '';
     document.getElementById('ue-race-more').hidden = true;
     return;
@@ -918,7 +990,7 @@ function raceItemHTML(r) {
       <div class="ue-race-label">
         <span class="ue-state-badge">${r.state}</span>
         <div>
-          <div style="font-size:18px;font-weight:600;line-height:1.2;">${r.stateName}</div>
+          <div style="font-family:var(--ff-display);font-size:18px;font-weight:700;line-height:1.2;">${r.stateName}</div>
         </div>
       </div>
       <div class="ue-race-status">
@@ -926,7 +998,7 @@ function raceItemHTML(r) {
       </div>
     </div>
     <div style="margin-top:6px;">
-      <div style="display:flex;justify-content:space-between;font-family:var(--ff-mono);font-size:13px;margin-bottom:5px;">
+      <div style="display:flex;justify-content:space-between;font-family:var(--ff-label);font-size:13px;margin-bottom:5px;">
         <span style="color:var(--c-dem)">${dLabel}</span>
         <span style="color:var(--c-rep)">${rLabel}</span>
       </div>
@@ -957,22 +1029,22 @@ function showStateModal(abbr) {
     bodyHTML += `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
         <div>
-          <div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);margin-bottom:6px;">選舉結果</div>
+          <div style="font-family:var(--ff-label);font-size:13px;color:var(--c-muted);margin-bottom:6px;">選舉結果</div>
           <div style="font-size:20px;font-weight:700;color:${wColor}">${wText}</div>
         </div>
-        ${st.margin ? `<div style="text-align:right;"><div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);margin-bottom:6px;">領先差距</div><div style="font-family:var(--ff-mono);font-size:24px;font-weight:700;color:${wColor}">${st.margin.toFixed(1)}%</div></div>` : ''}
+        ${st.margin ? `<div style="text-align:right;"><div style="font-family:var(--ff-label);font-size:13px;color:var(--c-muted);margin-bottom:6px;">領先差距</div><div style="font-family:var(--ff-label);font-size:24px;font-weight:700;color:${wColor}">${st.margin.toFixed(1)}%</div></div>` : ''}
       </div>`;
   }
 
   if (races.length > 0) {
-    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:13px;color:var(--c-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">競選資訊</div>`;
+    bodyHTML += `<div style="font-family:var(--ff-label);font-size:13px;color:var(--c-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">競選資訊</div>`;
     bodyHTML += races.map(r => `
-      <div style="background:rgba(255,255,255,.03);border:1px solid var(--c-border);border-radius:4px;padding:12px;margin-bottom:8px;">
+      <div style="background:var(--c-hover);border:1px solid var(--c-border);border-radius:4px;padding:12px;margin-bottom:8px;">
         ${raceItemHTML(r)}
       </div>`
     ).join('');
   } else {
-    bodyHTML += `<div style="font-family:var(--ff-mono);font-size:14px;color:var(--c-muted);text-align:center;padding:20px 0;">此州詳細選情資料尚未收錄</div>`;
+    bodyHTML += `<div style="font-family:var(--ff-label);font-size:14px;color:var(--c-muted);text-align:center;padding:20px 0;">此州詳細選情資料尚未收錄</div>`;
   }
 
   document.getElementById('ue-modal-body').innerHTML = bodyHTML;
