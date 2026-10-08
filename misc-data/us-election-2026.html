@@ -71,12 +71,94 @@ html[data-font="c"]{
   --ff-body:'Chiron GoRound TC','Noto Sans TC',sans-serif;
 }
 
+html,body{background:var(--c-bg);}
+
 /* ── Wrapper ── */
 .ue-wrap{
   font-family:var(--ff-body);font-size:var(--fs-base);
   background:var(--c-bg);color:var(--c-text);
-  min-height:100vh;padding:0;overflow-x:hidden;
+  min-height:100vh;padding:0;overflow-x:hidden;overflow-x:clip;max-width:1280px;margin:0 auto;
   -webkit-font-smoothing:antialiased;
+}
+
+/* ── Top bar / hub / topic pages ── */
+.ue-topbar{position:sticky;top:0;z-index:60;background:var(--c-card);border-bottom:1px solid var(--c-border);}
+.ue-topbar-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;}
+.ue-brand{
+  font-family:var(--ff-label);font-size:var(--fs-md);font-weight:600;letter-spacing:1px;
+  color:var(--c-text);text-decoration:none;white-space:nowrap;
+}
+.ue-brand .ue-back{color:var(--c-accent);margin-right:4px;}
+.ue-brand:hover{color:var(--c-accent);}
+.ue-brand-k{color:var(--c-muted);letter-spacing:3px;font-size:var(--fs-mono);}
+.ue-chips{display:flex;gap:8px;overflow-x:auto;padding:0 18px 10px;scrollbar-width:none;}
+.ue-chips[hidden]{display:none;}
+.ue-chips::-webkit-scrollbar{display:none;}
+.ue-chip{
+  flex:none;padding:6px 14px;border:1px solid var(--c-border);border-radius:999px;
+  font-size:var(--fs-md);color:var(--c-muted);text-decoration:none;white-space:nowrap;
+  transition:all .15s;
+}
+.ue-chip b{font-family:var(--ff-label);margin-right:6px;color:var(--c-accent);font-weight:700;}
+.ue-chip:hover{border-color:var(--c-accent-line);color:var(--c-text);}
+.ue-chip.on{background:var(--c-accent-bg);border-color:var(--c-accent-line);color:var(--c-text);font-weight:700;}
+
+.ue-hero{
+  background:var(--c-head-bg);border-bottom:3px solid var(--c-accent-line);
+  padding:clamp(28px,6vw,56px) 24px clamp(24px,5vw,44px);
+}
+.ue-hero-k{
+  font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:3px;
+  color:var(--c-accent);text-transform:uppercase;margin-bottom:12px;
+}
+.ue-hero-title{
+  font-family:var(--ff-display);font-weight:900;line-height:1.15;color:var(--c-head-text);
+  font-size:clamp(32px,6.5vw,60px);margin-bottom:12px;
+}
+.ue-hero-sub{font-size:clamp(18px,2.6vw,24px);color:var(--c-muted);line-height:1.5;}
+.ue-hub-grid{
+  display:grid;gap:14px;padding:18px;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
+}
+.ue-card{
+  position:relative;display:block;overflow:hidden;color:#fff;text-decoration:none;
+  aspect-ratio:4/3;border-radius:var(--r);border:1px solid var(--c-border);
+  background:linear-gradient(135deg,#1b2a4a 0%,#3a1d2b 100%);
+  transition:transform .2s,box-shadow .2s;
+}
+.ue-card:hover{transform:translateY(-3px);box-shadow:var(--c-shadow);}
+.ue-card-media{position:absolute;inset:0;}
+.ue-card-media img,.ue-card-media video{width:100%;height:100%;object-fit:cover;display:block;}
+.ue-card::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(8,12,22,.9) 0%,rgba(8,12,22,.6) 45%,rgba(8,12,22,.05) 80%);
+}
+.ue-card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;}
+.ue-card-num{font-family:var(--ff-label);font-size:var(--fs-sm);font-weight:700;letter-spacing:2px;color:#ffd24a;margin-bottom:2px;}
+.ue-card-name{font-family:var(--ff-display);font-size:clamp(22px,3vw,28px);font-weight:900;line-height:1.25;}
+.ue-card-head{font-size:var(--fs-md);line-height:1.55;color:rgba(255,255,255,.88);margin-top:4px;}
+.ue-card.nocover::before{
+  content:attr(data-num);position:absolute;right:14px;top:-6px;z-index:1;
+  font-family:var(--ff-label);font-weight:700;font-size:clamp(90px,16vw,140px);line-height:1;
+  color:rgba(255,255,255,.07);
+}
+.ue-card-live{
+  position:absolute;left:14px;top:14px;z-index:3;display:flex;align-items:center;gap:7px;
+  padding:5px 12px;border-radius:999px;background:rgba(220,38,38,.92);color:#fff;
+  font-family:var(--ff-label);font-size:var(--fs-sm);font-weight:700;letter-spacing:1px;
+}
+.ue-card-live::before{content:'';width:8px;height:8px;border-radius:50%;background:#fff;animation:ue-pulse 1.6s infinite;}
+.ue-topic-stories{padding:18px;}
+.ue-topic-empty{
+  margin:18px;padding:48px 16px;text-align:center;color:var(--c-muted);
+  border:1px dashed var(--c-border);border-radius:var(--r);font-size:var(--fs-base);
+}
+@media(max-width:480px){
+  .ue-topbar-row{padding:8px 12px;}
+  .ue-chips{padding:0 12px 8px;}
+  .ue-hub-grid{padding:12px;}
+  .ue-topic-stories{padding:12px;}
+  .ue-card{aspect-ratio:16/10;}
 }
 
 /* ── Header ── */
@@ -101,7 +183,6 @@ html[data-font="c"]{
 .ue-kicker{
   font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:3px;
   color:var(--c-accent);text-transform:uppercase;margin-bottom:10px;
-  padding-right:104px;
 }
 .ue-title{
   font-size:clamp(22px,3.5vw,34px);font-weight:900;line-height:1.2;
@@ -469,7 +550,7 @@ html[data-font="c"]{
 
 
 .ue-theme-btn{
-  position:absolute;top:16px;right:16px;z-index:2;
+  flex:none;
   font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:1px;
   padding:6px 12px;border:1px solid var(--c-border);border-radius:999px;
   background:var(--c-card);color:var(--c-text);cursor:pointer;transition:all .2s;
@@ -486,9 +567,29 @@ html[data-font="c"]{
 <body>
 <div class="ue-wrap" id="ue-root">
 
+  <!-- Top bar（全頁共用：返回首頁／子頁導覽／亮暗切換） -->
+  <div class="ue-topbar" id="ue-topbar">
+    <div class="ue-topbar-row">
+      <a class="ue-brand" id="ue-brand" href="#"></a>
+      <button class="ue-theme-btn" id="ue-theme-btn" onclick="toggleTheme()" aria-label="切換亮色或暗色"></button>
+    </div>
+    <nav class="ue-chips" id="ue-chips" aria-label="子頁導覽" hidden></nav>
+  </div>
+
+  <!-- 第一層：專頁首頁 -->
+  <section class="ue-view" id="ue-hub" hidden></section>
+
+  <!-- 第二層：圖文子頁（1、2、3、4、6） -->
+  <section class="ue-view" id="ue-topic" hidden>
+    <div class="ue-stories ue-topic-stories" id="ue-topic-stories" hidden></div>
+    <div class="ue-topic-empty" id="ue-topic-empty" hidden>內容準備中，敬請期待</div>
+  </section>
+
+  <!-- 第二層：開票結果專區（5） -->
+  <section class="ue-view" id="ue-vote" hidden>
+
   <!-- Header -->
   <div class="ue-head">
-    <button class="ue-theme-btn" id="ue-theme-btn" onclick="toggleTheme()" aria-label="切換亮色或暗色"></button>
     <div class="ue-kicker">🇺🇸 Breaking · 2026 Midterms</div>
     <div class="ue-title">2026 美國期中選舉<br>即時開票結果</div>
     <div class="ue-head-meta">
@@ -549,6 +650,9 @@ html[data-font="c"]{
     <button class="ue-refresh-btn" id="ue-refresh-btn" onclick="manualRefresh()">↻ 立即更新</button>
   </div>
 
+
+  </section>
+
 </div>
 
 <!-- Tooltip -->
@@ -570,6 +674,7 @@ html[data-font="c"]{
    CONFIG
 ═══════════════════════════════════════════════ */
 const DATA_URL = './us-election-2026-data.json';
+const MEDIA_BASE = '../'; // 獨立部署時，若 medias/ 位置不同，改這裡
 const REFRESH_INTERVAL = 60000; // 60s
 
 /* ══════════════════════════════════════════════
@@ -675,7 +780,7 @@ function mediaKind(src) {
   return 'image';
 }
 function resolveMedia(src) {
-  return /^https?:\/\//i.test(src) ? src : '../' + src.replace(/^\.?\/+/, '');
+  return /^https?:\/\//i.test(src) ? src : MEDIA_BASE + src.replace(/^\.?\/+/, '');
 }
 function safeUrl(u) {
   u = String(u || '').trim();
@@ -711,15 +816,108 @@ function storyHTML(st, i) {
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function renderStories() {
-  const wrap = document.getElementById('ue-stories');
-  const list = (electionData.stories || []).filter(s => s && (s.title || s.text || s.src || (s.links || []).some(l => l && safeUrl(l.url))));
-  const sig = JSON.stringify(list);
-  if (sig === storiesSig) return;
-  storiesSig = sig;
-  wrap.hidden = list.length === 0;
-  wrap.innerHTML = list.map(storyHTML).join('');
+function hasStoryContent(s) {
+  return s && (s.title || s.text || s.src || (s.links || []).some(l => l && safeUrl(l.url)));
 }
+function storiesOf(pid) {
+  return (electionData.stories || []).filter(s => hasStoryContent(s) && (s.page || 'p5') === pid);
+}
+const storySigs = {};
+function paintStories(el, list, key) {
+  const sig = key + JSON.stringify(list);
+  if (storySigs[el.id] === sig) return;
+  storySigs[el.id] = sig;
+  el.hidden = list.length === 0;
+  el.innerHTML = list.map(storyHTML).join('');
+}
+function renderStories() {
+  paintStories(document.getElementById('ue-stories'), storiesOf('p5'), 'p5');
+}
+
+/* ══════════════════════════════════════════════
+   HUB / TOPICS / ROUTING（單一 iframe 內切換：#p1 … #p6）
+═══════════════════════════════════════════════ */
+const HUB_DEFAULTS = { kicker: '2026 US MIDTERMS', title: '2026美國期中選舉', subtitle: '川普期中考　國會攻防與台海變數' };
+const TOPIC_DEFAULTS = [
+  { id: 'p1', name: '選舉全解析', headline: '川普期中考全貌｜兩黨目標與對台影響一次看懂' },
+  { id: 'p2', name: '眾議院決戰', headline: '435席全面爭奪｜川普能否守住眾院控制權？' },
+  { id: 'p3', name: '參議院關鍵戰', headline: '參院控制權決戰｜川普關鍵州保衛戰' },
+  { id: 'p4', name: '民調預測', headline: '最新民調與席次預測｜川普執政下的兩黨勝算' },
+  { id: 'p5', name: '開票結果專區', headline: '即時開票與最終結果｜川普國會版圖一次掌握' },
+  { id: 'p6', name: '深度分析', headline: '選後解讀｜川普政策延續、中美關係與台灣安全衝擊' }
+];
+function getHub() {
+  const h = (electionData && electionData.hub) || {};
+  return { kicker: HUB_DEFAULTS.kicker, title: h.title || HUB_DEFAULTS.title, subtitle: h.subtitle || HUB_DEFAULTS.subtitle };
+}
+function getTopics() {
+  const saved = (electionData && electionData.topics) || [];
+  return TOPIC_DEFAULTS.map(d => {
+    const t = saved.find(x => x && x.id === d.id) || {};
+    return { id: d.id, name: t.name || d.name, headline: t.headline || d.headline };
+  });
+}
+function paintHTML(el, html) {
+  if (el._html === html) return;
+  el._html = html;
+  el.innerHTML = html;
+}
+function coverOf(pid) {
+  const st = storiesOf(pid).find(s => s.src && mediaKind(s.src.trim()) !== 'embed');
+  if (!st) return '';
+  const src = st.src.trim();
+  return `<div class="ue-card-media">${mediaKind(src) === 'video'
+    ? `<video src="${esc(resolveMedia(src))}" autoplay muted loop playsinline preload="metadata"></video>`
+    : `<img src="${esc(resolveMedia(src))}" alt="" loading="lazy">`}</div>`;
+}
+function renderHub() {
+  const h = getHub();
+  const cards = getTopics().map((t, i) => {
+    const cover = coverOf(t.id);
+    const num = String(i + 1).padStart(2, '0');
+    return `<a class="ue-card${cover ? '' : ' nocover'}" href="#${t.id}" data-num="${num}">
+      ${cover}
+      ${t.id === 'p5' ? '<span class="ue-card-live">LIVE 即時開票</span>' : ''}
+      <div class="ue-card-body"><div class="ue-card-num">${num}</div><div class="ue-card-name">${esc(t.name)}</div><div class="ue-card-head">${esc(t.headline)}</div></div>
+    </a>`;
+  }).join('');
+  paintHTML(document.getElementById('ue-hub'),
+    `<div class="ue-hero"><div class="ue-hero-k">${esc(h.kicker)}</div><h1 class="ue-hero-title">${esc(h.title)}</h1><div class="ue-hero-sub">${esc(h.subtitle)}</div></div><div class="ue-hub-grid">${cards}</div>`);
+}
+function renderTopbar(view) {
+  const isHub = view === 'hub';
+  const brand = document.getElementById('ue-brand');
+  paintHTML(brand, isHub ? '<span class="ue-brand-k">2026 US MIDTERMS</span>' : '<span class="ue-back">←</span>專頁首頁');
+  const chips = document.getElementById('ue-chips');
+  chips.hidden = isHub;
+  paintHTML(chips, getTopics().map((t, i) =>
+    `<a class="ue-chip${t.id === view ? ' on' : ''}" href="#${t.id}"><b>${i + 1}</b>${esc(t.name)}</a>`).join(''));
+  const on = chips.querySelector('.ue-chip.on');
+  if (on) chips.scrollLeft = on.offsetLeft - (chips.clientWidth - on.offsetWidth) / 2;
+}
+function renderTopic(pid) {
+  const list = storiesOf(pid);
+  paintStories(document.getElementById('ue-topic-stories'), list, pid);
+  document.getElementById('ue-topic-empty').hidden = list.length > 0;
+}
+let curView = null;
+function parseRoute() {
+  const m = location.hash.match(/^#\/?(p[1-6])$/);
+  return m ? m[1] : 'hub';
+}
+function applyRoute() {
+  if (!electionData) return;
+  const v = parseRoute();
+  document.getElementById('ue-hub').hidden = v !== 'hub';
+  document.getElementById('ue-topic').hidden = (v === 'hub' || v === 'p5');
+  document.getElementById('ue-vote').hidden = v !== 'p5';
+  renderTopbar(v);
+  if (v === 'hub') renderHub();
+  else if (v === 'p5') renderRaceList();
+  else renderTopic(v);
+  if (curView !== v) { window.scrollTo(0, 0); curView = v; }
+}
+window.addEventListener('hashchange', applyRoute);
 
 /* ══════════════════════════════════════════════
    RENDER
@@ -731,6 +929,7 @@ function renderAll() {
   renderMap();
   renderRaceList();
   renderStories();
+  applyRoute();
 }
 
 function renderHeader() {
@@ -975,6 +1174,7 @@ function fitRaceList(total) {
     more.hidden = true;
     return;
   }
+  if (!items[0].offsetHeight) return; // 隱藏中無法量測，進入開票專區時會重新計算
   let h = 0;
   for (let i = 0; i < RACE_VISIBLE; i++) h += items[i].offsetHeight;
   list.style.maxHeight = h + 'px';

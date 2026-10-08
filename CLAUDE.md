@@ -61,7 +61,12 @@ war-industry-news/
 
 ### 前台
 - **網址**：`/misc-data/us-election-2026.html`
-- D3 + TopoJSON SVG 地圖、參眾院席次計分板、關鍵選區列表
+- **兩層結構（單一 iframe 內以網址 hash 切換）**：第一層專頁首頁（`#` 或無 hash）→ 第二層子頁 `#p1`…`#p6`
+  - p1 選舉全解析／p2 眾議院決戰／p3 參議院關鍵戰／p4 民調預測／p5 開票結果專區（地圖＋計分板＋戰區列表）／p6 深度分析
+  - p1–p4、p6 是「圖文子頁」：顯示 `stories` 中 `page` 等於該頁 id 的圖文卡；沒內容顯示「內容準備中」
+  - 首頁卡片封面＝該子頁第一張圖片/影片；p5 卡片有 LIVE 標；`#p5` 可直接深層連結到開票專區
+  - 頂列（sticky）：返回首頁、6 顆子頁標籤、亮暗切換；整頁 `max-width:1280px` 置中，未來可直接作為獨立滿版網站部署（`MEDIA_BASE` 常數可調整 medias 路徑）
+- D3 + TopoJSON SVG 地圖、參眾院席次計分板、關鍵選區列表（位於 p5）
 - 每 60 秒自動 fetch `us-election-2026-data.json` 更新資料
 - 預設亮色，右上角可切換暗色（記憶在 localStorage；網址參數 `?theme=dark|light` 優先，方便 CMS 嵌入時指定）
 - 字體：標題/大數字 Noto Serif TC、內文 Noto Sans TC、標籤與數字 Barlow Condensed（CSS 變數 `--ff-display/--ff-body/--ff-label`）；`?font=b|c` 可臨時預覽其他字體組合（LXGW WenKai TC／Chiron GoRound TC），定案後可移除
@@ -73,7 +78,9 @@ war-industry-news/
   "senate": { "dem": { "seats": 0, "net": 0 }, "rep": {...}, "ind": {...}, "uncalled": 0, "total": 100, "threshold": 51, "currentControl": "R" },
   "house":  { ... "total": 435, "threshold": 218 },
   "governor": { ... "total": 50 },
-  "stories": [ { "id": "s-1", "title": "標題", "text": "文字", "src": "medias/xxx.mp4 或 https://… 或 YouTube/Vimeo 連結",
+  "hub": { "title": "首頁大標", "subtitle": "首頁副標" },
+  "topics": [ { "id": "p1", "name": "子頁名稱", "headline": "一句話說明" } ],   // p1–p6 固定六筆
+  "stories": [ { "id": "s-1", "page": "p1", "title": "標題", "text": "文字", "src": "medias/xxx.mp4 或 https://… 或 YouTube/Vimeo 連結",
       "links": [ { "url": "https://www.chinatimes.com/…", "title": "報導標題" } ] } ],
   "states": {
     "TX": { "winner": "R", "called": true, "margin": 10.0, "office": "Senate" }
@@ -95,6 +102,7 @@ war-industry-news/
 - **Ctrl+S** 快速推送
 - 手機優先、遊戲風 UI：手機底部分頁列／桌機左側選單（總覽、參議院、眾議院、地圖、戰區）；各州用方塊地圖點選設定
 - 「內容」分頁：管理地圖下方圖文區塊（可多則、可排序；清空則前台不顯示）；檔案上傳至 `medias/`，src 副檔名自動判斷 圖片/GIF、MP4（靜音循環自動播放）、YouTube/Vimeo 嵌入
+- 「總覽」分頁可編輯首頁大標／副標與六個子頁的名稱、一句話說明；「內容」分頁每則圖文需指定所屬子頁（預設 p5，新增時沿用上一則）
 - 圖文「報導連結」：每則可加多個，貼上網址自動抓標題（microlink → allorigins 備援，去掉「- 中時新聞網」後綴；抓不到可手動輸入，不填則前台顯示網站名稱）；前台以文字超連結呈現（僅允許 http/https，新分頁開啟）
 - 防呆：未確定席次、過半控制黨、最後更新時間皆由系統自動計算，不需手填；席次加總超過總數時禁止存檔
 

@@ -453,6 +453,15 @@ const CH={
   senate:{label:'參議院',ico:'🏛',total:100,thr:51},
   house:{label:'眾議院',ico:'🏠',total:435,thr:218}
 };
+const HUB_DEFAULTS={title:'2026美國期中選舉',subtitle:'川普期中考　國會攻防與台海變數'};
+const TOPIC_DEFAULTS=[
+  {id:'p1',name:'選舉全解析',headline:'川普期中考全貌｜兩黨目標與對台影響一次看懂'},
+  {id:'p2',name:'眾議院決戰',headline:'435席全面爭奪｜川普能否守住眾院控制權？'},
+  {id:'p3',name:'參議院關鍵戰',headline:'參院控制權決戰｜川普關鍵州保衛戰'},
+  {id:'p4',name:'民調預測',headline:'最新民調與席次預測｜川普執政下的兩黨勝算'},
+  {id:'p5',name:'開票結果專區',headline:'即時開票與最終結果｜川普國會版圖一次掌握'},
+  {id:'p6',name:'深度分析',headline:'選後解讀｜川普政策延續、中美關係與台灣安全衝擊'}
+];
 const PARTIES=[['dem','民主黨','D'],['rep','共和黨','R'],['ind','獨立／其他','I']];
 const OFFICE_LABEL={Senate:'參議院',House:'眾議院',Governor:'州長'};
 const TABS=[
@@ -549,7 +558,12 @@ function normalize(){
   STATE_ABBRS.forEach(a=>{
     if(!data.states[a])data.states[a]={winner:null,called:false,margin:null,office:'Senate'};
   });
+  const h=data.hub||{};
+  data.hub={title:h.title||HUB_DEFAULTS.title,subtitle:h.subtitle||HUB_DEFAULTS.subtitle};
+  const savedT=Array.isArray(data.topics)?data.topics:[];
+  data.topics=TOPIC_DEFAULTS.map(d=>{const t=savedT.find(x=>x&&x.id===d.id)||{};return {id:d.id,name:t.name||d.name,headline:t.headline||d.headline}});
   data.stories=Array.isArray(data.stories)?data.stories:[];
+  data.stories.forEach(st=>{st.page=/^p[1-6]$/.test(st.page)?st.page:'p5'});
   data.stories.forEach(st=>{st.title=st.title||'';st.text=st.text||'';st.src=st.src||'';st.links=Array.isArray(st.links)?st.links.map(l=>({url:(l&&l.url)||'',title:(l&&l.title)||'',_lastUrl:(l&&l.url)||''})):[];st.id=st.id||('s-'+Math.random().toString(36).slice(2,8))});
   data.keyRaces=data.keyRaces||[];
   data.keyRaces.forEach(r=>{
@@ -685,6 +699,7 @@ function goTab(id){
   curTab=id;
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+id));
   document.querySelectorAll('.nv').forEach(n=>n.classList.toggle('on',n.dataset.t===id));
+  if(id==='stories')renderStories();
   window.scrollTo(0,0);
 }
 
@@ -784,6 +799,19 @@ function renderHome(){
   </div>
 
   <div class="panel">
+    <h3>🏠 專頁首頁</h3>
+    <div class="fld"><div class="lab">大標題</div><input class="tin" value="${esc(data.hub.title)}" oninput="setHub('title',this.value)"></div>
+    <div class="fld"><div class="lab">副標題</div><input class="tin" value="${esc(data.hub.subtitle)}" oninput="setHub('subtitle',this.value)"></div>
+    <div class="lab">六個子頁（名稱＋一句話說明）</div>
+    ${data.topics.map((t,i)=>`
+    <div class="lkrow">
+      <input class="tin" value="${esc(t.name)}" placeholder="子頁名稱" oninput="setTopic(${i},'name',this.value)">
+      <input class="tin" value="${esc(t.headline)}" placeholder="一句話說明" oninput="setTopic(${i},'headline',this.value)">
+    </div>`).join('')}
+    <p class="hint">首頁卡片的封面會自動使用該子頁「內容」裡第一張圖片或影片；沒有的話顯示底色。</p>
+  </div>
+
+  <div class="panel">
     <h3>🕒 最後更新</h3>
     <div class="timebox"><span class="big" id="last-time">${twTime(m.lastUpdated)}</span><span class="hint" style="margin:0">台灣時間</span></div>
     <p class="hint">按「存檔上線」時會自動更新為現在時間，不用手動改。</p>
@@ -796,6 +824,8 @@ function renderHome(){
   Object.keys(CH).forEach(paintChamber);
 }
 function setMeta(k,v){data.meta[k]=v;markDirty()}
+function setHub(k,v){data.hub[k]=v;markDirty()}
+function setTopic(i,k,v){data.topics[i][k]=v;markDirty()}
 function setReportingPct(v){
   v=clamp(parseInt(v)||0,0,100);
   $('rep-slider').style.setProperty('--p',v+'%');$('rep-val').textContent=v+'%';
@@ -1089,10 +1119,12 @@ function renderStories(){
   <div class="panel" id="story-${i}">
     <div class="story-h">
       <span class="badge">#${i+1}</span>
-      <b id="st-name-${i}">${esc(st.title)||'（未命名）'}</b>
+      <b id="st-name-${i}" title="${esc((data.topics.find(t=>t.id===st.page)||{}).name||'')}">${esc(st.title)||'（未命名）'}</b>
       <button class="gbtn sm sq" ${i===0?'disabled style="opacity:.35"':''} onclick="moveStory(${i},-1)" aria-label="上移">▲</button>
       <button class="gbtn sm sq" ${i===list.length-1?'disabled style="opacity:.35"':''} onclick="moveStory(${i},1)" aria-label="下移">▼</button>
     </div>
+    <div class="lab">放在哪一個子頁？</div>
+    <div class="seg" style="margin-bottom:6px">${data.topics.map((t,k)=>`<button type="button" class="opt${st.page===t.id?' sel':''}" onclick="setStoryPage(${i},'${t.id}')">${st.page===t.id?'✓ ':''}${k+1} ${esc(t.name)}</button>`).join('')}</div>
     <div class="lab">標題（選填）</div>
     <input class="tin" value="${esc(st.title)}" placeholder="例如：為什麼這場選舉很重要" oninput="setStory(${i},'title',this.value)">
     <div class="lab">文字說明（選填）</div>
@@ -1122,12 +1154,13 @@ function renderStories(){
     <button class="gbtn red block" style="margin-top:16px" onclick="removeStory(${i})">🗑 刪除這一則</button>
   </div>`).join(''):'<div class="empty"><b>📰</b>還沒有內容<br>按上方「＋ 新增一則」</div>'}`;
 }
+function setStoryPage(i,pid){data.stories[i].page=pid;markDirty();vib();renderStories()}
 function setStory(i,k,v){
   data.stories[i][k]=v;markDirty();
   if(k==='title'){const e=$('st-name-'+i);if(e)e.textContent=v||'（未命名）'}
 }
 function addStory(){
-  data.stories.push({id:'s-'+Date.now().toString(36),title:'',text:'',src:'',links:[]});
+  data.stories.push({id:'s-'+Date.now().toString(36),title:'',text:'',src:'',links:[],page:data.stories.length?data.stories[data.stories.length-1].page:'p1'});
   markDirty();renderStories();
   setTimeout(()=>{const e=$('story-'+(data.stories.length-1));e&&e.scrollIntoView({behavior:'smooth',block:'start'})},60);
 }
