@@ -90,7 +90,10 @@ html[data-font="c"]{
   font-size:clamp(34px,7vw,64px);margin-bottom:10px;
 }
 .ue-hero-sub{font-size:clamp(18px,2.6vw,26px);color:var(--c-muted);line-height:1.5;}
-@media(max-width:480px){.ue-hero{padding-left:16px;padding-right:16px;}}
+@media(max-width:480px){
+  .ue-hero{padding-left:16px;padding-right:16px;}
+  .ue-hero .ue-kicker{left:16px;top:24px;letter-spacing:1px;font-size:12.5px;max-width:calc(100% - 112px);}
+}
 
 /* ── Header ── */
 .ue-head{
@@ -112,8 +115,10 @@ html[data-font="c"]{
   pointer-events:none;
 }
 .ue-kicker{
+  position:absolute;top:22px;left:24px;max-width:calc(100% - 130px);
   font-family:var(--ff-label);font-size:var(--fs-mono);letter-spacing:3px;
-  color:var(--c-accent);text-transform:uppercase;margin-bottom:10px;
+  color:var(--c-accent);text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .ue-title{
   font-size:clamp(22px,3.5vw,34px);font-weight:900;line-height:1.2;
@@ -500,6 +505,7 @@ html[data-font="c"]{
 
   <!-- Hero：專題大標 -->
   <div class="ue-hero">
+    <div class="ue-kicker">🇺🇸 Breaking · 2026 Midterms</div>
     <button class="ue-theme-btn" id="ue-theme-btn" onclick="toggleTheme()" aria-label="切換亮色或暗色"></button>
     <h1 class="ue-hero-title">2026美國期中選舉</h1>
     <div class="ue-hero-sub">川普期中考　國會攻防與台海變數</div>
@@ -507,8 +513,7 @@ html[data-font="c"]{
 
   <!-- Header -->
   <div class="ue-head">
-    <div class="ue-kicker">🇺🇸 Breaking · 2026 Midterms</div>
-    <div class="ue-title">2026 美國期中選舉<br>即時開票結果</div>
+    <div class="ue-title">即時開票結果</div>
     <div class="ue-head-meta">
       <span class="ue-live-dot">直播開票中</span>
       <span class="ue-updated" id="ue-updated">更新中…</span>
