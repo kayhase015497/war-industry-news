@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-08T06:03:20-04:00",
+    "lastUpdated": "2026-10-17T04:23:53-04:00",
     "reporting": "0918 測試  已開出 52% 選區 ",
     "note": "測試中",
     "source": "美聯社、各州選務委員會"
@@ -400,6 +400,22 @@
         }
       ],
       "page": "p2"
+    },
+    {
+      "id": "s-mvc425fc",
+      "title": "參議院關鍵戰",
+      "text": "參院控制權決戰｜川普關鍵州保衛戰",
+      "src": "medias/uO4pd-AJtK6sq5Up-mvc4m57u.mp4",
+      "links": [
+        {
+          "url": "https://www.chinatimes.com/realtimenews/20261016004342-260408?chdtv",
+          "title": "「被要求去做服務」 美國參議院1職位人人避之唯恐不及"
+        },
+        {
+          "url": "https://www.chinatimes.com/realtimenews/20261012004240-260408?chdtv",
+          "title": "紅潮難掀「藍色海嘯」？川普不受歡迎 但民主黨也難狂勝6大原因"
+        }
+      ]
     }
   ],
   "keyRaces": [
