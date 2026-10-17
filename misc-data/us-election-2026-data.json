@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-17T04:23:53-04:00",
+    "lastUpdated": "2026-10-17T05:08:13-04:00",
     "reporting": "0918 測試  已開出 52% 選區 ",
     "note": "測試中",
     "source": "美聯社、各州選務委員會"
@@ -414,6 +414,18 @@
         {
           "url": "https://www.chinatimes.com/realtimenews/20261012004240-260408?chdtv",
           "title": "紅潮難掀「藍色海嘯」？川普不受歡迎 但民主黨也難狂勝6大原因"
+        }
+      ]
+    },
+    {
+      "id": "s-mvc4rimk",
+      "title": "民調預測",
+      "text": "最新民調與席次預測｜川普執政下的兩黨勝算",
+      "src": "medias/poll2-mvc6awvi.mp4",
+      "links": [
+        {
+          "url": "https://www.chinatimes.com/realtimenews/20261016004474-260408?chdtv",
+          "title": "美期中選舉大玩「俄羅斯輪盤」 川普10月驚奇竟是擁抱普丁"
         }
       ]
     }
