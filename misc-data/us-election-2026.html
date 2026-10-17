@@ -307,6 +307,7 @@ html[data-font="c"]{
 .ue-story-media video,.ue-story-embed iframe{pointer-events:none;} /* 純氛圍播放：不可點擊暫停 */
 .ue-story-embed{position:relative;width:100%;aspect-ratio:16/9;}
 .ue-story-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.ue-story.has-media .ue-story-body{border-top:3px solid var(--c-accent-line);}
 .ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
 .ue-story-title{font-family:var(--ff-display);font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
 .ue-story-text{font-size:var(--fs-base);line-height:1.8;color:var(--c-text);white-space:pre-line;}
@@ -322,7 +323,7 @@ html[data-font="c"]{
 .ue-story-links a:hover{color:var(--c-accent);}
 @media(min-width:900px){
   .ue-story.has-media.has-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
-  .ue-story.flip .ue-story-media{order:2;}
+  .ue-story.has-media .ue-story-body{border-top:none;border-left:3px solid var(--c-accent-line);}
 }
 
 /* ── Race Panel ── */
@@ -737,7 +738,7 @@ function storyHTML(st, i) {
   const body = (title || text || linkHTML)
     ? `<div class="ue-story-body">${title ? `<div class="ue-story-title">${esc(title)}</div>` : ''}${text ? `<div class="ue-story-text">${esc(text)}</div>` : ''}${linkHTML}</div>`
     : '';
-  return `<div class="ue-story${media ? ' has-media' : ''}${body ? ' has-body' : ''}${i % 2 ? ' flip' : ''}">${media ? `<div class="ue-story-media">${media}</div>` : ''}${body}</div>`;
+  return `<div class="ue-story${media ? ' has-media' : ''}${body ? ' has-body' : ''}">${media ? `<div class="ue-story-media">${media}</div>` : ''}${body}</div>`;
 }
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
