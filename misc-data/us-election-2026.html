@@ -304,6 +304,7 @@ html[data-font="c"]{
 }
 .ue-story-media{background:#05080f;display:flex;align-items:center;justify-content:center;min-width:0;}
 .ue-story-media img,.ue-story-media video{display:block;width:100%;height:auto;}
+.ue-story-media video,.ue-story-embed iframe{pointer-events:none;} /* 純氛圍播放：不可點擊暫停 */
 .ue-story-embed{position:relative;width:100%;aspect-ratio:16/9;}
 .ue-story-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
@@ -692,6 +693,13 @@ function embedURL(src) {
   if (m) return 'https://player.vimeo.com/video/' + m[1];
   return null;
 }
+function ambientEmbed(u) {
+  if (u.includes('youtube-nocookie.com/embed/')) {
+    const id = u.split('/embed/')[1];
+    return u + '?autoplay=1&mute=1&loop=1&controls=0&playsinline=1&rel=0&modestbranding=1&playlist=' + id;
+  }
+  return u + '?background=1'; // Vimeo：自動播放、靜音、循環、無控制列
+}
 function mediaKind(src) {
   if (embedURL(src)) return 'embed';
   if (/\.(mp4|webm|mov)(\?|#|$)/i.test(src)) return 'video';
@@ -715,9 +723,9 @@ function storyHTML(st, i) {
   if (src) {
     const kind = mediaKind(src);
     if (kind === 'embed') {
-      media = `<div class="ue-story-embed"><iframe src="${esc(embedURL(src))}" loading="lazy" allowfullscreen></iframe></div>`;
+      media = `<div class="ue-story-embed"><iframe src="${esc(ambientEmbed(embedURL(src)))}" loading="lazy" allow="autoplay; encrypted-media" tabindex="-1"></iframe></div>`;
     } else if (kind === 'video') {
-      media = `<video src="${esc(resolveMedia(src))}" autoplay muted loop playsinline controls preload="metadata"></video>`;
+      media = `<video src="${esc(resolveMedia(src))}" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback preload="auto"></video>`;
     } else {
       media = `<img src="${esc(resolveMedia(src))}" alt="${esc(title)}" loading="lazy">`;
     }
