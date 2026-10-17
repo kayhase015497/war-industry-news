@@ -83,13 +83,15 @@ html[data-font="c"]{
 .ue-hero{
   position:relative;background:var(--c-head-bg);
   border-bottom:1px solid var(--c-border);
-  padding:clamp(60px,9vw,76px) 24px clamp(22px,4vw,36px);
+  padding:clamp(60px,9vw,76px) 24px clamp(26px,5vw,48px);
+  text-align:center;
 }
 .ue-hero-title{
   font-family:var(--ff-display);font-weight:900;line-height:1.15;color:var(--c-head-text);
-  font-size:clamp(34px,7vw,64px);margin-bottom:10px;
+  font-size:clamp(40px,9.5vw,92px);margin-bottom:14px;
 }
-.ue-hero-sub{font-size:clamp(18px,2.6vw,26px);color:var(--c-muted);line-height:1.5;}
+.ue-hero-sub{font-size:clamp(20px,3.6vw,36px);color:var(--c-muted);line-height:1.5;}
+@media(max-width:340px){.ue-hero-title{font-size:34px;}}
 @media(max-width:480px){
   .ue-hero{padding-left:16px;padding-right:16px;}
   .ue-hero .ue-kicker{left:16px;top:24px;letter-spacing:1px;font-size:12.5px;max-width:calc(100% - 112px);}
@@ -332,7 +334,6 @@ html[data-font="c"]{
   .ue-story.flip .ue-story-media{order:2;}
   .ue-story.has-media.flip .ue-story-body{padding:18px 44px 18px 20px;}
   .ue-story.has-media.flip .ue-story-body::before{left:auto;right:16px;}
-  .ue-story-title{font-size:32px;text-align:center;}
 }
 
 /* ── Race Panel ── */
