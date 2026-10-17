@@ -307,8 +307,12 @@ html[data-font="c"]{
 .ue-story-media video,.ue-story-embed iframe{pointer-events:none;} /* 純氛圍播放：不可點擊暫停 */
 .ue-story-embed{position:relative;width:100%;aspect-ratio:16/9;}
 .ue-story-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-.ue-story.has-media .ue-story-body{border-top:3px solid var(--c-accent-line);}
-.ue-story-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
+.ue-story-body{position:relative;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;}
+.ue-story.has-media .ue-story-body{padding-top:34px;}
+.ue-story.has-media .ue-story-body::before{
+  content:'';position:absolute;left:20px;right:20px;top:14px;height:6px;
+  border-radius:3px;background:var(--c-accent-line);
+}
 .ue-story-title{font-family:var(--ff-display);font-size:clamp(20px,2.4vw,24px);font-weight:900;line-height:1.35;margin-bottom:10px;}
 .ue-story-text{font-size:var(--fs-base);line-height:1.8;color:var(--c-text);white-space:pre-line;}
 .ue-story-links{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px;}
@@ -323,7 +327,8 @@ html[data-font="c"]{
 .ue-story-links a:hover{color:var(--c-accent);}
 @media(min-width:900px){
   .ue-story.has-media.has-body{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
-  .ue-story.has-media .ue-story-body{border-top:none;border-left:3px solid var(--c-accent-line);}
+  .ue-story.has-media .ue-story-body{padding:18px 20px 18px 44px;}
+  .ue-story.has-media .ue-story-body::before{left:16px;right:auto;top:16px;bottom:16px;width:6px;height:auto;}
 }
 
 /* ── Race Panel ── */
