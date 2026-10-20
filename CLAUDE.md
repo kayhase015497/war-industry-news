@@ -6,7 +6,7 @@
 
 - **平台**：GitHub Pages，repo: `kayhase015497/war-industry-news`
 - **上線網址**：`https://kayhase015497.github.io/war-industry-news/`（舊網址會自動轉址到下方自訂網域）
-- **自訂網域**：`https://usmidtermelection2026.chinatimes.com/`（根目錄 `CNAME` 檔 + Settings → Pages → Custom domain；DNS 由 IT 設定為 CNAME `usmidtermelection2026` → `kayhase015497.github.io`；整個 repo 都在此網域下，選舉專題路徑為 `/misc-data/us-election-2026.html`）
+- **自訂網域**：不綁定本 repo。`usmidtermelection2026.chinatimes.com` 已綁定獨立 repo `kayhase015497/usmidtermelection2026`；本 repo 不放 `CNAME`、Settings → Pages 不要設 Custom domain
 - **觸發條件**：push 到 `main` branch 後，CI 自動部署（約 2~5 分鐘）
 - **工作流程**：`.github/workflows/static.yml`（含 game-v2 Vite build）
 
@@ -60,8 +60,11 @@ war-industry-news/
 
 ## 美國期中選舉頁面（2026）
 
+> **已搬遷**：選舉專題現行版本在獨立 repo `kayhase015497/usmidtermelection2026`，網址 `https://usmidtermelection2026.chinatimes.com/`，後台 `…/admin.html`，資料檔 `data.json`。本 repo 內的 `misc-data/us-election-2026.html`、`us-election-2026-admin.html` 只是導向頁。
+> 以下說明保留作為功能與資料格式的參考（路徑以新 repo 為準：前台 `index.html`、資料 `data.json`、素材 `medias/`）；搬遷前的完整程式可由 git 歷史（`47ab802` 及之前）取得。
+
 ### 前台
-- **網址**：`https://usmidtermelection2026.chinatimes.com/misc-data/us-election-2026.html`
+- **網址**：`https://usmidtermelection2026.chinatimes.com/`
 - D3 + TopoJSON SVG 地圖、參眾院席次計分板、關鍵選區列表、地圖下方圖文區塊
 - 每 60 秒自動 fetch `us-election-2026-data.json` 更新資料
 - 預設亮色，右上角可切換暗色（記憶在 localStorage；網址參數 `?theme=dark|light` 優先，方便 CMS 嵌入時指定）
@@ -89,7 +92,7 @@ war-industry-news/
 ```
 
 ### 後台管理 UI
-- **網址**：`https://usmidtermelection2026.chinatimes.com/misc-data/us-election-2026-admin.html`
+- **網址**：`https://usmidtermelection2026.chinatimes.com/admin.html`
 - 需要 GitHub Classic PAT（勾選完整 `repo` scope）
 - Token 存在 sessionStorage，關閉分頁後自動清除
 - 功能：從 GitHub 載入 → 表單編輯 → 直接透過 API 推送 JSON → 前台 2 分鐘後更新
@@ -109,7 +112,7 @@ war-industry-news/
 
 ### 嵌入碼
 ```html
-<iframe src="https://usmidtermelection2026.chinatimes.com/misc-data/us-election-2026.html"
+<iframe src="https://usmidtermelection2026.chinatimes.com/"
   width="100%" height="900" frameborder="0"
   style="border:none;max-width:100%"></iframe>
 ```
