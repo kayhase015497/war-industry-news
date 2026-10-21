@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "title": "俄蘇-30SM墜毀加里寧格勒切爾尼亞霍夫斯克區（2026年10月21日）",
+    "titleEn": "Russian Su-30SM Crashes near Chernyakhovsk, Kaliningrad — Oct 21 2026",
+    "subtitle": "訓練飛行意外・機組彈射獲救・切爾尼亞霍夫斯克基地海軍航空兵・北約飛地戰略要地",
+    "date": "2026-10-21",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "俄羅斯國防部聲明", "路透社", "俄媒《112》", "Mash", "Exilenova+"]
+  },
+  "map": {
+    "center": [54.68, 21.10],
+    "zoom": 8,
+    "bounds": [[53.5, 18.5], [56.2, 24.0]]
+  },
+  "infoPanel": {
+    "title": "俄蘇-30SM墜毀加里寧格勒・切爾尼亞霍夫斯克區（2026年10月21日）",
+    "paragraphs": [
+      "2026年10月21日，俄羅斯國防部確認，一架蘇-30SM雙座戰機在加里寧格勒地區執行計畫訓練飛行時墜毀。國防部表示機上未攜帶任何彈藥，墜毀地點為無人區，兩名飛行員均成功彈射逃生並送往軍醫院，官方強調無人死亡，地方媒體描述為輕傷。",
+      "據路透社、俄媒《112》及Mash等引述消息，墜毀地點位於切爾尼亞霍夫斯克（Chernyakhovsk）區，具體落在季莫費耶夫卡（Timofeyevka）與綠林（Zeleny Bor）兩村之間的田野，靠近一處墓地。現場影片已流出網路，由烏克蘭監控頻道Exilenova+等轉傳。",
+      "切爾尼亞霍夫斯克基地隸屬俄羅斯波羅的海艦隊海軍航空兵，長期部署蘇-30SM執行區域防空與護航任務。加里寧格勒是俄羅斯本土以外的飛地，夾在北約成員波蘭（西、南）與立陶宛（北、東）之間，戰略位置高度敏感。2023年8月，同一地區曾發生蘇-30訓練墜毀，當時兩名飛行員罹難，此次為近年同型機在該地區再度事故。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [54.35, 20.00],
+        [54.45, 20.80],
+        [54.58, 21.35],
+        [54.62, 21.85]
+      ],
+      "color": "#e53935",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "蘇-30SM訓練飛行概略航跡（推估）・自切爾尼亞霍夫斯克起飛",
+        "tag": "✈ 蘇-30SM訓練飛行航跡（推估）",
+        "tagClass": "tag-possible",
+        "desc": "此為概略推估航跡，蘇-30SM自切爾尼亞霍夫斯克基地起飛後，於加里寧格勒飛地上空執行訓練任務，最終墜毀於切爾尼亞霍夫斯克區田野。實際飛行路線未公開，本線條僅為示意。⚠️ 路線為概略推估，非確認飛行軌跡。",
+        "source": "俄羅斯國防部聲明；路透社"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [54.62, 21.92],
+      "name": "Su-30SM Crash Site – Between Timofeyevka and Zeleny Bor",
+      "nameLocal": "蘇-30SM墜毀地點・季莫費耶夫卡與綠林之間田野・靠近墓地",
+      "type": "confirmed",
+      "tag": "💥 蘇-30SM墜毀・田野・兩名飛行員彈射獲救・10/21",
+      "tagClass": "tag-confirmed",
+      "desc": "蘇-30SM雙座戰機2026年10月21日墜毀於此，位於切爾尼亞霍夫斯克區、季莫費耶夫卡（Timofeyevka）與綠林（Zeleny Bor）兩村之間的田野，靠近一處墓地。兩名飛行員成功彈射，送往軍醫院，官方稱無傷亡，地方媒體稱輕傷。國防部確認機上未攜彈藥，墜毀地點為無人區，事故原因未說明。⚠️ 座標為概略位置。",
+      "coords": "54°37'N 021°55'E",
+      "source": "俄羅斯國防部；路透社；俄媒《112》；Mash"
+    },
+    {
+      "latlng": [54.63, 21.81],
+      "name": "Chernyakhovsk Airbase – Baltic Fleet Naval Aviation, Su-30SM Base",
+      "nameLocal": "切爾尼亞霍夫斯克空軍基地・波羅的海艦隊海軍航空兵・蘇-30SM駐地",
+      "type": "possible",
+      "tag": "✈ 切爾尼亞霍夫斯克基地・海軍航空兵・蘇-30SM駐地",
+      "tagClass": "tag-possible",
+      "desc": "切爾尼亞霍夫斯克（Chernyakhovsk）空軍基地隸屬俄羅斯波羅的海艦隊海軍航空兵，長期部署蘇-30SM戰機，執行加里寧格勒飛地的區域防空與護航任務。2023年8月，同一基地曾發生蘇-30訓練墜毀事故，造成兩名飛行員死亡。此次墜毀地點距基地僅數公里。⚠️ 座標為概略位置。",
+      "coords": "54°38'N 021°49'E",
+      "source": "俄媒；路透社"
+    },
+    {
+      "latlng": [54.71, 20.51],
+      "name": "Kaliningrad – Russian Exclave Capital, NATO-Encircled",
+      "nameLocal": "加里寧格勒市（Kaliningrad）・俄羅斯飛地首府・夾於波蘭與立陶宛之間",
+      "type": "capital",
+      "tag": "🏙 加里寧格勒市・俄飛地首府・北約戰略包圍",
+      "tagClass": "tag-reference",
+      "desc": "加里寧格勒是俄羅斯的飛地（exclave），與俄羅斯本土不相連，夾在北約成員波蘭（西、南）與立陶宛（北、東）之間，北臨波羅的海。飛地內部署有波羅的海艦隊、伊斯坎德爾導彈系統及大量航空兵力，是俄羅斯在北約腹地的關鍵戰略支點。",
+      "coords": "54°43'N 020°31'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [54.40, 21.55],
+      "name": "Chernyakhovsk City – District Center, Near Crash Site",
+      "nameLocal": "切爾尼亞霍夫斯克市（Chernyakhovsk）・區中心城市",
+      "type": "possible",
+      "tag": "📍 切爾尼亞霍夫斯克市・墜毀區的行政中心",
+      "tagClass": "tag-possible",
+      "desc": "切爾尼亞霍夫斯克市是加里寧格勒州第二大城，也是此次蘇-30SM墜毀所在的切爾尼亞霍夫斯克區行政中心。俄媒報導稱，現場影片已在網路上流傳。⚠️ 座標為概略位置。",
+      "coords": "54°38'N 021°49'E",
+      "source": "路透社；俄媒"
+    },
+    {
+      "latlng": [54.69, 25.28],
+      "name": "Vilnius – Lithuanian Capital, NATO Member",
+      "nameLocal": "維爾紐斯（Vilnius）・立陶宛首都・北約成員國",
+      "type": "capital",
+      "tag": "🏛 維爾紐斯・立陶宛首都・北約成員",
+      "tagClass": "tag-reference",
+      "desc": "立陶宛首都，北約成員國，與加里寧格勒飛地東、北方相接。立陶宛境內的蘇瓦烏基走廊（Suwalki Gap）是連接波蘭與波羅的海三國的陸路通道，也是北約最脆弱的地面防禦節點之一。",
+      "coords": "54°41'N 025°17'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [52.23, 21.01],
+      "name": "Warsaw – Polish Capital, NATO Member",
+      "nameLocal": "華沙（Warsaw）・波蘭首都・北約成員國",
+      "type": "capital",
+      "tag": "🏛 華沙・波蘭首都・北約成員",
+      "tagClass": "tag-reference",
+      "desc": "波蘭首都，北約成員國，與加里寧格勒飛地南、西方相接。波蘭是加里寧格勒飛地最主要的北約鄰國，其境內部署有美軍永久駐軍及北約增強前進部署（eFP）兵力。",
+      "coords": "52°14'N 021°01'E",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "line",    "color": "#e53935", "weight": 2,   "dash": "7,4", "label": "蘇-30SM訓練飛行概略航跡（推估・虛線）" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "蘇-30SM墜毀地點（切爾尼亞霍夫斯克區田野）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "切爾尼亞霍夫斯克基地・市區（參考）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "參考城市：加里寧格勒・維爾紐斯・華沙" }
+  ]
+}
