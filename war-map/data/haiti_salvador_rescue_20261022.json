@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "薩爾瓦多特種部隊馳援海地・4名航空技術人員遭幫派綁架（2026年10月）",
+    "titleEn": "El Salvador Special Forces Deploy to Haiti — 4 Aviation Technicians Kidnapped by Gang, Oct 2026",
+    "subtitle": "克魯瓦德布凱幫派伏擊・布格磊啟動軍事救援・GSF首次重大幫派攻擊・約100名特種部隊22日抵達太子港",
+    "date": "2026-10-22",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "薩爾瓦多武裝部隊聲明", "GSF聲明", "美聯社", "海地媒體《Le Nouvelliste》", "路透社"]
+  },
+  "map": {
+    "center": [18.70, -72.40],
+    "zoom": 10,
+    "bounds": [[17.8, -74.5], [20.0, -70.5]]
+  },
+  "infoPanel": {
+    "title": "薩爾瓦多特種部隊馳援海地・4名航空技術人員遭幫派綁架（2026年10月）",
+    "paragraphs": [
+      "2026年10月18日，薩爾瓦多4名航空技術人員在海地首都太子港附近的克魯瓦德布凱（Croix-des-Bouquets）地區，返回營地途中遭武裝幫派伏擊。據報，攻擊者以槍火與爆炸物攻擊裝甲車並引發火災，4名人員逃離後失聯。薩爾瓦多武裝部隊與GSF確認，事發地點在Santo地區，攻擊可能由「Chen Mechan」（兇狠狗）幫派主導，首領為前內政部官員克勞迪·塞萊斯坦（Claudy Célestin）。",
+      "薩爾瓦多總統布格磊（Nayib Bukele）於21日宣布啟動軍事救援行動，22日派遣約100名特種部隊抵達太子港，參與庫爾德薩克平原（Plaine du Cul-de-Sac）地區搜尋與安全行動，並呼籲當地居民避開行動區域。美聯社引述消息指出，後續可能再增派約100人。布格磊以克里奧爾語警告幫派：「我們已在薩爾瓦多結束了幫派，也能結束你們。」",
+      "海地長期受武裝幫派控制，幫派估計掌控太子港約70%的地區。聯合國安理會2025年9月通過第2793號決議，將原由肯亞主導的「多國安全支持任務」（MSS）轉型為「幫派壓制部隊」（GSF），目標規模5,550人，現實際部署約1,500至2,000人，貢獻國包括查德、瓜地馬拉、牙買加、蒙古、斯里蘭卡與薩爾瓦多。薩爾瓦多自2025年初起參與，此次是GSF運作以來首次遭遇重大幫派攻擊。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [13.69, -89.19],
+        [15.20, -85.50],
+        [17.00, -79.00],
+        [18.58, -72.29]
+      ],
+      "color": "#e53935",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "8,4",
+      "popup": {
+        "title": "薩爾瓦多特種部隊部署路線・聖薩爾瓦多→太子港・約100名22日抵達",
+        "tag": "✈ 薩爾瓦多特種部隊部署路線・22日抵達太子港",
+        "tagClass": "tag-confirmed",
+        "desc": "薩爾瓦多總統布格磊21日宣布啟動軍事救援行動，22日約100名特種部隊自薩爾瓦多出發，抵達海地太子港圖桑盧韋爾杜爾國際機場（Toussaint Louverture International Airport），隨即展開庫爾德薩克平原地區搜尋與安全行動。美聯社引述消息指後續可能再增派約100人。⚠️ 路線為概略示意。",
+        "source": "薩爾瓦多武裝部隊聲明；GSF聲明；美聯社"
+      }
+    },
+    {
+      "points": [
+        [18.58, -72.29],
+        [18.60, -72.22],
+        [18.62, -72.17]
+      ],
+      "color": "#e67e22",
+      "weight": 2,
+      "opacity": 0.70,
+      "dashArray": "6,3",
+      "popup": {
+        "title": "薩爾瓦多技術人員返回營地路線（推估）・太子港機場→克魯瓦德布凱",
+        "tag": "🚗 薩爾瓦多技術人員行進路線（推估）・遭伏擊前",
+        "tagClass": "tag-possible",
+        "desc": "4名薩爾瓦多航空技術人員18日執行任務返回營地途中，疑在克魯瓦德布凱Santo地區遭幫派以槍火與爆炸物伏擊，裝甲車起火，人員失聯。行進路線為推估，非確認路線。⚠️ 路線為概略推估。",
+        "source": "薩爾瓦多武裝部隊聲明；GSF聲明"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [18.62, -72.17],
+      "name": "Croix-des-Bouquets / Santo – Gang Ambush Site, 4 Salvadoran Technicians Kidnapped Oct 18",
+      "nameLocal": "克魯瓦德布凱・Santo地區・薩爾瓦多技術人員遭幫派伏擊失聯・10/18",
+      "type": "confirmed",
+      "tag": "💥 克魯瓦德布凱・10/18幫派伏擊・4名薩爾瓦多技術人員失聯",
+      "tagClass": "tag-confirmed",
+      "desc": "2026年10月18日，薩爾瓦多4名航空技術人員在返回營地途中，於克魯瓦德布凱（Croix-des-Bouquets）Santo地區遭武裝分子以槍火與爆炸物攻擊，裝甲車起火，人員逃離後失聯。據海地媒體《Le Nouvelliste》，攻擊可能由「Chen Mechan」（兇狠狗）幫派主導，首領為前內政部官員克勞迪·塞萊斯坦（Claudy Célestin），該幫與「400 Mawozo」等幫派在當地活動。搜尋行動已造成數名幫派分子死亡，GSF人員亦有人受傷。⚠️ 座標為概略位置。",
+      "coords": "18°37'N 072°10'W",
+      "source": "薩爾瓦多武裝部隊；GSF；海地媒體《Le Nouvelliste》"
+    },
+    {
+      "latlng": [18.55, -72.12],
+      "name": "Plaine du Cul-de-Sac – GSF Search and Security Operation Zone",
+      "nameLocal": "庫爾德薩克平原（Plaine du Cul-de-Sac）・GSF搜尋行動區・薩爾瓦多特種部隊22日展開行動",
+      "type": "possible",
+      "tag": "🔍 庫爾德薩克平原・GSF搜尋行動區・薩爾瓦多特種部隊22日進駐",
+      "tagClass": "tag-possible",
+      "desc": "庫爾德薩克平原（Plaine du Cul-de-Sac）是太子港東側的廣大平原地帶，也是克魯瓦德布凱所在的主要地理區域。薩爾瓦多特種部隊22日抵達後，隨即在此展開搜尋與安全行動，GSF呼籲當地居民避開行動區域。幫派在此地區長期盤踞，「Chen Mechan」與「400 Mawozo」等幫派均在附近活動。⚠️ 座標為概略位置。",
+      "coords": "18°33'N 072°07'W",
+      "source": "GSF聲明；薩爾瓦多武裝部隊聲明"
+    },
+    {
+      "latlng": [18.58, -72.29],
+      "name": "Toussaint Louverture International Airport – Salvadoran Forces Arrived Oct 22",
+      "nameLocal": "圖桑盧韋爾杜爾國際機場（PAP）・薩爾瓦多約100名特種部隊22日抵達",
+      "type": "possible",
+      "tag": "✈ 太子港國際機場（PAP）・薩爾瓦多特種部隊22日抵達點",
+      "tagClass": "tag-possible",
+      "desc": "圖桑盧韋爾杜爾國際機場（Toussaint Louverture International Airport，IATA：PAP）是海地最主要的國際機場，薩爾瓦多約100名特種部隊2026年10月22日由此入境，隨即展開庫爾德薩克平原的搜尋行動。機場本身曾多次因幫派衝突或封路而受影響。⚠️ 座標為概略位置。",
+      "coords": "18°34'N 072°18'W",
+      "source": "GSF聲明；美聯社"
+    },
+    {
+      "latlng": [18.54, -72.34],
+      "name": "Port-au-Prince – Haiti Capital, ~70% Gang-Controlled",
+      "nameLocal": "太子港（Port-au-Prince）・海地首都・幫派估計控制約70%地區",
+      "type": "capital",
+      "tag": "🏛 太子港・海地首都・幫派控制約70%・GSF行動基地",
+      "tagClass": "tag-reference",
+      "desc": "太子港是海地首都，也是武裝幫派衝突最為激烈的地區，幫派估計控制全市約70%的地區，造成大量平民流離失所。2025年9月，聯合國安理會通過第2793號決議，將多國安全支持任務（MSS）轉型為「幫派壓制部隊」（GSF），目前約有1,500至2,000人在海地執行反幫派任務，主要貢獻國包括查德、瓜地馬拉、牙買加、蒙古、斯里蘭卡與薩爾瓦多。",
+      "coords": "18°32'N 072°20'W",
+      "source": "聯合國安理會第2793號決議；美聯社"
+    },
+    {
+      "latlng": [13.69, -89.19],
+      "name": "San Salvador – El Salvador Capital, Bukele Ordered Military Rescue Operation",
+      "nameLocal": "聖薩爾瓦多（San Salvador）・薩爾瓦多首都・布格磊宣布啟動軍事救援行動",
+      "type": "capital",
+      "tag": "🏛 聖薩爾瓦多・布格磊21日宣布軍事救援行動",
+      "tagClass": "tag-reference",
+      "desc": "薩爾瓦多首都，總統布格磊（Nayib Bukele）於2026年10月21日宣布啟動軍事救援行動，22日派遣約100名特種部隊赴海地。布格磊以海地克里奧爾語直接向幫派警告：「我們已在薩爾瓦多結束了幫派，也能結束你們。」薩爾瓦多自2025年初起以「自由任務部隊二號」（Fuerza de Tarea Libertad II）參與GSF，聚焦航空支援與醫療後送，2026年10月立法議會通過法案，把參與期限延長至2027年。",
+      "coords": "13°41'N 089°11'W",
+      "source": "薩爾瓦多總統府；美聯社；路透社"
+    }
+  ],
+  "legend": [
+    { "symbol": "line",    "color": "#e53935", "weight": 2.5, "dash": "8,4", "label": "薩爾瓦多特種部隊部署路線・聖薩爾瓦多→太子港（22日）" },
+    { "symbol": "line",    "color": "#e67e22", "weight": 2,   "dash": "6,3", "label": "薩爾瓦多技術人員行進路線（推估）・遭伏擊前" },
+    { "symbol": "dot",     "color": "#e74c3c", "pulse": true,  "label": "幫派伏擊地點：克魯瓦德布凱・Santo區（4人失聯）" },
+    { "symbol": "dot",     "color": "#64B5F6", "pulse": false, "label": "庫爾德薩克平原（GSF搜尋行動區）・太子港機場（PAP）" },
+    { "symbol": "dot",     "color": "#f1c40f", "pulse": false, "label": "參考城市：太子港・聖薩爾瓦多" }
+  ]
+}
