@@ -1,0 +1,554 @@
+{
+  "meta": {
+    "title": "哈薩克：把地理宿命變成歐亞共贏的節點",
+    "titleEn": "Kazakhstan: Turning Geography into a Eurasian Win-Win Hub",
+    "subtitle": "鐵路・口岸・跨裏海走廊・南北走廊・油氣管道・稀土鈾鎢礦區",
+    "date": "2026-11-02",
+    "status": "resource",
+    "theme": "blue",
+    "sources": ["張威翔製作", "哈薩克國鐵（KTZ）", "哈中鐵路分委會", "裏海管道集團（CPC）", "地理參考"]
+  },
+  "map": {
+    "center": [43.5, 66.0],
+    "zoom": 4,
+    "bounds": [[23.0, 36.0], [57.0, 122.0]]
+  },
+  "infoPanel": {
+    "title": "哈薩克：歐亞共贏的節點",
+    "paragraphs": [
+      "中國：2026年第1季哈中鐵路運量年增9.3%、達910萬噸；經跨裏海通道的貨櫃班列125列，年增34.4%。哈薩克今年鋪設900公里新軌，巴克特－阿亞戈茲鐵路將成為第3個哈中鐵路口岸；哈國鐵目標2030年前投入100億美元基礎建設，已花約一半。跨裏海線路今年目標600列，2029年前目標3,000列；連雲港、成都等中國節點正與哈、亞塞拜然、喬治亞的「中間走廊」並肩整合。",
+      "伊朗：2025年哈伊雙邊貿易成長26.4%、達4.302億美元；南北走廊貨運量達350萬噸（+12%），兩國鐵路貨運暴增69%。伊朗在阿巴斯港為哈薩克劃出專用地塊，也開放恰巴哈爾港業務；恰巴哈爾－札黑丹鐵路完工逾九成。中、哈、土庫曼、伊朗、土耳其5方鐵路協議已簽署，4方關稅協議即將落地。",
+      "俄羅斯：哈薩克石油出口逾八成經俄羅斯境內、由裏海管道集團（CPC）運輸；每年另向中國中轉約1,000萬噸俄羅斯石油，正談判加25%，並討論經哈通往中國的天然氣管線。礦產是第二張王牌：新發現超大型稀土礦氧化物儲量約93.5萬噸，鈾產量占全球近4成，鎢儲量約200萬噸、僅次於中國。礦區與特區多邊形皆為示意範圍，非精確邊界。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [[48.9, 71.9], [48.9, 73.4], [48.0, 73.4], [48.0, 71.9]],
+      "fillColor": "#8E24AA",
+      "fillOpacity": 0.55,
+      "borderColor": "#6A1B9A",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "超大型稀土礦（卡拉干達州一帶・示意）",
+        "tag": "💎 稀土・氧化物儲量約93.5萬噸",
+        "tagClass": "tag-strategic",
+        "desc": "哈薩克去年發現的超大型稀土礦，稀土氧化物估算儲量約93.5萬噸，礦石總量潛在可達2,000萬噸。⚠️ 確切礦址未於來源說明，本圖為卡拉干達州一帶的示意範圍，請以官方公布為準。",
+        "source": "哈薩克政府公布"
+      }
+    },
+    {
+      "points": [[45.9, 67.0], [45.9, 70.0], [44.4, 70.0], [44.4, 67.0]],
+      "fillColor": "#00ACC1",
+      "fillOpacity": 0.55,
+      "borderColor": "#00838F",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "楚－薩雷蘇鈾礦帶（Shu-Sarysu Basin・示意）",
+        "tag": "☢ 鈾礦・全球產量近4成",
+        "tagClass": "tag-strategic",
+        "desc": "哈薩克為全球最大鈾生產國，產量占全球近4成，主要採用地浸法，集中於南部楚－薩雷蘇盆地與錫爾河盆地。⚠️ 範圍為示意，非精確礦權邊界。",
+        "source": "哈薩克原子能公司公開資料"
+      }
+    },
+    {
+      "points": [[45.2, 64.0], [45.2, 66.0], [44.0, 66.0], [44.0, 64.0]],
+      "fillColor": "#00ACC1",
+      "fillOpacity": 0.45,
+      "borderColor": "#00838F",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "錫爾河盆地鈾礦（克孜勒奧爾達一帶・示意）",
+        "tag": "☢ 鈾礦・第二礦帶",
+        "tagClass": "tag-strategic",
+        "desc": "克孜勒奧爾達州一帶的鈾礦區，與楚－薩雷蘇盆地並列哈國鈾生產核心。⚠️ 範圍為示意。",
+        "source": "地理參考"
+      }
+    },
+    {
+      "points": [[48.3, 68.8], [48.3, 71.0], [47.2, 71.0], [47.2, 68.8]],
+      "fillColor": "#F9A825",
+      "fillOpacity": 0.55,
+      "borderColor": "#F57F17",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "鎢礦帶（中部・示意）",
+        "tag": "⛏ 鎢・儲量約200萬噸",
+        "tagClass": "tag-strategic",
+        "desc": "哈薩克鎢儲量約200萬噸，僅次於中國。主要鎢礦分布於中部與東南部。⚠️ 本圖僅標示中部示意範圍，非特定礦權位置。",
+        "source": "地質資料概述"
+      }
+    },
+    {
+      "points": [[44.45, 80.05], [44.45, 80.65], [44.05, 80.65], [44.05, 80.05]],
+      "fillColor": "#43A047",
+      "fillOpacity": 0.6,
+      "borderColor": "#2E7D32",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "霍爾果斯－東大門經濟特區（示意）",
+        "tag": "🏭 特區・陸港・哈中口岸",
+        "tagClass": "tag-strategic",
+        "desc": "霍爾果斯東大門經濟特區與乾港，位於哈中邊境，是中歐班列北通道的重要換裝與物流樞紐。⚠️ 範圍為示意。",
+        "source": "地理參考"
+      }
+    },
+    {
+      "points": [[43.85, 50.9], [43.85, 51.5], [43.45, 51.5], [43.45, 50.9]],
+      "fillColor": "#1E88E5",
+      "fillOpacity": 0.55,
+      "borderColor": "#1565C0",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "阿克套海港經濟特區（示意）",
+        "tag": "⚓ 特區・裏海出海口",
+        "tagClass": "tag-strategic",
+        "desc": "阿克套港與庫雷克港是哈薩克跨裏海中間走廊的海上起點，連接亞塞拜然巴庫。⚠️ 範圍為示意。",
+        "source": "地理參考"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [[45.17, 82.57], [43.83, 87.6], [36.06, 103.8], [34.3, 108.9], [34.6, 119.2]],
+      "color": "#e53935",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "0",
+      "popup": {
+        "title": "中國境內鐵路段・阿拉山口→烏魯木齊→蘭州→西安→連雲港",
+        "tag": "🚆 鋼鐵絲路・中國段（示意）",
+        "tagClass": "tag-confirmed",
+        "desc": "連雲港港與哈國鐵、中鐵集裝箱、中遠海運簽四方協議，推進跨裏海走廊「三樞紐一體化」；成都國際鐵路港將於2027年併入。⚠️ 路線為概略示意。",
+        "source": "哈中鐵路分委會；公開資料"
+      }
+    },
+    {
+      "points": [[45.25, 82.5], [46.97, 79.67], [48.7, 75.5], [51.17, 71.45]],
+      "color": "#e53935",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "0",
+      "popup": {
+        "title": "哈國北線幹線・德魯日巴→阿克托蓋→阿斯塔納",
+        "tag": "🚆 哈國鐵路・北線（示意）",
+        "tagClass": "tag-confirmed",
+        "desc": "從德魯日巴（Dostyk）口岸接入的哈國鐵路北線幹線，通往首都阿斯塔納。⚠️ 路線為概略示意。",
+        "source": "地理參考"
+      }
+    },
+    {
+      "points": [[44.2, 80.4], [43.24, 76.9], [42.3, 69.6], [44.85, 65.5], [46.8, 61.7], [45.31, 55.2], [43.65, 51.2]],
+      "color": "#ef6c00",
+      "weight": 3.5,
+      "opacity": 0.9,
+      "dashArray": "0",
+      "popup": {
+        "title": "哈國東西幹線→阿克套・跨裏海走廊起點",
+        "tag": "🚆 東西幹線・阿拉木圖→克孜勒奧爾達→別伊諾→阿克套",
+        "tagClass": "tag-confirmed",
+        "desc": "從哈中口岸經阿拉木圖、奇姆肯特、克孜勒奧爾達至別伊諾與阿克套的主幹線，是中間走廊的陸上骨幹。今年哈薩克鋪設900公里新軌，哈國鐵2030年前基建投入100億美元，已花約一半。⚠️ 路線為概略示意。",
+        "source": "哈薩克國鐵（KTZ）"
+      }
+    },
+    {
+      "points": [[46.7, 82.8], [47.97, 80.43]],
+      "color": "#43A047",
+      "weight": 4,
+      "opacity": 0.95,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "巴克特－阿亞戈茲鐵路（新建）",
+        "tag": "🚧 第3個哈中鐵路口岸・擴容南通道",
+        "tagClass": "tag-strategic",
+        "desc": "巴克特－阿亞戈茲鐵路將成為哈中之間第3個鐵路口岸，為中歐班列南通道擴容。⚠️ 為概略示意線。",
+        "source": "哈薩克國鐵"
+      }
+    },
+    {
+      "points": [[43.65, 51.2], [39.0, 49.4]],
+      "color": "#1E88E5",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "9,6",
+      "popup": {
+        "title": "跨裏海海運段・阿克套→巴庫",
+        "tag": "🚢 跨裏海通道・班列125列（+34.4%）",
+        "tagClass": "tag-reference",
+        "desc": "2026年第1季經跨裏海通道行駛的貨櫃班列有125列，年增34.4%；今年全年目標600列，明年預計再成長67%；2029年前目標過境3,000列。⚠️ 航線為示意。",
+        "source": "哈中鐵路分委會"
+      }
+    },
+    {
+      "points": [[39.0, 49.4], [40.4, 49.9], [41.7, 44.8], [42.15, 41.67]],
+      "color": "#1E88E5",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "0",
+      "popup": {
+        "title": "中間走廊西段・巴庫→第比利斯→波季",
+        "tag": "🚆 亞塞拜然・喬治亞段",
+        "tagClass": "tag-reference",
+        "desc": "哈、亞塞拜然、喬治亞3國鐵路公司組成「中間走廊多式聯運有限公司」，中方亦加入並成為單一營運主體之一。⚠️ 路線為概略示意。",
+        "source": "公開資料"
+      }
+    },
+    {
+      "points": [[43.34, 52.86], [41.5, 54.4], [39.25, 55.5], [37.4, 54.7], [35.69, 51.39], [31.0, 54.0], [27.1, 56.07]],
+      "color": "#00ACC1",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "0",
+      "popup": {
+        "title": "南北走廊・哈薩克→土庫曼→伊朗→阿巴斯港",
+        "tag": "🚆 南北走廊（示意）・貨運量350萬噸",
+        "tagClass": "tag-strategic",
+        "desc": "2025年南北運輸走廊貨運量成長12%、達350萬噸，兩國間鐵路貨運暴增69%。中、哈、土庫曼、伊朗、土耳其5方鐵路協議已簽署。⚠️ 路線為概略示意。",
+        "source": "公開資料"
+      }
+    },
+    {
+      "points": [[35.69, 51.39], [33.0, 55.0], [30.0, 57.0], [29.5, 60.86], [25.29, 60.64]],
+      "color": "#00ACC1",
+      "weight": 2.5,
+      "opacity": 0.8,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "恰巴哈爾－札黑丹鐵路（完工逾九成）",
+        "tag": "🚧 伊朗東南出海線",
+        "tagClass": "tag-strategic",
+        "desc": "恰巴哈爾－札黑丹鐵路已完工九成以上，通車後印度洋、中亞與歐洲將連成一線；伊朗表示哈薩克可到恰巴哈爾港開展業務。⚠️ 路線為概略示意。",
+        "source": "公開資料"
+      }
+    },
+    {
+      "points": [[46.2, 53.4], [47.1, 51.9], [46.3, 48.0], [45.4, 43.5], [45.0, 40.5], [44.72, 37.77]],
+      "color": "#8d6e63",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": "0",
+      "popup": {
+        "title": "裏海管道集團（CPC）・田吉茲→新羅西斯克",
+        "tag": "🛢 CPC管線（示意）・哈國石油出口逾八成經俄",
+        "tagClass": "tag-reference",
+        "desc": "哈薩克出口石油超過80%經俄羅斯境內，由裏海管道集團運輸至黑海新羅西斯克。⚠️ 路線為概略示意。",
+        "source": "裏海管道集團（CPC）"
+      }
+    },
+    {
+      "points": [[55.0, 73.4], [52.3, 77.0], [48.7, 71.6], [45.17, 82.57]],
+      "color": "#8d6e63",
+      "weight": 2.5,
+      "opacity": 0.8,
+      "dashArray": "0",
+      "popup": {
+        "title": "俄油過境中國・鄂木斯克→巴甫洛達爾→阿塔蘇→阿拉山口",
+        "tag": "🛢 每年中轉約1,000萬噸俄油至中國",
+        "tagClass": "tag-reference",
+        "desc": "哈薩克每年向中國中轉約1,000萬噸俄羅斯石油，目前正談判再增加25%。⚠️ 路線為概略示意。",
+        "source": "公開資料"
+      }
+    },
+    {
+      "points": [[51.77, 55.1], [50.28, 57.2], [49.8, 73.1], [47.97, 80.43], [43.83, 87.6]],
+      "color": "#8d6e63",
+      "weight": 2,
+      "opacity": 0.65,
+      "dashArray": "4,6",
+      "popup": {
+        "title": "討論中的天然氣管線（示意）・經哈薩克通往中國",
+        "tag": "🔥 規劃討論中・非定案路線",
+        "tagClass": "tag-possible",
+        "desc": "俄哈雙方討論經哈薩克通往中國的天然氣管線，並擴大油氣加工與天然氣區域過境運輸合作。⚠️ 尚無定案路線，本線僅為示意，不代表實際規劃。",
+        "source": "公開報導"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [44.2, 80.4],
+      "name": "Altynkol / Khorgos Gateway",
+      "nameLocal": "阿爾騰科爾／霍爾果斯（Khorgos）・哈中鐵路口岸",
+      "type": "confirmed",
+      "tag": "🚪 哈中口岸・霍爾果斯東大門",
+      "tagClass": "tag-confirmed",
+      "desc": "哈中邊境重要鐵路口岸與乾港，配有經濟特區。⚠️ 座標為概略位置。",
+      "coords": "44°12'N 080°24'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [45.25, 82.5],
+      "name": "Dostyk / Alashankou Border Crossing",
+      "nameLocal": "德魯日巴（Dostyk）－阿拉山口・哈中第一口岸",
+      "type": "confirmed",
+      "tag": "🚪 哈中口岸・阿拉山口",
+      "tagClass": "tag-confirmed",
+      "desc": "哈中最主要的鐵路口岸，連接中國新疆與哈國鐵路網，也是中歐班列北通道主入口。⚠️ 座標為概略位置。",
+      "coords": "45°15'N 082°30'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [46.7, 82.8],
+      "name": "Bakhty Border Crossing – 3rd China-Kazakhstan Rail Port",
+      "nameLocal": "巴克特（Bakhty）・第3個哈中鐵路口岸（新建）",
+      "type": "confirmed",
+      "tag": "🚧 巴克特・第3個哈中鐵路口岸",
+      "tagClass": "tag-confirmed",
+      "desc": "巴克特－阿亞戈茲鐵路將使此處成為哈中之間第3個鐵路口岸，替中歐班列南通道擴容。⚠️ 座標為概略位置。",
+      "coords": "46°42'N 082°48'E",
+      "source": "哈薩克國鐵"
+    },
+    {
+      "latlng": [47.97, 80.43],
+      "name": "Ayagoz",
+      "nameLocal": "阿亞戈茲（Ayagoz）・新線終點",
+      "type": "infra",
+      "tag": "🚉 阿亞戈茲・巴克特－阿亞戈茲鐵路接軌點",
+      "tagClass": "tag-strategic",
+      "desc": "接入哈國鐵路網的樞紐站。⚠️ 座標為概略位置。",
+      "coords": "47°58'N 080°26'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [43.65, 51.2],
+      "name": "Aktau Seaport",
+      "nameLocal": "阿克套港（Aktau）・跨裏海起點",
+      "type": "confirmed",
+      "tag": "⚓ 阿克套・裏海出海口",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克跨裏海中間走廊的海上起點，連接亞塞拜然巴庫港。⚠️ 座標為概略位置。",
+      "coords": "43°39'N 051°12'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [43.18, 51.67],
+      "name": "Kuryk Port",
+      "nameLocal": "庫雷克港（Kuryk）・裏海港口",
+      "type": "infra",
+      "tag": "⚓ 庫雷克港・阿克套外港",
+      "tagClass": "tag-strategic",
+      "desc": "阿克套南側的裏海港口，補充跨裏海通道的渡輪與貨櫃吞吐。⚠️ 座標為概略位置。",
+      "coords": "43°11'N 051°40'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [39.0, 49.4],
+      "name": "Baku Alat Port",
+      "nameLocal": "巴庫（Baku）阿拉特港・跨裏海對岸",
+      "type": "infra",
+      "tag": "⚓ 巴庫・跨裏海對岸",
+      "tagClass": "tag-strategic",
+      "desc": "亞塞拜然側跨裏海走廊的接駁港口，連接巴庫－第比利斯－卡爾斯鐵路。⚠️ 座標為概略位置。",
+      "coords": "39°00'N 049°24'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [41.7, 44.8],
+      "name": "Tbilisi",
+      "nameLocal": "第比利斯（Tbilisi）・喬治亞首都",
+      "type": "capital",
+      "tag": "🏛 第比利斯・中間走廊成員",
+      "tagClass": "tag-reference",
+      "desc": "喬治亞首都，喬治亞鐵路公司是「中間走廊多式聯運有限公司」成員。",
+      "coords": "41°42'N 044°48'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [42.15, 41.67],
+      "name": "Poti Port",
+      "nameLocal": "波季港（Poti）・黑海出口",
+      "type": "infra",
+      "tag": "⚓ 波季・黑海出口",
+      "tagClass": "tag-strategic",
+      "desc": "中間走廊在黑海一側的重要出海港。⚠️ 座標為概略位置。",
+      "coords": "42°09'N 041°40'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [51.17, 71.45],
+      "name": "Astana",
+      "nameLocal": "阿斯塔納（Astana）・哈薩克首都",
+      "type": "capital",
+      "tag": "🏛 阿斯塔納・哈薩克首都",
+      "tagClass": "tag-reference",
+      "desc": "哈薩克首都，哈薩克國家鐵路公司總部所在。",
+      "coords": "51°10'N 071°27'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [43.24, 76.9],
+      "name": "Almaty",
+      "nameLocal": "阿拉木圖（Almaty）・哈薩克最大城市",
+      "type": "capital",
+      "tag": "🏙 阿拉木圖・最大城市・鐵路樞紐",
+      "tagClass": "tag-reference",
+      "desc": "哈薩克最大城市，是通往中國方向鐵路的重要樞紐。",
+      "coords": "43°14'N 076°54'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [43.83, 87.6],
+      "name": "Urumqi",
+      "nameLocal": "烏魯木齊（Urumqi）・中國新疆鐵路樞紐",
+      "type": "capital",
+      "tag": "🏙 烏魯木齊・中歐班列新疆樞紐",
+      "tagClass": "tag-reference",
+      "desc": "中歐班列新疆段重要編組樞紐。",
+      "coords": "43°50'N 087°36'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [34.6, 119.2],
+      "name": "Lianyungang Port",
+      "nameLocal": "連雲港港（Lianyungang）・東向出海口",
+      "type": "confirmed",
+      "tag": "⚓ 連雲港・四方協議・三樞紐一體化",
+      "tagClass": "tag-confirmed",
+      "desc": "連雲港港與哈薩克國鐵、中鐵集裝箱、中遠海運簽下四方協議，合力推進跨裏海走廊「三樞紐一體化」。⚠️ 座標為概略位置。",
+      "coords": "34°36'N 119°12'E",
+      "source": "公開資料"
+    },
+    {
+      "latlng": [30.6, 104.1],
+      "name": "Chengdu International Railway Port",
+      "nameLocal": "成都國際鐵路港（Chengdu）・2027年併入",
+      "type": "infra",
+      "tag": "🚉 成都・2027年併入跨裏海網絡",
+      "tagClass": "tag-strategic",
+      "desc": "成都國際鐵路港將於2027年併入跨裏海走廊網絡。⚠️ 座標為概略位置。",
+      "coords": "30°36'N 104°06'E",
+      "source": "公開資料"
+    },
+    {
+      "latlng": [27.1, 56.07],
+      "name": "Shahid Rajaee Port (Bandar Abbas)",
+      "nameLocal": "沙希德拉賈伊港（阿巴斯港）・哈薩克專用地塊",
+      "type": "confirmed",
+      "tag": "⚓ 阿巴斯港・伊朗劃定哈國專用地塊",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗已確認在此港為哈薩克劃出專用地塊，是南北走廊在波斯灣的出海口。⚠️ 座標為概略位置。",
+      "coords": "27°06'N 056°04'E",
+      "source": "公開資料"
+    },
+    {
+      "latlng": [25.29, 60.64],
+      "name": "Chabahar Port",
+      "nameLocal": "恰巴哈爾港（Chabahar）・直通印度洋",
+      "type": "confirmed",
+      "tag": "⚓ 恰巴哈爾・伊朗開放哈國業務",
+      "tagClass": "tag-confirmed",
+      "desc": "伊朗表示哈薩克可到恰巴哈爾港開展業務，直通南亞與東南亞市場。⚠️ 座標為概略位置。",
+      "coords": "25°17'N 060°38'E",
+      "source": "公開資料"
+    },
+    {
+      "latlng": [29.5, 60.86],
+      "name": "Zahedan",
+      "nameLocal": "札黑丹（Zahedan）・恰巴哈爾線北端",
+      "type": "infra",
+      "tag": "🚉 札黑丹・鐵路北端",
+      "tagClass": "tag-strategic",
+      "desc": "恰巴哈爾－札黑丹鐵路北端，銜接伊朗國內鐵路網。",
+      "coords": "29°30'N 060°52'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [35.69, 51.39],
+      "name": "Tehran",
+      "nameLocal": "德黑蘭（Tehran）・伊朗首都",
+      "type": "capital",
+      "tag": "🏛 德黑蘭・伊朗首都",
+      "tagClass": "tag-reference",
+      "desc": "伊朗首都，南北走廊鐵路的重要節點。",
+      "coords": "35°41'N 051°23'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [39.25, 55.5],
+      "name": "Bereket",
+      "nameLocal": "貝列凱特（Bereket）・土庫曼過境節點",
+      "type": "infra",
+      "tag": "🚉 貝列凱特・土庫曼過境站",
+      "tagClass": "tag-strategic",
+      "desc": "哈薩克－土庫曼－伊朗鐵路的土庫曼段節點。⚠️ 座標為概略位置。",
+      "coords": "39°15'N 055°30'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [46.2, 53.4],
+      "name": "Tengiz Oil Field",
+      "nameLocal": "田吉茲油田（Tengiz）・CPC起點",
+      "type": "confirmed",
+      "tag": "🛢 田吉茲・CPC管線起點",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克最大油田之一，原油經裏海管道集團（CPC）輸往俄羅斯黑海新羅西斯克。⚠️ 座標為概略位置。",
+      "coords": "46°12'N 053°24'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [44.72, 37.77],
+      "name": "Novorossiysk (CPC Terminal)",
+      "nameLocal": "新羅西斯克（Novorossiysk）・CPC黑海終端",
+      "type": "confirmed",
+      "tag": "🛢 新羅西斯克・CPC黑海出口",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克出口石油逾八成經俄羅斯境內，由CPC運至此處出口。⚠️ 座標為概略位置。",
+      "coords": "44°43'N 037°46'E",
+      "source": "裏海管道集團"
+    },
+    {
+      "latlng": [55.0, 73.4],
+      "name": "Omsk",
+      "nameLocal": "鄂木斯克（Omsk）・俄油過境中國起點",
+      "type": "infra",
+      "tag": "🛢 鄂木斯克・俄油東向起點",
+      "tagClass": "tag-strategic",
+      "desc": "俄羅斯石油經哈薩克過境中國的起點之一。⚠️ 座標為概略位置。",
+      "coords": "55°00'N 073°24'E",
+      "source": "公開資料"
+    },
+    {
+      "latlng": [51.77, 55.1],
+      "name": "Orenburg",
+      "nameLocal": "奧倫堡（Orenburg）・俄氣東向討論起點（示意）",
+      "type": "possible",
+      "tag": "🔥 奧倫堡・氣管線討論起點（示意）",
+      "tagClass": "tag-possible",
+      "desc": "俄哈討論經哈薩克通往中國的天然氣管線，本點僅為示意，不代表實際規劃。",
+      "coords": "51°46'N 055°06'E",
+      "source": "公開報導"
+    },
+    {
+      "latlng": [48.45, 72.6],
+      "name": "Rare Earth Deposit (approx.)",
+      "nameLocal": "超大型稀土礦（示意位置）・氧化物約93.5萬噸",
+      "type": "possible",
+      "tag": "💎 稀土礦（示意）・礦石潛力2,000萬噸",
+      "tagClass": "tag-possible",
+      "desc": "哈薩克去年發現的超大型稀土礦。⚠️ 確切礦址來源未說明，位置為示意。",
+      "coords": "48°27'N 072°36'E",
+      "source": "哈薩克政府公布"
+    }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#e53935", "weight": 3, "dash": "0", "label": "中國段・哈國北線鐵路（鋼鐵絲路）" },
+    { "symbol": "line", "color": "#ef6c00", "weight": 3.5, "dash": "0", "label": "哈國東西幹線→阿克套" },
+    { "symbol": "line", "color": "#43A047", "weight": 4, "dash": "6,4", "label": "巴克特－阿亞戈茲新線（第3口岸）" },
+    { "symbol": "line", "color": "#1E88E5", "weight": 3, "dash": "9,6", "label": "跨裏海海運・中間走廊（陸段實線）" },
+    { "symbol": "line", "color": "#00ACC1", "weight": 3, "dash": "0", "label": "南北走廊（哈→土→伊）・恰巴哈爾線（虛線）" },
+    { "symbol": "line", "color": "#8d6e63", "weight": 3, "dash": "0", "label": "油管：CPC／俄油過境中國；規劃氣管線（細虛線・示意）" },
+    { "symbol": "polygon", "fillColor": "#8E24AA", "fillOpacity": 0.55, "borderColor": "#6A1B9A", "label": "稀土礦（示意）" },
+    { "symbol": "polygon", "fillColor": "#00ACC1", "fillOpacity": 0.55, "borderColor": "#00838F", "label": "鈾礦帶（示意）" },
+    { "symbol": "polygon", "fillColor": "#F9A825", "fillOpacity": 0.55, "borderColor": "#F57F17", "label": "鎢礦帶（示意）" },
+    { "symbol": "polygon", "fillColor": "#43A047", "fillOpacity": 0.6, "borderColor": "#2E7D32", "label": "特區：霍爾果斯東大門" },
+    { "symbol": "polygon", "fillColor": "#1E88E5", "fillOpacity": 0.55, "borderColor": "#1565C0", "label": "特區：阿克套海港" },
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true, "label": "口岸・港口・油田熱點" },
+    { "symbol": "dot", "color": "#27ae60", "pulse": false, "label": "鐵路・港口節點" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "首都・主要城市" }
+  ]
+}
