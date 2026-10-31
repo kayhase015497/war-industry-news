@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "美軍F-16時隔30年重返阿留申謝米亞島・埃里克森空軍站防空待命（2026年10月）",
+    "titleEn": "USAF F-16s Return to Eareckson Air Station, Shemya Island After 30 Years — Oct 2026",
+    "subtitle": "10月18日至26日部署・E-3預警機與KC-135加油機支援・加拿大CC-150加油機參與・北太平洋與北極通道戰略價值上升",
+    "date": "2026-10-31",
+    "status": "breaking",
+    "theme": "blue",
+    "sources": ["張威翔製作", "軍事觀察（Military Watch）", "美國空軍公開資料"]
+  },
+  "map": {
+    "center": [56.5, 192.0],
+    "zoom": 4,
+    "bounds": [[47.0, 158.0], [64.0, 218.0]]
+  },
+  "infoPanel": {
+    "title": "美軍F-16時隔30年重返阿留申謝米亞島（2026年10月）",
+    "paragraphs": [
+      "美國空軍時隔30年，首次讓戰機重返阿拉斯加偏遠阿留申群島（Aleutian Islands）謝米亞島（Shemya Island）上的埃里克森空軍站（Eareckson Air Station），進入防空警戒待命態勢。本次部署於10月18日至26日進行，F-16戰機進駐這處美國最西端軍事前哨之一，維持戰備。部署最終以涉及美加戰機的防空任務收尾，範圍橫跨北太平洋廣大區域。",
+      "軍事觀察（Military Watch）報導，行動還動用了來自埃爾門多夫－理查森聯合基地（JBER）的E-3哨兵（Sentry）空中預警機、多架美軍KC-135同溫層加油機，以及加拿大空軍CC-150北極星（Polaris）加油機。這些支援對F-16十分關鍵，因為該機雷達是第四代戰機中最小、最弱的之一，航程也不夠長。",
+      "冷戰期間，埃里克森支援戰鬥機分遣隊，包括F-4與F-15制空戰鬥機，負責對蘇聯航空太空軍的防空任務。本次重返戰備態勢，與該基地近年的角色明顯不同；隨著美軍與中俄軍事競爭，北太平洋與北極通道的戰略重要性急遽上升。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [61.25, 210.20],
+        [58.50, 200.00],
+        [55.50, 187.50],
+        [52.72, 174.11]
+      ],
+      "color": "#42A5F5",
+      "weight": 2.5,
+      "opacity": 0.80,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "空中支援航線（示意）・JBER→謝米亞島",
+        "tag": "✈ E-3預警機・KC-135加油機支援航線（示意）",
+        "tagClass": "tag-reference",
+        "desc": "E-3哨兵空中預警機與KC-135同溫層加油機自埃爾門多夫－理查森聯合基地（JBER）出發，沿阿留申群島走廊向西支援謝米亞島的F-16戰機。F-16雷達小、航程有限，仰賴預警機與空中加油延伸作戰範圍。⚠️ 航線為概略示意，非實際飛行軌跡。本圖以東經座標（經度>180）表示跨越國際換日線。",
+        "source": "軍事觀察（Military Watch）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [52.72, 174.11],
+      "name": "Eareckson Air Station, Shemya Island – F-16s Return After 30 Years",
+      "nameLocal": "埃里克森空軍站（Eareckson Air Station）・謝米亞島・F-16時隔30年重返",
+      "type": "confirmed",
+      "tag": "✈ 埃里克森空軍站・謝米亞島・F-16防空待命・10/18–26",
+      "tagClass": "tag-confirmed",
+      "desc": "埃里克森空軍站位於阿留申群島最西端的謝米亞島，是美國最西端軍事前哨之一。冷戰期間曾駐有F-4與F-15戰鬥機分遣隊，負責對蘇聯航空太空軍的防空任務。2026年10月18日至26日，美國空軍時隔30年首度讓F-16重返此地進入防空警戒待命，並以涉及美加戰機的防空任務收尾。⚠️ 座標為概略位置。",
+      "coords": "52°43'N 174°07'E",
+      "source": "軍事觀察（Military Watch）"
+    },
+    {
+      "latlng": [61.25, 210.20],
+      "name": "Joint Base Elmendorf-Richardson – E-3 Sentry and KC-135 Support Base",
+      "nameLocal": "埃爾門多夫－理查森聯合基地（JBER）・E-3預警機與KC-135加油機支援基地",
+      "type": "possible",
+      "tag": "🛩 JBER・E-3預警機・KC-135加油機基地",
+      "tagClass": "tag-possible",
+      "desc": "位於阿拉斯加安克拉治的埃爾門多夫－理查森聯合基地（JBER），為本次行動提供E-3哨兵空中預警機與多架KC-135同溫層加油機支援。加拿大空軍CC-150北極星（Polaris）加油機亦參與行動。本圖以經度210.2°（即西經149.8°）表示，以便與謝米亞島維持連續顯示。⚠️ 座標為概略位置。",
+      "coords": "61°15'N 149°48'W",
+      "source": "軍事觀察（Military Watch）"
+    },
+    {
+      "latlng": [51.88, 183.35],
+      "name": "Adak Island – Former Cold War Naval Air Facility, Aleutians Reference",
+      "nameLocal": "阿達克島（Adak）・冷戰時期海軍航空設施舊址・阿留申群島參考點",
+      "type": "possible",
+      "tag": "📍 阿達克島・阿留申群島冷戰舊址參考",
+      "tagClass": "tag-possible",
+      "desc": "阿達克島位於阿留申群島中段，冷戰時期曾設有美國海軍航空設施，為北太平洋反潛與監視的重要據點，現已大幅縮編。作為阿留申群島戰略縱深的參考點。⚠️ 座標為概略位置，以東經座標表示。",
+      "coords": "51°53'N 176°39'W",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [53.04, 158.65],
+      "name": "Petropavlovsk-Kamchatsky – Russian Pacific Fleet Submarine Base",
+      "nameLocal": "彼得羅巴甫洛夫斯克－堪察加斯基（Petropavlovsk-Kamchatsky）・俄羅斯太平洋艦隊潛艦基地",
+      "type": "capital",
+      "tag": "🏙 彼得羅巴甫洛夫斯克・俄太平洋艦隊・潛艦基地（參考）",
+      "tagClass": "tag-reference",
+      "desc": "堪察加半島的彼得羅巴甫洛夫斯克－堪察加斯基是俄羅斯太平洋艦隊的戰略核潛艦基地，位於謝米亞島以西約1,400公里，是美軍北太平洋防空與監視最直接面對的俄方節點之一。",
+      "coords": "53°02'N 158°39'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [61.22, 210.20],
+      "name": "Anchorage – Alaska's Largest City",
+      "nameLocal": "安克拉治（Anchorage）・阿拉斯加最大城市",
+      "type": "capital",
+      "tag": "🏙 安克拉治・阿拉斯加最大城市（參考）",
+      "tagClass": "tag-reference",
+      "desc": "阿拉斯加最大城市，毗鄰JBER，是美軍北太平洋與北極行動的後勤樞紐。",
+      "coords": "61°13'N 149°54'W",
+      "source": "地理參考"
+    }
+  ],
+  "legend": [
+    { "symbol": "line", "color": "#42A5F5", "weight": 2.5, "dash": "8,5", "label": "E-3・KC-135支援航線（JBER→謝米亞島・示意）" },
+    { "symbol": "dot",  "color": "#e74c3c", "pulse": true,  "label": "埃里克森空軍站・謝米亞島（F-16重返）" },
+    { "symbol": "dot",  "color": "#64B5F6", "pulse": false, "label": "JBER（預警機・加油機基地）・阿達克島（冷戰舊址）" },
+    { "symbol": "dot",  "color": "#f1c40f", "pulse": false, "label": "參考城市：安克拉治・彼得羅巴甫洛夫斯克" }
+  ]
+}
