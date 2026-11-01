@@ -20,8 +20,9 @@
       font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial, sans-serif;
       background: #1a1a2e;
       color: #eee;
-      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; height: 100%; overflow: hidden;
     }
+    html { height: 100%; }
 
     #header {
       background: #0f0f1e;
@@ -46,7 +47,8 @@
     .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    #map { width: 100%; flex: 1; min-height: 0; }
+    #map { width: 100%; flex: 1; min-height: 0; position: relative; }
+    #touch-hint { display: none; }
 
     .leaflet-popup-content-wrapper {
       background: rgba(12, 12, 28, 0.96);
@@ -122,6 +124,32 @@
     #mobile-drawer { display: none; }
 
     @media (max-width: 600px) {
+      /* 精簡標題區：只留中文標題＋狀態／日期，其餘移入說明抽屜 */
+      #header { padding: 7px 12px; gap: 4px; }
+      #header .title-block h1 { font-size: 0.92rem; line-height: 1.35; }
+      #header .title-block h1 span,
+      #header .title-block .sub,
+      .badge-news { display: none; }
+      .badge { padding: 2px 8px; font-size: 0.62rem; }
+      #footer { padding: 3px 12px; font-size: 0.58rem; }
+      #footer span:last-child { display: none; }
+
+      /* 地圖不被抽屜遮住 */
+      body { padding-bottom: var(--hh, 44px); }
+
+      /* 非重點標籤：放大後才顯示 */
+      .loc-tooltip { font-size: 0.62rem !important; padding: 1px 5px !important; }
+      .loc-minor { display: none !important; }
+      #map.show-minor .loc-minor { display: block !important; }
+
+      #touch-hint {
+        display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        background: rgba(10,10,25,0.9); color: #fff; font-size: 0.78rem;
+        padding: 8px 14px; border-radius: 6px; z-index: 1200; pointer-events: none;
+        opacity: 0; transition: opacity 0.2s; white-space: nowrap;
+      }
+      #touch-hint.show { opacity: 1; }
+
       /* 隱藏 Leaflet 浮動面板，改用抽屜 */
       .leaflet-top.leaflet-left .info-panel,
       .leaflet-bottom.leaflet-right .legend { display: none !important; }
@@ -129,16 +157,17 @@
       #mobile-drawer {
         display: flex; flex-direction: column;
         position: fixed; bottom: 0; left: 0; right: 0;
-        background: rgba(12, 12, 28, 0.97);
+        background: #0c0c1c;
         border-top: 2px solid var(--accent);
         border-radius: 14px 14px 0 0;
         z-index: 1000;
-        max-height: 55vh;
-        transform: translateY(calc(100% - 50px));
+        max-height: 60%;
+        transform: translateY(calc(100% - var(--hh, 44px)));
         transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform;
       }
       #mobile-drawer.open { transform: translateY(0); }
+      #mobile-drawer:not(.open) #drawer-body { visibility: hidden; }
 
       #drawer-handle {
         flex-shrink: 0; padding: 8px 0 0;
@@ -297,18 +326,41 @@ function initMap(d) {
   document.getElementById('loading').style.display = 'none';
 
   // 初始化地圖
+  const isMobile = window.innerWidth < 600;
+  const inFrame = window.self !== window.top;
+  const gestureMode = isMobile && inFrame && L.Browser.mobile; // 內嵌手機：單指捲頁面、雙指操作地圖
   const map = L.map('map', {
     center: d.map.center,
     zoom: d.map.zoom,
     zoomControl: true,
-    attributionControl: false
+    attributionControl: false,
+    dragging: !gestureMode
   });
+
+  if (gestureMode) {
+    const hint = document.createElement('div');
+    hint.id = 'touch-hint';
+    hint.textContent = '雙指移動／縮放地圖';
+    document.getElementById('map').appendChild(hint);
+    let hintTimer;
+    document.getElementById('map').addEventListener('touchstart', function(e) {
+      if (e.touches.length !== 1) return;
+      if (e.target.closest('.leaflet-marker-icon, .leaflet-control, .leaflet-popup')) return;
+      hint.classList.add('show');
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(function() { hint.classList.remove('show'); }, 1200);
+    }, { passive: true });
+  }
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18, opacity: 0.82
   }).addTo(map);
 
-  if (d.map.bounds) map.fitBounds(d.map.bounds);
+  function applyView() {
+    if (isMobile && d.map.mobile) map.setView(d.map.mobile.center, d.map.mobile.zoom);
+    else if (d.map.bounds) map.fitBounds(d.map.bounds);
+  }
+  applyView();
 
   // ── 共用內容（桌機 Leaflet 面板 + 手機抽屜共享） ──
   const infoParagraphsHtml = d.infoPanel.paragraphs.map(p => '<p>' + p + '</p>').join('');
@@ -422,11 +474,20 @@ function initMap(d) {
       '<div class="source">📰 ' + loc.source + '</div>'
     );
 
-    marker.bindTooltip(loc.nameLocal, {
+    const isKey = ['confirmed', 'dam', 'capital', 'city'].indexOf(loc.type) !== -1;
+    marker.bindTooltip(isMobile ? loc.nameLocal.split('・')[0] : loc.nameLocal, {
       permanent: true, direction: 'right',
-      offset: [10, 0], className: 'loc-tooltip'
+      offset: [10, 0], className: 'loc-tooltip' + (isMobile && !isKey ? ' loc-minor' : '')
     });
   });
+
+  if (isMobile) {
+    const mapEl = document.getElementById('map');
+    const baseZoom = map.getZoom();
+    const syncMinor = function() { mapEl.classList.toggle('show-minor', map.getZoom() >= baseZoom + 2); };
+    map.on('zoomend', syncMinor);
+    syncMinor();
+  }
 
   // ── 圖例資料與 swatch 工廠（共用） ──────────────────
   const defaultItems = [
@@ -500,9 +561,19 @@ function initMap(d) {
     let activeTab = 'info';
     const drawer = document.getElementById('mobile-drawer');
     const drawerBody = document.getElementById('drawer-body');
-    drawerBody.innerHTML = infoPanelBodyHtml;
+    const metaHtml =
+      '<p style="color:#bbb;font-size:0.72rem">' + d.meta.titleEn + '</p>' +
+      '<p style="color:#999;font-size:0.72rem">' + d.meta.subtitle + '</p>' +
+      '<p style="color:#777;font-size:0.68rem">來源：' + d.meta.sources.join('、') + '</p><hr>';
+    tabContents.info = metaHtml + infoPanelBodyHtml;
+    drawerBody.innerHTML = tabContents.info;
 
-    document.getElementById('drawer-handle').addEventListener('click', function() {
+    const handle = document.getElementById('drawer-handle');
+    document.documentElement.style.setProperty('--hh', handle.offsetHeight + 'px');
+    map.invalidateSize();
+    applyView();
+
+    handle.addEventListener('click', function() {
       drawer.classList.toggle('open');
     });
 
