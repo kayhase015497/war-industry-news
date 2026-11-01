@@ -5,7 +5,7 @@
     "subtitle": "鋼鐵絲路・三樞紐一體化・中間走廊・南北走廊（油氣與礦產見第二張）",
     "date": "2026-11-02",
     "status": "resource",
-    "theme": "blue",
+    "theme": "red",
     "sources": [
       "張威翔製作",
       "哈薩克國鐵（KTZ）",
@@ -30,7 +30,14 @@
         57.0,
         122.0
       ]
-    ]
+    ],
+    "mobile": {
+      "center": [
+        43.0,
+        72.0
+      ],
+      "zoom": 3
+    }
   },
   "infoPanel": {
     "title": "哈薩克：鐵路・口岸・走廊",
@@ -492,9 +499,9 @@
           70.962
         ]
       ],
-      "fillColor": "#1565C0",
+      "fillColor": "#C62828",
       "fillOpacity": 0.1,
-      "borderColor": "#0D47A1",
+      "borderColor": "#B71C1C",
       "borderWeight": 4,
       "borderOpacity": 0.95,
       "popup": {
@@ -1166,9 +1173,9 @@
   "legend": [
     {
       "symbol": "polygon",
-      "fillColor": "#1565C0",
+      "fillColor": "#C62828",
       "fillOpacity": 0.1,
-      "borderColor": "#0D47A1",
+      "borderColor": "#B71C1C",
       "label": "哈薩克國境（簡化輪廓）"
     },
     {
