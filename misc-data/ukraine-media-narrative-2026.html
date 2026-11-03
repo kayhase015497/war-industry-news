@@ -87,6 +87,13 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 .ukn-footer{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
 [hidden]{display:none!important}
 
+/* two-finger scroll (touch devices): one finger passes the gesture to the host page */
+html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;overscroll-behavior:none}
+.ukn-hint{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:50;max-width:92%;
+  background:rgba(0,0,0,.88);color:#fff;border:1px solid #44527a;border-radius:14px;
+  padding:8px 18px;white-space:nowrap;font-size:18px;font-weight:700;text-align:center;pointer-events:none;
+  opacity:0;transition:opacity .2s}
+.ukn-hint.on{opacity:1}
 .ukn-seg{display:none}
 
 @media(max-width:760px){
@@ -379,6 +386,8 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 <div class="ukn-note">標題、日期、作者為2026年11月3日以瀏覽器逐篇開啟頁面查證的結果；各站顯示時區不同時，日期可能差一天。標題中的大寫字為重點強調，原文並非全大寫。</div>
 <div class="ukn-footer">製表：張威翔</div>
 
+<div class="ukn-hint" id="ukn-hint" role="status">雙指滑動可捲動本頁</div>
+
 <script>
 (function(){
   var tabs=document.querySelectorAll('.ukn-tab'),panels=document.querySelectorAll('.ukn-panel');
@@ -414,6 +423,28 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
   document.addEventListener('toggle',report,true);
   window.addEventListener('load',report);window.addEventListener('resize',report);
   apply();
+})();
+
+(function(){
+  var coarse=window.matchMedia&&window.matchMedia('(pointer:coarse)').matches;
+  if(!coarse||!(('ontouchstart' in window)||navigator.maxTouchPoints>0))return;
+  var root=document.documentElement;root.classList.add('ukn-coop');
+  var el=document.scrollingElement||root,hint=document.getElementById('ukn-hint'),ht,lastY=0,startY=0,warned=false;
+  function scrollable(){return el.scrollHeight>el.clientHeight+4;}
+  function show(ms){if(!scrollable())return;hint.classList.add('on');clearTimeout(ht);ht=setTimeout(function(){hint.classList.remove('on');},ms||1800);}
+  function midY(t){return t.length>1?(t[0].clientY+t[1].clientY)/2:t[0].clientY;}
+  document.addEventListener('touchstart',function(e){lastY=startY=midY(e.touches);warned=false;},{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(e.touches.length>1){
+      var y=midY(e.touches);el.scrollTop+=lastY-y;lastY=y;
+      hint.classList.remove('on');
+      if(e.cancelable)e.preventDefault();
+    }else{
+      lastY=midY(e.touches);
+      if(!warned&&Math.abs(lastY-startY)>10){warned=true;show(1800);}
+    }
+  },{passive:false});
+  window.addEventListener('load',function(){setTimeout(function(){show(3000);},600);});
 })();
 </script>
 </body>
