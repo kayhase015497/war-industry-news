@@ -8,171 +8,92 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0f1a;
-  --bg2:#121a2b;
-  --border:#2a3550;
-  --text:#e8ecf5;
-  --mute:#9aa5bd;
-  --blue:#3987e5;
-  --blue-bg:rgba(57,135,229,.10);
-  --gold:#eda100;
-  --gold-bg:rgba(237,161,0,.10);
+  --bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;
+  --blue:#3987e5;--blue-bg:rgba(57,135,229,.10);--gold:#eda100;--gold-bg:rgba(237,161,0,.10);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-body.ukn-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Noto Sans TC',sans-serif;
-  font-size:18px;
-  line-height:1.6;
-  padding:clamp(16px,4vw,36px);
-  max-width:980px;
-  margin:0 auto;
-}
-
-/* Header */
-.ukn-header{margin-bottom:22px}
-.ukn-kicker{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.06em;color:var(--mute);margin-bottom:8px}
-.ukn-title{font-size:clamp(26px,5vw,36px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:10px}
+body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.55;padding:clamp(14px,3vw,32px);max-width:1000px;margin:0 auto}
+.ukn-header{margin-bottom:16px}
+.ukn-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:6px}
+.ukn-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:6px}
 .ukn-sub{font-size:18px;color:var(--mute)}
 
-/* Column headers (desktop only) */
-.ukn-colhd{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
-.ukn-colhd div{
-  font-weight:900;
-  font-size:20px;
-  padding:10px 16px;
-  border-radius:10px;
-  text-align:center;
-}
+/* tabs & chips */
+.ukn-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ukn-tab{font:inherit;font-size:18px;font-weight:700;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--mute);cursor:pointer}
+.ukn-tab.on{background:#fff;color:#0b0f1a;border-color:#fff}
+.ukn-filters{display:grid;gap:8px;margin-bottom:12px}
+.ukn-fr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ukn-fl{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-right:2px}
+.ukn-chip{font:inherit;font-size:18px;padding:2px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--mute);cursor:pointer}
+.ukn-chip.on{background:var(--text);color:#0b0f1a;border-color:var(--text);font-weight:700}
+
+/* column headers */
+.ukn-colhd{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.ukn-colhd div{font-weight:900;font-size:20px;padding:8px 14px;border-radius:10px;text-align:center}
 .ukn-colhd .b{background:var(--blue);color:#fff}
 .ukn-colhd .a{background:var(--gold);color:#1a1300}
-.ukn-colhd small{display:block;font-family:'Space Mono',monospace;font-size:18px;font-weight:400;opacity:.9}
+.ukn-colhd small{font-family:'Space Mono',monospace;font-size:18px;font-weight:400;margin-left:8px}
 
-/* Pairs */
-.ukn-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.ukn-card{
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:16px 18px;
-  display:flex;flex-direction:column;
-}
-.ukn-card.b{background:var(--blue-bg);border-top:5px solid var(--blue)}
-.ukn-card.a{background:var(--gold-bg);border-top:5px solid var(--gold)}
-.ukn-phase{
-  font-family:'Space Mono',monospace;
-  font-size:18px;
-  font-weight:700;
-  margin-bottom:6px;
-}
+/* featured pairs */
+.ukn-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ukn-card{border:1px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column}
+.ukn-card.b{background:var(--blue-bg);border-top:4px solid var(--blue)}
+.ukn-card.a{background:var(--gold-bg);border-top:4px solid var(--gold)}
+.ukn-phase{display:none;font-family:'Space Mono',monospace;font-weight:700;font-size:18px}
 .ukn-card.b .ukn-phase{color:var(--blue)}
 .ukn-card.a .ukn-phase{color:var(--gold)}
-.ukn-outlet{
-  display:inline-block;
-  align-self:flex-start;
-  font-family:'Space Mono',monospace;
-  font-size:18px;
-  font-weight:700;
-  padding:0 10px;
-  border-radius:6px;
-  margin-bottom:8px;
-}
+.ukn-outlet{align-self:flex-start;font-family:'Space Mono',monospace;font-size:18px;font-weight:700;padding:0 10px;border-radius:6px;margin-bottom:6px}
 .ukn-card.b .ukn-outlet{background:rgba(57,135,229,.22);color:#9cc4f5}
 .ukn-card.a .ukn-outlet{background:rgba(237,161,0,.22);color:#f5d27a}
-.ukn-hl{font-size:20px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:6px}
+.ukn-hl{font-size:20px;font-weight:700;color:#fff;line-height:1.4;text-decoration:none;margin-bottom:4px}
+.ukn-hl::after{content:" ↗";color:var(--mute);font-weight:400}
+.ukn-hl:hover{text-decoration:underline}
 .ukn-hl em{font-style:normal;text-transform:uppercase;font-weight:900}
 .ukn-card.b .ukn-hl em{color:var(--blue)}
 .ukn-card.a .ukn-hl em{color:var(--gold)}
-.ukn-meta{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:6px}
-.ukn-desc{font-size:18px;color:var(--text);margin-bottom:10px}
-.ukn-foot{margin-top:auto}
-.ukn-link{
-  display:inline-block;
-  font-size:18px;
-  font-weight:700;
-  color:#fff;
-  text-decoration:none;
-  padding:4px 14px;
-  border-radius:8px;
-  border:1px solid;
-}
-.ukn-card.b .ukn-link{border-color:var(--blue);background:rgba(57,135,229,.25)}
-.ukn-card.a .ukn-link{border-color:var(--gold);background:rgba(237,161,0,.25)}
-.ukn-link:hover{text-decoration:underline}
-.ukn-nolink{
-  display:inline-block;
-  font-size:18px;
-  color:var(--mute);
-  border:1px dashed var(--border);
-  border-radius:8px;
-  padding:4px 12px;
-}
+.ukn-meta{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute)}
+.ukn-desc{font-size:18px;margin-top:2px}
 
-/* More */
-.ukn-sec{
-  font-family:'Space Mono',monospace;
-  font-size:18px;
-  color:var(--mute);
-  margin:34px 0 12px;
-  display:flex;align-items:center;gap:12px;
-}
-.ukn-sec::after{content:'';flex:1;height:1px;background:var(--border)}
-details.ukn-more{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:10px;
-  overflow:hidden;
-}
-details.ukn-more[open]{border-color:#44527a}
-.ukn-more summary{
-  list-style:none;
-  cursor:pointer;
-  padding:12px 16px;
-  font-size:18px;
-  font-weight:700;
-  color:#fff;
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
-}
-.ukn-more summary::-webkit-details-marker{display:none}
-.ukn-more summary .chev{color:var(--mute);transition:transform .15s}
-details.ukn-more[open] summary .chev{transform:rotate(180deg)}
-.ukn-more-body{padding:0 16px 12px;border-top:1px solid var(--border)}
-.ukn-row{
-  border-left:4px solid;
-  padding:6px 0 6px 12px;
-  margin-top:12px;
-}
-.ukn-row.b{border-left-color:var(--blue)}
-.ukn-row.a{border-left-color:var(--gold)}
-.ukn-row .o{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
-.ukn-row.b .o{color:var(--blue)}
-.ukn-row.a .o{color:var(--gold)}
-.ukn-row .h{font-size:18px;font-weight:700;color:#fff}
-.ukn-row .d{font-size:18px;color:var(--mute)}
-.ukn-row a{color:#9cc4f5;word-break:break-word}
-.ukn-row.a a{color:#f5d27a}
+/* more: columns */
+.ukn-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.ukn-col-t{display:none;font-weight:900;font-size:20px;padding:6px 14px;border-radius:10px;margin-bottom:8px}
+.ukn-col-t.b{background:var(--blue);color:#fff}
+.ukn-col-t.a{background:var(--gold);color:#1a1300}
+.ukn-it{border-left:5px solid;border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.ukn-it.b{border-left-color:var(--blue);background:var(--blue-bg)}
+.ukn-it.a{border-left-color:var(--gold);background:var(--gold-bg)}
+.ukn-it .o{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
+.ukn-it.b .o{color:#9cc4f5}
+.ukn-it.a .o{color:#f5d27a}
+.ukn-it .lg{font-size:18px;font-weight:400;border:1px solid var(--border);border-radius:5px;padding:0 6px;margin-right:4px;color:var(--mute)}
+.ukn-it .h{display:block;font-size:18px;font-weight:700;color:#fff;text-decoration:none;line-height:1.4}
+.ukn-it .h::after{content:" ↗";color:var(--mute);font-weight:400}
+.ukn-it .h:hover{text-decoration:underline}
+.ukn-it .zh{font-size:18px;color:var(--text)}
+.ukn-it .m{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute)}
+.ukn-it .n{font-size:18px;color:var(--mute)}
+.ukn-pw{font-family:'Noto Sans TC',sans-serif;font-weight:400;font-size:18px;color:var(--mute);border:1px dashed var(--border);border-radius:6px;padding:0 6px;margin-left:4px}
+.ukn-dt{margin-top:4px}
+.ukn-dt summary{cursor:pointer;color:#fff;font-size:18px;list-style:none;font-weight:700}
+.ukn-dt summary::-webkit-details-marker{display:none}
+.ukn-dt .chev{color:var(--mute)}
+.ukn-dt[open] .chev{display:inline-block;transform:rotate(180deg)}
+.ukn-dtb{font-size:18px;color:var(--text);padding-top:4px}
+.ukn-dtb a{color:#9cc4f5}
+.ukn-empty{display:none;border:1px dashed var(--border);border-radius:10px;padding:10px 14px;color:var(--mute);font-size:18px}
+.ukn-col.none .ukn-empty{display:block}
 
-/* Footer */
-.ukn-note{
-  margin-top:26px;
-  padding-top:12px;
-  border-top:1px solid var(--border);
-  font-size:18px;
-  color:var(--mute);
-}
-.ukn-footer{
-  margin-top:10px;
-  font-family:'Space Mono',monospace;
-  font-size:18px;
-  color:var(--mute);
-  text-align:right;
-}
+.ukn-note{margin-top:18px;padding-top:10px;border-top:1px solid var(--border);font-size:18px;color:var(--mute)}
+.ukn-footer{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
+[hidden]{display:none!important}
 
 @media(max-width:760px){
   .ukn-colhd{display:none}
-  .ukn-pair{grid-template-columns:1fr;gap:10px;margin-bottom:22px}
+  .ukn-pair{grid-template-columns:1fr;gap:8px;margin-bottom:16px}
+  .ukn-phase{display:block}
+  .ukn-cols{grid-template-columns:1fr}
+  .ukn-col-t{display:block}
 }
 </style>
 </head>
@@ -181,151 +102,273 @@ details.ukn-more[open] summary .chev{transform:rotate(180deg)}
 <header class="ukn-header">
   <div class="ukn-kicker">西方媒體敘事 · 2022年2月前後</div>
   <h1 class="ukn-title">烏克蘭戰前戰後：西方報導敘事比較</h1>
-  <p class="ukn-sub">同一批西方媒體，標題重心從「腐敗、極右、政治風波」轉向「自由、理想、英雄」。</p>
+  <p class="ukn-sub">同一批媒體在2022年2月全面入侵前後的標題對照。點標題開原文。</p>
 </header>
 
-<div class="ukn-colhd">
-  <div class="b">危機前<small>2015–2021</small></div>
-  <div class="a">危機後<small>2022起</small></div>
+<div class="ukn-tabs">
+  <button class="ukn-tab on" data-p="p1">精選四組</button>
+  <button class="ukn-tab" data-p="p2">更多對照（歐美）</button>
 </div>
 
-<!-- Pair 1 -->
-<div class="ukn-pair">
-  <div class="ukn-card b">
-    <div class="ukn-phase">危機前</div>
-    <span class="ukn-outlet">The Guardian</span>
-    <div class="ukn-hl">Welcome to Ukraine, the most <em>corrupt</em> nation in Europe</div>
-    <div class="ukn-meta">2015.02.04・Oliver Bullough</div>
-    <div class="ukn-desc">長文報導。依透明國際（Transparency International）指數，烏克蘭腐敗程度在歐洲名列前茅。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.theguardian.com/news/2015/feb/04/welcome-to-the-most-corrupt-nation-in-europe-ukraine" target="_blank" rel="noopener">原文連結 ↗</a></div>
+<section class="ukn-panel" id="p1">
+  <div class="ukn-colhd"><div class="b">危機前<small>2015–2021</small></div><div class="a">危機後<small>2022起</small></div></div>
+  <div class="ukn-pair">
+    <div class="ukn-card b">
+      <div class="ukn-phase">危機前</div>
+      <span class="ukn-outlet">The Guardian</span>
+      <a class="ukn-hl" href="https://www.theguardian.com/news/2015/feb/04/welcome-to-the-most-corrupt-nation-in-europe-ukraine" target="_blank" rel="noopener">Welcome to Ukraine, the most <em>corrupt</em> nation in Europe</a>
+      <div class="ukn-meta">2015.02.06・Oliver Bullough</div>
+      <div class="ukn-desc">依透明國際指數，烏克蘭腐敗程度在歐洲名列前茅。</div>
+    </div>
+    <div class="ukn-card a">
+      <div class="ukn-phase">危機後</div>
+      <span class="ukn-outlet">The Guardian</span>
+      <a class="ukn-hl" href="https://www.theguardian.com/commentisfree/2022/feb/27/ukraine-liberal-ideals-boris-johnson-tories-russian-money" target="_blank" rel="noopener">The fight for Ukraine is a fight for liberal <em>ideals</em>. So how can Boris Johnson possibly lead it?</a>
+      <div class="ukn-meta">2022.02.27・John Harris・個人專欄</div>
+      <div class="ukn-desc">前半句把戰爭框為自由主義理想之戰；副題談英國保守黨收俄資。</div>
+    </div>
   </div>
-  <div class="ukn-card a">
-    <div class="ukn-phase">危機後</div>
-    <span class="ukn-outlet">The Guardian</span>
-    <div class="ukn-hl">The fight for Ukraine is a fight for liberal <em>ideals</em></div>
-    <div class="ukn-meta">2022起・多篇社論與分析</div>
-    <div class="ukn-desc">2022年後多篇社論將俄烏戰爭框架為自由民主對專制的對抗（例：Timothy Garton Ash 等人評論）。</div>
-    <div class="ukn-foot"><span class="ukn-nolink">概括性標題，非單篇原題・無單篇連結</span></div>
+  <div class="ukn-pair">
+    <div class="ukn-card b">
+      <div class="ukn-phase">危機前</div>
+      <span class="ukn-outlet">REUTERS</span>
+      <a class="ukn-hl" href="https://www.reuters.com/article/us-cohen-ukraine-commentary-idUSKBN1GV2TY/" target="_blank" rel="noopener">Commentary: Ukraine's neo-<em>Nazi</em> problem</a>
+      <div class="ukn-meta">2018.03.20・Josh Cohen・評論</div>
+      <div class="ukn-desc">討論極右翼民兵（如 Azov 相關團體）使用暴力與納粹象徵。</div>
+    </div>
+    <div class="ukn-card a">
+      <div class="ukn-phase">危機後</div>
+      <span class="ukn-outlet">REUTERS</span>
+      <a class="ukn-hl" href="https://www.reuters.com/world/europe/foreign-fighters-ukraine-offers-purpose-camaraderie-cause-2022-03-07/" target="_blank" rel="noopener">Insight: For foreign fighters, Ukraine offers purpose, camaraderie and a <em>cause</em></a>
+      <div class="ukn-meta">2022.03.07・Andrew R.C. Marshall・深度報導</div>
+      <div class="ukn-desc">探討外國志願者赴烏動機：理想、戰友情誼與目標。</div>
+    </div>
   </div>
-</div>
+  <div class="ukn-pair">
+    <div class="ukn-card b">
+      <div class="ukn-phase">危機前</div>
+      <span class="ukn-outlet">Vox</span>
+      <a class="ukn-hl" href="https://www.vox.com/world/2019/9/24/20882359/trump-impeachment-ukraine-president-zelensky" target="_blank" rel="noopener">A Ukrainian comedian-turned-president is embroiled in Trump's impeachment <em>mess</em></a>
+      <div class="ukn-meta">2019.09.24・Alex Ward</div>
+      <div class="ukn-desc">前喜劇演員澤倫斯基捲入川普電話門與彈劾案。</div>
+    </div>
+    <div class="ukn-card a">
+      <div class="ukn-phase">危機後</div>
+      <span class="ukn-outlet">CNN</span>
+      <a class="ukn-hl" href="https://edition.cnn.com/2022/03/06/politics/ukraine-democracy-lesson-us-blake-cec" target="_blank" rel="noopener">Ukrainians are giving two <em>lessons</em> in democracy that Americans have forgotten</a>
+      <div class="ukn-meta">2022.03.06・John Blake・分析</div>
+      <div class="ukn-desc">以烏克蘭人捍衛民主，談美國人遺忘的兩點教訓。</div>
+    </div>
+  </div>
+  <div class="ukn-pair">
+    <div class="ukn-card b">
+      <div class="ukn-phase">危機前</div>
+      <span class="ukn-outlet">NEW EUROPE（NE Global）</span>
+      <a class="ukn-hl" href="https://www.neglobal.eu/ukrainian-presidents-rule-becomes-increasingly-corrupt-authoritarian/" target="_blank" rel="noopener">Ukrainian president's rule becomes increasingly corrupt, <em>authoritarian</em></a>
+      <div class="ukn-meta">2021.04.15・NE Global</div>
+      <div class="ukn-desc">內文談 Tatarov 案與 Vovk 案。</div>
+    </div>
+    <div class="ukn-card a">
+      <div class="ukn-phase">危機後</div>
+      <span class="ukn-outlet">The Washington Post</span>
+      <a class="ukn-hl" href="https://www.washingtonpost.com/podcasts/post-reports/zelensky-the-tv-president-turned-war-hero/" target="_blank" rel="noopener">Zelensky: The TV president turned war <em>hero</em></a>
+      <div class="ukn-meta">2022.03.05・Post Reports・播客</div>
+      <div class="ukn-desc">從電視演員到戰時英雄（42分鐘播客，非文字報導）。</div>
+    </div>
+  </div>
+</section>
 
-<!-- Pair 2 -->
-<div class="ukn-pair">
-  <div class="ukn-card b">
-    <div class="ukn-phase">危機前</div>
-    <span class="ukn-outlet">REUTERS</span>
-    <div class="ukn-hl">Ukraine's neo-<em>Nazi</em> problem</div>
-    <div class="ukn-meta">2018.03.20・Josh Cohen（前USAID官員）・評論</div>
-    <div class="ukn-desc">討論烏克蘭極右翼民兵（如 Azov 相關團體）使用暴力與納粹象徵的問題。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.reuters.com/article/us-cohen-ukraine-commentary-idUSKBN1GV2TY" target="_blank" rel="noopener">原文連結 ↗</a></div>
+<section class="ukn-panel" id="p2" hidden>
+  <div class="ukn-filters">
+    <div class="ukn-fr"><span class="ukn-fl">主題</span><button class="ukn-chip on" data-g="topic" data-v="all">全部</button><button class="ukn-chip" data-g="topic" data-v="far">亞速營・極右</button><button class="ukn-chip" data-g="topic" data-v="cor">腐敗・寡頭</button></div>
+    <div class="ukn-fr"><span class="ukn-fl">語言</span><button class="ukn-chip on" data-g="lang" data-v="all">全部</button><button class="ukn-chip" data-g="lang" data-v="EN">英</button><button class="ukn-chip" data-g="lang" data-v="DE">德</button><button class="ukn-chip" data-g="lang" data-v="FR">法</button><button class="ukn-chip" data-g="lang" data-v="PL">波</button></div>
   </div>
-  <div class="ukn-card a">
-    <div class="ukn-phase">危機後</div>
-    <span class="ukn-outlet">REUTERS</span>
-    <div class="ukn-hl">For foreign fighters, Ukraine offers purpose, camaraderie and a <em>cause</em></div>
-    <div class="ukn-meta">2022.03.07・深度報導</div>
-    <div class="ukn-desc">探討外國志願者赴烏動機：理想、戰友情誼與目標。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.reuters.com/world/europe/foreign-fighters-ukraine-offers-purpose-camaraderie-cause-2022-03-07/" target="_blank" rel="noopener">原文連結 ↗</a></div>
+  <div class="ukn-colhd"><div class="b">危機前<small>2014–2022.01</small></div><div class="a">危機後<small>2022起</small></div></div>
+  <div class="ukn-cols">
+    <div class="ukn-col">
+      <div class="ukn-col-t b">危機前</div>
+      <div class="ukn-it b" data-topic="far" data-lang="PL">
+        <div class="o"><span class="lg">PL</span> Gazeta Wyborcza <span class="ukn-pw">付費牆</span></div>
+        <a class="h" href="https://wyborcza.pl/magazyn/7,124059,16445827,ochotnik.html" target="_blank" rel="noopener">Ochotnik</a>
+        <div class="zh">志願者</div>
+        <div class="m">2014.08.08</div>
+        <div class="n">亞速營志願者宣誓後赴東線</div>
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> BBC News</div>
+        <a class="h" href="https://www.bbc.com/news/world-europe-28329329" target="_blank" rel="noopener">Ukraine conflict: 'White power' warrior from Sweden</a>
+        <div class="zh">瑞典志願者加入 Azov，引述其「白人權力」觀點</div>
+        <div class="m">2014.07.16・Dina Newman</div>
+        
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> FOCUS Online</div>
+        <a class="h" href="https://www.focus.de/politik/ausland/das-bataillon-asow-schmutziger-kampf-in-der-ukraine-neonazis-im-dienst-der-regierung_id_4058717.html" target="_blank" rel="noopener">Das Bataillon Asow: Schmutziger Kampf in der Ukraine: Neonazis im Dienst der Regierung</a>
+        <div class="zh">亞速營：烏克蘭的髒仗——為政府效力的新納粹</div>
+        <div class="m">2014.08.14・Linda Hinz</div>
+        
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> The Guardian</div>
+        <a class="h" href="https://www.theguardian.com/world/2014/sep/10/azov-far-right-fighters-ukraine-neo-nazis" target="_blank" rel="noopener">Azov fighters are Ukraine's greatest weapon and may be its greatest threat</a>
+        <div class="zh">Azov 營有極右與新納粹傾向成員，記者嵌入前線</div>
+        <div class="m">2014.09.10・Shaun Walker</div>
+        
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="FR">
+        <div class="o"><span class="lg">FR</span> Le Nouvel Obs</div>
+        <a class="h" href="https://www.nouvelobs.com/magazine/20140911.OBS8847/azov-des-neonazis-au-service-de-kiev.html" target="_blank" rel="noopener">Azov, des néonazis au service de Kiev</a>
+        <div class="zh">亞速：為基輔效力的新納粹</div>
+        <div class="m">2014.09.11</div>
+        <div class="n">訂閱牆，內文是否完整未確認</div>
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> BBC News</div>
+        <a class="h" href="https://www.bbc.com/news/world-europe-30414955" target="_blank" rel="noopener">Ukraine underplays role of far right in conflict</a>
+        <div class="zh">官方與媒體淡化極右翼（含 Azov）的角色</div>
+        <div class="m">2014.12.13・David Stern</div>
+        
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> The Guardian</div>
+        <a class="h" href="https://www.theguardian.com/world/2018/mar/13/ukraine-far-right-national-militia-takes-law-into-own-hands-neo-nazi-links" target="_blank" rel="noopener">Ukraine's National Militia: 'We're not neo-Nazis, we just want to make our country better'</a>
+        <div class="zh">國民民兵與 Biletsky 過去的白人至上言論</div>
+        <div class="m">2018.03.13・Marc Bennetts</div>
+        
+      </div>
+      <div class="ukn-it b" data-topic="far" data-lang="PL">
+        <div class="o"><span class="lg">PL</span> Gazeta Wyborcza（Wrocław）</div>
+        <a class="h" href="https://wroclaw.wyborcza.pl/wroclaw/7,35771,23904701,ukrainscy-faszysci-sa-szkoleni-w-polsce.html" target="_blank" rel="noopener">Ukraińscy neonaziści, m.in. z pułku Azow, byli wielokrotnie szkoleni w Polsce przez wrocławską akademię</a>
+        <div class="zh">烏克蘭新納粹（含亞速團）多次在波蘭受訓</div>
+        <div class="m">2018.09.11</div>
+        <div class="n">標題直接稱「neonaziści」</div>
+      </div>
+      <div class="ukn-it b" data-topic="cor" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> Atlantic Council</div>
+        <a class="h" href="https://www.atlanticcouncil.org/blogs/ukrainealert/ukraines-anti-oligarch-law-president-zelenskyys-populist-power-grab/" target="_blank" rel="noopener">Ukraine's Anti-Oligarch Law: President Zelenskyy's populist power grab?</a>
+        <div class="zh">質疑反寡頭法是權力集中工具，而非真改革</div>
+        <div class="m">2021.11.15・Kira Rudik（Holos黨領袖）</div>
+        <div class="n">個人投書，非機構立場</div>
+      </div>
+      <div class="ukn-it b" data-topic="cor" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> Kyiv Independent</div>
+        <a class="h" href="https://kyivindependent.com/how-zelensky-administration-moves-to-dismantle-press-freedom-in-ukraine/" target="_blank" rel="noopener">How Zelensky's administration moves to dismantle press freedom in Ukraine</a>
+        <div class="zh">入侵前報導政府對媒體施壓</div>
+        <div class="m">2022.01.12・Igor Kossov</div>
+        <div class="n">烏克蘭媒體，非西方媒體</div>
+      </div>
+      <div class="ukn-empty">此條件下沒有已查證的文章</div>
+    </div>
+    <div class="ukn-col">
+      <div class="ukn-col-t a">危機後</div>
+      <div class="ukn-it a" data-topic="far" data-lang="FR">
+        <div class="o"><span class="lg">FR</span> Libération（CheckNews）</div>
+        <a class="h" href="https://www.liberation.fr/checknews/quelle-est-limportance-du-regiment-azov-cette-unite-ukrainienne-fondee-par-des-proches-de-la-mouvance-neonazie-20220308_6UPAODEHPVCCBA5Z5BQ2QQZKTQ/" target="_blank" rel="noopener">Quelle est l'importance du régiment Azov, cette unité ukrainienne fondée par des proches de la mouvance néonazie?</a>
+        <div class="zh">亞速團有多重要？由新納粹圈子人士創立的部隊</div>
+        <div class="m">2022.03.08</div>
+        
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> DER SPIEGEL <span class="ukn-pw">付費牆</span></div>
+        <a class="h" href="https://www.spiegel.de/ausland/asow-regiment-wagner-soeldner-radikale-die-neonazis-die-um-die-ukraine-kaempfen-a-662b9c42-d874-4a49-844d-b80c4f96e474" target="_blank" rel="noopener">Asow-Regiment, Wagner-Söldner, Radikale: Die Neonazis, die um die Ukraine kämpfen</a>
+        <div class="zh">亞速團、瓦格納傭兵、激進分子：為烏克蘭而戰的新納粹</div>
+        <div class="m">2022.03.04・Ann-Dorit Boy、Francesco Collini</div>
+        <div class="n">馬立波主要由極右的亞速團防守</div>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> DIE ZEIT <span class="ukn-pw">付費牆</span></div>
+        <a class="h" href="https://www.zeit.de/politik/ausland/2022-03/asow-regiment-ukraine-rechtsextremismus" target="_blank" rel="noopener">Asow-Regiment: Extreme Verteidiger</a>
+        <div class="zh">亞速團：極端的防衛者</div>
+        <div class="m">2022.03.15・Hauke Friederichs・分析</div>
+        <div class="n">成員為民族主義者與極右派</div>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> Deutsche Welle</div>
+        <a class="h" href="https://www.dw.com/de/asow-regiment-die-extremisten-in-mariupol/a-61142241" target="_blank" rel="noopener">„Asow“-Regiment: Die Extremisten in Mariupol</a>
+        <div class="zh">「亞速」團：馬立波的極端分子</div>
+        <div class="m">2022.03.17・Roman Goncharenko</div>
+        
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="FR">
+        <div class="o"><span class="lg">FR</span> Le Monde（Les Décodeurs）</div>
+        <a class="h" href="https://www.lemonde.fr/les-decodeurs/article/2022/03/23/qui-sont-les-soldats-du-regiment-azov-accuses-d-etre-les-neonazis-de-l-armee-ukrainienne_6118771_4355770.html" target="_blank" rel="noopener">Qui sont les soldats du régiment Azov, accusés d'être les « néonazis » de l'armée ukrainienne ?</a>
+        <div class="zh">亞速團的士兵是誰？被指為軍中的「新納粹」</div>
+        <div class="m">2022.03.23</div>
+        <div class="n">「新納粹」放在引號內</div>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="EN">
+        <div class="o"><span class="lg">EN</span> CNN</div>
+        <a class="h" href="https://edition.cnn.com/2022/03/29/europe/ukraine-azov-movement-far-right-intl-cmd" target="_blank" rel="noopener">A far-right battalion has a key role in Ukraine's resistance. Its neo-Nazi history has been exploited by Putin</a>
+        <div class="zh">極右營在抵抗中扮演關鍵角色；其新納粹歷史被普丁利用</div>
+        <div class="m">2022.03.29・Tara John、Tim Lister・分析</div>
+        <div class="n">標題曾改過</div><details class="ukn-dt"><summary>備註 <span class="chev">▾</span></summary><div class="ukn-dtb">內文仍提及兒童夏令營等新納粹牽連。3月29日存檔標題為「…neo-Nazi <b>links</b> have given Putin <b>ammunition</b>」，3月31日存檔已是現行版；誰改的未知。<br><a href="https://web.archive.org/web/20220329104033/https://edition.cnn.com/2022/03/29/europe/ukraine-azov-movement-far-right-intl-cmd/" target="_blank" rel="noopener">3/29存檔 ↗</a> ｜ <a href="https://web.archive.org/web/20220331041408/https://edition.cnn.com/2022/03/29/europe/ukraine-azov-movement-far-right-intl-cmd/" target="_blank" rel="noopener">3/31存檔 ↗</a></div></details>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="PL">
+        <div class="o"><span class="lg">PL</span> Onet Wiadomości</div>
+        <a class="h" href="https://wiadomosci.onet.pl/kraj/konstanty-gebert-odchodzi-z-gazety-wyborczej-powodem-spor-o-ukrainski-pulk/wz0ymbe" target="_blank" rel="noopener">Konstanty Gebert odchodzi z "Gazety Wyborczej". Powodem spór o ukraiński pułk Azow</a>
+        <div class="zh">Gebert 離開《選舉報》，起因是亞速團之爭</div>
+        <div class="m">2022.04.14</div>
+        <div class="n">辭別文據轉述</div><details class="ukn-dt"><summary>備註 <span class="chev">▾</span></summary><div class="ukn-dtb">引述 Gebert 辭別文：他稱亞速營為「新納粹」，編輯部認為不可接受。辭別文本身未能開啟，內容據轉述。</div></details>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="PL">
+        <div class="o"><span class="lg">PL</span> WirtualneMedia.pl</div>
+        <a class="h" href="https://www.wirtualnemedia.pl/konstanty-gebert-odchodzi-gazeta-wyborcza-ukraina-azow,7170001518958209a" target="_blank" rel="noopener">Konstanty Gebert żegna się z „Gazetą Wyborczą". Poszło o ukraiński Azow</a>
+        <div class="zh">Gebert 向《選舉報》告別，起因是亞速</div>
+        <div class="m">2022.04.15</div>
+        <div class="n">報社回應見備註</div><details class="ukn-dt"><summary>備註 <span class="chev">▾</span></summary><div class="ukn-dtb">稱編輯部想把「neonazistowski」改成「skrajnie prawicowy」（極右）。文末附報社聲明：「z żalem przyjmuje decyzję naszego Kolegi」（遺憾接受我們同事的決定）。</div></details>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> DER SPIEGEL（播客）</div>
+        <a class="h" href="https://www.spiegel.de/ausland/ukraine-das-asow-regiment-neonazis-oder-elitekaempfer-acht-milliarden-podcast-a-a413843c-c090-41d9-9cb5-545082ac759d" target="_blank" rel="noopener">Ukraine: Das Asow-Regiment – Neonazis oder Elitekämpfer? - Podcast</a>
+        <div class="zh">亞速團——新納粹還是精英戰士？</div>
+        <div class="m">2022.05.03</div>
+        <div class="n">19分鐘播客</div>
+      </div>
+      <div class="ukn-it a" data-topic="far" data-lang="DE">
+        <div class="o"><span class="lg">DE</span> DER SPIEGEL <span class="ukn-pw">付費牆</span></div>
+        <a class="h" href="https://www.spiegel.de/politik/deutschland/ukraine-krieg-organisierte-neonazi-gruppen-kaempfen-fuer-russland-geheimdienstbericht-a-f1632333-6801-47b3-99b9-650d85a51a52" target="_blank" rel="noopener">Ukraine-Krieg: Organisierte Neonazi-Gruppen kämpfen für Russland - Geheimdienstbericht</a>
+        <div class="zh">有組織的新納粹團體為俄羅斯作戰——情報報告</div>
+        <div class="m">2022.05.22・Fidelius Schmid</div>
+        <div class="n">談的是俄方一側</div>
+      </div>
+      <div class="ukn-empty">此條件下沒有已查證的文章</div>
+    </div>
   </div>
-</div>
+  <div class="ukn-note">德、法、波蘭語媒體在2022年3月前後，仍有直接討論亞速營極右／新納粹關聯的報導。標「付費牆」者僅讀到導言。</div>
+</section>
 
-<!-- Pair 3 -->
-<div class="ukn-pair">
-  <div class="ukn-card b">
-    <div class="ukn-phase">危機前</div>
-    <span class="ukn-outlet">Vox</span>
-    <div class="ukn-hl">A Ukrainian comedian-turned-president is embroiled in Trump's impeachment <em>mess</em></div>
-    <div class="ukn-meta">2019.09・系列報導</div>
-    <div class="ukn-desc">2019年多次報導前喜劇演員澤倫斯基被捲入川普電話門與彈劾案。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.vox.com/world/2019/9/24/20882359/trump-impeachment-ukraine-president-zelensky" target="_blank" rel="noopener">代表性報導連結 ↗</a></div>
-  </div>
-  <div class="ukn-card a">
-    <div class="ukn-phase">危機後</div>
-    <span class="ukn-outlet">CNN</span>
-    <div class="ukn-hl">Ukrainians are giving two <em>lessons</em> in democracy that Americans have forgotten</div>
-    <div class="ukn-meta">2022.03.06・John Blake・分析</div>
-    <div class="ukn-desc">以烏克蘭人捍衛民主的作為，談美國人遺忘的兩點教訓。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.cnn.com/2022/03/06/politics/ukraine-democracy-lesson-us-blake-cec" target="_blank" rel="noopener">原文連結 ↗</a></div>
-  </div>
-</div>
-
-<!-- Pair 4 -->
-<div class="ukn-pair">
-  <div class="ukn-card b">
-    <div class="ukn-phase">危機前</div>
-    <span class="ukn-outlet">NEW EUROPE</span>
-    <div class="ukn-hl">Ukrainian president's rule becomes increasingly corrupt, <em>authoritarian</em></div>
-    <div class="ukn-meta">2019–2021・概括</div>
-    <div class="ukn-desc">New Europe 與同期西方媒體在澤倫斯基當選後，曾報導其權力集中、媒體與反腐敗機構等爭議。</div>
-    <div class="ukn-foot"><span class="ukn-nolink">找不到一字不差的原題・無單篇連結</span></div>
-  </div>
-  <div class="ukn-card a">
-    <div class="ukn-phase">危機後</div>
-    <span class="ukn-outlet">The Washington Post</span>
-    <div class="ukn-hl">Zelensky: The TV president turned war <em>hero</em></div>
-    <div class="ukn-meta">2022.03・Post Reports</div>
-    <div class="ukn-desc">描述澤倫斯基從電視演員到戰時英雄的轉變。</div>
-    <div class="ukn-foot"><a class="ukn-link" href="https://www.washingtonpost.com/podcasts/post-reports/zelensky-the-tv-president-turned-war-hero/" target="_blank" rel="noopener">原文連結 ↗</a></div>
-  </div>
-</div>
-
-<!-- More -->
-<div class="ukn-sec">更多對照</div>
-
-<details class="ukn-more">
-  <summary>極右翼／亞速營 <span class="chev">▾</span></summary>
-  <div class="ukn-more-body">
-    <div class="ukn-row b">
-      <div class="o">危機前・The Guardian</div>
-      <div class="h">Azov fighters are Ukraine's greatest weapon and may be its greatest threat</div>
-      <div class="d">2014.09.10・Azov營有明顯極右與新納粹傾向成員，記者嵌入前線採訪。<br><a href="https://www.theguardian.com/world/2014/sep/10/azov-far-right-fighters-ukraine-neo-nazis" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row b">
-      <div class="o">危機前・BBC News</div>
-      <div class="h">Ukraine underplays role of far right in conflict</div>
-      <div class="d">2014・官方與媒體淡化極右翼（含Azov）在衝突中的角色，並提到納粹象徵。<br><a href="https://www.bbc.com/news/world-europe-30414955" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row b">
-      <div class="o">危機前・BBC News</div>
-      <div class="h">Ukraine conflict: 'White power' warrior from Sweden</div>
-      <div class="d">2014・瑞典志願者加入Azov，並引述其「白人權力」觀點。<br><a href="https://www.bbc.com/news/world-europe-28329329" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row b">
-      <div class="o">危機前・The Guardian</div>
-      <div class="h">Ukraine's National Militia: 'We're not neo-Nazis, we just want to make our country better'</div>
-      <div class="d">2018.03.13・與Azov運動相關的國民民兵，以及Andriy Biletsky過去的白人至上言論。<br><a href="https://www.theguardian.com/world/2018/mar/13/ukraine-far-right-national-militia-takes-law-into-own-hands-neo-nazi-links" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row a">
-      <div class="o">危機後・CNN</div>
-      <div class="h">CNN 對亞速運動（Azov movement）的分析・標題以原文為準</div>
-      <div class="d">2022.03.29・仍提及極右歷史，語氣轉向強調其已整合進國民警衛隊、在抵抗中扮演角色。<br><a href="https://edition.cnn.com/2022/03/29/europe/ukraine-azov-movement-far-right-intl-cmd" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-  </div>
-</details>
-
-<details class="ukn-more">
-  <summary>腐敗、寡頭與媒體控制 <span class="chev">▾</span></summary>
-  <div class="ukn-more-body">
-    <div class="ukn-row b">
-      <div class="o">危機前・Atlantic Council</div>
-      <div class="h">Ukraine's Anti-Oligarch Law: President Zelenskyy's populist power grab?</div>
-      <div class="d">2021・質疑反寡頭法可能是權力集中工具，而非真正改革。<br><a href="https://www.atlanticcouncil.org/blogs/ukrainealert/ukraines-anti-oligarch-law-president-zelenskyys-populist-power-grab/" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row b">
-      <div class="o">危機前・Kyiv Independent</div>
-      <div class="h">How Zelensky's administration moves to dismantle press freedom in Ukraine</div>
-      <div class="d">2022.01（入侵前）・政府對媒體施壓、關閉親俄頻道，以及媒體法草案引發的疑慮。<br><a href="https://kyivindependent.com/how-zelensky-administration-moves-to-dismantle-press-freedom-in-ukraine/" target="_blank" rel="noopener">原文連結 ↗</a></div>
-    </div>
-    <div class="ukn-row b">
-      <div class="o">危機前・Chatham House</div>
-      <div class="h">Ukraine's system of crony capitalism</div>
-      <div class="d">2021・分析寡頭控制媒體、政治與經濟的體系。無單篇連結。</div>
-    </div>
-  </div>
-</details>
-
-<div class="ukn-note">標示「概括性標題」或「代表性報導」者，非單一篇的原題。標題中的大寫字為重點強調，原文並非全大寫。</div>
+<div class="ukn-note">標題、日期、作者為2026年11月3日以瀏覽器逐篇開啟頁面查證的結果；各站顯示時區不同時，日期可能差一天。標題中的大寫字為重點強調，原文並非全大寫。</div>
 <div class="ukn-footer">製表：張威翔</div>
 
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.ukn-tab'),panels=document.querySelectorAll('.ukn-panel');
+  var f={topic:'all',lang:'all'};
+  function report(){try{parent.postMessage({type:'ukn-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+  function apply(){
+    document.querySelectorAll('.ukn-it').forEach(function(el){
+      var ok=(f.topic==='all'||el.dataset.topic===f.topic)&&(f.lang==='all'||el.dataset.lang===f.lang);
+      el.hidden=!ok;
+    });
+    document.querySelectorAll('.ukn-col').forEach(function(c){
+      c.classList.toggle('none',!c.querySelector('.ukn-it:not([hidden])'));
+    });
+    report();
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.classList.toggle('on',x===t)});
+    panels.forEach(function(p){p.hidden=p.id!==t.dataset.p});
+    report();
+  });});
+  document.querySelectorAll('.ukn-chip').forEach(function(b){b.addEventListener('click',function(){
+    var g=b.dataset.g;f[g]=b.dataset.v;
+    document.querySelectorAll('.ukn-chip[data-g="'+g+'"]').forEach(function(x){x.classList.toggle('on',x===b)});
+    apply();
+  });});
+  document.addEventListener('toggle',report,true);
+  window.addEventListener('load',report);window.addEventListener('resize',report);
+  apply();
+})();
+</script>
 </body>
 </html>
