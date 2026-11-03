@@ -87,12 +87,49 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 .ukn-footer{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
 [hidden]{display:none!important}
 
+.ukn-seg{display:none}
+
 @media(max-width:760px){
+  body.ukn-body{padding:12px}
+  .ukn-title{font-size:26px}
   .ukn-colhd{display:none}
-  .ukn-pair{grid-template-columns:1fr;gap:8px;margin-bottom:16px}
-  .ukn-phase{display:block}
-  .ukn-cols{grid-template-columns:1fr}
-  .ukn-col-t{display:block}
+  .ukn-tab{min-height:48px}
+  .ukn-tabs{margin-bottom:12px}
+  .ukn-chip{min-height:44px;padding:4px 12px}
+  .ukn-filters{gap:6px}
+  .ukn-fl{display:none}
+  .ukn-fr{gap:6px}
+
+  /* featured: one "versus" card per pair */
+  .ukn-pair{display:block;margin-bottom:14px;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .ukn-card{display:flex;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:10px;border:0;border-radius:0;padding:10px 12px}
+  .ukn-card.b{border-left:6px solid var(--blue)}
+  .ukn-card.a{border-left:6px solid var(--gold);border-top:1px dashed var(--border)}
+  .ukn-phase{display:block;order:1;font-size:18px}
+  .ukn-outlet{order:2;margin-bottom:0;align-self:auto}
+  .ukn-meta{order:3;flex-basis:100%;font-size:18px}
+  .ukn-hl{order:4;flex-basis:100%;margin:2px 0}
+  .ukn-desc{order:5;flex-basis:100%;margin-top:0}
+
+  /* more: segmented before/after, one list at a time */
+  .ukn-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:10px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+  .ukn-seg button{font:inherit;font-size:18px;font-weight:700;min-height:48px;border:0;background:var(--bg2);color:var(--mute);cursor:pointer}
+  .ukn-seg button.on.b{background:var(--blue);color:#fff}
+  .ukn-seg button.on.a{background:var(--gold);color:#1a1300}
+  .ukn-seg .ct{font-family:'Space Mono',monospace;font-weight:400;margin-left:6px}
+  .ukn-cols{display:block}
+  .ukn-cols[data-show="b"] .ukn-col:nth-child(2){display:none}
+  .ukn-cols[data-show="a"] .ukn-col:nth-child(1){display:none}
+  .ukn-col-t{display:none}
+  .ukn-it{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;padding:8px 12px;margin-bottom:8px}
+  .ukn-it .o{order:1}
+  .ukn-it .m{order:2}
+  .ukn-it .h,.ukn-it .zh,.ukn-it .n,.ukn-it .ukn-dt{flex-basis:100%}
+  .ukn-it .h{order:3;margin-top:2px}
+  .ukn-it .zh{order:4}
+  .ukn-it .n{order:5}
+  .ukn-it .ukn-dt{order:6}
+  .ukn-dt summary{min-height:44px;display:flex;align-items:center}
 }
 </style>
 </head>
@@ -180,10 +217,14 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 <section class="ukn-panel" id="p2" hidden>
   <div class="ukn-filters">
     <div class="ukn-fr"><span class="ukn-fl">主題</span><button class="ukn-chip on" data-g="topic" data-v="all">全部</button><button class="ukn-chip" data-g="topic" data-v="far">亞速營・極右</button><button class="ukn-chip" data-g="topic" data-v="cor">腐敗・寡頭</button></div>
-    <div class="ukn-fr"><span class="ukn-fl">語言</span><button class="ukn-chip on" data-g="lang" data-v="all">全部</button><button class="ukn-chip" data-g="lang" data-v="EN">英</button><button class="ukn-chip" data-g="lang" data-v="DE">德</button><button class="ukn-chip" data-g="lang" data-v="FR">法</button><button class="ukn-chip" data-g="lang" data-v="PL">波</button></div>
+    <div class="ukn-fr"><span class="ukn-fl">語言</span><button class="ukn-chip on" data-g="lang" data-v="all">全部</button><button class="ukn-chip" data-g="lang" data-v="EN">EN</button><button class="ukn-chip" data-g="lang" data-v="DE">DE</button><button class="ukn-chip" data-g="lang" data-v="FR">FR</button><button class="ukn-chip" data-g="lang" data-v="PL">PL</button></div>
   </div>
   <div class="ukn-colhd"><div class="b">開戰前<small>2014–2022.01</small></div><div class="a">開戰後<small>2022起</small></div></div>
-  <div class="ukn-cols">
+  <div class="ukn-seg">
+    <button class="on b" data-c="b">開戰前<span class="ct" id="ct-b"></span></button>
+    <button class="a" data-c="a">開戰後<span class="ct" id="ct-a"></span></button>
+  </div>
+  <div class="ukn-cols" id="ukn-cols" data-show="b">
     <div class="ukn-col">
       <div class="ukn-col-t b">開戰前</div>
       <div class="ukn-it b" data-topic="far" data-lang="PL">
@@ -348,8 +389,10 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
       var ok=(f.topic==='all'||el.dataset.topic===f.topic)&&(f.lang==='all'||el.dataset.lang===f.lang);
       el.hidden=!ok;
     });
-    document.querySelectorAll('.ukn-col').forEach(function(c){
-      c.classList.toggle('none',!c.querySelector('.ukn-it:not([hidden])'));
+    document.querySelectorAll('.ukn-col').forEach(function(c,i){
+      var n=c.querySelectorAll('.ukn-it:not([hidden])').length;
+      c.classList.toggle('none',n===0);
+      var ct=document.getElementById(i===0?'ct-b':'ct-a');if(ct)ct.textContent=n;
     });
     report();
   }
@@ -362,6 +405,11 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
     var g=b.dataset.g;f[g]=b.dataset.v;
     document.querySelectorAll('.ukn-chip[data-g="'+g+'"]').forEach(function(x){x.classList.toggle('on',x===b)});
     apply();
+  });});
+  document.querySelectorAll('.ukn-seg button').forEach(function(b){b.addEventListener('click',function(){
+    document.getElementById('ukn-cols').dataset.show=b.dataset.c;
+    document.querySelectorAll('.ukn-seg button').forEach(function(x){x.classList.toggle('on',x===b)});
+    report();
   });});
   document.addEventListener('toggle',report,true);
   window.addEventListener('load',report);window.addEventListener('resize',report);
