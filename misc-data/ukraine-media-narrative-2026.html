@@ -9,17 +9,30 @@
 <style>
 :root{
   --bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;
-  --blue:#3987e5;--blue-bg:rgba(57,135,229,.10);--gold:#eda100;--gold-bg:rgba(237,161,0,.10);
+  --pad:clamp(14px,3vw,32px);--blue:#3987e5;--blue-bg:rgba(57,135,229,.10);--gold:#eda100;--gold-bg:rgba(237,161,0,.10);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.55;padding:clamp(14px,3vw,32px);max-width:1000px;margin:0 auto}
+body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.55;padding:var(--pad);max-width:1000px;margin:0 auto}
 .ukn-header{margin-bottom:16px}
 .ukn-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:6px}
 .ukn-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:6px}
 .ukn-sub{font-size:18px;color:var(--mute)}
 
 /* tabs & chips */
-.ukn-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ukn-tabs,.ukn-nav{position:sticky;top:0;z-index:20;background:var(--bg);margin:0 calc(-1*var(--pad)) 8px;padding:8px var(--pad);border-bottom:1px solid var(--border)}
+.ukn-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ukn-nav{display:none;grid-template-columns:repeat(3,1fr);gap:6px}
+.ukn-nav button{font:inherit;font-size:18px;font-weight:700;min-height:48px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--mute);cursor:pointer;padding:0 4px}
+.ukn-nav button.on{background:#fff;color:#0b0f1a;border-color:#fff}
+.ukn-nav button.on.vb{background:var(--blue);border-color:var(--blue);color:#fff}
+.ukn-nav button.on.va{background:var(--gold);border-color:var(--gold);color:#1a1300}
+.ukn-nav .ct{font-family:'Space Mono',monospace;font-weight:400;margin-left:4px}
+.ukn-top{position:fixed;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;gap:6px;
+  min-height:48px;padding:0 16px;border-radius:999px;border:0;background:#fff;color:#0b0f1a;
+  font:inherit;font-size:18px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.5);cursor:pointer;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s}
+.ukn-top.on{opacity:1;pointer-events:auto;transform:none}
+.ukn-top b{font-size:22px;line-height:1}
 .ukn-tab{font:inherit;font-size:18px;font-weight:700;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--mute);cursor:pointer}
 .ukn-tab.on{background:#fff;color:#0b0f1a;border-color:#fff}
 .ukn-filters{display:grid;gap:8px;margin-bottom:12px}
@@ -87,17 +100,11 @@ body.ukn-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 .ukn-footer{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
 [hidden]{display:none!important}
 
-/* two-finger scroll (touch devices): one finger passes the gesture to the host page */
-html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;overscroll-behavior:none}
-.ukn-hint{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:50;max-width:92%;
-  background:rgba(0,0,0,.88);color:#fff;border:1px solid #44527a;border-radius:14px;
-  padding:8px 18px;white-space:nowrap;font-size:18px;font-weight:700;text-align:center;pointer-events:none;
-  opacity:0;transition:opacity .2s}
-.ukn-hint.on{opacity:1}
-.ukn-seg{display:none}
 
 @media(max-width:760px){
-  body.ukn-body{padding:12px}
+  :root{--pad:12px}
+  .ukn-tabs{display:none}
+  .ukn-nav{display:grid}
   .ukn-title{font-size:26px}
   .ukn-colhd{display:none}
   .ukn-tab{min-height:48px}
@@ -118,12 +125,7 @@ html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;oversc
   .ukn-hl{order:4;flex-basis:100%;margin:2px 0}
   .ukn-desc{order:5;flex-basis:100%;margin-top:0}
 
-  /* more: segmented before/after, one list at a time */
-  .ukn-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:10px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-  .ukn-seg button{font:inherit;font-size:18px;font-weight:700;min-height:48px;border:0;background:var(--bg2);color:var(--mute);cursor:pointer}
-  .ukn-seg button.on.b{background:var(--blue);color:#fff}
-  .ukn-seg button.on.a{background:var(--gold);color:#1a1300}
-  .ukn-seg .ct{font-family:'Space Mono',monospace;font-weight:400;margin-left:6px}
+  /* more: one list at a time, switched from the sticky nav */
   .ukn-cols{display:block}
   .ukn-cols[data-show="b"] .ukn-col:nth-child(2){display:none}
   .ukn-cols[data-show="a"] .ukn-col:nth-child(1){display:none}
@@ -147,6 +149,13 @@ html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;oversc
   <h1 class="ukn-title">烏克蘭戰前戰後：西方報導敘事比較</h1>
   <p class="ukn-sub">同一批媒體在2022年2月全面入侵前後的標題對照。點標題開原文。</p>
 </header>
+<div id="ukn-anchor"></div>
+
+<div class="ukn-nav" id="ukn-nav">
+  <button class="on" data-v="feat">精選</button>
+  <button class="vb" data-v="b">開戰前<span class="ct" id="nv-b"></span></button>
+  <button class="va" data-v="a">開戰後<span class="ct" id="nv-a"></span></button>
+</div>
 
 <div class="ukn-tabs">
   <button class="ukn-tab on" data-p="p1">精選四組</button>
@@ -227,10 +236,6 @@ html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;oversc
     <div class="ukn-fr"><span class="ukn-fl">語言</span><button class="ukn-chip on" data-g="lang" data-v="all">全部</button><button class="ukn-chip" data-g="lang" data-v="EN">EN</button><button class="ukn-chip" data-g="lang" data-v="DE">DE</button><button class="ukn-chip" data-g="lang" data-v="FR">FR</button><button class="ukn-chip" data-g="lang" data-v="PL">PL</button></div>
   </div>
   <div class="ukn-colhd"><div class="b">開戰前<small>2014–2022.01</small></div><div class="a">開戰後<small>2022起</small></div></div>
-  <div class="ukn-seg">
-    <button class="on b" data-c="b">開戰前<span class="ct" id="ct-b"></span></button>
-    <button class="a" data-c="a">開戰後<span class="ct" id="ct-a"></span></button>
-  </div>
   <div class="ukn-cols" id="ukn-cols" data-show="b">
     <div class="ukn-col">
       <div class="ukn-col-t b">開戰前</div>
@@ -386,12 +391,14 @@ html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;oversc
 <div class="ukn-note">標題、日期、作者為2026年11月3日以瀏覽器逐篇開啟頁面查證的結果；各站顯示時區不同時，日期可能差一天。標題中的大寫字為重點強調，原文並非全大寫。</div>
 <div class="ukn-footer">製表：張威翔</div>
 
-<div class="ukn-hint" id="ukn-hint" role="status">雙指滑動可捲動本頁</div>
+<button class="ukn-top" id="ukn-top" aria-label="回到最上方"><b>↑</b>最上方</button>
 
 <script>
 (function(){
   var tabs=document.querySelectorAll('.ukn-tab'),panels=document.querySelectorAll('.ukn-panel');
-  var f={topic:'all',lang:'all'};
+  var navBtns=document.querySelectorAll('.ukn-nav button'),cols=document.getElementById('ukn-cols');
+  var anchor=document.getElementById('ukn-anchor'),topBtn=document.getElementById('ukn-top');
+  var f={topic:'all',lang:'all'},side='b',view='feat';
   function report(){try{parent.postMessage({type:'ukn-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
   function apply(){
     document.querySelectorAll('.ukn-it').forEach(function(el){
@@ -401,50 +408,37 @@ html.ukn-coop,html.ukn-coop body{overflow:hidden;touch-action:pan-x pan-y;oversc
     document.querySelectorAll('.ukn-col').forEach(function(c,i){
       var n=c.querySelectorAll('.ukn-it:not([hidden])').length;
       c.classList.toggle('none',n===0);
-      var ct=document.getElementById(i===0?'ct-b':'ct-a');if(ct)ct.textContent=n;
+      var ct=document.getElementById(i===0?'nv-b':'nv-a');if(ct)ct.textContent=n;
     });
     report();
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){
-    tabs.forEach(function(x){x.classList.toggle('on',x===t)});
-    panels.forEach(function(p){p.hidden=p.id!==t.dataset.p});
+  function setView(v){
+    var feat=v==='feat';
+    view=v;if(!feat)side=v;
+    tabs.forEach(function(t){t.classList.toggle('on',(t.dataset.p==='p1')===feat);});
+    panels.forEach(function(p){p.hidden=(p.id==='p1')!==feat;});
+    navBtns.forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
+    cols.dataset.show=side;
+    var y=anchor.offsetTop;
+    if((window.pageYOffset||document.documentElement.scrollTop)>y)window.scrollTo(0,y);
     report();
-  });});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){setView(t.dataset.p==='p1'?'feat':side);});});
+  navBtns.forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.v);});});
   document.querySelectorAll('.ukn-chip').forEach(function(b){b.addEventListener('click',function(){
     var g=b.dataset.g;f[g]=b.dataset.v;
     document.querySelectorAll('.ukn-chip[data-g="'+g+'"]').forEach(function(x){x.classList.toggle('on',x===b)});
     apply();
   });});
-  document.querySelectorAll('.ukn-seg button').forEach(function(b){b.addEventListener('click',function(){
-    document.getElementById('ukn-cols').dataset.show=b.dataset.c;
-    document.querySelectorAll('.ukn-seg button').forEach(function(x){x.classList.toggle('on',x===b)});
-    report();
-  });});
+  function onScroll(){topBtn.classList.toggle('on',(window.pageYOffset||document.documentElement.scrollTop)>300);}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  topBtn.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+    try{parent.postMessage({type:'ukn-top'},'*');}catch(e){}
+  });
   document.addEventListener('toggle',report,true);
   window.addEventListener('load',report);window.addEventListener('resize',report);
-  apply();
-})();
-
-(function(){
-  var coarse=window.matchMedia&&window.matchMedia('(pointer:coarse)').matches;
-  if(!coarse||!(('ontouchstart' in window)||navigator.maxTouchPoints>0))return;
-  var root=document.documentElement;root.classList.add('ukn-coop');
-  var el=document.scrollingElement||root,hint=document.getElementById('ukn-hint'),ht,lastY=0,startY=0,warned=false;
-  function scrollable(){return el.scrollHeight>el.clientHeight+4;}
-  function show(ms){if(!scrollable())return;hint.classList.add('on');clearTimeout(ht);ht=setTimeout(function(){hint.classList.remove('on');},ms||1800);}
-  function midY(t){return t.length>1?(t[0].clientY+t[1].clientY)/2:t[0].clientY;}
-  document.addEventListener('touchstart',function(e){lastY=startY=midY(e.touches);warned=false;},{passive:true});
-  document.addEventListener('touchmove',function(e){
-    if(e.touches.length>1){
-      var y=midY(e.touches);el.scrollTop+=lastY-y;lastY=y;
-      hint.classList.remove('on');
-      if(e.cancelable)e.preventDefault();
-    }else{
-      lastY=midY(e.touches);
-      if(!warned&&Math.abs(lastY-startY)>10){warned=true;show(1800);}
-    }
-  },{passive:false});
-  window.addEventListener('load',function(){setTimeout(function(){show(3000);},600);});
+  apply();onScroll();
 })();
 </script>
 </body>
