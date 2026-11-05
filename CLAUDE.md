@@ -126,7 +126,7 @@ war-industry-news/
 
 - **網址**：`/year-review-2026/dist/index.html`（內嵌建議 `height="600"`；`?debug=1` 顯示後端／FPS，`?renderer=webgl|webgpu|none` 強制後端）
 - 新增或修改 `war-map/data/*.json` 後：`cd year-review-2026 && npm install && npm run build`，提交 `public/` 與 `dist/`（目前不改 CI）
-- 分類、多版本（`variants`）、相關圖（`related`）、排除項目皆在 `manifest.json`；詳見 `PLAN.md`
+- 分類、多版本（`variants`）、相關圖（`related`）、戰役鏈（`series`）、導覽精選（`featured`）、排除項目皆在 `manifest.json`；詳見 `PLAN.md`
 
 ## 新增頁面 SOP
 

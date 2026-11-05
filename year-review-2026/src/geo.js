@@ -1,5 +1,5 @@
 import * as THREE from 'three/webgpu';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { attribute, time, fract, step, mix, vec3, float, smoothstep, positionLocal, oneMinus } from 'three/tsl';
 import { Delaunay } from 'd3-delaunay';
 
 const D2R = Math.PI / 180;
@@ -96,17 +96,19 @@ export function tubeGeometry(vs, radius) {
   const pts = [];
   for (const v of vs) if (!pts.length || pts[pts.length - 1].distanceToSquared(v) > 1e-10) pts.push(v);
   if (pts.length < 2) return null;
-  const R = 4, pos = [], idx = [];
+  const R = 4, pos = [], idx = [], aT = [];
+  let acc = 0;
   const t = new THREE.Vector3(), n = new THREE.Vector3(), b = new THREE.Vector3(), a = new THREE.Vector3();
   for (let i = 0; i < pts.length; i++) {
     const p0 = pts[Math.max(0, i - 1)], p1 = pts[Math.min(pts.length - 1, i + 1)];
+    if (i > 0) acc += pts[i].distanceTo(pts[i - 1]);
     t.subVectors(p1, p0).normalize();
     n.copy(pts[i]).normalize();
     b.crossVectors(t, n).normalize();
     for (let k = 0; k < R; k++) {
       const th = (k / R) * Math.PI * 2;
       a.copy(n).multiplyScalar(Math.cos(th) * radius).addScaledVector(b, Math.sin(th) * radius).add(pts[i]);
-      pos.push(a.x, a.y, a.z);
+      pos.push(a.x, a.y, a.z); aT.push(acc);
     }
   }
   for (let i = 0; i < pts.length - 1; i++) for (let k = 0; k < R; k++) {
@@ -115,42 +117,47 @@ export function tubeGeometry(vs, radius) {
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('aT', new THREE.Float32BufferAttribute(aT, 1));
   g.setIndex(idx);
   return g;
-}
-
-export function dashSegments(vs, onRad, offRad) {
-  const out = []; let cur = [vs[0]]; let on = true; let left = onRad;
-  for (let i = 1; i < vs.length; i++) {
-    let a = vs[i - 1], b = vs[i];
-    let len = a.distanceTo(b);
-    while (len > left) {
-      const t = left / len;
-      const m = a.clone().lerp(b, t).normalize().multiplyScalar(a.length());
-      if (on) { cur.push(m); out.push(cur); cur = []; } else { cur = [m]; }
-      a = m; len = a.distanceTo(b); on = !on; left = on ? onRad : offRad;
-    }
-    left -= len;
-    if (on) cur.push(b);
-  }
-  if (on && cur.length > 1) out.push(cur);
-  return out;
 }
 
 export function lineMesh(points, { color = '#e67e22', weight = 2, opacity = 0.85, dash = null } = {}) {
   const vs = densifyGeodesic(points, 1.2, 1.0016);
   const radius = 0.0016 * clamp(weight, 1, 6) / 2.2 + 0.0008;
-  let geos = [];
-  if (dash) {
-    const parts = String(dash).split(/[ ,]+/).map(Number).filter(n => n > 0);
-    const on = (parts[0] || 6) * 0.0042, off = (parts[1] || parts[0] || 4) * 0.0042;
-    if (parts.length && parts[0] > 0 && on + off > 0 && !(dash === '0')) geos = dashSegments(vs, on, off).map(s => tubeGeometry(s, radius)).filter(Boolean);
+  const geometry = tubeGeometry(vs, radius);
+  if (!geometry) return null;
+  const c = new THREE.Color(color), base = vec3(c.r, c.g, c.b);
+  const op = clamp(opacity + 0.1, 0.3, 1);
+  const material = new THREE.MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
+  const aT = attribute('aT', 'float');
+  const parts = dash && dash !== '0' ? String(dash).split(/[ ,]+/).map(Number).filter(n => n > 0) : [];
+  if (parts.length) {
+    const on = parts[0] * 0.0042, off = (parts[1] || parts[0]) * 0.0042, period = on + off;
+    const ph = fract(aT.div(period).sub(time.mul(0.035 / period)));
+    material.colorNode = base;
+    material.opacityNode = float(1).sub(step(float(on / period), ph)).mul(op);
+  } else {
+    const ph = fract(aT.div(0.7).sub(time.mul(0.22)));
+    material.colorNode = mix(base, vec3(1, 1, 1), smoothstep(0.86, 1.0, ph).mul(0.65));
+    material.opacityNode = float(op);
   }
-  if (!geos.length) { const g = tubeGeometry(vs, radius); if (g) geos = [g]; }
-  if (!geos.length) return null;
-  const geometry = geos.length > 1 ? mergeGeometries(geos) : geos[0];
-  const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: clamp(opacity + 0.1, 0.3, 1), depthWrite: false });
   return new THREE.Mesh(geometry, material);
+}
+
+export function pulseRing(lat, lng, colorHex, phase = 0, size = 0.014) {
+  const c = new THREE.Color(colorHex);
+  const material = new THREE.MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
+  const ph = fract(time.mul(0.55).add(phase));
+  const sc = mix(float(0.35), float(3.2), ph);
+  material.positionNode = positionLocal.mul(vec3(sc, sc, 1));
+  material.colorNode = vec3(c.r, c.g, c.b);
+  material.opacityNode = oneMinus(ph).pow(1.6).mul(0.85);
+  const mesh = new THREE.Mesh(new THREE.RingGeometry(0.82, 1.0, 40), material);
+  mesh.position.copy(ll2v(lat, lng, 1.003));
+  mesh.lookAt(mesh.position.clone().multiplyScalar(2));
+  mesh.scale.setScalar(size);
+  return mesh;
 }
 
 export function polygonMeshes(points, { fillColor = '#e74c3c', fillOpacity = 0.4, borderColor = '#ffffff', borderWeight = 2, borderOpacity = 0.9, dash = null } = {}) {

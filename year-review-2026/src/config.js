@@ -3,7 +3,7 @@ export const RENDERER = (q.get('renderer') || 'auto').toLowerCase();
 export const DEBUG = q.has('debug');
 export const IN_FRAME = window.self !== window.top;
 export const IS_TOUCH = (window.matchMedia && matchMedia('(pointer:coarse)').matches) || 'ontouchstart' in window;
-export const IS_MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || (IS_TOUCH && window.innerWidth < 900);
+export const IS_MOBILE = window.innerWidth < 700 || (IS_TOUCH && window.innerWidth < 900);
 export const GESTURE_MODE = IN_FRAME && IS_TOUCH && IS_MOBILE;
 export const WM_BASE = import.meta.env.DEV ? '/__wm/' : '../../war-map/';
 export const TEX_WIDTH = IS_MOBILE ? 4096 : 6144;

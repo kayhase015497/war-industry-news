@@ -13,15 +13,15 @@ export function paintBasemap(width) {
   const path = geoPath(proj, ctx);
   const s = width / 4096;
 
-  ctx.fillStyle = '#060a13'; ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = '#07101e'; ctx.fillRect(0, 0, width, height);
 
-  ctx.beginPath(); path(geoGraticule10()); ctx.strokeStyle = 'rgba(90,130,190,0.10)'; ctx.lineWidth = 1 * s; ctx.stroke();
+  ctx.beginPath(); path(geoGraticule10()); ctx.strokeStyle = 'rgba(100,150,210,0.14)'; ctx.lineWidth = 1 * s; ctx.stroke();
 
   const land = feature(land50, land50.objects.land);
-  ctx.beginPath(); path(land); ctx.fillStyle = '#101b2e'; ctx.fill();
+  ctx.beginPath(); path(land); ctx.fillStyle = '#15233a'; ctx.fill();
 
   const borders = mesh(land50, land50.objects.countries, (a, b) => a !== b);
-  ctx.beginPath(); path(borders); ctx.strokeStyle = 'rgba(120,170,225,0.42)'; ctx.lineWidth = 1.1 * s; ctx.stroke();
+  ctx.beginPath(); path(borders); ctx.strokeStyle = 'rgba(130,180,235,0.5)'; ctx.lineWidth = 1.1 * s; ctx.stroke();
 
   ctx.beginPath(); path(land); ctx.strokeStyle = 'rgba(150,205,255,0.7)'; ctx.lineWidth = 1.3 * s; ctx.stroke();
   return canvas;
