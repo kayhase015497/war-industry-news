@@ -1,0 +1,24 @@
+{
+  "name": "year-review-2026",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "index": "node scripts/build-index.mjs",
+    "test:index": "node --test scripts/lib.test.mjs",
+    "dev": "npm run index && vite",
+    "build": "npm run index && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "d3-delaunay": "^6.0.6",
+    "d3-geo": "^3.1.2",
+    "earcut": "^3.2.4",
+    "three": "0.187.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "vite": "^5.4.21"
+  }
+}

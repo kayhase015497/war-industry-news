@@ -48,6 +48,11 @@ war-industry-news/
 │   ├── siterep.html
 │   ├── data/                   # 各地圖的 GeoJSON / TopoJSON 資料
 │   └── ...
+├── year-review-2026/           # 年度特輯：3D 全球戰區地球儀（Vite + three.js，dist 已提交）
+│   ├── PLAN.md                     # 完整規劃書與進度
+│   ├── manifest.json               # 分類／多版本／相關圖等人工設定
+│   ├── scripts/build-index.mjs     # 從 war-map/data 產生 public/index.json
+│   └── dist/                       # 建置產出（需手動 npm run build 後提交）
 ├── game-v2/                    # Phaser 互動遊戲（Vite 建置）
 │   ├── src/
 │   ├── dist/                   # 建置產出（CI 自動產生）
@@ -116,6 +121,12 @@ war-industry-news/
   width="100%" height="900" frameborder="0"
   style="border:none;max-width:100%"></iframe>
 ```
+
+## 年度特輯：全球戰區地球儀
+
+- **網址**：`/year-review-2026/dist/index.html`（內嵌建議 `height="600"`；`?debug=1` 顯示後端／FPS，`?renderer=webgl|webgpu|none` 強制後端）
+- 新增或修改 `war-map/data/*.json` 後：`cd year-review-2026 && npm install && npm run build`，提交 `public/` 與 `dist/`（目前不改 CI）
+- 分類、多版本（`variants`）、相關圖（`related`）、排除項目皆在 `manifest.json`；詳見 `PLAN.md`
 
 ## 新增頁面 SOP
 

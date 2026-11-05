@@ -1,0 +1,276 @@
+{
+  "categories": {
+    "conflict": {
+      "label": "戰事衝突",
+      "color": "#ff4d4d"
+    },
+    "military": {
+      "label": "軍事部署與事故",
+      "color": "#ff8a3d"
+    },
+    "energy": {
+      "label": "能源",
+      "color": "#ffc233"
+    },
+    "minerals": {
+      "label": "礦產與資源",
+      "color": "#b57bff"
+    },
+    "corridor": {
+      "label": "走廊與產業",
+      "color": "#2fd4d4"
+    },
+    "disaster": {
+      "label": "災害與生態",
+      "color": "#4cd97b"
+    },
+    "reference": {
+      "label": "延伸參考",
+      "color": "#8fa3c7"
+    }
+  },
+  "maps": {
+    "aws_mideast_outage_20260430": {
+      "category": "corridor"
+    },
+    "beijing_heli_crashes": {
+      "category": "reference",
+      "note": "2022 事件"
+    },
+    "byd_europe_sites_2026": {
+      "category": "corridor"
+    },
+    "china_grid_upgrade_jiangsu_2026": {
+      "category": "energy"
+    },
+    "china_iran_trade_network_2026": {
+      "category": "corridor",
+      "related": [
+        "instc_corridor_2026"
+      ]
+    },
+    "china_nepal_flood_20260826": {
+      "category": "disaster"
+    },
+    "china_russia_infra_20260521": {
+      "category": "corridor"
+    },
+    "china_three_north_shelterbelt_2026": {
+      "category": "disaster"
+    },
+    "cuba_us_navy_20260517": {
+      "category": "military"
+    },
+    "ethiopia_conflict_20260523": {
+      "category": "conflict"
+    },
+    "etna_eruption_catania_airport_20260929": {
+      "category": "disaster"
+    },
+    "europe_na_wildfires_floods_2026": {
+      "category": "disaster",
+      "variants": [
+        {
+          "slug": "europe_na_wildfires_floods_2026",
+          "label": "橘色版"
+        },
+        {
+          "slug": "europe_na_wildfires_floods_2026_blue",
+          "label": "藍色版"
+        }
+      ]
+    },
+    "europe_na_wildfires_floods_2026_blue": {
+      "include": false,
+      "note": "併入 europe_na_wildfires_floods_2026 的 variants"
+    },
+    "europe_russia_energy_20260509": {
+      "category": "energy"
+    },
+    "great_green_wall_africa_2026": {
+      "category": "disaster"
+    },
+    "greater_israel_map": {
+      "category": "reference"
+    },
+    "greenland_energy_drilling_2026": {
+      "category": "energy"
+    },
+    "gulf_monarchies_triple_fragility_2026": {
+      "category": "military"
+    },
+    "haiti_artibonite_gangs_20260516": {
+      "category": "conflict"
+    },
+    "haiti_salvador_rescue_20261022": {
+      "category": "conflict"
+    },
+    "houthi_saudi_attack_20260908": {
+      "category": "conflict"
+    },
+    "indonesia_wildfire_helicopter_crash_20261105": {
+      "category": "disaster"
+    },
+    "instc_corridor_2026": {
+      "category": "corridor",
+      "related": [
+        "china_iran_trade_network_2026"
+      ]
+    },
+    "iran_mideast_military_20260516": {
+      "category": "military"
+    },
+    "iran_strikes_jordan_bases_mq9_2026": {
+      "category": "conflict"
+    },
+    "iran_strikes_us_gulf_bases_2026": {
+      "category": "conflict"
+    },
+    "iraq_marsh_20260428": {
+      "category": "disaster",
+      "variants": [
+        {
+          "slug": "iraq_marsh_20260428",
+          "label": "線條版"
+        },
+        {
+          "slug": "iraq_marsh_filled_20260428",
+          "label": "填色版"
+        }
+      ]
+    },
+    "iraq_marsh_filled_20260428": {
+      "include": false,
+      "note": "併入 iraq_marsh_20260428 的 variants"
+    },
+    "kailash_kora_fire_horse_2026": {
+      "category": "reference"
+    },
+    "kazakhstan_energy_minerals_europe_2026": {
+      "category": "energy",
+      "related": [
+        "kazakhstan_eurasia_nodes_2026"
+      ]
+    },
+    "kazakhstan_eurasia_nodes_2026": {
+      "category": "corridor",
+      "related": [
+        "kazakhstan_energy_minerals_europe_2026"
+      ]
+    },
+    "kostiantynivka_20260611": {
+      "category": "conflict"
+    },
+    "kostiantynivka_20260702": {
+      "category": "conflict"
+    },
+    "kumamoto_quake_industry_2026": {
+      "category": "disaster"
+    },
+    "kyauktaw_airstrike_20260928": {
+      "category": "conflict"
+    },
+    "libya_noc_zawiya_crisis_20260926": {
+      "category": "energy"
+    },
+    "lyman_battle_20260619": {
+      "category": "conflict"
+    },
+    "mali_attack_20260425": {
+      "category": "conflict",
+      "displayDate": "2026-04-25",
+      "note": "meta.date 為中文格式字串"
+    },
+    "mali_battle_20260428": {
+      "category": "conflict"
+    },
+    "mali_kidal_retaken_20261007": {
+      "category": "conflict"
+    },
+    "mali_overview_2026": {
+      "category": "conflict"
+    },
+    "myitsone_dam_2026": {
+      "category": "energy"
+    },
+    "niger_mutiny_20260829": {
+      "category": "conflict"
+    },
+    "nigeria_minerals_2026": {
+      "category": "minerals"
+    },
+    "pakistan_iran_routes_20260425": {
+      "category": "corridor"
+    },
+    "rostov_oil_terminal_strike_20261009": {
+      "category": "energy"
+    },
+    "russia_shadow_energy_global_20260509": {
+      "category": "energy"
+    },
+    "shemya_eareckson_f16_return_20261031": {
+      "category": "military"
+    },
+    "silk_road_empires_100ce": {
+      "category": "reference"
+    },
+    "su30sm_crash_kaliningrad_20261021": {
+      "category": "military"
+    },
+    "taiwan_energy_infra_20260602": {
+      "category": "energy"
+    },
+    "tata_hosur_pollution_20260525": {
+      "category": "corridor"
+    },
+    "tengiz_cpc_20260529": {
+      "category": "energy"
+    },
+    "test_routes": {
+      "include": false,
+      "note": "pakistan_iran_routes_20260425 的測試副本"
+    },
+    "thailand_cambodia_maritime_20260605": {
+      "category": "conflict"
+    },
+    "ukraine_battle_20260428": {
+      "category": "conflict"
+    },
+    "ukraine_bio_labs_odni": {
+      "category": "reference"
+    },
+    "ukraine_drone_energy_20260521": {
+      "category": "energy"
+    },
+    "ukraine_drone_shagol_20260425": {
+      "category": "conflict"
+    },
+    "ukraine_kostiantynivka_20260513": {
+      "category": "conflict"
+    },
+    "ukraine_rus_airstrikes_apr_jun_2026": {
+      "category": "conflict"
+    },
+    "ukraine_strikes_russia_civilian_20260603": {
+      "category": "conflict"
+    },
+    "ukraine_strikes_russia_energy_jun2026": {
+      "category": "energy"
+    },
+    "ulanqab_vs_colossus_ai_2026": {
+      "category": "corridor"
+    },
+    "venezuela_oil_us_china_russia_2026": {
+      "category": "energy"
+    },
+    "vietnam_minerals_20260506": {
+      "category": "minerals"
+    },
+    "yemen_coffee_mocha_history": {
+      "category": "reference"
+    },
+    "yemen_houthi_strikes_marib_hadramout_2026": {
+      "category": "conflict"
+    }
+  }
+}
