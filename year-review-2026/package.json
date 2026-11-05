@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "index": "node scripts/build-index.mjs",
+    "index": "node scripts/build-index.mjs && node scripts/extract-bases.mjs",
     "test:index": "node --test scripts/lib.test.mjs",
     "dev": "npm run index && vite",
     "build": "npm run index && vite build",

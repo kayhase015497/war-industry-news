@@ -47,10 +47,12 @@
       "category": "corridor",
       "related": [
         "instc_corridor_2026"
-      ]
+      ],
+      "series": "iran-trade"
     },
     "china_nepal_flood_20260826": {
-      "category": "disaster"
+      "category": "disaster",
+      "featured": true
     },
     "china_russia_infra_20260521": {
       "category": "corridor"
@@ -100,31 +102,42 @@
       "category": "military"
     },
     "haiti_artibonite_gangs_20260516": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "haiti",
+      "featured": true
     },
     "haiti_salvador_rescue_20261022": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "haiti"
     },
     "houthi_saudi_attack_20260908": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "yemen",
+      "featured": true
     },
     "indonesia_wildfire_helicopter_crash_20261105": {
-      "category": "disaster"
+      "category": "disaster",
+      "featured": true
     },
     "instc_corridor_2026": {
       "category": "corridor",
       "related": [
         "china_iran_trade_network_2026"
-      ]
+      ],
+      "series": "iran-trade"
     },
     "iran_mideast_military_20260516": {
-      "category": "military"
+      "category": "military",
+      "series": "iran-gulf"
     },
     "iran_strikes_jordan_bases_mq9_2026": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "iran-gulf",
+      "featured": true
     },
     "iran_strikes_us_gulf_bases_2026": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "iran-gulf"
     },
     "iraq_marsh_20260428": {
       "category": "disaster",
@@ -150,28 +163,34 @@
       "category": "energy",
       "related": [
         "kazakhstan_eurasia_nodes_2026"
-      ]
+      ],
+      "series": "kazakhstan"
     },
     "kazakhstan_eurasia_nodes_2026": {
       "category": "corridor",
       "related": [
         "kazakhstan_energy_minerals_europe_2026"
-      ]
+      ],
+      "series": "kazakhstan"
     },
     "kostiantynivka_20260611": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "kostiantynivka"
     },
     "kostiantynivka_20260702": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "kostiantynivka"
     },
     "kumamoto_quake_industry_2026": {
-      "category": "disaster"
+      "category": "disaster",
+      "featured": true
     },
     "kyauktaw_airstrike_20260928": {
       "category": "conflict"
     },
     "libya_noc_zawiya_crisis_20260926": {
-      "category": "energy"
+      "category": "energy",
+      "featured": true
     },
     "lyman_battle_20260619": {
       "category": "conflict"
@@ -179,19 +198,25 @@
     "mali_attack_20260425": {
       "category": "conflict",
       "displayDate": "2026-04-25",
-      "note": "meta.date 為中文格式字串"
+      "note": "meta.date 為中文格式字串",
+      "series": "mali"
     },
     "mali_battle_20260428": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "mali"
     },
     "mali_kidal_retaken_20261007": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "mali",
+      "featured": true
     },
     "mali_overview_2026": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "mali"
     },
     "myitsone_dam_2026": {
-      "category": "energy"
+      "category": "energy",
+      "featured": true
     },
     "niger_mutiny_20260829": {
       "category": "conflict"
@@ -203,13 +228,16 @@
       "category": "corridor"
     },
     "rostov_oil_terminal_strike_20261009": {
-      "category": "energy"
+      "category": "energy",
+      "series": "ua-energy",
+      "featured": true
     },
     "russia_shadow_energy_global_20260509": {
       "category": "energy"
     },
     "shemya_eareckson_f16_return_20261031": {
-      "category": "military"
+      "category": "military",
+      "featured": true
     },
     "silk_road_empires_100ce": {
       "category": "reference"
@@ -234,19 +262,23 @@
       "category": "conflict"
     },
     "ukraine_battle_20260428": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "kostiantynivka",
+      "featured": true
     },
     "ukraine_bio_labs_odni": {
       "category": "reference"
     },
     "ukraine_drone_energy_20260521": {
-      "category": "energy"
+      "category": "energy",
+      "series": "ua-energy"
     },
     "ukraine_drone_shagol_20260425": {
       "category": "conflict"
     },
     "ukraine_kostiantynivka_20260513": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "kostiantynivka"
     },
     "ukraine_rus_airstrikes_apr_jun_2026": {
       "category": "conflict"
@@ -255,7 +287,8 @@
       "category": "conflict"
     },
     "ukraine_strikes_russia_energy_jun2026": {
-      "category": "energy"
+      "category": "energy",
+      "series": "ua-energy"
     },
     "ulanqab_vs_colossus_ai_2026": {
       "category": "corridor"
@@ -270,7 +303,18 @@
       "category": "reference"
     },
     "yemen_houthi_strikes_marib_hadramout_2026": {
-      "category": "conflict"
+      "category": "conflict",
+      "series": "yemen"
     }
+  },
+  "seriesLabels": {
+    "kostiantynivka": "康斯坦丁諾夫卡戰役",
+    "mali": "馬利局勢",
+    "iran-gulf": "伊朗與波灣美軍",
+    "ua-energy": "烏克蘭打擊俄羅斯能源",
+    "kazakhstan": "哈薩克歐亞節點",
+    "haiti": "海地幫派危機",
+    "yemen": "青年運動攻勢",
+    "iran-trade": "中伊貿易走廊"
   }
 }

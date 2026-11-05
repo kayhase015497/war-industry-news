@@ -83,7 +83,7 @@ const stats = {
 };
 
 fs.mkdirSync(path.join(root, 'public'), { recursive: true });
-fs.writeFileSync(path.join(root, 'public/index.json'), JSON.stringify({ categories: manifest.categories, maps }));
+fs.writeFileSync(path.join(root, 'public/index.json'), JSON.stringify({ categories: manifest.categories, seriesLabels: manifest.seriesLabels || {}, maps }));
 fs.writeFileSync(path.join(root, 'public/stats.json'), JSON.stringify(stats));
 
 console.log(`index: ${maps.length} 張（統計用 ${counted.length}）｜警告 ${warnings.length}｜錯誤 ${errors.length}`);
