@@ -1,0 +1,216 @@
+{
+  "meta": {
+    "title": "印尼11年來最嚴重森林大火・澳洲派C-130滅火機馳援・陸軍直升機墜毀（2026年11月）",
+    "titleEn": "Indonesia's Worst Forest Fires in 11 Years — Australian C-130 Dispatched, Army Mi-17 Crashes",
+    "subtitle": "蘇門答臘・加里曼丹・巴布亞三大火區・煙霾跨境東南亞・Mi-17V5於中加里曼丹墜毀3死5傷",
+    "date": "2026-11-05",
+    "status": "breaking",
+    "theme": "red",
+    "sources": ["張威翔製作", "印尼國家減災署（BNPB）", "路透社", "印尼公共廣播電台（RRI）", "瑞士廣播電視台", "印尼衛生部"]
+  },
+  "map": {
+    "center": [-2.0, 115.0],
+    "zoom": 5,
+    "bounds": [[-10.0, 94.0], [8.0, 143.0]],
+    "mobile": { "center": [-1.5, 109.0], "zoom": 4 }
+  },
+  "infoPanel": {
+    "title": "印尼11年來最嚴重森林大火（2026年11月）",
+    "paragraphs": [
+      "印尼正面臨11年來最嚴重的森林大火，大片土地被燒毀，主要集中在蘇門答臘、婆羅洲（加里曼丹）與巴布亞三大島嶼。印尼衛生部數據顯示，截至11月2日，7個省份的火災與煙霾已造成逾40萬例急性呼吸道感染；煙霾跨越國界，馬來西亞與新加坡均受影響、學校一度被迫關閉，東協氣象中心已把東南亞部分地區的空氣品質警報提升至最高級別。",
+      "澳洲政府5日緊急派遣滅火飛機與專業人員馳援。據印尼國家減災署（BNPB）聲明，澳洲新南威爾斯州鄉村消防局派出1架C-130「大力神」大型空中滅火機及1架賽斯納引導機，於11月6日至12日期間在東加里曼丹執行空中滅火；單架次最多投放1萬5千公升水，每天最多6架次，日投水量可達9萬公升。署長西安圖里表示，部署地點由兩國技術團隊評估後敲定，東加里曼丹是繼中加里曼丹之後滅火需求第二高的地區。",
+      "援助消息公布前一天（11月4日），一架印尼陸軍Mi-17V5直升機（註冊號HA-5235）在中加里曼丹執行滅火任務時墜毀。據印尼交通部通報，該機當時正前往丹絨普廷國家公園（Tanjung Puting）一帶取水，機上載有8名機組人員；RRI報導事故造成3人死亡、5人受傷，軍方與搜救機構隨後展開打撈遺體與撤離傷員。火區範圍與墜毀位置皆為示意，非精確邊界。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [[-1.0, 102.4], [-1.0, 105.2], [-3.9, 106.2], [-4.2, 104.0], [-2.8, 102.4]],
+      "fillColor": "#E53935",
+      "fillOpacity": 0.55,
+      "borderColor": "#B71C1C",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "蘇門答臘火區（南部泥炭地一帶・示意）",
+        "tag": "🔥 野火重災區・蘇門答臘",
+        "tagClass": "tag-confirmed",
+        "desc": "蘇門答臘是此次印尼野火的三大集中地區之一，南部低地與泥炭地一帶為典型火災熱區，煙霾隨風向北飄向馬來半島與新加坡。⚠️ 確切火點與範圍來源未說明，本圖為示意範圍，非精確邊界。",
+        "source": "路透社；印尼國家減災署"
+      }
+    },
+    {
+      "points": [[-0.8, 111.3], [-1.0, 114.8], [-3.6, 115.0], [-3.4, 111.5]],
+      "fillColor": "#E53935",
+      "fillOpacity": 0.6,
+      "borderColor": "#B71C1C",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "中加里曼丹火區（泥炭地一帶・示意）",
+        "tag": "🔥 野火重災區・滅火需求最高",
+        "tagClass": "tag-confirmed",
+        "desc": "中加里曼丹是印尼此次滅火需求最高的地區，也是印尼陸軍Mi-17V5直升機11月4日墜毀的所在省份。⚠️ 範圍為示意，非精確邊界。",
+        "source": "印尼國家減災署；路透社"
+      }
+    },
+    {
+      "points": [[1.2, 115.8], [1.2, 118.4], [-2.0, 118.4], [-2.0, 115.8]],
+      "fillColor": "#E53935",
+      "fillOpacity": 0.45,
+      "borderColor": "#FF8F00",
+      "borderWeight": 2.5,
+      "borderOpacity": 0.95,
+      "borderDashArray": "8,4",
+      "popup": {
+        "title": "東加里曼丹火區・澳洲C-130空中滅火作業區（示意）",
+        "tag": "✈ 澳洲C-130・11月6日至12日",
+        "tagClass": "tag-strategic",
+        "desc": "東加里曼丹是滅火需求第二高的地區，也是澳洲新南威爾斯州鄉村消防局C-130「大力神」滅火機與賽斯納引導機的作業區，期間為11月6日至12日。C-130單架次最多投放1萬5千公升水，預計每天最多6架次。⚠️ 作業區範圍與起降機場來源未說明，本圖為示意。",
+        "source": "印尼國家減災署；澳洲駐印尼大使館"
+      }
+    },
+    {
+      "points": [[-7.4, 139.4], [-7.4, 141.0], [-9.0, 141.0], [-9.0, 139.4]],
+      "fillColor": "#E53935",
+      "fillOpacity": 0.5,
+      "borderColor": "#B71C1C",
+      "borderWeight": 2,
+      "borderOpacity": 0.9,
+      "popup": {
+        "title": "巴布亞火區（南部低地一帶・示意）",
+        "tag": "🔥 野火集中地區・巴布亞",
+        "tagClass": "tag-confirmed",
+        "desc": "巴布亞是此次野火的三大集中島嶼之一。⚠️ 來源未說明具體位置，本圖以南部低地一帶為示意範圍，請以官方公布為準。",
+        "source": "路透社"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [[-2.0, 104.0], [0.5, 103.0], [2.5, 102.0], [3.14, 101.69]],
+      "color": "#8d6e63",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "煙霾擴散方向（示意）・蘇門答臘→馬來半島",
+        "tag": "💨 煙霾跨境・馬來西亞受影響",
+        "tagClass": "tag-possible",
+        "desc": "據瑞士廣播電視台報導，來自印尼的火災煙霧持續數月籠罩東南亞部分地區，馬來西亞與新加坡均受影響，學校一度被迫關閉。⚠️ 方向為概略示意，非實際氣流軌跡。",
+        "source": "瑞士廣播電視台"
+      }
+    },
+    {
+      "points": [[-1.5, 110.0], [0.0, 108.0], [1.35, 103.82]],
+      "color": "#8d6e63",
+      "weight": 2.5,
+      "opacity": 0.75,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "煙霾擴散方向（示意）・加里曼丹→新加坡",
+        "tag": "💨 煙霾跨境・新加坡受影響",
+        "tagClass": "tag-possible",
+        "desc": "東協氣象中心已把東南亞部分地區的空氣品質警報提升至最高級別。⚠️ 方向為概略示意，非實際氣流軌跡。",
+        "source": "奧地利廣播集團；瑞士廣播電視台"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [-2.95, 111.9],
+      "name": "Mi-17V5 HA-5235 Crash Site – Near Tanjung Puting, Central Kalimantan, Nov 4",
+      "nameLocal": "Mi-17V5直升機（HA-5235）墜毀地點・丹絨普廷國家公園一帶・中加里曼丹・11/4",
+      "type": "confirmed",
+      "tag": "🚁 印尼陸軍直升機墜毀・3死5傷・11/4",
+      "tagClass": "tag-confirmed",
+      "desc": "印尼陸軍一架Mi-17V5直升機（註冊號HA-5235）11月4日在中加里曼丹執行滅火任務時墜毀。據印尼交通部通報，該機當時正前往丹絨普廷國家公園（Tanjung Puting）一帶取水，機上載有8名機組人員；據印尼公共廣播電台（RRI），事故造成3人死亡、5人受傷。軍方與搜救機構隨後展開打撈遺體與撤離傷員。⚠️ 確切墜毀座標來源未說明，本點為取水區一帶的概略位置。",
+      "coords": "02°57'S 111°54'E",
+      "source": "印尼交通部；印尼公共廣播電台（RRI）"
+    },
+    {
+      "latlng": [-1.27, 116.83],
+      "name": "East Kalimantan – Australian C-130 Operations Area (Balikpapan, approx.)",
+      "nameLocal": "東加里曼丹・澳洲C-130滅火作業區（以巴厘巴板為概略參考）",
+      "type": "possible",
+      "tag": "✈ 東加里曼丹・澳洲C-130・11/6–12",
+      "tagClass": "tag-possible",
+      "desc": "澳洲新南威爾斯州鄉村消防局的C-130「大力神」滅火機與賽斯納引導機，將於11月6日至12日在東加里曼丹執行空中滅火。部署地點由兩國技術團隊評估後敲定。⚠️ 實際起降機場來源未說明，本點以巴厘巴板（Balikpapan）為概略參考位置。",
+      "coords": "01°16'S 116°50'E",
+      "source": "印尼國家減災署；澳洲駐印尼大使館"
+    },
+    {
+      "latlng": [-8.47, 140.33],
+      "name": "Merauke – Papua Wildfire Reference",
+      "nameLocal": "梅勞克（Merauke）・巴布亞火區參考點（示意）",
+      "type": "possible",
+      "tag": "🔥 巴布亞南部・野火集中地區（示意）",
+      "tagClass": "tag-possible",
+      "desc": "巴布亞是此次印尼野火的三大集中島嶼之一，本點以南部梅勞克一帶作為示意參考位置。⚠️ 來源未說明具體位置。",
+      "coords": "08°28'S 140°20'E",
+      "source": "路透社"
+    },
+    {
+      "latlng": [-2.98, 104.76],
+      "name": "Palembang – South Sumatra Reference",
+      "nameLocal": "巨港（Palembang）・南蘇門答臘首府・火區參考",
+      "type": "city",
+      "tag": "🏙 巨港・蘇門答臘火區參考",
+      "tagClass": "tag-reference",
+      "desc": "南蘇門答臘首府，位於蘇門答臘南部低地與泥炭地一帶，是歷次印尼煙霾事件中受影響的重要城市。",
+      "coords": "02°59'S 104°46'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [-2.21, 113.92],
+      "name": "Palangka Raya – Central Kalimantan Capital",
+      "nameLocal": "帕朗卡拉亞（Palangka Raya）・中加里曼丹首府",
+      "type": "city",
+      "tag": "🏙 帕朗卡拉亞・中加里曼丹首府",
+      "tagClass": "tag-reference",
+      "desc": "中加里曼丹省會，位於泥炭地火災熱區中心，是印尼野火救災的重要節點。",
+      "coords": "02°13'S 113°55'E",
+      "source": "地理參考"
+    },
+    {
+      "latlng": [-6.2, 106.85],
+      "name": "Jakarta – Indonesia Capital, BNPB Headquarters",
+      "nameLocal": "雅加達（Jakarta）・印尼首都・國家減災署所在地",
+      "type": "capital",
+      "tag": "🏛 雅加達・印尼國家減災署・澳洲援助聲明",
+      "tagClass": "tag-reference",
+      "desc": "印尼首都，國家減災署（BNPB）發布澳洲滅火機援助聲明。署長西安圖里（Kristomei Sianturi）對澳方援助表示感謝，稱這體現了兩國鄰里情誼。",
+      "coords": "06°12'S 106°51'E",
+      "source": "印尼國家減災署"
+    },
+    {
+      "latlng": [3.14, 101.69],
+      "name": "Kuala Lumpur – Affected by Transboundary Haze",
+      "nameLocal": "吉隆坡（Kuala Lumpur）・受煙霾影響",
+      "type": "city",
+      "tag": "🏙 吉隆坡・煙霾跨境受影響",
+      "tagClass": "tag-reference",
+      "desc": "印尼火災煙霾跨越國界，馬來西亞受影響，學校一度被迫關閉。",
+      "coords": "03°08'N 101°41'E",
+      "source": "瑞士廣播電視台"
+    },
+    {
+      "latlng": [1.35, 103.82],
+      "name": "Singapore – Affected by Transboundary Haze",
+      "nameLocal": "新加坡（Singapore）・受煙霾影響",
+      "type": "city",
+      "tag": "🏙 新加坡・煙霾跨境受影響",
+      "tagClass": "tag-reference",
+      "desc": "印尼火災煙霾持續籠罩新加坡一帶，東協氣象中心已把東南亞部分地區的空氣品質警報提升至最高級別。",
+      "coords": "01°21'N 103°49'E",
+      "source": "瑞士廣播電視台；奧地利廣播集團"
+    }
+  ],
+  "legend": [
+    { "symbol": "polygon", "fillColor": "#E53935", "fillOpacity": 0.55, "borderColor": "#B71C1C", "label": "野火集中地區（示意）：蘇門答臘・中加里曼丹・巴布亞" },
+    { "symbol": "polygon", "fillColor": "#E53935", "fillOpacity": 0.45, "borderColor": "#FF8F00", "label": "東加里曼丹：澳洲C-130空中滅火作業區（11/6–12）" },
+    { "symbol": "line", "color": "#8d6e63", "weight": 2.5, "dash": "7,5", "label": "煙霾跨境擴散方向（示意）" },
+    { "symbol": "dot", "color": "#e74c3c", "pulse": true, "label": "Mi-17V5直升機墜毀地點（11/4・3死5傷）" },
+    { "symbol": "dot", "color": "#64B5F6", "pulse": false, "label": "澳洲C-130作業區參考・巴布亞火區參考" },
+    { "symbol": "dot", "color": "#f1c40f", "pulse": false, "label": "首都・省會・煙霾受影響城市" }
+  ]
+}
