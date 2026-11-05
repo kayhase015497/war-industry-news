@@ -35,7 +35,8 @@
 - `mali_attack_20260425`：`meta.date` 是 `"2026年4月25日"`（中文格式字串）。
 - 5 個檔案 `theme` 為 null。
 - `beijing_heli_crashes`：日期 2022-07-01（事件日期，不是製圖日期）。
-- 重複／近重複：`test_routes`（＝`pakistan_iran_routes_20260425` 的測試殘留，應排除）、`europe_na_wildfires_floods_2026_blue`（與同名橘色版同內容，只留一張）、`iraq_marsh_20260428`／`iraq_marsh_filled_20260428`（同題材兩版，合併為一顆光點，進入時可切換版本）。
+- 同題材多版本（**使用者決定：做成可切換**）：`europe_na_wildfires_floods_2026`（橘）／`_blue`（藍）、`iraq_marsh_20260428`（線條版）／`iraq_marsh_filled_20260428`（填色版）、哈薩克 `kazakhstan_eurasia_nodes_2026`（鐵路走廊）／`kazakhstan_energy_minerals_europe_2026`（能源礦產）與 `china_iran_trade_network_2026`／`instc_corridor_2026` 屬相關圖，不合併但互相掛為「相關圖」。同題材版本合併成**一顆光點**，資訊卡上有版本切換器。
+- 測試殘留：`test_routes`（＝`pakistan_iran_routes_20260425` 的測試副本）仍排除，不提供給使用者。
 - `meta.date` 是**事件日期**；git 歷史是淺的（最早 commit 2026-09-08），**不能**用 git 推算製圖日期。
 - `theme`、`status` **不代表主題**（theme 只是 UI 顏色），分類必須另外策展。
 - 座標約定：一律 `[lat, lng]`；跨換日線的圖用 lng>180（例：謝米亞島 JBER 為 210.2）；`map.mobile` 是手機視野覆寫（只給 siterep 用）。
@@ -89,9 +90,11 @@
 5. **驗證報告**（建置失敗條件）：JSON 無法解析、lat 超出 [-90,90]、lng 超出 [-180,360]、manifest 引用不存在的 slug、日期無法解析且 manifest 未提供。警告（不失敗）：近重複圖、`theme` 為 null、座標落在陸地以外的可疑點。
 
 ### `manifest.json`（手寫，可編輯）
-每張圖可覆寫：`include`（預設 true）、`category`、`displayDate`、`shortTitle`、`featured`、`series`、`anchor`、`mergeWith`（版本合併）、`note`。
+每張圖可覆寫：`include`（預設 true）、`category`、`displayDate`、`shortTitle`、`featured`、`series`、`anchor`、`variants`（同題材多版本，見下）、`related`（相關圖 slug 陣列）、`note`。
 
-**必須處理的條目**：`test_routes`→exclude；`europe_na_wildfires_floods_2026_blue`→exclude（保留橘色版）；`iraq_marsh_filled_20260428`→`mergeWith: iraq_marsh_20260428`；`mali_attack_20260425`→`displayDate: 2026-04-25`；`beijing_heli_crashes`→category 延伸參考，標示「2022 事件」。
+`variants` 格式：掛在「主版本」條目上，例如 `{"slug":"iraq_marsh_20260428","variants":[{"slug":"iraq_marsh_20260428","label":"線條版"},{"slug":"iraq_marsh_filled_20260428","label":"填色版"}]}`；被收編的版本自動不再單獨成為光點。
+
+**必須處理的條目**：`test_routes`→exclude；`europe_na_wildfires_floods_2026`→variants［橘色版／藍色版］；`iraq_marsh_20260428`→variants［線條版／填色版］；哈薩克兩張互掛 `related`；`mali_attack_20260425`→`displayDate: 2026-04-25`；`beijing_heli_crashes`→category 延伸參考，標示「2022 事件」。
 
 **anchor 規則**：預設取「第一個 `confirmed` 標記，否則 `map.center`」；多區域大圖（哈薩克×2、INSTC、絲路、俄羅斯影子能源、中俄互聯互通、非洲綠色長城、三北防護林）用 `map.center` 並在 UI 標為「區域型」，選取時畫出範圍環而非單點。
 
@@ -128,6 +131,8 @@
 2. 68－（排除／合併後）顆光點正確顯示，含聚合。
 3. 時間軸（4–11 月）＋分類篩選。
 4. 選取→飛行→球面圖層（多邊形、路線、標記）→資訊卡（含免責字句）→開 siterep 疊層。
+   - **版本切換器（使用者需求）**：有 `variants` 的光點，資訊卡頂部顯示分頁式切換（例如「橘色版｜藍色版」），切換時球面圖層與「進入戰區地圖」開啟的 `siterep` 同步換成該版本，不需重新選取光點；沒有 variants 的圖不顯示切換器。
+   - **相關圖**：資訊卡底部顯示 `related` 清單，點選直接飛到該光點。
 5. 純 DOM 清單 fallback（關閉 WebGL 時仍可用，用 `?renderer=none` 測）。
 6. 所有文案 zh-Hant；`yr-` 前綴 CSS（iframe 友善）；RWD breakpoint 約 900px。
 
@@ -167,9 +172,9 @@ WebGPU 加分特效（大氣層、bloom、流動弧線、脈衝環）、晝夜�
 
 ## 9. 需要使用者決策的事項（附預設值，Sonnet 不必卡住）
 
-1. **CI 建置 vs 提交建置產物**：修改 `static.yml` 需使用者同意。**預設**：不動 CI，先把 `dist/` 提交進 repo；使用者同意後再比照 game-v2 加 CI 建置步驟。
-2. **歷史／參考圖**（絲路 100CE、大以色列、摩卡咖啡史、北京直升機 2022、生物實驗室）：**預設**納入「延伸參考」類，預設在篩選中收合，不計入年度統計。
-3. **重複圖處理**：照第 3 節預設（排除 `test_routes`、`_blue`；合併 `iraq_marsh`）。
+1. **CI 建置 vs 提交建置產物**：（待使用者說明後決定）修改 `static.yml` 需使用者同意。**預設**：不動 CI，先把 `dist/` 提交進 repo；使用者同意後再比照 game-v2 加 CI 建置步驟。
+2. **歷史／參考圖**（絲路 100CE、大以色列、摩卡咖啡史、北京直升機 2022、生物實驗室）：**已決定：納入**，歸「延伸參考」類，正常顯示於篩選（不收合）；年度統計數字不計入這一類，並在 HUD 標註「不含延伸參考」。
+3. **重複／多版本圖**：**已決定：做成可切換**——同題材版本合併為一顆光點，資訊卡有版本切換器（見第 5 節 P0-4）；只有 `test_routes` 這個測試殘留排除。
 4. **嵌入目標**：**預設**以公司 APP 的 iframe（手機 WebView）為首要目標，其次才是獨立頁面。
 
 ## 10. 執行順序（每步獨立 PR，依慣例 squash 或一般 merge 皆可，使用者會說）
