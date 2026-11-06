@@ -144,3 +144,6 @@ html,body { margin:0; height:100%; background:var(--yr-bg); color:var(--yr-fg); 
 .yr-sum__n { font-size:11px; color:var(--yr-dim); margin:10px 0; }
 .yr-sum__btns { display:flex; gap:8px; justify-content:flex-end; }
 @media (max-width:900px) { .yr-tools { margin-left:0; } .yr-legend { bottom:70px; } .yr-tour { top:96px; } .yr-sum__nums b { font-size:19px; } }
+
+.yr-legend__go { margin-top:4px; padding:6px 8px; font-size:12px; border:1px solid var(--yr-acc); border-radius:4px; background:#4aa8ff22; color:#fff; }
+.yr-legend__go:hover { background:#4aa8ff44; }
