@@ -9,7 +9,7 @@ import { paintBasemap, borderLines, land50 } from './basemap.js';
 const D2R = Math.PI / 180;
 const MIN_DIST = 1.1, MAX_DIST = 6.5;
 const PATCH_N = IS_MOBILE ? 1536 : 2048;
-const BASE_COLORS = [0x4f8fd9, 0xff5a3c, 0xffb62e, 0x9a6bff];
+const BASE_COLORS = [0x58a6ff, 0xff4433, 0xffc21f, 0xb48cff];
 
 export async function createGlobe(container) {
   const state = { lat: 20, lng: 60, dist: 3.4 };
@@ -177,22 +177,31 @@ export async function createGlobe(container) {
   }
 
   /* ---------- 軍事基地圖層 ---------- */
-  let basesMesh = null;
+  let basesMesh = null, basesRim = null, basesDist = 0;
+  const baseObj = new THREE.Object3D(), baseCol = new THREE.Color();
+  function layoutBases() {
+    const rows = basesMesh.userData.rows, k = state.dist * 0.00098 * (IS_MOBILE ? 2.2 : 2.5);
+    rows.forEach((r, i) => {
+      const sc = k * (r[2] ? 1.45 : 1);
+      baseObj.position.copy(ll2v(r[0], r[1], 1.0013)); baseObj.lookAt(baseObj.position.clone().multiplyScalar(2));
+      baseObj.scale.setScalar(sc); baseObj.updateMatrix(); basesMesh.setMatrixAt(i, baseObj.matrix);
+      baseObj.position.copy(ll2v(r[0], r[1], 1.0009)); baseObj.scale.setScalar(sc * 1.4); baseObj.updateMatrix(); basesRim.setMatrixAt(i, baseObj.matrix);
+    });
+    basesMesh.instanceMatrix.needsUpdate = true; basesRim.instanceMatrix.needsUpdate = true; basesDist = state.dist;
+  }
   function setBases(rows) {
     if (basesMesh) return;
-    const geo = new THREE.CircleGeometry(1, 10);
-    const mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.92, depthWrite: false, side: THREE.DoubleSide });
-    basesMesh = new THREE.InstancedMesh(geo, mat, rows.length);
-    const o = new THREE.Object3D(), col = new THREE.Color();
-    rows.forEach((r, i) => {
-      o.position.copy(ll2v(r[0], r[1], 1.0012)); o.lookAt(o.position.clone().multiplyScalar(2));
-      o.scale.setScalar(r[2] ? 0.0075 : 0.0052); o.updateMatrix(); basesMesh.setMatrixAt(i, o.matrix);
-      basesMesh.setColorAt(i, col.setHex(BASE_COLORS[r[2]] ?? BASE_COLORS[0]));
-    });
-    basesMesh.instanceMatrix.needsUpdate = true; basesMesh.instanceColor.needsUpdate = true;
-    basesMesh.visible = false; basesMesh.userData.rows = rows; scene.add(basesMesh);
+    const geo = new THREE.CircleGeometry(1, 16);
+    basesMesh = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ transparent: true, opacity: 1, depthWrite: false, side: THREE.DoubleSide }), rows.length);
+    basesRim = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9, depthWrite: false, side: THREE.DoubleSide }), rows.length);
+    basesRim.renderOrder = 2; basesMesh.renderOrder = 3;
+    basesMesh.userData.rows = rows;
+    rows.forEach((r, i) => basesMesh.setColorAt(i, baseCol.setHex(BASE_COLORS[r[2]] ?? BASE_COLORS[0])));
+    basesMesh.instanceColor.needsUpdate = true;
+    layoutBases();
+    basesMesh.visible = basesRim.visible = false; scene.add(basesRim, basesMesh);
   }
-  function showBases(on) { if (basesMesh) { basesMesh.visible = on; needsRender = true; } }
+  function showBases(on) { if (basesMesh) { basesMesh.visible = basesRim.visible = on; if (on) layoutBases(); needsRender = true; } }
   function pickBase(x, y, radius = 16) {
     if (!basesMesh?.visible) return -1;
     let best = -1, bd = radius;
@@ -317,6 +326,7 @@ export async function createGlobe(container) {
     }
     if (!needsRender && mapGroup.children.length && now - lastRender > 33) needsRender = true;
     if (needsRender) {
+      if (basesMesh?.visible && Math.abs(state.dist - basesDist) / basesDist > 0.04) layoutBases();
       applyCamera();
       if (bloomOn && pipeline) pipeline.render(); else renderer.render(scene, camera);
       needsRender = false; lastRender = now; fps.frames++;
