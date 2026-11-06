@@ -210,6 +210,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
     }
     .loc-tooltip::before { display: none !important; }
+    .loc-hide { display: none !important; }
 
     #footer {
       background: #0f0f1e; border-top: 1px solid #2a2a3e;
@@ -468,8 +469,10 @@ function initMap(d) {
   });
 
   // ── 地點標記 ──────────────────────────────────────
+  const tipRefs = [];
   d.locations.forEach(function(loc) {
     const marker = L.marker(loc.latlng, { icon: makeIcon(loc.type) }).addTo(map);
+    tipRefs.push({ marker: marker, rank: { confirmed: 0, dam: 0, capital: 1, city: 1, possible: 2 }[loc.type] ?? 3 });
 
     marker.bindPopup(
       '<h3>' + loc.name + '</h3>' +
@@ -493,6 +496,23 @@ function initMap(d) {
     map.on('zoomend', syncMinor);
     syncMinor();
   }
+
+  // 標籤避讓：依重要性保留、隱藏與已顯示標籤重疊者（縮放／移動後重算）
+  function declutter() {
+    const items = tipRefs.slice().sort(function(x, y) { return x.rank - y.rank; });
+    const els = items.map(function(r) { const t = r.marker.getTooltip(); return t && t.getElement(); });
+    els.forEach(function(e) { if (e) e.classList.remove('loc-hide'); });
+    const placed = [];
+    items.forEach(function(r, i) {
+      const e = els[i]; if (!e || getComputedStyle(e).display === 'none') return;
+      const bb = e.getBoundingClientRect();
+      const hit = placed.some(function(p) { return bb.left < p.right && bb.right > p.left && bb.top < p.bottom && bb.bottom > p.top; });
+      if (hit) e.classList.add('loc-hide'); else placed.push(bb);
+    });
+  }
+  map.on('zoomend moveend', declutter);
+  window.addEventListener('resize', function() { setTimeout(declutter, 200); });
+  setTimeout(declutter, 500);
 
   // ── 圖例資料與 swatch 工廠（共用） ──────────────────
   const defaultItems = [
