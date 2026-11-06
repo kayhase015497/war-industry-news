@@ -271,7 +271,7 @@ function renderCard() {
     <button class="yr-go">進入戰區地圖 ›</button>`;
   card.classList.add('is-open');
   $('.yr-card__x', card).onclick = closeCard;
-  $('.yr-go', card).onclick = () => openOverlay(state.sel.slug, d.meta?.title || m.title);
+  $('.yr-go', card).onclick = () => openOverlay(WM_BASE + 'siterep.html?d=' + encodeURIComponent(state.sel.slug), d.meta?.title || m.title);
   card.querySelectorAll('[data-ch]').forEach(b => (b.onclick = () => selectMap(chain[ci + +b.dataset.ch])));
   card.querySelectorAll('.yr-var').forEach(b => (b.onclick = () => selectVariant(b.dataset.v)));
   card.querySelectorAll('[data-r]').forEach(b => (b.onclick = () => selectMap(idx.maps.find(x => x.slug === b.dataset.r))));
@@ -298,8 +298,8 @@ function showChooser(ms) {
 }
 
 /* ---------- overlay (siterep) ---------- */
-function openOverlay(slug, title) {
-  $('#yr-ov-t').textContent = title; $('#yr-ov-f').src = WM_BASE + 'siterep.html?d=' + encodeURIComponent(slug); $('#yr-ov').classList.add('is-open');
+function openOverlay(url, title) {
+  $('#yr-ov-t').textContent = title; $('#yr-ov-f').src = url; $('#yr-ov').classList.add('is-open');
 }
 function closeOverlay() { $('#yr-ov').classList.remove('is-open'); $('#yr-ov-f').src = 'about:blank'; }
 
@@ -389,7 +389,8 @@ async function toggleBases() {
   }
   globe.showBases(state.bases);
   const lg = $('#yr-legend'); lg.classList.toggle('is-hidden', !state.bases);
-  lg.innerHTML = `<b>全球軍事基地 1,232 座</b>` + BASE_FLAG.map((t, i) => `<span><i style="background:${BASE_HEX[i]}"></i>${t}</span>`).join('') + '<small>World BEYOND War 資料・點基地看名稱</small>';
+  lg.innerHTML = `<b>全球軍事基地 1,232 座</b>` + BASE_FLAG.map((t, i) => `<span><i style="background:${BASE_HEX[i]}"></i>${t}</span>`).join('') + '<small>World BEYOND War 資料・點基地看名稱</small><button class="yr-legend__go" id="yr-bases-go">開啟完整基地地圖（可搜尋／篩選） ›</button>';
+  $('#yr-bases-go').onclick = () => openOverlay(WM_BASE + 'military-bases-world.html', '全球軍事基地地圖（1,232 座）');
   if (!state.bases) $('#yr-tip').classList.add('is-hidden');
 }
 async function toggleQuality(silent) {
