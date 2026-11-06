@@ -3,7 +3,7 @@ import { float, vec3, normalView, normalWorld, positionViewDirection, smoothstep
 import { geoEquirectangular, geoPath, geoGraticule, geoBounds } from 'd3-geo';
 import { feature } from 'topojson-client';
 import { RENDERER, IS_MOBILE, GESTURE_MODE, TEX_WIDTH } from './config.js';
-import { ll2v, clamp, angularDistance, lineMesh, polygonMeshes, pulseRing } from './geo.js';
+import { ll2v, clamp, angularDistance, lineMesh, polygonMeshes, pulseRing, widthScale } from './geo.js';
 import { paintBasemap, borderLines, land50 } from './basemap.js';
 
 const D2R = Math.PI / 180;
@@ -36,7 +36,7 @@ export async function createGlobe(container) {
     const tx = texture(map);
     const lamb = normalWorld.dot(lightDir).clamp(0, 1);
     const rim = normalView.dot(positionViewDirection).clamp(0, 1).pow(0.4);
-    const shade = lamb.mul(0.5).add(0.68).mul(mix(float(0.5), float(1.0), rim));
+    const shade = lamb.mul(0.45).add(0.78).mul(mix(float(0.62), float(1.0), rim));
     m.colorNode = tx.rgb.mul(shade);
     if (transparent) m.opacityNode = tx.a;
     return m;
@@ -102,7 +102,7 @@ export async function createGlobe(container) {
   patchTex.colorSpace = THREE.SRGBColorSpace;
   patchTex.anisotropy = tex.anisotropy; patchTex.generateMipmaps = true; patchTex.minFilter = THREE.LinearMipmapLinearFilter;
   const patch = new THREE.Mesh(new THREE.BufferGeometry(), shaded(patchTex, true));
-  patch.visible = false; patch.renderOrder = 1; scene.add(patch);
+  patch.visible = false; patch.renderOrder = -1; scene.add(patch);
   let topo10 = null, topo10Promise = null, patchInfo = null, patchBusy = false;
 
   let landPolys = null, countryFeats = null;
@@ -220,6 +220,7 @@ export async function createGlobe(container) {
     if (focusX || focusY) camera.setViewOffset(w, h, focusX, focusY, w, h); else camera.clearViewOffset();
     camera.updateProjectionMatrix();
     camDir.copy(camera.position).normalize(); camRight.crossVectors(UP, camDir).normalize();
+    widthScale.value = clamp(state.dist / 2.1, 0.4, 3);
     lightDir.value.copy(camDir).addScaledVector(camRight, -0.55).addScaledVector(UP, 0.45).normalize();
   }
 
