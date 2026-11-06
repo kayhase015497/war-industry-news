@@ -12,7 +12,7 @@ let globe = null, idx, stats;
 const byDate = [];
 const state = { cats: new Set(), cutoff: null, sel: null, explored: new Set(), view: 'globe', playing: false, tour: null, bases: false, quality: 'std', toasted: new Set() };
 const BASE_FLAG = ['一般基地', '核武基地', '無人機基地', 'NATO 基地'];
-const BASE_HEX = ['#4f8fd9', '#ff5a3c', '#ffb62e', '#9a6bff'];
+const BASE_HEX = ['#58a6ff', '#ff4433', '#ffc21f', '#b48cff'];
 const detailCache = new Map();
 
 try { JSON.parse(localStorage.getItem(seenKey) || '[]').forEach(s => state.explored.add(s)); } catch (e) { /* storage unavailable */ }
