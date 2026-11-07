@@ -47,6 +47,9 @@ jobs:
         working-directory: game-v2
         run: npm run build
 
+      - name: Remove build-only files from Pages artifact
+        run: rm -rf game-v2/node_modules
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
