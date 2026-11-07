@@ -472,7 +472,7 @@ function initMap(d) {
   // ── 地點標記 ──────────────────────────────────────
   const tipRefs = [];
   d.locations.forEach(function(loc) {
-    const marker = L.marker(loc.latlng, { icon: makeIcon(loc.type) }).addTo(map);
+    const marker = L.marker(loc.latlng, { icon: makeIcon(loc.type, loc.shape) }).addTo(map);
     tipRefs.push({ marker: marker, rank: { confirmed: 0, dam: 0, capital: 1, city: 1, possible: 2 }[loc.type] ?? 3 });
 
     marker.bindPopup(
@@ -536,8 +536,11 @@ function initMap(d) {
     }
     if (item.symbol === 'dot') {
       const c = item.color;
-      const inner = '<div style="position:absolute;top:0;left:0;width:12px;height:12px;' +
-        'background:' + c + ';border:2px solid rgba(255,255,255,0.8);border-radius:50%;z-index:1;"></div>';
+      const inner = item.shape === 'triangle'
+        ? '<div style="position:absolute;top:-2px;left:-2px;width:16px;height:16px;background:#fff;clip-path:polygon(50% 0,100% 100%,0 100%);z-index:1;"></div>' +
+          '<div style="position:absolute;top:0;left:0;width:12px;height:12px;background:' + c + ';clip-path:polygon(50% 0,100% 100%,0 100%);z-index:2;"></div>'
+        : '<div style="position:absolute;top:0;left:0;width:12px;height:12px;' +
+          'background:' + c + ';border:2px solid rgba(255,255,255,0.8);border-radius:' + (item.shape === 'square' ? '2px' : '50%') + ';z-index:1;"></div>';
       const ring = item.pulse
         ? '<div style="position:absolute;top:-4px;left:-4px;width:20px;height:20px;' +
           'background:' + c + ';opacity:0.35;border-radius:50%;animation:ripple 1.6s ease-out infinite;"></div>'
@@ -629,15 +632,27 @@ function initMap(d) {
 }
 
 // ── 標記圖示工廠 ──────────────────────────────────────
-function makeIcon(type) {
-  if (type === 'capital'  || type === 'city')            return circleIcon('#f1c40f', 18, false);
-  if (type === 'confirmed'|| type === 'dam')             return circleIcon('#e74c3c', 15, true);
-  if (type === 'possible' || type === 'medium_recovery') return circleIcon('#64B5F6', 13, false);
-  if (type === 'high_recovery')                          return circleIcon('#1E88E5', 13, false);
-  return circleIcon('#27ae60', 11, false);
+function makeIcon(type, shape) {
+  if (type === 'capital'  || type === 'city')            return circleIcon('#f1c40f', 18, false, shape);
+  if (type === 'confirmed'|| type === 'dam')             return circleIcon('#e74c3c', 15, true, shape);
+  if (type === 'possible' || type === 'medium_recovery') return circleIcon('#64B5F6', 13, false, shape);
+  if (type === 'high_recovery')                          return circleIcon('#1E88E5', 13, false, shape);
+  return circleIcon('#27ae60', 11, false, shape);
 }
 
-function circleIcon(color, size, pulse) {
+function shapeHtml(color, size, shape) {
+  if (shape === 'triangle') {
+    const o = size + 8, tri = 'clip-path:polygon(50% 0,100% 100%,0 100%);';
+    return '<div style="position:absolute;left:' + (-4) + 'px;top:' + (-5.5) + 'px;width:' + o + 'px;height:' + o + 'px;background:#fff;' + tri + 'z-index:2;"></div>' +
+      '<div style="position:absolute;left:0;top:0;width:' + size + 'px;height:' + size + 'px;background:' + color + ';' + tri + 'z-index:3;"></div>';
+  }
+  const r = shape === 'square' ? '3px' : '50%';
+  return '<div style="position:absolute;top:0;left:0;width:' + size + 'px;height:' + size + 'px;' +
+    'background:' + color + ';border:2.5px solid rgba(255,255,255,0.9);border-radius:' + r + ';' +
+    'box-shadow:0 2px 10px rgba(0,0,0,0.7);z-index:2;"></div>';
+}
+
+function circleIcon(color, size, pulse, shape) {
   const ps = size + 6;
   const pulseHtml = pulse
     ? '<div style="position:absolute;top:' + (-ps/2+size/2) + 'px;left:' + (-ps/2+size/2) + 'px;' +
@@ -648,9 +663,7 @@ function circleIcon(color, size, pulse) {
     className: '',
     html: '<div style="position:relative;width:' + size + 'px;height:' + size + 'px;">' +
       pulseHtml +
-      '<div style="position:absolute;top:0;left:0;width:' + size + 'px;height:' + size + 'px;' +
-      'background:' + color + ';border:2.5px solid rgba(255,255,255,0.9);border-radius:50%;' +
-      'box-shadow:0 2px 10px rgba(0,0,0,0.7);z-index:2;"></div></div>',
+      shapeHtml(color, size, shape) + '</div>',
     iconSize: [size, size],
     iconAnchor: [size/2, size/2]
   });

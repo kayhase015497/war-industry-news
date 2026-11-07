@@ -1,0 +1,983 @@
+{
+  "meta": {
+    "title": "現代 TITR 跨裏海國際運輸路線：從連雲港到歐洲的中間走廊",
+    "titleEn": "Modern TITR — Trans-Caspian International Transport Route, from Lianyungang to Europe",
+    "subtitle": "連雲港・西安・霍爾果斯・阿克套・阿拉特・第比利斯・卡爾斯・伊斯坦布爾",
+    "date": "2026-11-07",
+    "status": "resource",
+    "theme": "blue",
+    "sources": [
+      "張威翔製作",
+      "公開資料整理",
+      "地理參考"
+    ]
+  },
+  "map": {
+    "center": [
+      42,
+      55
+    ],
+    "zoom": 4,
+    "bounds": [
+      [
+        34,
+        20
+      ],
+      [
+        55,
+        120
+      ]
+    ],
+    "mobile": {
+      "center": [
+        41,
+        52
+      ],
+      "zoom": 3
+    }
+  },
+  "infoPanel": {
+    "title": "TITR：跨裏海國際運輸路線",
+    "paragraphs": [
+      "TITR（跨裏海國際運輸路線，又稱中間走廊）自中國大陸出發，經鐵路穿越新疆進入哈薩克，在裏海東岸的阿克套轉乘渡輪橫渡裏海至亞塞拜然的阿拉特，再經巴庫—第比利斯—卡爾斯（BTK）鐵路進入土耳其，抵達伊斯坦布爾後銜接歐洲。",
+      "主線由連雲港（海鐵聯運，可選）與西安（中歐班列集結中心）出發，經霍爾果斯口岸（亦可由多斯特克口岸入哈）進入哈薩克，經阿拉木圖西行至阿克套；跨海渡輪是整條路線唯一的水上環節。替代與分支包括：庫雷克—巴庫的替代渡口、第比利斯通往黑海港口波季與巴統的支線、經土庫曼通往伊朗德黑蘭的南向分支，以及不經哈薩克的中吉烏鐵路（在建）。",
+      "圖中標記形狀：三角形為港口、方形為邊境口岸、圓形為城市；紅色為主線節點、藍色為分支或可選節點。路線依地形概略繪製，非精確線路；標示「可選」者不代表已開通。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [
+          34.6,
+          119.2
+        ],
+        [
+          34.26,
+          117.18
+        ],
+        [
+          34.75,
+          113.65
+        ],
+        [
+          34.62,
+          112.45
+        ],
+        [
+          34.77,
+          111.2
+        ],
+        [
+          34.34,
+          108.94
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・連雲港→西安（海鐵聯運，可選）",
+        "tag": "🚆 TITR 主線・海鐵聯運",
+        "tagClass": "tag-confirmed",
+        "desc": "連雲港與西安間的鐵路聯運段（可選），連接海港與中歐班列集結中心。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          34.34,
+          108.94
+        ],
+        [
+          36.06,
+          103.8
+        ],
+        [
+          37.93,
+          102.63
+        ],
+        [
+          39.73,
+          98.5
+        ],
+        [
+          42.83,
+          93.5
+        ],
+        [
+          43.83,
+          87.6
+        ],
+        [
+          44.6,
+          82.9
+        ],
+        [
+          43.9,
+          81.3
+        ],
+        [
+          44.2,
+          80.4
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・西安→霍爾果斯（中國大陸段，中歐班列）",
+        "tag": "🚆 TITR 主線・中國大陸段",
+        "tagClass": "tag-confirmed",
+        "desc": "經河西走廊與新疆抵達霍爾果斯口岸，與中歐班列共線。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          44.2,
+          80.4
+        ],
+        [
+          44.0,
+          79.6
+        ],
+        [
+          43.2,
+          76.9
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・霍爾果斯→阿拉木圖（哈薩克段，換裝後寬軌）",
+        "tag": "🚆 TITR 主線・哈薩克段",
+        "tagClass": "tag-confirmed",
+        "desc": "出口岸後換裝為哈薩克寬軌。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          43.2,
+          76.9
+        ],
+        [
+          42.3,
+          69.6
+        ],
+        [
+          44.85,
+          65.5
+        ],
+        [
+          46.8,
+          61.7
+        ],
+        [
+          45.3,
+          55.2
+        ],
+        [
+          43.65,
+          51.2
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・阿拉木圖→阿克套（哈薩克段）",
+        "tag": "🚆 TITR 主線・哈薩克段",
+        "tagClass": "tag-confirmed",
+        "desc": "經奇姆肯特、克孜勒奧爾達、別伊諾直接西行；也可繞經阿斯塔納。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          43.65,
+          51.2
+        ],
+        [
+          42.0,
+          50.5
+        ],
+        [
+          40.6,
+          50.0
+        ],
+        [
+          39.95,
+          49.4
+        ]
+      ],
+      "color": "#00ACC1",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": "10,6",
+      "popup": {
+        "title": "主線・阿克套→阿拉特（跨裏海渡輪）",
+        "tag": "⛴ 裏海渡輪（主線）",
+        "tagClass": "tag-confirmed",
+        "desc": "跨越裏海的渡輪段，是整條路線中唯一的水上環節。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          39.95,
+          49.4
+        ],
+        [
+          40.4,
+          49.9
+        ],
+        [
+          40.4,
+          47.5
+        ],
+        [
+          40.68,
+          46.36
+        ],
+        [
+          41.7,
+          44.8
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・阿拉特→第比利斯（亞塞拜然—喬治亞段，經巴庫）",
+        "tag": "🚆 TITR 主線・亞塞拜然—喬治亞段",
+        "tagClass": "tag-confirmed",
+        "desc": "自阿拉特經巴庫、占賈前往第比利斯。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          41.7,
+          44.8
+        ],
+        [
+          41.4,
+          43.49
+        ],
+        [
+          40.6,
+          43.1
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・第比利斯→卡爾斯（BTK 鐵路，喬治亞—土耳其段）",
+        "tag": "🚆 TITR 主線・BTK 鐵路",
+        "tagClass": "tag-confirmed",
+        "desc": "巴庫—第比利斯—卡爾斯（BTK）鐵路的喬治亞至土耳其段。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          40.6,
+          43.1
+        ],
+        [
+          39.9,
+          41.27
+        ],
+        [
+          39.75,
+          39.49
+        ],
+        [
+          39.75,
+          37.02
+        ],
+        [
+          39.9,
+          32.85
+        ],
+        [
+          40.8,
+          30.4
+        ],
+        [
+          41.0,
+          28.98
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 4,
+      "opacity": 0.9,
+      "dashArray": null,
+      "popup": {
+        "title": "主線・卡爾斯→伊斯坦布爾（土耳其段，經安卡拉）",
+        "tag": "🚆 TITR 主線・土耳其段",
+        "tagClass": "tag-confirmed",
+        "desc": "穿越安納托利亞經安卡拉抵達伊斯坦布爾。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          41.0,
+          28.98
+        ],
+        [
+          42.7,
+          23.3
+        ],
+        [
+          44.8,
+          20.5
+        ],
+        [
+          47.5,
+          19.04
+        ]
+      ],
+      "color": "#1565C0",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "9,6",
+      "popup": {
+        "title": "歐洲延伸・伊斯坦布爾→中歐（虛線，示意）",
+        "tag": "🚆 歐洲延伸段（示意）",
+        "tagClass": "tag-confirmed",
+        "desc": "自伊斯坦布爾延伸至中歐的鐵路段，圖中僅示意方向。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          43.2,
+          51.7
+        ],
+        [
+          41.5,
+          50.9
+        ],
+        [
+          40.4,
+          49.9
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・庫雷克→巴庫（裏海替代渡口）",
+        "tag": "⛴ 裏海替代渡口",
+        "tagClass": "tag-possible",
+        "desc": "與阿克套—阿拉特並行的替代渡口。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          41.7,
+          44.8
+        ],
+        [
+          41.99,
+          43.6
+        ],
+        [
+          42.27,
+          42.7
+        ],
+        [
+          42.15,
+          41.67
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・第比利斯→波季（黑海分支）",
+        "tag": "🚆 黑海分支・可轉海運",
+        "tagClass": "tag-possible",
+        "desc": "自第比利斯西向黑海港口波季。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          41.7,
+          44.8
+        ],
+        [
+          41.99,
+          43.6
+        ],
+        [
+          42.27,
+          42.7
+        ],
+        [
+          41.64,
+          41.64
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・第比利斯→巴統（黑海分支）",
+        "tag": "🚆 黑海分支・可轉海運",
+        "tagClass": "tag-possible",
+        "desc": "自第比利斯西向黑海港口巴統。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          43.34,
+          52.86
+        ],
+        [
+          39.25,
+          55.5
+        ],
+        [
+          37.95,
+          58.38
+        ],
+        [
+          36.3,
+          59.6
+        ],
+        [
+          35.7,
+          51.4
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・哈薩克（經土庫曼）→德黑蘭（南向分支）",
+        "tag": "🚆 南向分支・經阿什哈巴德",
+        "tagClass": "tag-possible",
+        "desc": "自哈薩克西部經土庫曼，途經阿什哈巴德南向抵達德黑蘭（可選）。起點約在哈薩克西部鐵路口岸一帶。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          39.25,
+          55.5
+        ],
+        [
+          40.0,
+          52.97
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・土庫曼巴希（裏海港口支線）",
+        "tag": "🚆 土庫曼巴希支線（可選）",
+        "tagClass": "tag-possible",
+        "desc": "連接土庫曼裏海港口的支線，圖中僅示意。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          39.47,
+          75.99
+        ],
+        [
+          40.52,
+          75.4
+        ],
+        [
+          41.0,
+          74.0
+        ],
+        [
+          40.93,
+          72.98
+        ],
+        [
+          40.78,
+          72.34
+        ]
+      ],
+      "color": "#FB8C00",
+      "weight": 3.2,
+      "opacity": 0.9,
+      "dashArray": "3,6",
+      "popup": {
+        "title": "在建・喀什→安集延（中吉烏鐵路，不經哈薩克）",
+        "tag": "🚧 中吉烏鐵路（在建）",
+        "tagClass": "tag-possible",
+        "desc": "不經哈薩克的構想路線，經吉爾吉斯連接烏茲別克；路線僅為概略示意。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    },
+    {
+      "points": [
+        [
+          40.78,
+          72.34
+        ],
+        [
+          40.53,
+          70.94
+        ],
+        [
+          40.28,
+          69.62
+        ],
+        [
+          41.3,
+          69.3
+        ]
+      ],
+      "color": "#78909C",
+      "weight": 3,
+      "opacity": 0.9,
+      "dashArray": "7,5",
+      "popup": {
+        "title": "分支・安集延→塔什干（連接烏茲別克鐵路網）",
+        "tag": "🚆 烏茲別克支線",
+        "tagClass": "tag-possible",
+        "desc": "連接烏茲別克鐵路網的支線。 ⚠️ 路線為依據地形的概略示意，非精確線路。",
+        "source": "地理參考；公開資料整理"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [
+        34.6,
+        119.2
+      ],
+      "name": "Lianyungang",
+      "nameLocal": "連雲港（Lianyungang）・海鐵聯運起點",
+      "type": "confirmed",
+      "shape": "triangle",
+      "tag": "⚓ 連雲港・中國大陸・海鐵聯運起點",
+      "tagClass": "tag-confirmed",
+      "desc": "中國大陸的海港，TITR 主線在東端的海鐵聯運起點，可經鐵路接上中歐班列路線。 ⚠️ 座標為概略位置。",
+      "coords": "34°36'N 119°12'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        34.34,
+        108.94
+      ],
+      "name": "Xi'an",
+      "nameLocal": "西安（Xi'an）・中歐班列集結中心",
+      "type": "confirmed",
+      "shape": "triangle",
+      "tag": "🚉 西安內陸港・中歐班列集結中心",
+      "tagClass": "tag-confirmed",
+      "desc": "中國大陸的內陸港，中歐班列的集結中心，主線由此向西經河西走廊前往新疆口岸。 ⚠️ 座標為概略位置。",
+      "coords": "34°20'N 108°56'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        44.2,
+        80.4
+      ],
+      "name": "Khorgos",
+      "nameLocal": "霍爾果斯（Khorgos）・中國大陸—哈薩克邊境口岸",
+      "type": "confirmed",
+      "shape": "square",
+      "tag": "🚪 霍爾果斯口岸・中哈邊境",
+      "tagClass": "tag-confirmed",
+      "desc": "中國大陸與哈薩克邊境的鐵路口岸，TITR 主線入哈薩克的入口；換裝後接哈薩克寬軌。 ⚠️ 座標為概略位置。",
+      "coords": "44°12'N 080°24'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        44.5,
+        82.5
+      ],
+      "name": "Dostyk",
+      "nameLocal": "多斯特克（Dostyk）・哈薩克—中國大陸邊境口岸",
+      "type": "confirmed",
+      "shape": "square",
+      "tag": "🚪 多斯特克口岸・對應阿拉山口",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克與中國大陸邊境的鐵路口岸，對應中國大陸一側的阿拉山口，是另一個中哈鐵路入口。 ⚠️ 座標為概略位置。",
+      "coords": "44°30'N 082°30'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        43.2,
+        76.9
+      ],
+      "name": "Almaty",
+      "nameLocal": "阿拉木圖（Almaty）・哈薩克最大城市",
+      "type": "confirmed",
+      "shape": "circle",
+      "tag": "🏙 阿拉木圖・哈薩克段",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克最大城市，主線自霍爾果斯接入後的樞紐。 ⚠️ 座標為概略位置。",
+      "coords": "43°12'N 076°54'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        51.2,
+        71.4
+      ],
+      "name": "Astana",
+      "nameLocal": "阿斯塔納（Astana）・哈薩克首都",
+      "type": "capital",
+      "shape": "circle",
+      "tag": "🏛 阿斯塔納・哈薩克首都",
+      "tagClass": "tag-reference",
+      "desc": "哈薩克首都。阿拉木圖至阿克套段可經阿斯塔納，也可直接西行。 ⚠️ 座標為概略位置。",
+      "coords": "51°12'N 071°24'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        43.65,
+        51.2
+      ],
+      "name": "Aktau",
+      "nameLocal": "阿克套（Aktau）・裏海東岸港口",
+      "type": "confirmed",
+      "shape": "triangle",
+      "tag": "⚓ 阿克套港・跨裏海渡輪起點",
+      "tagClass": "tag-confirmed",
+      "desc": "哈薩克裏海東岸港口，TITR 主線跨裏海渡輪的起點，經渡輪前往阿塞拜然的阿拉特。 ⚠️ 座標為概略位置。",
+      "coords": "43°39'N 051°12'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        43.2,
+        51.7
+      ],
+      "name": "Kuryk",
+      "nameLocal": "庫雷克（Kuryk）・裏海東岸備用港口",
+      "type": "possible",
+      "shape": "triangle",
+      "tag": "⚓ 庫雷克港・備用渡口",
+      "tagClass": "tag-possible",
+      "desc": "哈薩克裏海東岸備用港口，與阿克套—阿拉特並行的替代渡口，可渡海至巴庫。 ⚠️ 座標為概略位置。",
+      "coords": "43°12'N 051°42'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        40.4,
+        49.9
+      ],
+      "name": "Baku",
+      "nameLocal": "巴庫（Baku）・亞塞拜然首都／港口",
+      "type": "confirmed",
+      "shape": "triangle",
+      "tag": "⚓ 巴庫・亞塞拜然首都・港口",
+      "tagClass": "tag-confirmed",
+      "desc": "亞塞拜然首都與港口。主線鐵路自阿拉特經巴庫前往第比利斯；庫雷克的替代渡口也抵達此處。 ⚠️ 座標為概略位置。",
+      "coords": "40°24'N 049°54'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        39.95,
+        49.4
+      ],
+      "name": "Alat",
+      "nameLocal": "阿拉特（Alat）・裏海西岸樞紐港",
+      "type": "confirmed",
+      "shape": "triangle",
+      "tag": "⚓ 阿拉特港・裏海西岸樞紐",
+      "tagClass": "tag-confirmed",
+      "desc": "亞塞拜然裏海西岸的樞紐港，接收跨裏海渡輪，主線在此轉回鐵路。 ⚠️ 座標為概略位置。",
+      "coords": "39°57'N 049°24'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        41.7,
+        44.8
+      ],
+      "name": "Tbilisi",
+      "nameLocal": "第比利斯（Tbilisi）・喬治亞首都",
+      "type": "confirmed",
+      "shape": "circle",
+      "tag": "🏛 第比利斯・喬治亞首都・分岔樞紐",
+      "tagClass": "tag-confirmed",
+      "desc": "喬治亞首都。主線由此南向經巴庫—第比利斯—卡爾斯（BTK）鐵路前往土耳其，也可西向黑海港口波季、巴統。 ⚠️ 座標為概略位置。",
+      "coords": "41°42'N 044°48'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        42.15,
+        41.67
+      ],
+      "name": "Poti",
+      "nameLocal": "波季（Poti）・喬治亞黑海港口",
+      "type": "possible",
+      "shape": "triangle",
+      "tag": "⚓ 波季港・黑海分支",
+      "tagClass": "tag-possible",
+      "desc": "喬治亞黑海港口，第比利斯的黑海分支，可轉海運。 ⚠️ 座標為概略位置。",
+      "coords": "42°09'N 041°40'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        41.64,
+        41.64
+      ],
+      "name": "Batumi",
+      "nameLocal": "巴統（Batumi）・喬治亞黑海港口",
+      "type": "possible",
+      "shape": "triangle",
+      "tag": "⚓ 巴統港・黑海分支",
+      "tagClass": "tag-possible",
+      "desc": "喬治亞黑海港口，第比利斯的黑海分支，可轉海運。 ⚠️ 座標為概略位置。",
+      "coords": "41°38'N 041°38'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        40.6,
+        43.1
+      ],
+      "name": "Kars",
+      "nameLocal": "卡爾斯（Kars）・土耳其東部鐵路樞紐",
+      "type": "confirmed",
+      "shape": "circle",
+      "tag": "🚉 卡爾斯・土耳其東部鐵路樞紐（BTK）",
+      "tagClass": "tag-confirmed",
+      "desc": "土耳其東部的鐵路樞紐，BTK 鐵路（巴庫—第比利斯—卡爾斯）進入土耳其後的第一個大站。 ⚠️ 座標為概略位置。",
+      "coords": "40°36'N 043°06'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        39.9,
+        32.85
+      ],
+      "name": "Ankara",
+      "nameLocal": "安卡拉（Ankara）・土耳其首都（可選）",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🏛 安卡拉・主線經過（可選）",
+      "tagClass": "tag-possible",
+      "desc": "土耳其首都，卡爾斯至伊斯坦布爾的鐵路可經安卡拉。 ⚠️ 座標為概略位置。",
+      "coords": "39°54'N 032°51'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        41.0,
+        28.98
+      ],
+      "name": "Istanbul",
+      "nameLocal": "伊斯坦布爾（Istanbul）・博斯普魯斯海峽",
+      "type": "confirmed",
+      "shape": "circle",
+      "tag": "🏙 伊斯坦布爾・連接歐洲",
+      "tagClass": "tag-confirmed",
+      "desc": "土耳其，位於博斯普魯斯海峽兩側；主線在此銜接歐洲延伸段，可虛線延伸至中歐。 ⚠️ 座標為概略位置。",
+      "coords": "41°00'N 028°59'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        35.7,
+        51.4
+      ],
+      "name": "Tehran",
+      "nameLocal": "德黑蘭（Tehran）・伊朗（南向分支，可選）",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🏛 德黑蘭・南向分支（可選）",
+      "tagClass": "tag-possible",
+      "desc": "伊朗首都，哈薩克經土庫曼南向分支的終點。 ⚠️ 座標為概略位置。",
+      "coords": "35°42'N 051°24'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        37.95,
+        58.38
+      ],
+      "name": "Ashgabat",
+      "nameLocal": "阿什哈巴德（Ashgabat）・土庫曼首都（可選）",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🏛 阿什哈巴德・南向分支（可選）",
+      "tagClass": "tag-possible",
+      "desc": "土庫曼首都，南向分支途經的城市。 ⚠️ 座標為概略位置。",
+      "coords": "37°57'N 058°23'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        40.0,
+        52.97
+      ],
+      "name": "Turkmenbashi",
+      "nameLocal": "土庫曼巴希（Turkmenbashi）・裏海港口（可選）",
+      "type": "possible",
+      "shape": "triangle",
+      "tag": "⚓ 土庫曼巴希港・裏海港口（可選）",
+      "tagClass": "tag-possible",
+      "desc": "土庫曼裏海港口，南向分支途經的節點。 ⚠️ 座標為概略位置。",
+      "coords": "40°00'N 052°58'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        41.3,
+        69.3
+      ],
+      "name": "Tashkent",
+      "nameLocal": "塔什干（Tashkent）・烏茲別克（可選支線）",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🏙 塔什干・烏茲別克支線（可選）",
+      "tagClass": "tag-possible",
+      "desc": "烏茲別克首都，中吉烏鐵路連接烏茲別克鐵路網的支線方向。 ⚠️ 座標為概略位置。",
+      "coords": "41°18'N 069°18'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        40.78,
+        72.34
+      ],
+      "name": "Andijan",
+      "nameLocal": "安集延（Andijan）・中吉烏鐵路終點",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🚉 安集延・中吉烏鐵路終點（在建）",
+      "tagClass": "tag-possible",
+      "desc": "烏茲別克，中吉烏鐵路（在建）的終點，連接烏茲別克鐵路網。 ⚠️ 座標為概略位置。",
+      "coords": "40°47'N 072°20'E",
+      "source": "地理參考；公開資料整理"
+    },
+    {
+      "latlng": [
+        39.47,
+        75.99
+      ],
+      "name": "Kashgar",
+      "nameLocal": "喀什（Kashgar）・中吉烏鐵路起點",
+      "type": "possible",
+      "shape": "circle",
+      "tag": "🚉 喀什・中吉烏鐵路起點（在建）",
+      "tagClass": "tag-possible",
+      "desc": "中國大陸新疆，中吉烏鐵路（在建）的起點，構想中不經哈薩克。 ⚠️ 座標為概略位置。",
+      "coords": "39°28'N 075°59'E",
+      "source": "地理參考；公開資料整理"
+    }
+  ],
+  "legend": [
+    {
+      "symbol": "line",
+      "color": "#1565C0",
+      "weight": 4,
+      "dash": "0",
+      "label": "TITR 主線（鐵路）"
+    },
+    {
+      "symbol": "line",
+      "color": "#00ACC1",
+      "weight": 4,
+      "dash": "10,6",
+      "label": "跨裏海渡輪（主線）"
+    },
+    {
+      "symbol": "line",
+      "color": "#FB8C00",
+      "weight": 3.2,
+      "dash": "3,6",
+      "label": "在建鐵路：中吉烏（喀什→安集延）"
+    },
+    {
+      "symbol": "line",
+      "color": "#78909C",
+      "weight": 3,
+      "dash": "7,5",
+      "label": "替代／分支路線（含替代渡口、黑海與南向分支）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": true,
+      "shape": "triangle",
+      "label": "港口（紅：主線）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": false,
+      "shape": "square",
+      "label": "邊境口岸"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": false,
+      "shape": "circle",
+      "label": "城市（紅：主線節點）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#64B5F6",
+      "pulse": false,
+      "shape": "circle",
+      "label": "分支或可選節點（藍）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#f1c40f",
+      "pulse": false,
+      "shape": "circle",
+      "label": "首都：阿斯塔納"
+    }
+  ]
+}

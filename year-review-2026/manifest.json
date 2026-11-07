@@ -169,7 +169,8 @@
     "kazakhstan_eurasia_nodes_2026": {
       "category": "corridor",
       "related": [
-        "kazakhstan_energy_minerals_europe_2026"
+        "kazakhstan_energy_minerals_europe_2026",
+        "titr_trans_caspian_route_2026"
       ],
       "series": "kazakhstan"
     },
@@ -322,6 +323,13 @@
       "shortTitle": "唐代絲路・粟特人的接力式壟斷",
       "related": [
         "silk_road_empires_100ce"
+      ]
+    },
+    "titr_trans_caspian_route_2026": {
+      "category": "corridor",
+      "shortTitle": "現代 TITR 跨裏海國際運輸路線",
+      "related": [
+        "kazakhstan_eurasia_nodes_2026"
       ]
     }
   },
