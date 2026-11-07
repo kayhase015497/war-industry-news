@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "title": "美國空軍擬在北馬里亞納3島4座機場年飛逾6千架次・啟動環評（2026年11月）",
+    "titleEn": "USAF Plans 6,000+ Annual Sorties at 4 Airfields on 3 Northern Mariana Islands — EIS Notice, Nov 2026",
+    "subtitle": "塞班・天寧・天寧北機場・羅塔・支援「敏捷戰鬥運用」ACE・二戰時期大型機場整修中",
+    "date": "2026-11-07",
+    "status": "ongoing",
+    "theme": "blue",
+    "sources": [
+      "張威翔製作",
+      "美國空軍部公告（意向通知）",
+      "美國防務新聞（Defense News）"
+    ]
+  },
+  "map": {
+    "center": [
+      14.72,
+      145.45
+    ],
+    "zoom": 9,
+    "bounds": [
+      [
+        13.95,
+        145.0
+      ],
+      [
+        15.5,
+        146.0
+      ]
+    ],
+    "mobile": {
+      "center": [
+        14.72,
+        145.45
+      ],
+      "zoom": 9
+    }
+  },
+  "infoPanel": {
+    "title": "北馬里亞納3島4座機場：年飛逾6千架次與環評（2026年11月）",
+    "paragraphs": [
+      "根據美國空軍部公告內容，計畫在西北太平洋3座美國島嶼的4座機場，每年要執行逾6千架次飛行作業，其中包括一座正在整修的二戰時期大型機場。",
+      "美國防務新聞（Defense News）報導，空軍部公布「意向通知」，將編製環境影響評估報告書（EIS），評估塞班國際機場（Saipan）、天寧國際機場（Tinian）、天寧北機場（Tinian North Field）與羅塔國際機場（Rota）的訓練與作業，可能造成的「社會、經濟與環境影響」。",
+      "這3座島嶼屬北馬里亞納群島聯邦，是美國的非建制屬地。擬議的訓練與演習，將支援空軍的「敏捷戰鬥運用」（Agile Combat Operations，簡稱ACE）概念。這個概念強調兵力分散到各機場、並能在機場間機動，同時在各種條件下維持作業，目的是防止對手攻擊單一基地，癱瘓整體作業。圖中機場間連線為概念示意，關島安德森空軍基地僅作區域參考。"
+    ]
+  },
+  "polygons": [],
+  "lines": [
+    {
+      "points": [
+        [
+          15.119,
+          145.729
+        ],
+        [
+          14.999,
+          145.619
+        ]
+      ],
+      "color": "#e53935",
+      "weight": 2.5,
+      "opacity": 0.8,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "塞班↔天寧・機場間機動（示意）",
+        "tag": "↔ ACE 機場間機動（示意）",
+        "tagClass": "tag-possible",
+        "desc": "「敏捷戰鬥運用」強調兵力分散到各機場、並能在機場間機動。 ⚠️ 為概念示意線，非實際飛行路線或官方計畫。",
+        "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+      }
+    },
+    {
+      "points": [
+        [
+          15.084,
+          145.635
+        ],
+        [
+          14.999,
+          145.619
+        ]
+      ],
+      "color": "#e53935",
+      "weight": 2.5,
+      "opacity": 0.8,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "天寧北機場↔天寧國際機場（示意）",
+        "tag": "↔ 同島機場間機動（示意）",
+        "tagClass": "tag-possible",
+        "desc": "天寧島上的兩座機場，可作為同島分散與機動的概念示意。 ⚠️ 為概念示意線，非實際飛行路線或官方計畫。",
+        "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+      }
+    },
+    {
+      "points": [
+        [
+          14.999,
+          145.619
+        ],
+        [
+          14.174,
+          145.243
+        ]
+      ],
+      "color": "#e53935",
+      "weight": 2.5,
+      "opacity": 0.8,
+      "dashArray": "7,4",
+      "popup": {
+        "title": "天寧↔羅塔・機場間機動（示意）",
+        "tag": "↔ ACE 機場間機動（示意）",
+        "tagClass": "tag-possible",
+        "desc": "3座島嶼的4座機場形成分散網絡，使對手難以攻擊單一基地而癱瘓整體作業。 ⚠️ 為概念示意線，非實際飛行路線或官方計畫。",
+        "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+      }
+    },
+    {
+      "points": [
+        [
+          14.174,
+          145.243
+        ],
+        [
+          13.584,
+          144.93
+        ]
+      ],
+      "color": "#ff8a65",
+      "weight": 1.8,
+      "opacity": 0.8,
+      "dashArray": "4,5",
+      "popup": {
+        "title": "羅塔↔關島（區域參考，示意）",
+        "tag": "↔ 與關島的區域關聯（示意）",
+        "tagClass": "tag-possible",
+        "desc": "關島為區域主基地；此線僅示意北馬里亞納機場網絡與關島之間的相對位置。 ⚠️ 為概念示意線，非實際飛行路線或官方計畫。",
+        "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [
+        15.119,
+        145.729
+      ],
+      "name": "Saipan International Airport",
+      "nameLocal": "塞班國際機場（Saipan International Airport）・EIS評估範圍",
+      "type": "confirmed",
+      "tag": "✈ 塞班國際機場・EIS評估機場・北馬里亞納",
+      "tagClass": "tag-confirmed",
+      "desc": "位於北馬里亞納聯邦最大島塞班島。美國空軍部公布「意向通知」，將編製環境影響評估報告書（EIS），評估訓練與作業可能造成的「社會、經濟與環境影響」。此機場屬計畫中的4座機場之一，4座合計每年預計執行逾6千架次飛行作業。 ⚠️ 座標為概略位置。",
+      "coords": "15°07'N 145°44'E",
+      "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+    },
+    {
+      "latlng": [
+        14.999,
+        145.619
+      ],
+      "name": "Tinian International Airport (West Field)",
+      "nameLocal": "天寧國際機場（Tinian International Airport）・EIS評估範圍",
+      "type": "confirmed",
+      "tag": "✈ 天寧國際機場・EIS評估機場",
+      "tagClass": "tag-confirmed",
+      "desc": "位於天寧島西南部。美國空軍部公布「意向通知」，將編製環境影響評估報告書（EIS），評估訓練與作業可能造成的「社會、經濟與環境影響」。4座機場合計每年預計執行逾6千架次飛行作業。 ⚠️ 座標為概略位置。",
+      "coords": "15°00'N 145°37'E",
+      "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+    },
+    {
+      "latlng": [
+        15.084,
+        145.635
+      ],
+      "name": "Tinian North Field",
+      "nameLocal": "天寧北機場（Tinian North Field）・二戰大型機場整修中",
+      "type": "confirmed",
+      "tag": "🛠 天寧北機場・二戰時期大型機場・整修中",
+      "tagClass": "tag-confirmed",
+      "desc": "位於天寧島北端，是二戰時期留下的大型機場，目前正在整修，為此次計畫中的機場之一；二戰時期曾是美軍B-29轟炸機的基地。美國空軍部公布「意向通知」，將編製環境影響評估報告書（EIS），評估訓練與作業可能造成的「社會、經濟與環境影響」。 ⚠️ 座標為概略位置。",
+      "coords": "15°05'N 145°38'E",
+      "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+    },
+    {
+      "latlng": [
+        14.174,
+        145.243
+      ],
+      "name": "Rota International Airport",
+      "nameLocal": "羅塔國際機場（Rota International Airport）・EIS評估範圍",
+      "type": "confirmed",
+      "tag": "✈ 羅塔國際機場・EIS評估機場",
+      "tagClass": "tag-confirmed",
+      "desc": "位於羅塔島，是4座機場中最南的一座。美國空軍部公布「意向通知」，將編製環境影響評估報告書（EIS），評估訓練與作業可能造成的「社會、經濟與環境影響」。 ⚠️ 座標為概略位置。",
+      "coords": "14°10'N 145°15'E",
+      "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+    },
+    {
+      "latlng": [
+        13.584,
+        144.93
+      ],
+      "name": "Andersen Air Force Base, Guam",
+      "nameLocal": "關島安德森空軍基地（Andersen AFB）・區域主基地參考",
+      "type": "capital",
+      "tag": "🏛 關島安德森空軍基地・區域主基地（參考）",
+      "tagClass": "tag-reference",
+      "desc": "位於關島，是美軍在西太平洋的重要空軍基地，位於北馬里亞納3座島嶼以南約200至300公里。本圖以此作為「敏捷戰鬥運用」兵力分散概念的區域參考，並非此次環評範圍。 ⚠️ 座標為概略位置。",
+      "coords": "13°35'N 144°56'E",
+      "source": "美國空軍部「意向通知」；美國防務新聞（Defense News）"
+    }
+  ],
+  "legend": [
+    {
+      "symbol": "line",
+      "color": "#e53935",
+      "weight": 2.5,
+      "dash": "7,4",
+      "label": "ACE 機場間機動（概念示意）"
+    },
+    {
+      "symbol": "line",
+      "color": "#ff8a65",
+      "weight": 1.8,
+      "dash": "4,5",
+      "label": "與關島的區域關聯（示意）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": true,
+      "label": "EIS 評估的4座機場（含整修中的天寧北機場）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#f1c40f",
+      "pulse": false,
+      "label": "區域主基地參考：關島安德森空軍基地"
+    }
+  ]
+}

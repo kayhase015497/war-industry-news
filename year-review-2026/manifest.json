@@ -309,6 +309,10 @@
     "us_datacenter_ballot_measures_20261103": {
       "category": "corridor",
       "shortTitle": "美國41項AI資料中心公投"
+    },
+    "marianas_airfields_ace_eis_20261107": {
+      "category": "military",
+      "shortTitle": "北馬里亞納4座機場環評（ACE）"
     }
   },
   "seriesLabels": {
