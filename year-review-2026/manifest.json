@@ -240,7 +240,10 @@
       "featured": true
     },
     "silk_road_empires_100ce": {
-      "category": "reference"
+      "category": "reference",
+      "related": [
+        "sogdian_silk_road_tang"
+      ]
     },
     "su30sm_crash_kaliningrad_20261021": {
       "category": "military"
@@ -313,6 +316,13 @@
     "marianas_airfields_ace_eis_20261107": {
       "category": "military",
       "shortTitle": "北馬里亞納4座機場環評（ACE）"
+    },
+    "sogdian_silk_road_tang": {
+      "category": "reference",
+      "shortTitle": "唐代絲路・粟特人的接力式壟斷",
+      "related": [
+        "silk_road_empires_100ce"
+      ]
     }
   },
   "seriesLabels": {
