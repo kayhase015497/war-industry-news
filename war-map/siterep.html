@@ -43,6 +43,7 @@
     .badge-ongoing   { background: var(--accent); color: #fff; }
     .badge-resolved  { background: #27ae60; color: #fff; }
     .badge-resource  { background: #1565C0; color: #fff; }
+    .badge-reference { background: #546E7A; color: #fff; }
     .badge-date { background: var(--accent-dark); color: #fff; }
     .badge-news { background: #2c3e50; color: #ccc; border: 1px solid #555; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -316,8 +317,8 @@ function initMap(d) {
     d.meta.title + ' <span>' + d.meta.titleEn + '</span>';
   document.getElementById('h-subtitle').textContent = d.meta.subtitle;
 
-  const statusLabel = { breaking: '⚡ BREAKING', ongoing: '▶ ONGOING', resolved: '✓ RESOLVED', resource: '🗺 RESOURCE MAP' };
-  const statusClass = { breaking: 'badge-breaking', ongoing: 'badge-ongoing', resolved: 'badge-resolved', resource: 'badge-resource' };
+  const statusLabel = { breaking: '⚡ BREAKING', ongoing: '▶ ONGOING', resolved: '✓ RESOLVED', resource: '🗺 RESOURCE MAP', reference: '📖 REFERENCE' };
+  const statusClass = { breaking: 'badge-breaking', ongoing: 'badge-ongoing', resolved: 'badge-resolved', resource: 'badge-resource', reference: 'badge-reference' };
   const sourceBadges = d.meta.sources.map(s =>
     '<span class="badge badge-news">' + s + '</span>'
   ).join('');

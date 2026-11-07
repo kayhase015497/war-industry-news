@@ -1,0 +1,1476 @@
+{
+  "meta": {
+    "title": "唐代歐亞文明與絲路路線圖・粟特人的接力式壟斷（4–9世紀）",
+    "titleEn": "Tang-Era Eurasia and the Silk Road — The Sogdian Relay Monopoly (4th–9th c.)",
+    "subtitle": "撒馬爾罕與布哈拉・昭武九姓・薩寶制度・從碎葉到怛羅斯、從布哈拉到長安",
+    "date": "2026-11-07",
+    "status": "reference",
+    "theme": "blue",
+    "sources": [
+      "張威翔製作",
+      "公開史料整理"
+    ]
+  },
+  "map": {
+    "center": [
+      38,
+      65
+    ],
+    "zoom": 4,
+    "bounds": [
+      [
+        20,
+        10
+      ],
+      [
+        55,
+        125
+      ]
+    ],
+    "mobile": {
+      "center": [
+        38,
+        72
+      ],
+      "zoom": 3
+    }
+  },
+  "infoPanel": {
+    "title": "粟特人：靠控制節點壟斷絲路（4–9世紀）",
+    "paragraphs": [
+      "粟特人來自撒馬爾罕與布哈拉一帶，公元四至九世紀以接力式轉運壟斷了陸上絲綢與香藥貿易。他們的權力來源不是生產，而是控制節點之間的連接：從碎葉到怛羅斯，從布哈拉到長安，每到一處城鎮留下聚落作為中轉站，時間一久便壟斷了沿線貿易。唐朝稱他們為「興胡」，允許他們在長安建祆祠、開酒肆、蓄奴婢，因為朝廷清楚：這條路需要有人經營，而經營這條路的人，必須被給予比過路費更多的東西。",
+      "唐朝對這套網絡的管理有個有意思的制度設計：薩寶（sārthavāha），原意是「商隊首領」，唐朝把這個頭銜變成正式官職，薩寶府下設祆正、祆祝，負責管理胡人聚落的宗教與商業事務。粟特人入華後，常以故鄉城市為姓：康（撒馬爾罕）、安（布哈拉）、石（塔什干）、米（弭秣賀）、何、史、曹、火尋、戊地，合稱昭武九姓。",
+      "粟特人的壟斷最終不是被另一個商人集團取代的。十四世紀末，帖木兒摧毀了北方路線上的關鍵城市，把貿易強行改道經過撒馬爾罕；玉龍傑赤被夷平，阿斯特拉罕和別兒哥薩萊被洗劫，絲路北道隨之衰落。圖中各勢力範圍為不同時期的概略示意，非單一年份疆界；底圖為現代地圖，國界與地名僅供對照。"
+    ]
+  },
+  "polygons": [
+    {
+      "points": [
+        [
+          36.5,
+          79
+        ],
+        [
+          36,
+          92
+        ],
+        [
+          35,
+          100
+        ],
+        [
+          31,
+          103
+        ],
+        [
+          27,
+          98
+        ],
+        [
+          28,
+          90
+        ],
+        [
+          28,
+          82
+        ],
+        [
+          32,
+          78
+        ]
+      ],
+      "fillColor": "#8E44AD",
+      "fillOpacity": 0.26,
+      "borderColor": "#8E44AD",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "吐蕃（青藏高原）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "青藏高原上的吐蕃政權。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          38,
+          95
+        ],
+        [
+          38,
+          100
+        ],
+        [
+          35,
+          101
+        ],
+        [
+          34,
+          97
+        ],
+        [
+          35,
+          94
+        ]
+      ],
+      "fillColor": "#7F8C8D",
+      "fillOpacity": 0.3,
+      "borderColor": "#7F8C8D",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "吐谷渾（青海一帶）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "青海一帶的政權（選配）。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          50,
+          90
+        ],
+        [
+          51,
+          105
+        ],
+        [
+          49,
+          117
+        ],
+        [
+          43,
+          116
+        ],
+        [
+          42,
+          105
+        ],
+        [
+          43,
+          96
+        ]
+      ],
+      "fillColor": "#2C3E50",
+      "fillOpacity": 0.26,
+      "borderColor": "#2C3E50",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "東突厥（蒙古高原一帶）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "蒙古高原一帶的突厥汗國。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          48,
+          98
+        ],
+        [
+          49,
+          106
+        ],
+        [
+          46,
+          110
+        ],
+        [
+          43,
+          106
+        ],
+        [
+          43,
+          99
+        ]
+      ],
+      "fillColor": "#16A085",
+      "fillOpacity": 0.26,
+      "borderColor": "#16A085",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "回鶻（漠北）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "漠北的回鶻汗國（時代晚於東突厥，範圍略有重疊）。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          47,
+          68
+        ],
+        [
+          48,
+          82
+        ],
+        [
+          45,
+          90
+        ],
+        [
+          42,
+          85
+        ],
+        [
+          40,
+          78
+        ],
+        [
+          42,
+          70
+        ]
+      ],
+      "fillColor": "#34495E",
+      "fillOpacity": 0.26,
+      "borderColor": "#34495E",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "西突厥（天山以北草原）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "天山以北的草原勢力。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          41.5,
+          63
+        ],
+        [
+          41.5,
+          70
+        ],
+        [
+          39,
+          70.5
+        ],
+        [
+          37.8,
+          67
+        ],
+        [
+          38.5,
+          63
+        ]
+      ],
+      "fillColor": "#D35400",
+      "fillOpacity": 0.45,
+      "borderColor": "#D35400",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "粟特城邦（昭武九姓）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "撒馬爾罕、布哈拉、石國等綠洲城邦。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          40.5,
+          94
+        ],
+        [
+          43,
+          105
+        ],
+        [
+          42,
+          118
+        ],
+        [
+          40,
+          124
+        ],
+        [
+          34,
+          120
+        ],
+        [
+          28,
+          122
+        ],
+        [
+          22,
+          112
+        ],
+        [
+          21,
+          106
+        ],
+        [
+          26,
+          100
+        ],
+        [
+          31,
+          103
+        ],
+        [
+          35,
+          102
+        ],
+        [
+          37,
+          99
+        ]
+      ],
+      "fillColor": "#C0392B",
+      "fillOpacity": 0.3,
+      "borderColor": "#C0392B",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "唐帝國",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "以長安為中心，東至洛陽、西至敦煌（盛時勢力延伸至安西四鎮）。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          37,
+          36
+        ],
+        [
+          38,
+          48
+        ],
+        [
+          37,
+          56
+        ],
+        [
+          33,
+          60
+        ],
+        [
+          27,
+          57
+        ],
+        [
+          25,
+          50
+        ],
+        [
+          30,
+          45
+        ],
+        [
+          30,
+          35
+        ]
+      ],
+      "fillColor": "#27AE60",
+      "fillOpacity": 0.26,
+      "borderColor": "#27AE60",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "大食（阿拉伯帝國）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "西亞、波斯、敘利亞一帶，倭馬亞與阿拔斯王朝。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          43,
+          22
+        ],
+        [
+          43,
+          29
+        ],
+        [
+          41,
+          38
+        ],
+        [
+          37,
+          37
+        ],
+        [
+          36,
+          29
+        ],
+        [
+          38,
+          23
+        ]
+      ],
+      "fillColor": "#2980B9",
+      "fillOpacity": 0.26,
+      "borderColor": "#2980B9",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "拜占庭帝國",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "以君士坦丁堡為中心。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          34,
+          72
+        ],
+        [
+          31,
+          80
+        ],
+        [
+          27,
+          88
+        ],
+        [
+          22,
+          90
+        ],
+        [
+          15,
+          80
+        ],
+        [
+          8,
+          77
+        ],
+        [
+          20,
+          72
+        ],
+        [
+          26,
+          68
+        ]
+      ],
+      "fillColor": "#F39C12",
+      "fillOpacity": 0.26,
+      "borderColor": "#F39C12",
+      "borderWeight": 1.6,
+      "borderOpacity": 0.8,
+      "borderDashArray": "6,4",
+      "popup": {
+        "title": "天竺（印度次大陸）",
+        "tag": "🗺 勢力範圍（示意）",
+        "tagClass": "tag-reference",
+        "desc": "印度次大陸。 ⚠️ 範圍為不同時期的概略示意，並非單一年份的精確疆界。",
+        "source": "公開史料整理；地理參考"
+      }
+    }
+  ],
+  "lines": [
+    {
+      "points": [
+        [
+          34.27,
+          108.95
+        ],
+        [
+          36.06,
+          103.8
+        ],
+        [
+          37.93,
+          102.63
+        ],
+        [
+          38.93,
+          100.45
+        ],
+        [
+          39.73,
+          98.5
+        ],
+        [
+          40.14,
+          94.66
+        ]
+      ],
+      "color": "#E53935",
+      "weight": 3.2,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路東段・長安→敦煌（經河西走廊）",
+        "tag": "🐪 絲路東段・河西走廊",
+        "tagClass": "tag-strategic",
+        "desc": "由長安沿河西走廊西行至敦煌，粟特商人以接力方式轉運絲綢與香藥。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          40.14,
+          94.66
+        ],
+        [
+          40.35,
+          93.85
+        ],
+        [
+          42.83,
+          93.5
+        ],
+        [
+          42.85,
+          89.5
+        ]
+      ],
+      "color": "#E8590C",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路北道・敦煌→高昌（經玉門關）",
+        "tag": "🐪 絲路北道",
+        "tagClass": "tag-strategic",
+        "desc": "出玉門關，經哈密進入吐魯番盆地。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          42.85,
+          89.5
+        ],
+        [
+          42.0,
+          86.0
+        ],
+        [
+          41.7,
+          82.9
+        ]
+      ],
+      "color": "#E8590C",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路北道・高昌→龜茲（天山南麓）",
+        "tag": "🐪 絲路北道",
+        "tagClass": "tag-strategic",
+        "desc": "沿天山南麓西行。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          41.7,
+          82.9
+        ],
+        [
+          42.0,
+          80.0
+        ],
+        [
+          42.4,
+          77.5
+        ],
+        [
+          42.8,
+          75.3
+        ]
+      ],
+      "color": "#E8590C",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路北道・龜茲→碎葉（經熱海）",
+        "tag": "🐪 絲路北道",
+        "tagClass": "tag-strategic",
+        "desc": "越過天山，經熱海（伊塞克湖）抵達碎葉。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          42.8,
+          75.3
+        ],
+        [
+          42.9,
+          71.4
+        ]
+      ],
+      "color": "#E8590C",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路北道・碎葉→怛羅斯（沿天山北麓）",
+        "tag": "🐪 絲路北道",
+        "tagClass": "tag-strategic",
+        "desc": "沿天山北麓西行。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          42.9,
+          71.4
+        ],
+        [
+          40.5,
+          69.0
+        ],
+        [
+          39.65,
+          66.96
+        ]
+      ],
+      "color": "#E8590C",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路北道・怛羅斯→撒馬爾罕（粟特核心區）",
+        "tag": "🐪 絲路北道・粟特核心區",
+        "tagClass": "tag-strategic",
+        "desc": "進入粟特人的核心綠洲區。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          39.65,
+          66.96
+        ],
+        [
+          39.77,
+          64.42
+        ],
+        [
+          38.6,
+          63.0
+        ],
+        [
+          37.6,
+          62.2
+        ]
+      ],
+      "color": "#2ECC71",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "呼羅珊道・撒馬爾罕→木鹿（經布哈拉）",
+        "tag": "🐪 呼羅珊道",
+        "tagClass": "tag-strategic",
+        "desc": "經布哈拉進入呼羅珊綠洲。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          37.6,
+          62.2
+        ],
+        [
+          36.2,
+          58.8
+        ],
+        [
+          35.7,
+          51.4
+        ],
+        [
+          34.3,
+          47.1
+        ],
+        [
+          33.1,
+          44.6
+        ],
+        [
+          33.3,
+          44.4
+        ]
+      ],
+      "color": "#2ECC71",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "波斯道・木鹿→巴格達（經泰西封）",
+        "tag": "🐪 波斯道",
+        "tagClass": "tag-strategic",
+        "desc": "穿越伊朗高原至兩河流域，經泰西封抵巴格達。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          33.3,
+          44.4
+        ],
+        [
+          33.4,
+          41.0
+        ],
+        [
+          34.5,
+          38.3
+        ],
+        [
+          33.5,
+          36.3
+        ]
+      ],
+      "color": "#2ECC71",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "敘利亞道・巴格達→大馬士革",
+        "tag": "🐪 敘利亞道",
+        "tagClass": "tag-strategic",
+        "desc": "穿越敘利亞沙漠。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          33.5,
+          36.3
+        ],
+        [
+          34.7,
+          36.7
+        ],
+        [
+          36.2,
+          37.2
+        ],
+        [
+          36.2,
+          36.2
+        ]
+      ],
+      "color": "#2ECC71",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "地中海東岸・大馬士革→安條克",
+        "tag": "🐪 地中海東岸道",
+        "tagClass": "tag-strategic",
+        "desc": "沿地中海東岸北行。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          36.2,
+          36.2
+        ],
+        [
+          37.0,
+          35.3
+        ],
+        [
+          37.9,
+          32.5
+        ],
+        [
+          39.9,
+          32.8
+        ],
+        [
+          40.8,
+          29.9
+        ],
+        [
+          41.0,
+          28.98
+        ]
+      ],
+      "color": "#2ECC71",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "安納托利亞道・安條克→君士坦丁堡",
+        "tag": "🐪 安納托利亞道",
+        "tagClass": "tag-strategic",
+        "desc": "穿越安納托利亞高原抵達君士坦丁堡。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          40.14,
+          94.66
+        ],
+        [
+          39.9,
+          93.9
+        ],
+        [
+          39.0,
+          88.2
+        ],
+        [
+          38.1,
+          85.5
+        ],
+        [
+          37.07,
+          82.7
+        ],
+        [
+          37.1,
+          79.9
+        ]
+      ],
+      "color": "#F5B041",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路南道・敦煌→于闐（經陽關）",
+        "tag": "🐪 絲路南道",
+        "tagClass": "tag-strategic",
+        "desc": "出陽關，沿塔里木盆地南緣西行。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          37.1,
+          79.9
+        ],
+        [
+          38.4,
+          77.25
+        ],
+        [
+          39.47,
+          75.99
+        ]
+      ],
+      "color": "#F5B041",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "絲路南道・于闐→喀什",
+        "tag": "🐪 絲路南道",
+        "tagClass": "tag-strategic",
+        "desc": "與北道在喀什會合。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          39.47,
+          75.99
+        ],
+        [
+          37.77,
+          75.23
+        ],
+        [
+          36.9,
+          72.0
+        ],
+        [
+          37.1,
+          70.6
+        ],
+        [
+          36.7,
+          66.9
+        ]
+      ],
+      "color": "#F5B041",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "帕米爾道・喀什→巴爾赫",
+        "tag": "🐪 帕米爾道",
+        "tagClass": "tag-strategic",
+        "desc": "翻越帕米爾，經瓦罕走廊南下吐火羅地區。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          36.7,
+          66.9
+        ],
+        [
+          36.95,
+          65.1
+        ],
+        [
+          37.3,
+          63.0
+        ],
+        [
+          37.6,
+          62.2
+        ]
+      ],
+      "color": "#F5B041",
+      "weight": 3,
+      "opacity": 0.85,
+      "dashArray": null,
+      "popup": {
+        "title": "吐火羅道・巴爾赫→木鹿",
+        "tag": "🐪 吐火羅道",
+        "tagClass": "tag-strategic",
+        "desc": "由吐火羅地區西行至木鹿，與呼羅珊道會合。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          39.65,
+          66.96
+        ],
+        [
+          40.5,
+          68.0
+        ],
+        [
+          41.3,
+          69.3
+        ]
+      ],
+      "color": "#FFD27D",
+      "weight": 2.2,
+      "opacity": 0.85,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "支線・撒馬爾罕→石國",
+        "tag": "↔ 昭武九姓內部支線",
+        "tagClass": "tag-strategic",
+        "desc": "粟特城邦（昭武九姓）之間的連接。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          41.3,
+          69.3
+        ],
+        [
+          42.9,
+          71.4
+        ]
+      ],
+      "color": "#FFD27D",
+      "weight": 2.2,
+      "opacity": 0.85,
+      "dashArray": "6,4",
+      "popup": {
+        "title": "支線・石國→怛羅斯",
+        "tag": "↔ 粟特城邦支線",
+        "tagClass": "tag-strategic",
+        "desc": "連接石國與北道的怛羅斯。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          41.0,
+          28.98
+        ],
+        [
+          38.0,
+          24.0
+        ],
+        [
+          36.8,
+          21.0
+        ],
+        [
+          38.0,
+          16.0
+        ],
+        [
+          41.9,
+          12.5
+        ]
+      ],
+      "color": "#4DA3FF",
+      "weight": 2.4,
+      "opacity": 0.85,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "地中海航線・君士坦丁堡→羅馬（海路）",
+        "tag": "⛵ 地中海航線（選配虛線）",
+        "tagClass": "tag-strategic",
+        "desc": "經愛琴海與愛奧尼亞海抵達義大利。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    },
+    {
+      "points": [
+        [
+          31.2,
+          29.9
+        ],
+        [
+          33.0,
+          29.0
+        ],
+        [
+          36.0,
+          27.0
+        ],
+        [
+          38.5,
+          26.0
+        ],
+        [
+          41.0,
+          28.98
+        ]
+      ],
+      "color": "#4DA3FF",
+      "weight": 2.4,
+      "opacity": 0.85,
+      "dashArray": "8,5",
+      "popup": {
+        "title": "地中海航線・亞歷山大港→君士坦丁堡（海路）",
+        "tag": "⛵ 地中海航線（選配虛線）",
+        "tagClass": "tag-strategic",
+        "desc": "自埃及沿愛琴海北上。 ⚠️ 路線為依據地形的概略示意，非精確古道。",
+        "source": "公開史料整理；地理參考"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "latlng": [
+        34.27,
+        108.95
+      ],
+      "name": "Chang'an",
+      "nameLocal": "長安（Chang'an）・唐帝國首都",
+      "type": "capital",
+      "tag": "🏛 長安・唐都・粟特人落腳地",
+      "tagClass": "tag-reference",
+      "desc": "唐帝國首都，絲路東端。唐朝稱粟特商人為「興胡」，允許他們在長安建祆祠、開酒肆、蓄奴婢；薩寶府下設祆正、祆祝，管理胡人聚落的宗教與商業事務。 ⚠️ 座標為概略位置。",
+      "coords": "34°16'N 108°57'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        34.62,
+        112.45
+      ],
+      "name": "Luoyang",
+      "nameLocal": "洛陽（Luoyang）・唐東都",
+      "type": "capital",
+      "tag": "🏛 洛陽・唐東都",
+      "tagClass": "tag-reference",
+      "desc": "唐朝東都，與長安並為東方的權力與商業中心。 ⚠️ 座標為概略位置。",
+      "coords": "34°37'N 112°27'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        40.14,
+        94.66
+      ],
+      "name": "Dunhuang",
+      "nameLocal": "敦煌（Dunhuang）・河西走廊西端",
+      "type": "possible",
+      "tag": "🏜 敦煌・河西走廊西端・玉門關與陽關",
+      "tagClass": "tag-strategic",
+      "desc": "河西走廊西端的綠洲城市，絲路在此分為經玉門關的北道與經陽關的南道。 ⚠️ 座標為概略位置。",
+      "coords": "40°08'N 094°40'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        42.85,
+        89.5
+      ],
+      "name": "Gaochang",
+      "nameLocal": "高昌（Gaochang）・吐魯番盆地",
+      "type": "possible",
+      "tag": "🏜 高昌・北道綠洲",
+      "tagClass": "tag-strategic",
+      "desc": "吐魯番盆地的綠洲城市，絲路北道的重要中轉站。 ⚠️ 座標為概略位置。",
+      "coords": "42°51'N 089°30'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        41.7,
+        82.9
+      ],
+      "name": "Kucha",
+      "nameLocal": "龜茲（Kucha）・安西四鎮之一",
+      "type": "possible",
+      "tag": "🏜 龜茲・安西四鎮之一",
+      "tagClass": "tag-strategic",
+      "desc": "天山南麓的綠洲城市，唐朝安西四鎮之一，北道要站。 ⚠️ 座標為概略位置。",
+      "coords": "41°42'N 082°54'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        37.1,
+        79.9
+      ],
+      "name": "Khotan",
+      "nameLocal": "于闐（Khotan）・安西四鎮之一",
+      "type": "possible",
+      "tag": "🏜 于闐・南道綠洲・安西四鎮之一",
+      "tagClass": "tag-strategic",
+      "desc": "塔里木盆地南緣的綠洲城市，唐朝安西四鎮之一，絲路南道要站。 ⚠️ 座標為概略位置。",
+      "coords": "37°06'N 079°54'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        39.47,
+        75.99
+      ],
+      "name": "Kashgar",
+      "nameLocal": "喀什（Kashgar）・疏勒",
+      "type": "possible",
+      "tag": "🏜 喀什（疏勒）・南北道會合・通往帕米爾",
+      "tagClass": "tag-strategic",
+      "desc": "疏勒，絲路南北兩道在塔里木盆地西端會合之處，由此翻越帕米爾。 ⚠️ 座標為概略位置。",
+      "coords": "39°28'N 075°59'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        42.8,
+        75.3
+      ],
+      "name": "Suyab",
+      "nameLocal": "碎葉（Suyab）・今托克馬克附近",
+      "type": "confirmed",
+      "tag": "🏙 碎葉・粟特聚落・唐安西四鎮之一",
+      "tagClass": "tag-confirmed",
+      "desc": "位於今托克馬克附近，唐朝安西四鎮之一。粟特商人沿絲路北道在此建立聚落，作為接力式轉運的中轉站。 ⚠️ 座標為概略位置。",
+      "coords": "42°48'N 075°18'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        42.9,
+        71.4
+      ],
+      "name": "Talas",
+      "nameLocal": "怛羅斯（Talas）・今塔拉茲附近",
+      "type": "confirmed",
+      "tag": "🏙 怛羅斯・粟特聚落・北道要站",
+      "tagClass": "tag-confirmed",
+      "desc": "位於今塔拉茲附近，絲路北道上的粟特聚落與貿易節點。 ⚠️ 座標為概略位置。",
+      "coords": "42°54'N 071°24'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        39.65,
+        66.96
+      ],
+      "name": "Samarkand",
+      "nameLocal": "撒馬爾罕（Samarkand）・康國・粟特中心",
+      "type": "confirmed",
+      "tag": "🏙 撒馬爾罕・康國・粟特中心・昭武九姓「康」",
+      "tagClass": "tag-confirmed",
+      "desc": "粟特人的核心城市（康國）。粟特人入華後以故鄉城市為姓，撒馬爾罕成為姓氏「康」；人離開故鄉，故鄉的名字跟著人走，成為在新權力結構裡辨識彼此的記號。十四世紀末帖木兒把貿易強行改道經過此城。 ⚠️ 座標為概略位置。",
+      "coords": "39°39'N 066°58'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        39.77,
+        64.42
+      ],
+      "name": "Bukhara",
+      "nameLocal": "布哈拉（Bukhara）・安國",
+      "type": "confirmed",
+      "tag": "🏙 布哈拉・安國・昭武九姓「安」",
+      "tagClass": "tag-confirmed",
+      "desc": "粟特綠洲城邦之一（安國），布哈拉成為姓氏「安」。 ⚠️ 座標為概略位置。",
+      "coords": "39°46'N 064°25'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        41.3,
+        69.3
+      ],
+      "name": "Tashkent",
+      "nameLocal": "石國（Tashkent）・昭武九姓「石」",
+      "type": "confirmed",
+      "tag": "🏙 石國（塔什干）・昭武九姓「石」",
+      "tagClass": "tag-confirmed",
+      "desc": "今塔什干，昭武九姓之一，成為姓氏「石」。與撒馬爾罕、怛羅斯之間有支線相連。 ⚠️ 座標為概略位置。",
+      "coords": "41°18'N 069°18'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        37.6,
+        62.2
+      ],
+      "name": "Merv",
+      "nameLocal": "木鹿（Merv）・呼羅珊綠洲",
+      "type": "possible",
+      "tag": "🏜 木鹿（梅爾夫）・呼羅珊重要綠洲",
+      "tagClass": "tag-strategic",
+      "desc": "呼羅珊地區的重要綠洲城市，連接粟特與波斯、兩河流域。 ⚠️ 座標為概略位置。",
+      "coords": "37°36'N 062°12'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        36.7,
+        66.9
+      ],
+      "name": "Balkh",
+      "nameLocal": "巴爾赫（Balkh）・吐火羅地區",
+      "type": "possible",
+      "tag": "🏜 巴爾赫・吐火羅・帕米爾道出口",
+      "tagClass": "tag-strategic",
+      "desc": "吐火羅地區的城市，喀什經帕米爾南下後的重要節點。 ⚠️ 座標為概略位置。",
+      "coords": "36°42'N 066°54'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        33.1,
+        44.6
+      ],
+      "name": "Ctesiphon",
+      "nameLocal": "泰西封（Ctesiphon）・兩河流域古都",
+      "type": "possible",
+      "tag": "🏛 泰西封・兩河流域古都",
+      "tagClass": "tag-strategic",
+      "desc": "兩河流域的古都，位於後來巴格達附近，波斯道上的重要節點。 ⚠️ 座標為概略位置。",
+      "coords": "33°06'N 044°36'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        33.3,
+        44.4
+      ],
+      "name": "Baghdad",
+      "nameLocal": "巴格達（Baghdad）・阿拔斯王朝首都",
+      "type": "capital",
+      "tag": "🏛 巴格達・阿拔斯王朝首都（8世紀後）",
+      "tagClass": "tag-reference",
+      "desc": "阿拔斯王朝首都（8世紀後），大食的政治與商業中心。 ⚠️ 座標為概略位置。",
+      "coords": "33°18'N 044°24'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        33.5,
+        36.3
+      ],
+      "name": "Damascus",
+      "nameLocal": "大馬士革（Damascus）・倭馬亞王朝首都",
+      "type": "capital",
+      "tag": "🏛 大馬士革・倭馬亞王朝首都",
+      "tagClass": "tag-reference",
+      "desc": "倭馬亞王朝首都，連接兩河流域與地中海東岸的樞紐。 ⚠️ 座標為概略位置。",
+      "coords": "33°30'N 036°18'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        36.2,
+        36.2
+      ],
+      "name": "Antioch",
+      "nameLocal": "安條克（Antioch）・拜占庭東方重鎮",
+      "type": "possible",
+      "tag": "🏛 安條克・拜占庭東方重鎮",
+      "tagClass": "tag-strategic",
+      "desc": "地中海東岸的古城，拜占庭東方重鎮，安納托利亞道的起點。 ⚠️ 座標為概略位置。",
+      "coords": "36°12'N 036°12'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        41.0,
+        28.98
+      ],
+      "name": "Constantinople",
+      "nameLocal": "君士坦丁堡（Constantinople）・拜占庭首都",
+      "type": "capital",
+      "tag": "🏛 君士坦丁堡・拜占庭帝國首都",
+      "tagClass": "tag-reference",
+      "desc": "拜占庭帝國首都，陸上絲路西端與地中海航線的交會處。 ⚠️ 座標為概略位置。",
+      "coords": "41°00'N 028°59'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        41.9,
+        12.5
+      ],
+      "name": "Rome",
+      "nameLocal": "羅馬（Rome）・西方基督教中心",
+      "type": "capital",
+      "tag": "🏛 羅馬・西方基督教中心",
+      "tagClass": "tag-reference",
+      "desc": "西方基督教的中心，地中海航線西端的參考點。 ⚠️ 座標為概略位置。",
+      "coords": "41°54'N 012°30'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        31.2,
+        29.9
+      ],
+      "name": "Alexandria",
+      "nameLocal": "亞歷山大港（Alexandria）・地中海東岸港口",
+      "type": "possible",
+      "tag": "⚓ 亞歷山大港・地中海航線",
+      "tagClass": "tag-strategic",
+      "desc": "地中海東岸的重要港口，經海路連接君士坦丁堡。 ⚠️ 座標為概略位置。",
+      "coords": "31°12'N 029°54'E",
+      "source": "公開史料整理；地理參考"
+    },
+    {
+      "latlng": [
+        27.1,
+        56.5
+      ],
+      "name": "Hormuz",
+      "nameLocal": "霍爾木茲（Hormuz）・波斯灣出口（選配）",
+      "type": "possible",
+      "tag": "⚓ 霍爾木茲・波斯灣出口（可選）",
+      "tagClass": "tag-strategic",
+      "desc": "波斯灣出口的港口，海上香藥貿易的參考節點；本圖未畫海路連線。 ⚠️ 座標為概略位置。",
+      "coords": "27°06'N 056°30'E",
+      "source": "公開史料整理；地理參考"
+    }
+  ],
+  "legend": [
+    {
+      "symbol": "line",
+      "color": "#E53935",
+      "weight": 3.2,
+      "dash": "0",
+      "label": "絲路東段（長安→敦煌）"
+    },
+    {
+      "symbol": "line",
+      "color": "#E8590C",
+      "weight": 3,
+      "dash": "0",
+      "label": "絲路北道（敦煌→高昌→龜茲→碎葉→怛羅斯→撒馬爾罕）"
+    },
+    {
+      "symbol": "line",
+      "color": "#F5B041",
+      "weight": 3,
+      "dash": "0",
+      "label": "絲路南道與帕米爾道（敦煌→于闐→喀什→巴爾赫）"
+    },
+    {
+      "symbol": "line",
+      "color": "#2ECC71",
+      "weight": 3,
+      "dash": "0",
+      "label": "西亞段（木鹿→巴格達→大馬士革→安條克→君士坦丁堡）"
+    },
+    {
+      "symbol": "line",
+      "color": "#FFD27D",
+      "weight": 2.2,
+      "dash": "6,4",
+      "label": "粟特城邦內部支線"
+    },
+    {
+      "symbol": "line",
+      "color": "#4DA3FF",
+      "weight": 2.4,
+      "dash": "8,5",
+      "label": "地中海航線（選配）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#e74c3c",
+      "pulse": true,
+      "label": "粟特聚落與核心城邦（碎葉・怛羅斯・撒馬爾罕・布哈拉・石國）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#f1c40f",
+      "pulse": false,
+      "label": "都城（長安・洛陽・巴格達・大馬士革・君士坦丁堡・羅馬）"
+    },
+    {
+      "symbol": "dot",
+      "color": "#64B5F6",
+      "pulse": false,
+      "label": "綠洲城市與港口"
+    },
+    {
+      "symbol": "polygon",
+      "fillColor": "#C0392B",
+      "fillOpacity": 0.35,
+      "borderColor": "#C0392B",
+      "label": "各勢力範圍（示意；唐／吐蕃／突厥／回鶻／粟特／大食／拜占庭／天竺）"
+    }
+  ]
+}
