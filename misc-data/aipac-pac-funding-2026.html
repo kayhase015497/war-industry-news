@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>親以色列 PAC 與國會：資金數據一覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pad:clamp(14px,3vw,32px);
+  --bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;
+  --dem:#3987e5;--rep:#e66767;--gold:#eda100;--gray:#5b6784;--green:#1baf7a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body.aip-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.55;padding:var(--pad);max-width:900px;margin:0 auto}
+
+.aip-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:6px}
+.aip-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:6px}
+.aip-sub{font-size:18px;color:var(--mute)}
+
+.aip-sec{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:30px 0 10px;display:flex;align-items:center;gap:12px}
+.aip-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.aip-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.aip-src{font-size:18px;color:var(--mute);margin-top:8px}
+
+/* big number */
+.aip-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:8px}
+.aip-big .n{font-family:'Space Mono',monospace;font-size:clamp(34px,8vw,48px);font-weight:700;line-height:1;color:#fff}
+.aip-big .u{font-size:18px;color:var(--text)}
+.aip-big .p{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--gold)}
+
+/* stacked bar */
+.aip-stack{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--bg);border:1px solid var(--border);margin:6px 0 8px}
+.aip-stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#fff;overflow:hidden}
+.aip-legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:18px;color:var(--text)}
+.aip-legend span::before{content:'';display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;background:var(--c);vertical-align:-1px}
+
+/* horizontal bars */
+.aip-row{margin-bottom:10px}
+.aip-row .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:3px}
+.aip-row .l{font-size:18px;font-weight:700}
+.aip-row .v{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-align:right}
+.aip-bar{height:22px;background:var(--bg);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.aip-bar i{display:block;height:100%}
+.aip-meta{font-size:18px;color:var(--mute);margin-top:2px}
+.aip-grp{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:12px 0 6px}
+.aip-grp:first-child{margin-top:0}
+
+/* tiles */
+.aip-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+.aip-tile{background:var(--bg);border:1px solid var(--border);border-top:4px solid var(--c,var(--gold));border-radius:10px;padding:10px 14px}
+.aip-tile .n{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;line-height:1.1;color:var(--c,var(--gold))}
+.aip-tile .t{font-size:18px;color:var(--text)}
+.aip-tile .s{font-size:18px;color:var(--mute)}
+
+/* cases */
+.aip-case{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-top:8px}
+.aip-case .t{font-size:18px}
+.aip-case .t b{color:#fff}
+.aip-res{font-size:18px;font-weight:700;padding:2px 12px;border-radius:999px;white-space:nowrap;background:rgba(237,161,0,.18);color:#f5d27a}
+
+/* caution */
+.aip-warn{background:rgba(237,161,0,.1);border:1px solid rgba(237,161,0,.45);border-radius:12px;padding:12px 16px;margin-top:16px}
+.aip-warn b{color:var(--gold)}
+.aip-warn ul{list-style:none;margin-top:6px;display:grid;gap:4px}
+.aip-warn li{padding-left:16px;position:relative}
+.aip-warn li::before{content:'▸';position:absolute;left:0;color:var(--mute)}
+
+.aip-foot{margin-top:26px;padding-top:12px;border-top:1px solid var(--border);font-size:18px;color:var(--mute)}
+.aip-foot a{color:#9cc4f5}
+.aip-by{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
+
+@media(max-width:600px){
+  :root{--pad:12px}
+  .aip-case{grid-template-columns:1fr}
+  .aip-res{justify-self:start}
+}
+</style>
+</head>
+<body class="aip-body">
+
+<header>
+  <div class="aip-kicker">美國國會 · 約 2026 周期</div>
+  <h1 class="aip-title">親以色列 PAC 與國會：資金數據一覽</h1>
+  <p class="aip-sub">各來源追蹤的 PAC 範圍與時間點不同，數字請分開看，不宜直接相加。</p>
+</header>
+
+<!-- A -->
+<div class="aip-sec">① 現任議員覆蓋</div>
+<div class="aip-card">
+  <div class="aip-big"><span class="n">518</span><span class="u">／ 約539 名現任議員有親以色列 PAC 資金紀錄</span><span class="p">≈96%</span></div>
+  <div class="aip-stack" role="img" aria-label="民主黨247、共和黨268、其餘3、無紀錄21">
+    <i style="width:45.8%;background:var(--dem)">247</i>
+    <i style="width:49.7%;background:var(--rep)">268</i>
+    <i style="width:.6%;background:var(--gold)"></i>
+    <i style="width:3.9%;background:var(--gray)"></i>
+  </div>
+  <div class="aip-legend">
+    <span style="--c:var(--dem)">民主黨 247</span>
+    <span style="--c:var(--rep)">共和黨 268</span>
+    <span style="--c:var(--gold)">未列黨派 3</span>
+    <span style="--c:var(--gray)">無紀錄 21</span>
+  </div>
+  <div class="aip-tiles">
+    <div class="aip-tile"><div class="n">$202.5M</div><div class="t">累計支持支出（生涯）</div><div class="s">約 $202,503,189</div></div>
+  </div>
+  <div class="aip-src">來源：Who Funds My Rep 等。兩黨相加為 515，與 518 差 3 人（原資料未說明）。</div>
+</div>
+
+<!-- B -->
+<div class="aip-sec">② 黨派比較（約17個 PAC 生涯總額）</div>
+<div class="aip-card">
+  <div class="aip-grp">生涯總額</div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">$134.9M</span></div><div class="aip-bar"><i style="width:100%;background:var(--dem)"></i></div></div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">$60.9M</span></div><div class="aip-bar"><i style="width:45.1%;background:var(--rep)"></i></div></div>
+
+  <div class="aip-grp">平均每位議員</div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">~$572K</span></div><div class="aip-bar"><i style="width:100%;background:var(--dem)"></i></div><div class="aip-meta">236 人・覆蓋率 ~90%</div></div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">~$227K</span></div><div class="aip-bar"><i style="width:39.7%;background:var(--rep)"></i></div><div class="aip-meta">269 人・覆蓋率 ~99%</div></div>
+
+  <div class="aip-src">來源：The Crosscheck 分析。民主黨總額較高、平均約為共和黨的 2.5 倍，共和黨覆蓋率較高。</div>
+</div>
+
+<div class="aip-warn">
+  <b>口徑差異（請勿直接相加）</b>
+  <ul>
+    <li>表列總計 $209.3M，與兩黨相加 $195.8M 差 $13.5M；人數 236＋269＝505，少於 539。</li>
+    <li>$209.3M（Crosscheck）與 $202.5M（①）來源與追蹤範圍不同。</li>
+  </ul>
+</div>
+
+<!-- C -->
+<div class="aip-sec">③ 2026 周期</div>
+<div class="aip-card">
+  <div class="aip-big"><span class="n">$100–120M</span><span class="u">估計總支出（AIPAC PAC＋United Democracy Project 等，不同來源）</span></div>
+
+  <div class="aip-grp">Quincy Institute／Responsible Statecraft 統計：$84.1M</div>
+  <div class="aip-stack" role="img" aria-label="$55.3M 投向落敗候選人，約三分之二">
+    <i style="width:65.8%;background:var(--rep)">$55.3M</i>
+    <i style="width:34.2%;background:var(--gray)">$28.8M</i>
+  </div>
+  <div class="aip-legend">
+    <span style="--c:var(--rep)">投向落敗候選人（近 2/3）</span>
+    <span style="--c:var(--gray)">其餘（推算）</span>
+  </div>
+
+  <div class="aip-grp">高調案例</div>
+  <div class="aip-case"><div class="t"><b>密西根參議院</b>：逾 $30M 反對 El-Sayed</div><span class="aip-res">El-Sayed 勝出</span></div>
+  <div class="aip-case"><div class="t"><b>支持 Susan Collins</b></div><span class="aip-res">Collins 落敗</span></div>
+
+  <div class="aip-grp">AIPAC 自稱戰績</div>
+  <div class="aip-tiles" style="margin-top:0">
+    <div class="aip-tile" style="--c:var(--green)"><div class="n">~234</div><div class="t">名親以色列候選人勝選</div></div>
+    <div class="aip-tile" style="--c:var(--green)"><div class="n">29</div><div class="t">名批評者被協助擊敗</div></div>
+  </div>
+
+  <div class="aip-src">策略重點：民主黨初選高額干預；共和黨多為低成本維繫。</div>
+</div>
+
+<!-- D -->
+<div class="aip-sec">④ 其他來源</div>
+<div class="aip-card">
+  <div class="aip-grp">Primary Democrats（聚焦民主黨）</div>
+  <div class="aip-tiles" style="margin-top:0">
+    <div class="aip-tile" style="--c:var(--dem)"><div class="n">211／264</div><div class="t">民主黨相關成員自 2016 年起獲支持（約 80%）</div></div>
+    <div class="aip-tile" style="--c:var(--dem)"><div class="n">$94.5M</div><div class="t">AIPAC PAC＋UDP</div></div>
+  </div>
+
+  <div class="aip-grp" style="margin-top:16px">2026 年相關武器銷售決議：參議員支持「限制」</div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">約 40／47</span></div><div class="aip-bar"><i style="width:85.1%;background:var(--dem)"></i></div></div>
+  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">0／49</span></div><div class="aip-bar"><i style="width:0;background:var(--rep)"></i></div></div>
+  <div class="aip-src">投票差異與資金多寡並列，不等於因果；決議內容與「限制」的定義以原報導為準。</div>
+</div>
+
+<div class="aip-foot">
+  數字因追蹤範圍（AIPAC 本體 vs. 更廣親以色列團體）、是否含反對支出、時間點而異；本頁未獨立核對原始資料。<br>
+  來源：<a href="https://www.fec.gov" target="_blank" rel="noopener">FEC</a>、<a href="https://trackaipac.com" target="_blank" rel="noopener">trackaipac.com</a>、<a href="https://whofundsmyrep.com" target="_blank" rel="noopener">whofundsmyrep.com</a>、The Crosscheck、Quincy Institute／Responsible Statecraft、Primary Democrats。
+</div>
+<div class="aip-by">製圖：張威翔</div>
+
+</body>
+</html>
