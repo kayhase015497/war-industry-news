@@ -339,6 +339,11 @@
     "hump_airlift_remains_handover_20261112": {
       "category": "military",
       "shortTitle": "駝峰航線遺骸移交（成都）"
+    },
+    "hormuz_us_strikes_iran_drones_20261120": {
+      "category": "conflict",
+      "shortTitle": "荷莫茲海峽美軍打擊與伊朗無人機反擊",
+      "series": "iran-gulf"
     }
   },
   "seriesLabels": {
