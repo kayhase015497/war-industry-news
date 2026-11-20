@@ -7,75 +7,91 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --pad:clamp(14px,3vw,32px);
-  --bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;
-  --dem:#3987e5;--rep:#e66767;--gold:#eda100;--gray:#5b6784;--green:#1baf7a;
-}
+:root{--pad:clamp(14px,3vw,32px);--bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;--dem:#3987e5;--rep:#e66767;--gold:#eda100;--gray:#5b6784;--green:#1baf7a}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body.aip-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.55;padding:var(--pad);max-width:900px;margin:0 auto}
-
-.aip-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:6px}
-.aip-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:6px}
-.aip-sub{font-size:18px;color:var(--mute)}
-
-.aip-sec{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:30px 0 10px;display:flex;align-items:center;gap:12px}
+body.aip-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.5;padding:var(--pad);max-width:900px;margin:0 auto}
+.aip-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:4px}
+.aip-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff}
+.aip-sec{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:26px 0 10px;display:flex;align-items:center;gap:12px}
 .aip-sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.aip-sec em{font-style:normal;color:#fff;font-weight:700;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
+.aip-sec span{min-width:0}
+.aip-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px}
+.aip-split{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:18px;align-items:center}
+.aip-split>.aip-donut{justify-self:center}
+.aip-hd{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
 
-.aip-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-.aip-src{font-size:18px;color:var(--mute);margin-top:8px}
+/* donut */
+.aip-donut{position:relative;width:min(100%,240px);aspect-ratio:1}
+.aip-donut svg{display:block;width:100%;height:100%}
+.aip-donut .ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.15}
+.aip-donut .b{font-family:'Space Mono',monospace;font-size:clamp(26px,7vw,34px);font-weight:700;color:#fff}
+.aip-donut .s{font-size:18px;color:var(--mute)}
 
-/* big number */
-.aip-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:8px}
-.aip-big .n{font-family:'Space Mono',monospace;font-size:clamp(34px,8vw,48px);font-weight:700;line-height:1;color:#fff}
-.aip-big .u{font-size:18px;color:var(--text)}
-.aip-big .p{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--gold)}
+/* legend */
+.aip-lg{display:grid;gap:8px}
+.aip-lg div{display:flex;align-items:center;gap:10px;font-size:18px}
+.aip-lg i{width:16px;height:16px;border-radius:4px;flex-shrink:0;background:var(--c)}
+.aip-lg b{margin-left:auto;font-family:'Space Mono',monospace;font-size:20px}
 
-/* stacked bar */
-.aip-stack{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--bg);border:1px solid var(--border);margin:6px 0 8px}
-.aip-stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#fff;overflow:hidden}
-.aip-legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:18px;color:var(--text)}
-.aip-legend span::before{content:'';display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;background:var(--c);vertical-align:-1px}
-
-/* horizontal bars */
-.aip-row{margin-bottom:10px}
-.aip-row .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:3px}
-.aip-row .l{font-size:18px;font-weight:700}
-.aip-row .v{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-align:right}
-.aip-bar{height:22px;background:var(--bg);border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.aip-bar i{display:block;height:100%}
-.aip-meta{font-size:18px;color:var(--mute);margin-top:2px}
-.aip-grp{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:12px 0 6px}
-.aip-grp:first-child{margin-top:0}
-
-/* tiles */
-.aip-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
-.aip-tile{background:var(--bg);border:1px solid var(--border);border-top:4px solid var(--c,var(--gold));border-radius:10px;padding:10px 14px}
+/* stat tiles */
+.aip-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.aip-tile{background:var(--bg);border:1px solid var(--border);border-top:4px solid var(--c,var(--gold));border-radius:10px;padding:10px 12px}
 .aip-tile .n{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;line-height:1.1;color:var(--c,var(--gold))}
 .aip-tile .t{font-size:18px;color:var(--text)}
-.aip-tile .s{font-size:18px;color:var(--mute)}
+
+/* vertical columns */
+.aip-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.aip-colchart{display:flex;align-items:flex-end;justify-content:center;gap:20px;min-height:230px;padding-top:6px}
+.aip-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;max-width:120px;text-align:center}
+.aip-col .val{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.aip-col .bar{width:100%;border-radius:8px 8px 0 0}
+.aip-col .nm{font-size:18px;font-weight:700;margin-top:6px}
+.aip-col .sb{font-size:18px;color:var(--mute);line-height:1.3}
+
+.aip-flag{margin-top:12px;font-size:18px;color:var(--gold)}
+.aip-big{font-family:'Space Mono',monospace;font-size:clamp(32px,8vw,46px);font-weight:700;color:#fff;line-height:1.1}
+.aip-big small{display:block;font-family:'Noto Sans TC',sans-serif;font-size:18px;font-weight:400;color:var(--mute)}
 
 /* cases */
-.aip-case{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-top:8px}
-.aip-case .t{font-size:18px}
-.aip-case .t b{color:#fff}
-.aip-res{font-size:18px;font-weight:700;padding:2px 12px;border-radius:999px;white-space:nowrap;background:rgba(237,161,0,.18);color:#f5d27a}
+.aip-cases{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.aip-case{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:18px}
+.aip-case b{display:block;color:#fff}
+.aip-case .r{display:inline-block;margin-top:4px;padding:0 10px;border-radius:999px;background:rgba(237,161,0,.18);color:#f5d27a;font-weight:700}
+.aip-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.aip-chip{font-size:18px;padding:2px 12px;border-radius:999px;border:1px solid var(--border);color:var(--text)}
+.aip-chip b{color:#fff}
 
-/* caution */
-.aip-warn{background:rgba(237,161,0,.1);border:1px solid rgba(237,161,0,.45);border-radius:12px;padding:12px 16px;margin-top:16px}
-.aip-warn b{color:var(--gold)}
-.aip-warn ul{list-style:none;margin-top:6px;display:grid;gap:4px}
-.aip-warn li{padding-left:16px;position:relative}
-.aip-warn li::before{content:'▸';position:absolute;left:0;color:var(--mute)}
+/* rings row */
+.aip-two .aip-donut{width:min(100%,170px);margin:0 auto}
+.aip-rings{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.aip-rings .aip-donut{width:min(100%,170px);margin:0 auto}
+.aip-rings .aip-donut .b{font-size:clamp(24px,6vw,30px)}
+.aip-cap{text-align:center;font-size:18px;margin-top:4px}
 
-.aip-foot{margin-top:26px;padding-top:12px;border-top:1px solid var(--border);font-size:18px;color:var(--mute)}
-.aip-foot a{color:#9cc4f5}
-.aip-by{margin-top:8px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
+/* notes */
+details.aip-note{margin-top:22px;background:var(--bg2);border:1px solid var(--border);border-radius:12px}
+details.aip-note summary{cursor:pointer;list-style:none;min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-weight:700;color:#fff}
+details.aip-note summary::-webkit-details-marker{display:none}
+details.aip-note[open] .chev{transform:rotate(180deg)}
+.aip-note .chev{color:var(--mute);transition:transform .15s}
+.aip-nb{padding:0 16px 14px;font-size:18px;color:var(--text);display:grid;gap:8px}
+.aip-nb p{padding-left:16px;position:relative}
+.aip-nb p::before{content:'▸';position:absolute;left:0;color:var(--mute)}
+.aip-nb a{color:#9cc4f5}
+.aip-by{margin-top:12px;font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);text-align:right}
 
-@media(max-width:600px){
+@media(max-width:640px){
   :root{--pad:12px}
-  .aip-case{grid-template-columns:1fr}
-  .aip-res{justify-self:start}
+  .aip-split{grid-template-columns:1fr;gap:12px}
+  .aip-two{grid-template-columns:1fr}
+  .aip-cases{grid-template-columns:1fr}
+  .aip-donut{width:min(100%,260px)}
+  .aip-rings .aip-donut{width:min(100%,150px)}
+  .aip-two .aip-donut{width:min(100%,190px)}
+  .aip-sec{flex-wrap:wrap;gap:0 12px;margin-top:22px}
+  .aip-sec::after{display:none}
+  .aip-sec span{flex-basis:100%;font-size:18px}
 }
 </style>
 </head>
@@ -84,101 +100,110 @@ body.aip-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',
 <header>
   <div class="aip-kicker">美國國會 · 約 2026 周期</div>
   <h1 class="aip-title">親以色列 PAC 與國會：資金數據一覽</h1>
-  <p class="aip-sub">各來源追蹤的 PAC 範圍與時間點不同，數字請分開看，不宜直接相加。</p>
 </header>
 
-<!-- A -->
-<div class="aip-sec">① 現任議員覆蓋</div>
+<div class="aip-sec"><em>① 現任議員覆蓋</em><span>Who Funds My Rep 等</span></div>
+<div class="aip-card aip-split">
+  <div class="aip-donut" role="img" aria-label="現任議員覆蓋率">
+  <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="var(--dem)" stroke-width="30" stroke-dasharray="228.34 274.31" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="var(--rep)" stroke-width="30" stroke-dasharray="247.93 254.73" stroke-dashoffset="-230.34" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="var(--gold)" stroke-width="30" stroke-dasharray="2.24 500.42" stroke-dashoffset="-480.27" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="#5b6784" stroke-width="30" stroke-dasharray="17.58 485.07" stroke-dashoffset="-483.07" transform="rotate(-90 100 100)"/></svg>
+  <div class="ctr"><span class="b">96%</span><span class="s">518／539</span></div>
+</div>
+  <div>
+    <div class="aip-lg">
+      <div style="--c:var(--dem)"><i></i>民主黨<b>247</b></div>
+      <div style="--c:var(--rep)"><i></i>共和黨<b>268</b></div>
+      <div style="--c:var(--gold)"><i></i>未列黨派<b>3</b></div>
+      <div style="--c:var(--gray)"><i></i>無紀錄<b>21</b></div>
+    </div>
+    <div class="aip-tiles" style="margin-top:14px"><div class="aip-tile"><div class="n">$202.5M</div><div class="t">累計支持支出</div></div></div>
+  </div>
+</div>
+
+<div class="aip-sec"><em>② 黨派比較</em><span>The Crosscheck・約17個 PAC 生涯</span></div>
 <div class="aip-card">
-  <div class="aip-big"><span class="n">518</span><span class="u">／ 約539 名現任議員有親以色列 PAC 資金紀錄</span><span class="p">≈96%</span></div>
-  <div class="aip-stack" role="img" aria-label="民主黨247、共和黨268、其餘3、無紀錄21">
-    <i style="width:45.8%;background:var(--dem)">247</i>
-    <i style="width:49.7%;background:var(--rep)">268</i>
-    <i style="width:.6%;background:var(--gold)"></i>
-    <i style="width:3.9%;background:var(--gray)"></i>
+  <div class="aip-two">
+    <div><div class="aip-hd">生涯總額</div><div class="aip-colchart"><div class="aip-col"><div class="val">$134.9M</div><div class="bar" style="height:150px;background:var(--dem)"></div><div class="nm" style="color:var(--dem)">民主黨</div><div class="sb">236人・90%</div></div><div class="aip-col"><div class="val">$60.9M</div><div class="bar" style="height:68px;background:var(--rep)"></div><div class="nm" style="color:var(--rep)">共和黨</div><div class="sb">269人・99%</div></div></div></div>
+    <div><div class="aip-hd">平均每位議員</div><div class="aip-colchart"><div class="aip-col"><div class="val">$572K</div><div class="bar" style="height:150px;background:var(--dem)"></div><div class="nm" style="color:var(--dem)">民主黨</div><div class="sb">平均每人</div></div><div class="aip-col"><div class="val">$227K</div><div class="bar" style="height:60px;background:var(--rep)"></div><div class="nm" style="color:var(--rep)">共和黨</div><div class="sb">平均每人</div></div></div></div>
   </div>
-  <div class="aip-legend">
-    <span style="--c:var(--dem)">民主黨 247</span>
-    <span style="--c:var(--rep)">共和黨 268</span>
-    <span style="--c:var(--gold)">未列黨派 3</span>
-    <span style="--c:var(--gray)">無紀錄 21</span>
+  <div class="aip-flag">⚠ 各來源口徑不同，數字不宜相加（見文末說明）</div>
+</div>
+
+<div class="aip-sec"><em>③ 2026 周期</em></div>
+<div class="aip-card">
+  <div class="aip-big">$100–120M<small>估計總支出（AIPAC PAC＋UDP 等，不同來源）</small></div>
+</div>
+<div class="aip-card aip-split" style="margin-top:12px">
+  <div class="aip-donut" role="img" aria-label="Quincy 統計 $84.1M，其中 $55.3M 投向落敗候選人">
+  <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="var(--rep)" stroke-width="30" stroke-dasharray="328.52 174.13" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="#5b6784" stroke-width="30" stroke-dasharray="170.13 332.52" stroke-dashoffset="-330.52" transform="rotate(-90 100 100)"/></svg>
+  <div class="ctr"><span class="b">$84.1M</span><span class="s">Quincy 統計</span></div>
+</div>
+  <div>
+    <div class="aip-lg">
+      <div style="--c:var(--rep)"><i></i>投向落敗候選人（近 2/3）<b>$55.3M</b></div>
+      <div style="--c:var(--gray)"><i></i>其餘（推算）<b>$28.8M</b></div>
+    </div>
+    <div class="aip-cases">
+      <div class="aip-case"><b>密西根參議院</b>反對 El-Sayed，逾 $30M<span class="r">El-Sayed 勝出</span></div>
+      <div class="aip-case"><b>支持 Susan Collins</b>　<span class="r">Collins 落敗</span></div>
+    </div>
   </div>
+</div>
+<div class="aip-card" style="margin-top:12px">
+  <div class="aip-hd">AIPAC 自稱戰績</div>
   <div class="aip-tiles">
-    <div class="aip-tile"><div class="n">$202.5M</div><div class="t">累計支持支出（生涯）</div><div class="s">約 $202,503,189</div></div>
-  </div>
-  <div class="aip-src">來源：Who Funds My Rep 等。兩黨相加為 515，與 518 差 3 人（原資料未說明）。</div>
-</div>
-
-<!-- B -->
-<div class="aip-sec">② 黨派比較（約17個 PAC 生涯總額）</div>
-<div class="aip-card">
-  <div class="aip-grp">生涯總額</div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">$134.9M</span></div><div class="aip-bar"><i style="width:100%;background:var(--dem)"></i></div></div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">$60.9M</span></div><div class="aip-bar"><i style="width:45.1%;background:var(--rep)"></i></div></div>
-
-  <div class="aip-grp">平均每位議員</div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">~$572K</span></div><div class="aip-bar"><i style="width:100%;background:var(--dem)"></i></div><div class="aip-meta">236 人・覆蓋率 ~90%</div></div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">~$227K</span></div><div class="aip-bar"><i style="width:39.7%;background:var(--rep)"></i></div><div class="aip-meta">269 人・覆蓋率 ~99%</div></div>
-
-  <div class="aip-src">來源：The Crosscheck 分析。民主黨總額較高、平均約為共和黨的 2.5 倍，共和黨覆蓋率較高。</div>
-</div>
-
-<div class="aip-warn">
-  <b>口徑差異（請勿直接相加）</b>
-  <ul>
-    <li>表列總計 $209.3M，與兩黨相加 $195.8M 差 $13.5M；人數 236＋269＝505，少於 539。</li>
-    <li>$209.3M（Crosscheck）與 $202.5M（①）來源與追蹤範圍不同。</li>
-  </ul>
-</div>
-
-<!-- C -->
-<div class="aip-sec">③ 2026 周期</div>
-<div class="aip-card">
-  <div class="aip-big"><span class="n">$100–120M</span><span class="u">估計總支出（AIPAC PAC＋United Democracy Project 等，不同來源）</span></div>
-
-  <div class="aip-grp">Quincy Institute／Responsible Statecraft 統計：$84.1M</div>
-  <div class="aip-stack" role="img" aria-label="$55.3M 投向落敗候選人，約三分之二">
-    <i style="width:65.8%;background:var(--rep)">$55.3M</i>
-    <i style="width:34.2%;background:var(--gray)">$28.8M</i>
-  </div>
-  <div class="aip-legend">
-    <span style="--c:var(--rep)">投向落敗候選人（近 2/3）</span>
-    <span style="--c:var(--gray)">其餘（推算）</span>
-  </div>
-
-  <div class="aip-grp">高調案例</div>
-  <div class="aip-case"><div class="t"><b>密西根參議院</b>：逾 $30M 反對 El-Sayed</div><span class="aip-res">El-Sayed 勝出</span></div>
-  <div class="aip-case"><div class="t"><b>支持 Susan Collins</b></div><span class="aip-res">Collins 落敗</span></div>
-
-  <div class="aip-grp">AIPAC 自稱戰績</div>
-  <div class="aip-tiles" style="margin-top:0">
     <div class="aip-tile" style="--c:var(--green)"><div class="n">~234</div><div class="t">名親以色列候選人勝選</div></div>
-    <div class="aip-tile" style="--c:var(--green)"><div class="n">29</div><div class="t">名批評者被協助擊敗</div></div>
+    <div class="aip-tile" style="--c:var(--green)"><div class="n">29</div><div class="t">名批評者被擊敗</div></div>
   </div>
-
-  <div class="aip-src">策略重點：民主黨初選高額干預；共和黨多為低成本維繫。</div>
+  <div class="aip-chips"><span class="aip-chip">民主黨：<b>初選高額干預</b></span><span class="aip-chip">共和黨：<b>低成本維繫</b></span></div>
 </div>
 
-<!-- D -->
-<div class="aip-sec">④ 其他來源</div>
+<div class="aip-sec"><em>④ 其他來源</em></div>
 <div class="aip-card">
-  <div class="aip-grp">Primary Democrats（聚焦民主黨）</div>
-  <div class="aip-tiles" style="margin-top:0">
-    <div class="aip-tile" style="--c:var(--dem)"><div class="n">211／264</div><div class="t">民主黨相關成員自 2016 年起獲支持（約 80%）</div></div>
-    <div class="aip-tile" style="--c:var(--dem)"><div class="n">$94.5M</div><div class="t">AIPAC PAC＋UDP</div></div>
+  <div class="aip-two">
+    <div>
+      <div class="aip-hd">Primary Democrats</div>
+      <div class="aip-donut" role="img" aria-label="80% 211／264">
+  <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="var(--dem)" stroke-width="30" stroke-dasharray="399.74 102.91" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="#273148" stroke-width="30" stroke-dasharray="98.91 403.74" stroke-dashoffset="-401.74" transform="rotate(-90 100 100)"/></svg>
+  <div class="ctr"><span class="b">80%</span><span class="s">211／264</span></div>
+</div>
+      <div class="aip-cap">民主黨相關成員<br>自 2016 年起獲支持</div>
+      <div class="aip-tiles" style="margin-top:10px"><div class="aip-tile" style="--c:var(--dem)"><div class="n">$94.5M</div><div class="t">AIPAC PAC＋UDP</div></div></div>
+    </div>
+    <div>
+      <div class="aip-hd">2026 武器銷售決議：支持「限制」</div>
+      <div class="aip-rings">
+        <div><div class="aip-donut" role="img" aria-label="85% 40／47">
+  <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="var(--dem)" stroke-width="30" stroke-dasharray="425.79 76.86" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="#273148" stroke-width="30" stroke-dasharray="72.86 429.79" stroke-dashoffset="-427.79" transform="rotate(-90 100 100)"/></svg>
+  <div class="ctr"><span class="b">85%</span><span class="s">40／47</span></div>
+</div><div class="aip-cap" style="color:var(--dem)"><b>民主黨</b><br>參議員</div></div>
+        <div><div class="aip-donut" role="img" aria-label="0% 0／49">
+  <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="var(--rep)" stroke-width="30" stroke-dasharray="0.50 502.15" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="80" fill="none" stroke="#273148" stroke-width="30" stroke-dasharray="500.65 2.00" stroke-dashoffset="-0.00" transform="rotate(-90 100 100)"/></svg>
+  <div class="ctr"><span class="b">0%</span><span class="s">0／49</span></div>
+</div><div class="aip-cap" style="color:var(--rep)"><b>共和黨</b><br>參議員</div></div>
+      </div>
+    </div>
   </div>
-
-  <div class="aip-grp" style="margin-top:16px">2026 年相關武器銷售決議：參議員支持「限制」</div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--dem)">民主黨</span><span class="v">約 40／47</span></div><div class="aip-bar"><i style="width:85.1%;background:var(--dem)"></i></div></div>
-  <div class="aip-row"><div class="h"><span class="l" style="color:var(--rep)">共和黨</span><span class="v">0／49</span></div><div class="aip-bar"><i style="width:0;background:var(--rep)"></i></div></div>
-  <div class="aip-src">投票差異與資金多寡並列，不等於因果；決議內容與「限制」的定義以原報導為準。</div>
 </div>
 
-<div class="aip-foot">
-  數字因追蹤範圍（AIPAC 本體 vs. 更廣親以色列團體）、是否含反對支出、時間點而異；本頁未獨立核對原始資料。<br>
-  來源：<a href="https://www.fec.gov" target="_blank" rel="noopener">FEC</a>、<a href="https://trackaipac.com" target="_blank" rel="noopener">trackaipac.com</a>、<a href="https://whofundsmyrep.com" target="_blank" rel="noopener">whofundsmyrep.com</a>、The Crosscheck、Quincy Institute／Responsible Statecraft、Primary Democrats。
-</div>
+<details class="aip-note">
+  <summary>口徑與來源說明 <span class="chev">▾</span></summary>
+  <div class="aip-nb">
+    <p>人數：民主黨 247＋共和黨 268＝515，與 518 差 3 人，原資料未說明。</p>
+    <p>黨派表：236＋269＝505 人（非 539），$134.9M＋$60.9M＝$195.8M，與表列總計 $209.3M 差 $13.5M；$209.3M 與 $202.5M 來源不同。</p>
+    <p>衍生數字（本頁計算）：平均約為 2.5 倍、$28.8M（＝84.1－55.3）、211／264≈80%、40／47≈85%。</p>
+    <p>投票差異與資金多寡並列，不等於因果；「限制」的定義以原報導為準。</p>
+    <p>數字因追蹤範圍（AIPAC 本體 vs. 更廣親以色列團體）、是否含反對支出、時間點而異；本頁未獨立核對原始資料。</p>
+    <p>來源：<a href="https://www.fec.gov" target="_blank" rel="noopener">FEC</a>、<a href="https://trackaipac.com" target="_blank" rel="noopener">trackaipac.com</a>、<a href="https://whofundsmyrep.com" target="_blank" rel="noopener">whofundsmyrep.com</a>、The Crosscheck、Quincy Institute／Responsible Statecraft、Primary Democrats。</p>
+  </div>
+</details>
 <div class="aip-by">製圖：張威翔</div>
 
+<script>
+(function(){
+  function report(){try{parent.postMessage({type:'aip-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+  document.addEventListener('toggle',report,true);
+  window.addEventListener('load',report);window.addEventListener('resize',report);
+})();
+</script>
 </body>
 </html>
