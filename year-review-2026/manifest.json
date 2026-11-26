@@ -348,6 +348,10 @@
     "iraq_kurdistan_federal_takeover_20261124": {
       "category": "conflict",
       "shortTitle": "伊拉克接管庫區口岸與4省油田"
+    },
+    "rosatom_bn800_closed_fuel_cycle_20261125": {
+      "category": "energy",
+      "shortTitle": "BN-800 閉式核燃料循環"
     }
   },
   "seriesLabels": {
