@@ -1,0 +1,166 @@
+{
+ "meta": {
+  "title": "Rosatom BN-800 閉式核燃料循環：全球首次多輪MOX回收",
+  "titleEn": "Rosatom BN-800: World's First Multi-Cycle MOX Recycling in a Commercial-Scale Reactor",
+  "subtitle": "別洛雅爾斯克4號機組・熱列茲諾戈爾斯克燃料製造・BREST-OD-300",
+  "date": "2026-11-25",
+  "status": "breaking",
+  "theme": "blue",
+  "sources": [
+   "張威翔製作",
+   "Rosatom",
+   "媒體報導"
+  ]
+ },
+ "map": {
+  "center": [
+   56.5,
+   70
+  ],
+  "zoom": 4,
+  "bounds": [
+   [
+    48,
+    34
+   ],
+   [
+    63,
+    100
+   ]
+  ],
+  "mobile": {
+   "center": [
+    56.5,
+    66
+   ],
+   "zoom": 3
+  }
+ },
+ "infoPanel": {
+  "title": "BN-800：鈽從乏燃料回到同一座反應爐",
+  "paragraphs": [
+   "俄羅斯國家原子能公司（Rosatom）週三（25日）宣布，別洛雅爾斯克核電廠4號機組的BN-800快中子反應爐，已進入回收鈾鈽混合氧化物（MOX）燃料的試點工業運行階段。Rosatom稱，這是全球首次在商業級大型反應爐上，用同一座反應爐先前輻照過的乏燃料組件提煉出鈽，製成新燃料後再裝回原機組，完整驗證閉式核燃料循環的技術可行性。",
+   "過去曾把傳統熱中子反應爐的乏燃料加工後裝入快中子反應爐，但只能循環一次；BN-800這次做到多輪循環，過程可以無限重複。Rosatom稱，這將從根本上解決地球上鈾礦儲量上限的問題。實驗燃料組件在熱列茲諾戈爾斯克（Zheleznogorsk）製造，組裝全程在Rostechnadzor許可下進行。",
+   "Rosatom總裁利哈喬夫（Alexey Likhachev）表示，這是通往第四代反應爐的關鍵一步，包括未來10年的BN-1200M量產機組，以及托木斯克州在建的BREST-OD-300鉛冷快堆。",
+   "BN-800規格：鈉冷池式快中子增殖反應爐；熱功率2100兆瓦、電功率880兆瓦（淨出力約789兆瓦）；堆芯入口鈉溫354°C、出口547°C，產生490°C、13.7兆帕過熱蒸汽；淨效率39.4%、設計壽命40年、年淨發電量約55億2千萬度、容量因子85%。安全設計：被動停堆（鈉流量喪失時控制棒靠重力落入堆芯）、零鈉空泡反應性效應與嚴重事故堆芯捕集器。",
+   "⚠️ 以上為Rosatom自述，尚待獨立驗證；座標為概略位置，連線僅示意供應關係。"
+  ]
+ },
+ "polygons": [],
+ "lines": [
+  {
+   "points": [
+    [
+     56.25,
+     93.54
+    ],
+    [
+     56.843,
+     61.324
+    ]
+   ],
+   "color": "#43A047",
+   "weight": 3,
+   "opacity": 0.9,
+   "dashArray": "8,5",
+   "popup": {
+    "title": "實驗燃料組件：熱列茲諾戈爾斯克 → 別洛雅爾斯克（示意）",
+    "tag": "➤ 燃料供應（示意）",
+    "tagClass": "tag-strategic",
+    "desc": "實驗燃料組件在熱列茲諾戈爾斯克製造，用於別洛雅爾斯克BN-800。連線僅示意供應關係，直線約2,000公里，非實際運輸路線。⚠️ 座標為概略位置。",
+    "source": "Rosatom 公告（2026-11-25）、媒體報導"
+   }
+  }
+ ],
+ "locations": [
+  {
+   "latlng": [
+    56.843,
+    61.324
+   ],
+   "name": "Beloyarsk NPP",
+   "nameLocal": "別洛雅爾斯克核電廠4號機組（Beloyarsk）・BN-800",
+   "type": "confirmed",
+   "tag": "⚛️ 別洛雅爾斯克核電廠・全球首次閉式循環試點工業運行",
+   "tagClass": "tag-confirmed",
+   "desc": "位於斯維爾德洛夫斯克州扎列奇內（Zarechny）。4號機組BN-800為鈉冷池式快中子增殖反應爐，2015年併網、2016年滿功率運行、2023年完成全MOX堆芯過渡。Rosatom稱，該機組已進入回收鈾鈽混合氧化物（MOX）燃料的試點工業運行：鈽從同一座反應爐的乏燃料中回收，製成新MOX燃料再裝回原機組，可多輪循環、理論上無限重複。熱功率2100兆瓦、電功率880兆瓦（淨出力約789兆瓦）。 ⚠️ 座標為概略位置。",
+   "coords": "56°51'N 061°19'E",
+   "source": "Rosatom 公告（2026-11-25）、媒體報導"
+  },
+  {
+   "latlng": [
+    56.25,
+    93.54
+   ],
+   "name": "Zheleznogorsk",
+   "nameLocal": "熱列茲諾戈爾斯克（Zheleznogorsk）・實驗燃料組件製造地",
+   "type": "possible",
+   "tag": "🏭 熱列茲諾戈爾斯克・燃料組件製造",
+   "tagClass": "tag-possible",
+   "desc": "位於克拉斯諾亞爾斯克邊疆區。這批實驗燃料組件在此製造，採用優化後的鈽回收工藝，兼顧維持燃料品質並減少處理步驟，讓回收更具經濟性；組裝全程在俄羅斯聯邦生態、技術與原子能監督局（Rostechnadzor）許可下進行。與別洛雅爾斯克直線約2,000公里。 ⚠️ 座標為概略位置。",
+   "coords": "56°15'N 093°32'E",
+   "source": "Rosatom 公告（2026-11-25）、媒體報導"
+  },
+  {
+   "latlng": [
+    56.6,
+    84.88
+   ],
+   "name": "Seversk (BREST-OD-300)",
+   "nameLocal": "托木斯克州・BREST-OD-300鉛冷快堆（在建）",
+   "type": "other",
+   "tag": "🏗️ 托木斯克州・BREST-OD-300（在建）",
+   "tagClass": "tag-other",
+   "desc": "Rosatom總裁利哈喬夫表示，閉式燃料循環「從理論走向實踐」，是通往第四代反應爐的關鍵一步，包括未來10年的BN-1200M量產機組，以及托木斯克州在建的BREST-OD-300鉛冷快堆。⚠️ 以托木斯克州謝韋爾斯克一帶標示，實際廠址位置為概略。 ⚠️ 座標為概略位置。",
+   "coords": "56°36'N 084°53'E",
+   "source": "Rosatom 公告（2026-11-25）、媒體報導"
+  },
+  {
+   "latlng": [
+    55.75,
+    37.62
+   ],
+   "name": "Moscow (Rosatom)",
+   "nameLocal": "莫斯科・Rosatom總部（公告發布方）",
+   "type": "capital",
+   "tag": "🏛️ 莫斯科・Rosatom總部",
+   "tagClass": "tag-capital",
+   "desc": "俄羅斯國家原子能公司（Rosatom）總部所在地。Rosatom於週三（25日）宣布此項成果；總裁為利哈喬夫（Alexey Likhachev）。 ⚠️ 座標為概略位置。",
+   "coords": "55°45'N 037°37'E",
+   "source": "Rosatom 公告（2026-11-25）、媒體報導"
+  }
+ ],
+ "legend": [
+  {
+   "symbol": "dot",
+   "color": "#e74c3c",
+   "pulse": true,
+   "label": "別洛雅爾斯克核電廠4號機組（BN-800）"
+  },
+  {
+   "symbol": "dot",
+   "color": "#64B5F6",
+   "pulse": false,
+   "label": "熱列茲諾戈爾斯克（實驗燃料組件製造）"
+  },
+  {
+   "symbol": "dot",
+   "color": "#2ECC71",
+   "pulse": false,
+   "label": "托木斯克州 BREST-OD-300（在建）"
+  },
+  {
+   "symbol": "dot",
+   "color": "#F1C40F",
+   "pulse": false,
+   "label": "莫斯科・Rosatom總部"
+  },
+  {
+   "symbol": "line",
+   "color": "#43A047",
+   "weight": 3,
+   "dash": "8,5",
+   "label": "燃料供應關係（示意）"
+  }
+ ]
+}
