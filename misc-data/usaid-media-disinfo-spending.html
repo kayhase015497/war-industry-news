@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>美國對外媒體與「不實資訊」相關支出</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--pad:clamp(14px,3vw,32px);--bg:#0b0f1a;--bg2:#121a2b;--border:#2a3550;--text:#e8ecf5;--mute:#9aa5bd;--blue:#3987e5;--gold:#eda100;--violet:#9085e9;--gray:#5b6784;--green:#1baf7a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body.usd-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:18px;line-height:1.5;padding:var(--pad);max-width:900px;margin:0 auto}
+.usd-kicker{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin-bottom:4px}
+.usd-title{font-size:clamp(26px,5vw,34px);font-weight:900;line-height:1.25;color:#fff}
+.usd-sub{font-size:18px;color:var(--mute);margin-top:4px}
+
+/* sticky currency bar */
+.usd-bar{position:sticky;top:0;z-index:20;background:var(--bg);margin:12px calc(-1*var(--pad)) 0;padding:8px var(--pad);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.usd-seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:12px;overflow:hidden;min-width:220px}
+.usd-seg button{font:inherit;font-size:18px;font-weight:700;min-height:44px;border:0;background:var(--bg2);color:var(--mute);cursor:pointer;padding:0 14px}
+.usd-seg button.on{background:#fff;color:#0b0f1a}
+.usd-rate{font-size:18px;color:var(--mute)}
+
+.usd-sec{font-family:'Space Mono',monospace;font-size:18px;color:var(--mute);margin:26px 0 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.usd-sec em{font-style:normal;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff}
+.usd-sec::after{content:'';flex:1;height:1px;background:var(--border);min-width:20px}
+.usd-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px}
+
+/* hero */
+.usd-hero{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center}
+.usd-donut{position:relative;width:200px;aspect-ratio:1;justify-self:center}
+.usd-donut svg{display:block;width:100%;height:100%}
+.usd-donut .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.usd-donut .c b{font-family:'Space Mono',monospace;font-size:34px;color:#fff}
+.usd-donut .c span{font-size:18px;color:var(--mute)}
+.usd-big{font-family:'Space Mono',monospace;font-size:clamp(32px,8vw,46px);font-weight:700;color:#fff;line-height:1.1}
+.usd-big small{display:block;font-family:'Noto Sans TC',sans-serif;font-size:18px;font-weight:400;color:var(--text);margin-top:4px}
+.usd-lg{display:grid;gap:6px;margin-top:10px}
+.usd-lg div{display:flex;align-items:center;gap:10px}
+.usd-lg i{width:16px;height:16px;border-radius:4px;background:var(--c);flex-shrink:0}
+.usd-lg b{margin-left:auto;font-family:'Space Mono',monospace}
+
+/* tiles */
+.usd-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.usd-tile{background:var(--bg);border:1px solid var(--border);border-top:4px solid var(--c,var(--gold));border-radius:10px;padding:10px 12px}
+.usd-tile .n{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;line-height:1.15;color:var(--c,var(--gold))}
+.usd-tile .t{font-size:18px}
+.usd-tile .s{font-size:18px;color:var(--mute)}
+
+/* rows */
+.usd-row{padding:8px 0;border-top:1px solid rgba(42,53,80,.7)}
+.usd-row:first-child{border-top:0}
+.usd-row .top{display:flex;align-items:baseline;gap:10px}
+.usd-row .no{font-family:'Space Mono',monospace;color:var(--mute);min-width:2.2em;flex-shrink:0}
+.usd-row .tx{flex:1;min-width:0;overflow-wrap:anywhere}
+.usd-row .am{font-family:'Space Mono',monospace;font-weight:700;white-space:nowrap;flex-shrink:0;color:#fff}
+.usd-bar2{height:12px;border-radius:6px;background:var(--bg);border:1px solid var(--border);overflow:hidden;margin-top:5px}
+.usd-bar2 i{display:block;height:100%;background:var(--blue)}
+.usd-row.ua .usd-bar2 i{background:var(--gold)}
+.usd-row.ua .tx{color:#fff}
+.usd-prop .usd-bar2 i{background:var(--violet)}
+.usd-key{display:flex;flex-wrap:wrap;gap:4px 16px;margin-bottom:6px}
+.usd-key span::before{content:'';display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;background:var(--c);vertical-align:-1px}
+.usd-more{margin-top:10px;width:100%;min-height:48px;font:inherit;font-size:18px;font-weight:700;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:#fff;cursor:pointer}
+.usd-note{font-size:18px;color:var(--mute);margin-top:10px}
+.usd-warn{margin-top:12px;background:rgba(237,161,0,.1);border:1px solid rgba(237,161,0,.45);border-radius:12px;padding:10px 14px;color:var(--text)}
+.usd-warn b{color:var(--gold)}
+.usd-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:18px;color:var(--violet);border:1px solid var(--violet);border-radius:6px;padding:0 8px;margin-left:6px}
+.usd-foot{margin-top:24px;padding-top:12px;border-top:1px solid var(--border);color:var(--mute)}
+.usd-by{margin-top:8px;font-family:'Space Mono',monospace;color:var(--mute);text-align:right}
+.usd-top{position:fixed;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;gap:6px;min-height:48px;padding:0 16px;border-radius:999px;border:0;background:#fff;color:#0b0f1a;font:inherit;font-size:18px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.5);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s}
+.usd-top.on{opacity:1;pointer-events:auto;transform:none}
+.usd-top b{font-size:22px;line-height:1}
+
+@media(max-width:640px){
+  :root{--pad:12px}
+  .usd-hero{grid-template-columns:1fr;gap:12px}
+  .usd-donut{width:min(100%,220px)}
+  .usd-seg{flex:1}
+}
+</style>
+</head>
+<body class="usd-body">
+
+<header>
+  <div class="usd-kicker">美國對外媒體資金</div>
+  <h1 class="usd-title">美國對外媒體與「不實資訊」相關支出</h1>
+  <p class="usd-sub">依原清單順序（金額由大到小）</p>
+</header>
+
+<div class="usd-bar" id="usd-bar">
+  <div class="usd-seg"><button data-c="ntd" class="on">新台幣</button><button data-c="usd">美元</button></div>
+  <span class="usd-rate" id="usd-rate"></span>
+</div>
+
+<div class="usd-card usd-hero" style="margin-top:14px">
+  <div class="usd-donut" role="img" aria-label="USAID 占 72%"><svg viewBox="0 0 200 200" id="usd-donut"></svg><div class="c"><b>72%</b><span>USAID</span></div></div>
+  <div>
+    <div class="usd-big" id="usd-head"></div>
+    <div class="usd-lg">
+      <div style="--c:var(--blue)"><i></i>USAID<b>72%</b></div>
+      <div style="--c:var(--gray)"><i></i>其他機構<b>28%</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="usd-tiles" id="usd-tiles"></div>
+<div class="usd-warn" id="usd-warn"></div>
+
+<div class="usd-sec"><em>依國家加總</em>本頁依項目名稱歸類</div>
+<div class="usd-card" id="usd-country"></div>
+
+<div class="usd-sec"><em>完整清單</em><span id="usd-cnt"></span></div>
+<div class="usd-card">
+  <div class="usd-key"><span style="--c:var(--gold)">烏克蘭</span><span style="--c:var(--blue)">其他</span></div>
+  <div id="usd-list"></div>
+  <button class="usd-more" id="usd-more"></button>
+</div>
+
+<div class="usd-sec"><em>USAID 提議中的其他支出</em><span class="usd-tag">提議</span></div>
+<div class="usd-card usd-prop" id="usd-prop"></div>
+
+<div class="usd-foot">依提供之原清單整理。金額期間與口徑原清單未載明；新台幣金額為美元原值乘匯率後四捨五入。</div>
+<div class="usd-by">製圖：張威翔</div>
+
+<button class="usd-top" id="usd-top" aria-label="回到最上方"><b>↑</b>最上方</button>
+
+<script>
+var D={"headline": 358000000.0, "usaidShare": 0.72, "rate": 32.92, "items": [{"u": 158000000, "t": "USAID全球媒體計畫", "c": ""}, {"u": 93900000, "t": "伊拉克，Chemonics「社區韌性倡議」", "c": "伊拉克"}, {"u": 79800000, "t": "烏克蘭，俄語電視與數位內容", "c": "烏克蘭"}, {"u": 75000000, "t": "烏克蘭，Internews媒體計畫", "c": "烏克蘭"}, {"u": 60000000, "t": "烏克蘭，反制「不實資訊」的媒體計畫", "c": "烏克蘭"}, {"u": 30500000, "t": "拉丁美洲，「公民賦權」（Citizens Empowered）計畫", "c": ""}, {"u": 24700000, "t": "烏克蘭，政府傳播，包括與好萊塢專家的大師班", "c": "烏克蘭"}, {"u": 20000000, "t": "歐洲／歐亞，OCCRP調查報導", "c": ""}, {"u": 19900000, "t": "哥倫比亞，「透明夥伴」（Partners for Transparency）媒體計畫（La Silla Vacía）", "c": "哥倫比亞"}, {"u": 19900000, "t": "委內瑞拉，IRI獨立新聞", "c": "委內瑞拉"}, {"u": 19000000, "t": "突尼西亞，政治轉型計畫", "c": "突尼西亞"}, {"u": 15000000, "t": "白俄羅斯，自由之家（Freedom House）、Internews媒體計畫", "c": "白俄羅斯"}, {"u": 15000000, "t": "亞美尼亞，Internews媒體計畫", "c": "亞美尼亞"}, {"u": 15000000, "t": "中亞，Internews「MediaCAMP」", "c": ""}, {"u": 14000000, "t": "塞爾維亞，IREX「MediaInnovation」", "c": "塞爾維亞"}, {"u": 14000000, "t": "烏克蘭，Chemonics「建立互信倡議」", "c": "烏克蘭"}, {"u": 13400000, "t": "墨西哥，記者與人權捍衛者保護", "c": "墨西哥"}, {"u": 12800000, "t": "委內瑞拉，自由之家新聞計畫", "c": "委內瑞拉"}, {"u": 12000000, "t": "烏克蘭，緊急媒體活動", "c": "烏克蘭"}, {"u": 10650000, "t": "吉爾吉斯，Internews「Media-K」", "c": "吉爾吉斯"}, {"u": 10350000, "t": "尼加拉瓜，「人人有聲」（Voices for All）媒體計畫", "c": "尼加拉瓜"}, {"u": 10000000, "t": "波士尼亞，Internews媒體參與", "c": "波士尼亞"}, {"u": 10000000, "t": "喬治亞，IREX媒體計畫", "c": "喬治亞"}, {"u": 10000000, "t": "西巴爾幹，Internews媒體計畫", "c": ""}, {"u": 9700000, "t": "坦尚尼亞，FHI360／Internews媒體計畫", "c": "坦尚尼亞"}, {"u": 9400000, "t": "尼加拉瓜，媒體強化", "c": "尼加拉瓜"}, {"u": 8500000, "t": "查德，FHI 360公民社會", "c": "查德"}, {"u": 8300000, "t": "摩爾多瓦，Internews媒體問責", "c": "摩爾多瓦"}, {"u": 8000000, "t": "塞爾維亞，媒體投資基金", "c": "塞爾維亞"}, {"u": 8000000, "t": "斯里蘭卡，IREX媒體計畫（MEND）", "c": "斯里蘭卡"}, {"u": 7500000, "t": "喬治亞，「資訊完整性」", "c": "喬治亞"}, {"u": 7500000, "t": "歐亞，俄語新聞", "c": ""}, {"u": 7000000, "t": "菲律賓，媒體自由倡議", "c": "菲律賓"}, {"u": 6000000, "t": "墨西哥，ICFJ報導中心", "c": "墨西哥"}, {"u": 5300000, "t": "德國馬歇爾基金會，反不實資訊", "c": ""}, {"u": 5000000, "t": "白俄羅斯，NDI／IRI政治計畫", "c": "白俄羅斯"}, {"u": 5000000, "t": "瓜地馬拉、秘魯、多明尼加，青年媒體「青年之聲」（Voces de la Juventud）", "c": ""}, {"u": 4500000, "t": "馬利，媒體素養", "c": "馬利"}, {"u": 4400000, "t": "北馬其頓，青年媒體素養", "c": "北馬其頓"}, {"u": 3900000, "t": "中亞，反制不實資訊", "c": ""}, {"u": 3500000, "t": "亞塞拜然，IREX新聞業", "c": "亞塞拜然"}, {"u": 3000000, "t": "塞爾維亞，社群媒體網紅培訓", "c": "塞爾維亞"}, {"u": 2600000, "t": "摩爾多瓦，「韌性倡議」", "c": "摩爾多瓦"}, {"u": 2500000, "t": "波士尼亞，調查報導", "c": "波士尼亞"}, {"u": 2350000, "t": "秘魯，學校公民教育", "c": "秘魯"}, {"u": 2100000, "t": "白俄羅斯，「另類敘事」", "c": "白俄羅斯"}, {"u": 2000000, "t": "墨西哥，Article 19言論自由", "c": "墨西哥"}, {"u": 2000000, "t": "印度，聯合國兒童基金會（UNICEF）COVID訊息", "c": "印度"}, {"u": 1790000, "t": "印尼，透過迷因、遊戲與網紅推廣媒體素養", "c": "印尼"}, {"u": 1600000, "t": "烏克蘭，「批判性媒體消費」", "c": "烏克蘭"}, {"u": 1500000, "t": "白俄羅斯，公民社會媒體／不實資訊", "c": "白俄羅斯"}, {"u": 1500000, "t": "約旦，反不實資訊", "c": "約旦"}, {"u": 1470000, "t": "亞洲／歐亞，IREX「活力資訊指標」（Vibrant Information Barometer）", "c": ""}, {"u": 1000000, "t": "馬利，廣播宣導", "c": "馬利"}, {"u": 779000, "t": "烏克蘭，全國媒體協會", "c": "烏克蘭"}, {"u": 631000, "t": "利比亞，反不實資訊", "c": "利比亞"}, {"u": 500000, "t": "Internews／YouTube媒體試點", "c": ""}, {"u": 488000, "t": "馬來西亞，反不實資訊", "c": "馬來西亞"}, {"u": 464000, "t": "阿富汗，「和平支持」訊息", "c": "阿富汗"}, {"u": 200000, "t": "柬埔寨，數位監測", "c": "柬埔寨"}, {"u": 61000, "t": "吉爾吉斯，數位安全支援", "c": "吉爾吉斯"}, {"u": 38000, "t": "拉丁美洲，數位支援", "c": ""}, {"u": 32000, "t": "經濟合作暨發展組織（OECD）「錯誤／不實資訊中心」（計畫包括DEIA／LGBTQ+補助）", "c": ""}], "prop": [{"lo": 300000000, "hi": 300000000, "t": "反制中國影響力基金"}, {"lo": 20000000, "hi": 20000000, "t": "「資訊操弄」資金機制"}, {"lo": 8000000, "hi": 10000000, "t": "透過民主峰會設立的不實資訊基金（每年）"}, {"lo": 2000000, "hi": 2000000, "t": "「資訊操弄」監測中心"}, {"lo": 1500000, "hi": 1500000, "t": "員工「資訊完整性」培訓"}]};
+(function(){
+  var cur='ntd',expanded=false,SHOW=12;
+  var $=function(id){return document.getElementById(id)};
+  function num(x,d){var s=x.toFixed(d);if(s.indexOf('.')>-1)s=s.replace(/0+$/,'').replace(/\.$/,'');var p=s.split('.');p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');return p.join('.');}
+  function fmt(v){
+    var unit=cur==='ntd'?'元':'美元';if(cur==='ntd')v=v*D.rate;
+    if(v>=1e8)return num(v/1e8,2)+'億'+unit;
+    if(v>=1e4){var w=v/1e4;return num(w,w>=100?0:1)+'萬'+unit;}
+    return num(v,0)+unit;
+  }
+  function fmtRange(a,b){
+    var unit=cur==='ntd'?'元':'美元',k=cur==='ntd'?D.rate:1;a*=k;b*=k;
+    if(b>=1e8)return num(a/1e8,2)+'–'+num(b/1e8,2)+'億'+unit;
+    return num(a/1e4,0)+'–'+num(b/1e4,0)+'萬'+unit;
+  }
+  function report(){try{parent.postMessage({type:'usd-height',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+
+  // donut
+  (function(){var R=80,C=2*Math.PI*R,a=C*D.usaidShare,g=2;
+    $('usd-donut').innerHTML=
+      '<circle cx="100" cy="100" r="'+R+'" fill="none" stroke="#5b6784" stroke-width="28" transform="rotate(-90 100 100)"/>'+
+      '<circle cx="100" cy="100" r="'+R+'" fill="none" stroke="#3987e5" stroke-width="28" stroke-dasharray="'+(a-g)+' '+(C-a+g)+'" transform="rotate(-90 100 100)"/>';})();
+
+  var total=D.items.reduce(function(s,x){return s+x.u},0);
+  var by={},reg=0;
+  D.items.forEach(function(x){if(x.c){by[x.c]=(by[x.c]||0)+x.u}else{reg+=x.u}});
+  var ctry=Object.keys(by).map(function(k){return{n:k,u:by[k]}}).sort(function(a,b){return b.u-a.u});
+  var ua=by['烏克蘭']||0,uaN=D.items.filter(function(x){return x.c==='烏克蘭'}).length;
+  var maxItem=D.items[0];
+
+  function row(no,txt,amt,pct,cls){
+    return '<div class="usd-row '+(cls||'')+'"><div class="top"><span class="no">'+no+'</span><span class="tx">'+txt+'</span><span class="am">'+amt+'</span></div><div class="usd-bar2"><i style="width:'+pct.toFixed(1)+'%"></i></div></div>';
+  }
+  function render(){
+    $('usd-rate').textContent=cur==='ntd'?'1 美元＝'+D.rate+' 新台幣':'原清單單位：美元';
+    $('usd-head').innerHTML=fmt(D.headline)+'<small>2021年美國對外媒體「不實資訊」相關支出</small>';
+    $('usd-tiles').innerHTML=
+      '<div class="usd-tile" style="--c:var(--gold)"><div class="n">'+(ua/total*100).toFixed(1)+'%</div><div class="t">烏克蘭占清單加總</div><div class="s">'+uaN+' 項・'+fmt(ua)+'</div></div>'+
+      '<div class="usd-tile" style="--c:var(--blue)"><div class="n">'+fmt(maxItem.u)+'</div><div class="t">最大單項</div><div class="s">'+maxItem.t+'</div></div>'+
+      '<div class="usd-tile" style="--c:var(--green)"><div class="n">'+D.items.length+' 項</div><div class="t">清單項目</div><div class="s">加總 '+fmt(total)+'</div></div>';
+    $('usd-warn').innerHTML='<b>注意：</b>清單 '+D.items.length+' 項加總 '+fmt(total)+'，是頭條 '+fmt(D.headline)+' 的 '+(total/D.headline).toFixed(1)+' 倍；各項不是頭條的組成，期間與口徑原清單未載明。';
+    var cm=ctry[0].u,html='';
+    ctry.slice(0,8).forEach(function(c,i){html+=row(i+1,c.n,fmt(c.u),c.u/cm*100,c.n==='烏克蘭'?'ua':'')});
+    html+='<div class="usd-note">另有區域性、全球與機構項目 '+fmt(reg)+'，未計入國家。</div>';
+    $('usd-country').innerHTML=html;
+    $('usd-cnt').textContent='共 '+D.items.length+' 項，依原順序';
+    var max=D.items[0].u,list='',n=expanded?D.items.length:SHOW;
+    D.items.slice(0,n).forEach(function(x,i){list+=row(i+1,x.t,fmt(x.u),x.u/max*100,x.c==='烏克蘭'?'ua':'')});
+    $('usd-list').innerHTML=list;
+    $('usd-more').textContent=expanded?'收合清單 ▲':'展開全部 '+D.items.length+' 項 ▼';
+    var pm=D.prop[0].hi,p='';
+    D.prop.forEach(function(x,i){p+=row('',x.t,x.lo===x.hi?fmt(x.hi):fmtRange(x.lo,x.hi),x.hi/pm*100,'')});
+    $('usd-prop').innerHTML=p;
+    report();
+  }
+  document.querySelectorAll('.usd-seg button').forEach(function(b){b.addEventListener('click',function(){
+    cur=b.dataset.c;document.querySelectorAll('.usd-seg button').forEach(function(x){x.classList.toggle('on',x===b)});render();});});
+  $('usd-more').addEventListener('click',function(){expanded=!expanded;render();});
+  var top=$('usd-top');
+  function onScroll(){top.classList.toggle('on',(window.pageYOffset||document.documentElement.scrollTop)>300)}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});try{parent.postMessage({type:'usd-top'},'*');}catch(e){}});
+  window.addEventListener('load',report);window.addEventListener('resize',report);
+  render();onScroll();
+})();
+</script>
+</body>
+</html>
