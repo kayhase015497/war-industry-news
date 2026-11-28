@@ -352,6 +352,10 @@
     "rosatom_bn800_closed_fuel_cycle_20261125": {
       "category": "energy",
       "shortTitle": "BN-800 閉式核燃料循環"
+    },
+    "afghanistan_kunar_school_blast_20261128": {
+      "category": "conflict",
+      "shortTitle": "庫納爾省學校爆炸"
     }
   },
   "seriesLabels": {
